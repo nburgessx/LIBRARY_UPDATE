@@ -193,10 +193,16 @@ each numbered item.
   `FolderConfig` vs `\config\…` / bare filename elsewhere). Also delete the
   stale `resources\config\MLIBQ_ADDIN.xll`. `LACurveProperties` and
   `FolderConfig` are near-duplicates — consider collapsing to one.
-- ☐ **1.8 `.clang-format`** — add one at the `AQ_LIB` root, tuned to the *current*
-  style (derive from a sample so a future reformat is minimal). Retire the old
-  `resources\utilities\ArtisticStyle` (AStyle) setup. **Config only now — do not
-  bulk-reformat** (that waits until after Phase 3; see Tooling appendix).
+- ☑ **1.8 `.clang-format`** — commit (see below). `.clang-format` at `AQ_LIB`
+  root, tuned to observed style: Allman braces, `UseTab: ForIndentation` /
+  width 4 (tabs were the plurality — 59k vs 33k 4-space lines), `SpacesInParentheses`
+  (`foo( arg )`, ~3:1 in the code), `PointerAlignment: Left`,
+  **`ColumnLimit: 0`** and `SortIncludes: false` so it only normalises
+  whitespace/braces and never rewraps — keeps the Phase 6.8 bulk-reformat diff
+  small. `resources\.clang-format` with `DisableFormat: true` exempts examples /
+  toolkits / the vendored AStyle tree. **No reformat run** — clang-format is a
+  guide for edited files until Phase 6.8. `resources\utilities\ArtisticStyle`
+  (AStyle, not wired to anything) is removed in the Phase 6.4 resources audit.
 
 **Exit:** solution builds all configs; `grep -r "MLIB\|Mizuho\|validation_api\|msc"`
 in `src\` is empty except third-party and string literals; baseline-diff clean.

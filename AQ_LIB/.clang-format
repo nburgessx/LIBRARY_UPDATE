@@ -1,0 +1,61 @@
+# AlgoQuantLib .clang-format
+#
+# Tuned to the CURRENT observed style, not an ideal. The tree is stylistically
+# mixed (tabs and spaces, spaced and unspaced parens) after years of edits, so no
+# config makes a reformat zero. The goals here are:
+#   1. Capture the intended house style (Allman braces, tabs, spaced parens,
+#      trailing-underscore members, camelCase).
+#   2. Minimise churn until the ONE bulk reformat, which is deferred to
+#      MIGRATION_PLAN.md Phase 6.8 (never mid-rename - it buries the real diff).
+#      Hence ColumnLimit: 0 (no line rewrapping) and SortIncludes: false.
+#
+# Until Phase 6/7, clang-format is a GUIDE for new/edited code, not a gate.
+# Format a file you are already touching; do not run it tree-wide.
+
+Language:        Cpp
+BasedOnStyle:    LLVM
+
+# --- braces & layout ---
+BreakBeforeBraces: Allman
+Cpp11BracedListStyle: false
+NamespaceIndentation: All
+FixNamespaceComments: false
+AccessModifierOffset: -4
+IndentCaseLabels: false
+IndentPPDirectives: None
+
+# --- indentation ---
+UseTab:          ForIndentation
+TabWidth:        4
+IndentWidth:     4
+ContinuationIndentWidth: 4
+
+# --- line length: do NOT rewrap (keeps the Phase 6.8 diff to whitespace only) ---
+ColumnLimit:     0
+ReflowComments:  false
+
+# --- spacing (house style: foo( arg ), if ( cond )) ---
+SpacesInParentheses: true
+SpaceBeforeParens: ControlStatements
+SpacesInSquareBrackets: false
+SpacesInAngles:  false
+SpaceAfterCStyleCast: true
+SpaceBeforeAssignmentOperators: true
+
+# --- pointers / references bind to the type ---
+PointerAlignment: Left
+DerivePointerAlignment: false
+
+# --- keep existing structure, don't be clever ---
+SortIncludes:    false
+SortUsingDeclarations: false
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+KeepEmptyLinesAtTheStartOfBlocks: true
+MaxEmptyLinesToKeep: 2
+AlignTrailingComments: true
+AlignAfterOpenBracket: Align
+BinPackParameters: true
+BinPackArguments: true

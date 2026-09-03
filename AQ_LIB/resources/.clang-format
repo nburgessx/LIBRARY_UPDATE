@@ -1,0 +1,6 @@
+# resources/ is end-user spreadsheets, pricing toolkits, example apps, vendored
+# tools (ArtisticStyle) and research guides - NOT library source. Exempt the
+# whole tree from formatting so an editor's "format on save" never restyles a
+# shipped example or a third-party tool's source.
+DisableFormat: true
+SortIncludes: false
