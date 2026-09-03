@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate Student t-distribution.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LABivariateStudentTDistribution_h
 #define LABivariateStudentTDistribution_h
 ////X///////////////////X///////////////////////////////X///////////////////

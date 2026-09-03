@@ -4,9 +4,9 @@
 * @File:			This file tests the ability to reload yield curves from the recorded csv log files
 * @Created:			18 April 2016
 * @Author:			Nicholas Burgess
-* @Department:		Quant Developement Team, MHI London
+* @Department:		Quant Developement Team, AlgoQuantHub London
 *
-* The copyright to the computer program(s) herein is the property of Mizuho International.
+* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
 */
 
 // Includes: Google Test Library

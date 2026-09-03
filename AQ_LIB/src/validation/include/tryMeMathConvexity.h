@@ -2,9 +2,9 @@
  * @brief			Validation Interface for Convexity Adjustment Class
  * @Created:		14th January 2019
  * @Author:			Nicholas Burgess
- * @Department:		MHI Quant Research and Development
+ * @Department:		AlgoQuantHub Quant Research and Development
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

@@ -1,7 +1,7 @@
 /*! @file
     @brief Risk setup class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfiguration_h
 #define LARiskConfiguration_h
 ////X///////////////////X///////////////////////////////X///////////////////

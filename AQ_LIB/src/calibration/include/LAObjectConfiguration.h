@@ -1,7 +1,7 @@
 /*! @file
     @brief  object setup class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LAObjectConfiguration_h
 #define LAObjectConfiguration_h
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -15,7 +15,7 @@
 			11.IR_MODEL_DATA_CACHESIZE(LADataInt)<BR>
 
 */
-//  2006, Mizuho International London..
+//  2006, AlgoQuantHub..
 #ifdef __GNUG__
 #pragma implementation
 #else

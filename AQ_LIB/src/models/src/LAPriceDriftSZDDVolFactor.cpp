@@ -4,7 +4,7 @@
 
 
 */
-//  2016, Mizuho SC Co., Ltd.
+//  2016, AlgoQuantHub SC Co., Ltd.
 
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LAPriceDriftSZDDVolFactor.cpp

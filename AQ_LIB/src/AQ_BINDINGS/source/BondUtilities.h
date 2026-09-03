@@ -4,9 +4,9 @@
  * @brief			Collection of utility methods for Bond Struct Management
  * @Created:		14 March 2016 
  * @Author:			Nicholas Burgess
- * @Department:		MHI Quant Research and Analytics
+ * @Department:		AlgoQuantHub Quant Research and Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

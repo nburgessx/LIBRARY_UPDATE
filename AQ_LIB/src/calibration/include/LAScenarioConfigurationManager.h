@@ -1,7 +1,7 @@
 /*! @file
     @brief LAScenarioConfigurationManager manager class 
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LAScenarioConfigurationManager_h
 #define LAScenarioConfigurationManager_h
 ////X///////////////////X///////////////////////////////X///////////////////

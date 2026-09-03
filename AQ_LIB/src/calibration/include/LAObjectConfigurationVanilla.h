@@ -1,7 +1,7 @@
 /*! @file
     @brief  Vanilla object setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LAObjectConfigurationVanilla_h
 #define LAObjectConfigurationVanilla_h
 ////X///////////////////X///////////////////////////////X///////////////////

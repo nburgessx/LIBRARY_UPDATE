@@ -1,7 +1,7 @@
 /*! @file
     @brief Yield delta setup class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationYieldDelta_h
 #define LARiskConfigurationYieldDelta_h
 ////X///////////////////X///////////////////////////////X///////////////////

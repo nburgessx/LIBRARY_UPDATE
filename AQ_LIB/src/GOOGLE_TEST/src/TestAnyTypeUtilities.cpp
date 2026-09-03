@@ -2,9 +2,9 @@
  * @brief			Unit Tests for Boost AnyType Utilities
  * @Created:		23rd October 2018
  * @Author:			Nicholas Burgess
- * @Department:		MHI Quant Research and Analytics
+ * @Department:		AlgoQuantHub Quant Research and Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

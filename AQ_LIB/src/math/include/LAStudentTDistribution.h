@@ -2,7 +2,7 @@
     @brief Class declaration for Student t-distribution.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LAStudentTDistribution_h
 #define LAStudentTDistribution_h
 ////X///////////////////X///////////////////////////////X///////////////////

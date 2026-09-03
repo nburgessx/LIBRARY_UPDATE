@@ -2,7 +2,7 @@
 /*! @file
     @brief Volatility data create class for Schobel-Zhu
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LACalibrateVolatilitySZ_h
 #define LACalibrateVolatilitySZ_h
 ////X///////////////////X///////////////////////////////X///////////////////

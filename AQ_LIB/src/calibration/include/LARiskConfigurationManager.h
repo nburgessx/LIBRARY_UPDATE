@@ -1,7 +1,7 @@
 /*! @file
     @brief LARiskConfiguration manager class 
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationManager_h
 #define LARiskConfigurationManager_h
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -15,7 +15,7 @@ class LACholeskyDecompSC
 public:
 
 								//======================================
-								// CholeskyDecomposition by Mizuho SC Algorithm
+								// CholeskyDecomposition by AlgoQuantHub SC Algorithm
 	static	LAMatrix			choleskyDecompositionSC(const LAMatrix& mat);
 
 private:

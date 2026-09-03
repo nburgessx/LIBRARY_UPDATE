@@ -2,7 +2,7 @@
 	@file	
     @brief Source code for class to represent ArbitrageFreeCurve.
 */
-//  2009, Mizuho International London.
+//  2009, AlgoQuantHub.
 
 #ifdef __GNUG__
 #pragma implementation

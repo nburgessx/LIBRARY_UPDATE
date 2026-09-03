@@ -1,7 +1,7 @@
 /*! @file
     @brief HW calibration request
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LACalibratePtberg3F.cpp
 //

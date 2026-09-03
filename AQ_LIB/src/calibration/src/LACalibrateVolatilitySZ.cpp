@@ -2,7 +2,7 @@
 /*! @file
     @brief Volatility data create class for SZ
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LACalibrateVolatilitySZ.cpp
 //

@@ -2,7 +2,7 @@
     @brief source code of accrued interest calculator class.
 
 */
-//  2007, Mizuho International London..
+//  2007, AlgoQuantHub..
 ///
 
 #ifdef __GNUG__

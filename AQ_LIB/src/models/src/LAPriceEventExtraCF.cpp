@@ -2,7 +2,7 @@
     @brief source code of trigger action class(extra cf action).
 
 */
-//  2006, Mizuho International London..
+//  2006, AlgoQuantHub..
 ///
 //////////////////////////////////////////////////////////
 //いくかのパターンでテスト実施ずみ

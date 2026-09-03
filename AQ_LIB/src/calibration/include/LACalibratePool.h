@@ -1,7 +1,7 @@
 /*! @file
     @brief LACalibratePool manager class 
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LACalibratePool_h
 #define LACalibratePool_h
 ////X///////////////////X///////////////////////////////X///////////////////

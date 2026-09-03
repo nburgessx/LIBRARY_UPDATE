@@ -4,9 +4,9 @@
  * @brief			Collection of SetUp Macros and Utilities for the MLIB_CLIENT_API
  * @Created:	    21 September 2018
  * @Author:			Nicholas Burgess
- * @Department:		Mizuho Quant Research and Analytics
+ * @Department:		AlgoQuantHub Quant Research and Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

@@ -1,7 +1,7 @@
 /*! @file
     @brief Volatility data create class for ptberg
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LACalibrateVolatilityIRSABR.cpp
 //

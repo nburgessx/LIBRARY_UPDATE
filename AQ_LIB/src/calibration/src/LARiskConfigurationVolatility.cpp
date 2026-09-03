@@ -1,7 +1,7 @@
 /*! @file
     @brief Volatility setup class for calc risk
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LARiskConfigurationVolatility.cpp
 //

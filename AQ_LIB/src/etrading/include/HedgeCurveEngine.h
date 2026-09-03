@@ -2,9 +2,9 @@
  * @brief			Methods that are related to calculating hedge delta risks
  * @Created:		19 Oct 2017
  * @Author:			Ian Castleton
- * @Department:		MHI Quant Research and Analytics
+ * @Department:		AlgoQuantHub Quant Research and Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

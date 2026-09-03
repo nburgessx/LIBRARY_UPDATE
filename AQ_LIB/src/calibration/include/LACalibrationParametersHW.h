@@ -1,7 +1,7 @@
 /*! @file
     @brief  Calibration method create class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LACalibrationParametersHW_h
 #define LACalibrationParametersHW_h
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -6,7 +6,7 @@
  *					Each loan within the group is assumed to be homogeneous and to have the
  *					same behaviour as the Rep Line.
  *
- *					This code was ported from MGEN MHI R analytics library
+ *					This code was ported from MGEN AlgoQuantHub R analytics library
  *					Author Andrew Friend
  *
  * @Created:		3rd Dec 2019

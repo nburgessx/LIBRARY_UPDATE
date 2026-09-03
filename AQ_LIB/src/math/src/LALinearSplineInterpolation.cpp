@@ -7,7 +7,7 @@
 	Outside is constant interpolation.
 
 */
-//  3rd April 2017, Mizuho International London
+//  3rd April 2017, AlgoQuantHub
 
 
 #ifdef __GNUG__

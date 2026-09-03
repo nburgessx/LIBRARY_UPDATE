@@ -4,9 +4,9 @@
  * @brief			CZK Curve Consistency Tests
  * @Created:		3rd September 2020
  * @Author:			Nicholas Burgess
- * @Department:		MHI London Quant Research and Analytics
+ * @Department:		AlgoQuantHub London Quant Research and Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 // Include: Google Test Library

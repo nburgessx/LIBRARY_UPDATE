@@ -2,7 +2,7 @@
  * @brief			Structured Credit Loan Portfolio
  *					Class to represent a portfolio of loans.
  *
- *					This code was ported from MGEN MHI R analytics library
+ *					This code was ported from MGEN AlgoQuantHub R analytics library
  *					Author Andrew Friend
  *
  * @Created:		19th Nov 2019

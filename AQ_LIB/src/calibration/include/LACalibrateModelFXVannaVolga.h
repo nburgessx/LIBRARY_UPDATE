@@ -1,7 +1,7 @@
 /*! @file
     @brief FXVanilla sde generator class
 */
-//  2011, Mizuho International London.
+//  2011, AlgoQuantHub.
 #ifndef LACalibrateModelFXVannaVolga_h
 #define LACalibrateModelFXVannaVolga_h
 ////X///////////////////X///////////////////////////////X///////////////////

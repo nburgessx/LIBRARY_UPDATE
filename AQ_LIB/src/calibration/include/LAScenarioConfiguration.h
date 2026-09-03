@@ -1,7 +1,7 @@
 /*! @file
     @brief Risk Scenario create class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LAScenarioConfiguration_h
 #define LAScenarioConfiguration_h
 ////X///////////////////X///////////////////////////////X///////////////////

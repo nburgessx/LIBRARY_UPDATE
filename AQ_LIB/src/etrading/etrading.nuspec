@@ -1,56 +1,53 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Mizuho.MLIBQ</id>
-    <version>$version$</version> 
-    <title>MLIBQ</title>
-    <authors>MHI</authors>
-    <owners>MHI Quants</owners>
-    <licenseUrl>https://msusaconnect/it/IT%20%20Policies%20and%20Procedures/MizuhoIT-Policy-AcceptableUse.pdf</licenseUrl>
-    <projectUrl>https://www.mizuhoamericas.com/</projectUrl>
-    <iconUrl>https://www.mizuhoamericas.com/webfiles/1532704873811/app/images/mizuho-favicon.png</iconUrl>
+    <id>AlgoQuantHub.AlgoQuantLib</id>
+    <version>$version$</version>
+    <title>AlgoQuantLib</title>
+    <authors>AlgoQuantHub</authors>
+    <owners>AlgoQuantHub</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>MLIBQ Libraries</description>
-    <summary>MLIBQ Libraries</summary>
-    <releaseNotes>Release of MLIBQ libraries.</releaseNotes>
-    <copyright>Copyright 2019</copyright>
-    <tags>MLIBQ native nativepackage</tags>
+    <description>AlgoQuantLib native libraries</description>
+    <summary>AlgoQuantLib native libraries</summary>
+    <releaseNotes>Release of AlgoQuantLib native libraries.</releaseNotes>
+    <copyright>Copyright (c) 2026 Nicholas Burgess / AlgoQuantHub. All rights reserved.</copyright>
+    <tags>AlgoQuantLib native nativepackage</tags>
   </metadata>
   <files>
-    <file src="..\..\target2017\64\Debug\calibration\out\*" target="build\native\lib\x64\Debug\"/>
-    <file src="..\..\target2017\64\Debug\models\out\*" target="build\native\lib\x64\Debug\"/>
-    <file src="..\..\target2017\64\Debug\math\out\*" target="build\native\lib\x64\Debug\"/>
-    <file src="..\..\target2017\64\Debug\etrading\out\*" target="build\native\lib\x64\Debug\"/>
-    <file src="..\..\target2017\64\Debug\validation_api\out\*" target="build\native\lib\x64\Debug\"/>
+    <file src="..\..\targets\64\Debug\calibration\out\*" target="build\native\lib\x64\Debug\"/>
+    <file src="..\..\targets\64\Debug\models\out\*" target="build\native\lib\x64\Debug\"/>
+    <file src="..\..\targets\64\Debug\math\out\*" target="build\native\lib\x64\Debug\"/>
+    <file src="..\..\targets\64\Debug\etrading\out\*" target="build\native\lib\x64\Debug\"/>
+    <file src="..\..\targets\64\Debug\validation\out\*" target="build\native\lib\x64\Debug\"/>
 
 
-    <file src="..\..\target2017\32\Debug\calibration\out\*" target="build\native\lib\Win32\Debug\"/>
-    <file src="..\..\target2017\32\Debug\models\out\*" target="build\native\lib\Win32\Debug\"/>
-    <file src="..\..\target2017\32\Debug\math\out\*" target="build\native\lib\Win32\Debug\"/>
-    <file src="..\..\target2017\32\Debug\etrading\out\*" target="build\native\lib\Win32\Debug\"/>
-    <file src="..\..\target2017\32\Debug\validation_api\out\*" target="build\native\lib\Win32\Debug\"/>
+    <file src="..\..\targets\32\Debug\calibration\out\*" target="build\native\lib\Win32\Debug\"/>
+    <file src="..\..\targets\32\Debug\models\out\*" target="build\native\lib\Win32\Debug\"/>
+    <file src="..\..\targets\32\Debug\math\out\*" target="build\native\lib\Win32\Debug\"/>
+    <file src="..\..\targets\32\Debug\etrading\out\*" target="build\native\lib\Win32\Debug\"/>
+    <file src="..\..\targets\32\Debug\validation\out\*" target="build\native\lib\Win32\Debug\"/>
 
 
-    <file src="..\..\target2017\64\Release\calibration\out\*.lib" target="build\native\lib\x64\Release\"/>
-    <file src="..\..\target2017\64\Release\models\out\*.lib" target="build\native\lib\x64\Release\"/>
-    <file src="..\..\target2017\64\Release\math\out\*.lib" target="build\native\lib\x64\Release\"/>
-    <file src="..\..\target2017\64\Release\etrading\out\*.lib" target="build\native\lib\x64\Release\"/>
-    <file src="..\..\target2017\64\Release\validation_api\out\*.lib" target="build\native\lib\x64\Release\"/>
+    <file src="..\..\targets\64\Release\calibration\out\*.lib" target="build\native\lib\x64\Release\"/>
+    <file src="..\..\targets\64\Release\models\out\*.lib" target="build\native\lib\x64\Release\"/>
+    <file src="..\..\targets\64\Release\math\out\*.lib" target="build\native\lib\x64\Release\"/>
+    <file src="..\..\targets\64\Release\etrading\out\*.lib" target="build\native\lib\x64\Release\"/>
+    <file src="..\..\targets\64\Release\validation\out\*.lib" target="build\native\lib\x64\Release\"/>
     
 
-    <file src="..\..\target2017\32\Release\calibration\out\*.lib" target="build\native\lib\Win32\Release\"/>
-    <file src="..\..\target2017\32\Release\models\out\*.lib" target="build\native\lib\Win32\Release\"/>
-    <file src="..\..\target2017\32\Release\math\out\*.lib" target="build\native\lib\Win32\Release\"/>
-    <file src="..\..\target2017\32\Release\etrading\out\*.lib" target="build\native\lib\Win32\Release\"/>
-    <file src="..\..\target2017\32\Release\validation_api\out\*.lib" target="build\native\lib\Win32\Release\"/>
+    <file src="..\..\targets\32\Release\calibration\out\*.lib" target="build\native\lib\Win32\Release\"/>
+    <file src="..\..\targets\32\Release\models\out\*.lib" target="build\native\lib\Win32\Release\"/>
+    <file src="..\..\targets\32\Release\math\out\*.lib" target="build\native\lib\Win32\Release\"/>
+    <file src="..\..\targets\32\Release\etrading\out\*.lib" target="build\native\lib\Win32\Release\"/>
+    <file src="..\..\targets\32\Release\validation\out\*.lib" target="build\native\lib\Win32\Release\"/>
 
 
     <file src="..\..\src\etrading\include\*.h" target="build\native\include\etrading\"/>
-    <file src="..\..\src\validation_api\include\*.h" target="build\native\include\validation_api\"/>
+    <file src="..\..\src\validation\include\*.h" target="build\native\include\validation\"/>
     <file src="..\..\src\math\include\*.h" target="build\native\include\math\"/>
     <file src="..\..\src\models\include\*.h" target="build\native\include\models\"/>
     <file src="..\..\src\calibration\include\*.h" target="build\native\include\calibration\"/>
-    <file src="..\..\Mizuho.MLIBQ.targets" target="build\native\Mizuho.MLIBQ.targets"/>
+    <file src="..\..\AlgoQuantLib.targets" target="build\native\AlgoQuantLib.targets"/>
     <file src="..\..\default-propertiesui.xml" target="build\native\default-propertiesui.xml"/>
   </files>
 </package>

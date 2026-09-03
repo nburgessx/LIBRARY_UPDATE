@@ -5,7 +5,7 @@
     \date 2008/10
     \version 1.0
 
-     2005, Mizuho International London. All rights reserved.
+     2005, AlgoQuantHub. All rights reserved.
 */
 
 #include "LAMathVolatilityLMM.h"

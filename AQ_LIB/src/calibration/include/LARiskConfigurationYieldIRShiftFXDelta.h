@@ -1,7 +1,7 @@
 /*! @file
     @brief  YieldShift FX shift delta setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationYieldIRShiftFXDelta_h
 #define LARiskConfigurationYieldIRShiftFXDelta_h
 ////X///////////////////X///////////////////////////////X///////////////////

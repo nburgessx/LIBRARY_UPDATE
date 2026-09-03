@@ -3,7 +3,7 @@
 
 	This class derives from LABlackScholesBaseMethod
 */
-//  2010, Mizuho International London.
+//  2010, AlgoQuantHub.
 #ifndef LABlackScholesDigitalCapletOption_h
 #define LABlackScholesDigitalCapletOption_h
 ////X///////////////////X///////////////////////////////X///////////////////

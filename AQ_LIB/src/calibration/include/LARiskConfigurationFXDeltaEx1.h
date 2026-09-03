@@ -1,7 +1,7 @@
 /*! @file
     @brief  FX delta setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationFXDeltaEx1_h
 #define LARiskConfigurationFXDeltaEx1_h
 ////X///////////////////X///////////////////////////////X///////////////////

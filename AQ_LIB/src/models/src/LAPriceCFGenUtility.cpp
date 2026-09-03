@@ -2,7 +2,7 @@
     @brief source code of utility class to calculate dates of schedule.
 
 */
-//  2006, Mizuho International London..
+//  2006, AlgoQuantHub..
 ///
 #ifdef __GNUG__
 #pragma implementation

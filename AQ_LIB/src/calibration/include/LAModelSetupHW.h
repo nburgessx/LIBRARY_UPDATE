@@ -1,7 +1,7 @@
 /*! @file
     @brief HW Master data regist class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef  LAModelSetupHW_h
 #define  LAModelSetupHW_h
 ////X///////////////////X///////////////////////////////X///////////////////

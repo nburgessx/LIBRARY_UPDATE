@@ -1,7 +1,7 @@
 /*! @file
     @brief  HW object setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LAObjectConfigurationHW_h
 #define LAObjectConfigurationHW_h
 ////X///////////////////X///////////////////////////////X///////////////////

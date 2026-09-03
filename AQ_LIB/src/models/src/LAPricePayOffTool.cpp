@@ -2,7 +2,7 @@
     @brief source code of tool class of payoff calculation.
 
 */
-//  2006, Mizuho International London..
+//  2006, AlgoQuantHub..
 #ifdef __GNUG__
 #pragma implementation
 #endif

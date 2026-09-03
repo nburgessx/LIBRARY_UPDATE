@@ -1,7 +1,7 @@
 /*! @file
     @brief FXVannaVolga sde generator class
 */
-//  2011, Mizuho International London.
+//  2011, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LACalibrateModelFXVannaVolga.cpp
 //

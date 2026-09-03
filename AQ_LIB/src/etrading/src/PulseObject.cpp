@@ -4,9 +4,9 @@
  * @brief			Function to control object pulsing and recalculation frequency
  * @Created:		5nd July 2018
  * @Author:			Nicholas Burgess
- * @Department:		MHI Quant Research & Development
+ * @Department:		AlgoQuantHub Quant Research & Development
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #include "PulseObject.h"

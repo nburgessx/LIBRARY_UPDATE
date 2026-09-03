@@ -4,7 +4,7 @@
 
 
 */
-//  2012, Mizuho International London.
+//  2012, AlgoQuantHub.
 
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LAPriceQuantAdjustmentFuncBase.cpp

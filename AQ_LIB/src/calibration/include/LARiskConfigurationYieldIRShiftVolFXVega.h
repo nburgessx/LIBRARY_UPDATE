@@ -1,7 +1,7 @@
 /*! @file
     @brief FX vega setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationYieldIRShiftVolFXVega_h
 #define LARiskConfigurationYieldIRShiftVolFXVega_h
 ////X///////////////////X///////////////////////////////X///////////////////

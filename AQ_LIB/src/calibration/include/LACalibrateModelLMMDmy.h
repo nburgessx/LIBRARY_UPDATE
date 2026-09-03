@@ -1,7 +1,7 @@
 /*! @file
     @brief LMM Dmy sde generator class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LACalibrateModelLMMDmy_h
 #define LACalibrateModelLMMDmy_h
 ////X///////////////////X///////////////////////////////X///////////////////

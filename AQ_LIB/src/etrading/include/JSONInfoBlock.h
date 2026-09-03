@@ -4,9 +4,9 @@
  * @brief			Class to Manage the JSON InfoBlock Container for LWO Serialization
  * @Created:		24th September 2018
  * @Author:			Nicholas Burgess
- * @Department:		Mizuho International, Quant Research & Analytics
+ * @Department:		AlgoQuantHub, Quant Research & Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

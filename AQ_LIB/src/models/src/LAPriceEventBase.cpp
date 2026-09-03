@@ -2,7 +2,7 @@
     @brief source code of abstract base class of trigger action and holder class of trigger action class.
 
 */
-//  2006, Mizuho International London..
+//  2006, AlgoQuantHub..
 ///
 //////////////////////////////////////////////////////////
 //いくかのパターンでテスト実施ずみ 

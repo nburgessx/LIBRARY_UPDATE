@@ -1,7 +1,7 @@
 /*! @file
     @brief Volatility setup class for calc parallel shift risk 
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationVolParallel_h
 #define LARiskConfigurationVolParallel_h
 ////X///////////////////X///////////////////////////////X///////////////////

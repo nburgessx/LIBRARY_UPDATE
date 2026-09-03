@@ -3,7 +3,7 @@
  *					The SXS is used as a synthetic tranxhe below equity which can absorb losses.
  *					The SXS can be periodically replenished.
  *
- *					This code was ported from MGEN MHI R analytics library
+ *					This code was ported from MGEN AlgoQuantHub R analytics library
  *					Author Andrew Friend
  *
  * @Created:		17th Dec 2019

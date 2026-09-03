@@ -3,7 +3,7 @@
 
 
 */
-//  2007, Mizuho International London..
+//  2007, AlgoQuantHub..
 
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LARatesCurveLinearInterpolation.cpp

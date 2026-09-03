@@ -1,7 +1,7 @@
 /*! @file
     @brief  sde generator class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LACalibrateModel_h
 #define LACalibrateModel_h
 ////X///////////////////X///////////////////////////////X///////////////////

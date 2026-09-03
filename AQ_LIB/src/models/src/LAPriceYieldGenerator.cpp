@@ -2,7 +2,7 @@
     @brief Source code for class to generate YieldCurve.
 
 */
-//  2007, Mizuho International London..
+//  2007, AlgoQuantHub..
 #ifdef __GNUG__
 #pragma implementation
 #else

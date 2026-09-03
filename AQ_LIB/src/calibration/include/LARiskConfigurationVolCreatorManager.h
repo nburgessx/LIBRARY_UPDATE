@@ -1,7 +1,7 @@
 /*! @file
     @brief LARiskConfigurationVolCreator manager class 
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationVolCreatorManager_h
 #define LARiskConfigurationVolCreatorManager_h
 ////X///////////////////X///////////////////////////////X///////////////////

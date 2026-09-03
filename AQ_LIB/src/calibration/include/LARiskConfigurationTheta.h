@@ -1,7 +1,7 @@
 /*! @file
     @brief Theta risk setup class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationTheta_h
 #define LARiskConfigurationTheta_h
 ////X///////////////////X///////////////////////////////X///////////////////

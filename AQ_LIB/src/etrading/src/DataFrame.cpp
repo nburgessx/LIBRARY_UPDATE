@@ -2,7 +2,7 @@
  * @brief			Structured Credit DataFrame class
  *					Represents an "R" DataFrame, which consists of a matrix with column names
  *
- *					This code was ported from MGEN MHI R analytics library
+ *					This code was ported from MGEN AlgoQuantHub R analytics library
  *					Author Andrew Friend
  *
  * @Created:		28th Nov 2019

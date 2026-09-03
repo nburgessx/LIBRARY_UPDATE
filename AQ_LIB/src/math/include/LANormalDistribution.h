@@ -2,7 +2,7 @@
     @brief Class declaration for Normal distribution.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LANormalDistribution_h
 #define LANormalDistribution_h
 ////X///////////////////X///////////////////////////////X///////////////////

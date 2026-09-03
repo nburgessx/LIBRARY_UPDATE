@@ -1,7 +1,7 @@
 /*! @file
     @brief IR Delta setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationYieldBasisAnalytic_h
 #define LARiskConfigurationYieldBasisAnalytic_h
 ////X///////////////////X///////////////////////////////X///////////////////

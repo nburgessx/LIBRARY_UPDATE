@@ -11,7 +11,7 @@
 			6.IR_CALIBRATION_DATA_FREQUENCY(LADataString)<BR>
 			7.IR_CALIBRATION_DATA_YIELDDATA(LADataReference)<BR>
 */
-//  2007, Mizuho International London..
+//  2007, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

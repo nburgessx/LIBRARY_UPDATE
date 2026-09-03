@@ -3,7 +3,7 @@
 	
 */
 
-//  2005, Fixed Income Group, Mizuho International London.
+//  2005, Fixed Income Group, AlgoQuantHub.
 
 
 #ifndef LAAntithetic_h

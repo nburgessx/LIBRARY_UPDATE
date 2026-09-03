@@ -1,7 +1,7 @@
 /*! @file
     @brief  LMM object setup class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LAObjectConfigurationLMM_h
 #define LAObjectConfigurationLMM_h
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -1,7 +1,7 @@
 /*! @file
     @brief Yield Risk Scenario create class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LAScenarioConfigurationYieldCurveMultiPara_h
 #define LAScenarioConfigurationYieldCurveMultiPara_h
 ////X///////////////////X///////////////////////////////X///////////////////

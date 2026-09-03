@@ -2,7 +2,7 @@
     @brief Implementation of a class for a negative correlation method.
 */
 
-//  2005, Fixed Income Group, Mizuho International London.
+//  2005, Fixed Income Group, AlgoQuantHub.
 
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LAAntithetic.cpp

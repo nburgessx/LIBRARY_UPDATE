@@ -4,7 +4,7 @@
     This class derives from LAFunctionBase
 
 */
-//  2006, Mizuho International London..
+//  2006, AlgoQuantHub..
 
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LASumMethod2.cpp

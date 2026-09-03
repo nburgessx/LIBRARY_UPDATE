@@ -1,7 +1,7 @@
 /*! @file
     @brief IRVanilla sde generator class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LACalibrateModelIRVanilla_h
 #define LACalibrateModelIRVanilla_h
 ////X///////////////////X///////////////////////////////X///////////////////

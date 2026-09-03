@@ -1,7 +1,7 @@
 /*! @file
     @brief Risk Constant data declare file
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 
 #ifndef LADefinitionsRisk_h
 #define LADefinitionsRisk_h

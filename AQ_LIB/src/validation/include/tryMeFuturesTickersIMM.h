@@ -4,9 +4,9 @@
  * @brief			Validation interface for the future tickers methods
  * @Created:		7th February 20119
  * @Author:			Nicholas Burgess
- * @Department:		MHI Quant Research & Analytics
+ * @Department:		AlgoQuantHub Quant Research & Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #pragma once

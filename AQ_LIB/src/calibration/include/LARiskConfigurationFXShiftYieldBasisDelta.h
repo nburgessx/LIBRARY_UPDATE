@@ -1,7 +1,7 @@
 /*! @file
     @brief FX shift Basis Delta setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationFXShiftYieldBasisDelta_h
 #define LARiskConfigurationFXShiftYieldBasisDelta_h
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -1,7 +1,7 @@
 /*! @file
     @brief Calibration method create class for hw
 */
-//  2011, Mizuho International London.
+//  2011, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LACalibrationParametersFXVannaVolga.cpp
 //

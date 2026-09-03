@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate Normal distribution.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LABivariateNormalDistribution_h
 #define LABivariateNormalDistribution_h
 ////X///////////////////X///////////////////////////////X///////////////////

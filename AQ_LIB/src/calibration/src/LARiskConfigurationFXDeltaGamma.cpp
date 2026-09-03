@@ -1,7 +1,7 @@
 /*! @file
     @brief FX delta gamma setup class
 */
-//  2016, Mizuho International London.
+//  2016, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LARiskConfigurationFXDeltaGamma.cpp
 //

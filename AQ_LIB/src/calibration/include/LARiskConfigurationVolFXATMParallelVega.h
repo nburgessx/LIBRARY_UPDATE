@@ -1,7 +1,7 @@
 /*! @file
     @brief FX atm parallel vega setup class 
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationVolFXATMParallelVega_h
 #define LARiskConfigurationVolFXATMParallelVega_h
 ////X///////////////////X///////////////////////////////X///////////////////

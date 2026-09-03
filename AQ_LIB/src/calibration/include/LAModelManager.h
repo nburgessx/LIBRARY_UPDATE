@@ -1,7 +1,7 @@
 /*! @file
     @brief LAModelSetup manager class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef MAMasterRegistManager_h
 #define MAMasterRegistManager_h
 ////X///////////////////X///////////////////////////////X///////////////////

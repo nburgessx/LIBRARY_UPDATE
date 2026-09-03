@@ -1,7 +1,7 @@
 /*! @file
     @brief MACalibrationThread class 
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef MACalibrationThread_h
 #define MACalibrationThread_h
 ////X///////////////////X///////////////////////////////X///////////////////

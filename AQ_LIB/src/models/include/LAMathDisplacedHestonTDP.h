@@ -2,7 +2,7 @@
     @brief Class declaration to LAMathDisplacedHestonTDP.
 
 */
-//  2009, Mizuho International London.
+//  2009, AlgoQuantHub.
 #ifndef __LAMATHDISPLACEDHESTONTDP_H__
 #define __LAMATHDISPLACEDHESTONTDP_H__
 

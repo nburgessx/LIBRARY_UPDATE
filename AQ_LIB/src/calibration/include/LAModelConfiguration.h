@@ -1,7 +1,7 @@
 /*! @file
     @brief LACalibrateModel manager class 
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LAModelConfiguration_h
 #define LAModelConfiguration_h
 ////X///////////////////X///////////////////////////////X///////////////////

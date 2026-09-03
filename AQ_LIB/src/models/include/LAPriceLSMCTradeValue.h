@@ -2,7 +2,7 @@
     @brief Class declaration to evaluate trade.
 
 */
-//  2007, Mizuho International London..
+//  2007, AlgoQuantHub..
 #ifndef LAPriceLSMCTradeValue_h
 #define LAPriceLSMCTradeValue_h
 

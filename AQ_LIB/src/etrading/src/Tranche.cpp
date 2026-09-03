@@ -4,7 +4,7 @@
  *					Losses are applied to the least senior tranche first, once that tranche capacity
  *					has been exhausted the losses are applied to the next most senior tranche.
  *
- *					This code was ported from MGEN MHI R analytics library
+ *					This code was ported from MGEN AlgoQuantHub R analytics library
  *					Author Andrew Friend
  *
  * @Created:		11th Dec 2019

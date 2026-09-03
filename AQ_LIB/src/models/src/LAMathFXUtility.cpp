@@ -2,7 +2,7 @@
     @brief source code of utility class to calculate about FX.
 
 */
-//  2006, Mizuho International London..
+//  2006, AlgoQuantHub..
 ///
 
 #ifdef __GNUG__

@@ -1,7 +1,7 @@
 /*! @file
     @brief LALinearRatesModel manager class 
 */
-//  2011, Mizuho International London.
+//  2011, AlgoQuantHub.
 #ifndef LALinearRatesModel_h
 #define LALinearRatesModel_h
 

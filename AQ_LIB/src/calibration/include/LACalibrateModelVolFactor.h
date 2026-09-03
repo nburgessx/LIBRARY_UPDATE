@@ -2,7 +2,7 @@
 /*! @file
     @brief Volatility factor SDE generator class
 */
-//  2016, Mizuho International London.
+//  2016, AlgoQuantHub.
 #ifndef LACalibrateModelVolFactor_h
 #define LACalibrateModelVolFactor_h
 ////X///////////////////X///////////////////////////////X///////////////////

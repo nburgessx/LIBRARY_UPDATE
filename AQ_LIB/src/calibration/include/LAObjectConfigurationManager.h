@@ -1,7 +1,7 @@
 /*! @file
     @brief LAObjectConfiguration manager class 
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LAObjectConfigurationManager_h
 #define LAObjectConfigurationManager_h
 ////X///////////////////X///////////////////////////////X///////////////////

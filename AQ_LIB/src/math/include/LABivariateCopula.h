@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate copulas.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LABivariateCopula_h
 #define LABivariateCopula_h
 ////X///////////////////X///////////////////////////////X///////////////////

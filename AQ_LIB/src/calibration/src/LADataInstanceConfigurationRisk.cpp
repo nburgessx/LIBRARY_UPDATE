@@ -1,7 +1,7 @@
 /*! @file
     @brief DataInstance setup class for Risk
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LADataInstanceConfigurationRisk.cpp
 //

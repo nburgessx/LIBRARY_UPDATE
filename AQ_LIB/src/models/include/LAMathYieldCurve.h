@@ -3,7 +3,7 @@
     @brief  Class declaration to represent YieldCurve.
 
 */
-//  2007, Mizuho International London..
+//  2007, AlgoQuantHub..
 
 #ifndef LAMathYieldCurve_h
 #define LAMathYieldCurve_h

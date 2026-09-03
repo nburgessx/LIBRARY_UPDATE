@@ -1,7 +1,7 @@
 /*! @file
     @brief LMM Master data regist class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef  LAModelSetupLMM_h
 #define  LAModelSetupLMM_h
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate Power copulas.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LABivariatePowerCopula_h
 #define LABivariatePowerCopula_h
 ////X///////////////////X///////////////////////////////X///////////////////

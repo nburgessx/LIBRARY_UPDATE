@@ -1,7 +1,7 @@
 /*! @file
     @brief IR Delta setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationFXShiftYieldIRDelta_h
 #define LARiskConfigurationFXShiftYieldIRDelta_h
 ////X///////////////////X///////////////////////////////X///////////////////

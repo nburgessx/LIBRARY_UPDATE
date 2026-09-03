@@ -2,7 +2,7 @@
     @brief declaration of class of rainbow Max type coupon select operator.
 
 */
-//   2007,Mizuho International London.
+//   2007,AlgoQuantHub.
 
 //////////////////////////////////////////////////////////
 //いくかのパターンでテスト実施ずみ  

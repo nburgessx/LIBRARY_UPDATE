@@ -1,4 +1,4 @@
-//  2015, Mizuho International London.
+//  2015, AlgoQuantHub.
 #ifdef __GNUG__
 #pragma implementation
 #else

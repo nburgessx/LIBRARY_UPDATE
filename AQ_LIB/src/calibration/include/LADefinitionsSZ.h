@@ -2,7 +2,7 @@
 /*! @file
     @brief Constant data declare file
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 
 #ifndef LADefinitionsSZ_h
 #define LADefinitionsSZ_h

@@ -1,7 +1,7 @@
 /*! @file
     @brief Event class (for multi thread)
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       MAEvent.cpp
 //

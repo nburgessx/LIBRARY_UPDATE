@@ -1,7 +1,7 @@
 /*! @file
     @brief  M-Library Excel Addin Wrap class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 
 ///X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LACurveSetup.cpp

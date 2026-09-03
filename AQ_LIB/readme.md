@@ -1,237 +1,200 @@
-# Algo Quant Library
+# AlgoQuantLib
 
-## Introduction to Algo Quant Lib
-This repository contains Algo Quant pricing analytics sourcecode used for building yield curves, instrument pricing and risk. Asset classes
-supported include: Bonds, Swaps, Credit and Vanilla Derivatives.
+A C++ quantitative finance library for **fixed income, interest rates and
+credit** — yield-curve construction, instrument pricing and risk — with language
+bindings for Python, C#, Java and R, and an Excel add-in.
 
-## Author
-[Nicholas Burgess](mailto:nburgessx@gmail.com)  
+**Author:** [Nicholas Burgess](mailto:nburgessx@gmail.com) — AlgoQuantHub
 
-## First Time Git Usage
-Firstly configure your name and email using command line git config --global user.name "[name]" and git config --global user.email "[email address]"
-Secondly create a feature branch, see BitBucket Actions->Create Branch and use your name for the long-term branch names or use the new feature name
-for short-term branch names. Thirdly to set-up your first workspace please clone the git repository to a folder of your choice using the git command
-"git clone <URL>", note the clone URL must be copied from BitBucket under Actions->Clone and is not the general BitBucket URL. Forthly in your
-workspace switch to your desired branch. You are now ready to make changes and commit.
+> **Status:** the library is mid-rebrand from its original VS2017 form. Internal
+> identifiers, namespaces and some project names are still being migrated. See
+> `MIGRATION_PLAN.md` for the sequence and `CLAUDE.md` for working guidance.
 
-## Working with Git Repositories
-Git repositories take entire library and file snapshots. Git repositorites store file snapshots that can be compared for differences, meaning file
-differences are not stored, but rather implied on demand. To checkout the library we clone the repo, we typically do this once. Once cloned we must
-periodically rebase the branch to update the local branch and keep it up-to-date with the repo master. Branch updates can also be managed using the
-pull command; this does a fetch and merge, which can be done separately as two steps if preferred. 
+---
 
-Source code changes made are committed to our local branch, which we call the staging area. Once staged we must push our branch back to the repository.
-The final step is to merge our branch into the master, which is done by creating a pull request and requires approval. Pull requests are created in
-Bitbucket under actions->pull request. Once approved a merge button is enabled and appears in the BitBucket pull request.
+## What it does
 
-## Functional Outline  
-1. Sync and Pull to update your local branch to the remote master (or rebase as necessary)
-2. Commit changes to your branch
-3. Push your local branch changes to your remote branch in the repository
-4. Create a "Pull Request" to merge your remote branch to remote master in the repository
+- **Yield curves** calibrated on the *forward rate* as the state variable, with
+  monotone-preserving interpolation so the forward curve stays smooth and free of
+  the kinks that imply arbitrage. Discount factors are obtained by integrating
+  the forwards.
+- **Analytical risk** via the Jacobian approach — interest-rate sensitivities
+  without bump-and-revalue.
+- **Instruments:** bonds, vanilla and OIS swaps, basis and cross-currency swaps,
+  FRAs and futures, caps/floors, CDS, and vanilla options.
+- **Consumers:** a single validated core, exposed identically through Python, C#,
+  Java, R (SWIG) and Excel (xlOil), all shipping as **`AlgoQuantLib`**.
 
-## Feature Branching
-Simple short lived feature changes can be accommodated in with a simplified feature branching strategy
-1. Create feature branch from Master.
-2. Undertake all development on the feature branch and commit all changes
-3. Check to see if a sync and pull or rebase is necessary
-4. Create pull request for feature back to Master
-5. Merge the feature branch to Master and delete the feature branch
+---
 
-## Git Cheat Sheet
+## Repository layout
 
-#### INSTALLATION
-  
+```
+AQ_LIB\
+├── AQ_2022.sln                  Visual Studio 2022 solution
+├── SetEnvironmentVariables.bat  one-time environment setup
+├── Visualizer.natvis            debugger visualisers for date types
+├── CLAUDE.md                    working guidance
+├── MIGRATION_PLAN.md            rebrand / xlOil-port plan
+├── projects\                    all .vcxproj files
+├── src\
+│   ├── math\  models\  calibration\   legacy — being deprecated / extracted
+│   ├── etrading\                       core pricing and analytics
+│   ├── validation\                     single entry / contract layer
+│   ├── AQ_BINDINGS\                    SWIG bindings (rename to AQ_API pending)
+│   ├── AQ_XLL\                         xlOil Excel add-in
+│   └── GOOGLE_TEST\                    test suite
+├── resources\                   end-user spreadsheets, pricing toolkits, guides
+└── targets\                     build output (generated; not in source control)
+```
 
+### Layer model
 
-**GitHub for Windows**  
-htps://windows.github.com  
-  
-**Git Command Line Executable**  
-Git-2.21.0-64-bit.exe  
-  
-**Tortoise Git**  
-TortoiseGit-2.8.0.0-64bit.msi  
-  
-  
-#### MIGRATE SVN REPOSITORY TO GIT
-  
-  
-**$ git svn clone [URL] --no-minimize-url**  
-clones a SVN repository with history without URL minimization  
-i.e. without expanding from root (needed when no root access permissions)
-  
-  
-#### CONFIGURATION
-  
-  
-**$ git config --global user.name "[name]"**  
-Sets the name you want atached to your commit transactions  
+```
+  AQ_BINDINGS (Py/C#/Java/R)    AQ_XLL (Excel)          GOOGLE_TEST
+                 \                 /                     (sees everything)
+                  ▼               ▼                            |
+              ┌──────────────────────────┐                     |
+              │       validation         │ ◄───────────────────┘
+              │  validates every input   │
+              │  once; records I/O for   │
+              │  test generation         │
+              └────────────┬─────────────┘
+                           ▼
+              ┌──────────────────────────┐
+              │        etrading          │  core pricing / analytics
+              └────────────┬─────────────┘
+                           ▼
+              ┌──────────────────────────┐
+              │  calibration · math ·    │  legacy — deprecate / extract
+              │  models                  │
+              └──────────────────────────┘
+```
 
-**$ git config --global user.email "[email address]"**  
-Sets the email you want atached to your commit transactions    
+Every public call — binding or spreadsheet — passes through `validation`, so all
+languages return identical results for identical inputs. Nothing bypasses it.
 
-**$ git config --global color.ui auto**  
-Enables helpful colorization of command line output    
-  
-  
-#### CREATE REPOSITORIES
-  
-  
-**$ git init [project-name]**  
-Creates a new local repository with the specified name  
+---
 
-**$ git clone [url]**  
-Downloads a project and its entire version history  
-  
-  
-#### REFACTOR NAMES
-  
-  
-**$ git rm [file]**  
-Deletes the file from the working directory and stages the deletion  
+## Building
 
-**$ git rm --cached [file]**  
-Removes the file from version control but preserves the file locally  
+### Prerequisites
 
-**$ git mv [file-original] [file-renamed]**  
-Changes the file name and prepares it for commit  
-  
-  
-#### MAKE CHANGES
-  
-  
-Review edits and craft a commit transaction  
+- Visual Studio 2022 with the **v143** toolset, Windows x64.
+- The external dependency tree (Boost 1.91, QuantLib 1.43, Eigen3, Adept 2.0.3,
+  GoogleTest 1.17, SWIG 4.0, xlOil 0.19) — see `CLAUDE.md` §3 for how it is
+  built. The dependencies use the **static** runtime (`/MT`, `/MTd`); the library
+  matches.
+- For the Python binding only: a 64-bit Python install with `Include\Python.h`
+  and `libs\`.
 
-**$ git status**  
-Lists all new or modified files to be commited  
+### One-time setup
 
-**$ git add [file]**  
-Snapshots the file in preparation for versioning  
+From the solution folder:
 
-**$ git reset [file]**  
-Unstages the file, but preserve its contents  
+```
+SetEnvironmentVariables.bat
+```
 
-**$ git diff**  
-Shows file differences not yet staged  
+It sets, in your user environment:
 
-**$ git diff --staged**  
-Shows file differences between staging and the last file version  
+| Variable | Meaning |
+|---|---|
+| `AQ` | this source tree (derived from the script location) |
+| `AQ_EXTERNAL_LIB_PATH` | root of the external dependency tree |
+| `AQ_PYTHON_ROOT` | Python the bindings compile against (optional; `*Python` configs only) |
 
-**$ git commit -m "[descriptive message]"**  
-Records file snapshots permanently in version history  
-  
+Accept the suggested paths or type your own; the script validates them. Then
+**restart Visual Studio** — MSBuild reads the environment at launch.
 
-#### UNDO CHANGES  
+### Compile
 
+Open `AQ_2022.sln` and build. All projects are x64. Configurations:
 
-**$ git reset head^**  
-Unstages the last commit, head^ refers to the parent of the last commit
+| Configuration | Purpose |
+|---|---|
+| `Debug`, `Release` | the core library and Excel add-in |
+| `DebugEditAndContinue` | Debug with Edit-and-Continue |
+| `ReleaseProfiler` | Release with profiling instrumentation |
+| `Debug/Release` + `Python` `CSharp` `Java` `R` | build the corresponding language binding |
 
-**$ git reset [file] --hard**  
-Unstages the file and deletes changes
+Project properties are kept in each `.vcxproj` directly (not in shared property
+sheets) — deliberately, so every setting is in one place.
 
-**$ git reset [file] --soft**  
-Unstages the last commit, but keeps the changes locally
+### Outputs
 
+All consumer artefacts are named `AlgoQuantLib`, regardless of project name:
 
-#### GROUP CHANGES
-  
-  
-Name a series of commits and combine completed efforts  
+| Target | Artefact | Consume as |
+|---|---|---|
+| `AQ_XLL` | `AlgoQuantLib.xll` | load in Excel |
+| `AQ_BINDINGS` (Python) | `AlgoQuantLib.pyd` | `import AlgoQuantLib` |
+| `AQ_BINDINGS` (C#/Java/R) | `AlgoQuantLib.dll` + generated wrappers | per-language import |
 
-**$ git branch**  
-Lists all local branches in the current repository  
+The binding `generate*` / `deploy*` scripts under `src\AQ_BINDINGS\source` run
+automatically as pre- and post-build steps for the language configurations.
 
-**$ git branch [branch-name]**  
-Creates a new branch  
+### Editions
 
-**$ git checkout [branch-name]**  
-Switches to the specified branch and updates the working directory  
+`AlgoQuantLib` ships as **Swaps**, **Bonds**, **Credit** and **Full** editions.
+There is one binary per language; the edition is selected at load time from an
+edition manifest and an entitlement file in the `config` folder — no separate
+per-edition build. `aqToolsEdition()` reports which edition is active.
 
-**$ git merge [branch]**  
-Combines the specified branch�s history into the current branch  
+---
 
-**$ git branch -d [branch-name]**  
-Deletes the specified branch  
-  
-  
-#### SUPPRESS TRACKING
-  
-  
-Exclude temporary files and paths  
-*.log  
-build/  
-temp-*  
-A text file named .gitignore suppresses accidental versioning of files and paths matching the specified paterns  
-  
-**$ git ls-files --other --ignored --exclude-standard**  
-Lists all ignored files in this project  
-  
-  
-#### SAVE FRAGMENTS
-  
-  
-Shelve and restore incomplete changes  
+## Config folder & generators
 
-**$ git stash**  
-Temporarily stores all modified tracked files  
+The `config` folder ships with the Excel and API packages and is the
+customisation surface that needs **no recompilation**:
 
-**$ git stash list**  
-Lists all stashed changesets  
+- **Calendars / holidays** — holiday dates (from MarketWire / SwapsWire) are
+  loaded at runtime. Correct, add or amend them in `config` and reload; the
+  add-in does not need rebuilding or reinstalling.
+- **Generators** — JSON templates that carry an instrument's or model's static
+  data (calendars, day counts, rolls, fixing and payment lags, currency
+  defaults). Static data is most of a trade booking, so with a generator a user
+  books, for example, a USD swap from just notional, start, maturity, fixed rate
+  and direction, or a US Treasury from notional, dates and coupon. Starter
+  generators live under `resources\config`.
 
-**$ git stash pop**  
-Restores the most recently stashed files  
+---
 
-**$ git stash drop**  
-Discards the most recently stashed changeset  
-  
-  
-#### REVIEW HISTORY
-  
-  
-Browse and inspect the evolution of project files  
+## Testing
 
-**$ git log**  
-Lists version history for the current branch  
+`GOOGLE_TEST` sits at the top of the stack and can reach every layer. Its cases
+are generated from the input/output recordings captured in `validation`, so the
+test surface tracks the API surface.
 
-**$ git log --follow [file]**  
-Lists version history for a file, including renames  
+Run the `GOOGLE_TEST` project, or the batch and spreadsheet test harnesses under
+`resources\test`.
 
-**$ git diff [first-branch]...[second-branch]**   
-Shows content differences between two branches  
+---
 
-**$ git show [commit]**  
-Outputs metadata and content changes of the specified commit  
-  
-  
-#### REDO COMMITS
-  
-  
-Erase mistakes and craft replacement history  
+## Conventions
 
-**$ git reset [commit]**  
-Undoes all commits afer [commit], preserving changes locally  
+- **Public functions:** `aq` + `Category` + `FunctionName`, e.g.
+  `aqDatesYearFraction`, `aqCurvesForwardRate`. The category list is being
+  standardised — see `MIGRATION_PLAN.md` Phase 2.
+- **Project name case:** lowercase = statically linked, Uppercase = dynamically
+  linked.
+- **C++ style:** descriptive names, camelCase, classes uppercase, members with a
+  trailing underscore, enums over strings, readable steps over one-liners.
+  Enforced by `clang-format` and `clang-tidy` (`.clang-format` / `.clang-tidy` at
+  the root).
+- **Calendars** update from MarketWire / SwapsWire holiday files without
+  recompiling — see *Config folder & generators*.
 
-**$ git reset --hard [commit]**  
-Discards all history and changes back to the specified commit  
-  
-  
-#### SYNCHRONIZE CHANGES
-  
-  
-Register a repository bookmark and exchange version history  
+---
 
-**$ git fetch [bookmark]**  
-Downloads all history from the repository bookmark  
+## Licence
 
-**$ git merge [bookmark]/[branch]**  
-Combines bookmark�s branch into current local branch  
+**Proprietary. All rights reserved.** AlgoQuantLib is distributed under the
+AlgoQuantHub End User Licence Agreement — see the `LICENSE` file (an interim
+placeholder until the full EULA is issued). No right to use, copy, modify or
+redistribute is granted except under a separate written agreement with
+AlgoQuantHub.
 
-**$ git push [alias] [branch]**  
-Uploads all local branch commits to GitHub  
-
-**$ git pull**   
-Downloads bookmark history and incorporates changes  
-  
-  
+Third-party components bundled with AlgoQuantLib (Boost, QuantLib, xlOil, Eigen,
+Adept) retain their own licences — see `THIRD_PARTY_LICENSES.md`. GoogleTest is
+used for testing only and is not distributed.

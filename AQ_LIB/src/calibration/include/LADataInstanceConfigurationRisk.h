@@ -1,7 +1,7 @@
 /*! @file
     @brief  DataInstance setup class for calc Risk
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LADataInstanceConfigurationRisk_h
 #define LADataInstanceConfigurationRisk_h
 ////X///////////////////X///////////////////////////////X///////////////////

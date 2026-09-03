@@ -6,7 +6,7 @@
 // @Department: ISO Front Office Development
 //
 // The copyright to the computer program(s) herein
-// is the property of Mizuho International.
+// is the property of AlgoQuantHub.
 
 #pragma once
 

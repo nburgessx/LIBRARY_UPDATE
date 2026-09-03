@@ -1,7 +1,7 @@
 /*! @file
     @brief   Volatility setup class for calc risk
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationVolatility_h
 #define LARiskConfigurationVolatility_h
 ////X///////////////////X///////////////////////////////X///////////////////

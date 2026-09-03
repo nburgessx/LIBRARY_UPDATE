@@ -1,7 +1,7 @@
 /*! @file
     @brief Ptberg sde generator class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LACalibrateModelPtberg3F_h
 #define LACalibrateModelPtberg3F_h
 ////X///////////////////X///////////////////////////////X///////////////////

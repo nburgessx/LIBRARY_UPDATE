@@ -2,7 +2,7 @@
     @brief source code of trigger action class(trade terminate action).
 
 */
-//  2006, Mizuho International London..
+//  2006, AlgoQuantHub..
 ///
 //beta vesion
 //いくかのパターンでテスト実施ずみ

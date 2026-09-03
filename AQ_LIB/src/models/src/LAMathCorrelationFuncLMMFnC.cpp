@@ -4,7 +4,7 @@
 	This class derives from LAMathCorrelationFuncLMM
 
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LAMathCorrelationFuncLMMFnC.cpp

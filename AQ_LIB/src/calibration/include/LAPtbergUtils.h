@@ -1,7 +1,7 @@
 /*! @file
     @brief  FX ptberg model util class
 */
-//  2012, Mizuho International London.
+//  2012, AlgoQuantHub.
 #ifndef MAPtbergUtils_h
 #define MAPtbergUtils_h
 

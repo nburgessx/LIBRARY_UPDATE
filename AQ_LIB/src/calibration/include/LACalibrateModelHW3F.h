@@ -1,7 +1,7 @@
 /*! @file
     @brief Hull-White sde generator class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LACalibrateModelHW3F_h
 #define LACalibrateModelHW3F_h
 ////X///////////////////X///////////////////////////////X///////////////////

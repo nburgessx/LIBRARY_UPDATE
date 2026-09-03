@@ -15,7 +15,7 @@
 			11.IR_CALIBRATION_DATA_INPUTTYPE(LAPriceInt)<BR>
 	
 */
-//  2007, Mizuho International London..
+//  2007, AlgoQuantHub..
 
 
 #ifdef __GNUG__

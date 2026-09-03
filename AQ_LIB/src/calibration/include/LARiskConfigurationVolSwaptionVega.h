@@ -1,7 +1,7 @@
 /*! @file
     @brief Swaption vega setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationVolSwaptionVega_h
 #define LARiskConfigurationVolSwaptionVega_h
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -1,7 +1,7 @@
 /*! @file
     @brief Ptberg(fx) Volatility create class for calc risk 
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationVolCreatorPtberg_h
 #define LARiskConfigurationVolCreatorPtberg_h
 ////X///////////////////X///////////////////////////////X///////////////////

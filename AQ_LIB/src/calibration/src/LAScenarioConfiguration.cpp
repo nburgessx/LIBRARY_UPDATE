@@ -3,7 +3,7 @@
 /*! @file
     @brief Scenario create class
 */
-//  2011, Mizuho International London.
+//  2011, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LAScenarioConfiguration.cpp
 //

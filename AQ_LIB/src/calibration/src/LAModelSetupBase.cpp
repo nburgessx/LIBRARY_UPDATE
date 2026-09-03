@@ -3,7 +3,7 @@
 /*! @file
     @brief Class to regist master data
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LAModelSetupBase.cpp
 //

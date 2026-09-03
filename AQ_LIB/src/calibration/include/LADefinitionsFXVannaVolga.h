@@ -1,7 +1,7 @@
 /*! @file
     @brief Constant data declare file
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 
 #ifndef LADefinitionsFXVannaVolga_h
 #define LADefinitionsFXVannaVolga_h

@@ -2,9 +2,9 @@
  * @brief			Test File for BondPrices.cpp
  * @Created:		13th June 2018
  * @Author:			Ian Castleton
- * @Department:		MHI Quant Research and Analytics
+ * @Department:		AlgoQuantHub Quant Research and Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 // Include: Google Test Library

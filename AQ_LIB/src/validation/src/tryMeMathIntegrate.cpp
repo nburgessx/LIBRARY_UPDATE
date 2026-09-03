@@ -6,7 +6,7 @@
  * @Author:			Nicholas Burgess
  * @Department:		ISD Front Office Development
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #include "tryMeMathIntegrate.h"

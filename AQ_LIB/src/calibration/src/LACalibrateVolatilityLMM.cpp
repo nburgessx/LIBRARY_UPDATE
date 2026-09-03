@@ -1,7 +1,7 @@
 /*! @file
     @brief Volatility data create class for lmm
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LACalibrateVolatilityLMM.cpp
 //

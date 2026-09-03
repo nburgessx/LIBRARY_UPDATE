@@ -4,7 +4,7 @@
     This class derives from LAFunctionBase
 
 */
-//  2006, Mizuho International London..
+//  2006, AlgoQuantHub..
 
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LACompoundMethod.cpp
@@ -700,7 +700,7 @@ LACompoundMethod11::getType() const
 	return FN_COMPOUNDING10;
 }
 
-//Compounding (ISDA) for MHI
+//Compounding (ISDA) for AlgoQuantHub
 /*!
     @brief Return function value
 	@param[in] x point

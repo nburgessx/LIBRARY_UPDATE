@@ -2,7 +2,7 @@
  * @brief			Structured Credit Loan Cashflow calculations.
  *					Contains functions to calculate the monthly cashflow breakdown for a loan
  *
- *					This code was ported from MGEN MHI R analytics library
+ *					This code was ported from MGEN AlgoQuantHub R analytics library
  *					Author Andrew Friend
  *
  * @Created:		20th March 2019

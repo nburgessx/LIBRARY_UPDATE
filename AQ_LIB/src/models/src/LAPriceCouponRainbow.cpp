@@ -2,7 +2,7 @@
     @brief source code of class of coupon rainbow type select operator.
 
 */
-// Copyright (C) 2006, Mizuho International London..
+// Copyright (C) 2006, AlgoQuantHub..
 //////////////////////////////////////////////////////////
 //いくかのパターンでテスト実施ずみ
 //////////////////////////////////////////////////////////

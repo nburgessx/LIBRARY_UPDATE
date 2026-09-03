@@ -5,7 +5,7 @@
     \date 2006/09
     \version 1.0
 
-     2005, Mizuho International London. All rights reserved.
+     2005, AlgoQuantHub. All rights reserved.
 */
 
 #ifndef LACoreUtil_h

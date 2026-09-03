@@ -2,9 +2,9 @@
  * @brief			Tests to validate the Curve Market Data Bumping Method(s)
  * @Created:		27nd November 2019
  * @Author:			Nicholas Burgess
- * @Department:		MHI London Quant Research and Analytics
+ * @Department:		AlgoQuantHub London Quant Research and Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 // Include: Google Test Library

@@ -3,7 +3,7 @@
 
 This class derives from LABlackScholesBaseMethod
 */
-//  2010, Mizuho International London.
+//  2010, AlgoQuantHub.
 #ifndef LABlackShcolesDigitalFloorletOption_h
 #define LABlackShcolesDigitalFloorletOption_h
 ////X///////////////////X///////////////////////////////X///////////////////

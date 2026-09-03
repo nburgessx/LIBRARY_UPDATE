@@ -2,9 +2,9 @@
  * @brief			Regression tests on Yield Curve State Variable Utilities
  * @Created:		05 October 2017
  * @Author:			Nicholas Burgess
- * @Department:		MHI Quant Research and Analytics
+ * @Department:		AlgoQuantHub Quant Research and Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 // Include: Google Test Library

@@ -1,7 +1,7 @@
 /*! @file
     @brief LMM Volatility create class for calc risk
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationVolCreatorLMM_h
 #define LARiskConfigurationVolCreatorLMM_h
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -4,7 +4,7 @@
  * @Author:			Yongyan Zheng
  * @Department:		ISD Front Office Development
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 #include "FloatLeg.h"
 #include "FloatCashflow.h"
@@ -608,7 +608,7 @@ namespace etrading
            useStubCurveIndex = getMatchingCurveIndex(curveCollection, stubCurveIndex, curveIndices);
         }
 
-        // Default the tolerance to 3D - Requested by Cam Gilbert MHI Euro Swaps Trader 31-Jan-2019
+        // Default the tolerance to 3D - Requested by Cam Gilbert AlgoQuantHub Euro Swaps Trader 31-Jan-2019
         // This is so that regular swaps with effective dates starting on weekends do not imply a stub rate
         LAString toleranceTenor = "3D";
 
@@ -668,7 +668,7 @@ namespace etrading
 			useStubCurveIndex = getMatchingCurveIndex(curveCollection, stubCurveIndex, curveIndices);
 		}
 
-		// Default the tolerance to 3D - Requested by Cam Gilbert MHI Euro Swaps Trader 31-Jan-2019
+		// Default the tolerance to 3D - Requested by Cam Gilbert AlgoQuantHub Euro Swaps Trader 31-Jan-2019
 		// This is so that regular swaps with effective dates starting on weekends do not imply a stub rate
 		LAString toleranceTenor = "3D";
 

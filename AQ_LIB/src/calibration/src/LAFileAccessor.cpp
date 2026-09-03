@@ -1,7 +1,7 @@
 /*! @file
     @brief Class to load excel data
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       MAFileAccessor.h
 //

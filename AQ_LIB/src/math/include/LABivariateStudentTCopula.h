@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate Student t-copula.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LABivariateStudentTCopula_h
 #define LABivariateStudentTCopula_h
 ////X///////////////////X///////////////////////////////X///////////////////

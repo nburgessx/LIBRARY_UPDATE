@@ -1,7 +1,7 @@
 /*! @file
     @brief Constant data declare file
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 
 #ifndef LADefinitionsIRSABR_h
 #define LADefinitionsIRSABR_h

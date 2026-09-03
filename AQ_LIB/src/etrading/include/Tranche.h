@@ -6,7 +6,7 @@
  *
  *					A tranche may pay coupons.
  *
- *					This code was ported from MGEN MHI R analytics library
+ *					This code was ported from MGEN AlgoQuantHub R analytics library
  *					Author Andrew Friend
  *
  *

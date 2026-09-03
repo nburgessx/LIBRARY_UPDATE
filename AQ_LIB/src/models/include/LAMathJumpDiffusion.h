@@ -2,7 +2,7 @@
     @brief Class declaration to LAMathJumpDiffusion.
 
 */
-//  2009, Mizuho International London.
+//  2009, AlgoQuantHub.
 #ifndef __LAMATHJUMPDIFFUSION_H__
 #define __LAMATHJUMPDIFFUSION_H__
 

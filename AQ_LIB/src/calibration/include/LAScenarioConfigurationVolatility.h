@@ -1,7 +1,7 @@
 /*! @file
     @brief Volatility Risk Scenario create class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LAScenarioConfigurationVolatility_h
 #define LAScenarioConfigurationVolatility_h
 ////X///////////////////X///////////////////////////////X///////////////////

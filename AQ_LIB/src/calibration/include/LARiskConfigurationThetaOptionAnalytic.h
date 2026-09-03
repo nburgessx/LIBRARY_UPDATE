@@ -1,7 +1,7 @@
 /*! @file
     @brief  FX delta setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationThetaOptionAnalytic_h
 #define LARiskConfigurationThetaOptionAnalytic_h
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -1,7 +1,7 @@
 /*! @file
     @brief Yield basis setup class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationYieldBasis_h
 #define LARiskConfigurationYieldBasis_h
 ////X///////////////////X///////////////////////////////X///////////////////

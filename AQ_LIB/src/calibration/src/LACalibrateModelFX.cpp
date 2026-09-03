@@ -1,7 +1,7 @@
 /*! @file
     @brief FX sde generator class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LACalibrateModelFX.cpp
 //

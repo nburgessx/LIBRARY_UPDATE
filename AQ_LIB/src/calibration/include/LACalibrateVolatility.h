@@ -1,7 +1,7 @@
 /*! @file
     @brief  Volatility data create class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LACalibrateVolatility_h
 #define LACalibrateVolatility_h
 ////X///////////////////X///////////////////////////////X///////////////////

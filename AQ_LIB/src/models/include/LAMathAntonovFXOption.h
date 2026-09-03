@@ -2,7 +2,7 @@
     @brief Class declaration to LAMathAntonovFXOption model.
 
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 
 #ifndef PRICING_DATA_ENDPOSITION
 #define PRICING_DATA_ENDPOSITION					"EndPosition"			//  data name of EndPosition

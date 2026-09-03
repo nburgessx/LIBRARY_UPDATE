@@ -2,7 +2,7 @@
     @brief Class declaration to LAMathAntonovFXOption model.
 
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 
 #ifndef LAMathAntonovFXOptionBetaFixed_h
 #define LAMathAntonovFXOptionBetaFixed_h

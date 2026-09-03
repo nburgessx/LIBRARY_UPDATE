@@ -1,7 +1,7 @@
 /*! @file
     @brief Calibration data declare file
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 
 #ifndef LADefinitionsCalibration_h
 #define LADefinitionsCalibration_h

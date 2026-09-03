@@ -13,7 +13,7 @@
 
 
 */
-//  2006, Mizuho International London..
+//  2006, AlgoQuantHub..
 
 #ifdef __GNUG__
 #pragma implementation

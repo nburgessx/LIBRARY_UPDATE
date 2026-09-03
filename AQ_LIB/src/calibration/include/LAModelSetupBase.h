@@ -1,7 +1,7 @@
 /*! @file
     @brief Master data regist class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef  LAModelSetup_h
 #define  LAModelSetup_h
 ////X///////////////////X///////////////////////////////X///////////////////

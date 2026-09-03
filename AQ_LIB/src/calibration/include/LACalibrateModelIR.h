@@ -1,7 +1,7 @@
 /*! @file
     @brief IR sde generator class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LACalibrateModelIR_h
 #define LACalibrateModelIR_h
 ////X///////////////////X///////////////////////////////X///////////////////

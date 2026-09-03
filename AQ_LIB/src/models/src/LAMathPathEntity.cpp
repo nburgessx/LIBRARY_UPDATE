@@ -18,7 +18,7 @@
 			14.IR_MODEL_DATA_CORRELATIONMATRIXREF(LADataReference)<BR>
 
 */
-//  2007, Mizuho International London..
+//  2007, AlgoQuantHub..
 
 
 #ifdef __GNUG__

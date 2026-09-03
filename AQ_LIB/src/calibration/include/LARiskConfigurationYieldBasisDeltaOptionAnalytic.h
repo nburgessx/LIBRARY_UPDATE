@@ -1,7 +1,7 @@
 /*! @file
     @brief FX vega setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationYieldBasisDeltaOptionAnalytic_h
 #define LARiskConfigurationYieldBasisDeltaOptionAnalytic_h
 ////X///////////////////X///////////////////////////////X///////////////////

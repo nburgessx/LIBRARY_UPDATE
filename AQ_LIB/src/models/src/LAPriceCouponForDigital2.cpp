@@ -2,7 +2,7 @@
     @brief source code of class of coupon rainbow type select operator.
 
 */
-//   2007,Mizuho International London.
+//   2007,AlgoQuantHub.
 // 
 //////////////////////////////////////////////////////////
 //いくかのパターンでテスト実施ずみ

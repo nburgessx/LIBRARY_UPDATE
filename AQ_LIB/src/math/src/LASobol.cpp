@@ -2,7 +2,7 @@
     @brief inplementation of sobol random number
 */
 
-//  2009, Mizuho International London.
+//  2009, AlgoQuantHub.
 
 
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -2,7 +2,7 @@
     @brief source code of tool class of payoff calculation in range accrue.
 
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 
 
 #ifdef __GNUG__

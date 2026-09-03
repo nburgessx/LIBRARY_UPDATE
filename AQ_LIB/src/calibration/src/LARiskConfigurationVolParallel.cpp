@@ -1,7 +1,7 @@
 /*! @file
     @brief Volatility setup class for calc parallel shift risk
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LARiskConfigurationVolParallel.cpp
 //

@@ -1,7 +1,7 @@
 /*! @file
     @brief  Calibration info create class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LACalibrationParametersPtberg3F_h
 #define LACalibrationParametersPtberg3F_h
 ////X///////////////////X///////////////////////////////X///////////////////

@@ -1,7 +1,7 @@
 /*! @file
     @brief FX setup class for calc risk
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LARiskConfigurationFX.cpp
 //

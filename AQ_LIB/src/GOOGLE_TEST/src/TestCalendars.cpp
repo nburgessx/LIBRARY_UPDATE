@@ -2,9 +2,9 @@
  * @brief			Tests performed on the MLIB calendar file
  * @Created:		22 April 2020
  * @Author:			Ian Castleton
- * @Department:		MHI Quant Research & Analytics
+ * @Department:		AlgoQuantHub Quant Research & Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #include "ExceptionMacros.h"

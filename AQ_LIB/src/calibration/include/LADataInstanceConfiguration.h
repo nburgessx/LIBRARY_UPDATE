@@ -1,7 +1,7 @@
 /*! @file
     @brief  DataInstance setup class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LADataInstanceConfiguration_h
 #define LADataInstanceConfiguration_h
 ////X///////////////////X///////////////////////////////X///////////////////

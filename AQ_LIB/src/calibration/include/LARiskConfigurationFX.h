@@ -1,7 +1,7 @@
 /*! @file
     @brief   FX setup class for calc risk
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationFX_h
 #define LARiskConfigurationFX_h
 ////X///////////////////X///////////////////////////////X///////////////////

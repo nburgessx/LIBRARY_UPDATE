@@ -1,7 +1,7 @@
 /*! @file
     @brief FXVanilla sde generator class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LACalibrateModelFXStrangleSolver_h
 #define LACalibrateModelFXStrangleSolver_h
 ////X///////////////////X///////////////////////////////X///////////////////

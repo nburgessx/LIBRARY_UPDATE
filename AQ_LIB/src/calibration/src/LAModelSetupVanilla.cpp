@@ -1,7 +1,7 @@
 /*! @file
     @brief Class to regist Vanilla master data
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LAModelSetupVanilla.cpp
 //

@@ -4,7 +4,7 @@
 * @Author:			Arthur Wu
 * @Department:	    Quantitative Strategies, New York
 *
-* The copyright to the computer program(s) herein is the property of Mizuho International.
+* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
 */
 
 #include "PiecewisePolynomialInterpolation.h"

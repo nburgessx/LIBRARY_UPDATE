@@ -1,7 +1,7 @@
 /*! @file
     @brief IR vega setup class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationIRVega_h
 #define LARiskConfigurationIRVega_h
 ////X///////////////////X///////////////////////////////X///////////////////

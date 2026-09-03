@@ -1,7 +1,7 @@
 /*! @file
     @brief IRSABR sde generator class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LACalibrateModelIRSABR_h
 #define LACalibrateModelIRSABR_h
 ////X///////////////////X///////////////////////////////X///////////////////

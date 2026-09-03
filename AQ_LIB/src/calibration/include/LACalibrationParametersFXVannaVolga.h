@@ -1,7 +1,7 @@
 /*! @file
     @brief  Calibration info create class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LACalibrationParametersFXVannaVolga_h
 #define LACalibrationParametersFXVannaVolga_h
 ////X///////////////////X///////////////////////////////X///////////////////

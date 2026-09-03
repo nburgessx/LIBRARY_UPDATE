@@ -5,7 +5,7 @@
     @date 2008/25
     @version 1.0
 
-     2008, Mizuho International London. All rights reserved.
+     2008, AlgoQuantHub. All rights reserved.
 */
 
 #ifndef LAMathAnalyticalBlack2_h

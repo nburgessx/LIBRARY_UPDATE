@@ -4,7 +4,7 @@
     This class derives from LABlackScholesBaseMethod
 
 */
-//  2010, Mizuho International London.
+//  2010, AlgoQuantHub.
 
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LABlackScholesStrangleOption.cpp

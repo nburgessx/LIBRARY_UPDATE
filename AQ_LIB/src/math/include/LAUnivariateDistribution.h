@@ -2,7 +2,7 @@
     @brief Class declaration for base class of univariate distributions.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LAUnivariateDistribution_h
 #define LAUnivariateDistribution_h
 ////X///////////////////X///////////////////////////////X///////////////////

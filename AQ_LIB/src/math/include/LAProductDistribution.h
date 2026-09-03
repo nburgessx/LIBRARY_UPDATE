@@ -2,7 +2,7 @@
     @brief Class declaration to provide distribution functions.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LAProductDistribution_h
 #define LAProductDistribution_h
 ////X///////////////////X///////////////////////////////X///////////////////

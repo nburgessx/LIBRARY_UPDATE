@@ -1,7 +1,7 @@
 /*! @file
     @brief  FX Vega setup class 
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LARiskConfigurationYieldIRDeltaOptionAnalytic.cpp
 //

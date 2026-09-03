@@ -1,7 +1,7 @@
 /*! @file
     @brief  M-Library Deal util class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef MADealUtils_h
 #define MADealUtils_h
 

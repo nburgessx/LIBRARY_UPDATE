@@ -2,7 +2,7 @@
 /*! Implements a cost function using the interface provided by
     the LeastSquareProblem class.
 */
-//  2012, Mizuho International London.
+//  2012, AlgoQuantHub.
 
 #ifndef LAMathLeastSquareBlackDD_h
 #define LAMathLeastSquareBlackDD_h

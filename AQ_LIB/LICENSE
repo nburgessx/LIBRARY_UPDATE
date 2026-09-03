@@ -1,0 +1,47 @@
+AlgoQuantLib — Proprietary Software Licence
+
+Copyright (c) 2026 Nicholas Burgess / AlgoQuantHub. All rights reserved.
+
+================================================================================
+PLACEHOLDER NOTICE
+================================================================================
+This file is a placeholder for the AlgoQuantHub End User Licence Agreement
+(the "EULA"). The final EULA will replace this file in full before commercial
+release. Source-file headers refer to this file by name only and quote no
+licence terms, so substituting the final EULA is a change to this file alone.
+
+================================================================================
+INTERIM TERMS
+================================================================================
+Until the final EULA is issued, the following interim terms apply to
+AlgoQuantLib and all of its source code, build scripts, configuration,
+generators, examples and documentation (the "Software"):
+
+1.  Ownership. The Software is the confidential and proprietary property of
+    AlgoQuantHub / Nicholas Burgess and is protected by copyright and other
+    intellectual property laws.
+
+2.  No licence granted. No right to use, copy, reproduce, modify, adapt,
+    merge, publish, distribute, sublicense, sell, lease, or create derivative
+    works of any part of the Software is granted except under a separate
+    written agreement signed by AlgoQuantHub.
+
+3.  No redistribution. Redistribution of the Software in any form — source or
+    binary, in whole or in part, standalone or embedded in another product —
+    is prohibited.
+
+4.  No warranty. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+    KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+5.  Limitation of liability. TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO
+    EVENT SHALL ALGOQUANTHUB OR NICHOLAS BURGESS BE LIABLE FOR ANY CLAIM,
+    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+    OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+    USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+6.  Third-party components. The Software is distributed with third-party
+    components that remain subject to their own licences. See
+    THIRD_PARTY_LICENSES.md.
+
+Contact: nburgessx@gmail.com

@@ -2,7 +2,7 @@
     @brief Class declaration to LAMathAntonovFXOption model.
 
 */
-//  2012, Mizuho International London.
+//  2012, AlgoQuantHub.
 #ifndef MMContainer_h
 #define MMContainer_h
 

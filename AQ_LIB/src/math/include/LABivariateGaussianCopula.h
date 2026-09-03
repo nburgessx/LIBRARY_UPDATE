@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate Gaussian copula.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LABivariateGaussianCopula_h
 #define LABivariateGaussianCopula_h
 ////X///////////////////X///////////////////////////////X///////////////////

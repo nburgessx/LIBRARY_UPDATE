@@ -1,7 +1,7 @@
 /*! @file
     @brief  Calibration info create class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LACalibrationParametersFXStrangleSolver_h
 #define LACalibrationParametersFXStrangleSolver_h
 ////X///////////////////X///////////////////////////////X///////////////////

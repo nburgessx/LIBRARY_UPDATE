@@ -2,7 +2,7 @@
     @brief Class declaration to LAMathSABR.
 
 */
-//  2009, Mizuho International London.
+//  2009, AlgoQuantHub.
 #ifndef __LAMATHSWAPTIONSABR_H__
 #define __LAMATHSWAPTIONSABR_H__
 

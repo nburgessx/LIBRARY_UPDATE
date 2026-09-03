@@ -4,9 +4,9 @@
  * @brief			Bond Factory to Create Bond LWO Objects
  * @Created:		3rd February 2017
  * @Author:			Nicholas Burgess
- * @Department:		MHI Quant Research and Analytics
+ * @Department:		AlgoQuantHub Quant Research and Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #include "BondAccrualPeriods.h"

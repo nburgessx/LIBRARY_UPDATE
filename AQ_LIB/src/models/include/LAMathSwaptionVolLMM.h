@@ -5,7 +5,7 @@
     @date 2008/10
     @version 1.0
 
-     2008, Mizuho International London. All rights reserved.
+     2008, AlgoQuantHub. All rights reserved.
 */
 
 #ifndef LAMathSwaptionVolLMM_h

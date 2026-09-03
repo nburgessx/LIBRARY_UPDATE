@@ -1,7 +1,7 @@
 /*! @file
     @brief Ptberg SDE generator class. The SDE includes skew.
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LACalibrateModelPtbergSkew_h
 #define LACalibrateModelPtbergSkew_h
 ////X///////////////////X///////////////////////////////X///////////////////

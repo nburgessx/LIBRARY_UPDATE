@@ -2,7 +2,7 @@
     @brief Class declaration for bivariate distribution functions.
 */
 
-// Improved performance & precision by Mizuho International London.
+// Improved performance & precision by AlgoQuantHub.
 #ifndef LABivariateDistribution_h
 #define LABivariateDistribution_h
 ////X///////////////////X///////////////////////////////X///////////////////

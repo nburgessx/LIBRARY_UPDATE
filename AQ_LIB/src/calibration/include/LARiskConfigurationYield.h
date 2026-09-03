@@ -1,7 +1,7 @@
 /*! @file
     @brief Yield risk setup class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationYield_h
 #define LARiskConfigurationYield_h
 ////X///////////////////X///////////////////////////////X///////////////////

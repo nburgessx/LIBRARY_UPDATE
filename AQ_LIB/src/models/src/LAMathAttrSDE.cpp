@@ -2,7 +2,7 @@
     @brief Source code of class representing a sde data
 
 */
-//  2007, Mizuho International London..
+//  2007, AlgoQuantHub..
 
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LAMathAttrSDE.cpp

@@ -1,7 +1,7 @@
 /*! @file
     @brief  DataInstance setup class for calc PV
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LADataInstanceConfigurationPV_h
 #define LADataInstanceConfigurationPV_h
 ////X///////////////////X///////////////////////////////X///////////////////

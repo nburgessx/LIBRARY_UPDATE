@@ -2,9 +2,9 @@
  * @brief			Tests to validate the Curve Results and Container Object
  * @Created:		17th May 2019
  * @Author:			Nicholas Burgess
- * @Department:		MHI London Quant Research and Analytics
+ * @Department:		AlgoQuantHub London Quant Research and Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 // Include: Google Test Library

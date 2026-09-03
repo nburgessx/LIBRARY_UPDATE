@@ -1,7 +1,7 @@
 /*! @file
     @brief  Yield delta gamma setup class
 */
-//  2015, Mizuho International London.
+//  2015, AlgoQuantHub.
 ////X///////////////////X///////////////////////////////X///////////////////
 //  NAME        :       LARiskConfigurationYieldIRDeltaGamma.cpp
 //

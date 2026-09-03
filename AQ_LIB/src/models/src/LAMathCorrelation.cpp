@@ -20,7 +20,7 @@
 			16.IR_CALIBRATION_DATA_CORFACTORDATA(LADataDoubleMatrix)<BR>
 
 */
-//  2007, Mizuho International London..
+//  2007, AlgoQuantHub..
 
 
 #ifdef __GNUG__

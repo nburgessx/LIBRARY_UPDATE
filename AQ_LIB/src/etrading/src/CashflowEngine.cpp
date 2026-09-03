@@ -2,7 +2,7 @@
  * @brief			Structured Credit Cashflow Engine.
  *					Computes the cashflows as a function of time within a Capital Structure
  *
- *					This code was ported from MGEN MHI R analytics library
+ *					This code was ported from MGEN AlgoQuantHub R analytics library
  *					Author Andrew Friend
  *
  * @Created:		10th Dec 2019

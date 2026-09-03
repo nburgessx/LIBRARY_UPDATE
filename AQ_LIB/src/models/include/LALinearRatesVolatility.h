@@ -1,7 +1,7 @@
 /*! @file
     @brief LALinearRatesVolatility manager class 
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LALinearRatesVolatility_h
 #define LALinearRatesVolatility_h
 

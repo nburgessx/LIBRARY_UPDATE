@@ -4,9 +4,9 @@
  * @brief			Utility file for Boost Variant or Any Type Helpers
  * @Created:		23rd October 2018
  * @Author:			Nicholas Burgess
- * @Department:	    MHI Quant Research & Analytics
+ * @Department:	    AlgoQuantHub Quant Research & Analytics
  *
- * The copyright to the computer program(s) herein is the property of Mizuho International.
+ * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
 #include "AnyTypeUtilities.h"

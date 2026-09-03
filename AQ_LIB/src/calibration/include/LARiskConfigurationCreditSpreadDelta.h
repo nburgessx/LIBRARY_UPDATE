@@ -1,7 +1,7 @@
 /*! @file
     @brief CreditSpreadDelta risk setup class
 */
-//  2007, Mizuho International London.
+//  2007, AlgoQuantHub.
 #ifndef LARiskConfigurationCreditSpreadDelta_h
 #define LARiskConfigurationCreditSpreadDelta_h
 ////X///////////////////X///////////////////////////////X///////////////////

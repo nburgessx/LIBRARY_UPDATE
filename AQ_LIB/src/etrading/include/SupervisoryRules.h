@@ -2,7 +2,7 @@
  * @brief			Structured Credit Supervisory Rules
  *					Contains functions to calculate regulatory risk weighting of loans
  *
- *					This code was ported from MGEN MHI R analytics library
+ *					This code was ported from MGEN AlgoQuantHub R analytics library
  *					Author Andrew Friend
  * @Created:		20th March 2019
  * @Author:			Ian Castleton

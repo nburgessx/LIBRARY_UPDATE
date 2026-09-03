@@ -1,7 +1,7 @@
 /*! @file
     @brief Cap vega  setup class
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LARiskConfigurationVolCapVega_h
 #define LARiskConfigurationVolCapVega_h
 ////X///////////////////X///////////////////////////////X///////////////////

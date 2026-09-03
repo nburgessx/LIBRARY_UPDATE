@@ -5,7 +5,7 @@
     \date 2009/4/14
     \version 1.0
 
-     2009, Mizuho International London. All rights reserved.
+     2009, AlgoQuantHub. All rights reserved.
 */
 
 #ifndef __LAMathFXVOLATILITYSURFACEGENERATE_H__

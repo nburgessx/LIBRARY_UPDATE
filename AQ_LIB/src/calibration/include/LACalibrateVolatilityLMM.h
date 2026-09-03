@@ -1,7 +1,7 @@
 /*! @file
     @brief Volatility data create class for lmm
 */
-//  2008, Mizuho International London.
+//  2008, AlgoQuantHub.
 #ifndef LACalibrateVolatilityLMM_h
 #define LACalibrateVolatilityLMM_h
 ////X///////////////////X///////////////////////////////X///////////////////
