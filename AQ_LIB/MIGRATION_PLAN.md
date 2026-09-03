@@ -324,11 +324,13 @@ baseline-diff between **every** batch.
   identifier map (identifiers + include-guard macros + error-string text), fix
   `#include "LA*.h"` **tree-wide**, update `.vcxproj`/`.filters` + natvis + SWIG
   `.i` → build all projects → baseline-diff.
-  - **`math`**: census done, `rebrand\phase3_math_APPROVED.csv` — **173
-    `LA→AQL`**, 6 SKIP (`MAXIMUM`, `MATRIX`, `MATRIX_A`, `MANUALINPUT_VOLDATA`,
-    `MARGINAL_DEFAULT_PROBABILITY_HEADER`, `MARKETDATA_PROPERTIES` — English-word
-    enum values). Zero real `MA*`/`MB*`/`LB*`. 227 `LA*.{cpp,h}` + 4 `LA1D*`
-    files to `git mv`; ~1528 files carry `#include "LA*.h"`.
+  - ☑ **`math`** — commit `268ed8e`. **204 `LA→AQL`** identifiers (census v1 was
+    ~31 short; reconciled raw-token census + filename cross-check), **235
+    `LA*.{cpp,h}` → `AQL*`** `git mv`. Applied tree-wide: **2266 files,
+    ~90k replacements**. 10 SKIP (6 English-word `MA*` enum values, 4 comment
+    typos/artifacts). Verified: 0 dangling includes, 0 missing vcxproj refs, 0
+    stale guards, 0 `AQAQL`/`AQLL` artifacts. Awaiting Nicholas's all-config
+    build + GoogleTest baseline-diff.
 - ☐ **3.2 `LWO → AQO`** (D4, D15). Two distinct things:
   - **C++ object-framework classes** get the `AQO` prefix (AlgoQuant Object):
     `LWOCurve → AQOCurve`, `LWOCurveDayAdjustment → AQOCurveDayAdjustment`,
