@@ -9,24 +9,19 @@ if "%~1"=="" ( echo Architecture not passed as argument 1 & exit /b 1 )
 if "%~2"=="" ( echo Configuration not passed as argument 2 & exit /b 1 )
 
 if not exist "%AQ%\targets" ( echo Targets folder not found: %AQ%\targets & exit /b 1 )
-set AQ_BINDINGS_TARGET=%AQ%\targets\%1\%2\AQ_BINDINGS
-del /s /f /q "%AQ_BINDINGS_TARGET%\obj\exposed_functions.obj" 2>nul
+set AQ_API_TARGET=%AQ%\targets\%1\%2\AQ_API
+del /s /f /q "%AQ_API_TARGET%\obj\exposed_functions.obj" 2>nul
 
 REM Make the output folder if this is the first time it is being built
-set GENERATED_FILES=%AQ_BINDINGS_TARGET%\out\GeneratedFiles
+set GENERATED_FILES=%AQ_API_TARGET%\out\GeneratedFiles
 if not exist "%GENERATED_FILES%" mkdir "%GENERATED_FILES%"
 
 REM Clear Previous Generated Files
 del /s /f /q "%GENERATED_FILES%\*.*" 2>nul
 
-REM This places the Client *.R files into the GeneratedFiles output folder,
-REM and places swig_R_wrap.cpp in the src\AQ_BINDINGS\source folder
-"%AQ_EXTERNAL_LIB_PATH%\library\swigwin-4.0.0\swig.exe" -v -c++ -outdir "%GENERATED_FILES%" -o "%AQ%\src\AQ_BINDINGS\source\swig_R_wrap.cpp" -r "%AQ%\src\AQ_BINDINGS\source\swig_R.i"
-
-REM --- Please ensure to set the Path Environment Variable for R.exe
-REM --- If all build tools are installed, this next line will build the shared library
-REM --- However we will use VisualStudio to build the DLL.
-REM R CMD SHLIB -o AQ_BINDINGS "%AQ%\src\AQ_BINDINGS\source\swig_R_wrap.cpp"
+REM This places the Client *.java files into the GeneratedFiles output folder,
+REM and places swig_JAVA_wrap.cxx in the src\AQ_API\source folder
+"%AQ_EXTERNAL_LIB_PATH%\library\swigwin-4.0.0\swig.exe" -v -c++ -outdir "%GENERATED_FILES%" -o "%AQ%\src\AQ_API\source\swig_JAVA_wrap.cxx" -package com.algoquantlib -java "%AQ%\src\AQ_API\source\swig_JAVA.i"
 
 REM After running this, add the pre-compiled header include statement to the generate XXXXX_wrap.cxx and rebuild the project if using pre-compiled headers
 @echo on

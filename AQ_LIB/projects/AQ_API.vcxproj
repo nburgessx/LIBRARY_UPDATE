@@ -37,8 +37,8 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E5B044BF-B408-4B6F-8A0F-F9EC15F04195}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>swigUseCase</RootNamespace>
-    <ProjectName>AQ_BINDINGS</ProjectName>
+    <RootNamespace>AQ_API</RootNamespace>
+    <ProjectName>AQ_API</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
@@ -210,13 +210,13 @@
       <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\generateJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Generating Swig Java API</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\deployJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
       <Message>Deploy Swig Java API</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -251,13 +251,13 @@
       <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\generateJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Generating Swig Java API</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\deployJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
       <Message>Deploy Swig Java API</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -291,13 +291,13 @@
       <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\generateR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Generating Swig R API</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\deployR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
       <Message>Deploy Swig R API</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -332,13 +332,13 @@
       <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\generateR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Generating Swig R API</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\deployR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
       <Message>Deploy Swig R API</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -371,13 +371,13 @@
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generatePython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\generatePython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Generating Swig Python API</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployPython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\deployPython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
       <Message>Deploy Swig Python API</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -411,13 +411,13 @@
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generatePython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\generatePython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Generating Swig Python API</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployPython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\deployPython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
       <Message>Deploy Swig Python API</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -451,13 +451,13 @@
       <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\generateCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Generating Swig CSharp API</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\deployCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
       <Message>Deploy Swig CSharp API</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -492,18 +492,18 @@
       <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\generateCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Generating Swig CSharp API</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Command>$(SolutionDir)\src\AQ_API\source\deployCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
       <Message>Deploy Swig CSharp API</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="..\src\AQ_BINDINGS\source\deployCSharp_2022.bat">
+    <None Include="..\src\AQ_API\source\deployCSharp_2022.bat">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
@@ -513,7 +513,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\deployJava_2022.bat">
+    <None Include="..\src\AQ_API\source\deployJava_2022.bat">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">false</ExcludedFromBuild>
@@ -523,7 +523,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\deployPython_2022.bat">
+    <None Include="..\src\AQ_API\source\deployPython_2022.bat">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
@@ -533,7 +533,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\deployR_2022.bat">
+    <None Include="..\src\AQ_API\source\deployR_2022.bat">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
@@ -543,7 +543,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">false</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\generateCSharp_2022.bat">
+    <None Include="..\src\AQ_API\source\generateCSharp_2022.bat">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">false</ExcludedFromBuild>
@@ -553,7 +553,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\generateJava_2022.bat">
+    <None Include="..\src\AQ_API\source\generateJava_2022.bat">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
@@ -563,7 +563,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\generatePython_2022.bat">
+    <None Include="..\src\AQ_API\source\generatePython_2022.bat">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
@@ -573,7 +573,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\generateR_2022.bat">
+    <None Include="..\src\AQ_API\source\generateR_2022.bat">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
@@ -583,7 +583,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">false</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\swig_CSharp.i">
+    <None Include="..\src\AQ_API\source\swig_CSharp.i">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
@@ -591,7 +591,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\swig_JAVA.i">
+    <None Include="..\src\AQ_API\source\swig_JAVA.i">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
@@ -599,7 +599,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\swig_Python.i">
+    <None Include="..\src\AQ_API\source\swig_Python.i">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
@@ -607,7 +607,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="..\src\AQ_BINDINGS\source\swig_R.i">
+    <None Include="..\src\AQ_API\source\swig_R.i">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
@@ -617,151 +617,151 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\AQ_BINDINGS\source\APISetUp.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\BondTypes.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\BondUtilities.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\exposed_functions.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveResults.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOCredit.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meBondCurve.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveCalibrateBasis.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveCalibrateFXForwards.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveCalibrateOIS.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveCalibrateSwap.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveCompoundRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveDiscountFactor.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveDisplay.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveForwardRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveInterpolationJoinDate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveZeroRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meDate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meDateCentralBank.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meDateIMM.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveDualBootstrap.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWO.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOBondCreate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOBondPrice.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOCurve.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOGrids.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOSwapCreate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOSwapPrice.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductAssetSwapSpread.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductOISParRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductOISPV.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapDV01.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapParRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapPV.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapPV01.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapSchedule.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapStubRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meUtilityLVB.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meUtilityRecord.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meUtilitySetup.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meUtilityInterpolation.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\meUtilityPCA.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirClearEntityPool.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirCompound.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetAnnuity.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetBusinessDays.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetDate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetDateFromTerm.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetDF.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetECBStartDate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetForwardRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetIMMDate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetNextCBDate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetNextECBDate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetParRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetPCAResults.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetTerm.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetZeroRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirInterpolation.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirOISParRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirOISSwapPV.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirOutputCurve.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSetUpBasisSwapCurve.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSetUpFwdFXConstantCurve.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSetUpOISCurve.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSetupPCA.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSetUpSwapCurve.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSwapPV.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSwapPV01.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSwapSchedule.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSwapStubRate.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\SwigTypes.h" />
-    <ClInclude Include="..\src\AQ_BINDINGS\source\TypeUtilities.h" />
+    <ClInclude Include="..\src\AQ_API\source\APISetUp.h" />
+    <ClInclude Include="..\src\AQ_API\source\BondTypes.h" />
+    <ClInclude Include="..\src\AQ_API\source\BondUtilities.h" />
+    <ClInclude Include="..\src\AQ_API\source\exposed_functions.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveResults.h" />
+    <ClInclude Include="..\src\AQ_API\source\meLWOCredit.h" />
+    <ClInclude Include="..\src\AQ_API\source\meBondCurve.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveCalibrateBasis.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveCalibrateFXForwards.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveCalibrateOIS.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveCalibrateSwap.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveCompoundRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveDiscountFactor.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveDisplay.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveForwardRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveInterpolationJoinDate.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveZeroRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\meDate.h" />
+    <ClInclude Include="..\src\AQ_API\source\meDateCentralBank.h" />
+    <ClInclude Include="..\src\AQ_API\source\meDateIMM.h" />
+    <ClInclude Include="..\src\AQ_API\source\meCurveDualBootstrap.h" />
+    <ClInclude Include="..\src\AQ_API\source\meLWO.h" />
+    <ClInclude Include="..\src\AQ_API\source\meLWOBondCreate.h" />
+    <ClInclude Include="..\src\AQ_API\source\meLWOBondPrice.h" />
+    <ClInclude Include="..\src\AQ_API\source\meLWOCurve.h" />
+    <ClInclude Include="..\src\AQ_API\source\meLWOGrids.h" />
+    <ClInclude Include="..\src\AQ_API\source\meLWOSwapCreate.h" />
+    <ClInclude Include="..\src\AQ_API\source\meLWOSwapPrice.h" />
+    <ClInclude Include="..\src\AQ_API\source\meProductAssetSwapSpread.h" />
+    <ClInclude Include="..\src\AQ_API\source\meProductOISParRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\meProductOISPV.h" />
+    <ClInclude Include="..\src\AQ_API\source\meProductSwapDV01.h" />
+    <ClInclude Include="..\src\AQ_API\source\meProductSwapParRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\meProductSwapPV.h" />
+    <ClInclude Include="..\src\AQ_API\source\meProductSwapPV01.h" />
+    <ClInclude Include="..\src\AQ_API\source\meProductSwapSchedule.h" />
+    <ClInclude Include="..\src\AQ_API\source\meProductSwapStubRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\meUtilityLVB.h" />
+    <ClInclude Include="..\src\AQ_API\source\meUtilityRecord.h" />
+    <ClInclude Include="..\src\AQ_API\source\meUtilitySetup.h" />
+    <ClInclude Include="..\src\AQ_API\source\meUtilityInterpolation.h" />
+    <ClInclude Include="..\src\AQ_API\source\meUtilityPCA.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirClearEntityPool.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirCompound.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetAnnuity.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetBusinessDays.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetDate.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetDateFromTerm.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetDF.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetECBStartDate.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetForwardRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetIMMDate.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetNextCBDate.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetNextECBDate.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetParRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetPCAResults.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetTerm.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirGetZeroRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirInterpolation.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirOISParRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirOISSwapPV.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirOutputCurve.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirSetUpBasisSwapCurve.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirSetUpFwdFXConstantCurve.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirSetUpOISCurve.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirSetupPCA.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirSetUpSwapCurve.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirSwapPV.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirSwapPV01.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirSwapSchedule.h" />
+    <ClInclude Include="..\src\AQ_API\source\mirSwapStubRate.h" />
+    <ClInclude Include="..\src\AQ_API\source\SwigTypes.h" />
+    <ClInclude Include="..\src\AQ_API\source\TypeUtilities.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\AQ_BINDINGS\source\BondUtilities.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\exposed_functions.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meBondCurve.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveCalibrateBasis.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveCalibrateFXForwards.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveCalibrateOIS.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveCalibrateSwap.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveCompoundRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveDiscountFactor.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveDisplay.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveForwardRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveInterpolationJoinDate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveResults.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveZeroRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meDate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meDateCentralBank.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meDateIMM.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveDualBootstrap.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWO.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOBondCreate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOBondPrice.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOCredit.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOCurve.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOSwapCreate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOSwapPrice.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductAssetSwapSpread.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductOISParRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductOISPV.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapDV01.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapParRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapPV.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapPV01.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapSchedule.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapStubRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meUtilityLVB.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meUtilityRecord.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meUtilitySetup.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meUtilityInterpolation.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meUtilityPCA.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirClearEntityPool.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirCompound.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetAnnuity.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetBusinessDays.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetDate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetDateFromTerm.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetDF.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetECBStartDate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetForwardRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetIMMDate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetNextCBDate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetNextECBDate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetParRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetPCAResults.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetTerm.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetZeroRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirInterpolation.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirOISParRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirOISSwapPV.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirOutputCurve.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSetUpBasisSwapCurve.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSetUpFwdFXConstantCurve.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSetUpOISCurve.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSetupPCA.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSetUpSwapCurve.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSwapPV.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSwapPV01.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSwapSchedule.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSwapStubRate.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOGrids.cpp" />
-    <ClCompile Include="..\src\AQ_BINDINGS\source\swig_CSharp_wrap.cxx">
+    <ClCompile Include="..\src\AQ_API\source\BondUtilities.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\exposed_functions.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meBondCurve.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveCalibrateBasis.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveCalibrateFXForwards.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveCalibrateOIS.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveCalibrateSwap.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveCompoundRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveDiscountFactor.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveDisplay.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveForwardRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveInterpolationJoinDate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveResults.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveZeroRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meDate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meDateCentralBank.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meDateIMM.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meCurveDualBootstrap.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meLWO.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meLWOBondCreate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meLWOBondPrice.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meLWOCredit.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meLWOCurve.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meLWOSwapCreate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meLWOSwapPrice.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meProductAssetSwapSpread.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meProductOISParRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meProductOISPV.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meProductSwapDV01.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meProductSwapParRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meProductSwapPV.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meProductSwapPV01.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meProductSwapSchedule.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meProductSwapStubRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meUtilityLVB.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meUtilityRecord.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meUtilitySetup.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meUtilityInterpolation.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meUtilityPCA.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirClearEntityPool.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirCompound.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetAnnuity.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetBusinessDays.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetDate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetDateFromTerm.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetDF.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetECBStartDate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetForwardRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetIMMDate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetNextCBDate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetNextECBDate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetParRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetPCAResults.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetTerm.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirGetZeroRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirInterpolation.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirOISParRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirOISSwapPV.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirOutputCurve.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirSetUpBasisSwapCurve.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirSetUpFwdFXConstantCurve.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirSetUpOISCurve.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirSetupPCA.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirSetUpSwapCurve.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirSwapPV.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirSwapPV01.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirSwapSchedule.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\mirSwapStubRate.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\meLWOGrids.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\swig_CSharp_wrap.cxx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">false</ExcludedFromBuild>
@@ -771,7 +771,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_BINDINGS\source\swig_JAVA_wrap.cxx">
+    <ClCompile Include="..\src\AQ_API\source\swig_JAVA_wrap.cxx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
@@ -781,7 +781,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_BINDINGS\source\swig_Python_wrap.cxx">
+    <ClCompile Include="..\src\AQ_API\source\swig_Python_wrap.cxx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
@@ -791,7 +791,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_BINDINGS\source\swig_R_wrap.cpp">
+    <ClCompile Include="..\src\AQ_API\source\swig_R_wrap.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
@@ -801,7 +801,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\src\AQ_BINDINGS\source\TypeUtilities.cpp" />
+    <ClCompile Include="..\src\AQ_API\source\TypeUtilities.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
