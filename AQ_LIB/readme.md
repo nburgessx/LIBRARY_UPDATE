@@ -41,7 +41,7 @@ AQ_LIB\
 │   ├── math\  models\  calibration\   legacy — being deprecated / extracted
 │   ├── etrading\                       core pricing and analytics
 │   ├── validation\                     single entry / contract layer
-│   ├── AQ_BINDINGS\                    SWIG bindings (rename to AQ_API pending)
+│   ├── AQ_API\                        SWIG bindings (Py/C#/Java/R)
 │   ├── AQ_XLL\                         xlOil Excel add-in
 │   └── GOOGLE_TEST\                    test suite
 ├── resources\                   end-user spreadsheets, pricing toolkits, guides
@@ -51,7 +51,7 @@ AQ_LIB\
 ### Layer model
 
 ```
-  AQ_BINDINGS (Py/C#/Java/R)    AQ_XLL (Excel)          GOOGLE_TEST
+  AQ_API (Py/C#/Java/R)         AQ_XLL (Excel)          GOOGLE_TEST
                  \                 /                     (sees everything)
                   ▼               ▼                            |
               ┌──────────────────────────┐                     |
@@ -128,10 +128,10 @@ All consumer artefacts are named `AlgoQuantLib`, regardless of project name:
 | Target | Artefact | Consume as |
 |---|---|---|
 | `AQ_XLL` | `AlgoQuantLib.xll` | load in Excel |
-| `AQ_BINDINGS` (Python) | `AlgoQuantLib.pyd` | `import AlgoQuantLib` |
-| `AQ_BINDINGS` (C#/Java/R) | `AlgoQuantLib.dll` + generated wrappers | per-language import |
+| `AQ_API` (Python) | `AlgoQuantLib.pyd` | `import AlgoQuantLib` |
+| `AQ_API` (C#/Java/R) | `AlgoQuantLib.dll` + generated wrappers | per-language import |
 
-The binding `generate*` / `deploy*` scripts under `src\AQ_BINDINGS\source` run
+The binding `generate*` / `deploy*` scripts under `src\AQ_API\source` run
 automatically as pre- and post-build steps for the language configurations.
 
 ### Editions
