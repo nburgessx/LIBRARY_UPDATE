@@ -1,0 +1,245 @@
+/*! @file
+    @brief DataInstance setup class for Risk
+*/
+//  2007, Mizuho International London.
+////X///////////////////X///////////////////////////////X///////////////////
+//  NAME        :       LADataInstanceConfigurationRisk.cpp
+//
+//  DESCRIPTION :        DataInstance setupper for PV
+//                      
+//  SEE ALSO    :       
+//  VIRSION		:
+//  STATUS      :       
+////X///////////////////X///////////////////////////////X///////////////////
+#ifdef __GNUG__
+#pragma implementation
+#else
+#pragma warning(disable:4786)
+#endif
+
+
+#include "LADataInstanceConfigurationRisk.h"
+#include "LAMathFXEntity.h"
+#include "LAMarketData.h"
+#include "LARiskConfigurationManager.h"
+
+// constructor
+/*!
+
+*/
+LADataInstanceConfigurationRisk::LADataInstanceConfigurationRisk()
+: LADataInstanceConfigurationPV()
+{
+}
+
+// destructor
+/*!
+
+*/
+LADataInstanceConfigurationRisk::~LADataInstanceConfigurationRisk(void)
+{
+}
+
+
+// 
+/*!
+	@brief setup
+
+*/
+void 
+LADataInstanceConfigurationRisk::setUp(void)
+{
+	LADataInstanceConfigurationPV::setUp();
+}
+
+
+
+// 
+/*!
+    @brief setup entities
+
+	@param[out] dataInstance
+*/
+void
+LADataInstanceConfigurationRisk::setUpEntityes(LADataInstance &dataInstance) const
+{
+	LADataInstanceConfigurationPV::setUpEntityes(dataInstance);
+
+//	LARiskConfiguration *riskSetUpper = 0;
+//
+//////////////////////////////////////////////////////////////// for XLL plus
+///*
+//	LAString riskName = LACoreDataService::getContext(ARG_KEY_OFFICIALRISK);
+//	if (riskName != MLIB_NO_DATA)
+//	{
+//		riskSetUpper = LARiskConfigurationManager::getInstance()->createRiskSetUpper(riskName, true);
+//	}
+//	else
+//	{
+//		riskName = LACoreDataService::getContext(ARG_KEY_FRONTRISK);
+//		riskSetUpper = LARiskConfigurationManager::getInstance()->createRiskSetUpper(riskName, false);
+//	}
+//
+//	riskSetUpper->setUpRiskEntity(dataInstance);
+//
+//	delete riskSetUpper;
+//*/
+//
+//	bool isOfficial = true;
+//	LAString riskName = LACoreDataService::getContext(ARG_KEY_OFFICIALRISK);
+//	if (riskName == MLIB_NO_DATA)
+//	{
+//		// front risk
+//		isOfficial = false;
+//		riskName = LACoreDataService::getContext(ARG_KEY_FRONTRISK);
+//	}
+//
+//	// risk setup(multiple)
+//	std::vector<LAString> risks = riskName.toToken(',');
+//	LAString curveType = LACoreDataService::getContext(ARG_KEY_CURVETYPE);
+//	std::vector<LAString> curveTypes = curveType.toToken(',');
+//	LAString baseSceNum = LACoreDataService::getContext(ARG_KEY_BASESCENARIONUM);
+//	std::vector<LAString> baseSceNums = baseSceNum.toToken(',');
+//
+//	LAString risk = risks[0];
+//	riskSetUpper = LARiskConfigurationManager::getInstance()->createRiskSetUpper(risk, isOfficial);
+//	if ( riskSetUpper == NULL )
+//		throw LACoreInvalidData( "riskName is odd! LADataInstanceConfigurationRisk::setUpEntityes", __FILE__, __LINE__ );
+//
+//	if (curveType != MLIB_NO_DATA && curveTypes[0] != "")
+//	{
+//		LAStringVector ccyCurves = curveTypes[0].toToken(':');
+//		for (unsigned int i = 0; i < ccyCurves.size(); ++i)
+//		{
+//			LAStringVector ccy_curve = ccyCurves[i].toToken('_');
+//			riskSetUpper->setCurveType(ccy_curve[0], ccy_curve[1]);
+//		}
+//	}
+//
+//	if (baseSceNum != MLIB_NO_DATA && baseSceNums[0] != "")
+//	{
+//		LAStringVector ccyBaseSceNums = baseSceNums[0].toToken(':');
+//		for (unsigned int i = 0; i < ccyBaseSceNums.size(); ++i)
+//		{
+//			LAStringVector ccy_baseSceNums = ccyBaseSceNums[i].toToken('_');
+//			riskSetUpper->setBaseScenarioTarget(ccy_baseSceNums[0], ccy_baseSceNums[1]);
+//		}
+//	}
+//
+//	riskSetUpper->setUpRiskEntity(dataInstance);
+//	delete riskSetUpper;
+//
+//	for (unsigned int i=1; i<risks.size(); i++)
+//	{
+//		risk = risks[i];
+//		riskSetUpper = LARiskConfigurationManager::getInstance()->createRiskSetUpper(risk, isOfficial);
+//		if (curveType != MLIB_NO_DATA && curveTypes.size() > i  && curveTypes[i] != "")
+//		{
+//			LAStringVector ccyCurves = curveTypes[i].toToken(':');
+//			for (unsigned int j = 0; j < ccyCurves.size(); ++j)
+//			{
+//				LAStringVector ccy_curve = ccyCurves[j].toToken('_');
+//				riskSetUpper->setCurveType(ccy_curve[0], ccy_curve[1]);
+//			}
+//		}
+//
+//		if (baseSceNum != MLIB_NO_DATA && baseSceNums.size() > i && baseSceNums[i] != "")
+//		{
+//			LAStringVector ccyBaseSceNums = baseSceNums[i].toToken(':');
+//			for (unsigned int j = 0; j < ccyBaseSceNums.size(); ++j)
+//			{
+//				LAStringVector ccy_baseSceNums = ccyBaseSceNums[j].toToken('_');
+//				riskSetUpper->setBaseScenarioTarget(ccy_baseSceNums[0], ccy_baseSceNums[1]);
+//			}
+//		}
+//
+//		riskSetUpper->setUpRiskEntity(dataInstance,false);
+//		delete riskSetUpper;
+//	}
+//////////////////////////////////////////////////////////////// for XLL plus
+}
+
+
+// 
+/*!
+    @brief setup risk object
+
+	@param[out] dataInstance
+*/
+void
+LADataInstanceConfigurationRisk::setUpRiskEntityes(LADataInstance &dataInstance) const
+{
+	LARiskConfiguration *riskSetUpper = 0;
+	bool isOfficial = true;
+	LAString riskName = LACoreDataService::getContext(ARG_KEY_OFFICIALRISK);
+	if (riskName == MLIB_NO_DATA)
+	{
+		// front risk
+		isOfficial = false;
+		riskName = LACoreDataService::getContext(ARG_KEY_FRONTRISK);
+	}
+
+	// risk setup(multiple)
+	std::vector<LAString> risks = riskName.toToken(',');
+	LAString curveType = LACoreDataService::getContext(ARG_KEY_CURVETYPE);
+	std::vector<LAString> curveTypes = curveType.toToken(',');
+	LAString baseSceNum = LACoreDataService::getContext(ARG_KEY_BASESCENARIONUM);
+	std::vector<LAString> baseSceNums = baseSceNum.toToken(',');
+
+	LAString risk = risks[0];
+	riskSetUpper = LARiskConfigurationManager::getInstance()->createRiskSetUpper(risk, isOfficial);
+	if ( riskSetUpper == NULL )
+		throw LACoreInvalidData( "riskName is odd! LADataInstanceConfigurationRisk::setUpEntityes", __FILE__, __LINE__ );
+
+	if (curveType != MLIB_NO_DATA && curveTypes[0] != "")
+	{
+		LAStringVector ccyCurves = curveTypes[0].toToken(':');
+		for (unsigned int i = 0; i < ccyCurves.size(); ++i)
+		{
+			LAStringVector ccy_curve = ccyCurves[i].toToken('_');
+			riskSetUpper->setCurveType(ccy_curve[0], ccy_curve[1]);
+		}
+	}
+
+	if (baseSceNum != MLIB_NO_DATA && baseSceNums[0] != "")
+	{
+		LAStringVector ccyBaseSceNums = baseSceNums[0].toToken(':');
+		for (unsigned int i = 0; i < ccyBaseSceNums.size(); ++i)
+		{
+			LAStringVector ccy_baseSceNums = ccyBaseSceNums[i].toToken('_');
+			riskSetUpper->setBaseScenarioTarget(ccy_baseSceNums[0], ccy_baseSceNums[1]);
+		}
+	}
+
+	riskSetUpper->setUpRiskEntity(dataInstance);
+	delete riskSetUpper;
+
+	for (unsigned int i=1; i<risks.size(); i++)
+	{
+		risk = risks[i];
+		riskSetUpper = LARiskConfigurationManager::getInstance()->createRiskSetUpper(risk, isOfficial);
+		if (curveType != MLIB_NO_DATA && curveTypes.size() > i  && curveTypes[i] != "")
+		{
+			LAStringVector ccyCurves = curveTypes[i].toToken(':');
+			for (unsigned int j = 0; j < ccyCurves.size(); ++j)
+			{
+				LAStringVector ccy_curve = ccyCurves[j].toToken('_');
+				riskSetUpper->setCurveType(ccy_curve[0], ccy_curve[1]);
+			}
+		}
+
+		if (baseSceNum != MLIB_NO_DATA && baseSceNums.size() > i && baseSceNums[i] != "")
+		{
+			LAStringVector ccyBaseSceNums = baseSceNums[i].toToken(':');
+			for (unsigned int j = 0; j < ccyBaseSceNums.size(); ++j)
+			{
+				LAStringVector ccy_baseSceNums = ccyBaseSceNums[j].toToken('_');
+				riskSetUpper->setBaseScenarioTarget(ccy_baseSceNums[0], ccy_baseSceNums[1]);
+			}
+		}
+
+		riskSetUpper->setUpRiskEntity(dataInstance,false);
+		delete riskSetUpper;
+	}
+////////////////////////////////////////////////////////////// for XLL plus
+}

@@ -1,0 +1,932 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="include\Calibration">
+      <UniqueIdentifier>{86ed2d00-5ddf-4fee-aa62-93475b801ada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Definitions">
+      <UniqueIdentifier>{147de914-3879-4392-9e6c-655efb99c9ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\StaticData">
+      <UniqueIdentifier>{8c9498aa-9e87-4a01-823d-61820345427a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Scenarios">
+      <UniqueIdentifier>{1ebaf3cc-f058-423b-866e-4c1dd1659199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Models">
+      <UniqueIdentifier>{221fae6a-ae54-4b98-b519-74ccd6d7abff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Calibration">
+      <UniqueIdentifier>{0b8930ca-c28d-4ebd-b013-ae8253595d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ExceptionHandling">
+      <UniqueIdentifier>{f22dca5c-c817-4bb9-bfa9-509cda352714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ExceptionHandling">
+      <UniqueIdentifier>{db0eca6e-b205-45a9-acac-4227127009ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Infrastructure">
+      <UniqueIdentifier>{76d2d995-6d86-429e-bd7d-047e3fa33fd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Risk">
+      <UniqueIdentifier>{047975ad-6e22-4811-8f32-8eb32a495c8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Volatility">
+      <UniqueIdentifier>{24a811bb-8b65-454f-873b-54413421eb54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Setup">
+      <UniqueIdentifier>{e145898d-f7a6-42dc-b5e2-8eb8f19d4479}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Definitions">
+      <UniqueIdentifier>{439e63ae-9cfb-4f54-94d7-ba94049a155b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Infrastructure">
+      <UniqueIdentifier>{d06d2538-bdc4-4a78-b88a-18fcef5418f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Models">
+      <UniqueIdentifier>{0d4609a8-b3bb-48cc-91da-0561429c13c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Risk">
+      <UniqueIdentifier>{cf07367b-6eb0-4ed3-bcf7-cda8f5e7a856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Scenarios">
+      <UniqueIdentifier>{e55af9f5-44bf-4ed9-89d1-75d7b9095582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Setup">
+      <UniqueIdentifier>{1ebec115-a483-49ef-aee0-de6d10061931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\StaticData">
+      <UniqueIdentifier>{dd0946a9-33a1-43b9-8ce7-6ff838f90277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Volatility">
+      <UniqueIdentifier>{e7ed7a51-e20f-4055-9d11-594173a4735f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\calibration\include\LACalibrationParameters.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersFXStrangleSolver.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersFXVannaVolga.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersHW.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersIRSABR.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersLMM.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersManager.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersPtberg.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersPtberg3F.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersSZ.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrate.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateFXStrangleSolver.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateFXVannaVolga.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateHW.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateIRSABR.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateLMM.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibratePool.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibratePtberg.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibratePtberg3F.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateSZ.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACurveProperties.h">
+      <Filter>include\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACurveSetup.h">
+      <Filter>include\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfiguration.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationCorDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationCreditSpreadDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFX.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXDeltaEx1.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXDeltaGamma.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXDeltaOptionAnalytic.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXShiftDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXShiftDeltaOptionAnalytic.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXShiftVolFXVega.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXShiftYieldBasisDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXShiftYieldIRDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationIRVega.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationManager.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationTheta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationThetaOptionAnalytic.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolatility.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolCapVega.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolCreator.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolCreatorLMM.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolCreatorManager.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolCreatorPtberg.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolFXATMParallelVega.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolFXShiftVolFXVega.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolFXVega.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolFXVegaOptionAnalytic.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolIRVega.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolParallel.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolSwaptionVega.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYield.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldBasis.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldBasisAnalytic.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldBasisDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldBasisDeltaAnalytic.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldBasisDeltaOptionAnalytic.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldDeltaAnalytic.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDeltaAnalytic.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDeltaGamma.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDeltaMultiParallel.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDeltaOptionAnalytic.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDeltaSimple.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRShiftDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRShiftFXDelta.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRShiftVolFXVega.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRShiftVolIRVega.h">
+      <Filter>include\Risk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfiguration.h">
+      <Filter>include\Scenarios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationFX.h">
+      <Filter>include\Scenarios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationManager.h">
+      <Filter>include\Scenarios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationVolatility.h">
+      <Filter>include\Scenarios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationYieldCurve.h">
+      <Filter>include\Scenarios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationYieldCurveBasis.h">
+      <Filter>include\Scenarios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationYieldCurveMultiParallel.h">
+      <Filter>include\Scenarios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationYieldCurveZero.h">
+      <Filter>include\Scenarios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModel.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelFX.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelFXStrangleSolver.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelFXVanilla.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelFXVannaVolga.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelHW.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelHW3F.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelIR.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelIRSABR.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelIRVanilla.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelLMM.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelLMMDmy.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelPtberg.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelPtberg3F.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelPtbergSkew.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelSZ.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelVolFactor.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAModelConfiguration.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatility.h">
+      <Filter>include\Volatility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityFXStrangleSolver.h">
+      <Filter>include\Volatility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityFXVannaVolga.h">
+      <Filter>include\Volatility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityHW.h">
+      <Filter>include\Volatility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityIRSABR.h">
+      <Filter>include\Volatility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityLMM.h">
+      <Filter>include\Volatility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityManager.h">
+      <Filter>include\Volatility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityPtberg.h">
+      <Filter>include\Volatility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilitySZ.h">
+      <Filter>include\Volatility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAEvent.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAFileAccessor.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAFileUtils.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitions.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitionsCalibration.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitionsFXStrangleSolver.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitionsFXVannaVolga.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitionsHazardRate.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitionsHW.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitionsIRSABR.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitionsLMM.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitionsPtberg.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitionsRisk.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADefinitionsSZ.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADealUtils.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAModelSetupBase.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAModelSetupHW.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAModelSetupLMM.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAModelSetupVanilla.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAModelManager.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADataInstanceConfiguration.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADataInstanceConfigurationPV.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LADataInstanceConfigurationRisk.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LALogger.h">
+      <Filter>include\ExceptionHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LALogManager.h">
+      <Filter>include\ExceptionHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAValuePrinter.h">
+      <Filter>include\ExceptionHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAPtbergUtils.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAMultiSwapPricer.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAObjectConfiguration.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAObjectConfigurationHW.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAObjectConfigurationLMM.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAObjectConfigurationManager.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAObjectConfigurationVanilla.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAModelSetup.h">
+      <Filter>include\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationFunc.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationThread.h">
+      <Filter>include\Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACalibrationUtilities.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACoreGridExceptions.h">
+      <Filter>include\ExceptionHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACoreGridConfiguation.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAStaticData.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAStaticDataImport.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAStaticDataManager.h">
+      <Filter>include\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACoreDataService.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACoreThread.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LACoreMutex.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAMarketData.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAMarketDataHW.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\calibration\include\LAMarketDataLMM.h">
+      <Filter>include\Models</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\calibration\src\LACalibrationFunc.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersFXStrangleSolver.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersFXVannaVolga.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersHW.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersIRSABR.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersLMM.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersManager.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersPtberg.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersPtberg3F.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersSZ.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrate.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateFXStrangleSolver.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateFXVannaVolga.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateHW.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateIRSABR.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateLMM.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibratePool.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibratePtberg.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibratePtberg3F.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateSZ.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrationThread.cpp">
+      <Filter>src\Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LALogger.cpp">
+      <Filter>src\ExceptionHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LALogManager.cpp">
+      <Filter>src\ExceptionHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfiguration.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationCorDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationCreditSpreadDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFX.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXDeltaEx1.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXDeltaGamma.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXDeltaOptionAnalytic.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXShiftDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXShiftDeltaOptionAnalytic.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXShiftVolFXVega.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXShiftYieldBasisDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXShiftYieldIRDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationManager.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationTheta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationThetaOptionAnalytic.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolatility.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolCapVega.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolFXATMParallelVega.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolFXShiftVolFXVega.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolFXVega.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolFXVegaOptionAnalytic.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolIRVega.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolParallel.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolSwaptionVega.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYield.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldBasis.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldBasisAnalytic.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldBasisDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldBasisDeltaAnalytic.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldBasisDeltaOptionAnalytic.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldDeltaAnalytic.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDeltaAnalytic.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDeltaGamma.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDeltaMultiParallel.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDeltaOptionAnalytic.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDeltaSimple.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRShiftDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRShiftFXDelta.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRShiftVolFXVega.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRShiftVolIRVega.cpp">
+      <Filter>src\Risk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfiguration.cpp">
+      <Filter>src\Scenarios</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationFX.cpp">
+      <Filter>src\Scenarios</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationManager.cpp">
+      <Filter>src\Scenarios</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationVolatility.cpp">
+      <Filter>src\Scenarios</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationYieldCurve.cpp">
+      <Filter>src\Scenarios</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationYieldCurveBasis.cpp">
+      <Filter>src\Scenarios</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationYieldCurveMultiParallel.cpp">
+      <Filter>src\Scenarios</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationYieldCurveZero.cpp">
+      <Filter>src\Scenarios</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModel.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelFX.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelFXStrangleSolver.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelFXVanilla.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelFXVannaVolga.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelHW.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelHW3F.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelIR.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelIRSABR.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelIRVanilla.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelLMM.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelLMMDmy.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelPtberg.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelPtberg3F.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelPtbergSkew.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelSZ.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelVolFactor.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAModelConfiguration.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LADataInstanceConfiguration.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LADataInstanceConfigurationPV.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LADataInstanceConfigurationRisk.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAModelSetupBase.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAModelSetupHW.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAModelSetupLMM.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAModelSetupVanilla.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAModelManager.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityFXStrangleSolver.cpp">
+      <Filter>src\Volatility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityFXVannaVolga.cpp">
+      <Filter>src\Volatility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityHW.cpp">
+      <Filter>src\Volatility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityIRSABR.cpp">
+      <Filter>src\Volatility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityLMM.cpp">
+      <Filter>src\Volatility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityManager.cpp">
+      <Filter>src\Volatility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityPtberg.cpp">
+      <Filter>src\Volatility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilitySZ.cpp">
+      <Filter>src\Volatility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAObjectConfiguration.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAObjectConfigurationHW.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAObjectConfigurationLMM.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAObjectConfigurationManager.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAObjectConfigurationVanilla.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACurveProperties.cpp">
+      <Filter>src\Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACurveSetup.cpp">
+      <Filter>src\Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAEvent.cpp">
+      <Filter>src\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAFileAccessor.cpp">
+      <Filter>src\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAFileUtils.cpp">
+      <Filter>src\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAMultiSwapPricer.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAValuePrinter.cpp">
+      <Filter>src\ExceptionHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LADealUtils.cpp">
+      <Filter>src\Scenarios</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAPtbergUtils.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAModelSetup.cpp">
+      <Filter>src\Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAStaticData.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAStaticDataImport.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAStaticDataManager.cpp">
+      <Filter>src\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACoreDataService.cpp">
+      <Filter>src\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACoreThread.cpp">
+      <Filter>src\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LACoreMutex.cpp">
+      <Filter>src\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAMarketData.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAMarketDataHW.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\calibration\src\LAMarketDataLMM.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

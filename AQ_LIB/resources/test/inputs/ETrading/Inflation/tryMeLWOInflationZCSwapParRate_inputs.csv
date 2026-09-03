@@ -1,0 +1,10 @@
+generatorFunction,tryMeLWOInflationZCSwapParRate
+
+swapName,GBP_SWAP1@79
+
+inflationCurveName,INFL_GBP_RPI_MANY_SWAPS@62
+
+valuationSettingsLVB
+key,col1
+GBPYC,
+

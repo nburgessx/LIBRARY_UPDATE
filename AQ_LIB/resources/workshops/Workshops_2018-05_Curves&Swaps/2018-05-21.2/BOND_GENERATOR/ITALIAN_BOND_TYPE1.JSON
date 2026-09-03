@@ -1,0 +1,62 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND_GENERATOR",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND_STATICDATA",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "BondType",
+                "Currency",
+                "YieldType",
+                "IsCleanPrice",
+                "BondQuoteConvention"
+            ],
+            "COL_2": [
+                "FIXED",
+                "EUR",
+                "YIELD-TO-MATURITY",
+                "TRUE",
+                "QUOTE_IN_32NDS"
+            ]
+        },
+        {
+            "SK_NAME": "BOND_SCHEDULE",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "PayReceive",
+                "NotionalExchange",
+                "FaceValue",
+                "AccrualBusinessDayAdjustment",
+                "AccrualCalendar",
+                "PaymentBusinessDayAdjustment",
+                "PaymentCalendar",
+                "PaymentLag",
+                "CalculationType",
+                "",
+                ""
+            ],
+            "COL_2": [
+                "RECEIVE",
+                "START_AND_END",
+                1000000,
+                "MOD_FOLLOWING",
+                "TGT",
+                "NO_CHANGE",
+                "TGT",
+                "0D",
+                "TYPE1_STREET_CONVENTION",
+                "",
+                ""
+            ]
+        }
+    ],
+    "NAME": "ITALIAN_BOND_TYPE1"
+}

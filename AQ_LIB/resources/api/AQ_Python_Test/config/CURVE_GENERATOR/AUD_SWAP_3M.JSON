@@ -1,0 +1,268 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEPROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "CurveType",
+                "CurveIndexFrequency",
+                "StaticDataTable",
+                "IndexName",
+                "Currency",
+                "interpolation",
+                "yieldgen.interpolation",
+                "isfrause",
+                "isfutureuse",
+                "future.interpolation",
+                "Frequency",
+                "dfcurvename",
+                "IsSwapTenorAdjust",
+                "TenorSwapName",
+                "FastRebuild"
+            ],
+            "COL_2": [
+                "SWAP",
+                "QUARTERLY",
+                "STD",
+                "STD:AUD3ML",
+                "AUD",
+                "FN_LINEARSPLINEINTERPOLATION",
+                "FN_LINEARSPLINEINTERPOLATION",
+                "FALSE",
+                "TRUE",
+                "FN_LINEARSPLINEINTERPOLATION",
+                "SIMPLE",
+                "OIS",
+                "TRUE",
+                "3M6MBasis",
+                "TRUE"
+            ]
+        },
+        {
+            "SK_NAME": "MONEYMARKET",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "Calendar",
+                "DayCount",
+                "Slidingrule"
+            ],
+            "COL_2": [
+                "SYB:LnB",
+                "ACT/365",
+                "FOLLOWING"
+            ]
+        },
+        {
+            "SK_NAME": "LIBORFIXINGS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Calendar",
+                "Daycount",
+                "Frequency",
+                "Resetlag",
+                "SlidingRule"
+            ],
+            "COL_2": [
+                "SYB:LnB",
+                "ACT/365",
+                "Simple",
+                1,
+                "MOD_FOLLOWING"
+            ]
+        },
+        {
+            "SK_NAME": "FRAS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Calendar",
+                "DayCount",
+                "ResetLag",
+                "SlidingRule",
+                "ApplyTension",
+                "TensionGap"
+            ],
+            "COL_2": [
+                "SYB:LnB",
+                "ACT/365",
+                1,
+                "MOD_FOLLOWING",
+                "FALSE",
+                2
+            ]
+        },
+        {
+            "SK_NAME": "FUTURES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "calendar",
+                "daycount",
+                "resetlag",
+                "slidingrule",
+                "MeanReversion",
+                "ApplyTension",
+                "TensionGap"
+            ],
+            "COL_2": [
+                "SYB:LnB",
+                "Act/360",
+                2,
+                "MOD_FOLLOWING",
+                0.03,
+                "FALSE",
+                2
+            ]
+        },
+        {
+            "SK_NAME": "SWAPS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Calendar",
+                "DayCount",
+                "DayCountFix",
+                "DayCountFloat",
+                "Frequency",
+                "FrequencyFix.1y",
+                "FrequencyFix.2y",
+                "FrequencyFix.3y",
+                "FrequencyFloat",
+                "FrequencyFloat.1y",
+                "FrequencyFloat.2y",
+                "FrequencyFloat.3y",
+                "interpolation",
+                "SlidingRule",
+                "IsNewtonraphson",
+                "issimultaneouseq",
+                "Epsilon",
+                "MaxLoop",
+                "ResetLag",
+                "BaseFrequencyFloat",
+                "IsEomRoll"
+            ],
+            "COL_2": [
+                "SYB:LnB",
+                "ACT/365",
+                "ACT/365",
+                "ACT/365",
+                "SEMI-ANNUAL",
+                "QUARTERLY",
+                "QUARTERLY",
+                "QUARTERLY",
+                "SEMI-ANNUAL",
+                "QUARTERLY",
+                "QUARTERLY",
+                "QUARTERLY",
+                "FN_LINEARSPLINEINTERPOLATION",
+                "MOD_FOLLOWING",
+                "TRUE",
+                "TRUE",
+                1e-9,
+                1000,
+                1,
+                "QUARTERLY",
+                "TRUE"
+            ]
+        },
+        {
+            "SK_NAME": "BASISSWAPS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "IsLeg1Spread",
+                "Leg1cashlet.calendar",
+                "Leg1cashlet.daycount",
+                "Leg1cashlet.frequency",
+                "Leg1cashlet.slidingrule",
+                "Leg1cashlet.spotlag",
+                "Leg1discount",
+                "Leg1forecast",
+                "Leg1index.accessary",
+                "Leg1index.daycount",
+                "Leg1index.fixing.calendar",
+                "Leg1index.frequency",
+                "Leg1index.payment.calendar",
+                "Leg1index.resetlag",
+                "Leg1index.slidingrule",
+                "Leg2cashlet.calendar",
+                "Leg2cashlet.daycount",
+                "Leg2cashlet.frequency",
+                "Leg2cashlet.slidingrule",
+                "Leg2cashlet.spotlag",
+                "Leg2discount",
+                "Leg2forecast",
+                "Leg2index.accessary",
+                "Leg2index.daycount",
+                "Leg2index.fixing.calendar",
+                "Leg2index.frequency",
+                "Leg2index.payment.calendar",
+                "Leg2index.resetlag",
+                "Leg2index.slidingrule",
+                "Target",
+                "issimultaneouseq",
+                "issamegridindex"
+            ],
+            "COL_2": [
+                "FALSE",
+                "SYB:LnB",
+                "ACT/365",
+                "Semi-Annual",
+                "MOD_FOLLOWING",
+                1,
+                "OIS",
+                "STD",
+                "6M",
+                "ACT/365",
+                "SYB:LnB",
+                "Simple",
+                "SYB",
+                1,
+                "MOD_FOLLOWING",
+                "SYB:LnB",
+                "ACT/365",
+                "Quarterly",
+                "MOD_FOLLOWING",
+                1,
+                "OIS",
+                "STD",
+                "3M",
+                "ACT/365",
+                "SYB:LnB",
+                "Simple",
+                "SYB",
+                1,
+                "MOD_FOLLOWING",
+                "Leg2Forecast",
+                "TRUE",
+                "TRUE"
+            ]
+        }
+    ],
+    "NAME": "AUD_SWAP_3M"
+}

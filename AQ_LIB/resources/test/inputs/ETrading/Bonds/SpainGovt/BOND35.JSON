@@ -1,0 +1,68 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "BOND_PARAMETER": [
+                "ACCRUALBUSINESSDAYADJUSTMENT",
+                "ACCRUALCALENDAR",
+                "ACCRUALSTARTDATE",
+                "BONDDESCRIPTION",
+                "BONDQUOTECONVENTION",
+                "BONDTYPE",
+                "CALCULATIONTYPE",
+                "COUPON",
+                "CURRENCY",
+                "DAYCOUNT",
+                "FACEVALUE",
+                "FIRSTCOUPONDATE",
+                "FREQUENCY",
+                "ISCLEANPRICE",
+                "ISIN",
+                "ISSUEDATE",
+                "LASTCOUPONDATE",
+                "MATURITYDATE",
+                "NOTIONALEXCHANGE",
+                "PAYMENTBUSINESSDAYADJUSTMENT",
+                "PAYMENTCALENDAR",
+                "PAYMENTLAG",
+                "PAYRECEIVE",
+                "ROLLDAY",
+                "YIELDTYPE"
+            ],
+            "BOND_VALUE": [
+                "NO_CHANGE",
+                "MDB",
+                "39707",
+                "ES00000121G2",
+                "",
+                "FIXED",
+                "Type1029",
+                "0.048",
+                "EUR",
+                "ACT/ACT",
+                "1000000",
+                "39844",
+                "Annual",
+                "TRUE",
+                "ES00000121G2",
+                "39707",
+                "44957",
+                "45322",
+                "START_AND_END",
+                "NO_CHANGE",
+                "MDB",
+                "0D",
+                "RECEIVE",
+                "EOM",
+                "YIELD-TO-MATURITY"
+            ]
+        }
+    ],
+    "NAME": "BOND35"
+}

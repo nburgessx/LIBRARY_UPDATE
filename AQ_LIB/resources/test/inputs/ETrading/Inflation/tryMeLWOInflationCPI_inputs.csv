@@ -1,0 +1,10 @@
+generatorFunction,tryMeLWOInflationCPI
+
+inflationCurveName,INFL_GBP_RPI_SINGLE_POINT@3
+
+date,20200715
+
+inflationResetType,MonthlyInterpolation
+
+lag,2M
+

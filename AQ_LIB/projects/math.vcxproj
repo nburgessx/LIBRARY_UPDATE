@@ -1,0 +1,574 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugEditAndContinue|Win32">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditAndContinue|x64">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|Win32">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|x64">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{028F411D-3BAF-4320-8CC4-CA9DAB42C965}</ProjectGuid>
+    <RootNamespace>math</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>false</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>false</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <OpenMPSupport>false</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <OpenMPSupport>false</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;NO_CHECKDEPENCENCY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>false</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;NO_CHECKDEPENCENCY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>false</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;NO_CHECKDEPENCENCY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <OpenMPSupport>false</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;NO_CHECKDEPENCENCY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996;4819</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <OpenMPSupport>false</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\math\include\CoreEnumerations.h" />
+    <ClInclude Include="..\src\math\include\ETradingException.h" />
+    <ClInclude Include="..\src\math\include\ExceptionMacros.h" />
+    <ClInclude Include="..\src\math\include\LA1DDataSet.h" />
+    <ClInclude Include="..\src\math\include\LA1DIntegral.h" />
+    <ClInclude Include="..\src\math\include\LA1DNormDist.h" />
+    <ClInclude Include="..\src\math\include\LA1DPolynomialFunc.h" />
+    <ClInclude Include="..\src\math\include\LADataBasics.h" />
+    <ClInclude Include="..\src\math\include\LADataHolder.h" />
+    <ClInclude Include="..\src\math\include\LAEnumConversion.h" />
+    <ClInclude Include="..\src\math\include\LALinearMonotoneSplineInterpolation.h" />
+    <ClInclude Include="..\src\math\include\LAMonotoneSplineInterpolation.h" />
+    <ClInclude Include="..\src\math\include\LAPriceDataType.h" />
+    <ClInclude Include="..\src\math\include\LAPriceDataManager.h" />
+    <ClInclude Include="..\src\math\include\LADataMatrix.h" />
+    <ClInclude Include="..\src\math\include\LADataMultiReference.h" />
+    <ClInclude Include="..\src\math\include\LADataProcedure.h" />
+    <ClInclude Include="..\src\math\include\LADataReference.h" />
+    <ClInclude Include="..\src\math\include\LADataValuation.h" />
+    <ClInclude Include="..\src\math\include\LADataVector.h" />
+    <ClInclude Include="..\src\math\include\LACoreAutoPtr.h" />
+    <ClInclude Include="..\src\math\include\LADate.h" />
+    <ClInclude Include="..\src\math\include\LADateTime.h" />
+    <ClInclude Include="..\src\math\include\LAObject.h" />
+    <ClInclude Include="..\src\math\include\LAObjectHolder.h" />
+    <ClInclude Include="..\src\math\include\LAObjectMaster.h" />
+    <ClInclude Include="..\src\math\include\LAObjectPool.h" />
+    <ClInclude Include="..\src\math\include\LACoreFunctionBase.h" />
+    <ClInclude Include="..\src\math\include\LACoreFunctionHolder.h" />
+    <ClInclude Include="..\src\math\include\LAFunctionManager.h" />
+    <ClInclude Include="..\src\math\include\LAFunctionUtilities.h" />
+    <ClInclude Include="..\src\math\include\LACoreLockControl.h" />
+    <ClInclude Include="..\src\math\include\LACoreProcedure.h" />
+    <ClInclude Include="..\src\math\include\LACoreReferencePool.h" />
+    <ClInclude Include="..\src\math\include\LADataInstance.h" />
+    <ClInclude Include="..\src\math\include\LAString.h" />
+    <ClInclude Include="..\src\math\include\LACoreTemplateType.h" />
+    <ClInclude Include="..\src\math\include\LACoreUtil.h" />
+    <ClInclude Include="..\src\math\include\LACoreValuation.h" />
+    <ClInclude Include="..\src\math\include\LADataBase.h" />
+    <ClInclude Include="..\src\math\include\LADataCSVFileLoader.h" />
+    <ClInclude Include="..\src\math\include\LADataFile.h" />
+    <ClInclude Include="..\src\math\include\LADataObjHolder.h" />
+    <ClInclude Include="..\src\math\include\LACoreAppError.h" />
+    <ClInclude Include="..\src\math\include\LACoreError.h" />
+    <ClInclude Include="..\src\math\include\LACoreErrorLog.h" />
+    <ClInclude Include="..\src\math\include\LACoreSystemError.h" />
+    <ClInclude Include="..\src\math\include\LAPriceDataCalendar.h" />
+    <ClInclude Include="..\src\math\include\LAPriceDataConvention.h" />
+    <ClInclude Include="..\src\math\include\LAPriceDataDayCount.h" />
+    <ClInclude Include="..\src\math\include\LAPriceDataFunction.h" />
+    <ClInclude Include="..\src\math\include\LAPriceDataFunctions.h" />
+    <ClInclude Include="..\src\math\include\LAPriceDataInterpolation.h" />
+    <ClInclude Include="..\src\math\include\LAPriceDataRand.h" />
+    <ClInclude Include="..\src\math\include\LAPriceDataSlidingRule.h" />
+    <ClInclude Include="..\src\math\include\LAMathCalendar.h" />
+    <ClInclude Include="..\src\math\include\LAMathCalendarSet.h" />
+    <ClInclude Include="..\src\math\include\LAMathDefine.h" />
+    <ClInclude Include="..\src\math\include\LAMathValuableEntity.h" />
+    <ClInclude Include="..\src\math\include\LAAlgorithm.h" />
+    <ClInclude Include="..\src\math\include\LAAntithetic.h" />
+    <ClInclude Include="..\src\math\include\LABasic.h" />
+    <ClInclude Include="..\src\math\include\LABivariateCopula.h" />
+    <ClInclude Include="..\src\math\include\LABivariateDistribution.h" />
+    <ClInclude Include="..\src\math\include\LABivariateGaussianCopula.h" />
+    <ClInclude Include="..\src\math\include\LABivariateNormalDistribution.h" />
+    <ClInclude Include="..\src\math\include\LABivariatePowerCopula.h" />
+    <ClInclude Include="..\src\math\include\LABivariateStudentTCopula.h" />
+    <ClInclude Include="..\src\math\include\LABivariateStudentTDistribution.h" />
+    <ClInclude Include="..\src\math\include\LABoxMuller.h" />
+    <ClInclude Include="..\src\math\include\LABrownianBridge.h" />
+    <ClInclude Include="..\src\math\include\LACholeskyDecompSC.h" />
+    <ClInclude Include="..\src\math\include\LACombinationFunc.h" />
+    <ClInclude Include="..\src\math\include\LACompositeFunc.h" />
+    <ClInclude Include="..\src\math\include\LAConstant.h" />
+    <ClInclude Include="..\src\math\include\LAConstrainedSplineInterpolation.h" />
+    <ClInclude Include="..\src\math\include\LADist.h" />
+    <ClInclude Include="..\src\math\include\LADivideFunc.h" />
+    <ClInclude Include="..\src\math\include\LAEulerIntegral.h" />
+    <ClInclude Include="..\src\math\include\LAExpFunc.h" />
+    <ClInclude Include="..\src\math\include\LAFactorModel.h" />
+    <ClInclude Include="..\src\math\include\LAFindRootBase.h" />
+    <ClInclude Include="..\src\math\include\LAFindRootBrent.h" />
+    <ClInclude Include="..\src\math\include\LAFTQuasiRandGF.h" />
+    <ClInclude Include="..\src\math\include\LAFTQuasiRandGS.h" />
+    <ClInclude Include="..\src\math\include\LAFunction.h" />
+    <ClInclude Include="..\src\math\include\LAFunctionBase.h" />
+    <ClInclude Include="..\src\math\include\LAFunctionVector.h" />
+    <ClInclude Include="..\src\math\include\LAGaussHermite.h" />
+    <ClInclude Include="..\src\math\include\LAGaussianCopula.h" />
+    <ClInclude Include="..\src\math\include\LAGaussianQuadrature.h" />
+    <ClInclude Include="..\src\math\include\LAGaussLaguerre.h" />
+    <ClInclude Include="..\src\math\include\LAGaussLegendre.h" />
+    <ClInclude Include="..\src\math\include\LAGaussLobattointegral.h" />
+    <ClInclude Include="..\src\math\include\LAIntegralBase.h" />
+    <ClInclude Include="..\src\math\include\LAIntegralMC.h" />
+    <ClInclude Include="..\src\math\include\LAIntegratedFunc.h" />
+    <ClInclude Include="..\src\math\include\LAInterpolationBase.h" />
+    <ClInclude Include="..\src\math\include\LALinearFunc.h" />
+    <ClInclude Include="..\src\math\include\LALinearInterpolation.h" />
+    <ClInclude Include="..\src\math\include\LALinearSplineInterpolation.h" />
+    <ClInclude Include="..\src\math\include\LAMatrix.h" />
+    <ClInclude Include="..\src\math\include\LAMaxFunc.h" />
+    <ClInclude Include="..\src\math\include\LAMersenneTwister.h" />
+    <ClInclude Include="..\src\math\include\LAMinFunc.h" />
+    <ClInclude Include="..\src\math\include\LAMonotoneConvexInterpolation.h" />
+    <ClInclude Include="..\src\math\include\LANl2sol.h" />
+    <ClInclude Include="..\src\math\include\LANormalDistribution.h" />
+    <ClInclude Include="..\src\math\include\LANumericalConstants.h" />
+    <ClInclude Include="..\src\math\include\LAOptimumBase.h" />
+    <ClInclude Include="..\src\math\include\LAOptimumBFGS.h" />
+    <ClInclude Include="..\src\math\include\LAOptimumBrent.h" />
+    <ClInclude Include="..\src\math\include\LAParabolicInterpolation.h" />
+    <ClInclude Include="..\src\math\include\LAProductDistribution.h" />
+    <ClInclude Include="..\src\math\include\LAQuadraticFunc.h" />
+    <ClInclude Include="..\src\math\include\LARandBase.h" />
+    <ClInclude Include="..\src\math\include\LARomberg.h" />
+    <ClInclude Include="..\src\math\include\LAShiftFunc.h" />
+    <ClInclude Include="..\src\math\include\LASobol.h" />
+    <ClInclude Include="..\src\math\include\LASplineInterpolation.h" />
+    <ClInclude Include="..\src\math\include\LAStepInterpolation.h" />
+    <ClInclude Include="..\src\math\include\LAStudentTDistribution.h" />
+    <ClInclude Include="..\src\math\include\LAUnivariateDistribution.h" />
+    <ClInclude Include="..\src\math\include\LAPriceLSTargetFunction.h" />
+    <ClInclude Include="..\src\math\include\LAPriceTargetFunction.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\math\src\CoreEnumerations.cpp" />
+    <ClCompile Include="..\src\math\src\ETradingException.cpp" />
+    <ClCompile Include="..\src\math\src\LA1DDataSet.cpp" />
+    <ClCompile Include="..\src\math\src\LADataBasics.cpp" />
+    <ClCompile Include="..\src\math\src\LADataHolder.cpp" />
+    <ClCompile Include="..\src\math\src\LAEnumConversion.cpp" />
+    <ClCompile Include="..\src\math\src\LALinearMonotoneSplineInterpolation.cpp" />
+    <ClCompile Include="..\src\math\src\LAMonotoneSplineInterpolation.cpp" />
+    <ClCompile Include="..\src\math\src\LAPriceDataType.cpp" />
+    <ClCompile Include="..\src\math\src\LAPriceDataManager.cpp" />
+    <ClCompile Include="..\src\math\src\LADataMatrix.cpp" />
+    <ClCompile Include="..\src\math\src\LADataMultiReference.cpp" />
+    <ClCompile Include="..\src\math\src\LADataProcedure.cpp" />
+    <ClCompile Include="..\src\math\src\LADataReference.cpp" />
+    <ClCompile Include="..\src\math\src\LADataValuation.cpp" />
+    <ClCompile Include="..\src\math\src\LADataVector.cpp" />
+    <ClCompile Include="..\src\math\src\LADate.cpp" />
+    <ClCompile Include="..\src\math\src\LADateTime.cpp" />
+    <ClCompile Include="..\src\math\src\LAObject.cpp" />
+    <ClCompile Include="..\src\math\src\LAObjectHolder.cpp" />
+    <ClCompile Include="..\src\math\src\LAObjectMaster.cpp" />
+    <ClCompile Include="..\src\math\src\LAObjectPool.cpp" />
+    <ClCompile Include="..\src\math\src\LACoreFunctionBase.cpp" />
+    <ClCompile Include="..\src\math\src\LACoreFunctionHolder.cpp" />
+    <ClCompile Include="..\src\math\src\LAFunctionManager.cpp" />
+    <ClCompile Include="..\src\math\src\LAFunctionUtilities.cpp" />
+    <ClCompile Include="..\src\math\src\LACoreLockControl.cpp" />
+    <ClCompile Include="..\src\math\src\LACoreProcedure.cpp" />
+    <ClCompile Include="..\src\math\src\LACoreReferencePool.cpp" />
+    <ClCompile Include="..\src\math\src\LADataInstance.cpp" />
+    <ClCompile Include="..\src\math\src\LAString.cpp" />
+    <ClCompile Include="..\src\math\src\LACoreValuation.cpp" />
+    <ClCompile Include="..\src\math\src\LADataBase.cpp" />
+    <ClCompile Include="..\src\math\src\LADataCSVFileLoader.cpp" />
+    <ClCompile Include="..\src\math\src\LADataFile.cpp" />
+    <ClCompile Include="..\src\math\src\LADataObjHolder.cpp" />
+    <ClCompile Include="..\src\math\src\LACoreAppError.cpp" />
+    <ClCompile Include="..\src\math\src\LACoreError.cpp" />
+    <ClCompile Include="..\src\math\src\LACoreErrorLog.cpp" />
+    <ClCompile Include="..\src\math\src\LACoreSystemError.cpp" />
+    <ClCompile Include="..\src\math\src\LAPriceDataCalendar.cpp" />
+    <ClCompile Include="..\src\math\src\LAPriceDataConvention.cpp" />
+    <ClCompile Include="..\src\math\src\LAPriceDataDayCount.cpp" />
+    <ClCompile Include="..\src\math\src\LAPriceDataFunction.cpp" />
+    <ClCompile Include="..\src\math\src\LAPriceDataFunctions.cpp" />
+    <ClCompile Include="..\src\math\src\LAPriceDataInterpolation.cpp" />
+    <ClCompile Include="..\src\math\src\LAPriceDataRand.cpp" />
+    <ClCompile Include="..\src\math\src\LAPriceDataSlidingRule.cpp" />
+    <ClCompile Include="..\src\math\src\LAMathCalendar.cpp" />
+    <ClCompile Include="..\src\math\src\LAMathCalendarSet.cpp" />
+    <ClCompile Include="..\src\math\src\LAMathValuableEntity.cpp" />
+    <ClCompile Include="..\src\math\src\LA1DIntegral.cpp" />
+    <ClCompile Include="..\src\math\src\LA1DNormDist.cpp" />
+    <ClCompile Include="..\src\math\src\LA1DPolynomialFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LAAntithetic.cpp" />
+    <ClCompile Include="..\src\math\src\LABasic.cpp" />
+    <ClCompile Include="..\src\math\src\LABivariateDistribution.cpp" />
+    <ClCompile Include="..\src\math\src\LABivariateGaussianCopula.cpp" />
+    <ClCompile Include="..\src\math\src\LABivariateNormalDistribution.cpp" />
+    <ClCompile Include="..\src\math\src\LABivariatePowerCopula.cpp" />
+    <ClCompile Include="..\src\math\src\LABivariateStudentTCopula.cpp" />
+    <ClCompile Include="..\src\math\src\LABivariateStudentTDistribution.cpp" />
+    <ClCompile Include="..\src\math\src\LABoxMuller.cpp" />
+    <ClCompile Include="..\src\math\src\LABrownianBridge.cpp" />
+    <ClCompile Include="..\src\math\src\LACholeskyDecompSC.cpp" />
+    <ClCompile Include="..\src\math\src\LACombinationFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LACompositeFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LAConstant.cpp" />
+    <ClCompile Include="..\src\math\src\LAConstrainedSplineInterpolation.cpp" />
+    <ClCompile Include="..\src\math\src\LADist.cpp" />
+    <ClCompile Include="..\src\math\src\LADivideFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LAEulerIntegral.cpp" />
+    <ClCompile Include="..\src\math\src\LAExpFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LAFactorModel.cpp" />
+    <ClCompile Include="..\src\math\src\LAFindRootBase.cpp" />
+    <ClCompile Include="..\src\math\src\LAFindRootBrent.cpp" />
+    <ClCompile Include="..\src\math\src\LAFTQuasiRandGF.cpp" />
+    <ClCompile Include="..\src\math\src\LAFTQuasiRandGS.cpp" />
+    <ClCompile Include="..\src\math\src\LAFunction.cpp" />
+    <ClCompile Include="..\src\math\src\LAFunctionBase.cpp" />
+    <ClCompile Include="..\src\math\src\LAFunctionVector.cpp" />
+    <ClCompile Include="..\src\math\src\LAGaussHermite.cpp" />
+    <ClCompile Include="..\src\math\src\LAGaussianCopula.cpp" />
+    <ClCompile Include="..\src\math\src\LAGaussianQuadrature.cpp" />
+    <ClCompile Include="..\src\math\src\LAGaussLaguerre.cpp" />
+    <ClCompile Include="..\src\math\src\LAGaussLegendre.cpp" />
+    <ClCompile Include="..\src\math\src\LAGaussLobattointegral.cpp" />
+    <ClCompile Include="..\src\math\src\LAIntegralBase.cpp" />
+    <ClCompile Include="..\src\math\src\LAIntegralMC.cpp" />
+    <ClCompile Include="..\src\math\src\LAIntegratedFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LAInterpolationBase.cpp" />
+    <ClCompile Include="..\src\math\src\LALinearFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LALinearInterpolation.cpp" />
+    <ClCompile Include="..\src\math\src\LALinearSplineInterpolation.cpp" />
+    <ClCompile Include="..\src\math\src\LAMatrix.cpp" />
+    <ClCompile Include="..\src\math\src\LAMaxFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LAMersenneTwister.cpp" />
+    <ClCompile Include="..\src\math\src\LAMinFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LAMonotoneConvexInterpolation.cpp" />
+    <ClCompile Include="..\src\math\src\LANl2sol.cpp" />
+    <ClCompile Include="..\src\math\src\LANormalDistribution.cpp" />
+    <ClCompile Include="..\src\math\src\LAOptimumBase.cpp" />
+    <ClCompile Include="..\src\math\src\LAOptimumBFGS.cpp" />
+    <ClCompile Include="..\src\math\src\LAOptimumBrent.cpp" />
+    <ClCompile Include="..\src\math\src\LAParabolicInterpolation.cpp" />
+    <ClCompile Include="..\src\math\src\LAProductDistribution.cpp" />
+    <ClCompile Include="..\src\math\src\LAQuadraticFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LARandBase.cpp" />
+    <ClCompile Include="..\src\math\src\LARomberg.cpp" />
+    <ClCompile Include="..\src\math\src\LAShiftFunc.cpp" />
+    <ClCompile Include="..\src\math\src\LASobol.cpp" />
+    <ClCompile Include="..\src\math\src\LASplineInterpolation.cpp" />
+    <ClCompile Include="..\src\math\src\LAStepInterpolation.cpp" />
+    <ClCompile Include="..\src\math\src\LAStudentTDistribution.cpp" />
+    <ClCompile Include="..\src\math\src\LAUnivariateDistribution.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

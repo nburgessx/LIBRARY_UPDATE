@@ -1,0 +1,14 @@
+generatorFunction,tryMeLWOCreditBasketModelCreate
+
+objectName,CREDITBASKETMODEL1
+
+MODEL_PROPERTIES
+key,col1
+ASOFDATE,43171
+BASKETTYPE,HomogeneousLoss
+NTHTODEFAULT,1
+
+CREDIT_MODELS
+key,col1
+USD_CREDIT_MODEL,0
+

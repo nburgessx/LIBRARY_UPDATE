@@ -1,0 +1,12 @@
+@echo off
+
+REM MLIB VERSION CONTROL
+call "\\fs002\Global\Secure\DIR_MLib_Analytics\MLIB_Excel_Addin\VersionControl\VersionControl.bat"
+
+REM OVERWRITE THE MLIB ENVIRONMENT VARIABLE
+set MLIB=""
+set XCCYPRICER=%XCCY_PRICER%
+set TOOLBAR=%MLIB_TOOLBAR%
+
+START "" %EXCEL% /e %MLIB_XCCY_DESK_UAT% %XCCY_PRICER_UAT% %TOOLBAR%
+EXIT

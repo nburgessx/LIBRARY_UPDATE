@@ -1,0 +1,120 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEPROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "CurveType",
+                "CurveIndexFrequency",
+                "StaticDataTable",
+                "IndexName",
+                "Currency",
+                "interpolation",
+                "yieldgen.interpolation"
+            ],
+            "COL_2": [
+                "OIS",
+                "DAILY",
+                "OIS",
+                "OIS:AUDOIS:AUDDF:AUDDF_AUDCSA:AUDDF_NOCSA",
+                "AUD",
+                "FN_SPLINEINTERPOLATION",
+                "FN_SPLINEINTERPOLATION"
+            ]
+        },
+        {
+            "SK_NAME": "OIS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "calendar",
+                "daycount",
+                "frequency",
+                "generatemethod",
+                "resetlag",
+                "firstrate",
+                "slidingrule",
+                "eomday",
+                "iseomroll",
+                "shorttermconvention",
+                "longtermconvention",
+                "longterm",
+                "longterm.generatemethod",
+                "Epsilon",
+                "MaxLoop",
+                "CompoundingMethod",
+                "SmoothShortEnd"
+            ],
+            "COL_2": [
+                "SYB:LNB",
+                "ACT/365",
+                "ANNUAL",
+                "DAILYCOMPOUNDING",
+                "1D",
+                "SHORTMARKET",
+                "MOD_FOLLOWING",
+                "31",
+                "TRUE",
+                "ARITHMETICAVERAGE",
+                "LOBASIS",
+                "2Y",
+                "NONE",
+                "0.0000000001",
+                "1000",
+                "GEOMETRIC",
+                "FALSE"
+            ]
+        },
+        {
+            "SK_NAME": "LIBOROISBASIS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "frequency",
+                "slidingRule"
+            ],
+            "COL_2": [
+                "ANNUAL",
+                "MOD_FOLLOWING"
+            ]
+        },
+        {
+            "SK_NAME": "SWAPS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "calendar",
+                "daycountfix",
+                "frequencyfix",
+                "frequencyfix.1y",
+                "frequencyfix.2y",
+                "frequencyfix.3y",
+                "slidingrule"
+            ],
+            "COL_2": [
+                "SYB:LnB",
+                "ACT/365",
+                "Semi-Annual",
+                "QUARTERLY",
+                "QUARTERLY",
+                "QUARTERLY",
+                "MOD_FOLLOWING"
+            ]
+        }
+    ],
+    "NAME": "AUD_OIS_LOB_2Y"
+}

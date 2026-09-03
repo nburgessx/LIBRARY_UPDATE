@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugEditAndContinue|Win32">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditAndContinue|x64">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|Win32">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|x64">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D4F09614-8413-4A1E-AF3F-CB6282E218E6}</ProjectGuid>
+    <RootNamespace>AQ_XLL</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <ProjectName>AQ_XLL</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>NotSet</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>NotSet</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>NotSet</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>NotSet</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateManifest>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">false</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">false</LinkIncremental>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AlgoQuantLib</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">AlgoQuantLib</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.xll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">.xll</TargetExt>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AlgoQuantLib</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">AlgoQuantLib</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.xll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">.xll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/D "XLLAPLI"
+ %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\XllPlus\7.0\VS14.0\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\include;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\external\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;_WINDOWS;_USRDLL;_CONSOLE;XLL_LIB_STL;_MT;%(PreprocessorDefinitions);UNICODE;_UNICODE;XLOIL_STATIC_LIB;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267;4251</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;QuantLib-vc143-x64-mt-sgd.lib;Adept203-vc143-x64-g.lib;xlOil-COM.lib;xlOil-Dynamic.lib;xlOil-External.lib;xlOil-Funcs.lib;xlOil-XLL.lib;xlOilHelpers.lib;Oleacc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)AlgoQuantLib.xll</OutputFile>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\math\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\models\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\calibration\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\etrading\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\XllPlus\7.0\VS14.0\lib\x64;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\build\x64\DebugStatic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <SubSystem>NotSet</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <FixedBaseAddress>
+      </FixedBaseAddress>
+      <ForceSymbolReferences>DllMain;%(ForceSymbolReferences)</ForceSymbolReferences>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
+    <ClCompile>
+      <AdditionalOptions>/D "XLLAPLI"
+ %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\XllPlus\7.0\VS14.0\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\include;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\external\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;_WINDOWS;_USRDLL;_CONSOLE;XLL_LIB_STL;_MT;%(PreprocessorDefinitions);UNICODE;_UNICODE;XLOIL_STATIC_LIB;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267;4251</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;QuantLib-vc143-x64-mt-sgd.lib;Adept203-vc143-x64-g.lib;xlOil-COM.lib;xlOil-Dynamic.lib;xlOil-External.lib;xlOil-Funcs.lib;xlOil-XLL.lib;xlOilHelpers.lib;Oleacc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)AlgoQuantLib.xll</OutputFile>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\math\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\models\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\calibration\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\etrading\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\XllPlus\7.0\VS14.0\lib\x64;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib;%(AdditionalLibraryDirectories);$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\build\x64\DebugStatic</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <SubSystem>NotSet</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <FixedBaseAddress>
+      </FixedBaseAddress>
+      <ForceSymbolReferences>DllMain;%(ForceSymbolReferences)</ForceSymbolReferences>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\XllPlus\7.0\VS14.0\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\include;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\external\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_WINDOWS;_USRDLL;_CONSOLE;XLL_LIB_STL;_MT;%(PreprocessorDefinitions);UNICODE;_UNICODE;XLOIL_STATIC_LIB;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267;4251</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <OpenMPSupport>true</OpenMPSupport>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib;xlOil-COM.lib;xlOil-Dynamic.lib;xlOil-External.lib;xlOil-Funcs.lib;xlOil-XLL.lib;xlOilHelpers.lib;Oleacc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)AlgoQuantLib.xll</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\math\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\models\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\calibration\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\etrading\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\XllPlus\7.0\VS14.0\lib\x64;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib;%(AdditionalLibraryDirectories);$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\build\x64\ReleaseStatic</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
+      <ForceSymbolReferences>DllMain;%(ForceSymbolReferences)</ForceSymbolReferences>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\XllPlus\7.0\VS14.0\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\include;$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\external\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_WINDOWS;_USRDLL;_CONSOLE;XLL_LIB_STL;_MT;%(PreprocessorDefinitions);UNICODE;_UNICODE;XLOIL_STATIC_LIB;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267;4251</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <OpenMPSupport>true</OpenMPSupport>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib;xlOil-COM.lib;xlOil-Dynamic.lib;xlOil-External.lib;xlOil-Funcs.lib;xlOil-XLL.lib;xlOilHelpers.lib;Oleacc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)AlgoQuantLib.xll</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\math\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\models\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\calibration\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\etrading\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\XllPlus\7.0\VS14.0\lib\x64;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib;%(AdditionalLibraryDirectories);$(AQ_EXTERNAL_LIB_PATH)\library\xlOil-0.19.0\build\x64\ReleaseStatic</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
+      <ForceSymbolReferences>DllMain;%(ForceSymbolReferences)</ForceSymbolReferences>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Data">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Xml">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\AQ_XLL\resources\SetUp.md">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\AQ_XLL\src\dates.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\main.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\math.cpp" />
+    <ClCompile Include="..\src\AQ_XLL\src\tools.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\AQ_XLL\include\main.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

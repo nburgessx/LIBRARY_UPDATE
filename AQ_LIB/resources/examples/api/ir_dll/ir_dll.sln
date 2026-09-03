@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ir_dll", "ir_dll\ir_dll.vcxproj", "{0BA27DEC-37E3-429E-B58C-DBF70762ADFF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ir_dll_client", "ir_dll_client\ir_dll_client.vcxproj", "{8C922A8D-4DD9-41C2-8A4E-A4599C73CEE3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BA27DEC-37E3-429E-B58C-DBF70762ADFF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0BA27DEC-37E3-429E-B58C-DBF70762ADFF}.Debug|Win32.Build.0 = Debug|Win32
+		{0BA27DEC-37E3-429E-B58C-DBF70762ADFF}.Release|Win32.ActiveCfg = Release|Win32
+		{0BA27DEC-37E3-429E-B58C-DBF70762ADFF}.Release|Win32.Build.0 = Release|Win32
+		{8C922A8D-4DD9-41C2-8A4E-A4599C73CEE3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8C922A8D-4DD9-41C2-8A4E-A4599C73CEE3}.Debug|Win32.Build.0 = Debug|Win32
+		{8C922A8D-4DD9-41C2-8A4E-A4599C73CEE3}.Release|Win32.ActiveCfg = Release|Win32
+		{8C922A8D-4DD9-41C2-8A4E-A4599C73CEE3}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

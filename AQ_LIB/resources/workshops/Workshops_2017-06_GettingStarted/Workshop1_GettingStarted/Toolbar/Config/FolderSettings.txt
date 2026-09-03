@@ -1,0 +1,3 @@
+BLOOMBERG_FOLDER	,\\fs002\Global\Secure\DIR_MLib_Analytics\Examples\Bloomberg\
+MLIB_FOLDER		,\\fs002\Global\Secure\DIR_MLib_Analytics\Examples\eTradingAddin\
+SWAP_PRICER		,\\fs002\Global\Secure\DIR_MLib_Analytics\PricingTools\SwapsPricer\SwapsPricerV1.8.xlsm

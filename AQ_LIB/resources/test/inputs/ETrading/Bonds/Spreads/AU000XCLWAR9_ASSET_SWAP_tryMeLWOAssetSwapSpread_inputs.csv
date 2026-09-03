@@ -1,0 +1,16 @@
+generatorFunction,tryMeLWOAssetSwapSpread
+
+swapObjectName,AU000XCLWAR9_ASSET_SWAP
+
+bondObjectName,AU000XCLWAR9
+
+bondPrice,95.907999799792293
+
+valuationSettingsLVB
+key,col1
+CURVECOLLECTION,AUDYC
+VALUATIONDATE,43258
+
+fixingTableNames
+key,col1
+

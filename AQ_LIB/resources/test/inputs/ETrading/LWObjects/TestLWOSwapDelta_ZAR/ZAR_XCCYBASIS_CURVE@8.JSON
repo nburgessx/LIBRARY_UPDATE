@@ -1,0 +1,244 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "ZAR_XCCYBASIS_CURVE@8",
+                "ZAR_XCCY",
+                "ZAR_XCCYBASIS_CURVE_MARKETDATA@7",
+                "ZARYC",
+                "USDYC"
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "Currency",
+                        "interpolation",
+                        "yieldgen.interpolation",
+                        "basis.interpolation",
+                        "isFwdBasis",
+                        "isfrause",
+                        "isRenotionalAdjust"
+                    ],
+                    "COL_2": [
+                        "XCCYBASIS",
+                        "QUARTERLY",
+                        "XccyBasis",
+                        "XccyBasis:ZARDF_USDCSA",
+                        "ZAR",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FALSE",
+                        "FALSE",
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "XCCYSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "MarketName",
+                        "IsLeg1Spread",
+                        "Leg1cashlet.calendar",
+                        "Leg1cashlet.daycount",
+                        "Leg1cashlet.frequency",
+                        "Leg1cashlet.slidingrule",
+                        "Leg1cashlet.spotlag",
+                        "Leg1discount",
+                        "Leg1forecast",
+                        "Leg1index.accessary",
+                        "Leg1index.daycount",
+                        "Leg1index.fixing.calendar",
+                        "Leg1index.frequency",
+                        "Leg1index.payment.calendar",
+                        "Leg1index.resetlag",
+                        "Leg1index.slidingrule",
+                        "Leg2cashlet.calendar",
+                        "Leg2cashlet.daycount",
+                        "Leg2cashlet.frequency",
+                        "Leg2cashlet.slidingrule",
+                        "Leg2cashlet.spotlag",
+                        "Leg2discount",
+                        "Leg2forecast",
+                        "Leg2index.accessary",
+                        "Leg2index.daycount",
+                        "Leg2index.fixing.calendar",
+                        "Leg2index.frequency",
+                        "Leg2index.payment.calendar",
+                        "Leg2index.resetlag",
+                        "Leg2index.slidingrule",
+                        "Target",
+                        "isfwdinter",
+                        "issamegridindex",
+                        "eomday",
+                        "iseomroll",
+                        "issimultaneouseq",
+                        "isyieldspreadcalc",
+                        "SpotRateTerm"
+                    ],
+                    "COL_2": [
+                        "XccyBasis",
+                        "FALSE",
+                        "JOB:NYB:LNB",
+                        "ACT/360",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING",
+                        2,
+                        "AGAINST:OIS",
+                        "AGAINST:STD",
+                        "3M",
+                        "ACT/360",
+                        "JOB:NYB:LNB",
+                        "QUARTERLY",
+                        "JOB:NYB:LNB",
+                        2,
+                        "MOD_FOLLOWING",
+                        "JOB:NYB:LNB",
+                        "ACT/365",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING",
+                        2,
+                        "ZAR3MJ",
+                        "ZAR3MJ",
+                        "3M",
+                        "ACT/365",
+                        "JOB:NYB:LNB",
+                        "QUARTERLY",
+                        "JOB:NYB:LNB",
+                        2,
+                        "MOD_FOLLOWING",
+                        "Leg2Discount",
+                        "FALSE",
+                        "TRUE",
+                        31,
+                        "TRUE",
+                        "TRUE",
+                        "FALSE",
+                        "3M"
+                    ]
+                }
+            ],
+            "NAME": "ZAR_XCCY"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "ZAR",
+                        "XCCYBASIS",
+                        "QUARTERLY",
+                        43937
+                    ]
+                },
+                {
+                    "SK_NAME": "XCCYSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "12Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y"
+                    ],
+                    "COL_2": [
+                        -0.00075,
+                        -0.0015,
+                        -0.0026,
+                        -0.0033,
+                        -0.0039,
+                        -0.00445,
+                        -0.005,
+                        -0.00555,
+                        -0.006,
+                        -0.00635,
+                        -0.00665,
+                        -0.00675,
+                        -0.00775,
+                        -0.00865,
+                        -0.009375
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                }
+            ],
+            "NAME": "ZAR_XCCYBASIS_CURVE_MARKETDATA@7"
+        }
+    ],
+    "NAME": "ZAR_XCCYBASIS_CURVE@8"
+}

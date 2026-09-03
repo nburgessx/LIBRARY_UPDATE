@@ -1,0 +1,17 @@
+generatorFunction,tryMeLWOSwapDisplayCashflows
+
+swapName,TRS_0.15_FEB2028@6
+
+modelNames
+key,col1
+CREDITMODEL1@16,
+
+legName,Leg1:PREMIUM
+
+fixingTableNames
+key,col1
+
+showColumnHeaders,TRUE
+
+columnList,
+

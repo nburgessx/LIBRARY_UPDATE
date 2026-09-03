@@ -1,0 +1,264 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "EUR_BASIS_12M_CURVE",
+                "EUR_BASIS_6X12",
+                "EUR_BASIS_6X12_MARKETDATA@49",
+                "EURYC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "interpolation",
+                        "yieldgen.interpolation",
+                        "basis.interpolation",
+                        "isFwdBasis",
+                        "dfCurveName"
+                    ],
+                    "COL_2": [
+                        "EUR",
+                        "TENORBASIS",
+                        "ANNUAL",
+                        "6M12MBasis",
+                        "6M12MBasis:EUR12ML",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FALSE",
+                        "OIS"
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "ResetLag",
+                        "SlidingRule",
+                        "ApplyTension",
+                        "TensionGap",
+                        ""
+                    ],
+                    "COL_2": [
+                        "TGT",
+                        "ACT/360",
+                        2,
+                        "MOD_FOLLOWING",
+                        "FALSE",
+                        2,
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "BASISSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "MarketName",
+                        "IsLeg1Spread",
+                        "Leg1cashlet.calendar",
+                        "Leg1cashlet.daycount",
+                        "Leg1cashlet.frequency",
+                        "Leg1cashlet.slidingrule",
+                        "Leg1cashlet.spotlag",
+                        "Leg1forecast",
+                        "Leg1discount",
+                        "Leg1index.accessary",
+                        "Leg1index.daycount",
+                        "Leg1index.fixing.calendar",
+                        "Leg1index.frequency",
+                        "Leg1index.payment.calendar",
+                        "Leg1index.resetlag",
+                        "Leg1index.slidingrule",
+                        "Leg2cashlet.calendar",
+                        "Leg2cashlet.daycount",
+                        "Leg2cashlet.frequency",
+                        "Leg2cashlet.frequencycompound",
+                        "Leg2cashlet.slidingrule",
+                        "Leg2cashlet.spotlag",
+                        "Leg2forecast",
+                        "Leg2Discount",
+                        "Leg2index.accessary",
+                        "Leg2index.daycount",
+                        "Leg2index.fixing.calendar",
+                        "Leg2index.frequency",
+                        "Leg2index.payment.calendar",
+                        "Leg2index.resetlag",
+                        "Leg2index.slidingrule",
+                        "Target",
+                        "isSimultaneousEq",
+                        "fwdinterpolation",
+                        "isSameGridIndex",
+                        "SpotRateTerm",
+                        "isYieldSpreadCalc",
+                        "Epsilon",
+                        "MaxLoop",
+                        "isFwdInter",
+                        "IsEOMRoll",
+                        "eomday"
+                    ],
+                    "COL_2": [
+                        "6M12MBasis",
+                        "TRUE",
+                        "TGT",
+                        "ACT/360",
+                        "SEMI-ANNUAL",
+                        "MOD_FOLLOWING",
+                        2,
+                        "EUR6ML",
+                        "EUROIS",
+                        "6M",
+                        "ACT/360",
+                        "TGT",
+                        "SIMPLE",
+                        "TGT",
+                        2,
+                        "MOD_FOLLOWING",
+                        "TGT",
+                        "ACT/360",
+                        "ANNUAL",
+                        "ANNUAL",
+                        "MOD_FOLLOWING",
+                        2,
+                        "EUR6ML",
+                        "EUROIS",
+                        "12M",
+                        "ACT/360",
+                        "TGT",
+                        "SIMPLE",
+                        "TGT",
+                        2,
+                        "MOD_FOLLOWING",
+                        "Leg2Forecast",
+                        "TRUE",
+                        "FN_SPLINEINTERPOLATION",
+                        "TRUE",
+                        "12M",
+                        "FALSE",
+                        1.0000000000000003e-9,
+                        1000,
+                        "FALSE",
+                        "TRUE",
+                        31
+                    ]
+                }
+            ],
+            "NAME": "EUR_BASIS_6X12"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "EUR",
+                        "TENORBASIS",
+                        "ANNUAL",
+                        43588
+                    ]
+                },
+                {
+                    "SK_NAME": "BASISSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "12Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y",
+                        "40Y",
+                        "50Y",
+                        "55Y"
+                    ],
+                    "COL_2": [
+                        0.00116,
+                        0.00113,
+                        0.00113,
+                        0.00115,
+                        0.00115,
+                        0.00114,
+                        0.00114,
+                        0.00114,
+                        0.00113,
+                        0.00111,
+                        0.00109,
+                        0.00105,
+                        0.00099,
+                        0.00093,
+                        0.00088,
+                        0.00088,
+                        0.00088,
+                        0.00088
+                    ]
+                }
+            ],
+            "NAME": "EUR_BASIS_6X12_MARKETDATA@49"
+        }
+    ],
+    "NAME": "EUR_BASIS_12M_CURVE"
+}

@@ -1,0 +1,13 @@
+generatorFunction,tryMeLWOSwapCreateFromLegs
+
+swapName,VNS_SWAP_STRUCTURED
+
+legObjectNames[],FIXED_LEG_STRUCTURED,FLOAT_LEG_STRUCTURED
+
+swapPropertiesLVB
+key,col1
+
+isXccySwap,FALSE
+
+validateKeys,TRUE
+

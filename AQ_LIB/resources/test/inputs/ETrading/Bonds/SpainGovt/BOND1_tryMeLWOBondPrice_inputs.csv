@@ -1,0 +1,10 @@
+generatorFunction,tryMeLWOBondPrice
+
+bondObjectName,BOND1
+
+settlementDates[],20181214
+
+yields[],0.014074164962
+
+yieldCalculationType,
+

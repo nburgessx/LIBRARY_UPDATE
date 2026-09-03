@@ -1,0 +1,66 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "BOND_PARAMETER": [
+                "ACCRUALBUSINESSDAYADJUSTMENT",
+                "ACCRUALCALENDAR",
+                "ACCRUALSTARTDATE",
+                "BONDDESCRIPTION",
+                "BONDQUOTECONVENTION",
+                "BONDTYPE",
+                "CALCULATIONTYPE",
+                "COUPON",
+                "CURRENCY",
+                "DAYCOUNT",
+                "FACEVALUE",
+                "FIRSTCOUPONDATE",
+                "FREQUENCY",
+                "ISCLEANPRICE",
+                "ISIN",
+                "ISSUEDATE",
+                "LASTCOUPONDATE",
+                "MATURITYDATE",
+                "NOTIONALEXCHANGE",
+                "PAYMENTBUSINESSDAYADJUSTMENT",
+                "PAYMENTCALENDAR",
+                "PAYMENTLAG",
+                "PAYRECEIVE",
+                "YIELDTYPE"
+            ],
+            "BOND_VALUE": [
+                "NO_CHANGE",
+                "TGT",
+                "43112",
+                "DE0001102440",
+                "NONE",
+                "FIXED",
+                "TYPE60",
+                "0.005",
+                "EUR",
+                "ACT/ACT",
+                "1000000",
+                "43511",
+                "Annual",
+                "TRUE",
+                "DE0001102440",
+                "43112",
+                "46433",
+                "46798",
+                "START_AND_END",
+                "NO_CHANGE",
+                "TGT",
+                "0D",
+                "RECEIVE",
+                "YIELD-TO-MATURITY"
+            ]
+        }
+    ],
+    "NAME": "DE0001102440"
+}

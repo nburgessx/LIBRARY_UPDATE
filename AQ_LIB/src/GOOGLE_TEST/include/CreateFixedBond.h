@@ -1,0 +1,31 @@
+// CreateFixedBond.h
+
+/*
+ * @brief			Method to create a fixed bond from a Google Test Input File
+ * @Created:		6th March 2017
+ * @Author:			Nicholas Burgess
+ * @Department:		MHI Quant Research and Analytics
+ *
+ * The copyright to the computer program(s) herein is the property of Mizuho International.
+ */
+
+#pragma once
+
+#include "InitializeMLibGoogleTest.h"
+#include "ReadDataFile.h"
+#include "BondFactory.h"
+#include <string>
+
+namespace google_test
+{
+    class CreateFixedBond : public virtual google_test::InitializeMLibGoogleTest
+    {
+    public:
+        etrading::BondPtr createFixedBondFromInputFile( const std::string& inputFile );
+		etrading::BondPtr createFixedBondFromInputFileSingleLVB(const std::string& inputFile);
+    
+    protected:
+        etrading::ReadDataFile::Load inputFile_;
+    
+    };
+}

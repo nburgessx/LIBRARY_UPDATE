@@ -1,0 +1,12 @@
+generatorFunction,tryMeLWOBondYield
+
+bondObjectName,EK1791483 CORP@64
+
+settlementDates[],20180315
+
+prices[],107.947000000000
+
+yieldCalculationType,
+
+optimizePerformance,FALSE
+

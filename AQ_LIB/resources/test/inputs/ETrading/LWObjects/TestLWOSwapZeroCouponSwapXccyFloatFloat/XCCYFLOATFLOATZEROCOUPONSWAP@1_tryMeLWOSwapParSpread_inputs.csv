@@ -1,0 +1,13 @@
+generatorFunction,tryMeLWOXccySwapParSpread
+
+swapName,XCCYFLOATFLOATZEROCOUPONSWAP@1
+
+curveCollections
+key,col1
+LEG2:FLOAT,EURYC
+LEG1:FLOAT,USDYC
+FXSPOT,1.05766
+
+fixingTableNames
+key,col1
+

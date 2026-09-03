@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugEditAndContinue|x64">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|x64">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\validation\include\tryMeCurveResults.h" />
+    <ClInclude Include="..\src\validation\include\tryMeFuturesTickersIMM.h" />
+    <ClInclude Include="..\src\validation\include\tryMeBondCurves.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveDualBootstrap.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveInterpolation.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveHullWhite.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveVasicek.h" />
+    <ClInclude Include="..\src\validation\include\tryMeDateIsRegularSwapSchedule.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOBondOption.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCapFloor.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveCalibrateHedge.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveDisplay.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveEngineCalibrate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveJacobianDisplay.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOFra.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOInflationPricing.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOSwaption.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOVolatility.h" />
+    <ClInclude Include="..\src\validation\include\tryMeMathCapletFloorlet.h" />
+    <ClInclude Include="..\src\validation\include\tryMeMathConvexity.h" />
+    <ClInclude Include="..\src\validation\include\tryMeMathEuropeanIRSwaption.h" />
+    <ClInclude Include="..\src\validation\include\tryMeMathForwardRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeMathIntegrate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeMathPolynomial.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductFutureFra.h" />
+    <ClInclude Include="..\src\validation\include\tryMeSABRCalibrate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeSABRGetPrem.h" />
+    <ClInclude Include="..\src\validation\include\tryMeSABRGetVol.h" />
+    <ClInclude Include="..\src\validation\include\tryMeSABROutputParameter.h" />
+    <ClInclude Include="..\src\validation\include\tryMeSABRSetupConvention.h" />
+    <ClInclude Include="..\src\validation\include\tryMeSABRSetupParameter.h" />
+    <ClInclude Include="..\src\validation\include\tryMeSABRSetupSwaptionVol.h" />
+    <ClInclude Include="..\src\validation\include\tryMeSwapResults.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilityDataFilter.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilityAppend.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveCalibrateCTD.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveEuroDollarConvexityAdjustment.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveCalibrateBasis.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveCalibrateFXForwards.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveCalibrateOIS.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveCalibrateSwap.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveDelete.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveDiscountFactor.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveDisplay.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveForwardRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveFrequency.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOAssetSwap.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOBond.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveCalibrate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveCreateBasis.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveCreateFXForwards.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveCreateOIS.h" />
+    <ClInclude Include="..\src\validation\include\tryMELWOCurveCreateSwap.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveData.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveDiscountFactor.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveDualBootstrap.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveForwardRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveGenerator.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveMarketData.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOCurveUtilities.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWO.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOFixingTable.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOFX.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOLeg.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOSchedule.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOGrid.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOMultiGrid.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveZeroRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeCurveCompoundRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeDateCentralBank.h" />
+    <ClInclude Include="..\src\validation\include\tryMeDate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeDateIMM.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOSwapCreation.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOSwapDelta.h" />
+    <ClInclude Include="..\src\validation\include\tryMeLWOSwapPricing.h" />
+    <ClInclude Include="..\src\validation\include\tryMeMathBlackScholes.h" />
+    <ClInclude Include="..\src\validation\include\tryMeMathNormalDistribution.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductAssetSwapSpread.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductBondSchedule.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductOISParRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductOISPV.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductSwapDV01.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductSwapLeg.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductSwapParRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductSwapPV.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductSwapPV01.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductSwapSchedule.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductSwapStubRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeProductSwapDelta.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilityClean.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilityDate.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilitySetup.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilityLVB.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilityInterpolation.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilityPCA.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilityRecord.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilityReplay.h" />
+    <ClInclude Include="..\src\validation\include\tryMeUtilityValuationSettings.h" />
+    <ClInclude Include="..\src\validation\include\tryMirClearEntityPool.h" />
+    <ClInclude Include="..\src\validation\include\tryMirCompound.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetAnnuity.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetBusinessDays.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetDate.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetDateFromTerm.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetDF.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetECBStartDate.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetForwardRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetIMMDate.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetNextCBDate.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetNextECBDate.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetParRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetPCAResults.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetTerm.h" />
+    <ClInclude Include="..\src\validation\include\tryMirGetZeroRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMirInterpolation.h" />
+    <ClInclude Include="..\src\validation\include\tryMirOISParRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMirOISSwapPV.h" />
+    <ClInclude Include="..\src\validation\include\tryMirReplay.h" />
+    <ClInclude Include="..\src\validation\include\tryMirSetUpBasisSwapCurve.h" />
+    <ClInclude Include="..\src\validation\include\tryMirSetUpFwdFXConstantCurve.h" />
+    <ClInclude Include="..\src\validation\include\tryMirSetUpOISCurve.h" />
+    <ClInclude Include="..\src\validation\include\tryMirSetupPCA.h" />
+    <ClInclude Include="..\src\validation\include\tryMirSetUpSwapCurve.h" />
+    <ClInclude Include="..\src\validation\include\tryMirSwapDV01.h" />
+    <ClInclude Include="..\src\validation\include\tryMirSwapPV.h" />
+    <ClInclude Include="..\src\validation\include\tryMirSwapSchedule.h" />
+    <ClInclude Include="..\src\validation\include\tryMirSwapStubRate.h" />
+    <ClInclude Include="..\src\validation\include\tryMirOutputCurve.h" />
+    <ClInclude Include="..\src\validation\include\tryMirSwapPV01.h" />
+    <ClInclude Include="..\src\validation\include\tryMirAssetSwapSpread.h" />
+    <ClInclude Include="..\src\validation\include\VersionNumber.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\validation\src\tryMeCurveResults.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeFuturesTickersIMM.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeBondCurves.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveCalibrateCTD.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveDualBootstrap.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveEuroDollarConvexityAdjustment.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveCalibrateBasis.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveCalibrateFXForwards.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveCalibrateOIS.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveCalibrateSwap.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveDelete.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveDiscountFactor.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveDisplay.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveForwardRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveFrequency.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveInterpolation.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveHullWhite.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveVasicek.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeDateIsRegularSwapSchedule.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOBondOption.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCapFloor.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCalibrateHedge.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveDisplay.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveEngineCalibrate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveJacobianDisplay.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOFra.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOInflationPricing.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOSwaption.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOVolatility.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeMathCapletFloorlet.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeMathConvexity.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeMathEuropeanIRSwaption.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeMathForwardRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeMathIntegrate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeMathPolynomial.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductFutureFra.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeSABRCalibrate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeSABRGetPrem.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeSABRGetVol.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeSABROutputParameter.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeSABRSetupConvention.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeSABRSetupParameter.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeSABRSetupSwaptionVol.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeSwapResults.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilityDataFilter.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOAssetSwap.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOBond.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCalibrate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCreateBasis.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCreateFXForwards.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCreateOIS.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveCreateSwap.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveData.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveDiscountFactor.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveDualBootstrap.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveForwardRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveGenerator.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveMarketData.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOCurveUtilities.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWO.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOFixingTable.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOFX.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOLeg.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOSchedule.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOGrid.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOMultiGrid.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveZeroRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeCurveCompoundRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeDateCentralBank.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeDate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeDateIMM.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOSwapCreation.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOSwapDelta.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeLWOSwapPricing.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeMathBlackScholes.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeMathNormalDistribution.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductAssetSwapSpread.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductBondSchedule.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductOISParRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductOISPV.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductSwapDV01.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductSwapLeg.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductSwapParRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductSwapPV.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductSwapPV01.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductSwapSchedule.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductSwapStubRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeProductSwapDelta.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilityAppend.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilityClean.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilityDate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilitySetup.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilityLVB.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilityInterpolation.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilityPCA.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilityRecord.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilityReplay.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMeUtilityValuationSettings.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirClearEntityPool.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirCompound.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetAnnuity.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetBusinessDays.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetDate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetDateFromTerm.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetDF.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetECBStartDate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetForwardRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetIMMDate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetNextCBDate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetNextECBDate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetParRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetPCAResults.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetTerm.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirGetZeroRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirInterpolation.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirOISParRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirOISSwapPV.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirReplay.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirSetUpBasisSwapCurve.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirSetUpFwdFXConstantCurve.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirSetUpOISCurve.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirSetupPCA.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirSetUpSwapCurve.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirSwapDV01.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirSwapPV.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirSwapSchedule.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirSwapStubRate.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirOutputCurve.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirSwapPV01.cpp" />
+    <ClCompile Include="..\src\validation\src\tryMirAssetSwapSpread.cpp" />
+    <ClCompile Include="..\src\validation\src\VersionNumber.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2054B345-C993-4607-A533-3048E9D7567C}</ProjectGuid>
+    <RootNamespace>ir</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>validation</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>del $(IntDir)VersionNumber.obj</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Refresh the License Version by Forcing the VersionNumber File to Recompile by Deleting it's Obj file</Message>
+    </PreBuildEvent>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

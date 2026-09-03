@@ -1,0 +1,11 @@
+generatorFunction,tryMeLWOSwapParRate
+
+swapName,FIXEDFLOATZEROCOUPONSWAP@1
+
+curveCollections
+key,col1
+USDYC,
+
+fixingTableNames
+key,col1
+

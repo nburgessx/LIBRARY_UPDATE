@@ -1,0 +1,68 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "BOND_PARAMETER": [
+                "ACCRUALBUSINESSDAYADJUSTMENT",
+                "ACCRUALCALENDAR",
+                "ACCRUALSTARTDATE",
+                "BONDDESCRIPTION",
+                "BONDQUOTECONVENTION",
+                "BONDTYPE",
+                "CALCULATIONTYPE",
+                "COUPON",
+                "CURRENCY",
+                "DAYCOUNT",
+                "FACEVALUE",
+                "FIRSTCOUPONDATE",
+                "FREQUENCY",
+                "ISCLEANPRICE",
+                "ISIN",
+                "ISSUEDATE",
+                "LASTCOUPONDATE",
+                "MATURITYDATE",
+                "NOTIONALEXCHANGE",
+                "PAYMENTBUSINESSDAYADJUSTMENT",
+                "PAYMENTCALENDAR",
+                "PAYMENTLAG",
+                "PAYRECEIVE",
+                "YIELDTYPE",
+				"QUOTEDMARGIN"
+            ],
+            "BOND_VALUE": [
+                "MOD_FOLLOWING",
+                "NYB",
+                "20/03/2014",
+                "US30231GAE26",
+                "3DP",
+                "FLOATER",
+                "Type21",
+                "0.0248413",
+                "USD",
+                "ACT/360",
+                "1000000",
+                "16/06/2014",
+                "Quarterly",
+                "TRUE",
+                "US30231GAE26",
+                "20/03/2014",
+                "17/12/2018",
+                "15/03/2019",
+                "START_AND_END",
+                "MOD_FOLLOWING",
+                "NYB",
+                "0D",
+                "RECEIVE",
+                "YIELD-TO-MATURITY",
+				"15"
+            ]
+        }
+    ],
+    "NAME": "US30231GAE26"
+}

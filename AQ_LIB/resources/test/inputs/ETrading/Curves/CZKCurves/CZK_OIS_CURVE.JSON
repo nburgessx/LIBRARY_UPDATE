@@ -1,0 +1,220 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "CZK_OIS_CURVE",
+                "EM_CZK_CURVE_OIS",
+                "CZK_OIS_MKT",
+                "CZKYC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "Currency",
+                        "interpolation",
+                        "yieldgen.interpolation"
+                    ],
+                    "COL_2": [
+                        "OIS",
+                        "DAILY",
+                        "OIS",
+                        "OIS:CZKOIS",
+                        "CZK",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION"
+                    ]
+                },
+                {
+                    "SK_NAME": "OIS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycount",
+                        "frequency",
+                        "generatemethod",
+                        "resetlag",
+                        "firstrate",
+                        "slidingrule",
+                        "eomday",
+                        "iseomroll",
+                        "shorttermconvention",
+                        "longterm.generatemethod",
+                        "Epsilon",
+                        "MaxLoop",
+                        "CompoundingMethod",
+                        "SmoothShortEnd"
+                    ],
+                    "COL_2": [
+                        "PRB",
+                        "ACT/360",
+                        "ANNUAL",
+                        "DAILYCOMPOUNDING",
+                        "2D",
+                        "SHORTMARKET",
+                        "MOD_FOLLOWING",
+                        31,
+                        "TRUE",
+                        "ARITHMETICAVERAGE",
+                        "NONE",
+                        1e-10,
+                        1000,
+                        "ARITHMETIC",
+                        "FALSE"
+                    ]
+                }
+            ],
+            "NAME": "EM_CZK_CURVE_OIS"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "CZK",
+                        "OIS",
+                        "DAILY",
+                        44075
+                    ]
+                },
+                {
+                    "SK_NAME": "OIS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "ON",
+                        "1W",
+                        "2W",
+                        "1M",
+                        "2M",
+                        "3M",
+                        "6M",
+                        "9M",
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "12Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y",
+                        "40Y",
+                        "50Y"
+                    ],
+                    "COL_2": [
+                        0.0007,
+                        0.0012,
+                        0.0016,
+                        0.0012,
+                        0.0012,
+                        0.0013,
+                        0.0013,
+                        0.0014,
+                        0.0016,
+                        0.00141,
+                        0.00138,
+                        0.00152,
+                        0.00178,
+                        0.00214,
+                        0.00257,
+                        0.00304,
+                        0.00351,
+                        0.00401,
+                        0.00494,
+                        0.0061,
+                        0.00704,
+                        0.00717,
+                        0.00701,
+                        0.00663,
+                        0.00628
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                }
+            ],
+            "NAME": "CZK_OIS_MKT"
+        }
+    ],
+    "NAME": "CZK_OIS_CURVE"
+}

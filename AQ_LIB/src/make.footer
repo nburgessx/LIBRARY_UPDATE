@@ -1,0 +1,22 @@
+ifneq "$(EXEC)" ""
+build all: $(OBJS)
+	$(CC) -o $(OUTPUT)/$(EXEC) $(OBJS) $(LIBS) 
+endif
+
+ifneq "$(LIBA)" ""
+build all: $(OBJS)
+	$(AR) $(OUTPUT)/$(LIBA) $(OBJS)
+endif
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) $(INCLUDE) -c $<	
+
+ifneq "$(EXEC)" ""
+clean:
+	rm -f $(OBJS) $(OUTPUT)/$(EXEC) 
+endif
+
+ifneq "$(LIBA)" ""
+clean:
+	rm -f $(OBJS) $(OUTPUT)/$(LIBA)
+endif

@@ -1,0 +1,62 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND_GENERATOR",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND_STATICDATA",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "BondType",
+                "Currency",
+                "YieldType",
+                "IsCleanPrice",
+                "BondQuoteConvention"
+            ],
+            "COL_2": [
+                "FIXED",
+                "JPY",
+                "YIELD-TO-MATURITY",
+                "TRUE",
+                "QUOTE_IN_32NDS"
+            ]
+        },
+        {
+            "SK_NAME": "BOND_SCHEDULE",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "PayReceive",
+                "NotionalExchange",
+                "FaceValue",
+                "Frequency",
+                "AccrualBusinessDayAdjustment",
+                "AccrualCalendar",
+                "PaymentBusinessDayAdjustment",
+                "PaymentCalendar",
+                "PaymentLag",
+                "DayCount",
+                "CalculationType"
+            ],
+            "COL_2": [
+                "RECEIVE",
+                "START_AND_END",
+                1000000,
+                "SEMI-ANNUAL",
+                "MOD_FOLLOWING",
+                "TKB",
+                "NO_CHANGE",
+                "TKB",
+                "0D",
+                "ACT/365FJ",
+                "TYPE51_JAPANESE_GOVERNMENT_BONDS"
+            ]
+        }
+    ],
+    "NAME": "JAPAN_JGB_TYPE51"
+}

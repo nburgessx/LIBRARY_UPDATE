@@ -1,0 +1,154 @@
+{
+    "CACHED_OBJECT_TYPE": "INFLATION_CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVE_PROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "ASOFDATE",
+                "SPOTLAG",
+                "SPOTBUSINESSDAYADJUSTMENT",
+                "SPOTCALENDAR",
+                "CURRENCY",
+                "CURVECOLLECTION",
+                "INFLATIONINDEX",
+                "SWAPGENERATOR",
+                "ANNUALINTERPOLATION",
+                "FIXINGTABLE"
+            ],
+            "COL_2": [
+                44021,
+                "0D",
+                "FOLLOWING",
+                "LNB",
+                "GBP",
+                "GBPYC",
+                "UKRPI",
+                "GBP_ZC_UKRPI",
+                "LogLinear",
+                "UKRPI@1:0"
+            ]
+        },
+        {
+            "SK_NAME": "CPI_FIRST_YEAR",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "COL_2": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
+        },
+        {
+            "SK_NAME": "ZC_INFLATIONSWAPS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE"
+            ],
+            "COL_1": [
+                "1Y",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y",
+                "6Y",
+                "7Y",
+                "8Y",
+                "9Y",
+                "10Y",
+                "12Y",
+                "15Y",
+                "20Y",
+                "25Y",
+                "30Y",
+                "40Y",
+                "50Y"
+            ],
+            "COL_2": [
+                0.02355,
+                0.028425,
+                0.0304,
+                0.031588,
+                0.032425,
+                0.03305,
+                0.033463,
+                0.033837,
+                0.034125,
+                0.0342,
+                0.033788,
+                0.033062,
+                0.03235,
+                0.030875,
+                0.02945,
+                0.028038,
+                0.027825
+            ]
+        },
+        {
+            "SK_NAME": "SEASONALITY",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "INTEGER"
+            ],
+            "COL_1": [
+                "JANUARY",
+                "FEBUARY",
+                "MARCH",
+                "APRIL",
+                "MAY",
+                "JUNE",
+                "JULY",
+                "AUGUST",
+                "SEPTEMBER",
+                "OCTOBER",
+                "NOVEMBER",
+                "DECEMBER"
+            ],
+            "COL_2": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+    ],
+    "NAME": "INFL_GBP_RPI_MANY_SWAPS@113"
+}

@@ -1,0 +1,15 @@
+generatorFunction,tryMeLWOCreditIndexOptionImpliedVol
+
+creditModelName,FLATCURVE@66
+
+optionLVB
+key,col1
+PayerReceiver,Payer
+Strike,0.006
+Expiry,44181
+CDSStartDate,44182
+CDSMaturityDate,45828
+CDSCoupon,0.01
+ForwardSpread,0.00600274845683536
+OptionValue,0.00326845673337648
+

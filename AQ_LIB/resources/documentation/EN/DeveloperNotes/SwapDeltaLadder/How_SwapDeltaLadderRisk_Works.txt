@@ -1,0 +1,76 @@
+
+How Swap Delta Ladder Risk Works
+================================
+
+The delta-ladder risk is calculated for a portfolio of swaps by
+bumping the curve instruments one-at-a-time, rebuilding the curves
+after each bump and recalculating swap PV. The delta wrt a given
+curve instrument is how much a particular swap PV changes for a 1bp
+bump.
+
+The delta-ladder risk is expressed as a total for each curve-instrument,
+and is given as a breakdown across the portfolio of swap trades.
+
+
+"me" functions
+==============
+
+a) Old style, representing the swaps as a set of Trade LV Blocks:
+
+meProductSwapDeltaLadder(TradeLVB,
+                         CurveCollection,
+			 ForecastCurveSet,
+			 BumpSize,
+			 BumpMode)
+
+b) New style using LWO Swaps which are stored in the cache:
+
+meProductLWOSwapDeltaLadder(SwapNames,
+                            FixingTables,
+			    CurveCollection,
+			    BumpSize,
+			    BumpMode)
+
+The swaps are referenced by SwapNames.
+Swap Types supported: Regular IRS, OIS, Tenor Basis and XCCY.
+
+This version also supports seasoned trades via the FixingTables.
+
+
+Classes involved
+================
+
+There are two main classes:
+
+1. MultiCurveDeltaRiskGenerator
+-------------------------------
+
+This class groups the swaps by common curve dependencies, and
+calculates the risk for each mini-portfolio. Each mini-portfolio
+will have the same forecast and discount curve dependencies.
+
+This minimises the number of times each curve must be bumped, since
+the entire mini-portfolio can be revalued after each curve bump.
+
+For the LWO Swaps, the delta-ladder risk is calculated by swap LEG.
+i.e. we construct a mini-portfolio of swap legs that all depend
+on the same forecast and discount curve.
+
+This is how we are able to support tenor-basis and XCCY swaps:
+For a given basis or XCCY swap, each leg has different curve requirements.
+
+2. DeltaRiskGenerator
+---------------------
+
+Given a mini-portfolio in which all the instruments depend on the same
+forecast and discount curve, this class computes the risk by bumping
+each curve pillar instrument in turn. After each bump, the
+corresponding curve is rebuilt, and the mini-portfolio of instruments
+revalued.
+
+The delta sensitivity to each curve pillar-instrument is found by
+calculating the difference in PV arising from each bump.
+
+The following BumpModes are supported: UP, DOWN, CENTRAL.
+
+

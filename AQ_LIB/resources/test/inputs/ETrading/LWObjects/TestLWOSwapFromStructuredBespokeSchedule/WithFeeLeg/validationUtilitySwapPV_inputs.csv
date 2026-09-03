@@ -1,0 +1,13 @@
+generatorFunction,validationUtilitySwapPV
+
+swapName,VNS_SWAP_STRUCTURED
+
+valuationSettingsLVB
+key,col1
+EURYC,
+
+legName,
+
+fixingTableNames
+key,col1
+

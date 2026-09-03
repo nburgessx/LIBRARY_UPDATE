@@ -1,0 +1,44 @@
+Changes in Version 2.8.d:
+
+1. On the 'USDCurve' sheet, 
+(a) remove all defined names related to GBPUSD, USDJPY and EURUSD XCCY Basis curves. These are names that start with 'Curve.GBPUSDXccy', 'Curve.USDJPYXccy' and 
+
+'Curve.EURUSDXccy'
+(b) remove the three 'show/hide' buttons related to GBPUSD, USDJPY and EURUSD XCCY Basis curves and the underlying VBA code used by these three buttons
+(c) add a new button for FX Forward constant curves
+(d) add curve configurations for for FX Forward constant curves
+
+2. In the VAB code, modify subroutines 'ShowHideAllCurves' and 'HideAllCurves' so that they do not attempt to access the defunct names mentioned above.
+
+3. On the 'CurveBuild' page, replace the following three curves from using basis curve building method to using FX forward constant curve building method: 
+
+USDDF_GBPCSA, USDF_EURCSA and USDF_JPYCSA
+
+4. Improve the Worksheet_Change event handler for page 'XCCY Structure' so that 'EnableEvents' is not inadvertently switched off
+
+5. Change AUD Xccy curve set-up so that both legs have a 2D spot lag.
+
+
+Changes in Version 2.8.e:
+
+On the XCCY Structuring sheet:
+1. Add formula =meLWOSwapDV01() in rows 79,80 corresponding to each of the 4 XCCY swaps
+
+2. Add label XccyStructuring.DealX to cells B4, F4, I4, L4 
+
+3. Add label XccyStructuring.DealX.CurveY to the curve collection names in row 31 
+
+New Sheet:
+4. Add sheet XCCY Risk. Add formula =meLWOSwapDeltaLadder() to this sheet.
+
+
+Changes in version 2.9:
+New XCCY workbook XccyPricerV2.9.xlsm:
+1. Add a button to recalculate the XCCY Delta Ladder sheet
+
+
+Changes in version 3.5:
+1. On 'NOKCurve' page, fixed the 'leg1forecast' field for NOKDF_GBPCSA curve. The field used to have a value of 'GBPYC:NOKDF_USDCA' and has been corrected to 'GBPYC:GBPDF_USDCSA'.
+2. Changed the stlye of tenor basis convention blocks so that they are more simplistic with less cells highlighted. This style change applies to all currency curves.
+3. Fixed the 'Toggle All' button used in all the 'XXXCurve' pages. This button was broken for the 'USDCurve' page.
+4. This change concerns all the 'Curve Construction' pages: for all the tenor basis curve and xccy basis curve across all the currencies, (a) if both dependent forecast curves are swap curve, set the value of 'isFwdInter' according to =meUtilityCurveIsUsingForwards(), (b) if one or both of the dependent curves is NOT a swap curve, set the value of 'isFwdInter' to be FALSE.

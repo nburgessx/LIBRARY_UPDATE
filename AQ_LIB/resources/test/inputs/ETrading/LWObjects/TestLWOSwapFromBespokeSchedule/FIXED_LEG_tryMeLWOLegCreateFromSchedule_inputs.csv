@@ -1,0 +1,14 @@
+generatorFunction,tryMeLWOLegCreateFromSchedule
+
+legObjectName,FIXED_LEG
+
+scheduleName,FIXED_SCHEDULE
+
+legLVB
+key,col1
+LEGTYPE,LEG1:FIXED
+DISCOUNTCURVE,EUROIS
+CURRENCY,EUR
+
+validateKeys,TRUE
+

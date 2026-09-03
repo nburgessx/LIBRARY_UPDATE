@@ -1,0 +1,906 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugEditAndContinue|Win32">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditAndContinue|x64">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|Win32">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|x64">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\etrading\include\AnyTypeUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\BaseInstrument.h" />
+    <ClInclude Include="..\src\etrading\include\BasisComponentCurve.h" />
+    <ClInclude Include="..\src\etrading\include\BlackScholes.h" />
+    <ClInclude Include="..\src\etrading\include\Bond.h" />
+    <ClInclude Include="..\src\etrading\include\BondAccrualPeriods.h" />
+    <ClInclude Include="..\src\etrading\include\BondCurveCostFunction.h" />
+    <ClInclude Include="..\src\etrading\include\BondCurves.h" />
+    <ClInclude Include="..\src\etrading\include\BondOption.h" />
+    <ClInclude Include="..\src\etrading\include\BondOptionPricer.h" />
+    <ClInclude Include="..\src\etrading\include\BondQuote.h" />
+    <ClInclude Include="..\src\etrading\include\BondSpreadCalculation.h" />
+    <ClInclude Include="..\src\etrading\include\CashflowEngine.h" />
+    <ClInclude Include="..\src\etrading\include\CashflowModel.h" />
+    <ClInclude Include="..\src\etrading\include\CMSCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\CMSLeg.h" />
+    <ClInclude Include="..\src\etrading\include\CMSSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\CMSStaticData.h" />
+    <ClInclude Include="..\src\etrading\include\ConstantMaturitySwap.h" />
+    <ClInclude Include="..\src\etrading\include\ConvexityModel.h" />
+    <ClInclude Include="..\src\etrading\include\CreditResults.h" />
+    <ClInclude Include="..\src\etrading\include\CreditResultsContainer.h" />
+    <ClInclude Include="..\src\etrading\include\CurveGroup.h" />
+    <ClInclude Include="..\src\etrading\include\CurveConventionsAndMarketData.h" />
+    <ClInclude Include="..\src\etrading\include\CurveDescription.h" />
+    <ClInclude Include="..\src\etrading\include\CurveInterpolation.h" />
+    <ClInclude Include="..\src\etrading\include\CurveResults.h" />
+    <ClInclude Include="..\src\etrading\include\CurveResultsContainer.h" />
+    <ClInclude Include="..\src\etrading\include\CurveStreaming.h" />
+    <ClInclude Include="..\src\etrading\include\DataFrame.h" />
+    <ClInclude Include="..\src\etrading\include\DataProvider.h" />
+    <ClInclude Include="..\src\etrading\include\DiscountFactorResults.h" />
+    <ClInclude Include="..\src\etrading\include\FixedBondCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\BondEnumerations.h" />
+    <ClInclude Include="..\src\etrading\include\BondFactory.h" />
+    <ClInclude Include="..\src\etrading\include\BondGenerator.h" />
+    <ClInclude Include="..\src\etrading\include\BondSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\BondUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\BondYields.h" />
+    <ClInclude Include="..\src\etrading\include\Cacheable.h" />
+    <ClInclude Include="..\src\etrading\include\InflationCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\InflationCurve.h" />
+    <ClInclude Include="..\src\etrading\include\InflationLeg.h" />
+    <ClInclude Include="..\src\etrading\include\InflationSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\JacobianResults.h" />
+    <ClInclude Include="..\src\etrading\include\LAObjectPoolBase.h" />
+    <ClInclude Include="..\src\etrading\include\LoanCalculations.h" />
+    <ClInclude Include="..\src\etrading\include\CurveEngine.h" />
+    <ClInclude Include="..\src\etrading\include\LoanPortfolio.h" />
+    <ClInclude Include="..\src\etrading\include\LoanValidation.h" />
+    <ClInclude Include="..\src\etrading\include\OMPThreadManager.h" />
+    <ClInclude Include="..\src\etrading\include\PiecewisePolynomialInterpolation.h" />
+    <ClInclude Include="..\src\etrading\include\PolynomialInterpolation.h" />
+    <ClInclude Include="..\src\etrading\include\RepLine.h" />
+    <ClInclude Include="..\src\etrading\include\SabrMarketData.h" />
+    <ClInclude Include="..\src\etrading\include\SabrModel.h" />
+    <ClInclude Include="..\src\etrading\include\SwapRiskResults.h" />
+    <ClInclude Include="..\src\etrading\include\RiskUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\SupervisoryRules.h" />
+    <ClInclude Include="..\src\etrading\include\LAUpdateCurveObject.h" />
+    <ClInclude Include="..\src\etrading\include\LAUpdateModelObject.h" />
+    <ClInclude Include="..\src\etrading\include\CapFloorCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\CapFloorOption.h" />
+    <ClInclude Include="..\src\etrading\include\CapFloorPricer.h" />
+    <ClInclude Include="..\src\etrading\include\CapletFloorlet.h" />
+    <ClInclude Include="..\src\etrading\include\CDSLeg.h" />
+    <ClInclude Include="..\src\etrading\include\ConcurrentMap.h" />
+    <ClInclude Include="..\src\etrading\include\ConstrainedSplineInterpolation.h" />
+    <ClInclude Include="..\src\etrading\include\CoreCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\CreditDefaultSwap.h" />
+    <ClInclude Include="..\src\etrading\include\CreditModel.h" />
+    <ClInclude Include="..\src\etrading\include\CrossCurrencySwap.h" />
+    <ClInclude Include="..\src\etrading\include\CurveGenerator.h" />
+    <ClInclude Include="..\src\etrading\include\EuropeanIRSwaption.h" />
+    <ClInclude Include="..\src\etrading\include\FixedBondLeg.h" />
+    <ClInclude Include="..\src\etrading\include\FixedBondLegSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\FixedBondSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\FloatBondLeg.h" />
+    <ClInclude Include="..\src\etrading\include\FloatBondLegSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\FloatBondSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\FloatingBond.h" />
+    <ClInclude Include="..\src\etrading\include\Fra.h" />
+    <ClInclude Include="..\src\etrading\include\FraCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\FraSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\CreditBasketModel.h" />
+    <ClInclude Include="..\src\etrading\include\GlobalCalibrationComponentCurve.h" />
+    <ClInclude Include="..\src\etrading\include\GlobalCurveCalibrationEngine.h" />
+    <ClInclude Include="..\src\etrading\include\HedgeCurveEngine.h" />
+    <ClInclude Include="..\src\etrading\include\CurveObject.h" />
+    <ClInclude Include="..\src\etrading\include\DataUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\DebugMacros.h" />
+    <ClInclude Include="..\src\etrading\include\DualBootstrappedCurveObject.h" />
+    <ClInclude Include="..\src\etrading\include\FXCurve.h" />
+    <ClInclude Include="..\src\etrading\include\FXCurveUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\HullWhiteModel.h" />
+    <ClInclude Include="..\src\etrading\include\JSONInfoBlock.h" />
+    <ClInclude Include="..\src\etrading\include\LACurveCalibrationHelpers.h" />
+    <ClInclude Include="..\src\etrading\include\LACurveForwardRateHelpers.h" />
+    <ClInclude Include="..\src\etrading\include\LACurvePricingObject.h" />
+    <ClInclude Include="..\src\etrading\include\LADateHelpers.h" />
+    <ClInclude Include="..\src\etrading\include\LADateScheduleHelpers.h" />
+    <ClInclude Include="..\src\etrading\include\MonteCarloEngine.h" />
+    <ClInclude Include="..\src\etrading\include\MonteCarloPath.h" />
+    <ClInclude Include="..\src\etrading\include\MonteCarloStatistics.h" />
+    <ClInclude Include="..\src\etrading\include\MultiCurveObject.h" />
+    <ClInclude Include="..\src\etrading\include\BlackUtils.h" />
+    <ClInclude Include="..\src\etrading\include\NelsonSiegelFitting.h" />
+    <ClInclude Include="..\src\etrading\include\NormalDistribution.h" />
+    <ClInclude Include="..\src\etrading\include\OISComponentCurve.h" />
+    <ClInclude Include="..\src\etrading\include\PolynomialFitting.h" />
+    <ClInclude Include="..\src\etrading\include\PulseObject.h" />
+    <ClInclude Include="..\src\etrading\include\AffineModelUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\RandomNumberGenerator.h" />
+    <ClInclude Include="..\src\etrading\include\SettingsValidation.h" />
+    <ClInclude Include="..\src\etrading\include\SimpsonsRuleIntegration.h" />
+    <ClInclude Include="..\src\etrading\include\SingleCurveObject.h" />
+    <ClInclude Include="..\src\etrading\include\Solvers.h" />
+    <ClInclude Include="..\src\etrading\include\SurvivalPath.h" />
+    <ClInclude Include="..\src\etrading\include\SwapCalculation.h" />
+    <ClInclude Include="..\src\etrading\include\SwapComponentCurve.h" />
+    <ClInclude Include="..\src\etrading\include\SwapResults.h" />
+    <ClInclude Include="..\src\etrading\include\SwapResultsContainer.h" />
+    <ClInclude Include="..\src\etrading\include\SwaptionTrade.h" />
+    <ClInclude Include="..\src\etrading\include\SwaptionPricer.h" />
+    <ClInclude Include="..\src\etrading\include\SyntheticExcessSpread.h" />
+    <ClInclude Include="..\src\etrading\include\TotalReturnSwap.h" />
+    <ClInclude Include="..\src\etrading\include\Tranche.h" />
+    <ClInclude Include="..\src\etrading\include\Trigger.h" />
+    <ClInclude Include="..\src\etrading\include\ValuationSettings.h" />
+    <ClInclude Include="..\src\etrading\include\VanillaIRSwap.h" />
+    <ClInclude Include="..\src\etrading\include\VasicekFitting.h" />
+    <ClInclude Include="..\src\etrading\include\VasicekModel.h" />
+    <ClInclude Include="..\src\etrading\include\XccyZeroCouponSwap.h" />
+    <ClInclude Include="..\src\etrading\include\LAUpdateStaticDataManager.h" />
+    <ClInclude Include="..\src\etrading\include\LACurveMarketDataHelpers.h" />
+    <ClInclude Include="..\src\etrading\include\CurveInstrumentPricing.h" />
+    <ClInclude Include="..\src\etrading\include\CurveCalibrationData.h" />
+    <ClInclude Include="..\src\etrading\include\CurveCalibration.h" />
+    <ClInclude Include="..\src\etrading\include\ZeroCouponInflationSwap.h" />
+    <ClInclude Include="..\src\etrading\include\ZeroCouponSwap.h" />
+    <ClInclude Include="..\src\etrading\include\CurveBuildProperties.h" />
+    <ClInclude Include="..\src\etrading\include\CurveBuildDefaults.h" />
+    <ClInclude Include="..\src\etrading\include\CurveMarketData.h" />
+    <ClInclude Include="..\src\etrading\include\CurveValidation.h" />
+    <ClInclude Include="..\src\etrading\include\EntityPoolUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\EnvironmentImplementation.h" />
+    <ClInclude Include="..\src\etrading\include\ExampleObjects.h" />
+    <ClInclude Include="..\src\etrading\include\FolderConfig.h" />
+    <ClInclude Include="..\src\etrading\include\FeeCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\FeeStaticData.h" />
+    <ClInclude Include="..\src\etrading\include\FixedBond.h" />
+    <ClInclude Include="..\src\etrading\include\FixedSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\FixedStaticData.h" />
+    <ClInclude Include="..\src\etrading\include\FixingTable.h" />
+    <ClInclude Include="..\src\etrading\include\FixingTableSet.h" />
+    <ClInclude Include="..\src\etrading\include\FloatSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\FloatStaticData.h" />
+    <ClInclude Include="..\src\etrading\include\FuturesDates.h" />
+    <ClInclude Include="..\src\etrading\include\HasCurveData.h" />
+    <ClInclude Include="..\src\etrading\include\HasVariantMatrixAccess.h" />
+    <ClInclude Include="..\src\etrading\include\HasDataSchemaGenerator.h" />
+    <ClInclude Include="..\src\etrading\include\InitializeMLibETrading.h" />
+    <ClInclude Include="..\src\etrading\include\Interpolation2DUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\InterpolationFactory.h" />
+    <ClInclude Include="..\src\etrading\include\IsLWOObject.h" />
+    <ClInclude Include="..\src\etrading\include\LabelValueBlock.h" />
+    <ClInclude Include="..\src\etrading\include\LabelValueBlockValidation.h" />
+    <ClInclude Include="..\src\etrading\include\LegCollection.h" />
+    <ClInclude Include="..\src\etrading\include\LegGenerator.h" />
+    <ClInclude Include="..\src\etrading\include\LibSetUpETrading.h" />
+    <ClInclude Include="..\src\etrading\include\LinearInterpolation.h" />
+    <ClInclude Include="..\src\etrading\include\LWOCurve.h" />
+    <ClInclude Include="..\src\etrading\include\DataHolder.h" />
+    <ClInclude Include="..\src\etrading\include\ExposedInterface.h" />
+    <ClInclude Include="..\src\etrading\include\HasDataHolderConversion.h" />
+    <ClInclude Include="..\src\etrading\include\LWOCurveDayAdjustment.h" />
+    <ClInclude Include="..\src\etrading\include\LWOUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\MarketQuote.h" />
+    <ClInclude Include="..\src\etrading\include\CurveData.h" />
+    <ClInclude Include="..\src\etrading\include\MonotoneConvexInterpolation.h" />
+    <ClInclude Include="..\src\etrading\include\MultiCurveDeltaRiskGenerator.h" />
+    <ClInclude Include="..\src\etrading\include\NamesBiMap.h" />
+    <ClInclude Include="..\src\etrading\include\CommonConstants.h" />
+    <ClInclude Include="..\src\etrading\include\OISSwap.h" />
+    <ClInclude Include="..\src\etrading\include\PremiumCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\PremiumLeg.h" />
+    <ClInclude Include="..\src\etrading\include\PremiumSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\ProtectionCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\ProtectionLeg.h" />
+    <ClInclude Include="..\src\etrading\include\ProtectionSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\RecordMacros.h" />
+    <ClInclude Include="..\src\etrading\include\Schedule.h" />
+    <ClInclude Include="..\src\etrading\include\ScheduleValidation.h" />
+    <ClInclude Include="..\src\etrading\include\SerializationResultWrapper.h" />
+    <ClInclude Include="..\src\etrading\include\SerializationUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\SerializeInstance.h" />
+    <ClInclude Include="..\src\etrading\include\SplineInterpolation.h" />
+    <ClInclude Include="..\src\etrading\include\StepInterpolation.h" />
+    <ClInclude Include="..\src\etrading\include\SwapGenerator.h" />
+    <ClInclude Include="..\src\etrading\include\SwapUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\SwapValidation.h" />
+    <ClInclude Include="..\src\etrading\include\TradeCollection.h" />
+    <ClInclude Include="..\src\etrading\include\HasSchemaObjectConverter.h" />
+    <ClInclude Include="..\src\etrading\include\SchemaObject.h" />
+    <ClInclude Include="..\src\etrading\include\VanillaInterestRateSwap.h" />
+    <ClInclude Include="..\src\etrading\include\Variant.h" />
+    <ClInclude Include="..\src\etrading\include\ContainerUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\CreateDataFile.h" />
+    <ClInclude Include="..\src\etrading\include\DeltaRiskGenerator.h" />
+    <ClInclude Include="..\src\etrading\include\FileUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\FreeObject.h" />
+    <ClInclude Include="..\src\etrading\include\HasInstance.h" />
+    <ClInclude Include="..\src\etrading\include\InheritEnum.h" />
+    <ClInclude Include="..\src\etrading\include\InterestRateSwap.h" />
+    <ClInclude Include="..\src\etrading\include\KeyValueLookupTable.h" />
+    <ClInclude Include="..\src\etrading\include\ObjectUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\ReadDataFile.h" />
+    <ClInclude Include="..\src\etrading\include\Replay.h" />
+    <ClInclude Include="..\src\etrading\include\ReplayCurveBasis.h" />
+    <ClInclude Include="..\src\etrading\include\ReplayCurveFwdFX.h" />
+    <ClInclude Include="..\src\etrading\include\ReplayCurveOIS.h" />
+    <ClInclude Include="..\src\etrading\include\ReplayCurveSTD.h" />
+    <ClInclude Include="..\src\etrading\include\RuleInterface.h" />
+    <ClInclude Include="..\src\etrading\include\SerializationResult.h" />
+    <ClInclude Include="..\src\etrading\include\SerializeContainedData.h" />
+    <ClInclude Include="..\src\etrading\include\SerializeInterface.h" />
+    <ClInclude Include="..\src\etrading\include\Singleton.h" />
+    <ClInclude Include="..\src\etrading\include\StaticStructureStore.h" />
+    <ClInclude Include="..\src\etrading\include\StatisticsUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\StructuredExceptionHandler.h" />
+    <ClInclude Include="..\src\etrading\include\DataSchema.h" />
+    <ClInclude Include="..\src\etrading\include\SwapSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\TableDateDouble.h" />
+    <ClInclude Include="..\src\etrading\include\DateUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\TypeHelpers.h" />
+    <ClInclude Include="..\src\etrading\include\TypeName.h" />
+    <ClInclude Include="..\src\etrading\include\UserUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\ParameterValidation.h" />
+    <ClInclude Include="..\src\etrading\include\Environment.h" />
+    <ClInclude Include="..\src\etrading\include\EnvironmentPool.h" />
+    <ClInclude Include="..\src\etrading\include\EnvironmentUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\CurveInstruments.h" />
+    <ClInclude Include="..\src\etrading\include\YieldCurveUtil.h" />
+    <ClInclude Include="..\src\etrading\include\FeeLeg.h" />
+    <ClInclude Include="..\src\etrading\include\LegStaticData.h" />
+    <ClInclude Include="..\src\etrading\include\FixedCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\FloatCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\CurveUtilities.h" />
+    <ClInclude Include="..\src\etrading\include\SwapCollection.h" />
+    <ClInclude Include="..\src\etrading\include\Swap.h" />
+    <ClInclude Include="..\src\etrading\include\Cashflow.h" />
+    <ClInclude Include="..\src\etrading\include\FeeSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\FixedLeg.h" />
+    <ClInclude Include="..\src\etrading\include\FloatLeg.h" />
+    <ClInclude Include="..\src\etrading\include\Leg.h" />
+    <ClInclude Include="..\src\etrading\include\Option.h" />
+    <ClInclude Include="..\src\etrading\include\OptionCashflow.h" />
+    <ClInclude Include="..\src\etrading\include\OptionFactory.h" />
+    <ClInclude Include="..\src\etrading\include\RateProvider.h" />
+    <ClInclude Include="..\src\etrading\include\RateProviderExternal.h" />
+    <ClInclude Include="..\src\etrading\include\ScheduleParameters.h" />
+    <ClInclude Include="..\src\etrading\include\EnrichedSchedule.h" />
+    <ClInclude Include="..\src\etrading\include\Volatility.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\etrading\src\AnyTypeUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\BasisComponentCurve.cpp" />
+    <ClCompile Include="..\src\etrading\src\BlackScholes.cpp" />
+    <ClCompile Include="..\src\etrading\src\Bond.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondAccrualPeriods.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondCurveCostFunction.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondCurves.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondOption.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondOptionPricer.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondQuote.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondSpreadCalculation.cpp" />
+    <ClCompile Include="..\src\etrading\src\CashflowEngine.cpp" />
+    <ClCompile Include="..\src\etrading\src\CashflowModel.cpp" />
+    <ClCompile Include="..\src\etrading\src\CMSCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\CMSLeg.cpp" />
+    <ClCompile Include="..\src\etrading\src\CMSSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\CMSStaticData.cpp" />
+    <ClCompile Include="..\src\etrading\src\ConstantMaturitySwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\ConvexityModel.cpp" />
+    <ClCompile Include="..\src\etrading\src\CreditResults.cpp" />
+    <ClCompile Include="..\src\etrading\src\CreditResultsContainer.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveGroup.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveConventionsAndMarketData.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveDescription.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveInterpolation.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveResults.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveResultsContainer.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveStreaming.cpp" />
+    <ClCompile Include="..\src\etrading\src\DataFrame.cpp" />
+    <ClCompile Include="..\src\etrading\src\DataProvider.cpp" />
+    <ClCompile Include="..\src\etrading\src\DiscountFactorResults.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixedBondCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondEnumerations.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondFactory.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondGenerator.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\BondYields.cpp" />
+    <ClCompile Include="..\src\etrading\src\Cacheable.cpp" />
+    <ClCompile Include="..\src\etrading\src\InflationCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\InflationCurve.cpp" />
+    <ClCompile Include="..\src\etrading\src\InflationLeg.cpp" />
+    <ClCompile Include="..\src\etrading\src\InflationSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\JacobianResults.cpp" />
+    <ClCompile Include="..\src\etrading\src\LAObjectPoolBase.cpp" />
+    <ClCompile Include="..\src\etrading\src\LoanCalculations.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveEngine.cpp" />
+    <ClCompile Include="..\src\etrading\src\LoanPortfolio.cpp" />
+    <ClCompile Include="..\src\etrading\src\LoanValidation.cpp" />
+    <ClCompile Include="..\src\etrading\src\OMPThreadManager.cpp" />
+    <ClCompile Include="..\src\etrading\src\PiecewisePolynomialInterpolation.cpp" />
+    <ClCompile Include="..\src\etrading\src\PolynomialInterpolation.cpp" />
+    <ClCompile Include="..\src\etrading\src\PulseObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\RepLine.cpp" />
+    <ClCompile Include="..\src\etrading\src\RiskUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\SabrMarketData.cpp" />
+    <ClCompile Include="..\src\etrading\src\SabrModel.cpp" />
+    <ClCompile Include="..\src\etrading\src\SupervisoryRules.cpp" />
+    <ClCompile Include="..\src\etrading\src\LAUpdateCurveObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\LAUpdateModelObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\CapFloorCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\CapFloorOption.cpp" />
+    <ClCompile Include="..\src\etrading\src\CapFloorPricer.cpp" />
+    <ClCompile Include="..\src\etrading\src\CapletFloorlet.cpp" />
+    <ClCompile Include="..\src\etrading\src\CDSLeg.cpp" />
+    <ClCompile Include="..\src\etrading\src\CommonConstants.cpp" />
+    <ClCompile Include="..\src\etrading\src\ConstrainedSplineInterpolation.cpp" />
+    <ClCompile Include="..\src\etrading\src\CoreCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\CreditDefaultSwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\CreditModel.cpp" />
+    <ClCompile Include="..\src\etrading\src\CrossCurrencySwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveGenerator.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\DataUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\DualBootstrappedCurveObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\EuropeanIRSwaption.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixedBondLeg.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixedBondLegSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixedBondSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\FloatBondLeg.cpp" />
+    <ClCompile Include="..\src\etrading\src\FloatBondLegSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\FloatBondSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\FloatingBond.cpp" />
+    <ClCompile Include="..\src\etrading\src\Fra.cpp" />
+    <ClCompile Include="..\src\etrading\src\FraCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\FraSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\FXCurve.cpp" />
+    <ClCompile Include="..\src\etrading\src\FXCurveUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\CreditBasketModel.cpp" />
+    <ClCompile Include="..\src\etrading\src\GlobalCalibrationComponentCurve.cpp" />
+    <ClCompile Include="..\src\etrading\src\GlobalCurveCalibrationEngine.cpp" />
+    <ClCompile Include="..\src\etrading\src\HullWhiteModel.cpp" />
+    <ClCompile Include="..\src\etrading\src\HedgeCurveEngine.cpp" />
+    <ClCompile Include="..\src\etrading\src\JSONInfoBlock.cpp" />
+    <ClCompile Include="..\src\etrading\src\LACurveCalibrationHelpers.cpp" />
+    <ClCompile Include="..\src\etrading\src\LACurveForwardRateHelpers.cpp" />
+    <ClCompile Include="..\src\etrading\src\LACurvePricingObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\LADateHelpers.cpp" />
+    <ClCompile Include="..\src\etrading\src\LADateScheduleHelpers.cpp" />
+    <ClCompile Include="..\src\etrading\src\MonteCarloEngine.cpp" />
+    <ClCompile Include="..\src\etrading\src\MonteCarloPath.cpp" />
+    <ClCompile Include="..\src\etrading\src\MonteCarloStatistics.cpp" />
+    <ClCompile Include="..\src\etrading\src\MultiCurveObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\BlackUtils.cpp" />
+    <ClCompile Include="..\src\etrading\src\NelsonSiegelFitting.cpp" />
+    <ClCompile Include="..\src\etrading\src\NormalDistribution.cpp" />
+    <ClCompile Include="..\src\etrading\src\OISComponentCurve.cpp" />
+    <ClCompile Include="..\src\etrading\src\PolynomialFitting.cpp" />
+    <ClCompile Include="..\src\etrading\src\PremiumCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\PremiumLeg.cpp" />
+    <ClCompile Include="..\src\etrading\src\PremiumSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\ProtectionCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\ProtectionLeg.cpp" />
+    <ClCompile Include="..\src\etrading\src\ProtectionSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\AffineModelUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\RandomNumberGenerator.cpp" />
+    <ClCompile Include="..\src\etrading\src\SettingsValidation.cpp" />
+    <ClCompile Include="..\src\etrading\src\SingleCurveObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\Solvers.cpp" />
+    <ClCompile Include="..\src\etrading\src\SimpsonsRuleIntegration.cpp" />
+    <ClCompile Include="..\src\etrading\src\SurvivalPath.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwapCalculation.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwapComponentCurve.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwapResults.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwapResultsContainer.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwapRiskResults.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwaptionTrade.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwaptionPricer.cpp" />
+    <ClCompile Include="..\src\etrading\src\SyntheticExcessSpread.cpp" />
+    <ClCompile Include="..\src\etrading\src\TotalReturnSwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\Tranche.cpp" />
+    <ClCompile Include="..\src\etrading\src\Trigger.cpp" />
+    <ClCompile Include="..\src\etrading\src\TypeName.cpp" />
+    <ClCompile Include="..\src\etrading\src\ValuationSettings.cpp" />
+    <ClCompile Include="..\src\etrading\src\VanillaIRSwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\VasicekFitting.cpp" />
+    <ClCompile Include="..\src\etrading\src\VasicekModel.cpp" />
+    <ClCompile Include="..\src\etrading\src\XccyZeroCouponSwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\LAUpdateStaticDataManager.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveInstruments.cpp" />
+    <ClCompile Include="..\src\etrading\src\LACurveMarketDataHelpers.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveInstrumentPricing.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveCalibrationData.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveCalibration.cpp" />
+    <ClCompile Include="..\src\etrading\src\ZeroCouponInflationSwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\ZeroCouponSwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveBuildDefaults.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveMarketData.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveValidation.cpp" />
+    <ClCompile Include="..\src\etrading\src\DataHolder.cpp" />
+    <ClCompile Include="..\src\etrading\src\EntityPoolUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\EnvironmentImplementation.cpp" />
+    <ClCompile Include="..\src\etrading\src\ExampleObjects.cpp" />
+    <ClCompile Include="..\src\etrading\src\FolderConfig.cpp" />
+    <ClCompile Include="..\src\etrading\src\FeeCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\FeeStaticData.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixedBond.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixedSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixedStaticData.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixingTable.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixingTableSet.cpp" />
+    <ClCompile Include="..\src\etrading\src\FloatSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\FloatStaticData.cpp" />
+    <ClCompile Include="..\src\etrading\src\FuturesDates.cpp" />
+    <ClCompile Include="..\src\etrading\src\HasCurveData.cpp" />
+    <ClCompile Include="..\src\etrading\src\InitializeMLibETrading.cpp" />
+    <ClCompile Include="..\src\etrading\src\Interpolation2DUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\InterpolationFactory.cpp" />
+    <ClCompile Include="..\src\etrading\src\IsLWOObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\LabelValueBlock.cpp" />
+    <ClCompile Include="..\src\etrading\src\LabelValueBlockValidation.cpp" />
+    <ClCompile Include="..\src\etrading\src\LegCollection.cpp" />
+    <ClCompile Include="..\src\etrading\src\LegGenerator.cpp" />
+    <ClCompile Include="..\src\etrading\src\LibSetUpETrading.cpp" />
+    <ClCompile Include="..\src\etrading\src\LinearInterpolation.cpp" />
+    <ClCompile Include="..\src\etrading\src\LWOCurveDayAdjustment.cpp" />
+    <ClCompile Include="..\src\etrading\src\LWOUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\MarketQuote.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveData.cpp" />
+    <ClCompile Include="..\src\etrading\src\MonotoneConvexInterpolation.cpp" />
+    <ClCompile Include="..\src\etrading\src\MultiCurveDeltaRiskGenerator.cpp" />
+    <ClCompile Include="..\src\etrading\src\ObjectUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\Schedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\ScheduleValidation.cpp" />
+    <ClCompile Include="..\src\etrading\src\SerializationUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\SplineInterpolation.cpp" />
+    <ClCompile Include="..\src\etrading\src\StepInterpolation.cpp" />
+    <ClCompile Include="..\src\etrading\src\OISSwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwapGenerator.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwapUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwapValidation.cpp" />
+    <ClCompile Include="..\src\etrading\src\TradeCollection.cpp" />
+    <ClCompile Include="..\src\etrading\src\SchemaObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\VanillaInterestRateSwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\Variant.cpp" />
+    <ClCompile Include="..\src\etrading\src\ContainerUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\CreateDataFile.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveBuildProperties.cpp" />
+    <ClCompile Include="..\src\etrading\src\LWOCurve.cpp" />
+    <ClCompile Include="..\src\etrading\src\DeltaRiskGenerator.cpp" />
+    <ClCompile Include="..\src\etrading\src\ExposedObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\FileUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\FreeObject.cpp" />
+    <ClCompile Include="..\src\etrading\src\InterestRateSwap.cpp" />
+    <ClCompile Include="..\src\etrading\src\ReadDataFile.cpp" />
+    <ClCompile Include="..\src\etrading\src\SerializationResult.cpp" />
+    <ClCompile Include="..\src\etrading\src\SerializeContainedData.cpp" />
+    <ClCompile Include="..\src\etrading\src\Replay.cpp" />
+    <ClCompile Include="..\src\etrading\src\ReplayCurveBasis.cpp" />
+    <ClCompile Include="..\src\etrading\src\ReplayCurveFwdFX.cpp" />
+    <ClCompile Include="..\src\etrading\src\ReplayCurveOIS.cpp" />
+    <ClCompile Include="..\src\etrading\src\ReplayCurveSTD.cpp" />
+    <ClCompile Include="..\src\etrading\src\StaticStructureStore.cpp" />
+    <ClCompile Include="..\src\etrading\src\StatisticsUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\StructuredExceptionHandler.cpp" />
+    <ClCompile Include="..\src\etrading\src\DataSchema.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwapSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\TableDateDouble.cpp" />
+    <ClCompile Include="..\src\etrading\src\DateUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\UserUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\ParameterValidation.cpp" />
+    <ClCompile Include="..\src\etrading\src\Environment.cpp" />
+    <ClCompile Include="..\src\etrading\src\EnvironmentPool.cpp" />
+    <ClCompile Include="..\src\etrading\src\EnvironmentUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\YieldCurveUtil.cpp" />
+    <ClCompile Include="..\src\etrading\src\FeeLeg.cpp" />
+    <ClCompile Include="..\src\etrading\src\LegStaticData.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixedCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\FloatCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\CurveUtilities.cpp" />
+    <ClCompile Include="..\src\etrading\src\SwapCollection.cpp" />
+    <ClCompile Include="..\src\etrading\src\Swap.cpp" />
+    <ClCompile Include="..\src\etrading\src\Cashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\FeeSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\FixedLeg.cpp" />
+    <ClCompile Include="..\src\etrading\src\FloatLeg.cpp" />
+    <ClCompile Include="..\src\etrading\src\Leg.cpp" />
+    <ClCompile Include="..\src\etrading\src\Option.cpp" />
+    <ClCompile Include="..\src\etrading\src\OptionCashflow.cpp" />
+    <ClCompile Include="..\src\etrading\src\OptionFactory.cpp" />
+    <ClCompile Include="..\src\etrading\src\RateProvider.cpp" />
+    <ClCompile Include="..\src\etrading\src\RateProviderExternal.cpp" />
+    <ClCompile Include="..\src\etrading\src\ScheduleParameters.cpp" />
+    <ClCompile Include="..\src\etrading\src\EnrichedSchedule.cpp" />
+    <ClCompile Include="..\src\etrading\src\Volatility.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="version.rc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F7DF00D7-57A5-4CDF-9BBE-53E1FDA43083}</ProjectGuid>
+    <RootNamespace>ir</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

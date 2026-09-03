@@ -1,0 +1,58 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEPROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "CurveType",
+                "CurveIndexFrequency",
+                "StaticDataTable",
+                "IndexName",
+                "Currency",
+                "interpolation",
+                "yieldgen.interpolation",
+                "dfCurveName",
+                "Basis.interpolation"
+            ],
+            "COL_2": [
+                "FXFWD",
+                "QUARTERLY",
+                "FwdFXConstEUR",
+                "JPYDF_EURCSA",
+                "JPY",
+                "FN_SPLINEINTERPOLATION",
+                "FN_SPLINEINTERPOLATION",
+                "OIS",
+                "FN_SPLINEINTERPOLATION"
+            ]
+        },
+        {
+            "SK_NAME": "FWDFXCONST",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "leg1forecast",
+                "leg1discount",
+                "leg2forecast",
+                "leg2Discount",
+                "Target"
+            ],
+            "COL_2": [
+                "AGAINST:EURDF_USDCSA",
+                "AGAINST:OIS",
+                "TARGET:XccyBasis",
+                "TARGET:XccyBasis",
+                "Leg2Discount"
+            ]
+        }
+    ],
+    "NAME": "JPY_FXFWD_EURCSA"
+}

@@ -1,0 +1,14 @@
+generatorFunction,tryMeLWOBondZSpread
+
+bondObjectName,US912810QT88
+
+settlementDate,20180606
+
+bondPrice,101.203100000000006
+
+curveCollection,USDYC
+
+forecastCurve,USD3ML
+
+continuouslyCompounding,FALSE
+

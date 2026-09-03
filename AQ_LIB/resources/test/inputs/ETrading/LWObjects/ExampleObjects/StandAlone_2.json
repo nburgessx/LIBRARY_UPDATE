@@ -1,0 +1,16 @@
+{
+    "CACHED_OBJECT_TYPE": "EXAMPLE_STAND_ALONE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "THE_NUMBER",
+            "SK_NUMBER_OF_COLUMNS": 1,
+            "SK_COLUMN_TYPES": [
+                "DOUBLE"
+            ],
+            "COL_NAME": [
+                10.0
+            ]
+        }
+    ],
+    "NAME": "StandAlone_2"
+}

@@ -1,0 +1,11 @@
+generatorFunction,tryMeLWOTotalReturnSwapPV
+
+swapName,TRS_0.15_FEB2028@7
+
+creditModelName,CREDITMODEL1@5
+
+legName,Leg2:Float
+
+fixingTableNames
+key,col1
+

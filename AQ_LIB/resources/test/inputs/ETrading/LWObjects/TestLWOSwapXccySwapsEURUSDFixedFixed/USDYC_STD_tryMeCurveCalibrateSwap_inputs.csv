@@ -1,0 +1,124 @@
+generatorFunction,tryMeCurveCalibrateSwap
+
+curveCollection,USDYC
+
+staticDataTable,STD
+
+curveIndex,STD:USD3ML
+
+curveConv
+key,col1
+AsOfDate,42845
+Currency,USD
+basis.interpolation,FN_MONOTONECONVEXINTERPOLATION
+future.interpolation,FN_MONOTONECONVEXINTERPOLATION
+interpolation,FN_MONOTONECONVEXINTERPOLATION
+isadjustdf,FALSE
+isspotuse,FALSE
+isswaptenoradjust,FALSE
+yieldgen.interpolation,FN_MONOTONECONVEXINTERPOLATION
+isfrause,FALSE
+isfuturesuse,TRUE
+dfcurvename,OIS
+GenerateForwardsFromSwapsOnly,FALSE
+future.interpolation,FN_LINEARINTERPOLATION
+fra.interpolation,FN_LINEARINTERPOLATION
+
+moneyMarketConv
+key,col1
+calendar,NYB
+daycount,act/360
+slidingrule,following
+
+liborConv
+key,col1
+calendar,LNB:NYB
+daycount,act/360
+frequency,simple
+resetlag,2
+slidingrule,mod_following
+IsEomRoll,TRUE
+
+liborRates
+key,col1
+3M,0.0115317
+
+swapConv
+key,col1
+Calendar,LNB:NYB
+DayCount,30/360
+DayCountFix,30/360
+DayCountFloat,ACT/360
+Frequency,Semi-Annual
+FrequencyFloat,Quarterly
+Interpolation,FN_MONOTONECONVEXINTERPOLATION
+IsEomRoll,TRUE
+IsNewtonraphson,TRUE
+IsTimeInterpolation,TRUE
+Resetlag,2
+SlidingRule,MOD_FOLLOWING
+issimultaneouseq,TRUE
+optimizemethod,NL2SOL
+
+swapRates
+key,col1,col2
+5Y,0.018818,TRUE
+7Y,0.020353,TRUE
+10Y,0.021987,TRUE
+11Y,0.022422,TRUE
+12Y,0.022799,TRUE
+15Y,0.023587,TRUE
+20Y,0.0243,TRUE
+25Y,0.024553,TRUE
+30Y,0.024635,TRUE
+40Y,0.024512,TRUE
+
+fraConv
+key,col1
+calendar,NYB
+daycount,act/360
+resetlag,2
+slidingrule,MOD_FOLLOWING
+IsEomRoll,FALSE
+ApplyTension,FALSE
+TensionGap,2
+SmoothShortEnd,FALSE
+
+fra3mRates
+key,col1
+
+fra6mRates
+key,col1
+
+futureConv
+key,col1
+calendar,NYB
+daycount,act/360
+resetlag,2
+slidingrule,MOD_FOLLOWING
+MeanReversion,0.03
+ApplyTension,FALSE
+TensionGap,2
+SmoothShortEnd,FALSE
+
+futureRates
+key,col1,col2,col3,col4
+ED1  COMB Comdty,42907,42998,98.73,0.009
+ED2 COMB Comdty,42998,43089,98.63,0.009
+ED3 COMB Comdty,43089,43180,98.55,0.009
+ED4  COMB Comdty,43180,43271,98.47,0.009
+ED5  COMB Comdty,43271,43362,98.385,0.009
+ED6  COMB Comdty,43362,43453,98.29,0.009
+ED7  COMB Comdty,43453,43544,98.195,0.009
+ED8  COMB Comdty,43544,43635,98.135,0.009
+ED9 COMB Comdty,43635,43726,98.075,0.009
+ED10  COMB Comdty,43726,43817,98.015,0.009
+ED11  COMB Comdty,43817,43908,97.935,0.009
+ED12  COMB Comdty,43908,43999,97.89,0.009
+
+convexityAdjConv
+key,col1
+
+convexityAdjRates
+key,col1
+

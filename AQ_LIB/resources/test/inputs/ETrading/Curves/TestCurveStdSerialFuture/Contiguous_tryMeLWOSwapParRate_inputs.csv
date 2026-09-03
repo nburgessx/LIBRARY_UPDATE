@@ -1,0 +1,11 @@
+generatorFunction,tryMeLWOSwapParRate
+
+swapName,EDJ0_COMDTY_SWAP
+
+valuationSettingsLVB
+key,col1
+CURVECOLLECTION,Contiguous
+
+fixingTableNames
+key,col1
+

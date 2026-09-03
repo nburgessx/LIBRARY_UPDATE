@@ -1,0 +1,14 @@
+generatorFunction,tryMeLWOBondForwardPrice
+
+bondObjectName,DE0001102424
+
+settleDate,20180710
+
+forwardSettleDate,20180910
+
+price,102.468999999999994
+
+repoRate,-0.003210000000000
+
+repoDayCount,ACT/360
+

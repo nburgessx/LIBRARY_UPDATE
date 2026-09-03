@@ -1,0 +1,11 @@
+generatorFunction,tryMeLWOSwapParRate
+
+swapName,EURSWAP@6
+
+curveCollections
+key,col1
+EURYC,
+
+fixingTableNames
+key,col1
+

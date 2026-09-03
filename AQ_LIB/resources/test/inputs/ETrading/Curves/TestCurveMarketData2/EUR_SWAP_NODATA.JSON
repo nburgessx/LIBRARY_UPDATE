@@ -1,0 +1,76 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "MARKETDATAPROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Currency",
+                "CurveType",
+                "CurveIndexFrequency",
+                "AsOfDate"
+            ],
+            "COL_2": [
+                "EUR",
+                "SWAP",
+                "QUARTERLY",
+                44081
+            ]
+        },
+        {
+            "SK_NAME": "LIBORFIXINGS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE"
+            ],
+            "COL_1": [
+                "1M",
+                "3M",
+                "6M",
+                "12M"
+            ],
+            "COL_2": [
+                -0.0054514,
+                -0.0050671,
+                -0.0048529,
+                -0.0039786
+            ]
+        },
+        {
+            "SK_NAME": "FUTURES",
+            "SK_NUMBER_OF_COLUMNS": 6,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "INTEGER",
+                "INTEGER",
+                "DOUBLE",
+                "DOUBLE",
+                "STRING"
+            ],
+            "COL_1": [],
+            "COL_2": [],
+            "COL_3": [],
+            "COL_4": [],
+            "COL_5": [],
+            "COL_6": []
+        },
+        {
+            "SK_NAME": "SWAPS",
+            "SK_NUMBER_OF_COLUMNS": 3,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE",
+                "STRING"
+            ],
+            "COL_1": [],
+            "COL_2": [],
+            "COL_3": []
+        }
+    ],
+    "NAME": "EUR_SWAP_NODATA"
+}

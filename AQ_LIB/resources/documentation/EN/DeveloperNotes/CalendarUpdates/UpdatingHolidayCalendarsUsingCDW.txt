@@ -1,0 +1,22 @@
+Holiday Calendars can be sourced from CDW using the following link and query / request URL.
+
+Consolidated Data Warehouse
+https://cdwpp
+
+Request URL
+https://cdwpp:443/cdw/nonWorkingDays/1999-01-01/2069-01-01?limit=99999&sort=code&select=code%20day.date
+
+Request URL – Insert .CSV before “?” to get CSV file results
+https://cdwpp:443/cdw/nonWorkingDays/1999-01-01/2069-01-01.csv?limit=99999&sort=code&select=code%20day.date
+
+Formatting & Basic Checks
+•	Transpose Data
+•	Remove timestamp decoration
+•	Convert Dates to format using Excel function =text(date, “YYYYMMDD”)
+•	Then convert text to a number 
+•	Hard code Results
+•	Diff with last file
+•	Check diffs for main holiday centres LNB, NYB, TGT and TKB
+
+TODO:
+Next steps: automate this process

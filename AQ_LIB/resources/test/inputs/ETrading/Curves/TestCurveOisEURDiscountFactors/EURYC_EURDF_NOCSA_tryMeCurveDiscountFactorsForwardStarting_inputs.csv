@@ -1,0 +1,10 @@
+generatorFunction,tryMeCurveDiscountFactorsForwardStarting
+
+fromDates[],20160802
+
+toDates[],20170206,20170804,20180205,20180806,20190204,20190805,20200204,20200804,20210204,20210804
+
+curveCollection,EURYC
+
+curveIndex,EURDF_NOCSA
+

@@ -1,0 +1,10 @@
+generatorFunction,tryMeCurveDiscountFactorsFromYearFractions
+
+yearFractions[],0.25,0.5,1,2,5,10,15,20,25,30,40,50
+
+dayCount,ACT/365_ISDA
+
+curveCollection,USDYC
+
+curveIndex,OIS
+

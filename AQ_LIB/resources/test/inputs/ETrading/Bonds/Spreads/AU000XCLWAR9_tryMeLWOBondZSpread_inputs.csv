@@ -1,0 +1,14 @@
+generatorFunction,tryMeLWOBondZSpread
+
+bondObjectName,AU000XCLWAR9
+
+settlementDate,20180607
+
+bondPrice,95.907999799792293
+
+curveCollection,AUDYC
+
+forecastCurve,AUD3ML
+
+continuouslyCompounding,TRUE
+

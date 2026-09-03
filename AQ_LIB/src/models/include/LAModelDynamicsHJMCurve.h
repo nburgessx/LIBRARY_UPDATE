@@ -1,0 +1,88 @@
+#pragma once
+
+#ifdef __GNUG__
+#pragma interface
+#endif
+
+#include "LACoreTemplateType.h"
+#include "LAModelDynamicsCurve.h"
+#include "LAInterpolationBase.h"
+
+
+
+// ID for LARatesPathElementHJMCurve
+#define PE_HJMCURVE	9 
+
+
+
+///////////////////////////////////////////////////////////////////////
+/*! 
+    @brief Declaration of path element class that represents curve object for HJM
+*/
+class LARatesPathElementHJMCurve : public LARatesPathElementCurve
+{
+public:
+//  LIFECYCLE
+	// Default constructor
+	explicit LARatesPathElementHJMCurve(const DoubleArray& tenor, const DoubleArray& delta_tenor, double t = 0);
+	// Destructor
+	virtual ~LARatesPathElementHJMCurve();
+	// copy constructor
+	LARatesPathElementHJMCurve(const LARatesPathElementHJMCurve& v);
+
+//  QUERY
+								//======================================
+								// Check pathelement for this class ID
+	virtual bool                isTypeOf(pathelement_t id) const;
+								//======================================
+								// Make copy(clone) of this class
+	virtual LARatesPathElementBase*	
+								clone() const;// %%% COVARIANT RETURN %%%
+								//======================================
+								// Return this class ID
+	virtual pathelement_t		getType() const;
+
+	// equal operator
+    /*!
+	    @param[in] a source object
+        @return copy object
+    */
+    virtual	LARatesPathElementHJMCurve&
+								operator = (const LARatesPathElementHJMCurve& a);
+
+	// get discount bond price
+	virtual double				getP (double T) const;
+	// set value
+	/*!
+		@param[in] a value to set
+	*/	
+	virtual void				set(const SCALARARRAY& a) 
+								{	
+									int i, j;
+									for (i = a.size() - 1, j = mValue.size() - 1; j >= 0; j--, i--)
+										mValue[j] = a[i];
+								}
+	// set value
+	virtual void				set (const LARatesPathElementBase& a);
+
+
+	// set start time of this curve
+	virtual void				set_t (double t); 
+	void						setInterpolationMethod(LAInterpolationBase* pinter); 
+
+private:
+	// set start time of this curve
+	void						set_t (void); 
+	// clear data
+	void						clear();
+
+	int*						mpRefCount;		// reference counter of common data   
+
+protected:
+//	SCALARARRAY					mData_L;		// libor
+	DoubleArray*				mpTenor;		// tenor
+	DoubleArray*				mpDeltaTenor;	// delta tenor
+	SCALARARRAY*				mpInitialData_L;// initial libor
+	const LARatesPathElementCurve*	mpInitialCurve;	// initial curve
+	LAInterpolationBase*		mpInter;	// pointer to interpolation function
+};

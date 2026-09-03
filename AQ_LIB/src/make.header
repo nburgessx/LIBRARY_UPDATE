@@ -1,0 +1,54 @@
+RH_VER=$(shell cat /etc/redhat-release)
+ifeq ($(findstring release 7,$(RH_VER)), release 7)
+IS_RH7 = 1
+else
+IS_RH7 = 0
+endif
+
+ifeq "$(TOPDIR)" ""
+    TOPDIR = .
+endif
+
+IS_INTEL=$(shell if [ -e /opt/intel/bin/icpc ]; then echo "1"; else echo ""; fi)
+ifeq "$(IS_INTEL)" "1"
+        CC = icpc
+        CXX = icpc
+else
+        CC = g++
+        CXX = g++
+endif
+AR = ar rcs
+
+QLIB_HOME=/workspace/svc_quant_dev/library/QuantLib-1.15
+
+
+INCLUDE = -I$(TOPDIR)/math/include -I$(TOPDIR)/models/include  -I$(TOPDIR)/calibration/include  -I$(QLIB_HOME)
+
+
+
+QLIB_LIB = $(QLIB_HOME)/ql/.libs/libQuantLib.a
+
+# QLIB_LIB = -L$(QLIB_HOME)/ql/.libs -lQuantLib
+
+EXT_LIBS = $(QLIB_LIB)
+
+
+
+
+CFLAGS = -O3 -Wall -DXLLAPLI -DNO_CHECKDEPENDENCY -DZEROFLOOR
+
+CFLAGS += -fPIC -std=c++14 
+
+CFLAGS := $(CFLAGS) -DUSE_QUANTLIB_SVD
+
+LIBS += -L$(TOPDIR)/lib
+LIBS +=  -lcalibration -lmodels -lmath  $(EXT_LIBS) -lpthread
+
+SRCS := $(wildcard *.cpp)
+
+OBJS := $(patsubst %.cpp,%.o,$(SRCS))
+
+OUTPUT = 
+LIBA = 
+EXEC = 
+

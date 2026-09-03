@@ -1,0 +1,38 @@
+{
+    "CACHED_OBJECT_TYPE": "FREE_OBJECT",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "SWAPS@93",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "BPSA1V3 ICPL Curncy",
+                "BPSA2V3 ICPL Curncy",
+                "BPSA3V3 ICPL Curncy",
+                "BPSA4V3 ICPL Curncy",
+                "BPSA5V3 ICPL Curncy",
+                "BPSA7V3 ICPL Curncy",
+                "BPSA10V3 ICPL Curncy",
+                "BPSA15V3 ICPL Curncy",
+                "BPSA20V3 ICPL Curncy",
+                "BPSA30V3 ICPL Curncy"
+            ],
+            "COL_2": [
+                "1Y",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y",
+                "7Y",
+                "10Y",
+                "15Y",
+                "20Y",
+                "30Y"
+            ]
+        }
+    ],
+    "NAME": "SWAPS@93"
+}

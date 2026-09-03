@@ -1,0 +1,16 @@
+generatorFunction,tryMeLWOBondRepoRateFromFuture
+
+bondObjectName,DE0001102424
+
+settleDate,20180710
+
+deliveryDate,20180910
+
+price,102.468999999999994
+
+futurePrice,162.789999999999992
+
+conversionFactor,0.628154000000000
+
+repoDayCount,ACT/360
+

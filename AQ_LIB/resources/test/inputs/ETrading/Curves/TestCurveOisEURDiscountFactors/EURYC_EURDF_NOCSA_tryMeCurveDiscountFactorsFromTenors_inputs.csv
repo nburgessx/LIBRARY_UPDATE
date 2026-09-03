@@ -1,0 +1,12 @@
+generatorFunction,tryMeCurveDiscountFactorsFromTenors
+
+tenors[],6M2D,1Y2D,1Y6M2D,2Y2D,2Y6M2D,3Y2D,3Y6M2D,4Y2D,4Y6M2D,5Y2D
+
+curveCollection,EURYC
+
+curveIndex,EURDF_NOCSA
+
+businessDayAdj,MOD_FOLLOWING
+
+calendar,TGT
+

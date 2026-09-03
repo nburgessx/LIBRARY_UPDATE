@@ -1,0 +1,70 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "BOND_PARAMETER": [
+                "ACCRUALBUSINESSDAYADJUSTMENT",
+                "ACCRUALCALENDAR",
+                "ACCRUALSTARTDATE",
+                "BONDDESCRIPTION",
+                "BONDTYPE",
+                "CALCULATIONTYPE",
+                "COUPON",
+                "CURRENCY",
+                "DAYCOUNT",
+                "EXDIVIDENDBUSINESSDAYADJUSTMENT",
+                "EXDIVIDENDTENOR",
+                "FACEVALUE",
+                "FIRSTCOUPONDATE",
+                "FREQUENCY",
+                "ISCLEANPRICE",
+                "ISIN",
+                "ISSUEDATE",
+                "LASTCOUPONDATE",
+                "MATURITYDATE",
+                "NOTIONALEXCHANGE",
+                "PAYMENTBUSINESSDAYADJUSTMENT",
+                "PAYMENTCALENDAR",
+                "PAYMENTLAG",
+                "PAYRECEIVE",
+                "ROLLDAY",
+                "YIELDTYPE"
+            ],
+            "BOND_VALUE": [
+                "NO_CHANGE",
+                "LNB",
+                "39717",
+                "EH5591308 Govt",
+                "FIXED",
+                "Type26",
+                "0.045",
+                "GBP",
+                "ACT/ACT",
+                "PRECEDING",
+                "6D",
+                "1000000",
+                "39879",
+                "Semi-Annual",
+                "TRUE",
+                "GB00B39R3F84",
+                "39717",
+                "43350",
+                "43531",
+                "START_AND_END",
+                "NO_CHANGE",
+                "LNB",
+                "0D",
+                "RECEIVE",
+                "",
+                "YIELD-TO-MATURITY"
+            ]
+        }
+    ],
+    "NAME": "BOND22"
+}

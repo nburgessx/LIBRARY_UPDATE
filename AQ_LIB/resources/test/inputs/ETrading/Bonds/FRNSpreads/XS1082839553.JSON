@@ -1,0 +1,68 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "BOND_PARAMETER": [
+                "ACCRUALBUSINESSDAYADJUSTMENT",
+                "ACCRUALCALENDAR",
+                "ACCRUALSTARTDATE",
+                "BONDDESCRIPTION",
+                "BONDQUOTECONVENTION",
+                "BONDTYPE",
+                "CALCULATIONTYPE",
+                "COUPON",
+                "CURRENCY",
+                "DAYCOUNT",
+                "FACEVALUE",
+                "FIRSTCOUPONDATE",
+                "FREQUENCY",
+                "ISCLEANPRICE",
+                "ISIN",
+                "ISSUEDATE",
+                "LASTCOUPONDATE",
+                "MATURITYDATE",
+                "NOTIONALEXCHANGE",
+                "PAYMENTBUSINESSDAYADJUSTMENT",
+                "PAYMENTCALENDAR",
+                "PAYMENTLAG",
+                "PAYRECEIVE",
+                "YIELDTYPE",
+				"QUOTEDMARGIN"
+            ],
+            "BOND_VALUE": [
+                "MOD_FOLLOWING",
+                "LNB",
+                "01/07/2014",
+                "XS1082839553",
+                "3DP",
+                "FLOATER",
+                "Type21",
+                "0.0109938",
+                "GBP",
+                "ACT/365",
+                "1000000",
+                "01/10/2014",
+                "Quarterly",
+                "TRUE",
+                "XS1082839553",
+                "01/07/2014",
+                "01/04/2019",
+                "01/07/2019",
+                "START_AND_END",
+                "MOD_FOLLOWING",
+                "LNB",
+                "0D",
+                "RECEIVE",
+                "YIELD-TO-MATURITY",
+				"30"
+            ]
+        }
+    ],
+    "NAME": "XS1082839553"
+}

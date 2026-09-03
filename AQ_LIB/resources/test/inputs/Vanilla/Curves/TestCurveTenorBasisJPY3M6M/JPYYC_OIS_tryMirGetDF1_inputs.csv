@@ -1,0 +1,12 @@
+terms[],0.25,0.5,1,2,5,10,15,20,25,30,40,50
+
+curveID,JPYYC
+
+dayCount,ACT/360
+
+interpolation,Spline
+
+isBasisFlag,FALSE
+
+curveName,OIS
+

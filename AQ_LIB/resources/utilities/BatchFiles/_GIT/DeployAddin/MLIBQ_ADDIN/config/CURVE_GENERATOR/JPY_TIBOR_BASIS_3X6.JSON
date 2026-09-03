@@ -1,0 +1,184 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEPROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "Currency",
+                "CurveType",
+                "CurveIndexFrequency",
+                "StaticDataTable",
+                "IndexName",
+                "interpolation",
+                "yieldgen.interpolation",
+                "basis.interpolation",
+                "isFwdBasis",
+                "dfCurveName",
+                "isFraUse",
+                "FixingSource"
+            ],
+            "COL_2": [
+                "JPY",
+                "TENORBASIS",
+                "QUARTERLY",
+                "Tibor3M",
+                "Tibor3M:JPY3ML_TIBOR",
+                "FN_SPLINEINTERPOLATION",
+                "FN_SPLINEINTERPOLATION",
+                "FN_SPLINEINTERPOLATION",
+                "FALSE",
+                "OIS",
+                "TRUE",
+                "ITSELF"
+            ]
+        },
+        {
+            "SK_NAME": "LIBORFIXINGS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Calendar",
+                "Daycount",
+                "Frequency",
+                "Resetlag",
+                "SlidingRule"
+            ],
+            "COL_2": [
+                "TKB",
+                "ACT/360",
+                "Simple",
+                2,
+                "MOD_FOLLOWING"
+            ]
+        },
+        {
+            "SK_NAME": "FRAS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Calendar",
+                "DayCount",
+                "ResetLag",
+                "SlidingRule",
+                "ApplyTension",
+                "TensionGap"
+            ],
+            "COL_2": [
+                "TkB:LnB",
+                "ACT/360",
+                2,
+                "MOD_FOLLOWING",
+                "FALSE",
+                2
+            ]
+        },
+        {
+            "SK_NAME": "BASISSWAPS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "MarketName",
+                "IsLeg1Spread",
+                "Leg1cashlet.calendar",
+                "Leg1cashlet.daycount",
+                "Leg1cashlet.frequency",
+                "Leg1cashlet.slidingrule",
+                "Leg1cashlet.spotlag",
+                "Leg1forecast",
+                "Leg1discount",
+                "Leg1index.accessary",
+                "Leg1index.daycount",
+                "Leg1index.fixing.calendar",
+                "Leg1index.frequency",
+                "Leg1index.payment.calendar",
+                "Leg1index.resetlag",
+                "Leg1index.slidingrule",
+                "Leg2cashlet.calendar",
+                "Leg2cashlet.daycount",
+                "Leg2cashlet.frequency",
+                "Leg2cashlet.frequencycompound",
+                "Leg2cashlet.slidingrule",
+                "Leg2cashlet.spotlag",
+                "Leg2forecast",
+                "Leg2discount",
+                "Leg2index.accessary",
+                "Leg2index.daycount",
+                "Leg2index.fixing.calendar",
+                "Leg2index.frequency",
+                "Leg2index.payment.calendar",
+                "Leg2index.resetlag",
+                "Leg2index.slidingrule",
+                "Target",
+                "isSimultaneousEq",
+                "fwdinterpolation",
+                "isSameGridIndex",
+                "SpotRateTerm",
+                "isYieldSpreadCalc",
+                "Epsilon",
+                "MaxLoop",
+                "isFwdInter",
+                "IsEOMRoll",
+                "eomday"
+            ],
+            "COL_2": [
+                "3M6MBasis",
+                "FALSE",
+                "TkB:LnB",
+                "ACT/360",
+                "SEMI-ANNUAL",
+                "MOD_FOLLOWING",
+                2,
+                "Tibor6M",
+                "OIS",
+                "6M",
+                "ACT/360",
+                "TkB:LnB",
+                "SIMPLE",
+                "TkB:LnB",
+                2,
+                "MOD_FOLLOWING",
+                "TkB:LnB",
+                "ACT/360",
+                "QUARTERLY",
+                "QUARTERLY",
+                "MOD_FOLLOWING",
+                2,
+                "STD",
+                "OIS",
+                "3M",
+                "ACT/360",
+                "TkB:LnB",
+                "SIMPLE",
+                "TkB:LnB",
+                2,
+                "MOD_FOLLOWING",
+                "Leg2Forecast",
+                "TRUE",
+                "FN_SPLINEINTERPOLATION",
+                "TRUE",
+                "3M",
+                "FALSE",
+                1e-9,
+                1000,
+                "FALSE",
+                "TRUE",
+                31
+            ]
+        }
+    ],
+    "NAME": "JPY_TIBOR_BASIS_3X6"
+}

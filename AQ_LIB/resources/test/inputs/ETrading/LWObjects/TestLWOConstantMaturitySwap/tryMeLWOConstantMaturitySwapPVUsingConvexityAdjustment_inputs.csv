@@ -1,0 +1,15 @@
+generatorFunction,tryMeLWOConstantMaturitySwapPVUsingConvexityAdjustment
+
+swapName,CMS1@18
+
+curveCollections
+key,col1
+USDYC,
+
+convexityAdjustment,0.000000000000000
+
+legName,
+
+fixingTableNames
+key,col1
+

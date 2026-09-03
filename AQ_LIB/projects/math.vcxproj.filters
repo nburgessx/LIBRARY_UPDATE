@@ -1,0 +1,830 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="include\Integration">
+      <UniqueIdentifier>{daf04f0c-a8f3-4b40-82f0-98b1c7ba677e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Interpolation">
+      <UniqueIdentifier>{8a7e8c74-325a-48c2-b9de-14a083096a58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\DataTypes">
+      <UniqueIdentifier>{807342a0-9294-4812-a3d0-9326efcf8a9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Definitions">
+      <UniqueIdentifier>{3cbe48c9-3f46-47e2-a324-7e4966613fcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Distributions">
+      <UniqueIdentifier>{f1f0ad6a-c963-4351-9bfb-d46ebdd8b02d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ErrorHandling">		
+      <UniqueIdentifier>{780f5fe2-0a44-4184-93d3-24bb775e79e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Factory">
+      <UniqueIdentifier>{7f287846-21e4-4caa-9499-05ca3dba1fb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Math">
+      <UniqueIdentifier>{ad96b1c1-f253-493d-8a70-0094eaf19f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\RandomVariates">
+      <UniqueIdentifier>{90268723-c833-4f78-9b54-953e6aadf2b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Optimization">
+      <UniqueIdentifier>{05be6c19-b4ab-465f-8c83-c3fa520fb34e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Infrastructure">
+      <UniqueIdentifier>{29682bdc-d06d-4490-bce6-5639c70852ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\DataTypes">
+      <UniqueIdentifier>{79f7704e-66c8-4257-9243-7bc91b555be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Distributions">
+      <UniqueIdentifier>{a2a8daa9-15c2-4324-937c-ec426724bbec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ErrorHandling">
+      <UniqueIdentifier>{ee711f4d-fc08-4c70-ac41-9d1c02fef0a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Factory">
+      <UniqueIdentifier>{ce51b039-26b8-4a16-837b-d47ae23108bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Infrastructure">
+      <UniqueIdentifier>{d27649aa-4eb8-4adf-aae5-dd9e993b5342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Integration">
+      <UniqueIdentifier>{2e822c64-8f3b-40cc-90f1-cbb6294c86da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Interpolation">
+      <UniqueIdentifier>{b9643c69-e5df-4e0b-8a7b-9e0c388f76d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Math">
+      <UniqueIdentifier>{c7686f25-2a0c-4d04-a5f6-e1de832aa667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Optimization">
+      <UniqueIdentifier>{6fb03655-917d-43be-9873-61bee281ba68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\RandomVariates">
+      <UniqueIdentifier>{965133d8-0aef-47c0-b2cf-e3286d79a8c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\StaticData">
+      <UniqueIdentifier>{dd8e5589-97eb-444e-8517-d56b7b266597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\StaticData\Objects">
+      <UniqueIdentifier>{81e108bc-fb06-4cfb-b7fb-8db1d54ee76f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\StaticData\Types">
+      <UniqueIdentifier>{8ad5a737-64ad-464a-8e73-87ec7ef2db00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\StaticData">
+      <UniqueIdentifier>{30f7b0a3-24d4-40b5-b388-3510957040e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\StaticData\Objects">
+      <UniqueIdentifier>{02368da7-4186-4076-9618-4cbe723be482}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\StaticData\Types">
+      <UniqueIdentifier>{0cee6d7a-1ae8-4a22-a2be-a2eaf690e36e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\MathMethods">
+      <UniqueIdentifier>{8d3c57a1-8af6-450e-9536-d8ca8e1a8d19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\MathMethods">
+      <UniqueIdentifier>{0fa2dc8a-6d85-4deb-a507-363bbaebc067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Enums">
+      <UniqueIdentifier>{a888ec10-6459-4355-90a5-6c470f08d98c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Enums">
+      <UniqueIdentifier>{694cef22-2a98-4493-ac7e-96aec6a4d1e0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\math\include\LADate.h">
+      <Filter>include\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADateTime.h">
+      <Filter>include\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAMathCalendar.h">
+      <Filter>include\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAMathCalendarSet.h">
+      <Filter>include\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAObject.h">
+      <Filter>include\StaticData\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAObjectHolder.h">
+      <Filter>include\StaticData\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAObjectMaster.h">
+      <Filter>include\StaticData\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAObjectPool.h">
+      <Filter>include\StaticData\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceDataCalendar.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceDataConvention.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceDataDayCount.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceDataFunction.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceDataFunctions.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceDataInterpolation.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceDataRand.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceDataSlidingRule.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataBasics.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataHolder.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataMatrix.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataMultiReference.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataProcedure.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataReference.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataValuation.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataVector.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LABivariateDistribution.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LABivariateGaussianCopula.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LABivariateNormalDistribution.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LABivariatePowerCopula.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LABivariateStudentTCopula.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LABivariateStudentTDistribution.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAGaussHermite.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAGaussianCopula.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAGaussianQuadrature.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAGaussLaguerre.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAGaussLegendre.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAGaussLobattointegral.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAIntegralBase.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAIntegralMC.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADist.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAConstrainedSplineInterpolation.h">
+      <Filter>include\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAInterpolationBase.h">
+      <Filter>include\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LALinearInterpolation.h">
+      <Filter>include\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LALinearSplineInterpolation.h">
+      <Filter>include\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAMonotoneConvexInterpolation.h">
+      <Filter>include\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LABoxMuller.h">
+      <Filter>include\RandomVariates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAEulerIntegral.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACholeskyDecompSC.h">
+      <Filter>include\RandomVariates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LABrownianBridge.h">
+      <Filter>include\RandomVariates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAFindRootBase.h">
+      <Filter>include\Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAFindRootBrent.h">
+      <Filter>include\Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAFTQuasiRandGF.h">
+      <Filter>include\RandomVariates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAFTQuasiRandGS.h">
+      <Filter>include\RandomVariates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAOptimumBase.h">
+      <Filter>include\Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAOptimumBFGS.h">
+      <Filter>include\Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAOptimumBrent.h">
+      <Filter>include\Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LANl2sol.h">
+      <Filter>include\Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LASobol.h">
+      <Filter>include\RandomVariates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LARomberg.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACombinationFunc.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACompositeFunc.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAConstant.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADivideFunc.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAExpFunc.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAFunction.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAFunctionBase.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAFunctionVector.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAMinFunc.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAMaxFunc.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAQuadraticFunc.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LARandBase.h">
+      <Filter>include\RandomVariates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAStudentTDistribution.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAUnivariateDistribution.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LANormalDistribution.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAMersenneTwister.h">
+      <Filter>include\RandomVariates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAParabolicInterpolation.h">
+      <Filter>include\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LASplineInterpolation.h">
+      <Filter>include\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAStepInterpolation.h">
+      <Filter>include\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAAntithetic.h">
+      <Filter>include\RandomVariates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAString.h">
+      <Filter>include\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceLSTargetFunction.h">
+      <Filter>include\Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceTargetFunction.h">
+      <Filter>include\Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAProductDistribution.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAMatrix.h">
+      <Filter>include\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LANumericalConstants.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreFunctionBase.h">
+      <Filter>include\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreFunctionHolder.h">
+      <Filter>include\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAFunctionManager.h">
+      <Filter>include\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAFunctionUtilities.h">
+      <Filter>include\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreAutoPtr.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreLockControl.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreTemplateType.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreUtil.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAMathDefine.h">
+      <Filter>include\Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreReferencePool.h">
+      <Filter>include\StaticData\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreProcedure.h">
+      <Filter>include\StaticData\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreValuation.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAMathValuableEntity.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAAlgorithm.h">
+      <Filter>include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LABasic.h">
+      <Filter>include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAFactorModel.h">
+      <Filter>include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataObjHolder.h">
+      <Filter>include\StaticData\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataBase.h">
+      <Filter>include\StaticData\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataCSVFileLoader.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataFile.h">
+      <Filter>include\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAIntegratedFunc.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LALinearFunc.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAShiftFunc.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LA1DNormDist.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LABivariateCopula.h">
+      <Filter>include\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LA1DDataSet.h">
+      <Filter>include\Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LA1DIntegral.h">
+      <Filter>include\Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LA1DPolynomialFunc.h">
+      <Filter>include\MathMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LADataInstance.h">
+      <Filter>include\StaticData\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreAppError.h">
+      <Filter>include\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreError.h">
+      <Filter>include\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreErrorLog.h">
+      <Filter>include\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LACoreSystemError.h">
+      <Filter>include\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceDataManager.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAPriceDataType.h">
+      <Filter>include\StaticData\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAMonotoneSplineInterpolation.h">
+      <Filter>include\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LALinearMonotoneSplineInterpolation.h">
+      <Filter>include\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\CoreEnumerations.h">
+      <Filter>include\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\ETradingException.h">
+      <Filter>include\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\ExceptionMacros.h">
+      <Filter>include\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\include\LAEnumConversion.h">
+      <Filter>include\Enums</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\math\src\LADate.cpp">
+      <Filter>src\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADateTime.cpp">
+      <Filter>src\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAString.cpp">
+      <Filter>src\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAMathCalendar.cpp">
+      <Filter>src\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAMathCalendarSet.cpp">
+      <Filter>src\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAMatrix.cpp">
+      <Filter>src\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataBasics.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataHolder.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataMatrix.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataMultiReference.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataProcedure.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataReference.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataValuation.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataVector.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAPriceDataCalendar.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAPriceDataConvention.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAPriceDataDayCount.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAPriceDataFunction.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAPriceDataFunctions.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAPriceDataInterpolation.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAPriceDataRand.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataBase.cpp">
+      <Filter>src\StaticData\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAPriceDataSlidingRule.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAObject.cpp">
+      <Filter>src\StaticData\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAObjectHolder.cpp">
+      <Filter>src\StaticData\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAObjectMaster.cpp">
+      <Filter>src\StaticData\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAObjectPool.cpp">
+      <Filter>src\StaticData\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACoreProcedure.cpp">
+      <Filter>src\StaticData\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACoreReferencePool.cpp">
+      <Filter>src\StaticData\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataObjHolder.cpp">
+      <Filter>src\StaticData\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACoreLockControl.cpp">
+      <Filter>src\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataCSVFileLoader.cpp">
+      <Filter>src\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataFile.cpp">
+      <Filter>src\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACoreAppError.cpp">
+      <Filter>src\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACoreError.cpp">
+      <Filter>src\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACoreErrorLog.cpp">
+      <Filter>src\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACoreSystemError.cpp">
+      <Filter>src\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACoreFunctionBase.cpp">
+      <Filter>src\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACoreFunctionHolder.cpp">
+      <Filter>src\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAFunctionManager.cpp">
+      <Filter>src\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAFunctionUtilities.cpp">
+      <Filter>src\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LA1DIntegral.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAEulerIntegral.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAGaussHermite.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAGaussianCopula.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAGaussianQuadrature.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAGaussLaguerre.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAGaussLegendre.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAGaussLobattointegral.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAIntegralBase.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAIntegralMC.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LARomberg.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAConstrainedSplineInterpolation.cpp">
+      <Filter>src\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAIntegratedFunc.cpp">
+      <Filter>src\Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LABivariateDistribution.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LABivariateGaussianCopula.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LABivariateNormalDistribution.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LABivariatePowerCopula.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LABivariateStudentTCopula.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LABivariateStudentTDistribution.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LABasic.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAFactorModel.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LABoxMuller.cpp">
+      <Filter>src\RandomVariates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LABrownianBridge.cpp">
+      <Filter>src\RandomVariates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACholeskyDecompSC.cpp">
+      <Filter>src\RandomVariates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAFindRootBase.cpp">
+      <Filter>src\Optimization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAFindRootBrent.cpp">
+      <Filter>src\Optimization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAOptimumBase.cpp">
+      <Filter>src\Optimization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAOptimumBFGS.cpp">
+      <Filter>src\Optimization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAOptimumBrent.cpp">
+      <Filter>src\Optimization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LASobol.cpp">
+      <Filter>src\RandomVariates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LARandBase.cpp">
+      <Filter>src\RandomVariates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LASplineInterpolation.cpp">
+      <Filter>src\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAStepInterpolation.cpp">
+      <Filter>src\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAStudentTDistribution.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAUnivariateDistribution.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAFTQuasiRandGF.cpp">
+      <Filter>src\RandomVariates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAFTQuasiRandGS.cpp">
+      <Filter>src\RandomVariates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADist.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LALinearInterpolation.cpp">
+      <Filter>src\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LALinearSplineInterpolation.cpp">
+      <Filter>src\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAInterpolationBase.cpp">
+      <Filter>src\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LANormalDistribution.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LANl2sol.cpp">
+      <Filter>src\Optimization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAAntithetic.cpp">
+      <Filter>src\RandomVariates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LA1DNormDist.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAExpFunc.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LALinearFunc.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAMaxFunc.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAParabolicInterpolation.cpp">
+      <Filter>src\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAMonotoneConvexInterpolation.cpp">
+      <Filter>src\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADivideFunc.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LA1DPolynomialFunc.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACombinationFunc.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACompositeFunc.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAMinFunc.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAMersenneTwister.cpp">
+      <Filter>src\RandomVariates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAShiftFunc.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAQuadraticFunc.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAFunctionVector.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAFunctionBase.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAFunction.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LACoreValuation.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAMathValuableEntity.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAConstant.cpp">
+      <Filter>src\MathMethods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAProductDistribution.cpp">
+      <Filter>src\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LA1DDataSet.cpp">
+      <Filter>src\Optimization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LADataInstance.cpp">
+      <Filter>src\StaticData\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAPriceDataManager.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAPriceDataType.cpp">
+      <Filter>src\StaticData\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAMonotoneSplineInterpolation.cpp">
+      <Filter>src\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LALinearMonotoneSplineInterpolation.cpp">
+      <Filter>src\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\CoreEnumerations.cpp">
+      <Filter>src\Enums</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\ETradingException.cpp">
+      <Filter>src\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\math\src\LAEnumConversion.cpp">
+      <Filter>src\Enums</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

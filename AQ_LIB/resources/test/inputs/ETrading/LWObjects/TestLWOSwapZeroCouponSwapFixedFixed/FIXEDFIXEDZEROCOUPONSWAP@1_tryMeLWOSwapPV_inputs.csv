@@ -1,0 +1,13 @@
+generatorFunction,tryMeLWOSwapPV
+
+swapName,FIXEDFIXEDZEROCOUPONSWAP@1
+
+curveCollections
+key,col1
+USDYC,
+
+legName,
+
+fixingTableNames
+key,col1
+

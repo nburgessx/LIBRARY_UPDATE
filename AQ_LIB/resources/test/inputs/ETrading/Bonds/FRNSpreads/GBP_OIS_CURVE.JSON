@@ -1,0 +1,362 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "GBP_OIS_CURVE",
+                "GBP_OIS",
+                "GBP_OIS_CURVE_MARKETDATA",
+                "GBPYC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "Currency",
+                        "interpolation",
+                        "yieldgen.interpolation"
+                    ],
+                    "COL_2": [
+                        "OIS",
+                        "DAILY",
+                        "OIS",
+                        "OIS:GBPOIS:GBPDF:GBPDF_GBPCSA:GBPDF_NOCSA",
+                        "GBP",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION"
+                    ]
+                },
+                {
+                    "SK_NAME": "OIS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycount",
+                        "frequency",
+                        "generatemethod",
+                        "resetlag",
+                        "firstrate",
+                        "slidingrule",
+                        "eomday",
+                        "iseomroll",
+                        "shorttermconvention",
+                        "longtermconvention",
+                        "longterm",
+                        "longterm.generatemethod",
+                        "Epsilon",
+                        "MaxLoop",
+                        "CompoundingMethod",
+                        "SmoothShortEnd"
+                    ],
+                    "COL_2": [
+                        "LNB",
+                        "ACT/365",
+                        "ANNUAL",
+                        "DAILYCOMPOUNDING",
+                        "0D",
+                        "SHORTMARKET",
+                        "MOD_FOLLOWING",
+                        31,
+                        "TRUE",
+                        "ARITHMETICAVERAGE",
+                        "LOBASIS",
+                        "3Y",
+                        "NONE",
+                        1.0000000000000003e-10,
+                        1000,
+                        "GEOMETRIC",
+                        "FALSE"
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBOROISBASIS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "Daycount",
+                        "Frequency",
+                        "SlidingRule"
+                    ],
+                    "COL_2": [
+                        "LNB",
+                        "ACT/365",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycountfix",
+                        "frequencyfix",
+                        "slidingrule"
+                    ],
+                    "COL_2": [
+                        "LNB",
+                        "ACT/365",
+                        "SEMI-ANNUAL",
+                        "MOD_FOLLOWING"
+                    ]
+                }
+            ],
+            "NAME": "GBP_OIS"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "GBP",
+                        "OIS",
+                        "DAILY",
+                        43392
+                    ]
+                },
+                {
+                    "SK_NAME": "OIS",
+                    "SK_NUMBER_OF_COLUMNS": 5,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING",
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "ON",
+                        "1W",
+                        "1M",
+                        "2M",
+                        "3M",
+                        "4M",
+                        "5M",
+                        "6M",
+                        "7M",
+                        "8M",
+                        "9M",
+                        "10M",
+                        "11M",
+                        "1Y",
+                        "18M",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y"
+                    ],
+                    "COL_2": [
+                        0.007017,
+                        0.00701,
+                        0.00705,
+                        0.00707,
+                        0.00708,
+                        0.00716,
+                        0.00729,
+                        0.00739,
+                        0.00752,
+                        0.00764,
+                        0.00774,
+                        0.00786,
+                        0.00798,
+                        0.00809,
+                        0.00876,
+                        0.00938,
+                        0.01043,
+                        0.01125,
+                        0.01185
+                    ],
+                    "COL_3": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_4": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_5": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBOROISBASISSPREADS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "7Y",
+                        "10Y",
+                        "15Y",
+                        "20Y",
+                        "30Y",
+                        "40Y",
+                        "50Y"
+                    ],
+                    "COL_2": [
+                        0.00123,
+                        0.00141,
+                        0.00157,
+                        0.0017,
+                        0.0018,
+                        0.00194,
+                        0.00208,
+                        0.00218,
+                        0.00222,
+                        0.00222,
+                        0.00222,
+                        0.00222
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "7Y",
+                        "10Y",
+                        "15Y",
+                        "20Y",
+                        "30Y",
+                        "40Y",
+                        "50Y"
+                    ],
+                    "COL_2": [
+                        0.00932,
+                        0.01079,
+                        0.01198,
+                        0.01292,
+                        0.01362,
+                        0.01467,
+                        0.01586,
+                        0.01692,
+                        0.01727,
+                        0.01716,
+                        0.01716,
+                        0.01716
+                    ]
+                }
+            ],
+            "NAME": "GBP_OIS_CURVE_MARKETDATA"
+        }
+    ],
+    "NAME": "GBP_OIS_CURVE"
+}

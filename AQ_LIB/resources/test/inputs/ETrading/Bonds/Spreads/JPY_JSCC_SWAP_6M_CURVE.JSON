@@ -1,0 +1,562 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "JPY_JSCC_SWAP_6M_CURVE",
+                "JPY_JSCC_SWAP_6M",
+                "JPY_JSCC_SWAP_6M_CURVE_MARKETDATA",
+                "JPYYC_JSCC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "Currency",
+                        "interpolation",
+                        "yieldgen.interpolation",
+                        "isfrause",
+                        "isfutureuse",
+                        "future.interpolation",
+                        "Frequency",
+                        "dfcurvename",
+                        "AlwaysCalcJoinDate",
+                        "FastRebuild"
+                    ],
+                    "COL_2": [
+                        "SWAP",
+                        "SEMI-ANNUAL",
+                        "STD",
+                        "STD:JPY6ML",
+                        "JPY",
+                        "FN_LINEARSPLINEINTERPOLATION",
+                        "FN_LINEARSPLINEINTERPOLATION",
+                        "TRUE",
+                        "FALSE",
+                        "FN_LINEARSPLINEINTERPOLATION",
+                        "SIMPLE",
+                        "OIS",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "MONEYMARKET",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "Slidingrule"
+                    ],
+                    "COL_2": [
+                        "TkB:LnB",
+                        "ACT/360",
+                        "FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBORFIXINGS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "Daycount",
+                        "Frequency",
+                        "Resetlag",
+                        "SlidingRule"
+                    ],
+                    "COL_2": [
+                        "LNB:TKB",
+                        "ACT/360",
+                        "Simple",
+                        2,
+                        "MOD_FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "ResetLag",
+                        "SlidingRule",
+                        "ApplyTension",
+                        "TensionGap"
+                    ],
+                    "COL_2": [
+                        "LNB:TKB",
+                        "ACT/360",
+                        2,
+                        "MOD_FOLLOWING",
+                        "FALSE",
+                        2
+                    ]
+                },
+                {
+                    "SK_NAME": "FUTURES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycount",
+                        "resetlag",
+                        "slidingrule",
+                        "MeanReversion",
+                        "ApplyTension",
+                        "TensionGap"
+                    ],
+                    "COL_2": [
+                        "LNB:TKB",
+                        "ACT/360",
+                        2,
+                        "MOD_FOLLOWING",
+                        0.03,
+                        "FALSE",
+                        2
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "DayCountFloat",
+                        "Frequency",
+                        "FrequencyFloat",
+                        "Resetlag",
+                        "SlidingRule",
+                        "IsNewtonraphson",
+                        "issimultaneouseq",
+                        "Epsilon",
+                        "MaxLoop",
+                        "iseomroll"
+                    ],
+                    "COL_2": [
+                        "LNB:TKB",
+                        "ACT/365",
+                        "ACT/360",
+                        "SEMI-ANNUAL",
+                        "SEMI-ANNUAL",
+                        2,
+                        "MOD_FOLLOWING",
+                        "TRUE",
+                        "TRUE",
+                        1e-9,
+                        1000,
+                        "TRUE"
+                    ]
+                }
+            ],
+            "NAME": "JPY_JSCC_SWAP_6M"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate",
+                        "",
+                        ""
+                    ],
+                    "COL_2": [
+                        "JPY",
+                        "SWAP",
+                        "SEMI-ANNUAL",
+                        43256,
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBORFIXINGS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "1M",
+                        "3M",
+                        "6M",
+                        "",
+                        ""
+                    ],
+                    "COL_2": [
+                        -0.0006097,
+                        -0.0002267,
+                        0.0002435,
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "1x7",
+                        "2x8",
+                        "3x9",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_2": [
+                        0.000275,
+                        0.0003,
+                        0.0003375,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "FUTURES",
+                    "SK_NUMBER_OF_COLUMNS": 5,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING",
+                        "STRING",
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_2": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_3": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_4": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_5": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "18M",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "12Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y",
+                        "35Y",
+                        "40Y",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_2": [
+                        0.0003375,
+                        0.000425,
+                        0.000525,
+                        0.0007125,
+                        0.0009125,
+                        0.0011375,
+                        0.0014,
+                        0.0017,
+                        0.0020125,
+                        0.00235,
+                        0.0027125,
+                        0.003475,
+                        0.004625,
+                        0.0062625,
+                        0.0072875,
+                        0.007925,
+                        0.0083625,
+                        0.008725,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            ],
+            "NAME": "JPY_JSCC_SWAP_6M_CURVE_MARKETDATA"
+        }
+    ],
+    "NAME": "JPY_JSCC_SWAP_6M_CURVE"
+}

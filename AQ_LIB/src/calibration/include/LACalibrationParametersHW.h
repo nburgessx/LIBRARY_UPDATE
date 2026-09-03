@@ -1,0 +1,48 @@
+/*! @file
+    @brief  Calibration method create class
+*/
+//  2008, Mizuho International London.
+#ifndef LACalibrationParametersHW_h
+#define LACalibrationParametersHW_h
+////X///////////////////X///////////////////////////////X///////////////////
+//  NAME        :       LACalibrationParametersHW.h
+//
+//  DESCRIPTION :         Calibration info create class
+//                      
+//  SEE ALSO    :       
+//  VIRSION		:
+//  STATUS      :       
+////X///////////////////X///////////////////////////////X///////////////////
+
+
+#include "LACalibrationParameters.h"
+
+
+
+
+
+//===================== Class Declare LACalibrationParametersHW==================================
+/*! 
+    @brief Calibration method create class
+	
+
+*/
+class LACalibrationParametersHW : public LACalibrationParameters
+{
+public:
+	// constructor
+	explicit LACalibrationParametersHW(void);
+	// destructor
+	virtual ~LACalibrationParametersHW(void);
+
+	//==============================================
+	// create  calibration info object
+	virtual LAString createCalibrationInfo(LAObjectPool &objPool, const LAString &ccy); 
+private:
+	//==============================================
+	// create  calibration  property value
+	LAString getCalibStaticDataValue(const LAString &key, const LAString &grid);
+};
+
+
+#endif

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <PropertyGroup>
+ <IncludePath>C:\Program Files (x86)\Planatech\XllPlus\7.0\VS10.0\include\;D:\develop\boost_1_55_0;D:\develop\QuantLib-1.3;D:\develop\VS10.0\include;$(IncludePath)</IncludePath>
+ </PropertyGroup>
+ <PropertyGroup>
+ <LibraryPath>C:\Program Files (x86)\Planatech\XllPlus\7.0\VS10.0\lib\win32\;D:\develop\boost_1_55_0\stage\x86\lib;D:\develop\QuantLib-1.3\lib;D:\develop\VS10.0\lib\win32;$(LibraryPath)</LibraryPath>
+ </PropertyGroup>
+</Project>

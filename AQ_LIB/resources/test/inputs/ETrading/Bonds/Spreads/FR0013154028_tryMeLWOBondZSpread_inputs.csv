@@ -1,0 +1,14 @@
+generatorFunction,tryMeLWOBondZSpread
+
+bondObjectName,FR0013154028
+
+settlementDate,20180607
+
+bondPrice,98.971000000000004
+
+curveCollection,EURYC
+
+forecastCurve,EUR6ML
+
+continuouslyCompounding,TRUE
+

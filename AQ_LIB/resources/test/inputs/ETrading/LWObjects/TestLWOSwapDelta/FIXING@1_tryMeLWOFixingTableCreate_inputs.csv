@@ -1,0 +1,12 @@
+generatorFunction,tryMeLWOFixingTableCreate
+
+tableName,FIXING@1
+
+currency,EUR
+
+curveTenor,6M
+
+fixingDates[],2017-Jan-01
+
+fixingValues[],0.000000000000
+

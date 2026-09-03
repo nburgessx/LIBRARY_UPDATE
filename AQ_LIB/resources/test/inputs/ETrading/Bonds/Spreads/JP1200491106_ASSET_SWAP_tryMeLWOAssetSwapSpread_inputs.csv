@@ -1,0 +1,16 @@
+generatorFunction,tryMeLWOAssetSwapSpread
+
+swapObjectName,JP1200491106_ASSET_SWAP
+
+bondObjectName,JP1200491106
+
+bondPrice,106.277000000000001
+
+valuationSettingsLVB
+key,col1
+CURVECOLLECTION,JPYYC_JSCC
+VALUATIONDATE,43257
+
+fixingTableNames
+key,col1
+

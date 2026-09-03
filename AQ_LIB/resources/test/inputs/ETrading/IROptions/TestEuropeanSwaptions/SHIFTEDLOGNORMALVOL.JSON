@@ -1,0 +1,32 @@
+{
+    "CACHED_OBJECT_TYPE": "VOLATILITY",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "VOLATILITY",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "VARIABLE_NAME": [
+                "ASOFDATE",
+                "CURRENCY",
+                "OBJECTTYPE",
+                "SHIFTSIZE",
+                "VOLATILITY",
+                "VOLDATASOURCE",
+                "VOLTYPE"
+            ],
+            "VARIABLE_VALUE": [
+                "43327",
+                "USD",
+                "VOLATILITY",
+                "0.03",
+                "0.2293",
+                "SWAPTION",
+                "SHIFTED_LOGNORMAL"
+            ]
+        }
+    ],
+    "NAME": "SHIFTEDLOGNORMALVOL"
+}

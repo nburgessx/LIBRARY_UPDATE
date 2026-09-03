@@ -1,0 +1,220 @@
+#ifndef CONSTANT_DECLARATIONS_H
+#define CONSTANT_DECLARATIONS_H
+
+
+//define excel rowmax
+#define RowMax 1024
+//define curve generate input register
+#define CURVEINPUT_CURVEID					 "CURVEID"
+#define CURVEINPUT_ASOFDATE					 "ASOFDATE"
+#define CURVEINPUT_CURRENCY					 "CURRENCY"
+#define CURVEINPUT_ISFUTUREUSE				 "ISFUTUREUSE"
+#define CURVEINPUT_FUTUREINTERPOLATION		 "FUTUREINTERPOLATION"
+#define CURVEINPUT_YIELDGENINTERPOLATION		 "YIELDGENINTERPOLATION"
+#define CURVEINPUT_INTERPOLATION				 "INTERPOLATION"
+#define CURVEINPUT_SPOTDATE					 "SPOTDATE"
+#define CURVEINPUT_DAYCOUNT					 "DAYCOUNT"
+#define CURVEINPUT_CALENDAR					 "CALENDAR"
+#define CURVEINPUT_SLIDINGRULE				 "SLIDINGRULE"
+#define CURVEINPUT_FREQUENCY					 "FREQUENCY"
+#define CURVEINPUT_TERM						 "TERM"
+#define CURVEINPUT_TYPE						"TYPE"
+#define CURVEINPUT_RATE						 "RATE"
+#define CURVEINPUT_STARTDATE					 "STARTDATE"
+#define CURVEINPUT_ENDDATE					 "ENDDATE"
+#define CURVEINPUT_MARKETRATE				 "MARKETRATE"
+#define CURVEINPUT_BASISFREQUENCY			 "BASISFREQUENCY"
+#define CURVEINPUT_BASISFREQUENCY1			 "BASISFREQUENCY1"
+#define CURVEINPUT_BASISFREQUENCY2			 "BASISFREQUENCY2"
+#define CURVEINPUT_BASISINDEX				 "BASISINDEX"
+#define CURVEINPUT_BASISINDEX1				 "BASISINDEX1"
+#define CURVEINPUT_BASISINDEX2				 "BASISINDEX2"
+#define CURVEINPUT_BASISCURRENCY1			 "BASISCURRENCY1"
+#define CURVEINPUT_BASISCURRENCY2			 "BASISCURRENCY2"
+#define CURVEINPUT_BASISDAYCOUNT				 "BASISDAYCOUNT"
+#define CURVEINPUT_BASISDAYCOUNT1			 "BASISDAYCOUNT1"
+#define CURVEINPUT_BASISDAYCOUNT2			 "BASISDAYCOUNT2"
+#define CURVEINPUT_BASISCALENDAR				 "BASISCALENDAR"
+#define CURVEINPUT_BASISCALENDAR1			 "BASISCALENDAR1"
+#define CURVEINPUT_BASISCALENDAR2			 "BASISCALENDAR2"
+#define CURVEINPUT_BASISSLIDINGRULE			 "BASISSLIDINGRULE"
+#define CURVEINPUT_BASISSLIDINGRULE1			 "BASISSLIDINGRULE1"
+#define CURVEINPUT_BASISSLIDINGRULE2			 "BASISSLIDINGRULE2"
+#define CURVEINPUT_BASISFUNCTION				 "BASISFUNCTION"
+#define CURVEINPUT_BASISINTERPOLATION		 "BASISINTERPOLATION"
+#define CURVEINPUT_ISBASISGEN				 "ISBASISGENERATE"
+#define CURVEINPUT_BASISTYPE					 "BASISTYPE"
+#define CURVEINPUT_ISCHECKDF				"ISCHECKDF"
+#define CURVEINPUT_ISAUDADJUST				"ISAUDADJUST"
+#define CURVEINPUT_SPOTLAG		            "SPOTLAG"
+#define CURVEINPUT_BASISINITIALRATE			"BASISINITIALRATE"
+#define CURVEINPUT_USINGLIBORLEG			"USINGLIBORLEG"
+#define CURVEINPUT_ISNEWTONRAPHSON			"ISNEWTONRAPHSON"
+#define CURVEINPUT_ISONFORSPOTADJUST		"ISONFORSPOTADJUST"
+#define CURVEINPUT_CURVETYPE				"CURVETYPE"
+#define CURVEINPUT_BASISLEG  			    "BasisLeg"
+#define CURVEINPUT_FREQUENCYFLOAT			"FREQUENCYFLOAT"
+#define CURVEINPUT_ISEOMROLL				"ISEOMROLL"
+//define datatype about curves
+#define O_N	 	"O_N"
+#define T_N	 	"T_N"
+#define ZERO 	"ZERORATE"
+#define PAR	 	"PARRATE"
+#define FWD	 	"FWDRATE"
+#define BASIS	"BASISRATE"
+//define sliding
+#define MOD_FOL	 "MOD_FOLLOWING" 
+#define FOL		 "FOLLOWING"
+#define MOD_PRE	 "MOD_PRECEDING"
+#define PRE		 "PRECEDING"
+#define NO_CH	 "NO_CHANGE"
+//define daycount 
+#define AC_AC	 "ACT/ACT"
+#define AC_365	 "ACT/365"
+#define AC_360	 "ACT/360"
+#define N3_360	 "30/360"
+#define E3_360	 "30E/360"
+#define AC_365I	 "ACT/365_ISDA"
+#define AC_365F	 "ACT/365FJ"
+#define AC_AC_ICMA	"ACT/ACT.ICMA"
+#define ONE		"1/1"
+#define HALF	"1/2"
+#define QUARTER	"1/4"
+//define optiontype 
+//hishida vannavolga
+#define PROB		 "PROB"
+#define TOUCH		 "TOUCH"
+#define NOTOUCH		 "NOTOUCH"
+//hishida vannavolga
+#define PREM		 "PREM"
+#define DELTA	 "DELTA"
+#define GAMMA	 "GAMMA"
+#define VEGA		 "VEGA"
+#define THETA	 "THETA"
+#define RHO		 "RHO"
+#define PHI		 "PHI"
+#define VANNA	 "VANNA"
+#define VOLGA	 "VOLGA"
+#define REBATE	 "REBATE"
+//define vanilla products
+#define AFF		 "AFFINE"
+#define GK		 "GK"
+#define DG		 "DIGITAL"
+#define BK		 "BLACK"
+#define BKPAYOFF "BLACKPAYOFF"
+#define SB		 "SINGLEBARRIER"
+#define DB		 "DOUBLEBARRIER"
+#define FD		 "FWDDELTA"
+#define CF       "CAP_FLOOR"
+
+//define buy or sell
+#define BUY		 "BUY"
+#define SELL		 "SELL"
+//define callput flag
+#define CALL		 "CALL"
+#define PUT		 "PUT"
+#define HIGH		 "HIGH"
+#define LOW		 "LOW"
+//define spot fwd
+#define SPOT		 "SPOT"
+#define FORWARD		 "FWD"
+#define FIRSTDIFF  "1STDIFF"
+#define SECONDDIFF  "2NDDIFF"
+//dedine payer receiver flag
+#define STRADDLE  "STRADDLE"
+#define PAYERS	 "PAYERS"
+#define RECEIVERS "RECEIVERS"
+//define cap floor flag
+#define CAP		 "CAP"
+#define FLOOR	 "FLOOR"
+//define barrier option method
+#define SBDOWN	 "DOWN"
+#define SBUP		 "UP"	
+#define SBOUT	 "OUT"	
+#define SBIN		 "IN"	
+//define double barrier option
+#define DBIN		 "IN"
+#define DBOUT	 "OUT"
+#define RHIGH	 "KNOCKOUTHIGH"
+#define RLOW		 "KNOCKOUTLOW"
+#define RIN		 "KNOCKIN"
+//define frequency
+#define BUSINESS_DAYS		"BUSINESS_DAYS"
+#define WEEKLY				"WEEKLY"
+#define NONE				"NONE"
+#define ANNUAL				"ANNUAL"
+#define SEMI_ANNUAL			"SEMI-ANNUAL"
+#define QUARTERLY			"QUARTERLY"
+#define MONTHLY				"MONTHLY"
+#define DAILY				"DAILY"
+#define SIMPLE				"SIMPLE"
+#define CONTINUOUS			"CONTINUOUS"
+#define LUNAR				"LUNAR"
+
+//define interpolation method c.f. LACoreComponentManager::getInterpolation()
+#define LINEAR						"LINEAR"
+#define SPLINE						"SPLINE"
+#define MONOTONESPLINE				"MONOTONESPLINE"
+#define MONOTONEPARABOLIC			"MONOTONEPARABOLIC"
+#define NATURALSPLINE				"NATURALSPLINE"
+#define CLAMPEDSPLINE				"CLAMPEDSPLINE"
+#define PARABOLIC					"PARABOLIC"
+#define LINEARSPLINE				"LINEARSPLINE"
+#define LINEARMONOTONESPLINE		"LINEARMONOTONESPLINE"
+#define LINEARMONOTONEPARABOLIC		"LINEARMONOTONEPARABOLIC"
+#define STEP						"STEP"
+#define RIGHTCONTINUOUS				"RIGHTCONTINUOUS"
+#define LEFTCONTINUOUS				"LEFTCONTINUOUS"
+#define CONSTRAINEDSPLINE			"CONSTRAINEDSPLINE"
+#define BASISLINEAR					"BASISLINEAR"
+#define BASISSTEP					"BASISSTEP"
+#define MONOTONECONVEX				"MONOTONECONVEX"
+
+//define curvegenerate type and rate type mirGetRate  
+#define MONEY	 "MONEY"
+#define LIBOR	 "LIBOR"
+#define SWAP		 "SWAP"
+#define FUTURE	 "FUTURE"
+#define DF		 "DF"
+#define PARRATE	 "PAR"
+#define ZERORATE	 "ZERO"
+#define LOBASIS	"LOBASIS"
+#define XCCYBASIS  "XCCYBASIS"
+#define THREESIXBASIS  "3M6MBASIS"
+#define CMS	 "CMS"
+#define FORWARDFX  "FORWARDFX"
+//define curve maangeing data type
+#define MANAGER			 "MANAGER"
+#define TOOL				 "TOOL"
+#define YIELDTOOLREF		 "YIELDTOOLREF"
+#define YIELDDATAREF		 "YIELDDATAREF"
+#define GRIDREFS			 "GRIDREFS"
+//define two dimensional interpolatin arguments
+#define INTERPINPUT_TERMVECTOR  "TERMVECTOR"
+#define INTERPINPUT_STRIKEMATRIX  "STRIKEMATRIX"
+#define INTERPINPUT_VOLMATRIX  "VOLMATRIX"
+#define INTERPINPUT_INTERPOLATION  "INTERPOLATION"
+#define INTERPINPUT_INTERPID  "INTERPID"
+#define INTERPINPUT_SPOTFX "SPOTFX"
+//define rate priority
+#define RATEPRIORITY "RATEPRIORITY"
+//curve type
+#define OISCURVE "OISCURVE"
+#define BASECURVE "BASECURVE"
+//define optimizemethod
+#define NR "NEWTONRAPHSON"
+#define NL2SOLALGO "NL2SOL"
+//////ERROR METHOD/////////
+
+//setUp PlainVanillaEntity//////
+#define MIR_BASE_MARKETPARAM_NAME	"marketparam1"
+
+
+
+
+#define ERMATH   "A mathematical operation produced a wrong number"
+enum{ERMATHINF_ = 1 , ERMATHNAN_ };
+
+//typedef std::vector<LAStringVector > LAStringMatrix;
+
+#endif

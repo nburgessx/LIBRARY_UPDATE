@@ -1,0 +1,192 @@
+// TestLWOSwapEURUSDXccySwap.cpp
+
+// Curves
+#include "TryMeCurveOis.h"
+#include "TryMeCurveStd.h"
+#include "TryMeCurveTenorBasis.h"
+#include "TryMeCurveXccyBasis.h"
+
+// Swap Creation and Pricing
+#include "tryMeLWOSwapCreation.h"
+#include "tryMeLWOSwapPricing.h"
+
+// Test Infrastructure
+#include "Dependency.h"   // IMPORTANT: Curve Macros are Here !!!
+#include "ReadDataFile.h"
+#include "CreateDataFile.h"
+#include "ResultsProcessor.h"
+#include <gTest/gTest.h>
+
+using etrading::ReadDataFile;
+using etrading::CreateDataFile;
+
+// Define the Test Input Folder Here
+#define TEST_DIR "ETrading/LWObjects/TestLWOSwapXccySwaps/"
+
+namespace
+{
+
+    // test tolerances and number of tests
+    // -----------------------------------
+    const double priceTolerance = 1e-2;
+    const double basisSpreadTolerance = 1e-8;
+    const int minTests = 6;
+
+    //
+    // curve input files
+    //
+    
+    extern const char USDYC_OIS[]			    = TEST_DIR "USDYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
+    extern const char USDYC_STD[]			    = TEST_DIR "USDYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_OIS[]			    = TEST_DIR "EURYC_OIS_tryMeCurveCalibrateOIS_inputs.csv";
+    extern const char EURYC_STD[]			    = TEST_DIR "EURYC_STD_tryMeCurveCalibrateSwap_inputs.csv";
+    extern const char EURYC_3M6M[]			    = TEST_DIR "EURYC_3M6M_tryMeCurveCalibrateBasis_inputs.csv";
+    extern const char EURYC_XCCY[]			    = TEST_DIR "EURYC_XCCY_tryMeCurveCalibrateBasis_inputs.csv";
+
+    //
+    // test call input and reference files
+    //
+    
+    extern const char xccySwapInputs[]	        = TEST_DIR "XCCY1@182_tryMeLWOSwapCreate_inputs";
+    extern const char priceInputs[]		        = TEST_DIR "XCCY1@182_tryMeLWOSwapPV_inputs";
+    extern const char priceOutputs[]		    = TEST_DIR "XCCY1@182_tryMeLWOSwapPV_outputs";
+    extern const char priceOutputs64[]		    = TEST_DIR "XCCY1@182_tryMeLWOSwapPV_outputs64_";
+    extern const char parSpreadInputs[]	        = TEST_DIR "XCCY1@182_tryMeLWOSwapParSpread_inputs";
+    extern const char parSpreadOutputs[]	    = TEST_DIR "XCCY1@182_tryMeLWOSwapParSpread_outputs";
+    extern const char parSpreadOutputs64[]	    = TEST_DIR "XCCY1@182_tryMeLWOSwapParSpread_outputs64_";
+
+
+}
+
+namespace google_test
+{
+
+    //
+    // Build the Yield Curve by calling the Curve Constructor Classes in the correct order, respecting curve dependencies.
+    //
+    // All curves name MUST be defined for the ME_BUILD_EURUSD_XCCY_CURVE macro to work.
+    // If any curve is not in use and not defined, simply assign a "" to the curve name.
+    //
+    ME_BUILD_EURUSD_XCCY_CURVE( TestLWOSwapEURUSDXccySwap, USDYC_OIS, USDYC_STD, EURYC_OIS, EURYC_STD, EURYC_3M6M, EURYC_XCCY );
+
+    //
+    // Call Test Fixture
+    //
+
+    TEST_F( TestLWOSwapEURUSDXccySwap, SNAPSHOT_HardCodedPVCheck )
+    {
+        int i = 0;
+        try
+        {
+            for ( i = 0; ; ++i )
+            {
+                // 1. Create the Input File Names and Append the TestCase Index + ".csv"
+                LAString xccyInputsFilename     = CreateDataFile::makeFilename( xccySwapInputs, i );
+                LAString priceInputsFilename    = CreateDataFile::makeFilename( priceInputs, i );
+                
+#if defined(GTEST32)
+                LAString priceOutputsFilename   = CreateDataFile::makeFilename( priceOutputs, i );
+#else
+                LAString priceOutputsFilename   = CreateDataFile::makeFilename( priceOutputs64, i );
+#endif
+
+                // 2. Load the Input Files
+                const ReadDataFile::Load tradeInputFile( xccyInputsFilename );
+                const ReadDataFile::Load priceInputFile( priceInputsFilename );
+                const ReadDataFile::Load priceOutputFile( priceOutputsFilename );
+        
+                // 3. Get the Trade Inputs & Create the Swap
+                std::string swapTradeName       = tradeInputFile["swapName"];
+                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                bool isXccySwap                 = tradeInputFile["isXccySwap"];
+                bool validateKeys               = tradeInputFile["validateKeys"];
+                
+                std::string createSwap          = validation_api::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                
+                // 4. Get the Price Inputs & Price the Swap
+                std::string swapName            = priceInputFile["swapName"];
+                LAStringMatrix curveCollectionLVB = priceInputFile["curveCollections"];
+                LAString legName                = priceInputFile.getOptional("legName", LAString() );
+                LAStringMatrix fixingTableLVB     = priceInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                
+                double actualSwapPrice          = validation_api::tryMeLWOSwapPV( swapName, curveCollectionLVB, legName, fixingTableLVB );
+                
+                // 5. Check the Test Results or Rebase
+                CheckTestResultsAndRebaseOnRequest( actualSwapPrice, TEST_DIR, priceOutputsFilename, priceTolerance );
+            }
+        }
+        catch( const ReadDataFile::LoadError& )
+        {
+            EXPECT_GT( i, minTests );
+        }
+        catch( const LACoreError& m )
+        {
+            std::cout <<  m.getMsg();
+            ASSERT_FALSE( true );
+        }
+        catch( const std::exception& e )
+        {
+            std::cout << e.what();
+            ASSERT_FALSE( true );
+        }
+    }
+
+    TEST_F( TestLWOSwapEURUSDXccySwap, SNAPSHOT_HardCodedParSpreadCheck )
+    {
+        int i = 0;
+        try
+        {
+            for ( i = 0; ; ++i )
+            {
+                // 1. Create the Input File Names and Append the TestCase Index + ".csv"
+                LAString xccyInputsFilename     = CreateDataFile::makeFilename( xccySwapInputs, i );
+                LAString parSpreadInputsFilename    = CreateDataFile::makeFilename( parSpreadInputs, i );
+                
+#if defined(GTEST32)
+                LAString parSpreadOutputsFilename   = CreateDataFile::makeFilename( parSpreadOutputs, i );
+#else
+                LAString parSpreadOutputsFilename   = CreateDataFile::makeFilename( parSpreadOutputs64, i );
+#endif
+
+                // 2. Load the Input Files
+                const ReadDataFile::Load tradeInputFile( xccyInputsFilename );
+                const ReadDataFile::Load priceInputFile( parSpreadInputsFilename );
+                const ReadDataFile::Load priceOutputFile( parSpreadOutputsFilename );
+        
+                // 3. Get the Trade Inputs & Create the Swap
+                std::string swapTradeName       = tradeInputFile["swapName"];
+                LAStringMatrix swapLVB            = tradeInputFile["swapLVB"];
+                LAStringMatrix swapPropertiesLVB  = tradeInputFile["swapPropertiesLVB"];
+                bool isXccySwap                 = tradeInputFile["isXccySwap"];
+                bool validateKeys               = tradeInputFile["validateKeys"];
+                
+                std::string createSwap          = validation_api::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                
+                // 4. Get the Par Spread Inputs & the Basis Spreads
+                std::string swapName            = priceInputFile["swapName"];
+                LAStringMatrix curveCollectionLVB = priceInputFile["curveCollections"];
+                LAStringMatrix fixingTableLVB     = priceInputFile.getOptional("fixingTableNames", LAStringMatrix() );
+                
+                double actualBasisSpread        = validation_api::tryMeLWOSwapParSpread( swapName, curveCollectionLVB, fixingTableLVB );
+                
+                // 5. Check the Test Results or Rebase
+                CheckTestResultsAndRebaseOnRequest( actualBasisSpread, TEST_DIR, parSpreadOutputsFilename, basisSpreadTolerance );
+            }
+        }
+        catch( const ReadDataFile::LoadError& )
+        {
+            EXPECT_GT( i, minTests );
+        }
+        catch( const LACoreError& m )
+        {
+            std::cout <<  m.getMsg();
+            ASSERT_FALSE( true );
+        }
+        catch( const std::exception& e )
+        {
+            std::cout << e.what();
+            ASSERT_FALSE( true );
+        }
+    }
+}

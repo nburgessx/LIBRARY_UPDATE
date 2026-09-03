@@ -1,0 +1,410 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "AUDOIS",
+                "AUD_OIS_LOB_1Y",
+                "AUDOIS-LIVE-MARKETDATA-2018-08-08",
+                "AUDYC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "Currency",
+                        "interpolation",
+                        "yieldgen.interpolation"
+                    ],
+                    "COL_2": [
+                        "OIS",
+                        "DAILY",
+                        "OIS",
+                        "OIS:AUDOIS:AUDDF:AUDDF_AUDCSA:AUDDF_NOCSA",
+                        "AUD",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION"
+                    ]
+                },
+                {
+                    "SK_NAME": "OIS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycount",
+                        "frequency",
+                        "generatemethod",
+                        "resetlag",
+                        "firstrate",
+                        "slidingrule",
+                        "eomday",
+                        "iseomroll",
+                        "shorttermconvention",
+                        "longtermconvention",
+                        "longterm",
+                        "longterm.generatemethod",
+                        "Epsilon",
+                        "MaxLoop",
+                        "CompoundingMethod",
+                        "SmoothShortEnd"
+                    ],
+                    "COL_2": [
+                        "SYB:LNB",
+                        "ACT/365",
+                        "ANNUAL",
+                        "DAILYCOMPOUNDING",
+                        "1D",
+                        "SHORTMARKET",
+                        "MOD_FOLLOWING",
+                        31,
+                        "TRUE",
+                        "ARITHMETICAVERAGE",
+                        "LOBASIS",
+                        "1Y",
+                        "NONE",
+                        1e-10,
+                        1000,
+                        "GEOMETRIC",
+                        "FALSE"
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBOROISBASIS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "frequency",
+                        "slidingRule"
+                    ],
+                    "COL_2": [
+                        "ANNUAL",
+                        "MOD_FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycountfix",
+                        "frequencyfix",
+                        "frequencyfix.1y",
+                        "frequencyfix.2y",
+                        "frequencyfix.3y",
+                        "slidingrule"
+                    ],
+                    "COL_2": [
+                        "SYB:LnB",
+                        "ACT/365",
+                        "Semi-Annual",
+                        "QUARTERLY",
+                        "QUARTERLY",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING"
+                    ]
+                }
+            ],
+            "NAME": "AUD_OIS_LOB_1Y"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "AUD",
+                        "OIS",
+                        "DAILY",
+                        43320
+                    ]
+                },
+                {
+                    "SK_NAME": "OIS",
+                    "SK_NUMBER_OF_COLUMNS": 5,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING",
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "ON",
+                        "1W",
+                        "1M",
+                        "2M",
+                        "3M",
+                        "4M",
+                        "5M",
+                        "6M",
+                        "9M",
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y",
+                        "40Y",
+                        "50Y"
+                    ],
+                    "COL_2": [
+                        0.015,
+                        0.015,
+                        0.0149915,
+                        0.0149965,
+                        0.015005,
+                        0.015016,
+                        0.015035,
+                        0.0150555,
+                        0.01514,
+                        0.01532,
+                        0.016335,
+                        0.01746,
+                        0.01905,
+                        0.02001,
+                        0.020935,
+                        0.02177,
+                        0.02246,
+                        0.023035,
+                        0.023585,
+                        0.025055,
+                        0.02519,
+                        0.02491,
+                        0.02434,
+                        0.02434,
+                        0.02434
+                    ],
+                    "COL_3": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_4": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_5": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBOROISBASISSPREADS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y",
+                        "40Y",
+                        "50Y"
+                    ],
+                    "COL_2": [
+                        0.0049625,
+                        0.00475,
+                        0.00455425,
+                        0.0058725,
+                        0.0057875,
+                        0.0057125,
+                        0.00565,
+                        0.0055875,
+                        0.005525,
+                        0.00545,
+                        0.00535,
+                        0.00535,
+                        0.005425,
+                        0.0055,
+                        0.0055,
+                        0.0055
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y",
+                        "40Y",
+                        "50Y"
+                    ],
+                    "COL_2": [
+                        0.02017,
+                        0.02099,
+                        0.02185,
+                        0.024238,
+                        0.025188,
+                        0.0261062,
+                        0.0269,
+                        0.0275917,
+                        0.0281708,
+                        0.0287,
+                        0.030375,
+                        0.03074995,
+                        0.030575,
+                        0.030175,
+                        0.030175,
+                        0.030175
+                    ]
+                }
+            ],
+            "NAME": "AUDOIS-LIVE-MARKETDATA-2018-08-08"
+        }
+    ],
+    "NAME": "AUDOIS"
+}

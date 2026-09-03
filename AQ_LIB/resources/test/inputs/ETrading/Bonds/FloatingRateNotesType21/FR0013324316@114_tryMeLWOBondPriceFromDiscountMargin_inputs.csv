@@ -1,0 +1,15 @@
+generatorFunction,tryMeLWOBondPriceFromDiscountMargin
+
+bondObjectName,FR0013324316@114
+
+settlementDate,20180710
+
+discountMargin,0.000254174335101
+
+assumedRate,-0.003210000000000
+
+indexToNextCoupon,-0.003295000000000
+
+annualizedNextCouponRate,0.000000000000000
+
+

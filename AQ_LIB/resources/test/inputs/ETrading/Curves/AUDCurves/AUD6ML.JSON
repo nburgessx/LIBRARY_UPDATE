@@ -1,0 +1,313 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "AUD6ML",
+                "AUD_SWAP_6M",
+                "AUD6ML-LIVE-MARKETDATA-2018-08-08",
+                "AUDYC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "Currency",
+                        "interpolation",
+                        "yieldgen.interpolation",
+                        "isfraUse",
+                        "isfutureUse",
+                        "future.interpolation",
+                        "Frequency",
+                        "dfcurvename",
+                        "IsSwapTenorAdjust",
+                        "FastRebuild"
+                    ],
+                    "COL_2": [
+                        "SWAP",
+                        "SEMI-ANNUAL",
+                        "AUD6ML",
+                        "AUD6ML",
+                        "AUD",
+                        "FN_LINEARSPLINEINTERPOLATION",
+                        "FN_LINEARSPLINEINTERPOLATION",
+                        "TRUE",
+                        "FALSE",
+                        "FN_LINEARSPLINEINTERPOLATION",
+                        "SIMPLE",
+                        "OIS",
+                        "FALSE",
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "MONEYMARKET",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "Slidingrule"
+                    ],
+                    "COL_2": [
+                        "SYB:LnB",
+                        "ACT/365",
+                        "FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBORFIXINGS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "Daycount",
+                        "Frequency",
+                        "Resetlag",
+                        "SlidingRule"
+                    ],
+                    "COL_2": [
+                        "SYB:LnB",
+                        "ACT/365",
+                        "Simple",
+                        1,
+                        "MOD_FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "ResetLag",
+                        "SlidingRule",
+                        "ApplyTension",
+                        "TensionGap"
+                    ],
+                    "COL_2": [
+                        "SYB:LnB",
+                        "ACT/365",
+                        1,
+                        "MOD_FOLLOWING",
+                        "FALSE",
+                        2
+                    ]
+                },
+                {
+                    "SK_NAME": "FUTURES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        ""
+                    ],
+                    "COL_2": [
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "DayCountFix",
+                        "DayCountFloat",
+                        "Frequency",
+                        "FrequencyFloat",
+                        "SlidingRule",
+                        "IsNewtonraphson",
+                        "issimultaneouseq",
+                        "Epsilon",
+                        "MaxLoop",
+                        "ResetLag",
+                        "IsEomRoll"
+                    ],
+                    "COL_2": [
+                        "SYB:LnB",
+                        "ACT/365",
+                        "ACT/365",
+                        "ACT/365",
+                        "Semi-Annual",
+                        "Semi-Annual",
+                        "MOD_FOLLOWING",
+                        "TRUE",
+                        "TRUE",
+                        1e-9,
+                        1000,
+                        1,
+                        "TRUE"
+                    ]
+                }
+            ],
+            "NAME": "AUD_SWAP_6M"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "AUD",
+                        "SWAP",
+                        "SEMI-ANNUAL",
+                        43320
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBORFIXINGS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "6M"
+                    ],
+                    "COL_2": [
+                        0.0216
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "1x7",
+                        "2x8",
+                        "3x9"
+                    ],
+                    "COL_2": [
+                        0.0218,
+                        0.02188,
+                        0.02187
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y",
+                        "40Y",
+                        "50Y"
+                    ],
+                    "COL_2": [
+                        0.02178,
+                        0.02255,
+                        0.02338,
+                        0.024238,
+                        0.025188,
+                        0.0261062,
+                        0.0269,
+                        0.0275917,
+                        0.0281708,
+                        0.0287,
+                        0.030375,
+                        0.03074995,
+                        0.030575,
+                        0.030175,
+                        0.030175,
+                        0.030175
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                }
+            ],
+            "NAME": "AUD6ML-LIVE-MARKETDATA-2018-08-08"
+        }
+    ],
+    "NAME": "AUD6ML"
+}

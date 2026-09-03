@@ -1,0 +1,207 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "MARKETDATAPROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Currency",
+                "CurveType",
+                "CurveIndexFrequency",
+                "AsOfDate"
+            ],
+            "COL_2": [
+                "USD",
+                "OIS",
+                "DAILY",
+                43796
+            ]
+        },
+        {
+            "SK_NAME": "OIS",
+            "SK_NUMBER_OF_COLUMNS": 5,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE",
+                "STRING",
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "ON",
+                "1W",
+                "2W",
+                "3W",
+                "1M",
+                "2M",
+                "3M",
+                "4M",
+                "5M",
+                "6M",
+                "9M",
+                "1Y",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y"
+            ],
+            "COL_2": [
+                0.0155,
+                0.0156,
+                0.01557,
+                0.01562,
+                0.015646,
+                0.015619,
+                0.015549,
+                0.015477,
+                0.015371,
+                0.015275,
+                0.014919,
+                0.014569,
+                0.013535,
+                0.01319,
+                0.01315,
+                0.01325
+            ],
+            "COL_3": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "COL_4": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "COL_5": [
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE"
+            ]
+        },
+        {
+            "SK_NAME": "LIBOROISBASISSPREADS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE"
+            ],
+            "COL_1": [
+                "1Y",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y",
+                "7Y",
+                "10Y",
+                "12Y",
+                "15Y",
+                "20Y",
+                "25Y",
+                "30Y",
+                "40Y",
+                "50Y"
+            ],
+            "COL_2": [
+                0.00264375,
+                0.00244375,
+                0.0023375,
+                0.0023,
+                0.0022875,
+                0.00226875,
+                0.00224375,
+                0.0022625,
+                0.0022375,
+                0.0022625,
+                0.0022475,
+                0.00225,
+                0.00225,
+                0.00225
+            ]
+        },
+        {
+            "SK_NAME": "SWAPS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE"
+            ],
+            "COL_1": [
+                "1Y",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y",
+                "7Y",
+                "10Y",
+                "12Y",
+                "15Y",
+                "20Y",
+                "25Y",
+                "30Y",
+                "40Y",
+                "50Y"
+            ],
+            "COL_2": [
+                0.017448,
+                0.016171,
+                0.015705,
+                0.015612,
+                0.01566,
+                0.015975,
+                0.016734,
+                0.017202,
+                0.01771,
+                0.018256,
+                0.018416,
+                0.018441,
+                0.018441,
+                0.018441
+            ]
+        }
+    ],
+    "NAME": "USD_OIS_CURVE_MARKETDATA"
+}

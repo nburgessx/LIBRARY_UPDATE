@@ -1,0 +1,56 @@
+
+// TestUtilitiesSetup.cpp
+#include <string>
+#include "tryMeUtilitySetup.h"
+#include "OMPThreadManager.h"
+
+// Include: Google Test Library
+#include <gTest/gTest.h>
+
+
+
+TEST( TestUtilitiesSetupMLIB, UNIT_SetupMLIB_and_TearDownMLIB_CheckForSuccess )
+{
+    // Check funtion does not fail
+    // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively
+    EXPECT_NO_THROW( validation_api::trySetupMLIB( "", "", "" ));
+    EXPECT_NO_THROW( validation_api::tryTearDownMLIB() );
+}
+
+
+TEST( TestUtilitiesSetupMLIB, UNIT_SetupMLIB_and_TearDownMLIB_CheckForInvalidPathInputs )
+{
+    // Check funtion correctly fails
+    // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively
+    EXPECT_ANY_THROW( validation_api::trySetupMLIB( "invalid ir.properties filepath", "", "" ));
+    EXPECT_NO_THROW( validation_api::tryTearDownMLIB() );
+
+    EXPECT_ANY_THROW( validation_api::trySetupMLIB( "", "invalid calendar filepath", "" ));
+    EXPECT_NO_THROW( validation_api::tryTearDownMLIB() );
+
+    EXPECT_ANY_THROW( validation_api::trySetupMLIB( "", "", "Invalid central bank calendar filepath" ));
+    EXPECT_NO_THROW( validation_api::tryTearDownMLIB() );
+
+    // Check function correctly passes
+    // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively
+    EXPECT_NO_THROW( validation_api::trySetupMLIB( "", "", "" ));
+    EXPECT_NO_THROW( validation_api::tryTearDownMLIB() );
+}
+
+TEST( TestParallelModeUsingOMP, UNIT_ParallelModeUsingOMP_EnableAndStatus_Methods )
+{
+    // Default Mode should be enabled = true
+    const bool defaultMode = etrading::getIsOMPEnabled();
+    EXPECT_EQ( true, defaultMode );
+
+    // Disable Parallel Mode
+    etrading::setIsOMPEnabled( false );
+    const bool disabledParallelMode = etrading::getIsOMPEnabled();
+    EXPECT_EQ( false, disabledParallelMode );
+
+    // Enable Parallel Mode
+    etrading::setIsOMPEnabled( true );
+    const bool enableParallelMode = etrading::getIsOMPEnabled();
+    EXPECT_EQ( true, enableParallelMode );
+}
+

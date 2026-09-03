@@ -1,0 +1,341 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "GBP_SWAP_3M_CURVE",
+                "GBP_SWAP_3M",
+                "GBP_SWAP_3M_CURVE_MARKETDATA",
+                "GBPYC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "Currency",
+                        "interpolation",
+                        "yieldgen.interpolation",
+                        "isfrause",
+                        "isfutureuse",
+                        "future.interpolation",
+                        "dfcurvename",
+                        "Frequency",
+                        "AlwaysCalcJoinDate",
+                        "FastRebuild"
+                    ],
+                    "COL_2": [
+                        "SWAP",
+                        "QUARTERLY",
+                        "STD",
+                        "STD:GBP3ML",
+                        "GBP",
+                        "FN_LINEARSPLINEINTERPOLATION",
+                        "FN_LINEARSPLINEINTERPOLATION",
+                        "FALSE",
+                        "TRUE",
+                        "FN_LINEARSPLINEINTERPOLATION",
+                        "OIS",
+                        "SIMPLE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "MONEYMARKET",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "Slidingrule"
+                    ],
+                    "COL_2": [
+                        "LNB",
+                        "ACT/360",
+                        "FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBORFIXINGS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "Daycount",
+                        "Frequency",
+                        "Resetlag",
+                        "SlidingRule"
+                    ],
+                    "COL_2": [
+                        "LNB",
+                        "ACT/365",
+                        "Simple",
+                        0,
+                        "MOD_FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Calendar"
+                    ],
+                    "COL_2": [
+                        "LNB"
+                    ]
+                },
+                {
+                    "SK_NAME": "FUTURES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycount",
+                        "resetlag",
+                        "slidingrule",
+                        "MeanReversion",
+                        "ApplyTension",
+                        "TensionGap"
+                    ],
+                    "COL_2": [
+                        "LNB",
+                        "ACT/360",
+                        0,
+                        "MOD_FOLLOWING",
+                        0.03,
+                        "FALSE",
+                        2
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "DayCountFloat",
+                        "Frequency",
+                        "FrequencyFloat",
+                        "interpolation",
+                        "Resetlag",
+                        "SlidingRule",
+                        "IsNewtonraphson",
+                        "issimultaneouseq",
+                        "Epsilon",
+                        "MaxLoop",
+                        "IsEomRoll"
+                    ],
+                    "COL_2": [
+                        "LNB",
+                        "ACT/365",
+                        "ACT/365",
+                        "SEMI-ANNUAL",
+                        "QUARTERLY",
+                        "FN_LINEARSPLINEINTERPOLATION",
+                        0,
+                        "MOD_FOLLOWING",
+                        "TRUE",
+                        "TRUE",
+                        1e-9,
+                        1000,
+                        "TRUE"
+                    ]
+                }
+            ],
+            "NAME": "GBP_SWAP_3M"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "GBP",
+                        "SWAP",
+                        "QUARTERLY",
+                        43322
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBORFIXINGS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "1M",
+                        "3M",
+                        "6M",
+                        "12M"
+                    ],
+                    "COL_2": [
+                        0.0072213,
+                        0.008055,
+                        0.0089925,
+                        0.0104081
+                    ]
+                },
+                {
+                    "SK_NAME": "FUTURES",
+                    "SK_NUMBER_OF_COLUMNS": 5,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "INTEGER",
+                        "INTEGER",
+                        "DOUBLE",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "L 1 Comdty",
+                        "L 2 Comdty",
+                        "L 3 Comdty",
+                        "L 4 Comdty"
+                    ],
+                    "COL_2": [
+                        43362,
+                        43453,
+                        43544,
+                        43635
+                    ],
+                    "COL_3": [
+                        43453,
+                        43544,
+                        43635,
+                        43726
+                    ],
+                    "COL_4": [
+                        99.17,
+                        99.13,
+                        99.07,
+                        99.01
+                    ],
+                    "COL_5": [
+                        0.007,
+                        0.007,
+                        0.007,
+                        0.007
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "10Y",
+                        "12Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y",
+                        "40Y",
+                        "50Y"
+                    ],
+                    "COL_2": [
+                        0.01,
+                        0.01091,
+                        0.01163,
+                        0.01223,
+                        0.01272,
+                        0.01318,
+                        0.0136,
+                        0.01431,
+                        0.01485,
+                        0.01531,
+                        0.01563,
+                        0.01562,
+                        0.01551,
+                        0.01551,
+                        0.01551
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                }
+            ],
+            "NAME": "GBP_SWAP_3M_CURVE_MARKETDATA"
+        }
+    ],
+    "NAME": "GBP_SWAP_3M_CURVE"
+}

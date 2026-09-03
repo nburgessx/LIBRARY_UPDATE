@@ -1,0 +1,20 @@
+Yield Curve Interpolation State Variables
+
+
+1. OIS Curve:         
+Zero rates
+
+
+2. Swap Curves:
+(a)	FRAs/Futures section: Discount factors
+(b)	Swaps section: logarithm of discount factors, i.e. r * t
+
+
+3. Basis curve:
+(a)	FX Forwards section: Discount factors
+(b)	Basis swaps section: Either, logarithm of target curve’s discount factors, or, logarithm of spreads added on top of the base curve
+
+
+4. FX Forward Constant and Cheapest-to-Deliver Curves:
+Discount factors are directly implied from discount factors of the three other curves
+

@@ -1,0 +1,44 @@
+/* 
+ * @brief			Swig interface to Java for function meUtilityRecord
+ * @Created:		26 May 2017
+ * @Author:			Nicholas Burgess
+ * @Department:		Quant Research & Analytics
+ *
+ * The copyright to the computer program(s) herein is the property of Mizuho International.
+ */
+
+#include "LAString.h"
+#include "TypeUtilities.h"
+
+#include "meUtilityRecord.h"
+#include "tryMeUtilityRecord.h"
+#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+
+
+/* @brief			validation interface for the meUtilityVersion function
+*  @param [in]		enable		True to enable the recording of tests
+*  @param [in]		folder		Output folder
+*  @param [in]		repeat		Allowed repeated tests
+*  @param [in]		startIndex	Start index for repeated tests
+*  @param [in]		maxIndex	Max index for repeated tests
+*  @return			A notification string
+*/
+std::string meUtilityRecord( bool enable,
+                             const std::string& folder,
+                             bool repeat,
+                             int startIndex,
+                             int maxIndex )
+{
+    MLIB_API_START
+    
+    // Input Marshalling 
+    LAString myFolder( folder.c_str() );
+        
+    // Calculate Result
+    LAString result = validation_api::tryMeUtilityRecord( enable, myFolder, repeat, startIndex, maxIndex );
+
+    // Return as std::string
+    return result.getCString();
+    
+    MLIB_API_END
+}

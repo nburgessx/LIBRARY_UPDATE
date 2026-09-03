@@ -1,0 +1,12 @@
+generatorFunction,tryMeLWOBondYield
+
+bondObjectName,BOND27
+
+settlementDates[],20180606
+
+prices[],136.955997072361
+
+yieldCalculationType,
+
+optimizePerformance,FALSE
+

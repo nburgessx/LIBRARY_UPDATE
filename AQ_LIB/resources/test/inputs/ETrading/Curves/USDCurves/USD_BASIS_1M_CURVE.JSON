@@ -1,0 +1,236 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "USD_BASIS_1M_CURVE",
+                "USD_BASIS_1X3",
+                "USD_BASIS_1X3_MARKETDATA",
+                "USDYC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "interpolation",
+                        "yieldgen.interpolation",
+                        "basis.interpolation",
+                        "isFwdBasis",
+                        "dfCurveName"
+                    ],
+                    "COL_2": [
+                        "USD",
+                        "TENORBASIS",
+                        "MONTHLY",
+                        "1M3MBasis",
+                        "1M3MBasis:USD1ML",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FALSE",
+                        "OIS"
+                    ]
+                },
+                {
+                    "SK_NAME": "BASISSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "MarketName",
+                        "IsLeg1Spread",
+                        "Leg1cashlet.calendar",
+                        "Leg1cashlet.daycount",
+                        "Leg1cashlet.frequency",
+                        "Leg1cashlet.slidingrule",
+                        "Leg1cashlet.spotlag",
+                        "Leg1forecast",
+                        "Leg1discount",
+                        "Leg1index.accessary",
+                        "Leg1index.daycount",
+                        "Leg1index.fixing.calendar",
+                        "Leg1index.frequency",
+                        "Leg1index.payment.calendar",
+                        "Leg1index.resetlag",
+                        "Leg1index.slidingrule",
+                        "Leg2cashlet.calendar",
+                        "Leg2cashlet.daycount",
+                        "Leg2cashlet.frequency",
+                        "Leg2cashlet.frequencycompound",
+                        "Leg2cashlet.slidingrule",
+                        "Leg2cashlet.spotlag",
+                        "Leg2forecast",
+                        "Leg2discount",
+                        "Leg2index.accessary",
+                        "Leg2index.daycount",
+                        "Leg2index.fixing.calendar",
+                        "Leg2index.frequency",
+                        "Leg2index.payment.calendar",
+                        "Leg2index.resetlag",
+                        "Leg2index.slidingrule",
+                        "Target",
+                        "isSimultaneousEq",
+                        "fwdinterpolation",
+                        "isSameGridIndex",
+                        "SpotRateTerm",
+                        "isYieldSpreadCalc",
+                        "Epsilon",
+                        "MaxLoop",
+                        "isFwdInter",
+                        "IsEOMRoll",
+                        "eomday"
+                    ],
+                    "COL_2": [
+                        "1M3MBasis",
+                        "FALSE",
+                        "LNB:NYB",
+                        "ACT/360",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING",
+                        2,
+                        "AGAINST:USD3ML",
+                        "AGAINST:OIS",
+                        "3M",
+                        "ACT/360",
+                        "LNB:NYB",
+                        "SIMPLE",
+                        "LNB:NYB",
+                        2,
+                        "MOD_FOLLOWING",
+                        "LNB:NYB",
+                        "ACT/360",
+                        "MONTHLY",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING",
+                        2,
+                        "STD",
+                        "OIS",
+                        "1M",
+                        "ACT/360",
+                        "LNB:NYB",
+                        "SIMPLE",
+                        "LNB:NYB",
+                        2,
+                        "MOD_FOLLOWING",
+                        "Leg2Forecast",
+                        "TRUE",
+                        "FN_SPLINEINTERPOLATION",
+                        "TRUE",
+                        "1M",
+                        "FALSE",
+                        1.0000000000000003e-9,
+                        1000,
+                        "FALSE",
+                        "TRUE",
+                        31
+                    ]
+                }
+            ],
+            "NAME": "USD_BASIS_1X3"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "USD",
+                        "TENORBASIS",
+                        "MONTHLY",
+                        43322
+                    ]
+                },
+                {
+                    "SK_NAME": "BASISSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "12Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y",
+                        "40Y",
+                        "50Y"
+                    ],
+                    "COL_2": [
+                        0.0012625,
+                        0.0011625,
+                        0.0010625,
+                        0.0009875,
+                        0.0009125,
+                        0.0008625,
+                        0.0008125,
+                        0.0007875,
+                        0.0007625,
+                        0.00075,
+                        0.0007375,
+                        0.000775,
+                        0.000875,
+                        0.001025,
+                        0.00115,
+                        0.00115,
+                        0.00115
+                    ]
+                }
+            ],
+            "NAME": "USD_BASIS_1X3_MARKETDATA"
+        }
+    ],
+    "NAME": "USD_BASIS_1M_CURVE"
+}

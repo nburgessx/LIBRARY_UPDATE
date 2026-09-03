@@ -1,0 +1,42 @@
+{
+    "CACHED_OBJECT_TYPE": "FREE_OBJECT",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "USD OIS@129",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "USBG1 CMPN Curncy",
+                "USBG2 CMPN Curncy",
+                "USBG3 CMPN Curncy",
+                "USBG4 CMPN Curncy",
+                "USBG5 CMPN Curncy",
+                "USBG7 CMPN Curncy",
+                "USBG10 CMPN Curncy",
+                "USBG12 CMPN Curncy",
+                "USBG15 CMPN Curncy",
+                "USBG20 CMPN Curncy",
+                "USBG25 CMPN Curncy",
+                "USBG30 CMPN Curncy"
+            ],
+            "COL_2": [
+                "1Y",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y",
+                "7Y",
+                "10Y",
+                "12Y",
+                "15Y",
+                "20Y",
+                "25Y",
+                "30Y"
+            ]
+        }
+    ],
+    "NAME": "USD OIS@129"
+}

@@ -1,0 +1,12 @@
+generatorFunction,tryMeLWOCurveCalibrate
+
+objectName,EUR_OIS_CURVE
+
+lwoCurveGeneratorName,EUR_OIS_LOB_3Y
+
+lwoCurveMarketDataName,EUR_OIS_CURVE_MARKETDATA
+
+domesticCurveCollection,EURGEN
+
+foreignCurveCollection,
+

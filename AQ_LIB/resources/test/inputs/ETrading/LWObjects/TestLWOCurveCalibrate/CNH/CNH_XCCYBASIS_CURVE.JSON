@@ -1,0 +1,430 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "CNH_XCCYBASIS_CURVE",
+                "CNH_XCCYBASIS",
+                "CNH_XCCYBASIS_CURVE_MARKETDATA",
+                "CNHYC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "Currency",
+                        "interpolation",
+                        "yieldgen.interpolation",
+                        "basis.interpolation",
+                        "isFwdBasis",
+                        "isfrause",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_2": [
+                        "XCCYBASIS",
+                        "QUARTERLY",
+                        "XccyBasis",
+                        "XccyBasis:XccyDF:CNHDF",
+                        "CNH",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FALSE",
+                        "FALSE",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "XCCYSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "MarketName",
+                        "IsLeg1Spread",
+                        "Leg1cashlet.calendar",
+                        "Leg1cashlet.daycount",
+                        "Leg1cashlet.frequency",
+                        "Leg1cashlet.slidingrule",
+                        "Leg1cashlet.spotlag",
+                        "Leg1discount",
+                        "Leg1forecast",
+                        "Leg1index.accessary",
+                        "Leg1index.daycount",
+                        "Leg1index.fixing.calendar",
+                        "Leg1index.frequency",
+                        "Leg1index.payment.calendar",
+                        "Leg1index.resetlag",
+                        "Leg1index.slidingrule",
+                        "Leg2cashlet.calendar",
+                        "Leg2cashlet.daycount",
+                        "Leg2cashlet.frequency",
+                        "Leg2cashlet.slidingrule",
+                        "Leg2cashlet.spotlag",
+                        "Leg2discount",
+                        "Leg2forecast",
+                        "Leg2index.accessary",
+                        "Leg2index.daycount",
+                        "Leg2index.fixing.calendar",
+                        "Leg2index.frequency",
+                        "Leg2index.payment.calendar",
+                        "Leg2index.resetlag",
+                        "Leg2index.slidingrule",
+                        "Target",
+                        "isfwdinter",
+                        "issamegridindex",
+                        "eomday",
+                        "iseomroll",
+                        "issimultaneouseq",
+                        "isyieldspreadcalc"
+                    ],
+                    "COL_2": [
+                        "XccyBasis",
+                        "FALSE",
+                        "NYB:BEB:HKB",
+                        "ACT/360",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING",
+                        2,
+                        "USDYC:STD",
+                        "USDYC:STD",
+                        "3M",
+                        "ACT/360",
+                        "NYB:BEB:HKB",
+                        "SIMPLE",
+                        "NYB:BEB:HKB",
+                        2,
+                        "MOD_FOLLOWING",
+                        "NYB:BEB:HKB",
+                        "ACT/360",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING",
+                        2,
+                        "FIXEDRATE",
+                        "FIXEDRATE",
+                        "3M",
+                        "ACT/360",
+                        "NYB:BEB:HKB",
+                        "SIMPLE",
+                        "NYB:BEB:HKB",
+                        2,
+                        "MOD_FOLLOWING",
+                        "Leg2Discount",
+                        "FALSE",
+                        "TRUE",
+                        31,
+                        "TRUE",
+                        "TRUE",
+                        "FALSE"
+                    ]
+                },
+                {
+                    "SK_NAME": "FXFWDS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_2": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            ],
+            "NAME": "CNH_XCCYBASIS"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate",
+                        "",
+                        ""
+                    ],
+                    "COL_2": [
+                        "CNH",
+                        "XCCYBASIS",
+                        "QUARTERLY",
+                        43252,
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "XCCYSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "1M",
+                        "2M",
+                        "3M",
+                        "6M",
+                        "9M",
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "7Y",
+                        "10Y",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_2": [
+                        0.038119,
+                        0.03843,
+                        0.03874,
+                        0.038804,
+                        0.039483,
+                        0.0391,
+                        0.0395,
+                        0.0396,
+                        0.0398,
+                        0.0393,
+                        0.0384,
+                        0.0372,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "FXFWDS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_2": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "COL_3": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "FXSPOTS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING",
+                        "INTEGER"
+                    ],
+                    "COL_1": [
+                        "CNHUSD Spot"
+                    ],
+                    "COL_2": [
+                        "CNH Curncy"
+                    ],
+                    "COL_3": [
+                        1
+                    ]
+                }
+            ],
+            "NAME": "CNH_XCCYBASIS_CURVE_MARKETDATA"
+        }
+    ],
+    "NAME": "CNH_XCCYBASIS_CURVE"
+}

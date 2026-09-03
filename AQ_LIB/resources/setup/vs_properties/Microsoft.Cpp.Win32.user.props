@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <PropertyGroup>
+ <IncludePath>%MLIB_EXTERNAL_LIB_PATH%\library\eigen-eigen-b30b87236a1b;%MLIB_EXTERNAL_LIB_PATH%\library\boost_1_65_0;%MLIB_EXTERNAL_LIB_PATH%\library\QuantLib-1.10.1;C:\Program Files (x86)\Planatech\XllPlus\7.0\VS14.0\include;$(IncludePath)</IncludePath>
+ </PropertyGroup>
+ <PropertyGroup>
+ <LibraryPath>%MLIB_EXTERNAL_LIB_PATH%\library\;%MLIB_EXTERNAL_LIB_PATH%\library\boost_1_65_0\stage\x86\lib;%MLIB_EXTERNAL_LIB_PATH%\library\QuantLib-1.10.1\lib;C:\Program Files (x86)\Planatech\XllPlus\7.0\VS14.0\lib\win32;$(LibraryPath)</LibraryPath>
+ </PropertyGroup>
+</Project>

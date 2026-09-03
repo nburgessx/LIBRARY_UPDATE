@@ -1,0 +1,21 @@
+How to expose functions using swigwin to Python, R, C#, Java and other lanaguages
+---------------------------------------------------------------------------------
+
+Proejct: MLIB_CLIENT_API
+-------------------------------------
+
+1. Firstly add a header and source cpp file to the MLIB_CLIENT_API project to call the function of your choice.
+   Ideally we want to only call functions from the validation_api project since all these functions support
+   structured exception handling and crash controls. We also want a single entry point for all lanagues, so
+   only calling functions via the validation_api is very important.
+
+2. Once we have written the function method from (1) we expose it by adding an include to the header file from (1)
+   to each of the Swig interface files in the resource files folder. Currently there are four interface files for
+   Java, C#, Python and R; swig_Java.i, swig_CSharp.i, swig_Python.i and swig_R.i
+
+3. To expose the functionality in the interface files from (2) we should simply list the #include file from (1) in the
+   interface files listed in (2). We need to add one inlcude within the %{ ... } block as #include "myfile.h" and
+   also we must specify the inlcude file outside of this block as %include "myfile.h". Note in the second instance
+   we use a '%' symbol instead of '#'
+
+

@@ -1,0 +1,10 @@
+C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\..AQ\AQ\resources\utilities\Apps\TestNinja\TestNinja\bin\Release\TestNinja.exe.config
+C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\..AQ\AQ\resources\utilities\Apps\TestNinja\TestNinja\bin\Release\TestNinja.exe
+C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\..AQ\AQ\resources\utilities\Apps\TestNinja\TestNinja\bin\Release\TestNinja.pdb
+C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\..AQ\AQ\resources\utilities\Apps\TestNinja\TestNinja\obj\Release\TestNinja.csprojAssemblyReference.cache
+C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\..AQ\AQ\resources\utilities\Apps\TestNinja\TestNinja\obj\Release\TestNinja.Form1.resources
+C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\..AQ\AQ\resources\utilities\Apps\TestNinja\TestNinja\obj\Release\TestNinja.Properties.Resources.resources
+C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\..AQ\AQ\resources\utilities\Apps\TestNinja\TestNinja\obj\Release\TestNinja.csproj.GenerateResource.cache
+C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\..AQ\AQ\resources\utilities\Apps\TestNinja\TestNinja\obj\Release\TestNinja.csproj.CoreCompileInputs.cache
+C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\..AQ\AQ\resources\utilities\Apps\TestNinja\TestNinja\obj\Release\TestNinja.exe
+C:\Users\nburg\Documents\MY_DOCUMENTS\REPO\..AQ\AQ\resources\utilities\Apps\TestNinja\TestNinja\obj\Release\TestNinja.pdb

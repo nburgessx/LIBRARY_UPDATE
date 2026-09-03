@@ -1,0 +1,2691 @@
+#ifdef __GNUG__
+#pragma implementation
+#else
+#pragma warning(disable:4786)
+#endif
+
+//include
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include "LABasic.h"
+#include "LADist.h"
+#include <LACoreUtility.h>
+#include <LAMathDefine.h>
+#include "LAFunction.h"
+#include <LAMathInterpolationUtilities.h>
+#include <LAMathYieldCurve.h>
+#include <LADataReference.h>
+#include <LAMathDateUtilities.h>
+#include "LAFunctionVector.h"
+#include "LANl2sol.h"
+#include <LACoreTemplateType.h>
+#include <LAMathDisplacedHestonTDP.h>
+#include "LAMathFXVolatilitySurfaceGenerate.h"
+#include <LAPriceDataCalendar.h>
+
+using namespace std; 
+
+#if !defined(WIN32) && !defined(WIN64) && !defined(_isnan)
+#include <cmath>
+#define _isnan isnan
+#endif
+
+
+void LAMathFXVolatilitySurfaceGenerate::SetInterpolationTarget( const LAString& target, InterpolationTarget& target_ )
+{
+    if( target == "LOGSTRIKE" ) { target_ = TargetLogStrike;}
+    else if( target == "DELTAPUT" ) {target_ = TargetDeltaPut;}
+    else if( target == "STRIKE" ) {target_ = TargetStrike;}
+    else 
+    {
+        LAString msg("InterpolationTarget is not supported!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+};
+
+void LAMathFXVolatilitySurfaceGenerate::SetATMInterpolationMethod( const LAString& target, ATMInterpolationMethod& target_ )
+{
+    if( target == "TERM" ) { target_ = TermWeighted;}
+    else if( target == "DAILY" || target == "BUSINESS_DAYS") {target_ = DailyWeighted;}
+    else if( target == "SQUAREDAILY" ) {target_ = SquareDailyWeighted;}
+    else if( target == "TERMNORMAL") { target_ = TermNoWeighted;}
+    else 
+    {
+        LAString msg("ATMInterpolationMethod is not supported!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+};
+
+void LAMathFXVolatilitySurfaceGenerate::SetInterpolationMethod( const LAString& target, InterpolationMethod& target_ )
+{
+    if( target == "SPLINE" ) { target_ = SPLINE_FXVOL;}
+    else if( target == "CONSTRAINEDSPLINE" ) {target_ = CONSTRAINEDSPLINE_FXVOL;}
+    else if( target == "LINEAR" ) {target_ = LINEAR_FXVOL;}
+    else 
+    {
+        LAString msg("InterpolationMethod is not supported!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+};
+
+void LAMathFXVolatilitySurfaceGenerate::SetInterpolationVariable( const LAString& variable, InterpolationVariable& variable_ )
+{
+    if( variable == "DELTAPUT" ) { variable_ = VariableDeltaPut;}
+    else if( variable == "DELTACALL" ) {variable_ = VariableDeltaCall;}
+    else if( variable == "LOGSTRIKE" ) {variable_ = VariableLogStrike;}
+    else if( variable == "STRIKE" ) {variable_ = VariableLogStrike;}
+    else 
+    {
+        LAString msg("InterpolationVariable is not supported!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+};
+
+void LAMathFXVolatilitySurfaceGenerate::SetFXOptionParam( LAStringVector& str, FXOptionData& x )
+{
+    if( str.size() != 7 ) 
+    {
+        LAString msg("Size of FXOptionParam is 7!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    };
+
+    x.T = LACoreUtility::changeDoubleFromString(str)[0];
+    x.Pd = LACoreUtility::changeDoubleFromString(str)[1];
+    x.Pf = LACoreUtility::changeDoubleFromString(str)[2];
+    x.F = LACoreUtility::changeDoubleFromString(str)[3];
+
+    if( str[4] == "FWDNONPRE" )  { x.deltaType = FWD_NONPRE;}
+    else if( str[4] == "FWDPRE" )  { x.deltaType = FWD_PRE;}
+    else if( str[4] == "SPOTNONPRE" )  { x.deltaType = SPOT_NONPRE;}
+    else if( str[4] == "SPOTPRE" )  { x.deltaType = SPOT_PRE;}
+    else 
+    {
+        LAString msg("DeltaType is not supported!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    };
+    
+    if( str[5] == "FORWARDATM" )  { x.atmType = FORWARDATM;}
+    else if( str[5] == "SPOTATM" )  { x.atmType = SPOTATM;}
+    else if( str[5] == "DELTANEUTRALNONPRE" )  { x.atmType = DELTANEUTRAL_NONPRE;}
+    else if( str[5] == "DELTANEUTRALPRE" )  { x.atmType = DELTANEUTRAL_PRE;}
+    else 
+    {
+        LAString msg("FXATMStrikeType is not supported!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    };
+
+    x.Days = (unsigned int)LACoreUtility::changeDoubleFromString(str)[6];
+
+    if( ( x.deltaType == FWD_NONPRE && x.atmType == DELTANEUTRAL_PRE ) || 
+        ( x.deltaType == FWD_PRE && x.atmType == DELTANEUTRAL_NONPRE ) )
+    {
+        LAString msg("Option type is PRE or NONPRE!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    };
+};
+
+FXOptionData LAMathFXVolatilitySurfaceGenerate::SetFXOptionParam( LADataInstance& dataInstance,
+                                                              const LAString& dCurveID,
+                                                              const LAString& fCurveID,
+                                                              const LADate& maturityDate,
+                                                              const LADate& deliveryDate,
+                                                              double spotFX,
+                                                              const LAString& deltaType,
+                                                              const LAString& atmType,
+                                                              const LAPriceDataCalendar& cal )
+{
+    FXOptionData x;
+
+    LAString daycount(AC_365I);
+    //DOMESTICCURVEID
+	LAMathYieldCurve dcurve(&dataInstance);
+	dcurve.getYieldData().convertFromString(dCurveID);	
+	dcurve.setInterpolation("fn_splineinterpolation");
+    dcurve.getDayCount().setDayCount(daycount);
+    const LADate asOfDate = dynamic_cast<const LADataDate& >(dataInstance.getObjectPool().getObject(dCurveID,ENCHKTYPE_ISDEFINED).
+                                get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
+	
+	//FOREIGNCURVEID
+	LAMathYieldCurve fcurve(&dataInstance);
+	fcurve.getYieldData().convertFromString(fCurveID);	
+	fcurve.setInterpolation("fn_splineinterpolation");
+    fcurve.getDayCount().setDayCount(daycount);
+    const LADate& asOfDate2 = dynamic_cast<const LADataDate& >(dataInstance.getObjectPool().getObject(fCurveID,ENCHKTYPE_ISDEFINED).
+                                get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
+    if( asOfDate != asOfDate2 )
+    {
+        LAString msg("AsOfDates are not equal!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+	LAString blackdaycount(AC_365I);
+	x.T = LAMathDateUtilities::getTerm(asOfDate,maturityDate,blackdaycount,true);
+    double Td = LAMathDateUtilities::getTerm(asOfDate,deliveryDate,daycount,true);
+    x.Pd = dcurve.getBasisDF(Td);
+    x.Pf = fcurve.getBasisDF(Td);
+    x.F = spotFX * x.Pf / x.Pd;
+    x.spotFX = spotFX;
+
+    if( deltaType == "FWDNONPRE" )  { x.deltaType = FWD_NONPRE;}
+    else if( deltaType == "FWDPRE" )  { x.deltaType = FWD_PRE;}
+    else if( deltaType == "SPOTNONPRE" )  { x.deltaType = SPOT_NONPRE;}
+    else if( deltaType == "SPOTPRE" )  { x.deltaType = SPOT_PRE;}
+    else 
+    {
+        LAString msg("DeltaType is not supported!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    };
+    
+    if( atmType == "FORWARDATM" )  { x.atmType = FORWARDATM;}
+    else if( atmType == "SPOTATM" )  { x.atmType = SPOTATM;}
+    else if( atmType == "DELTANEUTRALNONPRE" )  { x.atmType = DELTANEUTRAL_NONPRE;}
+    else if( atmType == "DELTANEUTRALPRE" )  { x.atmType = DELTANEUTRAL_PRE;}
+    else 
+    {
+        LAString msg("FXATMStrikeType is not supported!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    };
+
+    x.Days = LAMathDateUtilities::getExcelDate( maturityDate ) - LAMathDateUtilities::getExcelDate( asOfDate )
+        -cal.getCalendar().countHoliday(maturityDate, asOfDate);
+
+    if( ( x.deltaType == FWD_NONPRE && x.atmType == DELTANEUTRAL_PRE ) || 
+        ( x.deltaType == FWD_PRE && x.atmType == DELTANEUTRAL_NONPRE ) )
+    {
+        LAString msg("Option type is PRE or NONPRE!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    };
+
+    return x;
+};
+
+//FXOptionData LAMathFXVolatilitySurfaceGenerate::SetFXOptionParam( LADataInstance& dataInstance,
+//                                                              const LAString& dCurveID,
+//                                                              const LAString& fCurveID,
+//                                                              double termPoint,
+//                                                              double spotFX,
+//                                                              ATMInterpolationMethod method,
+//                                                              const LAString& spotLag,
+//                                                              const LAString& calendar )
+//{
+//    FXOptionData x;
+//
+//    LAString daycount(AC_365I);
+//    LAString fol(FOL);
+//    //DOMESTICCURVEID
+//	LAMathYieldCurve dcurve(&dataInstance);
+//	dcurve.getYieldData().convertFromString(dCurveID);	
+//	dcurve.setInterpolation("fn_splineinterpolation");
+//    dcurve.getDayCount().setDayCount(daycount);
+//    const LADate& asOfDate = dynamic_cast<const LADataDate& >(dataInstance.getObjectPool().getObject(dCurveID,ENCHKTYPE_ISDEFINED).
+//                                get().getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
+//	
+//	//FOREIGNCURVEID
+//	LAMathYieldCurve fcurve(&dataInstance);
+//	fcurve.getYieldData().convertFromString(fCurveID);	
+//	fcurve.setInterpolation("fn_splineinterpolation");
+//    fcurve.getDayCount().setDayCount(daycount);
+//    const LADate& asOfDate2 = dynamic_cast<const LADataDate& >(dataInstance.getObjectPool().getObject(fCurveID,ENCHKTYPE_ISDEFINED).get().
+//                        getData(CALIBRATION_DATA_ASOFDATE,ISNOTNULL).get()).get();
+//    if( asOfDate != asOfDate2 )
+//    {
+//        LAString msg("AsOfDates are not equal!");
+//	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+//    }
+//
+//    LADate matuDate,deliDate;
+//    LAPriceDataCalendar cal;
+//    cal.convertFromString(calendar);
+//    switch (method)
+//	{
+//	case TermWeighted:
+//		x.T = termPoint;
+//		break;		
+//	case DailyWeighted:
+//        matuDate = cal.getBusinessDay(asOfDate, static_cast<int>(termPoint));
+//        deliDate = LAMathDateUtilities::getDate(maturityDate,spotLag,fol,cal);
+//        x.T = LAMathDateUtilities::getTerm(asOfDate,matuDate,daycount,true);
+//        x.Days = termPoint;
+//		break;
+//	case SquareDailyWeighted:
+//        matuDate = cal.getBusinessDay(asOfDate, static_cast<int>(termPoint));
+//        deliDate = LAMathDateUtilities::getDate(maturityDate,spotLag,fol,cal);
+//        x.T = LAMathDateUtilities::getTerm(asOfDate,matuDate,daycount,true);
+//        x.Days = termPoint;
+//		break;
+//    case TermNoWeighted:
+//		x.T = termPoint;
+//        break;
+//	default:
+//        LAString msg("ATMInterpolationMethodType is not supported");
+//		throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+//	}
+//
+//    x.Pd = dcurve.getBasisDF(x.T);
+//    x.Pf = fcurve.getBasisDF(x.T);
+//    x.F = spotFX * x.Pf / x.Pd;
+//
+//    return x;
+//};
+
+void LAMathFXVolatilitySurfaceGenerate::SetSmileParam( LAStringVector& str, SmileParam& x )
+{
+    if( str.size() < 5 )
+    {
+        LAString msg("SmileParam Size is not 5!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+    x.atmVol = LACoreUtility::changeDoubleFromString(str)[0]/100;
+    x.highRR = LACoreUtility::changeDoubleFromString(str)[1]/100;
+    x.highBF = LACoreUtility::changeDoubleFromString(str)[2]/100;
+    x.lowRR = LACoreUtility::changeDoubleFromString(str)[3]/100;
+    x.lowBF = LACoreUtility::changeDoubleFromString(str)[4]/100;
+};
+
+double LAMathFXVolatilitySurfaceGenerate::GetATMStrike( double V, const FXOptionData& x )
+{
+    //error check
+    if( V < 0 ) 
+    {
+        LAString msg("V negative!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+    double ret;
+    switch (x.atmType)
+		{
+		case FORWARDATM:
+			ret = x.F;
+			break;		
+		case SPOTATM:
+		    ret = x.spotFX;
+			break;
+		case DELTANEUTRAL_NONPRE:
+            ret = x.F * LAMath::exp( 0.5 * V * V * x.T );
+			break;
+        case DELTANEUTRAL_PRE:
+            ret = x.F * LAMath::exp( -0.5 * V * V * x.T );
+			break;
+		default:
+            LAString msg("ATMStrikeType is not supported");
+			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		}
+
+    return ret;
+};                      
+
+double LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( double K,
+                                                          double V,
+                                                          int sgn,
+                                                          const FXOptionData& x )
+{
+    //error check
+    if( sgn != -1 && sgn != 1 )
+    {
+        LAString msg("sgn is not 1 or -1!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+    if( K < 0 ) 
+    {
+        LAString msg("K negative!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+    if( V < 0 ) 
+    {
+        LAString msg("V negative!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+    double std_Dev = V * sqrt( x.T );
+    double d_plus = LAMath::log( x.F / K ) / std_Dev + 0.5 * std_Dev;
+    double d_minus = LAMath::log( x.F / K ) / std_Dev - 0.5 * std_Dev;
+
+    return x.Pd * ( sgn * x.F * LADist::normsdist( sgn * d_plus ) - sgn * K * LADist::normsdist( sgn * d_minus ) );
+};
+
+double LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( double T,
+                                                          double F,
+                                                          double Pd,
+                                                          double K,
+                                                          double V,
+                                                          int sgn)
+{
+    //error check
+    if( sgn != -1 && sgn != 1 )
+    {
+        LAString msg("sgn is not 1 or -1!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+    if( T<0 || F<0 || Pd<0 || K<0 || V<0 ) 
+    {
+        LAString msg("Parameter negative!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+    double std_Dev = V * sqrt( T );
+    double d_plus = LAMath::log( F / K ) / std_Dev + 0.5 * std_Dev;
+    double d_minus = LAMath::log( F / K ) / std_Dev - 0.5 * std_Dev;
+
+    return Pd * ( sgn * F * LADist::normsdist( sgn * d_plus ) - sgn * K * LADist::normsdist( sgn * d_minus ) );
+};
+
+/*!
+    @brief the operator returns the derivation of forward FX delta with premium 
+*/
+class MinimumCallDeltaLogStrikeFunc : public LAFunction
+{
+public:
+    MinimumCallDeltaLogStrikeFunc( double V_, const FXOptionData& x_ )
+        :  V(V_), x(x_) {};
+    virtual ~MinimumCallDeltaLogStrikeFunc(){};
+    double operator()(double y) const // y is logstrike
+    { 
+        double std_Dev = V * sqrt( x.T );
+        double d_minus = ( -y ) / std_Dev- 0.5 * std_Dev;
+        return LADist::normsdist(d_minus) / ( LAMath::exp( - d_minus * d_minus / 2 ) / LAMath::sqrt( 2 * LAMath::pi() ) / std_Dev ) - 1.; 
+    };
+private:
+    double V;
+    FXOptionData x;
+};
+
+/*!
+    @brief function to get logstrike whose delta call is minimum.
+*/
+double LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( double V, const FXOptionData& x )
+{
+    //error check
+    if( V < 0 ) {
+        LAString msg("V negative!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+     
+    MinimumCallDeltaLogStrikeFunc sub_func( V, x);
+
+    double upper = 1.;
+    double lower = -1.;
+    size_t i=0;
+
+    for(i=0;i<40;i++) 
+    {
+        if( sub_func( upper )  > 0.000001 ) upper *= 2.;
+        //else if( LAMath::abs( sub_func( upper ) ) <= 0.000001 || LATime::isError( sub_func( upper )  ) == ERMATHNAN_ ) upper /= 1.5;
+		//20170515 - David - Fixed INF Error
+		else if( LAMath::abs( sub_func( upper ) ) <= 0.000001 || LATime::isError( sub_func( upper )  ) == ERMATHNAN_ || LATime::isError( sub_func( upper )  ) == ERMATHINF_ ) upper /= 1.5;
+        else break;
+    }
+
+    for(i=0;i<40;i++)
+    {
+        if( sub_func( lower )  < -0.000001  )  lower *= 2.;
+        //else if( LAMath::abs( sub_func( lower ) ) <= 0.000001 || LATime::isError( sub_func( upper ) ) == ERMATHNAN_ ) lower /= 1.5;
+		//20170515 - David - Fixed INF Error
+		else if( LAMath::abs( sub_func( lower ) ) <= 0.000001 || LATime::isError( sub_func( upper ) ) == ERMATHNAN_ || LATime::isError( sub_func( upper ) ) == ERMATHINF_ ) lower /= 1.5;
+        else break;
+    }
+    return sub_func.SolveBR( lower , upper , 10000, 1.0e-8 );
+};   
+
+double LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( double k,
+                                                        double V,
+                                                        int sgn,
+                                                        const FXOptionData& x )
+{
+     //error check
+    if( sgn != -1 && sgn != 1 ) 
+    {
+        LAString msg("sgn is not 1 or -1!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+    if( V < 0 ) 
+    {
+        LAString msg("V negative!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+    double std_Dev = V * sqrt( x.T );
+    double d_plus = ( -k ) / std_Dev + 0.5 * std_Dev;
+    double d_minus = ( -k ) / std_Dev- 0.5 * std_Dev;
+    
+    double ret;
+    switch (x.deltaType)
+		{
+		case FWD_NONPRE:
+			ret = sgn * LADist::normsdist( sgn * d_plus );
+			break;		
+		case FWD_PRE:
+		    ret = sgn * LADist::normsdist( sgn * d_minus ) * exp( k ) ;
+			break;
+		case SPOT_NONPRE:
+            ret = sgn * LADist::normsdist( sgn * d_plus ) * x.Pf;
+			break;
+        case SPOT_PRE:
+            ret = sgn * LADist::normsdist( sgn * d_minus ) * exp( k ) * x.Pf;
+			break;
+		default:
+            LAString msg("DeltaType is not supported");
+			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		}
+
+    return ret;
+};
+
+class FindLogStrikeFromDeltaFunc : public LAFunction
+{
+public:
+    FindLogStrikeFromDeltaFunc( double delta_, double V_, int sgn_ , const FXOptionData& x_ )
+        : delta(delta_), V(V_), sgn(sgn_), x(x_) {};
+    virtual ~FindLogStrikeFromDeltaFunc(){};
+
+    double operator()(double y) const 
+    { 
+        return LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( y, V, sgn, x ) / delta - 1.0; 
+    };
+private:
+    double delta;
+    double V;
+    int sgn;
+    FXOptionData x;
+};
+
+double LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta( double delta, 
+                                                              double V,
+                                                              int sgn,
+                                                              const FXOptionData& x )
+{   
+    //error check
+    if( sgn != -1 && sgn != 1 )
+    {
+        LAString msg("sgn is not 1 or -1!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+    if ( ( sgn == -1 && delta >= 0. ) || ( sgn == 1 && delta <= 0. ) )
+    {
+        LAString msg("sign of delta is absurd!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+    if( V < 0 ) 
+    {
+        LAString msg("V negative!");
+	    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+    FindLogStrikeFromDeltaFunc sub_func(delta, V, sgn, x);
+
+    double lower, upper;
+    size_t i=0;
+
+    if ( sgn == 1 ) 
+    {
+        if( x.deltaType == FWD_NONPRE || x.deltaType == SPOT_NONPRE ) 
+        {
+            lower = -100.;
+            upper = 100.;
+
+            for(i=0;i<20;i++) 
+            {
+                if( sub_func( lower )  < 0. )  lower *= 2.0;
+                else if( LAMath::abs( sub_func( lower ) + 1. ) < 0.000001 )  lower /= 1.5;
+                else break;
+            }
+
+            for(i=0;i<20;i++)
+            {
+                if( sub_func( upper )  > 0.  )  upper *= 2.0;
+                else if( LAMath::abs( sub_func( upper ) + 1. ) < 0.000001 )  upper /= 1.5;
+                else break;
+            };
+        }
+        else 
+        {
+            lower = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( V, x );
+            upper = 100.;
+
+            if( delta > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( lower, V, 1, x ) )
+            {
+                LAString msg("call delta is over limit!");
+	            throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            }
+
+            for(i=0;i<20;i++)
+            {
+                if( sub_func( upper ) > 0. )  upper *= 2.0;
+                else if( LAMath::abs( sub_func( upper ) + 1. ) < 0.000001 )  upper /= 1.5;
+                else break;
+            }          
+        }
+    }
+    else
+    {
+        lower = -20.;
+        upper = 20.;
+
+        for(i=0;i<20;i++) 
+        {
+            if( sub_func( lower ) > 0. )  lower *= 2.0;
+            else if( LAMath::abs( sub_func( lower ) + 1. ) < 0.0000001 )  lower /= 1.5;
+            else break;
+        }
+
+        for(i=0;i<20;i++)
+        {
+            if( sub_func( upper )  < 0.  )  upper *= 2.0;
+            else if( LAMath::abs( sub_func( upper ) + 1. ) < 0.0000001 )  upper /= 1.5;
+            else break;
+        }
+    }
+
+    return sub_func.SolveBR( lower, upper, 10000, 1.0e-8 );
+};
+
+/*!
+	    @param[in] impliedVol[1]    LowPutVol
+        @param[in] impliedVol[2]    HighPutVol
+	    @param[in] impliedVol[3]    ATMVol
+        @param[in] impliedVol[4]    HighCallVol
+        @param[in] impliedVol[5]    LowCallVol
+        @param[in] wf       WingFactor
+
+        @return 
+    */
+void LAMathFXVolatilitySurfaceGenerate::GetWingSmile( DoubleVector& impliedVol, 
+                                                  double atmDelta, 
+                                                  double wf )
+{   
+    atmDelta *= -100.;
+    double alpha, beta, RR, BF, tmp1, tmp2, tmp3;
+
+    if( wf < 0 )
+    {
+         impliedVol[0] = ( (10 - 0.01) * impliedVol[2] + (25 - 0.01) * impliedVol[1] ) / 15;
+         impliedVol[6] = ( (10 - 0.01) * impliedVol[4] + (25 - 0.01) * impliedVol[5] ) / 15;
+    }
+    else
+    {
+        tmp1 = impliedVol[4] - impliedVol[2];
+        tmp2 = impliedVol[5] - impliedVol[1];
+        //error check
+        if( tmp1 * tmp2 <= 0.0 ) 
+        {
+            LAString msg("signs of risk reversal are not same!");
+	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        }
+        tmp3 = LAMath::abs( atmDelta - 25 ) / LAMath::abs( atmDelta - 10 );
+        alpha = log( tmp1 / tmp2 ) / log( tmp3 );
+
+        RR = ( impliedVol[4] - impliedVol[2] ) / LAMath::pow( LAMath::abs( atmDelta - 25 ), alpha );
+
+        tmp1 = ( impliedVol[4] + impliedVol[2] ) / 2 - impliedVol[3];
+        tmp2 = ( impliedVol[5] + impliedVol[1] ) / 2 - impliedVol[3];
+        //error check
+        if( tmp1 * tmp2 <= 0.0 ) 
+        {
+            LAString msg("signs of butterfly are not same!");
+	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        }
+        tmp3 = LAMath::abs( atmDelta - 25 ) / LAMath::abs( atmDelta - 10 );
+        beta = log( tmp1 / tmp2 ) / log( tmp3 );
+
+        BF = ( ( impliedVol[4] + impliedVol[2] ) / 2 - impliedVol[3] ) / LAMath::pow( LAMath::abs( atmDelta - 25 ), beta );
+
+        impliedVol[0] = impliedVol[3] - 0.5 * RR * LAMath::pow( LAMath::abs( atmDelta - 0.01 ), alpha ) 
+                                    + wf * BF * LAMath::pow( LAMath::abs( atmDelta - 0.01 ), beta );
+        impliedVol[6] = impliedVol[3] + 0.5 * RR * LAMath::pow(LAMath::abs( atmDelta - 0.01 ), alpha ) 
+                                    + wf * BF * LAMath::pow( LAMath::abs( atmDelta - 0.01 ), beta );
+    }
+};
+
+SmileData LAMathFXVolatilitySurfaceGenerate::BuildSmile( const SmileParam& y,
+                                                     const FXOptionData& x, 
+													 bool isWing,
+                                                     double wf,
+                                                     LAString& warningMSG )
+{
+    SmileData z;
+    z.logStrikes.resize(7);
+    z.vols.resize(7);
+    z.deltaPuts.resize(7);
+    z.strikes.resize(7);
+
+    z.vols[1] = y.atmVol - 0.5 * y.lowRR + y.lowBF;
+    z.vols[2] = y.atmVol - 0.5 * y.highRR + y.highBF;
+    z.vols[3] = y.atmVol;
+    z.vols[4] = y.atmVol + 0.5 * y.highRR + y.highBF;
+    z.vols[5] =  y.atmVol + 0.5 * y.lowRR + y.lowBF;
+
+    z.logStrikes[3] = LAMath::log( GetATMStrike( y.atmVol , x ) / x.F );
+    z.deltaPuts[3] = LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( z.logStrikes[3], y.atmVol, -1, x );
+	if( isWing ) GetWingSmile( z.vols, z.deltaPuts[3], wf );
+
+    z.logStrikes[0] = FindLogStrikeFromDelta( -0.0001, z.vols[0], -1, x );
+    z.logStrikes[1] = FindLogStrikeFromDelta( -0.1, z.vols[1], -1, x );
+    z.logStrikes[2] = FindLogStrikeFromDelta( -0.25, z.vols[2], -1, x );
+
+    double minLogStrike;
+
+    minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( z.vols[4], x );
+    if( 0.25 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vols[4], 1, x ) && isErrorMessage == true )
+    {
+		LAString msg("max high call delta is under 0.25!");
+	                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+    else if( 0.25 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vols[4], 1, x ) && isErrorMessage == false )
+    {
+        z.logStrikes[4] = minLogStrike;
+        warningMSG  += LAString( x.T, 3 ) + " high call delta under 0.25,";
+    }
+    else
+    {      
+        z.logStrikes[4] = FindLogStrikeFromDelta( 0.25, z.vols[4], 1, x );
+    }
+
+    minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( z.vols[5], x );
+    if( 0.1 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vols[5], 1, x ) && isErrorMessage == true )
+    {
+		LAString msg("max low call delta is under 0.1!");
+	                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+    else if( 0.1 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vols[5], 1, x ) && isErrorMessage == false )
+    {
+        z.logStrikes[5] = minLogStrike;
+        warningMSG  += LAString( x.T, 3 ) + " low call delta under 0.1,";
+    }
+    else
+    {      
+        z.logStrikes[5] = FindLogStrikeFromDelta( 0.1, z.vols[5], 1, x );
+    }
+
+	if( isWing )
+	{
+		minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( z.vols[6], x );
+		if( 0.0001 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vols[6], 1, x ) && isErrorMessage == true )
+		{
+			LAString msg("max wing call delta is under 0.0001!");
+	                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+		}
+        else if( 0.0001 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vols[6], 1, x ) && isErrorMessage == false )
+        {
+            z.logStrikes[6] = minLogStrike;
+            warningMSG  += LAString( x.T, 3 ) + " wing call delta under 0.001,";
+        }
+		else
+		{      
+			z.logStrikes[6] = FindLogStrikeFromDelta( 0.0001, z.vols[6], 1, x );
+		}
+	}
+
+    if( isWing ) z.deltaPuts[0] = -0.0001;
+    z.deltaPuts[1] = -0.1;
+    z.deltaPuts[2] = -0.25;
+    z.deltaPuts[4] = LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( z.logStrikes[4], z.vols[4], -1, x );
+    z.deltaPuts[5] = LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( z.logStrikes[5], z.vols[5], -1, x );
+    if( isWing ) z.deltaPuts[6] = LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( z.logStrikes[6], z.vols[6], -1, x );
+
+    //set strike
+    for(size_t i=0; i<7; i++)
+    {
+        z.strikes[i] = exp( z.logStrikes[i] ) * x.F;
+    }
+
+    if( isWing == true )
+    {
+        return z;
+    }
+    else
+    {
+        z.deltaPuts.pop_back();
+        z.logStrikes.pop_back();
+        z.strikes.pop_back();
+        z.vols.pop_back();
+        z.deltaPuts.erase( z.deltaPuts.begin() );     
+        z.logStrikes.erase( z.logStrikes.begin() );     
+        z.strikes.erase( z.strikes.begin() );      
+        z.vols.erase( z.vols.begin() );
+
+        return z;
+    }
+};
+
+void LAMathFXVolatilitySurfaceGenerate::SmileDataCheck( SmileData& x, bool isWing )
+{
+    if( isWing )
+    {
+        if( x.deltaPuts.size() != 7 ||  x.logStrikes.size() != 7 || x.vols.size() != 7 || x.strikes.size() != 7 )
+        {
+            LAString msg("SmileData size is not 7!");
+	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        }
+    }
+    else
+    {
+        if( x.deltaPuts.size() != 5 ||  x.logStrikes.size() != 5 || x.vols.size() != 5 || x.strikes.size() != 5 )
+        {
+            LAString msg("SmileData size is not 5!");
+	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        }
+    }
+    
+    size_t i;
+    for( i=0;i<x.vols.size();i++ )
+    {
+        if( x.vols[i] < 0. )
+        {
+            LAString msg("Volatility Negative!");
+	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        }
+
+        if( x.deltaPuts[i] > 0. )
+        {
+            LAString msg("DeltaPut Positive!");
+	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        }
+    }
+
+    for( i=0;i<x.vols.size()-1;i++ )
+    {
+        if( x.logStrikes[i+1] - x.logStrikes[i] < 0. )
+        {
+            LAString msg("LogStrikes decrease ");
+	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        }
+
+        if( x.deltaPuts[i+1] - x.deltaPuts[i] > 0. )
+        {
+            LAString msg("deltaPuts increase ");
+	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        }
+    }
+
+    if( isWing )
+    {
+        if( x.deltaPuts[0] != -0.0001 || x.deltaPuts[1] != -0.1 || x.deltaPuts[2] != -0.25 )
+        {
+            LAString msg("deltaPuts is not satisfied the condition {-0.0001,-0.1,-0.25,....}!");
+	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        }
+    }
+    else
+    {
+        if( x.deltaPuts[0] != -0.1 || x.deltaPuts[1] != -0.25 )
+        {
+            LAString msg("deltaPuts is not satisfied the condition {-0.0001,-0.1,-0.25,....}!");
+	        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+        }
+    }
+};
+
+bool LAMathFXVolatilitySurfaceGenerate::SmileDataCheck_Bool( const SmileParam& y,
+														 const FXOptionData& x,
+                                                         double wf )
+{
+    SmileData z;
+    z.logStrikes.resize(7);
+    z.vols.resize(7);
+    z.deltaPuts.resize(7);
+
+    z.vols[1] = y.atmVol - 0.5 * y.lowRR + y.lowBF;
+    z.vols[2] = y.atmVol - 0.5 * y.highRR + y.highBF;
+    z.vols[3] = y.atmVol;
+    z.vols[4] = y.atmVol + 0.5 * y.highRR + y.highBF;
+    z.vols[5] = y.atmVol + 0.5 * y.lowRR + y.lowBF;
+
+    z.logStrikes[3] = LAMath::log( GetATMStrike( y.atmVol , x ) / x.F );
+    z.deltaPuts[3] = LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( z.logStrikes[3], y.atmVol, -1, x );
+    
+    GetWingSmile( z.vols, z.deltaPuts[3], wf );
+
+	if( z.vols[0] < 0.0 || z.vols[6] < 0.0 ) return true;
+
+    z.logStrikes[0] = FindLogStrikeFromDelta( -0.0001, z.vols[0], -1, x );
+    z.logStrikes[1] = FindLogStrikeFromDelta( -0.1, z.vols[1], -1, x );
+
+    double minLogStrike;
+
+    minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( z.vols[5], x );
+    if( 0.1 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vols[5], 1, x ) )
+    {
+		z.logStrikes[5] = minLogStrike;
+    }
+    else
+    {      
+        z.logStrikes[5] = FindLogStrikeFromDelta( 0.1, z.vols[5], 1, x );
+    }
+
+    minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( z.vols[6], x );
+    if( 0.0001 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vols[6], 1, x ) )
+    {
+		z.logStrikes[6] = minLogStrike;
+    }
+    else
+    {      
+        z.logStrikes[6] = FindLogStrikeFromDelta( 0.0001, z.vols[6], 1, x );
+    }
+
+	if( z.logStrikes[1] - z.logStrikes[0] < 0.0 || z.logStrikes[6] - z.logStrikes[5] < 0.0 ) return true;
+
+	
+    z.deltaPuts[6] = LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( z.logStrikes[6], z.vols[6], -1, x );
+
+	if( z.deltaPuts[5] - z.deltaPuts[6] < 0.0 ) return true;
+
+	return false;
+};
+
+double LAMathFXVolatilitySurfaceGenerate::Interpolate( DoubleArray& array1,
+                                                   DoubleArray& array2,
+                                                   double point,
+                                                   const InterpolationMethod& method,
+                                                   bool isReverse )
+{
+    size_t n = array1.size();
+    double ret;
+
+    switch(method)
+    {
+        case SPLINE_FXVOL:
+            if( isReverse == false )
+            {
+                ret = LAMathInterpolationUtilities::spline(array1, array2, point);
+            }
+            else
+            {
+                ret = LAMathInterpolationUtilities::splineReverse(array1, array2, point);
+            }
+            break;
+        case CONSTRAINEDSPLINE_FXVOL:
+            if( isReverse == false )
+            {
+                ret = LAMathInterpolationUtilities::constrainedSpline( array1, array2, point);
+            }
+            else
+            {
+                ret = LAMathInterpolationUtilities::constrainedSplineReverse( array1, array2, point);
+            }
+            break;
+        case LINEAR_FXVOL:
+            if( isReverse == false )
+            {
+                ret = LAMathInterpolationUtilities::linear(array1,array2,point);
+            }
+            else
+            {
+                ret = LAMathInterpolationUtilities::linearReverse(array1,array2,point);
+            }
+            break;
+        default:
+                LAString msg("InterpolationMethod is not supported");
+			    throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+    }
+
+    if(ret<0.) ret=0.001;
+    return ret;
+};
+
+class DeltaPutDeltaCallPreFunc : public LAFunction
+{
+public:
+    DeltaPutDeltaCallPreFunc( double point_, const InterpolationMethod& method_, const FXOptionData& x_, SmileData& y_ )
+        : point(point_), method(method_), x(x_), y(y_){};
+    virtual ~DeltaPutDeltaCallPreFunc(){};
+    double operator()(double z) const//z is delta put
+    { 
+        double V = LAMathFXVolatilitySurfaceGenerate::Interpolate( y.deltaPuts, y.vols, z, method, true );
+        double k = LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta( z, V, -1, x );
+        return LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( k,  V, 1, x ) / point - 1.0; 
+    };
+private:
+    double point;
+    InterpolationMethod method;
+    FXOptionData x;
+    SmileData& y;
+};
+
+class DeltaPutLogStrikePreFunc : public LAFunction
+{
+public:
+    DeltaPutLogStrikePreFunc( double point_, const InterpolationMethod& method_, const FXOptionData& x_, SmileData& y_ )
+        : point(point_), method(method_), x(x_), y(y_) {};
+    virtual ~DeltaPutLogStrikePreFunc(){};
+    double operator()(double z) const//z is delta put
+    { 
+        double V = LAMathFXVolatilitySurfaceGenerate::Interpolate( y.deltaPuts, y.vols, z, method, true );
+        return LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta( z, V, -1, x ) / point - 1.;                    
+    };
+private:
+    double point;
+    InterpolationMethod method;
+    FXOptionData x;
+    SmileData& y;
+};
+
+class LogStrikeDeltaCallFwdNonPreFunc : public LAFunction
+{
+public:
+    LogStrikeDeltaCallFwdNonPreFunc( double point_, const InterpolationMethod& method_, const FXOptionData& x_, SmileData& y_)
+        : point(point_), method(method_), x(x_), y(y_) {};
+    virtual ~LogStrikeDeltaCallFwdNonPreFunc(){};
+    double operator()(double z) const//z is logStrike
+    { 
+        double d_plus = LADist::invNormdist( point );
+        double V = LAMathFXVolatilitySurfaceGenerate::Interpolate( y.logStrikes, y.vols, z, method );
+        double std_Dev =  V * LAMath::sqrt( x.T );
+        return ( ( -z ) / std_Dev + 0.5 * std_Dev )  / d_plus - 1.0; 
+    }
+private:
+    double point;
+    InterpolationMethod method;
+    FXOptionData x;
+    SmileData& y;
+};
+
+class LogStrikeDeltaCallSpotNonPreFunc : public LAFunction
+{
+public:
+    LogStrikeDeltaCallSpotNonPreFunc( double point_, const InterpolationMethod& method_, const FXOptionData& x_, SmileData& y_ )
+        : point(point_), method(method_), x(x_), y(y_) {};
+    virtual ~LogStrikeDeltaCallSpotNonPreFunc(){};
+    double operator()(double z) const//z is logStrike
+    { 
+        double d_plus = LADist::invNormdist( point / x.Pf );
+        double V = LAMathFXVolatilitySurfaceGenerate::Interpolate( y.logStrikes, y.vols, z, method );
+        double std_Dev =  V * LAMath::sqrt( x.T );
+        return ( ( -z ) / std_Dev + 0.5 * std_Dev )  / d_plus - 1.0; 
+    };
+private:
+    double point;
+    InterpolationMethod method;
+    FXOptionData x;
+    SmileData& y;
+};
+
+class LogStrikeDeltaCallPreFunc : public LAFunction
+{
+public:
+    LogStrikeDeltaCallPreFunc( double point_, const InterpolationMethod& method_, const FXOptionData& x_, SmileData& y_ )
+        : point(point_), method(method_), x(x_), y(y_) {};
+    virtual ~LogStrikeDeltaCallPreFunc(){};
+    double operator()(double z) const//z is logStrike
+    { 
+        double V = LAMathFXVolatilitySurfaceGenerate::Interpolate( y.logStrikes, y.vols, z, method );
+        return LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( z, V, 1, x ) / point - 1.0; 
+    };
+private:
+    double point;
+    InterpolationMethod method;
+    FXOptionData x;
+    SmileData& y;
+};
+
+class LogStrikeDeltaPutFunc : public LAFunction
+{
+public:
+    LogStrikeDeltaPutFunc( double point_, const InterpolationMethod& method_, const FXOptionData& x_, SmileData& y_ )
+        : point(point_),method(method_), x(x_), y(y_) {};
+    virtual ~LogStrikeDeltaPutFunc(){};
+    double operator()(double z) const//z is logStrike
+    { 
+        double V = LAMathFXVolatilitySurfaceGenerate::Interpolate( y.logStrikes, y.vols, z, method );
+        return LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( z, V, -1, x ) / point - 1.0;                             
+    };
+private:
+    double point;
+    InterpolationMethod method;
+    FXOptionData x;
+    SmileData& y;
+};
+
+class StrikeDeltaCallFwdNonPreFunc : public LAFunction
+{
+public:
+    StrikeDeltaCallFwdNonPreFunc( double point_, const InterpolationMethod& method_, const FXOptionData& x_, SmileData& y_)
+        : point(point_), method(method_), x(x_), y(y_) {};
+    virtual ~StrikeDeltaCallFwdNonPreFunc(){};
+    double operator()(double z) const//z is strike
+    { 
+        double d_plus = LADist::invNormdist( point );
+        double V = LAMathFXVolatilitySurfaceGenerate::Interpolate( y.strikes, y.vols, z, method );
+        double std_Dev =  V * LAMath::sqrt( x.T );
+        return ( ( -log( z / x.F ) ) / std_Dev + 0.5 * std_Dev )  / d_plus - 1.0; 
+    }
+private:
+    double point;
+    InterpolationMethod method;
+    FXOptionData x;
+    SmileData& y;
+};
+
+class StrikeDeltaCallSpotNonPreFunc : public LAFunction
+{
+public:
+    StrikeDeltaCallSpotNonPreFunc( double point_, const InterpolationMethod& method_, const FXOptionData& x_, SmileData& y_ )
+        : point(point_), method(method_), x(x_), y(y_) {};
+    virtual ~StrikeDeltaCallSpotNonPreFunc(){};
+    double operator()(double z) const//z is strike
+    { 
+        double d_plus = LADist::invNormdist( point / x.Pf );
+        double V = LAMathFXVolatilitySurfaceGenerate::Interpolate( y.strikes, y.vols, z, method );
+        double std_Dev =  V * LAMath::sqrt( x.T );
+        return ( ( -log( z / x.F ) ) / std_Dev + 0.5 * std_Dev )  / d_plus - 1.0; 
+    };
+private:
+    double point;
+    InterpolationMethod method;
+    FXOptionData x;
+    SmileData& y;
+};
+
+class StrikeDeltaCallPreFunc : public LAFunction
+{
+public:
+    StrikeDeltaCallPreFunc( double point_, const InterpolationMethod& method_, const FXOptionData& x_, SmileData& y_ )
+        : point(point_), method(method_), x(x_), y(y_) {};
+    virtual ~StrikeDeltaCallPreFunc(){};
+    double operator()(double z) const//z is strike
+    { 
+        double V = LAMathFXVolatilitySurfaceGenerate::Interpolate( y.strikes, y.vols, z, method );
+        return LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( log( z / x.F ), V, 1, x ) / point - 1.0; 
+    };
+private:
+    double point;
+    InterpolationMethod method;
+    FXOptionData x;
+    SmileData& y;
+};
+
+class StrikeDeltaPutFunc : public LAFunction
+{
+public:
+    StrikeDeltaPutFunc( double point_, const InterpolationMethod& method_, const FXOptionData& x_, SmileData& y_ )
+        : point(point_),method(method_), x(x_), y(y_) {};
+    virtual ~StrikeDeltaPutFunc(){};
+    double operator()(double z) const//z is strike
+    { 
+        double V = LAMathFXVolatilitySurfaceGenerate::Interpolate( y.strikes, y.vols, z, method );
+        return LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( log( z / x.F ), V, -1, x ) / point - 1.0;                             
+    };
+private:
+    double point;
+    InterpolationMethod method;
+    FXOptionData x;
+    SmileData& y;
+};
+
+double LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( double point,
+                                                             const InterpolationMethod& method,
+                                                             const InterpolationTarget& target,
+                                                             const InterpolationVariable& variable,
+                                                             const FXOptionData& x,
+                                                             SmileData& y,
+                                                             bool isWing )
+{
+    //check atmpoint
+	unsigned int atmpoint = 0;
+	if ( isWing ) atmpoint = 3;
+	else atmpoint = 2;
+
+    double ret;
+    if(target == TargetDeltaPut)
+    {
+        switch (variable)
+		    {
+		    case VariableDeltaPut:
+                //error check
+                if( point >= 0. )
+                {
+                    LAString msg("DeltaPut is not positive!");
+	                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                }
+
+                if( point >= y.deltaPuts.front() && isWing == true )
+                {
+                    ret = y.vols.front();
+                }
+                else if( point <= y.deltaPuts.back() && isWing == true )
+                {
+                    ret = y.vols.back();
+                }
+                else
+                {
+                    ret = Interpolate( y.deltaPuts, y.vols, point, method, true );
+                }
+                //ret = Interpolate( y.deltaPuts, y.vols, point, method, true );
+			    break;		
+		    case VariableDeltaCall:
+		        //error check
+                if( point <= 0. )
+                {
+                    LAString msg("DeltaCall is not negative!");
+	                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                }
+                
+                if( x.deltaType == FWD_NONPRE )
+                {
+                    //error check
+                    if( point >= 1. )
+                    {
+                        LAString msg("DeltaCall is not over 1!");
+	                    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                    }
+
+                    double point_Put = point - 1.;
+                    ret = Interpolate( y.deltaPuts, y.vols, point_Put, method, true );
+                }
+                else if( x.deltaType == SPOT_NONPRE )
+                {
+                    //error check
+                    if( point >= x.Pf )
+                    {
+                        LAString msg("DeltaCall is not over Pf!");
+	                    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                    }
+
+                    double point_Put = point - x.Pf;
+                    ret = Interpolate( y.deltaPuts, y.vols, point_Put, method, true );
+                }
+                else
+                {
+                    double atmDeltaCall = LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta(y.logStrikes[atmpoint], y.vols[atmpoint], 1, x);
+                    if( point > atmDeltaCall )
+                    {
+                        LAString msg("Point is over atmDeltaCall!");
+	                    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                    }
+
+                    if( isWing )
+                    {
+                        if( point < -y.deltaPuts.front() )
+                        {
+                            ret = y.vols.back();
+                        }
+                        else
+                        {
+                            DeltaPutDeltaCallPreFunc sub_func(point, method, x, y );
+                            double x_Solve = sub_func.SolveBR( y.deltaPuts.back() - EPS_Vol, y.deltaPuts[atmpoint] + EPS_Vol, 10000, 1.0e-8 );
+                            ret = Interpolate( y.deltaPuts, y.vols, x_Solve, method, true );
+                        }
+                    }
+                    else
+                    {
+                        DeltaPutDeltaCallPreFunc sub_func(point, method, x, y );
+                        double lower = y.deltaPuts.back() - EPS_Vol;
+                        double upper = y.deltaPuts[atmpoint] + EPS_Vol;
+                        for(size_t j=0;j<20;j++)
+                        {
+                            if( sub_func( lower ) > 0. ) lower *= 2.;
+                            else break;
+                        }        
+                        double x_Solve = sub_func.SolveBR( lower, upper, 10000, 1.0e-8 );
+                        ret = Interpolate( y.deltaPuts, y.vols, x_Solve, method, true );
+                    }
+                }
+			    break;
+		    case VariableLogStrike:
+                if( isWing )
+                {
+                    if( point <= y.logStrikes.front() )
+                    {
+                        ret = y.vols.front();
+                    }
+                    else if( point >= y.logStrikes.back() )
+                    {
+                        ret = y.vols.back();
+                    }
+                    else
+                    {
+					    size_t i = 1;
+					    for( i=1;i<y.logStrikes.size()-1;i++ )
+					    {
+						    if( (y.logStrikes[i-1]<=point) && (point<y.logStrikes[i]) ) break;
+					    }
+					    if( LAMath::abs(y.logStrikes[i-1]-point) < 0.000001 )
+					    {
+						    ret = y.vols[i-1];
+						    break;
+					    }
+					    else if( LAMath::abs(y.logStrikes[i]-point) < 0.000001 )
+					    {
+						    ret = y.vols[i];
+						    break;
+					    }
+					    double upper = y.deltaPuts[i-1];
+					    double lower = y.deltaPuts[i];
+					    DeltaPutLogStrikePreFunc sub_func( point, method, x, y );
+                        double x_Solve = sub_func.SolveBR( lower, upper , 10000, 1.0e-8 );               
+                        ret = Interpolate( y.deltaPuts, y.vols, x_Solve, method, true);
+                    }
+                }
+                else
+                {
+                    DeltaPutLogStrikePreFunc sub_func( point, method, x, y );
+                    double upper,lower;
+                    if( point <= y.logStrikes.front() )
+                    {
+                        upper = y.deltaPuts.front() / 2.;
+					    lower = y.deltaPuts.front() - 0.000001;
+                        for(size_t j=0; j<20; j++)
+                        {
+                            if( sub_func( upper )  < 0.  )  upper /= 2.0;
+                            else break;
+                        }
+                    }
+                    else if( point >= y.logStrikes.back() )
+                    {
+                        upper = y.deltaPuts.back() + 0.000001;
+                        if( x.deltaType == FWD_NONPRE )
+                        {
+                            lower = -1. + 0.0001;
+                        }
+                        else if( x.deltaType == SPOT_NONPRE ) 
+                        {
+                            lower = - x.Pf + 0.0001;
+                        }
+                        else
+                        {
+					        lower = y.deltaPuts.back() * 2.;
+                            for(size_t j=0; j<20; j++) 
+                            {
+                                if( sub_func( lower )  < 0. )  lower *= 2.0;
+                                else break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        size_t i=1;
+                        for(i=1; i<y.logStrikes.size(); i++)
+                        {
+                            if( (y.logStrikes[i-1]<=point) && (point<y.logStrikes[i]) ) break;
+					    }
+                        upper = y.deltaPuts[i-1] + 0.000001;
+					    lower = y.deltaPuts[i] - 0.000001;
+                    }
+                    double x_Solve = sub_func.SolveBR( lower, upper , 10000, 1.0e-8 );
+                    ret = Interpolate( y.deltaPuts, y.vols, x_Solve, method, true);
+                }
+			    break;
+		    default:
+                LAString msg("InterpolationVariable is not supported");
+			    throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		    }
+    }
+    else if( target == TargetLogStrike )
+    {
+        switch (variable)
+		    {
+		    case VariableLogStrike:
+                if( point <= y.logStrikes.front() && isWing == true )
+                {
+                    ret = y.vols.front();
+                }
+                else if( point >= y.logStrikes.back() && isWing == true )
+                {
+                    ret = y.vols.back();
+                }
+                else
+                {
+                    ret = Interpolate( y.logStrikes, y.vols, point, method );
+                }
+                //ret = Interpolate( y.logStrikes, y.vols, point, method );
+			    break;		
+		    case VariableDeltaCall:
+                //error check
+                if( point <= 0. )
+                {
+                    LAString msg("DeltaCall is not negative!");
+	                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                }
+                
+                if( x.deltaType == FWD_NONPRE )
+                {
+                    //error check
+                    if( point >= 1. )
+                    {
+                        LAString msg("DeltaCall is not over 1!");
+	                    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                    }
+
+                    double point_Put = point - 1.;
+                    if( isWing )
+                    {
+                        if( point < -y.deltaPuts.front() )
+                        {
+                            ret = y.vols.back();
+                        }
+                        else if( point_Put > y.deltaPuts.front() )
+                        {
+                            ret = y.vols.front();
+                        }
+                        else
+                        {
+                            LogStrikeDeltaCallFwdNonPreFunc sub_func( point, method, x, y );
+                            double x_Solve = sub_func.SolveBR( y.logStrikes.front() - EPS_Vol,y.logStrikes.back() + EPS_Vol, 10000, 1.0e-8 );
+                            return ret = Interpolate( y.logStrikes, y.vols, x_Solve, method );
+                        }
+                    }
+                    else
+                    {
+                        LogStrikeDeltaCallFwdNonPreFunc sub_func( point, method, x, y );
+                        double lower = y.logStrikes.front() - 0.01;
+                        double upper = y.logStrikes.back() + 0.01;
+                        if( point < -y.deltaPuts.front() || point_Put > y.deltaPuts.front()  )
+                        {
+                            LAString msg("DeltaCall is over limit!");
+	                        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                        }
+                        double x_Solve = sub_func.SolveBR( lower, upper, 10000, 1.0e-8 );
+                        ret = Interpolate( y.logStrikes, y.vols, x_Solve, method );
+                    }
+                }
+                else if( x.deltaType == SPOT_NONPRE )
+                {
+                    //error check
+                    if( point >= x.Pf )
+                    {
+                        LAString msg("DeltaCall is not over Pf!");
+	                    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                    }
+
+                    double point_Put = point - x.Pf;
+                    if( isWing )
+                    {
+                        if( point <= -y.deltaPuts.front() )
+                        {
+                            ret = y.vols.back();
+                        }
+                        else if( point_Put >= y.deltaPuts.front() )
+                        {
+                            ret = y.vols.front();
+                        }
+                        else
+                        {
+                            LogStrikeDeltaCallSpotNonPreFunc sub_func( point, method, x, y  );
+                            double x_Solve = sub_func.SolveBR( y.logStrikes.front() - EPS_Vol, y.logStrikes.back() + EPS_Vol, 10000, 1.0e-8 );
+                            return ret = Interpolate( y.logStrikes, y.vols, x_Solve, method );
+                        }
+                    }
+                    else
+                    {
+                        LogStrikeDeltaCallSpotNonPreFunc sub_func( point, method, x, y );
+                        double lower = y.logStrikes.front() - 0.01;
+                        double upper = y.logStrikes.back() + 0.01;
+                        if( point < -y.deltaPuts.front() || point_Put > y.deltaPuts.front()  )
+                        {
+                            LAString msg("DeltaCall is over limit!");
+	                        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                        }
+                        double x_Solve = sub_func.SolveBR( lower, upper, 10000, 1.0e-8 );
+                        ret = Interpolate( y.logStrikes, y.vols, x_Solve, method );
+                    }
+                }
+                else
+                {
+                    double atmDeltaCall = LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( y.logStrikes[atmpoint] - EPS_Vol, 
+                                                    y.vols[atmpoint] + EPS_Vol, 1, x );
+                    if( point > atmDeltaCall )
+                    {
+                        LAString msg("Point is over atmDeltaCall!");
+	                    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                    }
+
+                    if( isWing )
+                    {
+                        if( point < -y.deltaPuts.front() )
+                        {
+                            ret = y.vols.back();
+                        }
+                        else
+                        {
+                            LogStrikeDeltaCallPreFunc sub_func( point, method, x, y );
+                            double x_Solve = sub_func.SolveBR( y.logStrikes[atmpoint] - EPS_Vol, y.logStrikes.back() + EPS_Vol, 10000, 1.0e-8 );
+                            ret = Interpolate( y.logStrikes, y.vols, x_Solve, method );
+                        }
+                    }
+                    else
+                    {
+                        LogStrikeDeltaCallPreFunc sub_func( point, method, x, y );
+                        double upper;
+                        if( point < -y.deltaPuts.front() )
+                        {
+                            upper = y.logStrikes.back() * 2;
+                            for(size_t j=0;j<20;j++) 
+                            {
+                                if( sub_func( upper )  > 0. )  upper *= 2.;
+                                else break;
+                            }
+                        }
+                        else
+                        {
+                            upper = y.logStrikes.back() + 0.01;
+                        }
+                        double x_Solve = sub_func.SolveBR( y.logStrikes[atmpoint] - 0.01, upper, 10000, 1.0e-8 );
+                        ret = Interpolate( y.logStrikes, y.vols, x_Solve, method );
+                    }
+                }
+			    break;
+		    case VariableDeltaPut:
+                //error check
+                if( point >= 0. )
+                {
+                    LAString msg("DeltaPut is not positive!");
+	                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                }
+
+                if( isWing )
+                {
+                    if( point >= y.deltaPuts.front() )
+                    {
+                        ret = y.vols.front();
+                    }
+                    else if( point <= y.deltaPuts.back() )
+                    {
+                        ret = y.vols.back();
+                    }
+                    else
+                    {
+					    size_t i = 1;
+					    for(i=1;i<y.deltaPuts.size();i++)
+					    {
+						    if( (y.deltaPuts[i]<=point) && (point<y.deltaPuts[i-1]) ) break;
+					    }
+					    if( LAMath::abs(y.deltaPuts[i-1]-point) < 0.000001 )
+					    {
+						    ret = y.vols[i-1];
+						    break;
+					    }
+					    else if( LAMath::abs(y.deltaPuts[i]-point) < 0.000001 )
+					    {
+						    ret = y.vols[i];
+						    break;
+					    }
+
+					    double upper = y.logStrikes[i];
+					    double lower = y.logStrikes[i-1];
+                        LogStrikeDeltaPutFunc sub_func( point, method, x, y );     
+                        double x_Solve = sub_func.SolveBR( lower, upper, 10000, 1.0e-8 );
+                        ret = Interpolate( y.logStrikes, y.vols, x_Solve, method );
+                    }
+                }
+                else
+                {
+                    LogStrikeDeltaPutFunc sub_func( point, method, x, y );
+                    double upper,lower;
+                    if( point >= y.deltaPuts.front() )
+                    {
+                        upper = y.logStrikes.front() + 0.000001;
+					    lower = y.logStrikes.front() * 2.;
+                        for(size_t j=0;j<20;j++) 
+                        {
+                            if( sub_func( lower )  > 0. )  lower *= 2.;
+                            else break;
+                        }
+                    }
+                    else if( point <= y.deltaPuts.back() )
+                    {
+                        upper = y.logStrikes.back() * 2;
+					    lower = y.logStrikes.back() - 0.000001;  
+                        for(size_t j=0;j<20;j++)
+                        {
+                            if( sub_func( upper )  < 0.  )  upper *= 2.;
+                            else break;
+                        }                        
+                    }
+                    else
+                    {
+                        size_t i = 1;
+					    for(i=1;i<y.deltaPuts.size();i++)
+					    {
+						    if( (y.deltaPuts[i]<=point) && (point<y.deltaPuts[i-1]) ) break;
+					    }
+                        upper = y.logStrikes[i] + 0.000001;
+					    lower = y.logStrikes[i-1]  - 0.000001;
+                    }
+                    double x_Solve = sub_func.SolveBR( lower, upper, 10000, 1.0e-8 );
+                    ret = Interpolate( y.logStrikes, y.vols, x_Solve, method );
+                }
+			    break;
+		    default:
+                LAString msg("InterpolationVariable is not supported");
+			    throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		    }
+    }
+    else if( target ==  TargetStrike )
+    {
+        switch (variable)
+		    {
+		    case VariableLogStrike:
+                if( point <= y.logStrikes.front() && isWing == true )
+                {
+                    ret = y.vols.front();
+                }
+                else if( point >= y.logStrikes.back() && isWing == true )
+                {
+                    ret = y.vols.back();
+                }
+                else
+                {
+                    ret = Interpolate( y.strikes, y.vols, exp( point ) * x.F, method );
+                }
+                /*{
+                    ret = Interpolate( y.strikes, y.vols, point, method );
+                }*/
+			    break;		
+		    case VariableDeltaCall:
+                //error check
+                if( point <= 0. )
+                {
+                    LAString msg("DeltaCall is not negative!");
+	                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                }
+                
+                if( x.deltaType == FWD_NONPRE )
+                {
+                    //error check
+                    if( point >= 1. )
+                    {
+                        LAString msg("DeltaCall is not over 1!");
+	                    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                    }
+
+                    double point_Put = point - 1.;
+                    if( isWing )
+                    {
+                        if( point <= -y.deltaPuts.front() )
+                        {
+                            ret = y.vols.back();
+                        }
+                        else if( point_Put >= y.deltaPuts.front() )
+                        {
+                            ret = y.vols.front();
+                        }
+                        else
+                        {
+                            StrikeDeltaCallFwdNonPreFunc sub_func( point, method, x, y );
+                            double x_Solve = sub_func.SolveBR( y.strikes.front() - 0.01, y.strikes.back() + 0.01, 10000, 1.0e-8 );
+                            ret = Interpolate( y.strikes, y.vols, x_Solve, method );
+                        }
+                    }
+                    else
+                    {
+                        StrikeDeltaCallFwdNonPreFunc sub_func( point, method, x, y  );
+                        double lower = y.strikes.front() - 0.01;
+                        double upper = y.strikes.back() + 0.01;
+                        if( point < -y.deltaPuts.front() || point_Put > y.deltaPuts.front()  )
+                        {
+                            LAString msg("DeltaCall is over limit!");
+	                        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                        }
+                        double x_Solve = sub_func.SolveBR( lower, upper, 10000, 1.0e-8 );
+                        ret = Interpolate( y.strikes, y.vols, x_Solve, method );
+                    }
+                }
+                else if( x.deltaType == SPOT_NONPRE )
+                {
+                    //error check
+                    if( point >= x.Pf )
+                    {
+                        LAString msg("DeltaCall is not over Pf!");
+	                    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                    }
+
+                    double point_Put = point - x.Pf;
+                    if( isWing )
+                    {
+                        if( point <= -y.deltaPuts.front() )
+                        {
+                            ret = y.vols.back();
+                        }
+                        else if( point_Put >= y.deltaPuts.front() )
+                        {
+                            ret = y.vols.front();
+                        }
+                        else
+                        {
+                            StrikeDeltaCallSpotNonPreFunc sub_func( point, method, x, y  );
+                            double x_Solve = sub_func.SolveBR( y.strikes.front() - 0.01, y.strikes.back() + 0.01, 10000, 1.0e-8 );
+                            ret = Interpolate( y.strikes, y.vols, x_Solve, method );
+                        }
+                    }
+                    else
+                    {
+                        StrikeDeltaCallSpotNonPreFunc sub_func( point, method, x, y  );
+                        double lower = y.strikes.front() - 0.01;
+                        double upper = y.strikes.back() + 0.01;
+                        if( point < -y.deltaPuts.front() || point_Put > y.deltaPuts.front()  )
+                        {
+                            LAString msg("DeltaCall is over limit!");
+	                        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                        }
+                        double x_Solve = sub_func.SolveBR( lower, upper, 10000, 1.0e-8 );
+                        ret = Interpolate( y.strikes, y.vols, x_Solve, method );
+                    }
+                }
+                else
+                {
+                    double atmDeltaCall = LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( y.logStrikes[atmpoint] - EPS_Vol, 
+                                                    y.vols[atmpoint] + EPS_Vol, 1, x );
+                    if( point > atmDeltaCall )
+                    {
+                        LAString msg("Point is over atmDeltaCall!");
+	                    throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                    }
+
+                    if( isWing )
+                    {
+                        if( point < -y.deltaPuts.front() )
+                        {
+                            ret = y.vols.back();
+                        }
+                        else
+                        {
+                            StrikeDeltaCallPreFunc sub_func( point, method, x, y  );
+                            double x_Solve = sub_func.SolveBR( y.strikes[atmpoint] - 0.01, y.strikes.back() + 0.01, 10000, 1.0e-8 );
+                            ret = Interpolate( y.strikes, y.vols, x_Solve, method );
+                        }
+                    }
+                    else
+                    {
+                        StrikeDeltaCallPreFunc sub_func( point, method, x, y );
+                        double upper;
+                        if( point < -y.deltaPuts.front() )
+                        {
+                            upper = y.strikes.back() * 2;
+                            for(size_t j=0;j<20;j++) 
+                            {
+                                if( sub_func( upper )  > 0. )  upper *= 2.;
+                                else break;
+                            }
+                        }
+                        else
+                        {
+                            upper = y.strikes.back() + 0.01;
+                        }
+                        double x_Solve = sub_func.SolveBR( y.strikes[atmpoint] - 0.01, upper, 10000, 1.0e-8 );
+                        ret = Interpolate( y.strikes, y.vols, x_Solve, method );
+                    }
+                }
+			    break;
+		    case VariableDeltaPut:
+                //error check
+                if( point >= 0. )
+                {
+                    LAString msg("DeltaPut is not positive!");
+	                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+                }
+
+                if( isWing )
+                {
+                    if( point >= y.deltaPuts.front() )
+                    {
+                        ret = y.vols.front();
+                    }
+                    else if( point <= y.deltaPuts.back() )
+                    {
+                        ret = y.vols.back();
+                    }
+                    else
+                    {
+					    size_t i = 1;
+					    for(i=1;i<y.deltaPuts.size();i++)
+					    {
+						    if( (y.deltaPuts[i]<=point) && (point<y.deltaPuts[i-1]) ) break;
+					    }
+					    if( LAMath::abs(y.deltaPuts[i-1]-point) < 0.000001 )
+					    {
+						    ret = y.vols[i-1];
+						    break;
+					    }
+					    else if( LAMath::abs(y.deltaPuts[i]-point) < 0.000001 )
+					    {
+						    ret = y.vols[i];
+						    break;
+					    }
+
+					    double upper = y.strikes[i];
+					    double lower = y.strikes[i-1];
+                        StrikeDeltaPutFunc sub_func( point, method, x, y );                    
+                        double x_Solve = sub_func.SolveBR( lower, upper, 10000, 1.0e-8 );
+                        ret = Interpolate( y.strikes, y.vols, x_Solve, method );
+                    }
+                }
+                else
+                {
+                    StrikeDeltaPutFunc sub_func( point, method, x, y );
+                    double upper,lower;
+                    if( point >= y.deltaPuts.front() )
+                    {
+                        upper = y.strikes.front() + 0.0001;
+					    lower = y.strikes.front() * 2.;
+                        for(size_t j=0;j<20;j++) 
+                        {
+                            if( sub_func( lower )  > 0. )  lower *= 2.;
+                            else break;
+                        }
+                    }
+                    else if( point <= y.deltaPuts.back() )
+                    {
+                        upper = y.strikes.back() * 2;
+					    lower = y.strikes.back() - 0.0001;  
+                        for(size_t j=0;j<20;j++)
+                        {
+                            if( sub_func( upper )  < 0.  )  upper *= 2.;
+                            else break;
+                        }                        
+                    }
+                    else
+                    {
+                        size_t i = 1;
+					    for(i=1;i<y.deltaPuts.size();i++)
+					    {
+						    if( (y.deltaPuts[i]<=point) && (point<y.deltaPuts[i-1]) ) break;
+					    }
+                        upper = y.strikes[i] + 0.0001;
+					    lower = y.strikes[i-1]  - 0.0001;
+                    }
+                    double x_Solve = sub_func.SolveBR( lower, upper, 10000, 1.0e-8 );
+                    ret = Interpolate( y.strikes, y.vols, x_Solve, method );
+                }
+			    break;
+		    default:
+                LAString msg("InterpolationVariable is not supported");
+			    throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		    }
+        }
+        else
+        {   
+            LAString msg("InterpolationTarget is not supported");
+			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+		}
+    return ret;
+};
+
+double LAMathFXVolatilitySurfaceGenerate::GetModelPrem( const FXOptionData& x,
+                                                    SmileData& y,
+                                                    const Strangle& z,
+                                                    const InterpolationMethod& method,
+                                                    const InterpolationTarget& target,
+                                                    bool isWing)
+{
+    double kPut = LAMath::log( z.strikePut / x.F );
+    double kCall = LAMath::log( z.strikeCall / x.F );
+    double volPut = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( kPut, method, target, VariableLogStrike, x, y, isWing );
+    double volCall = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( kCall, method, target, VariableLogStrike, x, y, isWing );
+    double premPut = LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( z.strikePut, volPut, -1, x );
+    double premCall = LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( z.strikeCall, volCall, 1, x );
+
+    return premPut + premCall;
+};
+
+Strangle LAMathFXVolatilitySurfaceGenerate::GetHighStrangle(  double atmVol,
+                                                          double BF,
+                                                          const FXOptionData& x )
+{
+    Strangle z;
+
+    z.vol = atmVol + BF;
+    z.strikePut = exp( LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta( -0.25, z.vol, -1, x ) ) * x.F;
+
+    double minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( z.vol, x );
+    if( 0.25 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vol, 1, x ) && isErrorMessage == true )
+    {
+		LAString msg("max high strangle delta is under 0.25");
+		    throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+    }
+    if( 0.25 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vol, 1, x ) && isErrorMessage == false )
+    {
+        z.strikeCall = exp( minLogStrike ) * x.F;
+    }
+    else
+    {      
+        z.strikeCall = exp( LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta( 0.25, z.vol, 1, x ) ) * x.F;
+    }
+
+    z.prem = LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( z.strikePut, z.vol, -1, x ) + 
+              LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( z.strikeCall, z.vol, 1, x ); 
+
+    return z;
+};
+
+Strangle LAMathFXVolatilitySurfaceGenerate::GetLowStrangle(  double atmVol,
+                                                         double BF,
+                                                         const FXOptionData& x )
+{
+    Strangle z;
+
+    z.vol = atmVol + BF;
+    z.strikePut = exp( FindLogStrikeFromDelta( -0.1, z.vol, -1, x ) ) * x.F;
+
+    double minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( z.vol, x );
+    if( 0.1 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vol, 1, x ) && isErrorMessage == true )
+    {
+		LAString msg("max low strangle delta is under 0.1");
+			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
+    }
+    else if( 0.1 > LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, z.vol, 1, x ) && isErrorMessage == false )
+    {
+        z.strikeCall = exp( minLogStrike ) * x.F;;
+    }
+    else
+    {      
+        z.strikeCall = exp( LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta( 0.1, z.vol, 1, x ) ) * x.F;
+    }
+
+    z.prem = LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( z.strikePut, z.vol, -1, x ) + 
+             LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( z.strikeCall, z.vol, 1, x ); 
+
+    return z;
+};
+
+class FindStrangleVolFunc : public LAFunctionVector
+{
+public:
+
+    /// constructor
+    FindStrangleVolFunc( const FXOptionData& x_,
+                         const SmileParam& y_,
+                         const Strangle& lowSt_,
+                         const Strangle& highSt_,
+                         const InterpolationMethod& method_,
+                         const InterpolationTarget& target_,
+                         bool isWing_,
+                         double wf_ )
+            : x(x_), y(y_), lowSt(lowSt_), highSt(highSt_), method(method_), target( target_ ),isWing(isWing_), wf(wf_)
+			{
+				low.resize(2);
+				high.resize(2);
+                double multi = 3.;
+				/*low[0] = LAMath::max( y.lowBF - 0.02, LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				low[1] = LAMath::max( y.highBF - 0.02, LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				high[0] = y.lowBF + 0.07;
+				high[1] = y.highBF + 0.03;*/
+                if( y.lowBF>=0.0 && y.highBF<=0.0 && y.lowBF>-y.highBF )
+                {
+                    low[0] = LAMath::max( 0., LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    low[1] = LAMath::max( 0., LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    high[0] = y.lowBF * multi;
+				    high[1] = - y.highBF * multi;
+                }
+                else if( y.lowBF>=0.0 && y.highBF<=0.0 && y.lowBF<-y.highBF )
+                {
+                    low[0] = LAMath::max( - y.lowBF * multi, LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    low[1] = LAMath::max( y.highBF * multi, LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    high[0] = 0.;
+				    high[1] = 0.;
+                }
+                else if( y.lowBF<=0.0 && y.highBF>=0.0 && -y.lowBF>y.highBF )
+                {
+                    low[0] = LAMath::max( y.lowBF * multi, LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    low[1] = LAMath::max( - y.highBF * multi, LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    high[0] = 0.;
+				    high[1] = 0.;
+                }
+                else if( y.lowBF<=0.0 && y.highBF>=0.0 && -y.lowBF<y.highBF )
+                {
+                    low[0] = LAMath::max( 0., LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    low[1] = LAMath::max( 0., LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    high[0] = - y.lowBF * multi;
+				    high[1] = y.highBF * multi;
+                }
+                else if( y.lowBF>0.0 && y.highBF>0.0 )
+                {
+                    low[0] = LAMath::max( 0., LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    low[1] = LAMath::max( 0., LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    high[0] = y.lowBF * multi;
+				    high[1] = y.highBF * multi;
+                }
+                else if( y.lowBF<0.0 && y.highBF<0.0 )
+                {
+                    low[0] = LAMath::max( y.lowBF * multi, LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    low[1] = LAMath::max( y.highBF * multi, LAMath::max( -y.atmVol-0.5*y.highRR, -y.atmVol+0.5*y.highRR ) );
+				    high[0] = 0.;
+				    high[1] = 0.;
+                }
+			};
+    virtual unsigned long lengthOfArgumentVector( ) { return 2;}
+    virtual unsigned long lengthOfFunctionVector( ) { return 2;}
+    virtual unsigned long maximumNumberOfIterations() { return 150;}
+
+    virtual void operator()(std::vector<double> & f, const std::vector<double> & z)
+    {
+        f.resize( 2 );
+        SmileParam yOpt = y;
+        yOpt.lowBF = z[0];
+        yOpt.highBF = z[1];
+        LAString msg;
+        SmileData w = LAMathFXVolatilitySurfaceGenerate::BuildSmile( yOpt, x, isWing, wf, msg );
+        f[0] = LAMathFXVolatilitySurfaceGenerate::GetModelPrem( x, w, lowSt, method, target, isWing ) / lowSt.prem - 1.0;
+        f[1] = LAMathFXVolatilitySurfaceGenerate::GetModelPrem( x, w, highSt, method, target, isWing ) / highSt.prem - 1.0;
+    };
+
+    virtual bool constraintsAreViolated(const std::vector <double > &z)
+    {
+        if( z[0]<low[0] || z[0]>high[0] || z[1]<low[1] || z[1]>high[1] || 
+            z[0] - z[1] > y.lowBF - y.highBF + 0.05 || z[1] - z[0] > y.highBF - y.lowBF + 0.05 ) return true;
+        if( ( z[0] < 0.0 && z[1] > 0.0 ) || ( z[0] > 0.0 && z[1] < 0.0 ) ) return true;
+        if( LAMath::abs(z[0])<EPS_Vol1 || LAMath::abs(z[1])<EPS_Vol1 ) return true;
+        
+        if( isWing )
+        {
+            SmileParam y_ = y;
+            y_.lowBF = z[0];
+            y_.highBF = z[1];
+            return LAMathFXVolatilitySurfaceGenerate::SmileDataCheck_Bool( y_, x, wf ); 
+        }
+        else
+        {
+            return false;
+        }
+    };
+private:
+    FXOptionData x;
+    SmileParam y;
+    Strangle lowSt;
+    Strangle highSt;
+    InterpolationMethod method;
+    InterpolationTarget target;
+    bool isWing;
+    double wf;
+	DoubleArray low;
+	DoubleArray high;
+};
+
+SmileData LAMathFXVolatilitySurfaceGenerate::FindStrangleVol( const FXOptionData& x,
+                                                          const SmileParam& y,
+                                                          const InterpolationMethod& method,
+                                                          const InterpolationTarget& target,
+                                                          bool isWing,
+                                                          double wf)
+{
+    Strangle lowSt = LAMathFXVolatilitySurfaceGenerate::GetLowStrangle( y.atmVol, y.lowBF, x );
+    Strangle highSt = LAMathFXVolatilitySurfaceGenerate::GetHighStrangle( y.atmVol, y.highBF, x );
+
+    DoubleArray z(2);
+    z[0] = y.lowBF;
+    z[1] = y.highBF;
+    if( y.lowBF>0.0 && y.highBF<0.0 && y.lowBF>-y.highBF )
+    {
+        z[1] = EPS_Vol1;
+    }
+    else if( y.lowBF>0.0 && y.highBF<0.0 && y.lowBF<-y.highBF )
+    {
+        z[0] = -EPS_Vol1;
+    }
+    else if( y.lowBF<0.0 && y.highBF>0.0 && -y.lowBF>y.highBF )
+    {
+        z[1] = -EPS_Vol1;
+    }
+    else if( y.lowBF<0.0 && y.highBF>0.0 && -y.lowBF<y.highBF )
+    {
+        z[0] = EPS_Vol1;
+    }
+
+    if( LAMath::abs(y.lowBF)<=EPS_Vol1 && LAMath::abs(y.highBF)<=EPS_Vol1 )
+    {
+        z[0] = EPS_Vol1;
+        z[1] = EPS_Vol1;
+    }
+    else if( LAMath::abs(y.lowBF)<=EPS_Vol1 )
+    {
+        z[0] = LAMath::sign(EPS_Vol1, y.highBF);
+    }
+    else if( LAMath::abs(y.highBF)<=EPS_Vol1 )
+    {
+        z[1] = LAMath::sign(EPS_Vol1, y.lowBF);
+    }
+
+    FindStrangleVolFunc suv_func( x, y, lowSt, highSt, method, target, isWing, wf );
+    NL2SOL solver( suv_func );
+
+    solver.tryToSolve( z );
+    SmileParam yOpt = y;
+    yOpt.lowBF = z[0];
+    yOpt.highBF = z[1];
+    LAString msg;
+    return LAMathFXVolatilitySurfaceGenerate::BuildSmile( yOpt, x, isWing, wf, msg );
+};
+
+double LAMathFXVolatilitySurfaceGenerate::GetSurfaceInterpolation( double point,
+                                                               double termPoint,
+                                                               const InterpolationMethod& method,
+                                                               const InterpolationTarget& target,
+                                                               const InterpolationVariable& variable,
+                                                               const ATMInterpolationMethod& atmMethod,
+                                                               const vector<FXOptionData >& x,
+                                                               vector<SmileData >& y,
+                                                               bool isWing )
+{
+    //check atmpoint
+	unsigned int atmpoint = 0;
+	if ( isWing ) atmpoint = 3;
+	else atmpoint = 2;
+
+    size_t i;
+    size_t n = x.size();
+
+    //error check
+    if( termPoint<0. )
+    {
+        LAString msg("Term Point is negative!");
+        throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+    }
+    if( y.size() != n )
+    {
+        LAString msg("data sizes are not equal !");
+        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+    else if( atmMethod == DailyWeighted || atmMethod == SquareDailyWeighted )
+    {
+        for( i=0;i<n;i++ )
+        {
+            if( x[i].Days == NULL )
+            {
+                LAString msg("No days maturity data!");
+                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            }
+        }
+        for( i=0;i<n-1;i++ )
+        {
+            if( x[i].Days > x[i+1].Days )
+            {
+                LAString msg(" the order of Days is not correct!");
+                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            }
+        }
+    }
+    else if( atmMethod == TermWeighted || atmMethod == TermNoWeighted )
+    {
+        for( i=0;i<n;i++ )
+        {
+            if( x[i].T == NULL )
+            {
+                LAString msg("No days maturity data!");
+                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            }
+        }
+        for( i=0;i<n-1;i++ )
+        {
+            if( x[i].T > x[i+1].T )
+            {
+                LAString msg("bad the order of FXOptionParams!");
+                throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+            }
+        }
+     
+    }
+
+    for( i=0;i<n;i++ ){ SmileDataCheck( y[i], isWing );  }
+
+    size_t index;
+    switch ( atmMethod )
+        {
+        case TermWeighted:
+            for( index=0;index<n;index++ )
+            {
+                if( LAMath::abs(x[index].T-termPoint)<EPS_Vol ) 
+                {
+                    return LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, 
+                        x[index], y[index], isWing );
+                }
+                if(x[index].T>termPoint || index==n ) break;
+            }
+            break;
+        case DailyWeighted:
+            for( index=0;index<n;index++ )
+            {
+                if( LAMath::abs(x[index].Days-termPoint)<EPS_Vol ) 
+                {
+                    return LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, 
+                        x[index], y[index], isWing );
+                }
+                if(x[index].Days>termPoint) break;
+            }
+            break;
+        case SquareDailyWeighted:
+            for( index=0;index<n;index++ )
+            {
+                if( LAMath::abs(x[index].Days-termPoint)<EPS_Vol ) 
+                {
+                    return LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, 
+                        x[index], y[index], isWing );
+                }
+                if(x[index].Days>termPoint) break;
+            }
+            break;               
+        case TermNoWeighted:
+            for( index=0;index<n;index++ )
+            {
+                if( LAMath::abs(x[index].T-termPoint)<EPS_Vol ) 
+                {
+                    return LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, 
+                        x[index], y[index], isWing );
+                }
+                if(x[index].T>termPoint || index==n ) break;
+            }
+            break;
+		default:
+            LAString msg("ATMInterpolationMethod is not supported");
+			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+        }
+
+    vector<double > weightedVar(n, 0.), mat_Term(n, 0.), mat_Day(n, 0.), smileSpreadData( n, 0.0 );
+    double atmVol,smileSpread;  
+    switch ( atmMethod )
+        {
+        case TermWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Term[i] = x[i].T;
+                weightedVar[i] = LAMath::pow( y[i].vols[atmpoint], 2 ) * mat_Term[i];
+            }
+
+            if( index==0 )
+            {
+                atmVol = y[0].vols[atmpoint];
+                smileSpread = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, x[0], 
+                    y[0], isWing ) - y[0].vols[atmpoint];                
+            }
+            else if( index==n )
+            {
+                atmVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Term, weightedVar, termPoint, false ) / termPoint );
+                smileSpread = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, x[n-1], 
+                    y[n-1], isWing ) - y[n-1].vols[atmpoint];
+            }
+            else
+            {
+                atmVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Term, weightedVar, termPoint, false ) / termPoint );
+                smileSpreadData[index-1] = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, 
+                    variable, x[index-1], y[index-1], isWing ) - y[index-1].vols[atmpoint];
+                smileSpreadData[index] = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, 
+                    variable, x[index], y[index], isWing ) - y[index].vols[atmpoint];
+                smileSpread = LAMathInterpolationUtilities::linear( mat_Term, smileSpreadData, termPoint, false );
+            }
+            break;
+        case DailyWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Day[i] = x[i].Days;
+                weightedVar[i] = LAMath::pow( y[i].vols[atmpoint], 2)  * mat_Day[i];
+            }
+            
+            if( index==0 )
+            {
+                atmVol = y[0].vols[atmpoint];
+                smileSpread = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, x[0], 
+                    y[0], isWing ) - y[0].vols[atmpoint];
+            }
+            else if( index==n )
+            {
+                atmVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Day, weightedVar, termPoint, false ) / termPoint );
+                smileSpread = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, x[n-1], 
+                    y[n-1], isWing ) - y[n-1].vols[atmpoint];
+            }
+            else
+            {
+                atmVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Day, weightedVar, termPoint, false ) / termPoint );
+                smileSpreadData[index-1] = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, 
+                    variable, x[index-1], y[index-1], isWing ) - y[index-1].vols[atmpoint];
+                smileSpreadData[index] = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, 
+                    variable, x[index], y[index], isWing ) - y[index].vols[atmpoint];
+                smileSpread = LAMathInterpolationUtilities::linear( mat_Day, smileSpreadData, termPoint, false );
+            }
+            break;
+        case SquareDailyWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Day[i] = x[i].Days;
+                weightedVar[i] = LAMath::pow( y[i].vols[atmpoint], 2 ) * LAMath::sqrt( mat_Day[i] );
+            }
+
+            if( index==0 )
+            {
+                atmVol = y[0].vols[atmpoint];
+                smileSpread = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, x[0], 
+                    y[0], isWing ) - y[0].vols[atmpoint];
+            }
+            else if( index==n )
+            {
+                atmVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Day, weightedVar, termPoint, false ) / LAMath::sqrt( termPoint ) );
+                smileSpread = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, x[n-1], 
+                    y[n-1], isWing ) - y[n-1].vols[atmpoint];
+            }
+            else
+            {
+                atmVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Day, weightedVar, termPoint, false ) / LAMath::sqrt( termPoint ) );
+                smileSpreadData[index-1] = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, 
+                    variable, x[index-1], y[index-1], isWing ) - y[index-1].vols[atmpoint];
+                smileSpreadData[index] = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, 
+                    variable, x[index], y[index], isWing ) - y[index].vols[atmpoint];
+                smileSpread = LAMathInterpolationUtilities::linear( mat_Day, smileSpreadData, termPoint, false );
+            }
+            break;
+		case TermNoWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Term[i] = x[i].T;
+                weightedVar[i] = y[i].vols[atmpoint];
+            }
+
+            if( index==0 )
+            {
+                atmVol = y[0].vols[atmpoint];
+                smileSpread = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, x[0], 
+                    y[0], isWing ) - y[0].vols[atmpoint];                
+            }
+            else if( index==n )
+            {
+                atmVol = LAMathInterpolationUtilities::linear( mat_Term, weightedVar, termPoint, false );
+                smileSpread = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, variable, x[n-1], 
+                    y[n-1], isWing ) - y[n-1].vols[atmpoint];
+            }
+            else
+            {
+                atmVol = LAMathInterpolationUtilities::linear( mat_Term, weightedVar, termPoint, false );
+                smileSpreadData[index-1] = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, 
+                    variable, x[index-1], y[index-1], isWing ) - y[index-1].vols[atmpoint];
+                smileSpreadData[index] = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( point, method, target, 
+                    variable, x[index], y[index], isWing ) - y[index].vols[atmpoint];
+                smileSpread = LAMathInterpolationUtilities::linear( mat_Term, smileSpreadData, termPoint, false );
+            }
+
+            break;
+		default:
+            LAString msg("ATMInterpolationMethod is not supported");
+			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);		
+        }
+    return atmVol + smileSpread;
+};
+
+double LAMathFXVolatilitySurfaceGenerate::GetATMVolatility( double termPoint,
+                                                        const ATMInterpolationMethod& atmMethod,
+                                                        const vector<FXOptionData >& x,
+                                                        vector<SmileData >& y ) 
+{
+    size_t i;
+    size_t n = x.size();
+    if( n != y.size() || n == 0)
+    {
+        LAString msg("Data sizes are not same!");
+        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+	//check atmpoint
+	unsigned int atmpoint = 0;
+	if (7 == y[0].vols.size())
+		atmpoint = 3;
+	else if (5 == y[0].vols.size())
+		atmpoint = 2;
+	else if (3 == y[0].vols.size())
+		atmpoint = 1;
+	//hishida vannavolga
+	else 
+		throw LACoreInvalidData("Volatility Setting Error",__FILE__,__LINE__);
+
+	DoubleArray weightedVar(n, 0.), mat_Term(n, 0.), mat_Day(n, 0.);
+    double atmVol;  
+    switch ( atmMethod )
+        {
+        case TermWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Term[i] = x[i].T;
+                weightedVar[i] = LAMath::pow( y[i].vols[atmpoint], 2 ) * mat_Term[i];
+            }
+            if( termPoint<0. )
+            {
+                LAString msg("Term Point is negative!");
+              	throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+            }
+            else if( 0.<= termPoint &&  termPoint <= x[0].T )
+            {
+                atmVol = y[0].vols[atmpoint];
+            }
+            else
+            {
+                atmVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Term, weightedVar, termPoint, false ) / termPoint );
+            }
+            break;
+        case DailyWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Day[i] = x[i].Days;
+                weightedVar[i] = LAMath::pow( y[i].vols[atmpoint], 2)  * mat_Day[i];
+            }
+            if( termPoint<0. )
+            {
+                LAString msg("Term Point is negative!");
+              	throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+            }
+            else if( 0.<= termPoint &&  termPoint <= x[0].Days )
+            {
+                atmVol = y[0].vols[atmpoint];
+            }
+            else
+            {
+                atmVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Day, weightedVar, termPoint, false ) / termPoint );
+            }
+            break;
+        case SquareDailyWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Day[i] = x[i].Days;
+                weightedVar[i] = LAMath::pow( y[i].vols[atmpoint] , 2 ) * LAMath::sqrt( mat_Day[i] );
+            }
+            if( termPoint<0. )
+            {
+                LAString msg("Term Point is negative!");
+              	throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+            }
+            else if( 0.<= termPoint &&  termPoint <= x[0].Days )
+            {
+                atmVol = y[0].vols[atmpoint];
+            }
+            else
+            {
+                atmVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Day, weightedVar, termPoint, false ) / LAMath::sqrt( termPoint ) );
+            }
+            break;          
+        case TermNoWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Term[i] = x[i].T;
+                weightedVar[i] = y[i].vols[atmpoint];
+            }
+            if( termPoint<0. )
+            {
+                LAString msg("Term Point is negative!");
+              	throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+            }
+            else if( 0.<= termPoint &&  termPoint <= x[0].T )
+            {
+                atmVol = y[0].vols[atmpoint];
+            }
+            else
+            {
+                atmVol = LAMathInterpolationUtilities::linear( mat_Term, weightedVar, termPoint, false );
+            }
+            break;
+		default:
+            LAString msg("ATMInterpolationMethod is not supported");
+			throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);		
+        }
+    return atmVol;
+};
+
+//hishida vannavolga
+double LAMathFXVolatilitySurfaceGenerate::GetVolatilityFromMaturityInterp( double termPoint,
+                                                        const ATMInterpolationMethod& atmMethod,
+														const std::vector<FXOptionData >& x,
+														const std::vector<SmileData >& y,
+														int volpos) 
+{
+    size_t i;
+    size_t n = x.size();
+    if( n != y.size() || n == 0)
+    {
+        LAString msg("Data sizes are not same!");
+        throw LACoreInvalidData(msg.getCString(),__FILE__,__LINE__);
+    }
+
+	if (volpos >= y[0].vols.size())
+		throw LACoreInvalidData("vol position is not consistent",__FILE__,__LINE__);
+
+	
+	DoubleArray weightedVar(n, 0.), mat_Term(n, 0.), mat_Day(n, 0.);
+    double retVol;  
+    switch ( atmMethod )
+        {
+        case TermWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Term[i] = x[i].T;
+                weightedVar[i] = LAMath::pow( y[i].vols[volpos], 2 ) * mat_Term[i];
+            }
+            if( termPoint<0. )
+            {
+                LAString msg("Term Point is negative!");
+              	throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+            }
+            else if( 0.<= termPoint &&  termPoint <= x[0].T )
+            {
+                retVol = y[0].vols[volpos];
+            }
+            else
+            {
+                retVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Term, weightedVar, termPoint, false ) / termPoint );
+            }
+            break;
+        case DailyWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Day[i] = x[i].Days;
+                weightedVar[i] = LAMath::pow( y[i].vols[volpos], 2)  * mat_Day[i];
+            }
+            if( termPoint<0. )
+            {
+                LAString msg("Term Point is negative!");
+              	throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+            }
+            else if( 0.<= termPoint &&  termPoint <= x[0].Days )
+            {
+                retVol = y[0].vols[volpos];
+            }
+            else
+            {
+                retVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Day, weightedVar, termPoint, false ) / termPoint );
+            }
+            break;
+        case SquareDailyWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Day[i] = x[i].Days;
+                weightedVar[i] = LAMath::pow( y[i].vols[volpos] , 2 ) * LAMath::sqrt( mat_Day[i] );
+            }
+            if( termPoint<0. )
+            {
+                LAString msg("Term Point is negative!");
+              	throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+            }
+            else if( 0.<= termPoint &&  termPoint <= x[0].Days )
+            {
+                retVol = y[0].vols[volpos];
+            }
+            else
+            {
+                retVol = LAMath::sqrt( LAMathInterpolationUtilities::linear( mat_Day, weightedVar, termPoint, false ) / LAMath::sqrt( termPoint ) );
+            }
+            break;          
+        case TermNoWeighted:
+            for( i=0;i<n;i++ )
+            {
+                mat_Term[i] = x[i].T;
+                weightedVar[i] = y[i].vols[volpos];
+            }
+            if( termPoint<0. )
+            {
+                LAString msg("Term Point is negative!");
+              	throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);
+            }
+            else if( 0.<= termPoint &&  termPoint <= x[0].T )
+            {
+                retVol = y[0].vols[volpos];
+            }
+            else
+            {
+                retVol = LAMathInterpolationUtilities::linear( mat_Term, weightedVar, termPoint, false );
+            }
+            break;
+		default:
+            LAString msg("ATMInterpolationMethod is not supported");
+			throw LACoreInvalidData(msg.getCString(), __FILE__,__LINE__);		
+        }
+    return retVol;
+};
+
+class FindLowButterflyFunc : public LAFunctionVector
+{
+public:
+    FindLowButterflyFunc( const InterpolationMethod& method_, 
+                          const InterpolationTarget& target_, 
+		                  const FXOptionData& x_ ,
+                          SmileData& y_ ,
+                          bool isWing_ )
+        : method(method_), target(target_), x(x_), y(y_), isWing(isWing_) {};
+    virtual ~FindLowButterflyFunc(){};
+
+	virtual unsigned long lengthOfArgumentVector( ) { return 1; }
+    virtual unsigned long lengthOfFunctionVector( ) { return 1; }
+    virtual unsigned long maximumNumberOfIterations() { return 150; }
+
+    virtual void operator()(std::vector<double> & f, const std::vector<double> & z)
+    {
+        f.resize( 1 );
+        
+        Strangle strangle;
+        if( isWing ) 
+        {
+            strangle = LAMathFXVolatilitySurfaceGenerate::GetLowStrangle(y.vols[3], z[0], x);
+        }
+        else
+        {
+            strangle = LAMathFXVolatilitySurfaceGenerate::GetLowStrangle(y.vols[2], z[0], x);
+        }
+        double putVol,callVol;
+		putVol = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( LAMath::log(strangle.strikePut/x.F), 
+								method, target, VariableLogStrike, x, y, isWing );
+		callVol = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( LAMath::log(strangle.strikeCall/x.F), 
+								method, target, VariableLogStrike, x, y, isWing );
+       
+		double modelPrem = LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( strangle.strikePut, putVol, -1, x ) + 
+						   LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( strangle.strikeCall, callVol, 1, x ); 
+        f[0] = strangle.prem / modelPrem - 1.0; 
+    };
+
+    virtual bool constraintsAreViolated(const std::vector <double > &z)
+    {
+        if( isWing ) 
+        {
+		    Strangle strangle = LAMathFXVolatilitySurfaceGenerate::GetLowStrangle( y.vols[3], z[0], x );
+		    double minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( strangle.vol, x );
+            if( z[0] <= (y.vols[1]+y.vols[5])/2-y.vols[3]-0.1 || z[0] >= (y.vols[1]+y.vols[5])/2-y.vols[3]+0.1  ) return true;
+		    if( LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, strangle.vol, 1, x ) < 0.1 ) return true;
+        }
+        else
+        {
+            Strangle strangle = LAMathFXVolatilitySurfaceGenerate::GetLowStrangle( y.vols[2], z[0], x );
+		    double minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( strangle.vol, x );
+            if( z[0] <= (y.vols[0]+y.vols[4])/2-y.vols[2]-0.1 || z[0] >= (y.vols[0]+y.vols[4])/2-y.vols[2]+0.1  ) return true;
+		    if( LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, strangle.vol, 1, x ) < 0.1 ) return true;
+        }
+
+        return false;       
+    };
+
+private:
+	InterpolationMethod method;
+	InterpolationTarget target;
+    FXOptionData x;
+    SmileData y;
+    bool isWing;
+};
+
+class FindHighButterflyFunc : public LAFunctionVector
+{
+public:
+    FindHighButterflyFunc( const InterpolationMethod& method_, 
+                           const InterpolationTarget& target_, 
+		                   const FXOptionData& x_ , 
+                           SmileData& y_,
+                           bool isWing_ )
+        : method(method_), target(target_), x(x_), y(y_), isWing(isWing_) {};
+    virtual ~FindHighButterflyFunc(){};
+
+	virtual unsigned long lengthOfArgumentVector( ) { return 1; }
+    virtual unsigned long lengthOfFunctionVector( ) { return 1; }
+    virtual unsigned long maximumNumberOfIterations() { return 150; }
+
+    virtual void operator()(std::vector<double> & f, const std::vector<double> & z)
+    {
+        f.resize( 1 );
+        Strangle strangle;
+        if( isWing )
+        {
+            strangle = LAMathFXVolatilitySurfaceGenerate::GetHighStrangle(y.vols[3], z[0], x);
+        }
+        else
+        {
+            strangle = LAMathFXVolatilitySurfaceGenerate::GetHighStrangle(y.vols[2], z[0], x);
+        }
+        double callVol,putVol;
+		putVol = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( LAMath::log(strangle.strikePut/x.F), 
+								method, target, VariableLogStrike, x, y, isWing );
+		callVol = LAMathFXVolatilitySurfaceGenerate::GetSmileInterpolation( LAMath::log(strangle.strikeCall/x.F), 
+								method, target, VariableLogStrike, x, y, isWing );
+  
+		double modelPrem = LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( strangle.strikePut, putVol, -1, x ) + 
+						   LAMathFXVolatilitySurfaceGenerate::GetFXOptionPremium( strangle.strikeCall, callVol, 1, x ); 
+        f[0] = strangle.prem / modelPrem - 1.0; 
+    };
+
+    virtual bool constraintsAreViolated(const std::vector <double > &z)
+    {
+        if( isWing )
+        {
+		    Strangle strangle = LAMathFXVolatilitySurfaceGenerate::GetHighStrangle( y.vols[3], z[0], x );
+		    double minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( strangle.vol, x );
+            if( z[0] <= (y.vols[2]+y.vols[4])/2-y.vols[3]-0.1 || z[0] >= (y.vols[2]+y.vols[4])/2-y.vols[3]+0.1 ) return true;
+		    if( LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, strangle.vol, 1, x ) < 0.25 ) return true;
+        }
+        else
+        {
+            Strangle strangle = LAMathFXVolatilitySurfaceGenerate::GetHighStrangle( y.vols[2], z[0], x );
+		    double minLogStrike = LAMathFXVolatilitySurfaceGenerate::GetMinimumCallDeltaLogStrike( strangle.vol, x );
+            if( z[0] <= (y.vols[1]+y.vols[3])/2-y.vols[2]-0.1 || z[0] >= (y.vols[1]+y.vols[3])/2-y.vols[2]+0.1 ) return true;
+		    if( LAMathFXVolatilitySurfaceGenerate::GetFXOptionDelta( minLogStrike, strangle.vol, 1, x ) < 0.25 ) return true;
+        }
+
+        return false;       
+    };
+
+private:
+	InterpolationMethod method;
+	InterpolationTarget target;
+    FXOptionData x;
+    SmileData y;
+    bool isWing;
+};
+
+double LAMathFXVolatilitySurfaceGenerate::FindLowButterfly( const InterpolationMethod& method,
+														const InterpolationTarget& target, 
+														const FXOptionData& x,
+											            SmileData& y,
+                                                        bool isWing )
+{   
+	FindLowButterflyFunc sub_func( method, target, x, y, isWing );
+	DoubleArray z(1);
+    if( isWing) z[0] = (y.vols[1] + y.vols[5]) / 2 - y.vols[3];
+    else z[0] = (y.vols[0] + y.vols[4]) / 2 - y.vols[2];
+
+    NL2SOL solver( sub_func );
+	solver.tryToSolve( z );
+	return z[0];
+};
+
+double LAMathFXVolatilitySurfaceGenerate::FindHighButterfly( const InterpolationMethod& method,
+											         	 const InterpolationTarget& target, 
+											 			 const FXOptionData& x,
+											             SmileData& y,
+                                                         bool isWing )
+{   
+	FindHighButterflyFunc sub_func( method, target, x, y, isWing );
+	DoubleArray z(1);
+	if( isWing ) z[0] = (y.vols[2] + y.vols[4]) / 2 - y.vols[3];
+    else z[0] = (y.vols[1] + y.vols[3]) / 2 - y.vols[2];
+
+    NL2SOL solver( sub_func );
+	solver.tryToSolve( z );
+	return z[0];
+};

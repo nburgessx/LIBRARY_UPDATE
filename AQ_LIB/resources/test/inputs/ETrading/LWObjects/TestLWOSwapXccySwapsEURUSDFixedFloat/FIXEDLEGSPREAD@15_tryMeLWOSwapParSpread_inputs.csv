@@ -1,0 +1,15 @@
+generatorFunction,tryMeLWOXccySwapParSpread
+
+swapName,FIXEDLEGSPREAD@15
+
+curveCollections
+key,col1
+LEG1:FIXED,EURYC
+LEG2:FLOAT,USDYC
+FXSPOT,1.0436
+
+fixingTableNames
+key,col1
+
+spreadLegName,Leg1:Fixed
+

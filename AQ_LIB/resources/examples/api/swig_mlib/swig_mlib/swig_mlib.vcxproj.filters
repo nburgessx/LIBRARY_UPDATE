@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\static-data">
+      <UniqueIdentifier>{5f15620c-814d-49a3-975a-66c6638d7403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\swig">
+      <UniqueIdentifier>{c34b1880-d3a7-4478-8f47-f38e0debad69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\post-build">
+      <UniqueIdentifier>{079fd0df-fce8-4bfe-8bcb-037019ee5bf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\pre-build">
+      <UniqueIdentifier>{0360abf6-0d97-45cb-afdb-c13228a4e2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{e874ccf2-be25-4a36-b5f1-259b17a3d86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{d8e9655f-1d6f-4a15-9937-c34689c23bfb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="mlib_ReadMe.txt" />
+    <None Include="Calendar.csv">
+      <Filter>Resource Files\static-data</Filter>
+    </None>
+    <None Include="ir.properties">
+      <Filter>Resource Files\static-data</Filter>
+    </None>
+    <None Include="swig_mlib.i">
+      <Filter>Resource Files\swig</Filter>
+    </None>
+    <None Include="sw.bat">
+      <Filter>Resource Files\pre-build</Filter>
+    </None>
+    <None Include="VecDouble.java">
+      <Filter>Resource Files\swig</Filter>
+    </None>
+    <None Include="VecInteger.java">
+      <Filter>Resource Files\swig</Filter>
+    </None>
+    <None Include="VecString.java">
+      <Filter>Resource Files\swig</Filter>
+    </None>
+    <None Include="VecVecDouble.java">
+      <Filter>Resource Files\swig</Filter>
+    </None>
+    <None Include="VecVecInteger.java">
+      <Filter>Resource Files\swig</Filter>
+    </None>
+    <None Include="VecVecString.java">
+      <Filter>Resource Files\swig</Filter>
+    </None>
+    <None Include="SwigMLIB.java">
+      <Filter>Resource Files\swig</Filter>
+    </None>
+    <None Include="SwigMLIBJNI.java">
+      <Filter>Resource Files\swig</Filter>
+    </None>
+    <None Include="add_functions.txt" />
+    <None Include="cpwsw-R.bat">
+      <Filter>Resource Files\post-build</Filter>
+    </None>
+    <None Include="cpwsw-D.bat">
+      <Filter>Resource Files\post-build</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exposed_functions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeUtilities.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="mirSetUpOISCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirSetUpSwapCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetDateFromTerm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirSetUpBasisSwapCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetDate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetIMMDate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirOISParRate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetDF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetPCAResults.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirSetupPCA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirSetUpFwdFXConstantCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirInterpolation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetForwardRate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetZeroRate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirOutputCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirCompound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetAnnuity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetBusinessDays.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetECBStartDate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetNextCBDate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetNextECBDate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirGetTerm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mirSwapSchedule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="exposed_functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeUtilities.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="mirSetUpOISCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirSetUpSwapCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetDateFromTerm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirSetUpBasisSwapCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetDate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetIMMDate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetDF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetPCAResults.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirSetupPCA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirSetUpFwdFXConstantCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirInterpolation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetForwardRate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetZeroRate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirOutputCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirCompound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetAnnuity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetBusinessDays.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetECBStartDate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetNextCBDate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetNextECBDate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirGetTerm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mirSwapSchedule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="swig_mlib_wrap.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

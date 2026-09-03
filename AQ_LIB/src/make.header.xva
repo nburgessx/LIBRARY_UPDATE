@@ -1,0 +1,72 @@
+RH_VER=$(shell cat /etc/redhat-release)
+ifeq ($(findstring release 7,$(RH_VER)), release 7)
+IS_RH7 = 1
+else
+IS_RH7 = 0
+endif
+
+ifeq "$(TOPDIR)" ""
+    TOPDIR = .
+endif
+
+ICPC=$(shell whereis icpc)
+
+CC = icpc
+CXX = icpc
+
+AR = ar rcs
+
+ifeq "$(IS_RH7)" "1"
+QLIB_HOME=/home/irs_user/extlib/xeon
+else
+QLIB_HOME=/home/irs_user/libext/QuantLib-1.3
+endif
+
+INCLUDE = -I$(TOPDIR)/math/include -I$(TOPDIR)/xva_lib/include -I$(TOPDIR)/xva_calib/include -I$(TOPDIR)/gridcommon/include -I$(TOPDIR)/irserver/include -I$(TOPDIR)/common/include -I$(TOPDIR)/ft/include -I$(TOPDIR)/ir/include -I$(TOPDIR)/libext/include -I$(TOPDIR)/xva_std/include -I$(TOPDIR)/xva_server/include
+
+ifeq "$(IS_RH7)" "1"
+INCLUDE += -I$(QLIB_HOME)/include
+else
+INCLUDE += -I$(QLIB_HOME)
+endif
+
+ifeq "$(IS_RH7)" "1"
+QLIB_LIB = -L$(QLIB_HOME)/lib -lQuantLib
+else
+QLIB_LIB = -L$(QLIB_HOME)/ql/.libs -lQuantLib
+endif
+EXT_LIBS = -lext $(QLIB_LIB)
+
+CFLAGS = -O3 -Wall
+
+CFLAGS += -std=c++0x 
+CFLAGS += -DXVA
+
+ifeq "$(VECREPORT)" "TRUE"
+  CFLAGS += -vec-report=3 
+endif
+
+ifeq "$(NOVEC)" "TRUE"
+  CFLAGS += -no-vec -no-simd  
+endif
+
+LIBS += -L$(TOPDIR)/lib$(DIRPOSTFIX)
+
+#LIBS +=  -lxeonphi -lmaus -lirxlsutility -lmdci -lirserver -lir -lcommon $(EXT_LIBS) -lparallel -lgridcommon -lpthread
+
+ifeq "$(IS_RH7)" "1"
+LIBS += -Wl,--start-group -lxva_server -lirserver -lir -lft -lcommon -lxva_calib -lxva_lib -lxva_std -lmath
+else
+LIBS += -Wl,--start-group -lxva_server -lirserver -lir -lcommon -lxva_calib -lxva_lib -lxva_std -lmath
+endif
+
+LIBS += -Wl,--end-group $(EXT_LIBS) -lpthread
+
+SRCS := $(wildcard *.cpp)
+OBJDIR   = ../obj
+OBJS := $(patsubst %.cpp,%.o,$(SRCS))
+
+OUTPUT = 
+LIBA = 
+EXEC = 
+

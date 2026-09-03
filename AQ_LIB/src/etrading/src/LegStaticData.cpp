@@ -1,0 +1,195 @@
+/*
+ * @brief			Class the defines the leg market data
+ * @Created:		05 July 2016
+ * @Author:			Yongyan Zheng
+ * @Department:		ISD Front Office Development
+ *
+ * The copyright to the computer program(s) herein is the property of Mizuho International.
+ */
+
+
+#include "LegStaticData.h"
+#include "SwapValidation.h"
+#include "ParameterValidation.h"
+#include "ExceptionMacros.h"
+
+namespace etrading
+{
+
+    LegStaticData::LegStaticData()  
+        : legName_(""),
+		discountCurve_(""),		
+		currency_( NO_CCY ),		
+        valuationCurrency_( NO_CCY ),			
+		discountCurveMarketName_(""),				
+        couponCompoundMethod_(NONE_COMPOUNDING_METHOD),
+		isCurveDataLoaded_(false)
+    {}
+
+    LegStaticData::LegStaticData( const LabelValueBlock& marketDataLVB )
+    {
+
+   		inputParameters_ = marketDataLVB;
+
+        const std::string inputLVB = "legPropertiesLVB";
+
+		//cast it to upper case so that legName lookup is not case-sensitive (i.e Leg1:Fixed, leg1:fixed, LEG1:FIXED are the same)
+        legName_ = marketDataLVB.getCompulsoryValueAsLAString(IRS_KEY::LEG_TYPE,  inputLVB, true);
+
+        discountCurve_ = marketDataLVB.getCompulsoryValueAsLAString( MARKET_KEY::DISCOUNT_CURVE, inputLVB );
+       
+        currency_ = toCCYEnum( marketDataLVB.getOptionalValueAsLAString( IRS_KEY::CURRENCY ).getCString() );
+		if ( currency_ == NO_CCY )
+        {
+            MLIB_THROW( "No currency specified for swap leg" );
+        }
+
+        valuationCurrency_ = toCCYEnum( marketDataLVB.getOptionalValueAsLAString( IRS_KEY::VALUATION_CURRENCY).getCString() );
+		if (valuationCurrency_ == NO_CCY)
+        {
+            valuationCurrency_ = currency_;
+        }
+
+        couponCompoundMethod_ = NONE_COMPOUNDING_METHOD;
+        
+        isCurveDataLoaded_ = false;
+    }
+
+    void LegStaticData::validateCurveInput(const LAString& curveCollection)
+    {
+        if (curveCollection.size() == 0)
+        {
+    	    throw LACoreInvalidData( "#Error: curveCollection must be provided", __FILE__, __LINE__ );
+        }
+
+        //Throw exception if the curve has not been built.
+        discountCurveMarketName_ = getCurveStaticDataTableName( curveCollection, discountCurve_ );
+
+        auto curveCurrency = toCCYEnum( getCurveCurrency( curveCollection ).getCString() );
+
+        if ( currency_ == NO_CCY )
+        {
+            MLIB_THROW( "No currency specified for swap leg" );
+        }
+        else if ( curveCurrency != currency_ )
+        {
+    	    MLIB_THROW( "Invalid curve currency: Trade currency is " + toString( currency_ ) + ", curve currency is " + toString( curveCurrency) );
+        }
+
+        if (valuationCurrency_ == NO_CCY)
+        {
+            valuationCurrency_ = currency_;
+        }
+    }
+
+    LegStaticDataPtr LegStaticData::clone()
+    {
+        LegStaticDataPtr data = LegStaticDataPtr(new LegStaticData(*this));
+        return data;
+    }
+
+    LegStaticData::LegStaticData(const LegStaticData& rhs) 
+		: legName_(rhs.legName_),
+        discountCurve_(rhs.discountCurve_),		
+        valuationCurrency_(rhs.valuationCurrency_),			
+		currency_(rhs.currency_),		
+		discountCurveMarketName_(rhs.discountCurveMarketName_),				
+        inputParameters_(rhs.inputParameters_),
+        couponCompoundMethod_(rhs.couponCompoundMethod_),
+        isCurveDataLoaded_(rhs.isCurveDataLoaded_)
+	{}
+
+    LabelValueBlock LegStaticData::getInputParameters() const
+    {
+        return inputParameters_;
+    }
+
+    LAString LegStaticData::getLegName() const
+	{
+		return legName_; 
+	}
+
+    LAString LegStaticData::getDiscountCurve() const
+    {
+        return discountCurve_;
+    }
+
+    CCY LegStaticData::getCurrency() const
+    {
+        return currency_;
+    }
+
+    CCY LegStaticData::getValuationCurrency() const
+    {
+        return valuationCurrency_;
+    }
+
+	void LegStaticData::setValuationCurrency(const CCY& valuationCurrency)
+    {
+        valuationCurrency_ = valuationCurrency;
+    }
+
+    LAString LegStaticData::getDiscountCurveMarketName() const
+    {
+        return discountCurveMarketName_;
+    }
+
+    bool LegStaticData::isCurveDataLoaded() const
+    {
+        return isCurveDataLoaded_;
+    }
+
+    void LegStaticData::setCurveDataLoaded(bool isCurveDataLoaded)
+    {
+        isCurveDataLoaded_ = isCurveDataLoaded;
+    }
+
+    CompoundingMethodEnum LegStaticData::getCouponCompoundMethod() const
+    {
+        return couponCompoundMethod_;
+    }
+
+    //dummy methods, just to avoid downcasting
+    LAString LegStaticData::getForecastCurve() const
+    {
+    	throw LACoreInvalidData( "#Error: getForecastCurve method not supported on a fixed leg", __FILE__, __LINE__ );
+    }
+    
+    LAString LegStaticData::getForecastCurveMarketName() const
+    {
+    	throw LACoreInvalidData( "#Error: getForecastCurveMarketName method not supported for this product", __FILE__, __LINE__ );
+    }
+
+    double LegStaticData::getFirstFixing() const
+    {
+    	throw LACoreInvalidData( "#Error: getFirstFixing method not supported for this product", __FILE__, __LINE__ );
+    }
+
+    double LegStaticData::getLastFixing() const
+    {
+    	throw LACoreInvalidData( "#Error: getLastFixing method not supported for this product", __FILE__, __LINE__ );
+    }
+    
+    LAString LegStaticData::getFirstStubCurveIndex() const
+    {
+    	throw LACoreInvalidData( "#Error: getFirstStubCurveIndex method not supported for this product", __FILE__, __LINE__ );
+    }
+
+    LAString LegStaticData::getLastStubCurveIndex() const
+    {
+    	throw LACoreInvalidData( "#Error: getLastStubCurveIndex method not supported for this product", __FILE__, __LINE__ );
+    }
+
+    BooleanEnum LegStaticData::getFwdInter() const
+    {
+    	throw LACoreInvalidData( "#Error: getFwdInter method not supported for this product", __FILE__, __LINE__ );
+    }
+
+    void LegStaticData::setFwdInter(const BooleanEnum& fwdInter)
+    {
+    	throw LACoreInvalidData( "#Error: setFwdInter method not supported for this product", __FILE__, __LINE__ );
+    }
+
+
+}
+

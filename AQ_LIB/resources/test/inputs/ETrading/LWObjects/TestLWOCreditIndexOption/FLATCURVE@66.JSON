@@ -1,0 +1,78 @@
+{
+    "CACHED_OBJECT_TYPE": "CREDIT_MODEL",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "MODEL_PROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "ASOFDATE",
+                "SPOTLAG",
+                "SPOTBUSINESSDAYADJUSTMENT",
+                "SPOTCALENDAR",
+                "ACCRUALSTARTDATE",
+                "IMMREFERENCEDATE",
+                "CURRENCY",
+                "RECOVERYRATE",
+                "INCLUDEACCRUEDINTEREST",
+                "CDSCURVECOLLECTION",
+                "SWAPGENERATOR",
+                "CREDITINDEX",
+                "BONDHASRISKYACCRUEDINTEREST",
+                "BONDCURVECOLLECTION",
+                "INTERPOLATION",
+                "EXTRAPOLATION"
+            ],
+            "COL_2": [
+                44111,
+                "1D",
+                "FOLLOWING",
+                "TGT:LNB",
+                44111,
+                44093,
+                "EUR",
+                0.4,
+                "TRUE",
+                "EURYC",
+                "EUR_CDS_GENERATOR@62:1",
+                "EUR_ITRAXX",
+                "TRUE",
+                "EURYC",
+                "PiecewiseConstant",
+                "Flat"
+            ]
+        },
+        {
+            "SK_NAME": "CDS_MARKETDATA",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE"
+            ],
+            "COL_1": [
+                "6M",
+                "1Y",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y",
+                "7Y",
+                "10Y"
+            ],
+            "COL_2": [
+                0.00575553,
+                0.00575553,
+                0.00575553,
+                0.00575553,
+                0.00575553,
+                0.00575553,
+                0.00575553,
+                0.00575553
+            ]
+        }
+    ],
+    "NAME": "FLATCURVE@66"
+}

@@ -1,0 +1,14 @@
+generatorFunction,tryMeSABRSetupConvention
+
+conventionID,USD_Swaption_Conv
+
+convData
+key,col1
+AsOfDate,42794
+DayCount,30/360
+Frequency,Semi-Annual
+SlidingRule,MOD_FOLLOWING
+PaymentCalendar,LNB:NYB
+FixingCalendar,LNB:NYB
+SpotLag,2d
+

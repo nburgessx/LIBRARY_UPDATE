@@ -1,0 +1,72 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "BOND_PARAMETER": [
+                "ACCRUALBUSINESSDAYADJUSTMENT",
+                "ACCRUALCALENDAR",
+                "ACCRUALSTARTDATE",
+                "BONDDESCRIPTION",
+                "BONDQUOTECONVENTION",
+                "BONDTYPE",
+                "CALCULATIONTYPE",
+                "COUPON",
+                "CURRENCY",
+                "DAYCOUNT",
+                "EXDIVIDENDBUSINESSDAYADJUSTMENT",
+                "EXDIVIDENDTENOR",
+                "FACEVALUE",
+                "FIRSTCOUPONDATE",
+                "FREQUENCY",
+                "ISCLEANPRICE",
+                "ISIN",
+                "ISSUEDATE",
+                "LASTCOUPONDATE",
+                "MATURITYDATE",
+                "NOTIONALEXCHANGE",
+                "PAYMENTBUSINESSDAYADJUSTMENT",
+                "PAYMENTCALENDAR",
+                "PAYMENTLAG",
+                "PAYRECEIVE",
+                "ROLLDAY",
+                "YIELDTYPE"
+            ],
+            "BOND_VALUE": [
+                "NO_CHANGE",
+                "SYB",
+                "42329",
+                "AU000XCLWAR9 Govt",
+                "QUOTE_IN_32NDS",
+                "FIXED",
+                "TYPE23",
+                "0.0225",
+                "AUD",
+                "ACT/ACT",
+                "NO_CHANGE",
+                "7D",
+                "1000000",
+                "42511",
+                "SEMI-ANNUAL",
+                "TRUE",
+                "AU000XCLWAR9",
+                "42509",
+                "46712",
+                "46894",
+                "START_AND_END",
+                "NO_CHANGE",
+                "SYB",
+                "0D",
+                "RECEIVE",
+                "",
+                "YIELD-TO-MATURITY"
+            ]
+        }
+    ],
+    "NAME": "AU000XCLWAR9"
+}

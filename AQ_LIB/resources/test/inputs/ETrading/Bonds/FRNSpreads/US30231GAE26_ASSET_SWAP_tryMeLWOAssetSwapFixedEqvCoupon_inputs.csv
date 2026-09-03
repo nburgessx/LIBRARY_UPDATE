@@ -1,0 +1,16 @@
+generatorFunction,tryMeLWOAssetSwapFixedEqvCoupon
+
+swapObjectName,US30231GAE26_ASSET_SWAP
+
+bondObjectName,US30231GAE26
+
+bondPrice,101.000000000000000
+
+valuationSettingsLVB
+key,col1
+VALUATIONDATE,43396
+CURVECOLLECTION,USDYC
+
+fixingTableNames
+key,col1
+

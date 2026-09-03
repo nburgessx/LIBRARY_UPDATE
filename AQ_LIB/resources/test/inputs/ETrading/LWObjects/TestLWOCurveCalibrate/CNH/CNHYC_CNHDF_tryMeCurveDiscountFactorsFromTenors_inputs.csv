@@ -1,0 +1,12 @@
+generatorFunction,tryMeCurveDiscountFactorsFromTenors
+
+tenors[],1Y,2Y,3Y,4Y,5Y,6Y,7Y,8Y,9Y,10Y
+
+businessDayAdj,MOD_FOLLOWING
+
+calendar,NYB:BEB:HKB
+
+curveCollection,CNHYC
+
+curveIndex,CNHDF
+

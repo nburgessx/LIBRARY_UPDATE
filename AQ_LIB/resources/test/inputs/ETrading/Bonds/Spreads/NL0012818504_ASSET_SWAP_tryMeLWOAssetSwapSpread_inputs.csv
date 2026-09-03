@@ -1,0 +1,16 @@
+generatorFunction,tryMeLWOAssetSwapSpread
+
+swapObjectName,NL0012818504_ASSET_SWAP
+
+bondObjectName,NL0012818504
+
+bondPrice,101.745000000000005
+
+valuationSettingsLVB
+key,col1
+CURVECOLLECTION,EURYC
+VALUATIONDATE,43258
+
+fixingTableNames
+key,col1
+

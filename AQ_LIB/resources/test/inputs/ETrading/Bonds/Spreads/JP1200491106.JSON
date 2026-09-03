@@ -1,0 +1,66 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "BOND_PARAMETER": [
+                "ACCRUALBUSINESSDAYADJUSTMENT",
+                "ACCRUALCALENDAR",
+                "ACCRUALSTARTDATE",
+                "BONDDESCRIPTION",
+                "BONDQUOTECONVENTION",
+                "BONDTYPE",
+                "CALCULATIONTYPE",
+                "COUPON",
+                "CURRENCY",
+                "DAYCOUNT",
+                "FACEVALUE",
+                "FIRSTCOUPONDATE",
+                "FREQUENCY",
+                "ISCLEANPRICE",
+                "ISIN",
+                "ISSUEDATE",
+                "LASTCOUPONDATE",
+                "MATURITYDATE",
+                "NOTIONALEXCHANGE",
+                "PAYMENTBUSINESSDAYADJUSTMENT",
+                "PAYMENTCALENDAR",
+                "PAYMENTLAG",
+                "PAYRECEIVE",
+                "YIELDTYPE"
+            ],
+            "BOND_VALUE": [
+                "NO_CHANGE",
+                "TKB",
+                "36916",
+                "JP1200491106",
+                "NONE",
+                "FIXED",
+                "TYPE51",
+                "0.021",
+                "JPY",
+                "NL/365",
+                "1000000",
+                "37154",
+                "Semi-Annual",
+                "TRUE",
+                "JP1200491106",
+                "36916",
+                "44094",
+                "44277",
+                "START_AND_END",
+                "NO_CHANGE",
+                "TKB",
+                "0D",
+                "PAY",
+                "YIELD-TO-MATURITY"
+            ]
+        }
+    ],
+    "NAME": "JP1200491106"
+}

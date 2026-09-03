@@ -1,0 +1,16 @@
+generatorFunction,tryMeLWOAssetSwapSpread
+
+swapObjectName,DE000A19X793_ASSET_SWAP
+
+bondObjectName,DE000A19X793
+
+bondPrice,99.000000000000000
+
+valuationSettingsLVB
+key,col1
+VALUATIONDATE,43396
+CURVECOLLECTION,EURYC
+
+fixingTableNames
+key,col1
+

@@ -1,0 +1,74 @@
+{
+    "CACHED_OBJECT_TYPE": "CREDIT_MODEL",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "MODEL_PROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "AsOfDate",
+                "SpotLag",
+                "SpotBusinessDayAdjustment",
+                "SpotCalendar",
+                "AccrualStartDate",
+                "IMMReferenceDate",
+                "Currency",
+                "RecoveryRate",
+                "IncludeAccruedInterest",
+                "CurveCollection",
+                "SwapGenerator",
+                "CreditIndex",
+                "Interpolation",
+                "Extrapolation"
+            ],
+            "COL_2": [
+                43362,
+                "5D",
+                "FOLLOWING",
+                "NYB",
+                43362,
+                43362,
+                "USD",
+                0.4,
+                "TRUE",
+                "USDYC",
+                "USD_CDS_IMM",
+                "US9128282R06",
+                "PiecewiseConstant",
+                "Flat"
+            ]
+        },
+        {
+            "SK_NAME": "CDS_MARKETDATA",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE"
+            ],
+            "COL_1": [
+                "6M",
+                "1Y",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y",
+                "7Y",
+                "10Y"
+            ],
+            "COL_2": [
+                0.001939,
+                0.00183013,
+                0.0020593,
+                0.00219438,
+                0.00232063,
+                0.002337,
+                0.00275507,
+                0.00316097
+            ]
+        }
+    ],
+    "NAME": "CREDITMODEL1"
+}

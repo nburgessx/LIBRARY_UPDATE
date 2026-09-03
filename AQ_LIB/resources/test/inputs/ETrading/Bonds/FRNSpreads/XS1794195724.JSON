@@ -1,0 +1,68 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "BOND_PARAMETER": [
+                "ACCRUALBUSINESSDAYADJUSTMENT",
+                "ACCRUALCALENDAR",
+                "ACCRUALSTARTDATE",
+                "BONDDESCRIPTION",
+                "BONDQUOTECONVENTION",
+                "BONDTYPE",
+                "CALCULATIONTYPE",
+                "COUPON",
+                "CURRENCY",
+                "DAYCOUNT",
+                "FACEVALUE",
+                "FIRSTCOUPONDATE",
+                "FREQUENCY",
+                "ISCLEANPRICE",
+                "ISIN",
+                "ISSUEDATE",
+                "LASTCOUPONDATE",
+                "MATURITYDATE",
+                "NOTIONALEXCHANGE",
+                "PAYMENTBUSINESSDAYADJUSTMENT",
+                "PAYMENTCALENDAR",
+                "PAYMENTLAG",
+                "PAYRECEIVE",
+                "YIELDTYPE",
+				"QUOTEDMARGIN"
+            ],
+            "BOND_VALUE": [
+                "MOD_FOLLOWING",
+                "TGT",
+                "20/03/2018",
+                "XS1794195724",
+                "3DP",
+                "FLOATER",
+                "Type21",
+                "0.00131",
+                "EUR",
+                "ACT/ACT",
+                "1000000",
+                "20/06/2018",
+                "Quarterly",
+                "TRUE",
+                "XS1794195724",
+                "20/03/2018",
+                "20/12/2021",
+                "20/03/2022",
+                "START_AND_END",
+                "NO_CHANGE",
+                "LNB:TGT",
+                "0D",
+                "RECEIVE",
+                "YIELD-TO-MATURITY",
+				"45"
+            ]
+        }
+    ],
+    "NAME": "XS1794195724"
+}

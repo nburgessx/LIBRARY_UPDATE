@@ -1,0 +1,1070 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\Examples.cpp">
+      <Filter>src\SETUP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\Fixtures.cpp">
+      <Filter>src\SETUP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CurveAccessors.cpp">
+      <Filter>src\Legacy\Curve\CurveAccessors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CurveOis.cpp">
+      <Filter>src\Legacy\Curve\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CurveFwdFxConst.cpp">
+      <Filter>src\Legacy\Curve\CurveFwdFxConst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CurveStd.cpp">
+      <Filter>src\Legacy\Curve\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CurveTenorBasis.cpp">
+      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CurveXccyBasis.cpp">
+      <Filter>src\Legacy\Curve\CurveXccyBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveFwdFxConstEURGBP.cpp">
+      <Filter>src\Legacy\Curve\CurveFwdFxConst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveFwdFxConstGBPJPY.cpp">
+      <Filter>src\Legacy\Curve\CurveFwdFxConst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveFwdFxConstJPYEUR.cpp">
+      <Filter>src\Legacy\Curve\CurveFwdFxConst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveFwdFxConstUSDEUR.cpp">
+      <Filter>src\Legacy\Curve\CurveFwdFxConst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveOisEUR.cpp">
+      <Filter>src\Legacy\Curve\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveOisGBP.cpp">
+      <Filter>src\Legacy\Curve\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveOisJPY.cpp">
+      <Filter>src\Legacy\Curve\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveOisUSD.cpp">
+      <Filter>src\Legacy\Curve\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveStdEUR.cpp">
+      <Filter>src\Legacy\Curve\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveStdEURwithTension.cpp">
+      <Filter>src\Legacy\Curve\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveStdGBP.cpp">
+      <Filter>src\Legacy\Curve\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveStdJPY.cpp">
+      <Filter>src\Legacy\Curve\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveStdUSD.cpp">
+      <Filter>src\Legacy\Curve\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveTenorBasisEUR3M6M.cpp">
+      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveTenorBasisGBP3M6M.cpp">
+      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveTenorBasisJPY3M6M.cpp">
+      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveTenorBasisUSD3M6M.cpp">
+      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveXccyBasisEUR.cpp">
+      <Filter>src\Legacy\Curve\CurveXccyBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveXccyBasisGBP.cpp">
+      <Filter>src\Legacy\Curve\CurveXccyBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveXccyBasisJPY.cpp">
+      <Filter>src\Legacy\Curve\CurveXccyBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\RunTests.cpp">
+      <Filter>src\SETUP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\InterestRateSwap.cpp">
+      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeEURAssetSwapSpread.cpp">
+      <Filter>src\Legacy\Trades\AssetSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeEUROISParRate.cpp">
+      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeEURSwapParRate.cpp">
+      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeEURSwapStubRate.cpp">
+      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeEURWithTensionSwapParRate.cpp">
+      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeGBPSwapParRate.cpp">
+      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeJPYSwapParRate.cpp">
+      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeUSDSwapParRate.cpp">
+      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestDatesCentralBank.cpp">
+      <Filter>src\Legacy\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestDatesECB.cpp">
+      <Filter>src\Legacy\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestDatesSwapSchedule.cpp">
+      <Filter>src\Legacy\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestUtilitiesTime.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestUtilitiesUsername.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestDataFilesCreate.cpp">
+      <Filter>src\etrading\DataFilesAndTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestDataFilesRead.cpp">
+      <Filter>src\etrading\DataFilesAndTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\InitializeMLibGoogleTest.cpp">
+      <Filter>src\SETUP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveReplay.cpp">
+      <Filter>src\Legacy\Curve\CurveReplay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveOisEUR_SmoothShortEnd.cpp">
+      <Filter>src\Legacy\Curve\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestRiskSwapDeltaLadder.cpp">
+      <Filter>src\Legacy\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeCurveAccessors.cpp">
+      <Filter>src\etrading\Curves\CurveAccessors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeCurveFwdFxConst.cpp">
+      <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeCurveTenorBasis.cpp">
+      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeCurveStd.cpp">
+      <Filter>src\etrading\Curves\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeCurveXccyBasis.cpp">
+      <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveFwdFxConstEURGBP.cpp">
+      <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveTenorBasisEUR3M6M.cpp">
+      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveTenorBasisUSD3M6M.cpp">
+      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveTenorBasisGBP3M6M.cpp">
+      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveTenorBasisJPY3M6M.cpp">
+      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveOisEUR.cpp">
+      <Filter>src\etrading\Curves\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveOisUSD.cpp">
+      <Filter>src\etrading\Curves\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveOisGBP.cpp">
+      <Filter>src\etrading\Curves\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveOisJPY.cpp">
+      <Filter>src\etrading\Curves\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeCurveOis.cpp">
+      <Filter>src\etrading\Curves\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveStdEUR.cpp">
+      <Filter>src\etrading\Curves\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveStdUSD.cpp">
+      <Filter>src\etrading\Curves\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveStdGBP.cpp">
+      <Filter>src\etrading\Curves\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveStdJPY.cpp">
+      <Filter>src\etrading\Curves\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveXccyBasisEUR.cpp">
+      <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveXccyBasisJPY.cpp">
+      <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveXccyBasisGBP.cpp">
+      <Filter>src\etrading\Curves\CurveXccyBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveFwdFxConstGBPJPY.cpp">
+      <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveFwdFxConstUSDEUR.cpp">
+      <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveFwdFxConstJPYEUR.cpp">
+      <Filter>src\etrading\Curves\CurveFwdFxConst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestRiskTenorBasisCurve.cpp">
+      <Filter>src\Legacy\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\ResultsProcessor.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveTenorBasisJPY3M6MConvergence.cpp">
+      <Filter>src\etrading\Curves\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveOisEUR_Compounding.cpp">
+      <Filter>src\Legacy\Curve\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapEURTenorBasis.cpp">
+      <Filter>src\etrading\Swaps\TenorBasisSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\EnvironmentAttacker.cpp">
+      <Filter>src\etrading\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestExampleObject.cpp">
+      <Filter>src\etrading\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOInfrastructure.cpp">
+      <Filter>src\etrading\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestUtilities.cpp">
+      <Filter>src\etrading\Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOCurve.cpp">
+      <Filter>src\etrading\Curves\LWOCurve</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestFixingTable.cpp">
+      <Filter>src\etrading\Swaps\FixingTable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMarketDataCollection.cpp">
+      <Filter>src\etrading\MarketData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeUSDSwapParRate_NonOverridingFwds.cpp">
+      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveStdUSD_NonOverridingFwds.cpp">
+      <Filter>src\Legacy\Curve\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapEURVariableNotionalSwaps.cpp">
+      <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMirDateFunctions.cpp">
+      <Filter>src\Legacy\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveTenorBasisUSD_FRA.cpp">
+      <Filter>src\Legacy\Curve\CurveTenorBasis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapEURUSDXccySwap.cpp">
+      <Filter>src\etrading\Swaps\XccySwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeCurveOisAUD.cpp">
+      <Filter>src\etrading\Curves\CurveOIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapDelta.cpp">
+      <Filter>src\etrading\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapZeroCouponSwapFixedFixed.cpp">
+      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapZeroCouponSwapXccyFloatFloat.cpp">
+      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapZeroCouponSwapFixedFloat.cpp">
+      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapZeroCouponSwapFloatFloat.cpp">
+      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapZeroCouponSwapXccyFixedFixed.cpp">
+      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapZeroCouponSwapXccyFixedFloat.cpp">
+      <Filter>src\etrading\Swaps\ZeroCouponSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapGBPEURXccySwap.cpp">
+      <Filter>src\etrading\Swaps\XccySwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeDateYearFraction.cpp">
+      <Filter>src\etrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapEURUSDXccySwapFixedFixed.cpp">
+      <Filter>src\etrading\Swaps\XccySwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CurveConsistencies_STD.cpp">
+      <Filter>src\Legacy\Curve\CurveConsistency</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CurveConsistencies_TenorBasis.cpp">
+      <Filter>src\Legacy\Curve\CurveConsistency</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestHelperUtilities.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondUtilities.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondYields.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapCompounding.cpp">
+      <Filter>src\etrading\Swaps\Swaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CreateFixedBond.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondPrices.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeEURSwapPV01.cpp">
+      <Filter>src\Legacy\Trades\InterestRateSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\Test_IsFwdInter.cpp">
+      <Filter>src\Legacy\Curve\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondPricesAustraliaType23Govt.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondPricesItalianGovt.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondPricesJapaneseJGBs.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondPricesGermanBunds.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondPricesUSTreasuries.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapDeltaXCCY.cpp">
+      <Filter>src\etrading\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondPricesFrenchOATsBTANsFixed.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondPricesFrenchOATsBTANsZeroCoupon.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapDeltaXCCY_CSA.cpp">
+      <Filter>src\etrading\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\LinearSplineTests.cpp">
+      <Filter>src\Legacy\Curve\Interpolations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapDelta_JPY.cpp">
+      <Filter>src\etrading\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapAmortization.cpp">
+      <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapFloatRate.cpp">
+      <Filter>src\etrading\Swaps\FixingTable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeDateFuturesContract.cpp">
+      <Filter>src\etrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveForwardRates.cpp">
+      <Filter>src\etrading\Curves\CurveForwardRates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestUtilitiesSetup.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapEURUSDXccySwapFixedFloat.cpp">
+      <Filter>src\etrading\Swaps\XccySwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestExceptionMacros.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeCurveCheapestToDeliver_USD_SEK.cpp">
+      <Filter>src\etrading\Curves\CurveCheapestToDeliver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeCurveCTD.cpp">
+      <Filter>src\etrading\Curves\CurveCheapestToDeliver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeCurveGroupingJPY.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\JPYCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestDebugMacros.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestUtilitiesData.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestStateVariableUtilities.cpp">
+      <Filter>src\etrading\Curves\StateVariableUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CurveConsistencies_OIS.cpp">
+      <Filter>src\Legacy\Curve\CurveConsistency</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOHedgeCurveDelta.cpp">
+      <Filter>src\etrading\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOFra.cpp">
+      <Filter>src\etrading\Swaps\Fra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLeakChecker.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeMathEuropeanIRSwaption.cpp">
+      <Filter>src\etrading\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeMathBlackScholes.cpp">
+      <Filter>src\etrading\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeMathNormalDistribution.cpp">
+      <Filter>src\etrading\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondGenerator.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCreditDefaultSwap.cpp">
+      <Filter>src\etrading\Credit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCreditModel.cpp">
+      <Filter>src\etrading\Credit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestIsRegularSwapSchedule.cpp">
+      <Filter>src\etrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestTradeEURAssetSwapSpread.cpp">
+      <Filter>src\etrading\Swaps\AssetSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestTradeEUROISParRate.cpp">
+      <Filter>src\etrading\Swaps\OIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestTradeEURSwapParRate.cpp">
+      <Filter>src\etrading\Swaps\Swaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestTradeEURSwapStubRate.cpp">
+      <Filter>src\etrading\Swaps\Swaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapStubImpactOnParRate.cpp">
+      <Filter>src\etrading\Swaps\Swaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapEUROvernightIndexedSwaps.cpp">
+      <Filter>src\etrading\Swaps\OIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestConstantMaturitySwap.cpp">
+      <Filter>src\etrading\Swaps\Swaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTotalReturnSwap.cpp">
+      <Filter>src\etrading\Swaps\Swaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveDualBootstrapping.cpp">
+      <Filter>src\etrading\Curves\GlobalYieldCurveEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestValidateAndConvertStringToDate.cpp">
+      <Filter>src\etrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapDeltaDualBootstrap.cpp">
+      <Filter>src\etrading\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapGenerator.cpp">
+      <Filter>src\etrading\Swaps\Swaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeLWOCurveCalibrate.cpp">
+      <Filter>src\etrading\Curves\LWOCurve</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLiborOisBasisSwaps.cpp">
+      <Filter>src\etrading\Swaps\Swaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondPricesUKGilt.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondSpreads.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondCurves.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveDates.cpp">
+      <Filter>src\etrading\Curves\CurveStreaming</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveStreaming.cpp">
+      <Filter>src\etrading\Curves\CurveStreaming</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeUtilitityLVB.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondRepo.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondFRN_Type21.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveEngineCalibrate.cpp">
+      <Filter>src\etrading\Curves\GlobalYieldCurveEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\BuildSwapTradeFromGenerator.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\ExtractCurveCalibrationData.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\AUDSwapCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\AUDCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\GBPSwapCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\GBPCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\USDSwapCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\USDCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\EURSwapCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\EURCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\EURBasisCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\EURCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\USDBasisCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\USDCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\GBPBasisCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\GBPCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\EUROisCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\EURCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\GBPOisCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\GBPCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\USDOisCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\USDCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\AUDOisCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\AUDCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapDeltaWithCurveEngine.cpp">
+      <Filter>src\etrading\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\BuildMarketDataObjectFromFile.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestEuropeanSwaptions.cpp">
+      <Filter>src\etrading\IROptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\RepriceCalibrationInstruments.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\JPYLCHCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\JPYCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestIMMDates.cpp">
+      <Filter>src\etrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOInfoBlock.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\GetGoogleTestFolder.cpp">
+      <Filter>src\SETUP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestSABRCalibration.cpp">
+      <Filter>src\etrading\IRVol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestAnyTypeUtilities.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondPricesSpainGovt.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestSimpsonsRuleIntegration.cpp">
+      <Filter>src\etrading\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeMathVolatility.cpp">
+      <Filter>src\etrading\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeMathConvexity.cpp">
+      <Filter>src\etrading\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestIMMFuturesTickers.cpp">
+      <Filter>src\etrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestRandomNumbers.cpp">
+      <Filter>src\etrading\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCreditBasketModel.cpp">
+      <Filter>src\etrading\Credit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\ModelTools.cpp">
+      <Filter>src\etrading\IRVol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapFromBespokeSchedule.cpp">
+      <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapFromStructuredBespokeSchedule.cpp">
+      <Filter>src\etrading\Swaps\VariableNotionalSwaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveResults.cpp">
+      <Filter>src\etrading\Curves\CurveResults</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestMeDateECB.cpp">
+      <Filter>src\etrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestVariantDataType.cpp">
+      <Filter>src\etrading\DataFilesAndTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestUtilitiesInterpolation.cpp">
+      <Filter>src\etrading\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOCurveDiscountFactorsWithSpread.cpp">
+      <Filter>src\etrading\Curves\LWOCurve</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestRiskUtilities.cpp">
+      <Filter>src\etrading\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestDateConverters.cpp">
+      <Filter>src\etrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveResultsJacobian.cpp">
+      <Filter>src\etrading\Curves\CurveResults</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveMarketDataBumping.cpp">
+      <Filter>src\etrading\Curves\CurveMarketData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestValuationSettings.cpp">
+      <Filter>src\etrading\ValuationSettings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveStdSerialFuture.cpp">
+      <Filter>src\etrading\Curves\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TryMeTestCurveStdSerialFRA.cpp">
+      <Filter>src\etrading\Curves\CurveSTD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapDelta_ARR.cpp">
+      <Filter>src\etrading\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestLWOSwapDeltaXCCY_ZAR.cpp">
+      <Filter>src\etrading\Risks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\ZARSwapCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\ZARCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\NZDSwapCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\NZDCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\NZDOisCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\NZDCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestTradeGBPSwapStubRate.cpp">
+      <Filter>src\etrading\Swaps\Swaps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCalendars.cpp">
+      <Filter>src\etrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurrencyEnum.cpp">
+      <Filter>src\etrading\Enums</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\EUR_SWAP_3M_CurveInterpolation.cpp">
+      <Filter>src\etrading\Curves\CurveInterpolation\EUR</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveInterpolation.cpp">
+      <Filter>src\etrading\Curves\CurveInterpolation\.Methods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveLinearInterpolation.cpp">
+      <Filter>src\etrading\Curves\CurveInterpolation\.Methods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveLinearSplineInterpolation.cpp">
+      <Filter>src\etrading\Curves\CurveInterpolation\.Methods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurvePolynomialInterpolation.cpp">
+      <Filter>src\etrading\Curves\CurveInterpolation\.Methods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveSplineInterpolation.cpp">
+      <Filter>src\etrading\Curves\CurveInterpolation\.Methods</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\USD_SWAP_3M_CurveInterpolation.cpp">
+      <Filter>src\etrading\Curves\CurveInterpolation\USD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\BuildAllEURCurvesAsSTDSwap.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\EURCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestInflationCurve.cpp">
+      <Filter>src\etrading\Inflation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestSolvers.cpp">
+      <Filter>src\etrading\Solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestStubDates.cpp">
+      <Filter>src\etrading\Dates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\CZKCurveConsistency.cpp">
+      <Filter>src\etrading\Curves\CurveConsistency\CZKCurves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCurveMarketDataUseParameter.cpp">
+      <Filter>src\etrading\Curves\CurveMarketData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestCreditIndexOption.cpp">
+      <Filter>src\etrading\Credit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\Dependency.h">
+      <Filter>include\SETUP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\QuickTest.h">
+      <Filter>include\SETUP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\CurveAccessors.h">
+      <Filter>include\etrading\Legacy\Curve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\CurveFwdFxConst.h">
+      <Filter>include\etrading\Legacy\Curve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\CurveOis.h">
+      <Filter>include\etrading\Legacy\Curve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\CurveStd.h">
+      <Filter>include\etrading\Legacy\Curve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\CurveTenorBasis.h">
+      <Filter>include\etrading\Legacy\Curve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\CurveXccyBasis.h">
+      <Filter>include\etrading\Legacy\Curve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\InterestRateSwap.h">
+      <Filter>include\etrading\Legacy\Trade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\InitializeMLibGoogleTest.h">
+      <Filter>include\SETUP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\EnvironmentAttacker.h">
+      <Filter>include\etrading\Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\TryMeCurveAccessors.h">
+      <Filter>include\etrading\Curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\TryMeCurveXccyBasis.h">
+      <Filter>include\etrading\Curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\TryMeCurveFwdFxConst.h">
+      <Filter>include\etrading\Curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\TryMeCurveOis.h">
+      <Filter>include\etrading\Curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\TryMeCurveStd.h">
+      <Filter>include\etrading\Curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\TryMeCurveTenorBasis.h">
+      <Filter>include\etrading\Curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\ResultsProcessor.h">
+      <Filter>include\etrading\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\BindFileToClassConstructor.h">
+      <Filter>include\SETUP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\TestHelperUtilities.h">
+      <Filter>include\etrading\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\CreateFixedBond.h">
+      <Filter>include\etrading\Bonds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\TryMeCurveCTD.h">
+      <Filter>include\etrading\Curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\BuildSwapTradeFromGenerator.h">
+      <Filter>include\etrading\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\ExtractCurveCalibrationData.h">
+      <Filter>include\etrading\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\BuildMarketDataObjectFromFile.h">
+      <Filter>include\etrading\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\RepriceCalibrationInstruments.h">
+      <Filter>include\etrading\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\GetGoogleTestFolder.h">
+      <Filter>include\SETUP</Filter>
+    </ClInclude>
+    <ClCompile Include="..\src\GOOGLE_TEST\src\TestBondFRNSpreads.cpp">
+      <Filter>src\etrading\Bonds</Filter>
+    </ClCompile>
+    <ClInclude Include="..\src\GOOGLE_TEST\include\ModelTools.h">
+      <Filter>include\etrading\IRVol</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{2ca793ab-9c86-4467-9183-9bc9f23f744f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{8e335732-37e0-4a8e-a489-7739ab6d2876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="buildscripts">
+      <UniqueIdentifier>{771e6d28-4667-4554-b7ba-f3e4bcb9df4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\SETUP">
+      <UniqueIdentifier>{969850b1-30cb-4db6-b1c9-0a007ba68358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\etrading">
+      <UniqueIdentifier>{2b5029d1-9ae5-4ec3-b972-2ff78fd570b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\etrading\Legacy">
+      <UniqueIdentifier>{0740b021-81d3-4305-8c40-fa9004bd2d6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\etrading\Legacy\Curve">
+      <UniqueIdentifier>{25cfc511-39f7-44e2-bec4-799257f1e7c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\etrading\Legacy\Trade">
+      <UniqueIdentifier>{d1572047-416f-48c6-8687-8bf2746e3288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\etrading\IRVol">
+      <UniqueIdentifier>{a5e028e8-7e5d-44be-9978-d89a5485759b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\etrading\Infrastructure">
+      <UniqueIdentifier>{e894ce2d-952d-4ba6-b2b0-09eeb36b1f33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\etrading\Curves">
+      <UniqueIdentifier>{87813215-c7be-4082-b77f-325137685680}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\etrading\Bonds">
+      <UniqueIdentifier>{4dd96a71-f7b3-4c17-9212-ad17d313854f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\SETUP">
+      <UniqueIdentifier>{02824686-8f67-46d0-bd62-e65383f29f24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\etrading\Utilities">
+      <UniqueIdentifier>{5efba66f-a23c-4c67-9117-b9c1aa675113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading">
+      <UniqueIdentifier>{01ab1a34-327d-470c-a475-9613288810a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Utilities">
+      <UniqueIdentifier>{6df311da-3952-47c4-bb21-cc9f10590319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Swaps">
+      <UniqueIdentifier>{fd93b7b9-46ba-43da-85ca-4cef993c8f77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Swaps\Fra">
+      <UniqueIdentifier>{3f99ec86-307f-4805-827d-967e11cb8560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Swaps\AssetSwaps">
+      <UniqueIdentifier>{e6dca1df-4887-429b-9a4c-9394bfd6df2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Swaps\OIS">
+      <UniqueIdentifier>{656ee1f1-0370-42b9-908d-178e9758d901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Swaps\VariableNotionalSwaps">
+      <UniqueIdentifier>{d914a631-8c72-426c-856c-105375e059e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Swaps\XccySwaps">
+      <UniqueIdentifier>{e0372d9c-4a41-46ad-b34a-3189c275018a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Swaps\ZeroCouponSwaps">
+      <UniqueIdentifier>{2f7fd914-56f7-46b7-8fce-428966c6f14c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Swaps\TenorBasisSwaps">
+      <UniqueIdentifier>{bb0dee1b-6a2f-4c0d-a872-b124fe0717b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Swaps\Swaps">
+      <UniqueIdentifier>{7d10c52e-0aa7-44d6-ab53-9671fefec9ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Swaps\FixingTable">
+      <UniqueIdentifier>{7a1c6ce8-54f3-499a-affe-8a394cc59f10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Risks">
+      <UniqueIdentifier>{2726f402-10c7-4391-88f1-6361370398e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Math">
+      <UniqueIdentifier>{b7100364-53cd-4cca-bb3e-53ca97e4746f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Bonds">
+      <UniqueIdentifier>{c7c45cd2-dd41-41cf-9603-1836f01e347f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Credit">
+      <UniqueIdentifier>{79e910a3-0598-46a4-975a-e98b6d3b4c8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves">
+      <UniqueIdentifier>{8cabbf4d-90b8-49d9-bfe7-52b869a65cd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveAccessors">
+      <UniqueIdentifier>{a44afecf-8903-4a80-9e41-198206fbc39e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveXccyBasis">
+      <UniqueIdentifier>{7c53ca95-207d-4295-b639-ee369b85a0be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveFwdFxConst">
+      <UniqueIdentifier>{267fdf26-56c3-4206-bd35-fbd76103f304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveOIS">
+      <UniqueIdentifier>{2d8ff0c4-eefb-4795-aae6-2fe04d36f4d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveSTD">
+      <UniqueIdentifier>{ca597eb4-41ac-4a90-b73d-65a48d7b2218}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveTenorBasis">
+      <UniqueIdentifier>{9d4200c0-f2de-4f07-915d-706e1bd6978f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveForwardRates">
+      <UniqueIdentifier>{4e3f096f-ea86-4114-a5ea-ca3e7d726fd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveCheapestToDeliver">
+      <UniqueIdentifier>{003421f7-c369-4712-a13c-6d1dbc0f6348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\StateVariableUtilities">
+      <UniqueIdentifier>{5c408a99-dd4b-40c8-bdae-aa79b99551d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\LWOCurve">
+      <UniqueIdentifier>{855e7fe3-2d4c-4971-9d93-6045e105c913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveStreaming">
+      <UniqueIdentifier>{aebc3d09-b6ee-4c13-bd41-d32b786e8900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\GlobalYieldCurveEngine">
+      <UniqueIdentifier>{b444b2c2-455c-44e2-9c33-75c39d6de074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveConsistency">
+      <UniqueIdentifier>{f7a0d3e8-02b5-47b8-b5ce-6754329382f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveConsistency\USDCurves">
+      <UniqueIdentifier>{58222477-b82f-4cf6-a88e-8ea090c2f3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveConsistency\JPYCurves">
+      <UniqueIdentifier>{6cb95cc0-b839-4885-b90a-97e203348919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveConsistency\EURCurves">
+      <UniqueIdentifier>{b4618225-3dfb-425e-8e83-e7b47f4d994e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveConsistency\GBPCurves">
+      <UniqueIdentifier>{072f8c84-c48f-4c88-aa72-2d84a313f5d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveResults">
+      <UniqueIdentifier>{18c290be-7cf9-4ed5-bb59-3045c8595f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveMarketData">
+      <UniqueIdentifier>{9549cc61-3eb6-42f5-9ea7-d8dda291da1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\DataFilesAndTypes">
+      <UniqueIdentifier>{0980548d-cbf9-4e10-83e9-6131382383de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Dates">
+      <UniqueIdentifier>{d1dced55-5ec6-46b5-814d-e71dc5b58efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Infrastructure">
+      <UniqueIdentifier>{6c811301-63f4-42b9-98fa-3d04ea49d31f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\IROptions">
+      <UniqueIdentifier>{bcbae3f9-431d-4d0d-8ab1-d28ec79ecee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\IRVol">
+      <UniqueIdentifier>{99abc14b-6984-403e-be4b-b02ad1e21ee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\MarketData">
+      <UniqueIdentifier>{e0fd23ea-3d7d-4297-857c-ef3426e5696b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\ValuationSettings">
+      <UniqueIdentifier>{f95d726c-6a42-4932-b438-73445dbff38d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveInterpolation">
+      <UniqueIdentifier>{aebafacb-eba7-48a2-8e64-7d55425f6969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveConsistency\ZARCurves">
+      <UniqueIdentifier>{09c4da25-a0a7-4891-9822-efcdccbb8b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveConsistency\AUDCurves">
+      <UniqueIdentifier>{d0dc5a68-25d1-4be4-9265-9623fad34535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveConsistency\NZDCurves">
+      <UniqueIdentifier>{12a6eca2-3dc7-4458-abe8-49cbb7e81dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy">
+      <UniqueIdentifier>{c8504260-8df5-41a3-aec6-ba6d28f7d61e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Curve">
+      <UniqueIdentifier>{198e1b0c-76b2-45cd-9eaf-5f501f386554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Curve\CurveOIS">
+      <UniqueIdentifier>{28eca0d2-b800-4127-858b-d79c4dcc904f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Curve\CurveXccyBasis">
+      <UniqueIdentifier>{e8f59058-af63-4159-bd58-568716d64f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Curve\CurveTenorBasis">
+      <UniqueIdentifier>{b9725b6d-0485-4d1e-b799-de4d4eddf2c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Curve\CurveSTD">
+      <UniqueIdentifier>{676070b8-4d03-42bc-8969-da21a0322690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Curve\CurveFwdFxConst">
+      <UniqueIdentifier>{692e4edb-ac2c-455d-a16c-4197244de64b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Curve\CurveAccessors">
+      <UniqueIdentifier>{f0bdf069-ae81-4c26-aca1-f8c70f87e082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Curve\CurveReplay">
+      <UniqueIdentifier>{4ed84aba-3d08-4374-91b9-9c2f61856e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Curve\Interpolations">
+      <UniqueIdentifier>{ba07596b-c425-490b-a341-d5aa604826aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Curve\CurveConsistency">
+      <UniqueIdentifier>{700cf761-8ccd-4598-b730-880e7b504fcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Trades">
+      <UniqueIdentifier>{0ecee2d3-3a03-4ee9-9182-190306944cb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Trades\AssetSwaps">
+      <UniqueIdentifier>{b6b79c4e-91ee-4fe9-9d2b-d532ae7117dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Trades\InterestRateSwaps">
+      <UniqueIdentifier>{89d139e0-6b24-4c8c-a524-c50c88ac3c34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Dates">
+      <UniqueIdentifier>{a827d7dd-0778-4b7c-ba13-56b67e98382e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Legacy\Risks">
+      <UniqueIdentifier>{59c1be9b-3e66-4d7e-8ff6-72aef51e33d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Enums">
+      <UniqueIdentifier>{da3027ea-dc46-406f-8282-70b09e6740b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveInterpolation\EUR">
+      <UniqueIdentifier>{de4a947a-2a46-49d8-a4fb-7a63f5b3896a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveInterpolation\USD">
+      <UniqueIdentifier>{f763e63c-6521-4440-a000-7bf3dc7c6912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveInterpolation\.Methods">
+      <UniqueIdentifier>{75fca92e-5ef5-4eb9-b0cc-3f0b02b22691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Inflation">
+      <UniqueIdentifier>{6ea6c2f8-a59f-4b94-a9fa-bc2ddb0eb943}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Solvers">
+      <UniqueIdentifier>{6f2f48c7-64c2-4124-ab7c-9eb3c5cd6767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\etrading\Curves\CurveConsistency\CZKCurves">
+      <UniqueIdentifier>{738c094a-202d-43c3-a3e9-b34a02d5e94d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\GOOGLE_TEST\buildscripts\configureVisualLeakDetector32.bat">
+      <Filter>buildscripts</Filter>
+    </None>
+    <None Include="..\src\GOOGLE_TEST\buildscripts\configureVisualLeakDetector64.bat">
+      <Filter>buildscripts</Filter>
+    </None>
+  </ItemGroup>
+</Project>

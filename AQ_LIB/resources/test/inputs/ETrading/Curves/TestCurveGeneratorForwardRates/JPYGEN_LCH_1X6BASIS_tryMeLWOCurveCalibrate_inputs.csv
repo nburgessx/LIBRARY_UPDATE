@@ -1,0 +1,10 @@
+generatorFunction,tryMeLWOCurveCalibrate
+
+lwoCurveGeneratorName,JPY_LCH_BASIS_1X6
+
+lwoCurveMarketDataName,JPY_LCH_1X6BASIS_MKTDATA@48
+
+domesticCurveCollection,JPYGEN
+
+foreignCurveCollection,
+

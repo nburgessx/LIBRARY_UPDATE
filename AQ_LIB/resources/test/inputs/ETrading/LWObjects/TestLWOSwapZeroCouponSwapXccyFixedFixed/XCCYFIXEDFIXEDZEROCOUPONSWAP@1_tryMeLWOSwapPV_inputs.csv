@@ -1,0 +1,15 @@
+generatorFunction,tryMeLWOSwapPV
+
+swapName,XCCYFIXEDFIXEDZEROCOUPONSWAP@1
+
+curveCollections
+key,col1
+LEG2:FIXED,EURYC
+LEG1:FIXED,USDYC
+FXSPOT,1.05861
+
+legName,
+
+fixingTableNames
+key,col1
+

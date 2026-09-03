@@ -1,0 +1,68 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "MARKETDATAPROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Currency",
+                "CurveType",
+                "CurveIndexFrequency",
+                "AsOfDate"
+            ],
+            "COL_2": [
+                "EUR",
+                "XCCYBASIS",
+                "QUARTERLY",
+                44081
+            ]
+        },
+        {
+            "SK_NAME": "FXSPOTS",
+            "SK_NUMBER_OF_COLUMNS": 3,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING",
+                "DOUBLE"
+            ],
+            "COL_1": [
+                "EUR"
+            ],
+            "COL_2": [
+                "USD"
+            ],
+            "COL_3": [
+                1.17975
+            ]
+        },
+        {
+            "SK_NAME": "FXFWDS",
+            "SK_NUMBER_OF_COLUMNS": 3,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE",
+                "STRING"
+            ],
+            "COL_1": [],
+            "COL_2": [],
+            "COL_3": []
+        },
+        {
+            "SK_NAME": "XCCYSWAPS",
+            "SK_NUMBER_OF_COLUMNS": 3,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE",
+                "STRING"
+            ],
+            "COL_1": [],
+            "COL_2": [],
+            "COL_3": []
+        }
+    ],
+    "NAME": "EUR_XCCY_NODATA"
+}

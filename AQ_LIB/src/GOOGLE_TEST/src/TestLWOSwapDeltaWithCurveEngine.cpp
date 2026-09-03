@@ -1,0 +1,234 @@
+/*
+ * @brief			Regression tests on the swap delta ladder using global yield curve engine
+ * @Created:		18 Aug 2018
+ * @Author:			Joseph Ye
+ * @Department:		ISD Front Office Development
+ *
+ * The copyright to the computer program(s) herein is the property of Mizuho International.
+ */
+
+
+// Curves
+#include "tryMeLWOCurveEngineCalibrate.h"
+
+// Swap Creation and Pricing
+#include "tryMeLWOSwapPricing.h"
+
+// Risk calculation
+#include "tryMeLWOSwapDelta.h"
+#include "tryMeLWOFixingTable.h"
+
+// Test Infrastructure
+#include "Dependency.h"   // Curve Macros are Here !!!
+#include "ReadDataFile.h"
+#include "CreateDataFile.h"
+#include "ResultsProcessor.h"
+#include "tryMeUtilitySetup.h"
+#include <gTest/gTest.h>
+#include "BuildMarketDataObjectFromFile.h"
+#include "BuildSwapTradeFromGenerator.h"
+
+using etrading::ReadDataFile;
+using etrading::CreateDataFile;
+
+// Define the Test Input Folder Here
+#define TEST_DIR "ETrading/LWObjects/TestLWOSwapDeltaWithCurveEngine/"
+
+namespace
+{
+    // test tolerances
+    // ---------------
+    const double tolerance = 50; // Notional of test trades is 100MM and delta by bumping is inherently noisy
+	
+	unsigned int EUR_TEST_COUNT = 1;
+	unsigned int USD_TEST_COUNT = 1;
+
+	// Swap definitions
+	extern const char EUR_FIXEDFLOATSWAP_1[] = TEST_DIR "EUR_FixedFloatSwapLVB_1.csv";
+	extern const char EUR_FIXEDFLOATSWAP_2[] = TEST_DIR "EUR_FixedFloatSwapLVB_2.csv";
+	extern const char EUR_FIXEDFLOATSWAP_3[] = TEST_DIR "EUR_FixedFloatSwapLVB_3.csv";
+
+	extern const char USD_FIXEDFLOATSWAP_1[] = TEST_DIR "USD_FixedFloatSwapLVB_1.csv";
+	extern const char USD_FIXEDFLOATSWAP_2[] = TEST_DIR "USD_FixedFloatSwapLVB_2.csv";
+	extern const char USD_FIXEDFLOATSWAP_3[] = TEST_DIR "USD_FixedFloatSwapLVB_3.csv";
+
+	// Result paths
+	extern const char PORTFOLIO_DELTA_LADDER_INPUTS[] = "PortfolioDeltaLadder_inputs";
+	extern const char PORTFOLIO_DELTA_LADDER_OUTPUTS_32BIT[] = "PortfolioDeltaLadder_outputs_32bits";
+	extern const char PORTFOLIO_DELTA_LADDER_OUTPUTS_64BIT[] = "PortfolioDeltaLadder_outputs_64bits";
+
+	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
+	
+	void buildEngineCurves(const LAString& ccy, const LAString& prefix, const std::string& curveCollection, const std::vector<std::string>& curveGeneratorNames)
+	{		
+		LAString marketDataFile_OIS = TEST_DIR;
+		LAString marketDataFile_STD = TEST_DIR;
+		LAString marketDataFile_6M  = TEST_DIR;
+
+		marketDataFile_OIS += prefix + LAString("OIS_MARKETDATA");
+		marketDataFile_STD += prefix + LAString("STD_MARKETDATA");
+		marketDataFile_6M  += prefix + LAString("6M_MARKETDATA");
+
+		std::string marketObj_OIS = google_test::createLWOMarketDataObjectFromFileName(marketDataFile_OIS);
+		std::string marketObj_STD = google_test::createLWOMarketDataObjectFromFileName(marketDataFile_STD);
+		std::string marketObj_6M  = google_test::createLWOMarketDataObjectFromFileName(marketDataFile_6M);
+
+		std::vector<std::string> marketDataObjects;
+		marketDataObjects.push_back(marketObj_OIS);
+		marketDataObjects.push_back(marketObj_STD);
+		marketDataObjects.push_back(marketObj_6M);
+
+		LAStringMatrix engineSettings;	// dummy optional
+		validation_api::tryMeLWOCurveEngineCalibrate("", curveCollection, engineSettings, curveGeneratorNames, marketDataObjects);
+	}
+}
+
+namespace google_test
+{
+	DECLARE_TEST_FIXTURE(TestLWOSwapDeltaWithCurveEngine);
+	
+	// This test checks the delta ladder profile of 3 EUR vanilla swaps
+	TEST_F(TestLWOSwapDeltaWithCurveEngine, SNAPSHOT_EUR_SWAP_IR_DELTA)
+	{
+		// Load all the swaps 
+		createSwapFromDataFile(EUR_FIXEDFLOATSWAP_1);
+		createSwapFromDataFile(EUR_FIXEDFLOATSWAP_2);
+		createSwapFromDataFile(EUR_FIXEDFLOATSWAP_3);
+
+		LAString ccy = "EUR";
+
+		std::vector<std::string> curveGeneratorNames;
+		curveGeneratorNames.push_back("EUR_OFFICIAL_OIS_LOB_3Y");
+		curveGeneratorNames.push_back("EUR_OFFICIAL_SWAP_3M");
+		curveGeneratorNames.push_back("EUR_OFFICIAL_BASIS_3X6");
+
+		for (unsigned int i = 0; i < EUR_TEST_COUNT; ++i)
+		{
+			//------------------------------------------------
+			// 1. Build curves
+			LAString prefix = ccy + LAString("_") + LAString(static_cast<int>(i + 1)) + LAString("_");
+			buildEngineCurves(ccy, prefix, "EURYC", curveGeneratorNames);
+
+			// Load inputs to meLWOSwapDDeltaLadder
+			LAString deltaLadderInputDir = TEST_DIR;
+			deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
+			const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
+
+			//------------------------------------------------
+			// 2. Calculate deltas
+			LAStringVector headers;
+			LAStringVector pillarNames;
+			DoubleMatrix deltas;
+
+			LAStringVector swapNames				= deltaLadderInputs["swapNames"];
+			LAStringMatrix curveCollectionNames	= deltaLadderInputs["curveCollectionNames"];
+			LAStringMatrix fixingTableNames		= deltaLadderInputs["fixingTableNames"];
+			bool bumpSpreadInstruments			= deltaLadderInputs["bumpSpreadInstruments"];
+			double bumpSize						= deltaLadderInputs["bumpSize"];
+			LAString bumpMode					= deltaLadderInputs["bumpMode"];
+			bool aggregateRisks					= deltaLadderInputs["aggregateRisks"];
+			bool reportInLegCCY					= deltaLadderInputs["reportInLegCCY"];
+			std::string riskCutOffTenor			= deltaLadderInputs["riskCutOffTenor"];
+
+            // Dummy Xccy FX Spot Rates
+            DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
+
+			validation_api::tryMeLWOSwapDeltaLadder(headers,
+													pillarNames,
+													deltas,
+													swapNames,
+													curveCollectionNames,
+													fixingTableNames,
+													bumpSpreadInstruments,
+													bumpSize,
+													bumpMode,
+													aggregateRisks,
+													reportInLegCCY,
+													riskCutOffTenor,
+                                                    dummyXccyFXSpotRates );
+
+			//------------------------------------------------
+			// 3. Check risk results
+			LAString outputFile_32bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_32BIT;
+			LAString outputFile_64bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_64BIT;
+			verifyDeltaBucketAmounts(pillarNames, headers, deltas, tolerance, TEST_DIR, outputFile_32bit, outputFile_64bit);
+
+			//------------------------------------------------
+			// 4. Flush the curve curves
+			validation_api::tryMeUtilityClearEntityPool();
+		}		
+	}
+	
+	// // This test checks the delta ladder profile of 3 USD vanilla swaps
+	// TEST_F(TestLWOSwapDeltaWithCurveEngine, SNAPSHOT_USD_SWAP_IR_DELTA)
+	// {
+	// 	// Load all the swaps 
+	// 	createSwapFromDataFile(USD_FIXEDFLOATSWAP_1);
+	// 	createSwapFromDataFile(USD_FIXEDFLOATSWAP_2);
+	// 	createSwapFromDataFile(USD_FIXEDFLOATSWAP_3);
+	// 
+	// 	LAString ccy = "USD";
+	// 
+	// 	std::vector<std::string> curveGeneratorNames;
+	// 	curveGeneratorNames.push_back("USD_OIS");
+	// 	curveGeneratorNames.push_back("USD_SWAP_3M");
+	// 	curveGeneratorNames.push_back("USD_BASIS_3X6");
+	// 
+	// 	for (unsigned int i = 0; i < USD_TEST_COUNT; ++i)
+	// 	{
+	// 		//------------------------------------------------
+	// 		// 1. Build curves
+	// 		LAString prefix = ccy + LAString("_") + LAString(static_cast<int>(i + 1)) + LAString("_");
+	// 		buildEngineCurves(ccy, prefix, "USDYC", curveGeneratorNames);
+	// 
+	// 		// Load inputs to meLWOSwapDDeltaLadder
+	// 		LAString deltaLadderInputDir = TEST_DIR;
+	// 		deltaLadderInputDir += prefix + PORTFOLIO_DELTA_LADDER_INPUTS;
+	// 		const ReadDataFile::Load deltaLadderInputs(deltaLadderInputDir);
+	// 
+	// 		//------------------------------------------------
+	// 		// 2. Calculate deltas
+	// 		LAStringVector headers;
+	// 		LAStringVector pillarNames;
+	// 		DoubleMatrix deltas;
+	// 
+	// 		LAStringVector swapNames = deltaLadderInputs["swapNames"];
+	// 		LAStringMatrix curveCollectionNames = deltaLadderInputs["curveCollectionNames"];
+	// 		LAStringMatrix fixingTableNames = deltaLadderInputs["fixingTableNames"];
+	// 		bool bumpSpreadInstruments = deltaLadderInputs["bumpSpreadInstruments"];
+	// 		double bumpSize = deltaLadderInputs["bumpSize"];
+	// 		LAString bumpMode = deltaLadderInputs["bumpMode"];
+	// 		bool aggregateRisks = deltaLadderInputs["aggregateRisks"];
+	// 		bool reportInLegCCY = deltaLadderInputs["reportInLegCCY"];
+	// 		std::string riskCutOffTenor = deltaLadderInputs["riskCutOffTenor"];
+	// 
+    //         // Dummy Xccy FX Spot Rates
+    //         DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
+	// 
+	// 		validation_api::tryMeLWOSwapDeltaLadder(headers,
+	// 												pillarNames,
+	// 												deltas,
+	// 												swapNames,
+	// 												curveCollectionNames,
+	// 												fixingTableNames,
+	// 												bumpSpreadInstruments,
+	// 												bumpSize,
+	// 												bumpMode,
+	// 												aggregateRisks,
+	// 												reportInLegCCY,
+	// 												riskCutOffTenor,
+    //                                                 dummyXccyFXSpotRates );
+	// 
+	// 		//------------------------------------------------
+	// 		// 3. Check risk results
+	// 		LAString outputFile_32bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_32BIT;
+	// 		LAString outputFile_64bit = prefix + PORTFOLIO_DELTA_LADDER_OUTPUTS_64BIT;
+	// 		verifyDeltaBucketAmounts(pillarNames, headers, deltas, tolerance, TEST_DIR, outputFile_32bit, outputFile_64bit);
+	// 
+	// 		//------------------------------------------------
+	// 		// 4. Flush the object pool cache
+	// 		validation_api::tryMeUtilityClearEntityPool();
+	// 	}
+	// }
+
+}

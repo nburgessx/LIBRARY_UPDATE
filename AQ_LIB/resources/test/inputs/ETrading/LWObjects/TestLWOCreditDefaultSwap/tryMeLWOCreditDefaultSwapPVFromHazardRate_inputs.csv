@@ -1,0 +1,16 @@
+generatorFunction,tryMeLWOCreditDefaultSwapPVFromHazardRate
+
+swapName,CDS@7
+
+curveCollections
+key,col1
+USDYC,
+
+hazardRate,0.020000000000000
+
+recoveryRate,0.400000000000000
+
+legName,
+
+includeAccruedInterest,TRUE
+

@@ -1,0 +1,351 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "CZK_BASIS_3M_CURVE",
+                "EM_CZK_BASIS_3M",
+                "CZK_3M_MKT",
+                "CZKYC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "interpolation",
+                        "yieldgen.interpolation",
+                        "basis.interpolation",
+                        "isFwdBasis",
+                        "isFRAUse",
+                        "dfCurveName"
+                    ],
+                    "COL_2": [
+                        "CZK",
+                        "TENORBASIS",
+                        "QUARTERLY",
+                        "3M6MBasis",
+                        "3M6MBasis:PRB3M",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FALSE",
+                        "TRUE",
+                        "OIS"
+                    ]
+                },
+                {
+                    "SK_NAME": "MONEYMARKET",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycount",
+                        "slidingrule"
+                    ],
+                    "COL_2": [
+                        "PRB",
+                        "ACT/360",
+                        "FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBORFIXINGS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycount",
+                        "frequency",
+                        "resetlag",
+                        "slidingrule"
+                    ],
+                    "COL_2": [
+                        "PRB",
+                        "ACT/360",
+                        "simple",
+                        "2D",
+                        "MOD_FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "ResetLag",
+                        "SlidingRule"
+                    ],
+                    "COL_2": [
+                        "PRB",
+                        "ACT/360",
+                        "2d",
+                        "MOD_FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "BASISSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "MarketName",
+                        "IsLeg1Spread",
+                        "Leg1cashlet.calendar",
+                        "Leg1cashlet.daycount",
+                        "Leg1cashlet.frequency",
+                        "Leg1cashlet.slidingrule",
+                        "Leg1cashlet.spotlag",
+                        "Leg1forecast",
+                        "Leg1discount",
+                        "Leg1index.accessary",
+                        "Leg1index.daycount",
+                        "Leg1index.fixing.calendar",
+                        "Leg1index.frequency",
+                        "Leg1index.payment.calendar",
+                        "Leg1index.resetlag",
+                        "Leg1index.slidingrule",
+                        "Leg2cashlet.calendar",
+                        "Leg2cashlet.daycount",
+                        "Leg2cashlet.frequency",
+                        "Leg2cashlet.frequencycompound",
+                        "Leg2cashlet.slidingrule",
+                        "Leg2cashlet.spotlag",
+                        "Leg2forecast",
+                        "Leg2discount",
+                        "Leg2index.accessary",
+                        "Leg2index.daycount",
+                        "Leg2index.fixing.calendar",
+                        "Leg2index.frequency",
+                        "Leg2index.payment.calendar",
+                        "Leg2index.resetlag",
+                        "Leg2index.slidingrule",
+                        "Target",
+                        "isSimultaneousEq",
+                        "fwdinterpolation",
+                        "isSameGridIndex",
+                        "SpotRateTerm",
+                        "isYieldSpreadCalc",
+                        "Epsilon",
+                        "MaxLoop",
+                        "isFwdInter",
+                        "IsEOMRoll",
+                        "eomday"
+                    ],
+                    "COL_2": [
+                        "3M6MBasis",
+                        "FALSE",
+                        "PRB",
+                        "ACT/360",
+                        "SEMI-ANNUAL",
+                        "MOD_FOLLOWING",
+                        "2D",
+                        "PRB6M",
+                        "OIS",
+                        "6M",
+                        "ACT/360",
+                        "PRB",
+                        "SIMPLE",
+                        "PRB",
+                        "2D",
+                        "MOD_FOLLOWING",
+                        "PRB",
+                        "ACT/360",
+                        "QUARTERLY",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING",
+                        "2D",
+                        "STD",
+                        "OIS",
+                        "3M",
+                        "ACT/360",
+                        "PRB",
+                        "SIMPLE",
+                        "PRB",
+                        "2D",
+                        "MOD_FOLLOWING",
+                        "Leg2Forecast",
+                        "TRUE",
+                        "FN_SPLINEINTERPOLATION",
+                        "TRUE",
+                        "3M",
+                        "FALSE",
+                        1e-9,
+                        1000,
+                        "FALSE",
+                        "TRUE",
+                        31
+                    ]
+                }
+            ],
+            "NAME": "EM_CZK_BASIS_3M"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "CZK",
+                        "TENORBASIS",
+                        "QUARTERLY",
+                        44075
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBORFIXINGS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "3M"
+                    ],
+                    "COL_2": [
+                        0.0034
+                    ],
+                    "COL_3": [
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "1x4",
+                        "2x5",
+                        "3x6",
+                        "6x9"
+                    ],
+                    "COL_2": [
+                        0.00348,
+                        0.00348,
+                        0.0035,
+                        0.00368
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "BASISSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "12Y",
+                        "15Y",
+                        "20Y"
+                    ],
+                    "COL_2": [
+                        0.00045,
+                        0.000525,
+                        0.000575,
+                        0.000675,
+                        0.000775,
+                        0.000875,
+                        0.000995,
+                        0.00112,
+                        0.00127,
+                        0.001395,
+                        0.001485,
+                        0.00131,
+                        0.00121
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                }
+            ],
+            "NAME": "CZK_3M_MKT"
+        }
+    ],
+    "NAME": "CZK_BASIS_3M_CURVE"
+}

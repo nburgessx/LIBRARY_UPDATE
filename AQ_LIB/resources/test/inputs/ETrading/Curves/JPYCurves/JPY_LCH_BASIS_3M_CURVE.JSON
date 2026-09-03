@@ -1,0 +1,286 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "JPY_LCH_BASIS_3M_CURVE",
+                "JPY_LCH_BASIS_3X6",
+                "JPY_LCH_BASIS_3X6_MARKETDATA",
+                "JPYYC_LCH",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "interpolation",
+                        "yieldgen.interpolation",
+                        "basis.interpolation",
+                        "isFwdBasis",
+                        "dfCurveName",
+                        "isFraUse"
+                    ],
+                    "COL_2": [
+                        "JPY",
+                        "TENORBASIS",
+                        "QUARTERLY",
+                        "3M6MBasis",
+                        "3M6MBasis:JPY3ML",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FN_SPLINEINTERPOLATION",
+                        "FALSE",
+                        "OIS",
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "ResetLag",
+                        "SlidingRule",
+                        "ApplyTension",
+                        "TensionGap",
+                        ""
+                    ],
+                    "COL_2": [
+                        "TkB:LnB",
+                        "ACT/360",
+                        2,
+                        "MOD_FOLLOWING",
+                        "FALSE",
+                        2,
+                        ""
+                    ]
+                },
+                {
+                    "SK_NAME": "BASISSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "MarketName",
+                        "IsLeg1Spread",
+                        "Leg1cashlet.calendar",
+                        "Leg1cashlet.daycount",
+                        "Leg1cashlet.frequency",
+                        "Leg1cashlet.slidingrule",
+                        "Leg1cashlet.spotlag",
+                        "Leg1forecast",
+                        "Leg1discount",
+                        "Leg1index.accessary",
+                        "Leg1index.daycount",
+                        "Leg1index.fixing.calendar",
+                        "Leg1index.frequency",
+                        "Leg1index.payment.calendar",
+                        "Leg1index.resetlag",
+                        "Leg1index.slidingrule",
+                        "Leg2cashlet.calendar",
+                        "Leg2cashlet.daycount",
+                        "Leg2cashlet.frequency",
+                        "Leg2cashlet.frequencycompound",
+                        "Leg2cashlet.slidingrule",
+                        "Leg2cashlet.spotlag",
+                        "Leg2forecast",
+                        "Leg2discount",
+                        "Leg2index.accessary",
+                        "Leg2index.daycount",
+                        "Leg2index.fixing.calendar",
+                        "Leg2index.frequency",
+                        "Leg2index.payment.calendar",
+                        "Leg2index.resetlag",
+                        "Leg2index.slidingrule",
+                        "Target",
+                        "isSimultaneousEq",
+                        "fwdinterpolation",
+                        "isSameGridIndex",
+                        "SpotRateTerm",
+                        "isYieldSpreadCalc",
+                        "Epsilon",
+                        "MaxLoop",
+                        "isFwdInter",
+                        "IsEOMRoll",
+                        "eomday"
+                    ],
+                    "COL_2": [
+                        "3M6MBasis",
+                        "FALSE",
+                        "TkB:LnB",
+                        "ACT/360",
+                        "SEMI-ANNUAL",
+                        "MOD_FOLLOWING",
+                        2,
+                        "JPY6ML",
+                        "OIS",
+                        "6M",
+                        "ACT/360",
+                        "TkB:LnB",
+                        "SIMPLE",
+                        "TkB:LnB",
+                        2,
+                        "MOD_FOLLOWING",
+                        "TkB:LnB",
+                        "ACT/360",
+                        "QUARTERLY",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING",
+                        2,
+                        "STD",
+                        "OIS",
+                        "3M",
+                        "ACT/360",
+                        "TkB:LnB",
+                        "SIMPLE",
+                        "TkB:LnB",
+                        2,
+                        "MOD_FOLLOWING",
+                        "Leg2Forecast",
+                        "TRUE",
+                        "FN_SPLINEINTERPOLATION",
+                        "TRUE",
+                        "3M",
+                        "FALSE",
+                        1.0000000000000003e-9,
+                        1000,
+                        "FALSE",
+                        "TRUE",
+                        31
+                    ]
+                }
+            ],
+            "NAME": "JPY_LCH_BASIS_3X6"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "JPY",
+                        "TENORBASIS",
+                        "QUARTERLY",
+                        43337
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "1x4",
+                        "2x5",
+                        "3x6"
+                    ],
+                    "COL_2": [
+                        -0.0002625,
+                        -0.000225,
+                        -0.000175
+                    ]
+                },
+                {
+                    "SK_NAME": "BASISSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "18M",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "12Y",
+                        "15Y",
+                        "20Y",
+                        "25Y",
+                        "30Y",
+                        "35Y",
+                        "40Y",
+                        "50Y"
+                    ],
+                    "COL_2": [
+                        0.00045,
+                        0.000425,
+                        0.000425,
+                        0.0004375,
+                        0.00045,
+                        0.000475,
+                        0.0005125,
+                        0.00055,
+                        0.0005875,
+                        0.0006375,
+                        0.000675,
+                        0.00075,
+                        0.0008,
+                        0.000875,
+                        0.0009,
+                        0.000925,
+                        0.0009375,
+                        0.00095,
+                        0.00095
+                    ]
+                }
+            ],
+            "NAME": "JPY_LCH_BASIS_3X6_MARKETDATA"
+        }
+    ],
+    "NAME": "JPY_LCH_BASIS_3M_CURVE"
+}

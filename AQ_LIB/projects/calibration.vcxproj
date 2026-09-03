@@ -1,0 +1,615 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugEditAndContinue|Win32">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditAndContinue|x64">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|Win32">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|x64">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0988ACAE-6A9D-490E-B192-97F1E71EFCF1}</ProjectGuid>
+    <RootNamespace>calibration</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>false</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>false</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <OpenMPSupport>false</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <OpenMPSupport>false</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>false</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>false</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <OpenMPSupport>false</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <OpenMPSupport>false</OpenMPSupport>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Lib>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\calibration\include\LACoreGridConfiguation.h" />
+    <ClInclude Include="..\src\calibration\include\LACoreGridExceptions.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationFunc.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationParameters.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersFXStrangleSolver.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersFXVannaVolga.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersHW.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersIRSABR.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersLMM.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersManager.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersPtberg.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersPtberg3F.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationParametersSZ.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrate.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateFXStrangleSolver.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateFXVannaVolga.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateHW.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateIRSABR.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateLMM.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibratePool.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibratePtberg.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibratePtberg3F.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateSZ.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationThread.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitions.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitionsCalibration.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitionsFXStrangleSolver.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitionsFXVannaVolga.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitionsHazardRate.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitionsHW.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitionsIRSABR.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitionsLMM.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitionsPtberg.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitionsRisk.h" />
+    <ClInclude Include="..\src\calibration\include\LADefinitionsSZ.h" />
+    <ClInclude Include="..\src\calibration\include\LADealUtils.h" />
+    <ClInclude Include="..\src\calibration\include\LAMarketData.h" />
+    <ClInclude Include="..\src\calibration\include\LAMarketDataHW.h" />
+    <ClInclude Include="..\src\calibration\include\LAMarketDataLMM.h" />
+    <ClInclude Include="..\src\calibration\include\LAObjectConfiguration.h" />
+    <ClInclude Include="..\src\calibration\include\LAObjectConfigurationHW.h" />
+    <ClInclude Include="..\src\calibration\include\LAObjectConfigurationLMM.h" />
+    <ClInclude Include="..\src\calibration\include\LAObjectConfigurationManager.h" />
+    <ClInclude Include="..\src\calibration\include\LAObjectConfigurationVanilla.h" />
+    <ClInclude Include="..\src\calibration\include\LAEvent.h" />
+    <ClInclude Include="..\src\calibration\include\LACurveProperties.h" />
+    <ClInclude Include="..\src\calibration\include\LACurveSetup.h" />
+    <ClInclude Include="..\src\calibration\include\LAModelSetup.h" />
+    <ClInclude Include="..\src\calibration\include\LAFileAccessor.h" />
+    <ClInclude Include="..\src\calibration\include\LAFileUtils.h" />
+    <ClInclude Include="..\src\calibration\include\LALogger.h" />
+    <ClInclude Include="..\src\calibration\include\LALogManager.h" />
+    <ClInclude Include="..\src\calibration\include\LAModelSetupBase.h" />
+    <ClInclude Include="..\src\calibration\include\LAModelSetupHW.h" />
+    <ClInclude Include="..\src\calibration\include\LAModelSetupLMM.h" />
+    <ClInclude Include="..\src\calibration\include\LAModelSetupVanilla.h" />
+    <ClInclude Include="..\src\calibration\include\LAModelManager.h" />
+    <ClInclude Include="..\src\calibration\include\LACoreMutex.h" />
+    <ClInclude Include="..\src\calibration\include\LAStaticData.h" />
+    <ClInclude Include="..\src\calibration\include\LAStaticDataImport.h" />
+    <ClInclude Include="..\src\calibration\include\LAStaticDataManager.h" />
+    <ClInclude Include="..\src\calibration\include\LAPtbergUtils.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfiguration.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationCorDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationCreditSpreadDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFX.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXDeltaEx1.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXDeltaGamma.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXDeltaOptionAnalytic.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXShiftDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXShiftDeltaOptionAnalytic.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXShiftVolFXVega.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXShiftYieldBasisDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationFXShiftYieldIRDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationIRVega.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationManager.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationTheta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationThetaOptionAnalytic.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolatility.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolCapVega.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolCreator.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolCreatorLMM.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolCreatorManager.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolCreatorPtberg.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolFXATMParallelVega.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolFXShiftVolFXVega.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolFXVega.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolFXVegaOptionAnalytic.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolIRVega.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolParallel.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationVolSwaptionVega.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYield.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldBasis.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldBasisAnalytic.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldBasisDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldBasisDeltaAnalytic.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldBasisDeltaOptionAnalytic.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldDeltaAnalytic.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDeltaAnalytic.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDeltaGamma.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDeltaMultiParallel.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDeltaOptionAnalytic.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRDeltaSimple.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRShiftDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRShiftFXDelta.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRShiftVolFXVega.h" />
+    <ClInclude Include="..\src\calibration\include\LARiskConfigurationYieldIRShiftVolIRVega.h" />
+    <ClInclude Include="..\src\calibration\include\LADataInstanceConfiguration.h" />
+    <ClInclude Include="..\src\calibration\include\LADataInstanceConfigurationPV.h" />
+    <ClInclude Include="..\src\calibration\include\LADataInstanceConfigurationRisk.h" />
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfiguration.h" />
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationFX.h" />
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationManager.h" />
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationVolatility.h" />
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationYieldCurve.h" />
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationYieldCurveBasis.h" />
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationYieldCurveMultiParallel.h" />
+    <ClInclude Include="..\src\calibration\include\LAScenarioConfigurationYieldCurveZero.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModel.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelFX.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelFXStrangleSolver.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelFXVanilla.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelFXVannaVolga.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelHW.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelHW3F.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelIR.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelIRSABR.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelIRVanilla.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelLMM.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelLMMDmy.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelPtberg.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelPtberg3F.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelPtbergSkew.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelSZ.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateModelVolFactor.h" />
+    <ClInclude Include="..\src\calibration\include\LAModelConfiguration.h" />
+    <ClInclude Include="..\src\calibration\include\LACoreDataService.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrationUtilities.h" />
+    <ClInclude Include="..\src\calibration\include\LACoreThread.h" />
+    <ClInclude Include="..\src\calibration\include\LAValuePrinter.h" />
+    <ClInclude Include="..\src\calibration\include\LAMultiSwapPricer.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatility.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityFXStrangleSolver.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityFXVannaVolga.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityHW.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityIRSABR.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityLMM.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityManager.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilityPtberg.h" />
+    <ClInclude Include="..\src\calibration\include\LACalibrateVolatilitySZ.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\calibration\src\LACalibrationFunc.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersFXStrangleSolver.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersFXVannaVolga.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersHW.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersIRSABR.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersLMM.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersManager.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersPtberg.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersPtberg3F.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrationParametersSZ.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrate.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateFXStrangleSolver.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateFXVannaVolga.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateHW.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateIRSABR.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateLMM.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibratePool.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibratePtberg.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibratePtberg3F.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateSZ.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrationThread.cpp" />
+    <ClCompile Include="..\src\calibration\src\LADealUtils.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAMarketData.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAMarketDataHW.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAMarketDataLMM.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAObjectConfiguration.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAObjectConfigurationHW.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAObjectConfigurationLMM.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAObjectConfigurationManager.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAObjectConfigurationVanilla.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAEvent.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACurveProperties.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACurveSetup.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAModelSetup.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAFileAccessor.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAFileUtils.cpp" />
+    <ClCompile Include="..\src\calibration\src\LALogger.cpp" />
+    <ClCompile Include="..\src\calibration\src\LALogManager.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAModelSetupBase.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAModelSetupHW.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAModelSetupLMM.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAModelSetupVanilla.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAModelManager.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACoreMutex.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAStaticData.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAStaticDataImport.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAStaticDataManager.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAPtbergUtils.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfiguration.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationCorDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationCreditSpreadDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFX.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXDeltaEx1.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXDeltaGamma.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXDeltaOptionAnalytic.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXShiftDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXShiftDeltaOptionAnalytic.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXShiftVolFXVega.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXShiftYieldBasisDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationFXShiftYieldIRDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationManager.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationTheta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationThetaOptionAnalytic.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolatility.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolCapVega.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolFXATMParallelVega.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolFXShiftVolFXVega.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolFXVega.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolFXVegaOptionAnalytic.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolIRVega.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolParallel.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationVolSwaptionVega.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYield.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldBasis.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldBasisAnalytic.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldBasisDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldBasisDeltaAnalytic.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldBasisDeltaOptionAnalytic.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldDeltaAnalytic.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDeltaAnalytic.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDeltaGamma.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDeltaMultiParallel.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDeltaOptionAnalytic.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRDeltaSimple.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRShiftDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRShiftFXDelta.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRShiftVolFXVega.cpp" />
+    <ClCompile Include="..\src\calibration\src\LARiskConfigurationYieldIRShiftVolIRVega.cpp" />
+    <ClCompile Include="..\src\calibration\src\LADataInstanceConfiguration.cpp" />
+    <ClCompile Include="..\src\calibration\src\LADataInstanceConfigurationPV.cpp" />
+    <ClCompile Include="..\src\calibration\src\LADataInstanceConfigurationRisk.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfiguration.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationFX.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationManager.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationVolatility.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationYieldCurve.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationYieldCurveBasis.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationYieldCurveMultiParallel.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAScenarioConfigurationYieldCurveZero.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModel.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelFX.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelFXStrangleSolver.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelFXVanilla.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelFXVannaVolga.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelHW.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelHW3F.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelIR.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelIRSABR.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelIRVanilla.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelLMM.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelLMMDmy.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelPtberg.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelPtberg3F.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelPtbergSkew.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelSZ.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateModelVolFactor.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAModelConfiguration.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACoreDataService.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACoreThread.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAValuePrinter.cpp" />
+    <ClCompile Include="..\src\calibration\src\LAMultiSwapPricer.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityFXStrangleSolver.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityFXVannaVolga.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityHW.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityIRSABR.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityLMM.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityManager.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilityPtberg.cpp" />
+    <ClCompile Include="..\src\calibration\src\LACalibrateVolatilitySZ.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

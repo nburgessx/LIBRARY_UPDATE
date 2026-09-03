@@ -1,0 +1,10 @@
+generatorFunction,tryMeLWOCurveCalibrate
+
+lwoCurveGeneratorName,EUR_XCCY
+
+lwoCurveMarketDataName,EUR_XCCY_MKTDATA@41
+
+domesticCurveCollection,EURGEN
+
+foreignCurveCollection,USDGEN
+

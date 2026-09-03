@@ -1,0 +1,121 @@
+curveID,USDYC
+
+marketName,STD
+
+generateProp
+key,col1
+AsOfDate,42450
+Currency,USD
+basis.interpolation,fn_splineinterpolation
+future.interpolation,fn_splineinterpolation
+interpolation,fn_splineinterpolation
+isadjustdf,FALSE
+isfutureuse,TRUE
+isspotuse,FALSE
+isswaptenoradjust,FALSE
+yieldgen.interpolation,fn_splineinterpolation
+isfrause,FALSE
+basis.interpolation.3m6mbasis,fn_splineinterpolation
+dfcurvename,OIS
+
+moneyConv
+key,col1
+calendar,NYB
+daycount,act/360
+slidingrule,following
+
+liborRates
+key,col1
+3M,0.006288
+
+liborConv
+key,col1
+calendar,LnB:NYB
+daycount,act/360
+frequency,simple
+resetlag,2
+slidingrule,mod_following
+IsEomRoll,TRUE
+
+swapRates
+key,col1,col2
+5Y,0.011445,TRUE
+7Y,0.01349,TRUE
+10Y,0.01587,TRUE
+11Y,0.016514,TRUE
+12Y,0.017045,TRUE
+15Y,0.018315,TRUE
+20Y,0.019665,TRUE
+25Y,0.020265,TRUE
+30Y,0.02067,TRUE
+40Y,0.020845,TRUE
+
+swapConv
+key,col1
+Calendar,LNB:NYB
+DayCount,30/360
+DayCountFix,30/360
+DayCountFloat,ACT/360
+Frequency,Semi-Annual
+FrequencyFloat,Quarterly
+Interpolation,fn_splineinterpolation
+IsEomRoll,TRUE
+IsNewtonraphson,TRUE
+IsTimeInterpolation,TRUE
+Resetlag,2
+SlidingRule,MOD_FOLLOWING
+issimultaneouseq,TRUE
+optimizemethod,NL2SOL
+
+fra3mRates
+key,col1
+
+fra6mRates
+key,col1
+
+fraConv
+key,col1
+calendar,NYB
+daycount,act/360
+resetlag,2
+slidingrule,MOD_FOLLOWING
+IsEomRoll,FALSE
+ApplyTension,TRUE
+TensionGap,2
+
+futureRates
+key,col1,col2,col3,col4
+ED1  COMB Comdty,42536,42634,99.32,0.009
+ED2 COMB Comdty,42634,42725,99.25,0.009
+ED3 COMB Comdty,42725,42809,99.185,0.009
+ED4  COMB Comdty,42809,42907,99.135,0.009
+ED5  COMB Comdty,42907,42998,99.085,0.009
+ED6  COMB Comdty,42998,43089,99.03,0.009
+ED7  COMB Comdty,43089,43180,98.965,0.009
+ED8  COMB Comdty,43180,43271,98.92,0.009
+ED9 COMB Comdty,43271,43362,98.865,0.009
+ED10  COMB Comdty,43362,43453,98.81,0.009
+ED11  COMB Comdty,43453,43544,98.745,0.009
+ED12  COMB Comdty,43544,43635,98.695,0.009
+
+futureConv
+key,col1
+calendar,NYB
+daycount,act/360
+resetlag,2
+slidingrule,MOD_FOLLOWING
+MeanReversion,0.03
+ApplyTension,TRUE
+TensionGap,2
+SmoothShortEnd,FALSE
+
+adjustSwapConv
+key,col1
+
+adjustSwapRates
+key,col1
+
+curveNames,STD:USD3ML
+
+curveName_DF2,USDBASISDISCOUNT
+

@@ -1,0 +1,80 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_DEPRECATED",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVE_BUILD_PROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "VARIABLE_NAME": [
+                "CurveType",
+                "CurveCollectionName",
+                "CurveIndexName",
+                "CCY",
+                "AsOfDate",
+                "InterpolationMethod",
+                "FloatingRateCompoundingFrequency",
+                "CurveTenor",
+                "OISCompoundingMethod",
+                "PaymentDayAdjustment",
+                "PaymentCalendar",
+                "AccrualDayAdjustment",
+                "AccrualCalendar",
+                "FixingDayAdjustment",
+                "FixingCalendar",
+                "OnlyAllowLookup"
+            ],
+            "VARIABLE_VALUE": [
+                "OIS",
+                "EURYC",
+                "OIS",
+                "EUR",
+                "20160519",
+                "LINEAR",
+                "SEMI-ANNUAL",
+                "1D",
+                "ARITHMETIC",
+                "MOD_FOLLOWING",
+                "TGT",
+                "MOD_FOLLOWING",
+                "TGT",
+                "MOD_FOLLOWING",
+                "TGT",
+                false
+            ]
+        },
+        {
+            "SK_NAME": "RATES",
+            "SK_NUMBER_OF_COLUMNS": 3,
+            "SK_COLUMN_TYPES": [
+                "DATE",
+                "DOUBLE",
+                "DOUBLE"
+            ],
+            "DATE_VALUE": [
+                "20161221",
+                "20170420",
+                "20180604",
+                "20190812",
+                "20241104"
+            ],
+            "DISCOUNT_FACTORS": [
+                0.995,
+                0.98,
+                0.7,
+                0.75,
+                0.65
+            ],
+            "FORWARD_RATES": [
+                0.00568,
+                0.00912,
+                0.01444,
+                0.02685,
+                0.01799
+            ]
+        }
+    ],
+    "NAME": "AnotherCurveOutput"
+}

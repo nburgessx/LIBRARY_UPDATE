@@ -1,0 +1,41 @@
+
+#include "LWOCurveDayAdjustment.h"
+#include "ContainerUtilities.h"
+
+
+namespace etrading
+{
+    // TODO: move to delegating CTORs for C++11 ...
+    LWOCurveDayAdjustment::LWOCurveDayAdjustment(	const BusinessDayAdjustmentEnum businessDayAdjustment,
+            const std::string& dateCalendar )
+        :	fixingDateBusinessDayAdjustment_( businessDayAdjustment ),
+          fixingDateCalendar_( trim_to_upper( dateCalendar.c_str() ) ),
+          accrualEndDateDateBusinessDayAdjustment_( businessDayAdjustment ),
+          accrualEndDateDateCalendar_( trim_to_upper( dateCalendar.c_str() ) ),
+          paymentDateBusinessDayAdjustment_( businessDayAdjustment ),
+          paymentDateCalendar_( trim_to_upper( dateCalendar.c_str() ) )
+    {
+        mlibFixingDateCalendar_ = &LAMathCalendarSet::getCalendar( fixingDateCalendar_.c_str() );
+        mlibAccrualEndDateDateCalendar_ = &LAMathCalendarSet::getCalendar( accrualEndDateDateCalendar_.c_str() );
+        mlibPaymentDateCalendar_ = &LAMathCalendarSet::getCalendar( paymentDateCalendar_.c_str() );
+    };
+
+    LWOCurveDayAdjustment::LWOCurveDayAdjustment( const BusinessDayAdjustmentEnum fixingDateBusinessDayAdjustment,
+            const std::string& fixingDateCalendar,
+            const BusinessDayAdjustmentEnum accrualEndDateDateBusinessDayAdjustment,
+            const std::string& accrualEndDateDateCalendar,
+            const BusinessDayAdjustmentEnum paymentDateBusinessDayAdjustment,
+            const std::string& paymentDateCalendar )
+        : 	fixingDateBusinessDayAdjustment_( fixingDateBusinessDayAdjustment ),
+           fixingDateCalendar_( trim_to_upper( fixingDateCalendar.c_str() ) ),
+           accrualEndDateDateBusinessDayAdjustment_( accrualEndDateDateBusinessDayAdjustment ),
+           accrualEndDateDateCalendar_( trim_to_upper( accrualEndDateDateCalendar.c_str() ) ),
+           paymentDateBusinessDayAdjustment_( paymentDateBusinessDayAdjustment ),
+           paymentDateCalendar_( trim_to_upper( paymentDateCalendar.c_str() ) )
+    {
+        mlibFixingDateCalendar_ = &LAMathCalendarSet::getCalendar( fixingDateCalendar_.c_str() );
+        mlibAccrualEndDateDateCalendar_ = &LAMathCalendarSet::getCalendar( accrualEndDateDateCalendar_.c_str() );
+        mlibPaymentDateCalendar_ = &LAMathCalendarSet::getCalendar( paymentDateCalendar_.c_str() );
+    };
+
+}

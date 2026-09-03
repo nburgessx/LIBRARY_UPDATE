@@ -1,0 +1,92 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "MARKETDATAPROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Currency",
+                "CurveType",
+                "CurveIndexFrequency",
+                "AsOfDate"
+            ],
+            "COL_2": [
+                "EUR",
+                "OIS",
+                "DAILY",
+                44081
+            ]
+        },
+        {
+            "SK_NAME": "OIS",
+            "SK_NUMBER_OF_COLUMNS": 5,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE",
+                "VARIANT",
+                "VARIANT",
+                "STRING"
+            ],
+            "COL_1": [
+                "3Y"
+            ],
+            "COL_2": [
+                -0.00552
+            ],
+            "COL_3": [
+                ""
+            ],
+            "COL_4": [
+                ""
+            ],
+            "COL_5": [
+                "TRUE"
+            ]
+        },
+        {
+            "SK_NAME": "LIBOROISBASISSPREADS",
+            "SK_NUMBER_OF_COLUMNS": 4,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE",
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "3Y"
+            ],
+            "COL_2": [
+                0.00036
+            ],
+            "COL_3": [
+                "LIBOR"
+            ],
+            "COL_4": [
+                "TRUE"
+            ]
+        },
+        {
+            "SK_NAME": "SWAPS",
+            "SK_NUMBER_OF_COLUMNS": 3,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE",
+                "STRING"
+            ],
+            "COL_1": [
+                "3Y"
+            ],
+            "COL_2": [
+                -0.00514
+            ],
+            "COL_3": [
+                "TRUE"
+            ]
+        }
+    ],
+    "NAME": "EUR_OIS_SINGLE_POINT"
+}

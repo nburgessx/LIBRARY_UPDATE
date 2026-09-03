@@ -1,0 +1,16 @@
+generatorFunction,tryMeLWOAssetSwapSpread
+
+swapObjectName,US912810QT88_ASSET_SWAP
+
+bondObjectName,US912810QT88
+
+bondPrice,101.203100000000006
+
+valuationSettingsLVB
+key,col1
+CURVECOLLECTION,USDYC
+VALUATIONDATE,43257
+
+fixingTableNames
+key,col1
+

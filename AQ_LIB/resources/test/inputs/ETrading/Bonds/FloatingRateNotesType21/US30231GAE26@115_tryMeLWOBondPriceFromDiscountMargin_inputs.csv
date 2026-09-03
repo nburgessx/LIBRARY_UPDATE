@@ -1,0 +1,15 @@
+generatorFunction,tryMeLWOBondPriceFromDiscountMargin
+
+bondObjectName,US30231GAE26@115
+
+settlementDate,20180710
+
+discountMargin,0.000020304090499
+
+assumedRate,0.023314400000000
+
+indexToNextCoupon,0.022179980000000
+
+annualizedNextCouponRate,0.024906300000000
+
+

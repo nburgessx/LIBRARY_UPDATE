@@ -1,0 +1,51 @@
+RH_VER=$(shell cat /etc/redhat-release)
+ifeq ($(findstring release 7,$(RH_VER)), release 7)
+IS_RH7 = 1
+else
+IS_RH7 = 0
+endif
+
+
+SUBDIRS =  math/src 
+
+SUBDIRS += models/src calibration/src
+SUBDIRS += etrading/src validation_api/src GOOGLE_TEST/src
+SUBDIRS += MLIB_CLIENT_API/source
+
+TESTNINJAFOLDER = ../resource/utilities/Apps/TestNinjaPython
+TESTNINJA       = TestNinja.py
+
+TOPTARGETS = all clean debug
+
+# Since not all subfolders have a debug target, set a DEBUG variable
+GOAL = all
+ifeq ($(MAKECMDGOALS),debug)
+	GOAL = all
+	export DEBUG = -ggdb
+else
+	GOAL = $(MAKECMDGOALS)
+	export DEBUG =
+endif
+
+# Build each subfolder in sequence.
+.PHONY: $(TOPTARGETS)
+$(TOPTARGETS):
+	# Make output folders
+	@if [ ! -d lib ]; then mkdir lib; fi
+	@if [ ! -d bin ]; then mkdir bin; fi
+	# Install TestNinja
+	@if [ ! -f lib/$(TESTNINJA) ]; then cp -f $(TESTNINJAFOLDER)/* lib/. ; chmod +x lib/$(TESTNINJA) ; fi
+	# Build all the sub-projects
+	for d in $(SUBDIRS); \
+	do \
+		$(MAKE) -C $$d $(GOAL) || exit; \
+	done
+
+
+
+#
+# Target to generate doxygen documentation
+#
+doc:
+	@if [ ! -d doc ]; then mkdir doc; fi
+	doxygen

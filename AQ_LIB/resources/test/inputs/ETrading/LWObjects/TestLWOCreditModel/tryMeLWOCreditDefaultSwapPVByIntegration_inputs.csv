@@ -1,0 +1,14 @@
+generatorFunction,tryMeLWOCreditDefaultSwapPVByIntegration
+
+swapName,UST_2.75_FEB2028@12
+
+creditModelName,CREDITMODEL1@2
+
+legName,
+
+numberOfIntegrationPoints,100
+
+evaluateInParallel,TRUE
+
+payDefaultCashflowsOnNextCouponDate,TRUE
+

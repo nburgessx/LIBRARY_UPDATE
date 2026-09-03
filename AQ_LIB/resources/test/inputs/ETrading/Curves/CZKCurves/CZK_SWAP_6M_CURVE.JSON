@@ -1,0 +1,448 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEBUILDPARAMETERS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "AttributeNames": [
+                "ObjectName",
+                "CurveGeneratorName",
+                "CurveMarketDataName",
+                "DomesticCurveCollection",
+                "ForeignCurveCollection"
+            ],
+            "AttributeValues": [
+                "CZK_SWAP_6M_CURVE",
+                "EM_CZK_SWAP_6M",
+                "CZK_6M_MKT",
+                "CZKYC",
+                ""
+            ]
+        }
+    ],
+    "NESTED_OBJECTS": [
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "CURVEPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "StaticDataTable",
+                        "IndexName",
+                        "Currency",
+                        "interpolation",
+                        "yieldgen.interpolation",
+                        "future.interpolation",
+                        "isfrause",
+                        "isfutureuse",
+                        "Frequency",
+                        "AlwaysCalcJoinDate",
+                        "FastRebuild",
+                        "DfCurveName",
+                        "IsSwapTenorAdjust",
+                        "TenorSwapName"
+                    ],
+                    "COL_2": [
+                        "SWAP",
+                        "SEMI-ANNUAL",
+                        "STD",
+                        "STD:PRB6M",
+                        "CZK",
+                        "SPLINE",
+                        "SPLINE",
+                        "SPLINE",
+                        "TRUE",
+                        "FALSE",
+                        "SIMPLE",
+                        "FALSE",
+                        "TRUE",
+                        "OIS",
+                        "TRUE",
+                        "3M6MBasis"
+                    ]
+                },
+                {
+                    "SK_NAME": "MONEYMARKET",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycount",
+                        "slidingrule"
+                    ],
+                    "COL_2": [
+                        "PRB",
+                        "ACT/360",
+                        "FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBORFIXINGS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "calendar",
+                        "daycount",
+                        "frequency",
+                        "resetlag",
+                        "slidingrule"
+                    ],
+                    "COL_2": [
+                        "PRB",
+                        "ACT/360",
+                        "simple",
+                        "2D",
+                        "MOD_FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "ResetLag",
+                        "SlidingRule"
+                    ],
+                    "COL_2": [
+                        "PRB",
+                        "ACT/360",
+                        "0d",
+                        "MOD_FOLLOWING"
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Calendar",
+                        "DayCount",
+                        "DayCountFix",
+                        "DayCountFloat",
+                        "Frequency",
+                        "FrequencyFix.1y",
+                        "FrequencyFloat",
+                        "FrequencyFloat.1Y",
+                        "Interpolation",
+                        "SlidingRule",
+                        "IsEomRoll",
+                        "EomDay",
+                        "IsNewtonraphson",
+                        "issimultaneouseq",
+                        "Resetlag",
+                        "Epsilon",
+                        "MaxLoop",
+                        "BaseFrequencyFloat"
+                    ],
+                    "COL_2": [
+                        "PRB",
+                        "ACT/360",
+                        "ACT/360",
+                        "ACT/360",
+                        "ANNUAL",
+                        "ANNUAL",
+                        "SEMI-ANNUAL",
+                        "QUARTERLY",
+                        "SPLINE",
+                        "MOD_FOLLOWING",
+                        "TRUE",
+                        31,
+                        "TRUE",
+                        "TRUE",
+                        "2D",
+                        1e-9,
+                        1000,
+                        "Semi-Annual"
+                    ]
+                },
+                {
+                    "SK_NAME": "BASISSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "IsLeg1Spread",
+                        "Leg1cashlet.calendar",
+                        "Leg1cashlet.daycount",
+                        "Leg1cashlet.frequency",
+                        "Leg1cashlet.slidingrule",
+                        "Leg1cashlet.spotlag",
+                        "Leg1forecast",
+                        "Leg1discount",
+                        "Leg1index.accessary",
+                        "Leg1index.daycount",
+                        "Leg1index.fixing.calendar",
+                        "Leg1index.frequency",
+                        "Leg1index.payment.calendar",
+                        "Leg1index.resetlag",
+                        "Leg1index.slidingrule",
+                        "Leg2cashlet.calendar",
+                        "Leg2cashlet.daycount",
+                        "Leg2cashlet.frequency",
+                        "Leg2cashlet.slidingrule",
+                        "Leg2cashlet.spotlag",
+                        "Leg2forecast",
+                        "Leg2discount",
+                        "Leg2index.accessary",
+                        "Leg2index.daycount",
+                        "Leg2index.fixing.calendar",
+                        "Leg2index.frequency",
+                        "Leg2index.payment.calendar",
+                        "Leg2index.resetlag",
+                        "Leg2index.slidingrule",
+                        "Target",
+                        "isSimultaneousEq",
+                        "isSameGridIndex"
+                    ],
+                    "COL_2": [
+                        "FALSE",
+                        "PRB",
+                        "ACT/360",
+                        "SEMI-ANNUAL",
+                        "MOD_FOLLOWING",
+                        "2D",
+                        "STD",
+                        "OIS",
+                        "6M",
+                        "ACT/360",
+                        "PRB",
+                        "SIMPLE",
+                        "PRB",
+                        "2D",
+                        "MOD_FOLLOWING",
+                        "PRB",
+                        "ACT/360",
+                        "QUARTERLY",
+                        "MOD_FOLLOWING",
+                        "2D",
+                        "STD",
+                        "OIS",
+                        "3M",
+                        "ACT/360",
+                        "PRB",
+                        "SIMPLE",
+                        "PRB",
+                        "2D",
+                        "MOD_FOLLOWING",
+                        "Leg1Forecast",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                }
+            ],
+            "NAME": "EM_CZK_SWAP_6M"
+        },
+        {
+            "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+            "STRUCTURED_KEYS": [
+                {
+                    "SK_NAME": "MARKETDATAPROPERTIES",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT"
+                    ],
+                    "COL_1": [
+                        "Currency",
+                        "CurveType",
+                        "CurveIndexFrequency",
+                        "AsOfDate"
+                    ],
+                    "COL_2": [
+                        "CZK",
+                        "SWAP",
+                        "SEMI-ANNUAL",
+                        44075
+                    ]
+                },
+                {
+                    "SK_NAME": "LIBORFIXINGS",
+                    "SK_NUMBER_OF_COLUMNS": 2,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE"
+                    ],
+                    "COL_1": [
+                        "ON",
+                        "1M",
+                        "3M",
+                        "6M"
+                    ],
+                    "COL_2": [
+                        0.0025,
+                        0.003,
+                        0.0034,
+                        0.0036
+                    ]
+                },
+                {
+                    "SK_NAME": "FRAS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "1x7",
+                        "2x8",
+                        "3x9",
+                        "4x10",
+                        "5x11"
+                    ],
+                    "COL_2": [
+                        0.00368,
+                        0.0038,
+                        0.004,
+                        0.00413,
+                        0.00418
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "BASISSWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "VARIANT",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "12Y",
+                        "15Y",
+                        "20Y"
+                    ],
+                    "COL_2": [
+                        0.00045,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                },
+                {
+                    "SK_NAME": "SWAPS",
+                    "SK_NUMBER_OF_COLUMNS": 3,
+                    "SK_COLUMN_TYPES": [
+                        "STRING",
+                        "DOUBLE",
+                        "STRING"
+                    ],
+                    "COL_1": [
+                        "1Y",
+                        "2Y",
+                        "3Y",
+                        "4Y",
+                        "5Y",
+                        "6Y",
+                        "7Y",
+                        "8Y",
+                        "9Y",
+                        "10Y",
+                        "12Y",
+                        "15Y",
+                        "20Y"
+                    ],
+                    "COL_2": [
+                        0.00365,
+                        0.0055,
+                        0.006875,
+                        0.007975,
+                        0.00895,
+                        0.009675,
+                        0.010125,
+                        0.010475,
+                        0.01085,
+                        0.0111,
+                        0.01135,
+                        0.0126,
+                        0.01255
+                    ],
+                    "COL_3": [
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE",
+                        "TRUE"
+                    ]
+                }
+            ],
+            "NAME": "CZK_6M_MKT"
+        }
+    ],
+    "NAME": "CZK_SWAP_6M_CURVE"
+}

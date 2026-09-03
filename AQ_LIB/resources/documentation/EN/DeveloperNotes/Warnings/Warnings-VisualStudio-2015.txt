@@ -1,0 +1,68 @@
+Warnings Disabled in Visual Studio 2015
+---------------------------------------
+
+
+Background Info
+---------------
+The library is polluted and has many many warning messages. Sigh !!!
+
+This is being corrected horray !!! however in a phased approach. The intention is to resolve the most serious warnings first,
+disabling the less severe warnings to reduce the noise in addressing the more serious warnings and bugs. Once cleaned we intend
+to relax the warnings disabled and then clean the less severe warnings in a phased approach.
+
+
+How to Disable Warnings
+-----------------------
+This is done in Visual Studio by selecting: Project Settings->C/C++->Advanced-> Disable Specific Warnings then enter the 4 digit
+warning codes using the semi-colon character ';' as a delimiter to disable multiple warnings.
+
+
+Warning Codes
+-------------
+4018	Casting Warning: int - size_t
+4099	Linker Warning: Missing Pdb Debugging Information from a Dependecy Project / Library
+4100	Unused Parameter: Unreferenced / Unused Parameter or Local variable
+4101	Unused Parameter: Unreferenced / Unused Parameter or Local variable
+4189	Unused Parameter: Unreferenced / Unused Parameter or Local variable
+4244	Casting Warning: double - int
+4373	Variable Redeclaration: Local Variable overwritting Global Variable
+4389	Comparison Error: Unsigned vs Signed Variable Comparison
+4456	Variable Redeclaration
+4459	Variable Redeclaration
+4700	Uninitialised Variable
+4701	Uninitialised Variable
+4703	Uninitialised Variable
+4996	Legacy Non Thread Safe Method Used eg: printf
+4290	Exception specification after function declaration e.g. void foo() throw(std::exception) the throw is deprecated in C++11 - see MLIB_CLIENT_API note below
+4267	Adept AAD Library converting unsigned int to uindex, possible loss of data.
+4224    Effecting x64 bit build only. conversion from '__int64' to 'int', possible loss of data.
+4302	Reinterpret cast pointer truncation - DEV_UTILS project only
+4311	Reinterpret cast pointer truncation - DEV_UTILS project only
+
+NOTE For the MLIB Client API Only
+---------------------------------
+We need to add throw(std::exception) after each function declaration to instruct SwigWin to generate Java exceptions. This syntax is deprecated in C++11 but
+needed by SwigWin to generate Java exception handling code. We disable this warning in the MLIB_CLIENT_API only.
+
+
+Warnings Disabled:
+------------------
+------------------
+
+CORE PROJECTS
+-------------
+Projects:		common, common_vnladdin, credit, ir, ir_vnladdin, irserver, irserver_vnladdin, irxlutility, libext, maus, mdci, vanilla
+Warnings Disabled: 	4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996
+
+Projects:		etrading, validation_api
+Warnings Disabled: 	4099;4996;4267,4224
+
+
+
+BINARY AND ADDIN PROJECTS
+-------------------------
+Projects:		DEV_UTILS, EXO_ADDIN, FX_CLIENT, SINGLE_CLIENT, UTILITY_SERVER, VANILLA_ADDIN
+Warnings Disabled: 	4018;4099;4100;4101;4189;4244;4373;4389;4456;4459;4700;4701;4703;4996
+
+Projects:		ETRADING_ADDIN, GOOGLE_TEST, MLIB_CLIENT_API
+Warnings Disabled: 	4099;4996

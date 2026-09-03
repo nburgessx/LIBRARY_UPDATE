@@ -1,0 +1,14 @@
+generatorFunction,tryMeLWOAssetSwapSpreadFromFixedEqvCoupon
+
+swapObjectName,XS1082839553_ASSET_SWAP
+
+fixedEqvCoupon,-0.002743401781929
+
+valuationSettingsLVB
+key,col1
+VALUATIONDATE,43396
+CURVECOLLECTION,GBPYC
+
+fixingTableNames
+key,col1
+

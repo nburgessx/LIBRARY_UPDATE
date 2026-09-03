@@ -1,0 +1,189 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_MARKETDATA",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "MARKETDATAPROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Currency",
+                "CurveType",
+                "CurveIndexFrequency",
+                "AsOfDate"
+            ],
+            "COL_2": [
+                "GBP",
+                "OIS",
+                "DAILY",
+                43678
+            ]
+        },
+        {
+            "SK_NAME": "OIS",
+            "SK_NUMBER_OF_COLUMNS": 5,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE",
+                "STRING",
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "ON",
+                "1W",
+                "1M",
+                "2M",
+                "3M",
+                "4M",
+                "5M",
+                "6M",
+                "7M",
+                "8M",
+                "9M",
+                "10M",
+                "11M",
+                "1Y"
+            ],
+            "COL_2": [
+                0.007081,
+                0.00706,
+                0.00706,
+                0.00704,
+                0.00702,
+                0.00683,
+                0.00664,
+                0.00645,
+                0.00624,
+                0.00607,
+                0.00592,
+                0.00577,
+                0.00563,
+                0.0055
+            ],
+            "COL_3": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "COL_4": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "COL_5": [
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE",
+                "TRUE"
+            ]
+        },
+        {
+            "SK_NAME": "LIBOROISBASISSPREADS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE"
+            ],
+            "COL_1": [
+                "1Y",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y",
+                "7Y",
+                "10Y",
+                "15Y",
+                "20Y",
+                "30Y",
+                "40Y",
+                "50Y"
+            ],
+            "COL_2": [
+                0.00133,
+                0.00145,
+                0.0015,
+                0.00154,
+                0.00158,
+                0.00164,
+                0.00169,
+                0.00172,
+                0.00173,
+                0.00174,
+                0.00174,
+                0.00174
+            ]
+        },
+        {
+            "SK_NAME": "SWAPS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "DOUBLE"
+            ],
+            "COL_1": [
+                "1Y",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y",
+                "7Y",
+                "10Y",
+                "15Y",
+                "20Y",
+                "30Y",
+                "40Y",
+                "50Y"
+            ],
+            "COL_2": [
+                0.00682,
+                0.00617,
+                0.00602,
+                0.00609,
+                0.00625,
+                0.0068,
+                0.00778,
+                0.00907,
+                0.00967,
+                0.00994,
+                0.00994,
+                0.00994
+            ]
+        }
+    ],
+    "NAME": "GBP_OIS_CURVE_MARKETDATA@2"
+}

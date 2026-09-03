@@ -1,0 +1,33 @@
+/*
+ * @brief			validation interface for the meLWOCurveEngineCalibrate method
+ * @Created:		10 May 2018
+ * @Author:			Joseph Ye
+ * @Department:		ISD Front Office Development
+ *
+ * The copyright to the computer program(s) herein is the property of Mizuho International.
+ */
+
+#pragma once
+
+#include "Variant.h"
+
+#include <string>
+#include <vector>
+#include "LACoreTemplateType.h"
+
+namespace validation_api
+{
+    /* @brief Calibrate global yield curve engine to generate multiple synchronous yield curves
+	 * @param [in] engineObjectName			The name of the yield curve engine object
+	 * @param [in] engineSettings			A collection of parameters to do with the curve engine's operations
+	 * @param [in] curveCollection			Curve collection to which calibrated curves belong
+	 * @param [in] curveGeneratorNames		The list of curve generator names
+	 * @param [in] marketDataObjects		The list of market data objects that correponds curve generators
+	 * @param [out]                         The curve indexes
+	 */
+	LAStringVector tryMeLWOCurveEngineCalibrate(const std::string& engineObjectName,
+																	const std::string& curveCollection,
+																	const LAStringMatrix& engineSettings,
+																	const std::vector<std::string>& curveGeneratorNames,
+																	const std::vector<std::string>& marketDataObjects);
+}

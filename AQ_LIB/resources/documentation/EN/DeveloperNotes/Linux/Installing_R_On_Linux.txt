@@ -1,0 +1,346 @@
+
+Compiling R on Linux, and then using the MLIBQ R API
+====================================================
+
+
+Get the R source code from here:
+
+https://cran.ma.imperial.ac.uk/src/base/R-3/
+
+We choose version 3.6.0 since this is very recent and is the version which our clients (Andy Friend)
+are using.
+
+Use your Windows PC / browser to download this version as a *.tar.gz file, then copy over
+to our Linux server:
+
+Windows command to copy the source archive to Linux:
+
+pscp -pw e4jPLezoetDi R-3.6.0.tar.gz  svc_quant_dev@adl-quant01:.
+
+^^ This will place the source in the home directory of user svc_quant_dev.
+
+Log in to the Linux server and then navigate to the build workspace:
+/workspace/svc_quant_dev/library
+
+Then move the file R-3.6.0.tar.gz from svc_quant_dev's home folder to this location and
+unpack:
+$ mv ~/R-3.6.0.tar.gz .
+$ tar -zxf R-3.6.0.tar.gz
+
+You should now have the unpacked source in:
+/workspace/svc_quant_dev/library/R-3.6.0
+
+While we are here, make a separate folder to install the compiled binaries:
+$ mkdir -p /workspace/svc_quant_dev/library/R
+
+^^^ We will refer to this folder in our MLIBQ makefiles so that MLIBQ can resolve any R dependencies.
+Later on when we use R we will also load the MLIB_CLIENT_API from this folder.
+
+Finally, make a "tools" folder, which we shall use to install extra dependencies:
+$ mkdir -p /workspace/svc_quant_dev/library/tools
+
+Now take a look at the R source code we unpacked:
+$ cd R-3.6.0
+
+As an overview, it is worth noting that for the majority of open-source / GNU software, the
+source code is built in a 2-step process:
+
+1. First you typically run a "configure" script which examines your machine software
+environment to determine what features are available (compiler version, compiler behaviour etc).
+The configure script then tailors a Makefile to work for your machine.
+You will need to specify parameters to "configure" in order to specify where you want the
+build artifacts to be installed.
+
+2. You then typically run "make" in order to build the source, followed by "make install".
+
+Before going further, please consult these two guides on building R from source on Linux.
+We will be following these in order to install and build all the dependencies which R needs:
+
+http://pj.freefaculty.org/blog/?p=315 <-- this is great
+
+https://tdhock.github.io/blog/2017/compiling-R/ <-- this has further info
+
+
+Do not run the this next command just yet: For information, our actual "configure" command for R is going to be:
+
+$ ./configure --with-readline=no --with-x=no --disable-java F77=gfortran --prefix=/workspace/svc_quant_dev/library/R 
+
+--with-readline=no  readline is a nice feature, but to simplify dependencies turn it off
+--with-x=no         X-windows is the graphics system on Linux. As we have a server, turn this off
+--disable-java      Disable java support. This simplifies the build.
+F77=gfortran        Specify the fortran compiler (yes really, R uses Fortran)
+--prefix = ...      Specify the directory where the binaries will be installed.
+
+If you were to run "configure" as above you will quickly find out that R requires many dependencies.
+So we will first install these dependencies.
+
+Note that the "configure" command for R (and for each of the open source dependencies) writes out a "config.log" file.
+This is very helpful for diagnosing issues with the build / compilation steps.
+
+Dependencies
+============
+
+1. Fortran compiler
+-------------------
+
+gfortran is currently the recommended Linux fortran compiler.
+
+You can get the pre-built binaries from here:
+https://gcc.gnu.org/wiki/GFortranBinaries#GNU.2BAC8-Linux
+
+The particular version you need should closely match the version of gcc you have.
+
+$ gcc --version
+gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-39)
+
+So we will be getting the 64bit gcc-4.8-infrastructure package 
+http://gfortran.com/download/x86_64/gcc-4.8-infrastructure.tar.xz
+
+...and the actual gfortran 4.8 binary package:
+http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-4.8-20150611.tar.xz
+
+Unpack gfortran to:
+/workspace/svc_quant_dev/library/gfortran
+
+Unpack the infrastructure package to:
+/workspace/svc_quant_dev/library/gfortran/lib64
+
+2. zlib compression library and header files
+--------------------------------------------
+
+Get zlib source code from here:
+https://zlib.net/
+http://zlib.net/zlib-1.2.11.tar.gz
+
+Get this tar.gz file:
+zlib-1.2.11.tar.gz
+and transfer to the linux server using the pscp comamnd as above.
+
+Unpack the source into this folder:
+/workspace/svc_quant_dev/library/zlib-1.2.11
+
+Then build zlib from source and install to our tools folder:
+
+$ cd zlib-1.2.11
+$ ./configure --prefix=/workspace/svc_quant_dev/library/tools
+$ make
+$ make install
+
+We need to set some environment variables so that our R compilation will be able to locate the dependencies
+(such as zlib) in the tools folder:
+
+$ export PATH=/workspace/svc_quant_dev/library/tools/bin:/workspace/svc_quant_dev/library/gfortran/gcc-4.8/bin:$PATH
+
+$ export LD_LIBRARY_PATH=/workspace/svc_quant_dev/library/tools/lib:/workspace/svc_quant_dev/library/gfortran/lib64:$LD_LIBRARY_PATH
+
+$ export CFLAGS="-I/workspace/svc_quant_dev/library/tools/include"
+
+$ export LDFLAGS="-L/workspace/svc_quant_dev/library/tools/lib -L/workspace/svc_quant_dev/library/gfortran/gcc-4.8/lib64 -L/workspace/svc_quant_dev/library/gfortran/lib64"
+
+3. bzip2 library and headers (another compression library)
+----------------------------------------------------------
+
+Download from:
+https://www.sourceware.org/bzip2/downloads.html
+
+Get version: 
+bzip2-2.1.0.8.tar.gz
+
+Copy to linux server and unpack to this folder:
+/workspace/svc_quant_dev/library/bzip2-1.0.8
+
+Then build bzip2. bzip2 is unusual in that it does not have a "configure" script. We need to make a small change to the Makefile
+in order to build a shared library:
+
+$ cd bzip2-1.0.8
+$ sed -i 's/^CFLAGS=-Wall/CFLAGS=-fPIC -Wall/' Makefile
+
+^^^ This replaces "CFLAGS=-Wall" with "CFLAGS=-fPIC -Wall" inside the Makefile.
+Be sure to run this command ONCE ONLY.
+
+$ make PREFIX=/workspace/svc_quant_dev/library/tools/
+$ make -f Makefile-libbz2_so
+$ make clean
+$ make
+$ make -n install PREFIX=/workspace/svc_quant_dev/library/tools
+$ make install PREFIX=/workspace/svc_quant_dev/library/tools
+
+4. liblzma library and headers
+------------------------------
+
+The best way to resolve this dependency is actually to build the "xz" archive manager and the corresponding support library.
+
+Download from:
+http://tukaani.org/xz/xz-5.2.2.tar.gz
+
+Unpack the source archive: xz-5.2.2.tar.gz
+
+...to this folder:
+/workspace/svc_quant_dev/library/xz-5.2.2
+
+Build the xz library:
+$ cd xz-5.2.2
+
+$ ./configure --prefix=/workspace/svc_quant_dev/library/tools
+$ make -j3
+$ make install
+
+5. Perl pcre  regular expression library
+----------------------------------------
+
+Note we need to get pcre version >=8.20 but less than version 10. In particular we need to build the "pcre" library, not "pcre2".
+(I learnt this the hard way).
+
+Download from:
+https://ftp.pcre.org/pub/pcre/
+
+Get this source archive:
+pcre-8.38.tar.gz
+
+Unpack the source to this folder:
+/workspace/svc_quant_dev/library/pcre-8.38
+
+Build the source code:
+
+$ cd pcre-8.38
+$ ./configure --enable-utf8 --prefix=/workspace/svc_quant_dev/library/tools
+$ make
+$ make install
+ 
+6. OpenSSL (needed by curl which we build after this)
+-----------------------------------------------------
+
+Download from:
+https://www.openssl.org/
+
+Get this source archive:
+openssl-1.0.2t.tar.gz
+
+Unpack to this folder:
+/workspace/svc_quant_dev/library/openssl-1.0.2t
+
+Build openSSL. Note the command is "config" (not "configure". Note the additional "shared" parameter to config,
+which builds the shared library:
+
+$ cd openssl-1.0.2t
+
+$ ./config --prefix=/workspace/svc_quant_dev/library/tools --openssldir=/workspace/svc_quant_dev/library/tools/openssl shared 
+$ make
+$ make install
+
+7. libcurl >= 7.22.0 library and headers, with support for https
+----------------------------------------------------------------
+
+Curl is a command line utility which can download files from the internet.
+
+Download from:
+ 
+https://curl.haxx.se/dev/source.html
+
+The tutorial / blog listed at the beginning of this document will suggest to get curl 7.47.1.
+However this version has a problem in the configure script and you will get errors such as
+"undefined reference to `dlopen'".
+
+So do NOT get this:
+https://curl.haxx.se/download/curl-7.47.1.tar.gz  NO!! NOPE
+
+Instead get this later version:
+https://curl.haxx.se/download/curl-7.66.0.tar.gz  YES! All problems are fixed.
+ 
+Unpack the source archive curl-7.66.0.tar.gz to this folder:
+/workspace/svc_quant_dev/library/curl-7.66.0
+
+... and then run the configure script:
+
+$ cd curl-7.66.0
+
+$ ./configure --prefix=/workspace/svc_quant_dev/library/tools --with-ssl=/workspace/svc_quant_dev/library/tools
+
+In the summary transcript which "configure" prints out at the end, you MUST make sure that SSL is enabled.
+If there is a problem and SSL is not enabled you will need to dig further.
+It is worth noting at this point that you can examine the "config.log" for details of any errors.
+
+Assuming everything is configured fine, go ahead and build curl:
+
+$ make -j3
+$ make install
+
+Now we are ready to build R!
+============================
+
+go to the R source code installation folder which you unpacked previously:
+/workspace/svc_quant_dev/library/R-3.6.0
+
+$ cd R-3.6.0
+
+Try running configure:
+
+$ ./configure --with-readline=no --with-x=no --disable-java F77=gfortran --prefix=/workspace/svc_quant_dev/library/R 
+
+if you have all the dependencies installed correctly, and environment variables set up as above, configure
+should run through all the way to the end without displaying any errors.
+
+If there are any problems, then start by examining "config.log" as before.
+
+Now compile and install:
+
+$ make
+
+^^^ Note I did see an error at one point to do with zlib:
+devPS.c:54:18: fatal error: zlib.h: No such file or directory
+
+I re-ran make and everything was OK the second time.
+We should go back to investigate this if there is a problem when using R.
+
+... and finally install R:
+
+$ make install
+
+Running R on Linux
+==================
+
+Change to the installation directory and start R:
+
+$ cd /workspace/svc_quant_dev/library/R/bin
+$ ./R
+R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+> print("Hello World")
+[1] "Hello World"
+
+
+If you successfully get this far you are a Linux ninja. Congratulations!
+
+
+Loading the MLIBQ API
+=====================
+
+First set the MLIBQ environment variable to point to the MLIBQ R API.
+This allows the addin to locate the resource folder which contains the configuration files:
+
+$ export MLIBQ=/workspace/svc_quant_dev/MLIBQ/src/lib/R
+
+Then start R:
+
+$ cd /workspace/svc_quant_dev/library/R/bin
+$ ./R
+
+> setwd("/workspace/svc_quant_dev/MLIBQ/src/lib/R")
+> dyn.load("MLIB_CLIENT_API.so")                     <- Note that the suffix .so is required
+> source("MLIB_CLIENT_API.R")
+> getLoadedDLLs()
+> setUpMLIB("","")
+>
+> meUtilityVersion()
+
+[1] "MLIBQ_ADDIN: Version Number: 20191001.1701. Last built on Oct  1 2019 at 17:01:38."
+
+
+If you get this far you are a superstar!
+Exit from R with q() and go for a coffee.
+
+
+
+

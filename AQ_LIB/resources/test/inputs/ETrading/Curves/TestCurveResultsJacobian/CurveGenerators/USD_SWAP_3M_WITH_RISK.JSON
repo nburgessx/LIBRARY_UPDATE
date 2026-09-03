@@ -1,0 +1,170 @@
+{
+    "CACHED_OBJECT_TYPE": "CURVE_GENERATOR",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "CURVEPROPERTIES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "CurveType",
+                "CurveIndexFrequency",
+                "StaticDataTable",
+                "IndexName",
+                "Currency",
+                "interpolation",
+                "yieldgen.interpolation",
+                "future.interpolation",
+                "isfrause",
+                "isfutureuse",
+                "Frequency",
+                "dfcurvename",
+                "AlwaysCalcJoinDate",
+                "FastRebuild",
+                "JacobianBuildFrequency",
+                "JacobianShiftType",
+                "JacobianRiskType"
+            ],
+            "COL_2": [
+                "SWAP",
+                "QUARTERLY",
+                "STD",
+                "USD3ML",
+                "USD",
+                "FN_LINEARSPLINEINTERPOLATION",
+                "FN_LINEARSPLINEINTERPOLATION",
+                "FN_LINEARSPLINEINTERPOLATION",
+                "FALSE",
+                "TRUE",
+                "SIMPLE",
+                "OIS",
+                "TRUE",
+                "TRUE",
+                "ALWAYS",
+                "FLAT_SHIFT",
+                "DISCOUNT_FACTORS"
+            ]
+        },
+        {
+            "SK_NAME": "MONEYMARKET",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "calendar",
+                "daycount",
+                "slidingrule"
+            ],
+            "COL_2": [
+                "NYB",
+                "Act/360",
+                "FOLLOWING"
+            ]
+        },
+        {
+            "SK_NAME": "LIBORFIXINGS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "calendar",
+                "daycount",
+                "frequency",
+                "resetlag",
+                "slidingrule"
+            ],
+            "COL_2": [
+                "LNB:NYB",
+                "Act/360",
+                "simple",
+                2,
+                "MOD_FOLLOWING"
+            ]
+        },
+        {
+            "SK_NAME": "FRAS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "Calendar"
+            ],
+            "COL_2": [
+                "LNB:NYB"
+            ]
+        },
+        {
+            "SK_NAME": "FUTURES",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "calendar",
+                "daycount",
+                "resetlag",
+                "slidingrule",
+                "MeanReversion",
+                "ApplyTension",
+                "TensionGap"
+            ],
+            "COL_2": [
+                "NYB",
+                "Act/360",
+                2,
+                "MOD_FOLLOWING",
+                0.03,
+                "FALSE",
+                2
+            ]
+        },
+        {
+            "SK_NAME": "SWAPS",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "COL_1": [
+                "Calendar",
+                "DayCount",
+                "DayCountFloat",
+                "Frequency",
+                "FrequencyFloat",
+                "IsEomRoll",
+                "EomDay",
+                "IsNewtonraphson",
+                "Resetlag",
+                "SlidingRule",
+                "issimultaneouseq",
+                "Epsilon",
+                "MaxLoop"
+            ],
+            "COL_2": [
+                "LNB:NYB",
+                "30/360",
+                "ACT/360",
+                "Semi-Annual",
+                "Quarterly",
+                "TRUE",
+                31,
+                "TRUE",
+                2,
+                "MOD_FOLLOWING",
+                "TRUE",
+                1e-10,
+                1000
+            ]
+        }
+    ],
+    "NAME": "USD_SWAP_3M_WITH_RISK"
+}

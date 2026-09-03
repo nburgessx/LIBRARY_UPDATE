@@ -1,0 +1,15 @@
+generatorFunction,tryMeLWOBondFRNPriceFromYield
+
+bondObjectName,XS1522989869@109
+
+settlementDate,20180710
+
+yield,-0.001994530856182
+
+assumedRate,-0.003210000000000
+
+indexToNextCoupon,-0.003558333333333
+
+annualizedNextCouponRate,0.005440000000000
+
+

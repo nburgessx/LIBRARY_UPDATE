@@ -1,0 +1,151 @@
+/*
+* @brief			Class the defines the Schedule Input
+* @Created:			05 Feb 2018
+* @Author:			Yongyan Zheng
+* @Department:		ISD Front Office Development
+*
+* The copyright to the computer program(s) herein is the property of Mizuho International.
+*/
+
+#include "ScheduleParameters.h"
+
+namespace etrading
+{
+	ScheduleParameters::ScheduleParameters() : accrualStartDate_(""),
+									adjustedAccrualStartDate_(""),
+									accrualEndDateOrTenor_(""),
+									accrualbusinessDayAdj_(NONE_BUSINESS_DAY_ADJ),
+									accrualCalendar_(""),
+									accrualFrequency_(NONE_FREQUENCY),
+									accrualDaycount_(NONE_DAYCOUNT),
+									paymentbusinessDayAdj_(NONE_BUSINESS_DAY_ADJ),
+									paymentCalendar_(""),
+									paymentFrequency_(NONE_FREQUENCY),
+									payLag_(""),
+									rollDayInput_(""),
+									stubType_(NONE_STUBTYPE),
+									firstStub_(""),
+									lastStub_(""),
+									fixingAdvanceOrArrears_(""),
+									fixingbusinessDayAdj_(NONE_BUSINESS_DAY_ADJ),
+									fixingCalendar_(""),
+									fixLag_(""),
+									firstFixLag_(""),
+									fxFixingLag_(""),
+									fxFixingbusinessDayAdj_(NONE_BUSINESS_DAY_ADJ),
+									fxFixingCalendar_(""),
+									currency_(NO_CCY),
+									valuationCurrency_(NO_CCY),
+									notional_(std::numeric_limits<double>::quiet_NaN()),
+									leverage_(1),
+									couponMultiplier_(1),
+									spread_(std::numeric_limits<double>::quiet_NaN()),
+									fixedRateOrStrike_(std::numeric_limits<double>::quiet_NaN()),
+									discountCurve_(""),
+									forecastCurve_(""),
+									couponCompoundMethod_(NONE_COMPOUNDING_METHOD),
+									firstStubCurveIndex_(""),
+									lastStubCurveIndex_(""),
+									firstFixing_(std::numeric_limits<double>::quiet_NaN()),
+									lastFixing_(std::numeric_limits<double>::quiet_NaN()),
+									fwdInter_(NONE_BOOL),
+									spotLag_(""),
+									spotBusinessDayAdj_(NONE_BUSINESS_DAY_ADJ),
+									spotCalendar_("")
+	{};
+
+	ScheduleParameters::ScheduleParameters(const std::string& accrualStartDate,
+								const std::string& adjustedAccrualStartDate,
+								const std::string& accrualEndDateOrTenor,
+								const BusinessDayAdjustmentEnum& accrualbusinessDayAdj,
+								const std::string& accrualCalendar,
+								const FrequencyEnum& accrualFrequency,
+								const DayCountEnum& accrualDaycount,
+								const BusinessDayAdjustmentEnum& paymentbusinessDayAdj,
+								const std::string& paymentCalendar,
+								const FrequencyEnum& paymentFrequency,
+								const std::string& payLag,
+								const std::string& rollDayInput,
+								const StubTypeEnum& stubType,
+								const std::string& firstStub,
+								const std::string& lastStub,
+								const std::string& fixingAdvanceOrArrears,
+								const BusinessDayAdjustmentEnum& fixingbusinessDayAdj,
+								const std::string& fixingCalendar,
+								const std::string& fixLag,
+								const std::string& firstFixLag,
+								const std::string& fxFixingLag,
+								const BusinessDayAdjustmentEnum& fxFixingbusinessDayAdj,
+								const std::string& fxFixingCalendar,
+								const CCY& currency,
+								const CCY& valuationCurrency,
+								const double& notional,
+								const double& leverage,
+								const double& couponMultiplier,
+								const double& spread,
+								const double& fixedRateOrStrike,
+								const std::string& discountCurve,
+								const std::string& forecastCurve,
+								const CompoundingMethodEnum& couponCompoundMethod,
+								const std::string& firstStubCurveIndex,
+								const std::string& lastStubCurveIndex,
+								const double& firstFixing,
+								const double& lastFixing,
+								const BooleanEnum& fwdInter,
+								const std::string& spotLag,
+								const BusinessDayAdjustmentEnum& spotBusinessDayAdj,
+								const std::string& spotCalendar)
+							: accrualStartDate_(accrualStartDate),
+							adjustedAccrualStartDate_(adjustedAccrualStartDate),
+							accrualEndDateOrTenor_(accrualEndDateOrTenor),
+							accrualbusinessDayAdj_(accrualbusinessDayAdj),
+							accrualCalendar_(accrualCalendar),
+							accrualFrequency_(accrualFrequency),
+							accrualDaycount_(accrualDaycount),
+							paymentbusinessDayAdj_(paymentbusinessDayAdj),
+							paymentCalendar_(paymentCalendar),
+							paymentFrequency_(paymentFrequency),
+							payLag_(payLag),
+							rollDayInput_(rollDayInput),
+							stubType_(stubType),
+							firstStub_(firstStub),
+							lastStub_(lastStub),
+							fixingAdvanceOrArrears_(fixingAdvanceOrArrears),
+							fixingbusinessDayAdj_(fixingbusinessDayAdj),
+							fixingCalendar_(fixingCalendar),
+							fixLag_(fixLag),
+							firstFixLag_(firstFixLag),
+							fxFixingLag_(fxFixingLag),
+							fxFixingbusinessDayAdj_(fxFixingbusinessDayAdj),
+							fxFixingCalendar_(fxFixingCalendar),
+							currency_(currency),
+							valuationCurrency_(valuationCurrency),
+							notional_(notional),
+							leverage_(leverage),
+							couponMultiplier_(couponMultiplier),
+							spread_(spread),
+							fixedRateOrStrike_(fixedRateOrStrike),
+							discountCurve_(discountCurve),
+							forecastCurve_(forecastCurve),
+							couponCompoundMethod_(couponCompoundMethod),
+							firstStubCurveIndex_(firstStubCurveIndex),
+							lastStubCurveIndex_(lastStubCurveIndex),
+							firstFixing_(firstFixing),
+							lastFixing_(lastFixing),
+							fwdInter_(fwdInter),
+							spotLag_(spotLag),
+							spotBusinessDayAdj_(spotBusinessDayAdj),
+							spotCalendar_(spotCalendar)
+	{}
+
+
+	std::shared_ptr<ScheduleParameters> ScheduleParameters::clone()
+	{
+		ScheduleParameters temp(*this);
+		return std::make_shared<ScheduleParameters>(temp);
+	}
+
+
+
+}
+

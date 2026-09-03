@@ -1,0 +1,9 @@
+generatorFunction,tryMeLWOCurveCalibrate
+
+lwoCurveGeneratorName,USD_BASIS_3X12
+
+lwoCurveMarketDataName,USD_3X12BASIS_MKTDATA@40
+
+domesticCurveCollection,USDGEN
+
+foreignCurveCollection,

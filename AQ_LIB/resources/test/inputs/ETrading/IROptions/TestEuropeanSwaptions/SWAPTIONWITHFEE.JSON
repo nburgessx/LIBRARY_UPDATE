@@ -1,0 +1,64 @@
+{
+    "CACHED_OBJECT_TYPE": "OPTION",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "OPTION",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "VARIABLE_NAME": [
+                "BUSINESSDAYADJUSTMENT",
+                "CALENDAR",
+                "CURRENCY",
+                "DAYCOUNT",
+                "EFFECTIVEDATE",
+                "EXPIRY",
+		"FEEPAYRECEIVE",
+                "FEE",
+                "FEEDATE",
+                "LEVERAGE",
+                "LONGSHORT",
+                "NOTIFICATIONDAYS",
+                "NOTIONAL",
+                "OBJECTTYPE",
+                "OPTIONSTYLE",
+                "PAYERRECEIVER",
+                "SETTLEMENTTYPE",
+                "STRIKE",
+                "SWAPEND",
+                "SWAPGENERATOR",
+                "SWAPSTART",
+                "TENORDESCRIPTION",
+                "TRADETYPE"
+            ],
+            "VARIABLE_VALUE": [
+                "MOD_FOLLOWING",
+                "NYB",
+                "USD",
+                "ACT/365",
+                "43327",
+                "1Y",
+		"PAY",
+                "1000000",
+                "43327",
+                "1",
+                "LONG",
+                "2D",
+                "1000000",
+                "OPTION",
+                "EUROPEAN",
+                "PAYER",
+                "PHYSICAL",
+                "0.029363558752377",
+                "5Y",
+                "USD_3ML",
+                "1Y",
+                "1X5",
+                "EUROPEAN_SWAPTION"
+            ]
+        }
+    ],
+    "NAME": "SWAPTIONWITHFEE"
+}

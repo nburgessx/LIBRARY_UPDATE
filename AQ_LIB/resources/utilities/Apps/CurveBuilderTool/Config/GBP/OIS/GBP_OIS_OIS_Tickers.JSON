@@ -1,0 +1,56 @@
+{
+    "CACHED_OBJECT_TYPE": "FREE_OBJECT",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "OIS@91",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "STRING"
+            ],
+            "COL_1": [
+                "SONIO/N ICPL Index",
+                "BPSWS1Z ICPL Curncy",
+                "BPSWSA ICPL Curncy",
+                "BPSWSB ICPL Curncy",
+                "BPSWSC ICPL Curncy",
+                "BPSWSD ICPL Curncy",
+                "BPSWSE ICPL Curncy",
+                "BPSWSF ICPL Curncy",
+                "BPSWSG ICPL  Curncy",
+                "BPSWSH ICPL  Curncy",
+                "BPSWSI ICPL  Curncy",
+                "BPSWSJ ICPL  Curncy",
+                "BPSWSK ICPL  Curncy",
+                "BPSWS1 ICPL  Curncy",
+                "BPSWS1F ICPL  Curncy",
+                "BPSWS2 ICPL  Curncy",
+                "BPSWS3 ICPL  Curncy",
+                "BPSWS4 ICPL  Curncy",
+                "BPSWS5 ICPL  Curncy"
+            ],
+            "COL_2": [
+                "ON",
+                "1W",
+                "1M",
+                "2M",
+                "3M",
+                "4M",
+                "5M",
+                "6M",
+                "7M",
+                "8M",
+                "9M",
+                "10M",
+                "11M",
+                "1Y",
+                "18M",
+                "2Y",
+                "3Y",
+                "4Y",
+                "5Y"
+            ]
+        }
+    ],
+    "NAME": "OIS@91"
+}

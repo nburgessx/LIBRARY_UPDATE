@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3A08A901-1155-4CF2-8DF7-8F2BA9422AFD}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>CurveBuilder</RootNamespace>
+    <AssemblyName>CurveBuilder</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bloomberglp.Blpapi">
+      <HintPath>C:\BLP\APIv3\DotnetAPI\v3.12.5.1\lib\Bloomberglp.Blpapi.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Projects2017\RefDataTutorial\RefDataTutorial\lib\Json120r2\Bin\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BBGApi.cs" />
+    <Compile Include="ColumnMatrix.cs" />
+    <Compile Include="InstrumentConfig.cs" />
+    <Compile Include="JSonUtilities.cs" />
+    <Compile Include="MarketDataEngine.cs" />
+    <Compile Include="MarketDataTemplate.cs" />
+    <Compile Include="MLIBQApi.cs" />
+    <Compile Include="MLIBQ\MLIB_CLIENT_API.cs" />
+    <Compile Include="MLIBQ\MLIB_CLIENT_APIPINVOKE.cs" />
+    <Compile Include="MLIBQ\NelsonSiegelSvenssonCalibrationResults.cs" />
+    <Compile Include="MLIBQ\NelsonSiegelSvenssonParameters.cs" />
+    <Compile Include="MLIBQ\PolynomialCalibrationResults.cs" />
+    <Compile Include="MLIBQ\SWIGTYPE_p_double.cs" />
+    <Compile Include="MLIBQ\SWIGTYPE_p_DoubleVector.cs" />
+    <Compile Include="MLIBQ\SWIGTYPE_p_std__vectorT_etrading__LoanCashflowBreakdown_t.cs" />
+    <Compile Include="MLIBQ\SWIGTYPE_p_std__vectorT_etrading__TrancheCashflow_t.cs" />
+    <Compile Include="MLIBQ\SWIGTYPE_p_std__vectorT_etrading__TrancheDescription_t.cs" />
+    <Compile Include="MLIBQ\SWIGTYPE_p_SWIGCDATA.cs" />
+    <Compile Include="MLIBQ\SWIGTYPE_p_void.cs" />
+    <Compile Include="MLIBQ\VecDouble.cs" />
+    <Compile Include="MLIBQ\VecInteger.cs" />
+    <Compile Include="MLIBQ\VecString.cs" />
+    <Compile Include="MLIBQ\VecVecDouble.cs" />
+    <Compile Include="MLIBQ\VecVecInteger.cs" />
+    <Compile Include="MLIBQ\VecVecString.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TickerConfig.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

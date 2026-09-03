@@ -1,0 +1,14 @@
+generatorFunction,tryMeLWOAssetSwapSpreadFromFixedEqvCoupon
+
+swapObjectName,DE000A19X793_ASSET_SWAP
+
+fixedEqvCoupon,0.008845450232971
+
+valuationSettingsLVB
+key,col1
+VALUATIONDATE,43396
+CURVECOLLECTION,EURYC
+
+fixingTableNames
+key,col1
+

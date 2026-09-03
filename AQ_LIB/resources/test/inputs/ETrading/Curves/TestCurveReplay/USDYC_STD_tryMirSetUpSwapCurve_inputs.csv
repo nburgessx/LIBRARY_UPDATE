@@ -1,0 +1,116 @@
+generatorFunction,tryMirSetUpSwapCurve
+
+curveID,USDYC
+
+marketName,STD
+
+generateProp
+key,col1
+AsOfDate,42419
+Currency,USD
+future.interpolation,fn_MonotoneConvexInterpolation
+interpolation,fn_MonotoneConvexInterpolation
+yieldgen.interpolation,fn_MonotoneConvexInterpolation
+isfrause,FALSE
+isfutureuse,TRUE
+Frequency,Quarterly
+dfcurvename,OIS
+
+moneyConv
+key,col1
+calendar,NYB
+daycount,Act/360
+slidingrule,FOLLOWING
+
+liborRates
+key,col1
+1M,0.004318
+3M,0.006246
+6M,0.0089815
+12M,0.0121365
+
+liborConv
+key,col1
+calendar,LNB:NYB
+daycount,Act/360
+frequency,simple
+resetlag,2
+slidingrule,MOD_FOLLOWING
+
+swapRates
+key,col1,col2
+5Y,0.013005,TRUE
+7Y,0.01502,TRUE
+10Y,0.017345,TRUE
+11Y,0.01799,TRUE
+12Y,0.018495,TRUE
+15Y,0.01972,TRUE
+20Y,0.020975,TRUE
+25Y,0.02158,TRUE
+30Y,0.02198,TRUE
+40Y,0.022152,TRUE
+
+swapConv
+key,col1
+Calendar,LNB:NYB
+DayCount,30/360
+DayCountFix,30/360
+DayCountFloat,ACT/360
+Frequency,Semi-Annual
+FrequencyFloat,Quarterly
+Interpolation,fn_MonotoneConvexInterpolation
+IsEomRoll,FALSE
+IsNewtonraphson,TRUE
+IsTimeInterpolation,TRUE
+Resetlag,2
+SlidingRule,MOD_FOLLOWING
+issimultaneouseq,TRUE
+optimizemethod,NL2SOL
+Epsilon,1e-009
+GradientEpsilon,1e-015
+Delta,1e-010
+MaxLoop,1000
+
+fra3mRates
+key,col1
+
+fra6mRates
+key,col1
+
+fraConv
+key,col1
+
+futureRates
+key,col1,col2,col3,col4
+ED2 COMB Comdty,42634,42725,99.17,0.009
+ED3 COMB Comdty,42725,42809,99.085,0.009
+ED4  COMB Comdty,42809,42907,99.025,0.009
+ED5  COMB Comdty,42907,42998,98.96,0.009
+ED6  COMB Comdty,42998,43089,98.885,0.009
+ED7  COMB Comdty,43089,43180,98.81,0.009
+ED8  COMB Comdty,43180,43271,98.75,0.009
+ED9 COMB Comdty,43271,43362,98.68,0.009
+ED10  COMB Comdty,43362,43453,98.615,0.009
+ED11  COMB Comdty,43453,43544,98.54,0.009
+ED12  COMB Comdty,43544,43635,98.485,0.009
+
+futureConv
+key,col1
+calendar,NYB
+daycount,Act/360
+resetlag,2
+slidingrule,MOD_FOLLOWING
+MeanReversion,0.03
+ApplyTension,TRUE
+TensionGap,2
+
+adjustSwapConv
+key,col1
+
+adjustSwapRates
+key,col1
+
+curveNames,STD:USD3ML
+
+curveName_DF2,
+

@@ -1,0 +1,12 @@
+generatorFunction,tryMeLWOCurveCalibrate
+
+objectName,EUR_SWAP_3M_CURVE@20
+
+lwoCurveGeneratorName,EUR_SWAP_3M
+
+lwoCurveMarketDataName,EUR_SWAP_3M_CURVE_MARKETDATA@19
+
+domesticCurveCollection,EURYC
+
+foreignCurveCollection,
+

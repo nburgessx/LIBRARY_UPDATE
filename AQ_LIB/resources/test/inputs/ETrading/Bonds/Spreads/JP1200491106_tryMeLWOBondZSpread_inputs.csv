@@ -1,0 +1,14 @@
+generatorFunction,tryMeLWOBondZSpread
+
+bondObjectName,JP1200491106
+
+settlementDate,20180606
+
+bondPrice,106.277000000000001
+
+curveCollection,JPYYC_JSCC
+
+forecastCurve,JPY6ML
+
+continuouslyCompounding,TRUE
+

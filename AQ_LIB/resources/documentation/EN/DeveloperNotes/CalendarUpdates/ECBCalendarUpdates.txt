@@ -1,0 +1,33 @@
+Updating ECB Calendar & Meeting Dates
+-------------------------------------
+
+ECB meeting dates are typically published once a year for the following year.
+The ECB meeting dates can be found using the following link and are referred
+to as "Press Conference following the Governing Council Meeting of the ECB".
+
+These dates need to updated as follows:-
+
+1.	Central Bank Holiday Date Caledar File: CBSchedule.csv [MANDATORY]
+	-----------------------------------------------------------------------
+	This file can be found as follows: %MLIB%/resouce/config/CBSchedule.csv
+
+
+2.	Central Bank Holiday Date Source Code: LAMathCentralBank.cpp [ OPTIONAL]
+	This file is within the Models Project (was MFirCentralBank.cpp)
+	-----------------------------------------------------------------------
+	This location acts as a back-up to the calendar file in (1) and is optional.
+	The file can be founds as follows: %MLIB%/src/ir/src/MFirCentralbank.cpp
+
+
+ECB Meeting Date Link
+---------------------
+https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html
+
+
+ECB Swap Start and End Dates
+----------------------------
+ECB Swaps start on the first Wednesday following the meeting date and the swap
+ends one calendar day before the next swap start.
+
+
+

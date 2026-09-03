@@ -1,0 +1,813 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugCSharp|x64">
+      <Configuration>DebugCSharp</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugJava|x64">
+      <Configuration>DebugJava</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugPython|x64">
+      <Configuration>DebugPython</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugR|x64">
+      <Configuration>DebugR</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseCSharp|x64">
+      <Configuration>ReleaseCSharp</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseJava|x64">
+      <Configuration>ReleaseJava</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleasePython|x64">
+      <Configuration>ReleasePython</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseR|x64">
+      <Configuration>ReleaseR</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E5B044BF-B408-4B6F-8A0F-F9EC15F04195}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>swigUseCase</RootNamespace>
+    <ProjectName>AQ_BINDINGS</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <TargetName>AlgoQuantLib</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <TargetName>AlgoQuantLib</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <TargetName>AlgoQuantLib</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <TargetName>AlgoQuantLib</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <TargetName>_AlgoQuantLib</TargetName>
+    <TargetExt>.pyd</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <TargetName>_AlgoQuantLib</TargetName>
+    <TargetExt>.pyd</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <TargetName>AlgoQuantLib</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <TargetName>AlgoQuantLib</TargetName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>SWIG_JAVA;WIN64;NDEBUG;_WINDOWS;_USRDLL;SWIGUSECASE_EXPORTS;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\jdk1.8.0_131\include;$(AQ_EXTERNAL_LIB_PATH)\library\jdk1.8.0_131\include\win32;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DisableSpecificWarnings>4099;4996;4290</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib;$(SolutionDir)targets\64\Release\calibration\out;$(SolutionDir)targets\64\Release\math\out;$(SolutionDir)targets\64\Release\models\out;$(SolutionDir)targets\64\Release\validation\out;$(SolutionDir)targets\64\Release\etrading\out;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);math.lib;models.lib;calibration.lib;validation.lib;etrading.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
+    </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generating Swig Java API</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Message>Deploy Swig Java API</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>SWIG_JAVA;WIN64;_DEBUG;_WINDOWS;_USRDLL;SWIGUSECASE_EXPORTS;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\jdk1.8.0_131\include;$(AQ_EXTERNAL_LIB_PATH)\library\jdk1.8.0_131\include\win32;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DisableSpecificWarnings>4099;4996;4290</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib;$(SolutionDir)targets\64\Debug\calibration\out;$(SolutionDir)targets\64\Debug\math\out;$(SolutionDir)targets\64\Debug\models\out;$(SolutionDir)targets\64\Debug\validation\out;$(SolutionDir)targets\64\Debug\etrading\out;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);math.lib;models.lib;calibration.lib;validation.lib;etrading.lib;QuantLib-vc143-x64-mt-sgd.lib;Adept203-vc143-x64-g.lib</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
+    </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generating Swig Java API</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployJava_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Message>Deploy Swig Java API</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>SWIG_R;WIN64;NDEBUG;_WINDOWS;_USRDLL;SWIGUSECASE_EXPORTS;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\R-3.4.0_x64\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DisableSpecificWarnings>4099;4996;4290;4244;4800;4101;4267</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(AQ_EXTERNAL_LIB_PATH)\library\R-3.4.0_x64\lib;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(SolutionDir)targets\64\Release\math\out;$(SolutionDir)targets\64\Release\models\out;$(SolutionDir)targets\64\Release\calibration\out;$(SolutionDir)targets\64\Release\etrading\out;$(SolutionDir)targets\64\Release\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);Rdll.lib;math.lib;models.lib;calibration.lib;validation.lib;etrading.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
+    </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generating Swig R API</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Message>Deploy Swig R API</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>SWIG_R;WIN64;_DEBUG;_WINDOWS;_USRDLL;SWIGUSECASE_EXPORTS;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\R-3.4.0_x64\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DisableSpecificWarnings>4099;4996;4290;4244;4800;4101;4267</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(AQ_EXTERNAL_LIB_PATH)\library\R-3.4.0_x64\lib;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(SolutionDir)targets\64\Debug\math\out;$(SolutionDir)targets\64\Debug\models\out;$(SolutionDir)targets\64\Debug\calibration\out;$(SolutionDir)targets\64\Debug\etrading\out;$(SolutionDir)targets\64\Debug\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);Rdll.lib;math.lib;models.lib;calibration.lib;validation.lib;etrading.lib;QuantLib-vc143-x64-mt-sgd.lib;Adept203-vc143-x64-g.lib</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 /NATVIS:$(SolutionDir)Visualizer.natvis %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
+    </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generating Swig R API</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployR_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Message>Deploy Swig R API</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>SWIG_PYTHON;WIN64;NDEBUG;_WINDOWS;_USRDLL;SWIGUSECASE_EXPORTS;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_PYTHON_ROOT)\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DisableSpecificWarnings>4099;4996;4290</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(AQ_PYTHON_ROOT)\libs;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(SolutionDir)targets\64\Release\math\out;$(SolutionDir)targets\64\Release\models\out;$(SolutionDir)targets\64\Release\calibration\out;$(SolutionDir)targets\64\Release\etrading\out;$(SolutionDir)targets\64\Release\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);math.lib;models.lib;calibration.lib;validation.lib;etrading.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generatePython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generating Swig Python API</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployPython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Message>Deploy Swig Python API</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>SWIG_PYTHON;WIN64;_DEBUG;_WINDOWS;_USRDLL;SWIGUSECASE_EXPORTS;SWIG_PYTHON_INTERPRETER_NO_DEBUG;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_PYTHON_ROOT)\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DisableSpecificWarnings>4099;4996;4290</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(AQ_PYTHON_ROOT)\libs;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(SolutionDir)targets\64\Debug\math\out;$(SolutionDir)targets\64\Debug\models\out;$(SolutionDir)targets\64\Debug\calibration\out;$(SolutionDir)targets\64\Debug\etrading\out;$(SolutionDir)targets\64\Debug\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);math.lib;models.lib;calibration.lib;validation.lib;etrading.lib;QuantLib-vc143-x64-mt-sgd.lib;Adept203-vc143-x64-g.lib</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generatePython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generating Swig Python API</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployPython_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Message>Deploy Swig Python API</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>SWIG_CSHARP;WIN64;NDEBUG;_WINDOWS;_USRDLL;SWIGUSECASE_EXPORTS;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DisableSpecificWarnings>4099;4996;4290</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(AQ_EXTERNAL_LIB_PATH)\library\R-3.4.0_x64\lib;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib;$(SolutionDir)targets\64\Release\calibration\out;$(SolutionDir)targets\64\Release\math\out;$(SolutionDir)targets\64\Release\models\out;$(SolutionDir)targets\64\Release\validation\out;$(SolutionDir)targets\64\Release\etrading\out;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);math.lib;models.lib;calibration.lib;validation.lib;etrading.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
+    </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generating Swig CSharp API</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Message>Deploy Swig CSharp API</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>SWIG_CSHARP;WIN64;_DEBUG;_WINDOWS;_USRDLL;SWIGUSECASE_EXPORTS;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DisableSpecificWarnings>4099;4996;4290</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(AQ_EXTERNAL_LIB_PATH)\library\R-3.4.0_x64\lib;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib;$(SolutionDir)targets\64\Debug\calibration\out;$(SolutionDir)targets\64\Debug\math\out;$(SolutionDir)targets\64\Debug\models\out;$(SolutionDir)targets\64\Debug\validation\out;$(SolutionDir)targets\64\Debug\etrading\out;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);math.lib;models.lib;calibration.lib;validation.lib;etrading.lib;QuantLib-vc143-x64-mt-sgd.lib;Adept203-vc143-x64-g.lib</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(OutDir)AlgoQuantLib$(TargetExt)</OutputFile>
+    </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\generateCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generating Swig CSharp API</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)\src\AQ_BINDINGS\source\deployCSharp_2022.bat $(PlatformArchitecture) $(Configuration)</Command>
+      <Message>Deploy Swig CSharp API</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\src\AQ_BINDINGS\source\deployCSharp_2022.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\deployJava_2022.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\deployPython_2022.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\deployR_2022.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">false</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\generateCSharp_2022.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\generateJava_2022.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\generatePython_2022.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\generateR_2022.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">false</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\swig_CSharp.i">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\swig_JAVA.i">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\swig_Python.i">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\AQ_BINDINGS\source\swig_R.i">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\AQ_BINDINGS\source\APISetUp.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\BondTypes.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\BondUtilities.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\exposed_functions.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveResults.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOCredit.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meBondCurve.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveCalibrateBasis.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveCalibrateFXForwards.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveCalibrateOIS.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveCalibrateSwap.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveCompoundRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveDiscountFactor.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveDisplay.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveForwardRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveInterpolationJoinDate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveZeroRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meDate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meDateCentralBank.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meDateIMM.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meCurveDualBootstrap.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWO.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOBondCreate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOBondPrice.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOCurve.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOGrids.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOSwapCreate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meLWOSwapPrice.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductAssetSwapSpread.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductOISParRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductOISPV.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapDV01.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapParRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapPV.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapPV01.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapSchedule.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meProductSwapStubRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meUtilityLVB.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meUtilityRecord.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meUtilitySetup.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meUtilityInterpolation.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\meUtilityPCA.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirClearEntityPool.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirCompound.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetAnnuity.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetBusinessDays.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetDate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetDateFromTerm.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetDF.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetECBStartDate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetForwardRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetIMMDate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetNextCBDate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetNextECBDate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetParRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetPCAResults.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetTerm.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirGetZeroRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirInterpolation.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirOISParRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirOISSwapPV.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirOutputCurve.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSetUpBasisSwapCurve.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSetUpFwdFXConstantCurve.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSetUpOISCurve.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSetupPCA.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSetUpSwapCurve.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSwapPV.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSwapPV01.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSwapSchedule.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\mirSwapStubRate.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\SwigTypes.h" />
+    <ClInclude Include="..\src\AQ_BINDINGS\source\TypeUtilities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\AQ_BINDINGS\source\BondUtilities.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\exposed_functions.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meBondCurve.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveCalibrateBasis.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveCalibrateFXForwards.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveCalibrateOIS.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveCalibrateSwap.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveCompoundRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveDiscountFactor.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveDisplay.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveForwardRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveInterpolationJoinDate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveResults.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveZeroRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meDate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meDateCentralBank.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meDateIMM.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meCurveDualBootstrap.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWO.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOBondCreate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOBondPrice.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOCredit.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOCurve.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOSwapCreate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOSwapPrice.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductAssetSwapSpread.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductOISParRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductOISPV.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapDV01.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapParRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapPV.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapPV01.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapSchedule.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meProductSwapStubRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meUtilityLVB.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meUtilityRecord.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meUtilitySetup.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meUtilityInterpolation.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meUtilityPCA.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirClearEntityPool.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirCompound.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetAnnuity.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetBusinessDays.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetDate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetDateFromTerm.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetDF.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetECBStartDate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetForwardRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetIMMDate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetNextCBDate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetNextECBDate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetParRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetPCAResults.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetTerm.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirGetZeroRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirInterpolation.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirOISParRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirOISSwapPV.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirOutputCurve.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSetUpBasisSwapCurve.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSetUpFwdFXConstantCurve.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSetUpOISCurve.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSetupPCA.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSetUpSwapCurve.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSwapPV.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSwapPV01.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSwapSchedule.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\mirSwapStubRate.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\meLWOGrids.cpp" />
+    <ClCompile Include="..\src\AQ_BINDINGS\source\swig_CSharp_wrap.cxx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_BINDINGS\source\swig_JAVA_wrap.cxx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_BINDINGS\source\swig_Python_wrap.cxx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_BINDINGS\source\swig_R_wrap.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugJava|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugCSharp|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleasePython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugPython|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseR|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugR|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\src\AQ_BINDINGS\source\TypeUtilities.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <Target Name="CheckPythonRoot" BeforeTargets="ClCompile" Condition="$(Configuration.Contains('Python'))">
+    <Error Condition="'$(AQ_PYTHON_ROOT)' == ''" Text="Environment variable 'AQ_PYTHON_ROOT' has not been set. Add the variable and point it to your Python install root." />
+    <Error Condition="!Exists('$(AQ_PYTHON_ROOT)\include\Python.h')" Text="Python.h not found under $(AQ_PYTHON_ROOT)\include. Check environment variable 'AQ_PYTHON_ROOT' is set and points at a Python install root." />
+  </Target>
+</Project>

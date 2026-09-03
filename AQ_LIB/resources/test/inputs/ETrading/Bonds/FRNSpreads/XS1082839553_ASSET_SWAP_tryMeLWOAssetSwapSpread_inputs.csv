@@ -1,0 +1,16 @@
+generatorFunction,tryMeLWOAssetSwapSpread
+
+swapObjectName,XS1082839553_ASSET_SWAP
+
+bondObjectName,XS1082839553
+
+bondPrice,101.000000000000000
+
+valuationSettingsLVB
+key,col1
+VALUATIONDATE,43396
+CURVECOLLECTION,GBPYC
+
+fixingTableNames
+key,col1
+

@@ -1,0 +1,66 @@
+{
+    "CACHED_OBJECT_TYPE": "BOND",
+    "STRUCTURED_KEYS": [
+        {
+            "SK_NAME": "BOND",
+            "SK_NUMBER_OF_COLUMNS": 2,
+            "SK_COLUMN_TYPES": [
+                "STRING",
+                "VARIANT"
+            ],
+            "BOND_PARAMETER": [
+                "ACCRUALBUSINESSDAYADJUSTMENT",
+                "ACCRUALCALENDAR",
+                "ACCRUALSTARTDATE",
+                "BONDDESCRIPTION",
+                "BONDQUOTECONVENTION",
+                "BONDTYPE",
+                "CALCULATIONTYPE",
+                "COUPON",
+                "CURRENCY",
+                "DAYCOUNT",
+                "FACEVALUE",
+                "FIRSTCOUPONDATE",
+                "FREQUENCY",
+                "ISCLEANPRICE",
+                "ISIN",
+                "ISSUEDATE",
+                "LASTCOUPONDATE",
+                "MATURITYDATE",
+                "NOTIONALEXCHANGE",
+                "PAYMENTBUSINESSDAYADJUSTMENT",
+                "PAYMENTCALENDAR",
+                "PAYMENTLAG",
+                "PAYRECEIVE",
+                "YIELDTYPE"
+            ],
+            "BOND_VALUE": [
+                "NO_CHANGE",
+                "NYB",
+                "40862",
+                "US912810QT88",
+                "NONE",
+                "FIXED",
+                "TYPE1",
+                "0.03125",
+                "USD",
+                "ACT/ACT",
+                "1000000",
+                "41044",
+                "Semi-Annual",
+                "TRUE",
+                "US912810QT88",
+                "40862",
+                "51636",
+                "51820",
+                "START_AND_END",
+                "NO_CHANGE",
+                "NYB",
+                "0D",
+                "RECEIVE",
+                "YIELD-TO-MATURITY"
+            ]
+        }
+    ],
+    "NAME": "US912810QT88"
+}

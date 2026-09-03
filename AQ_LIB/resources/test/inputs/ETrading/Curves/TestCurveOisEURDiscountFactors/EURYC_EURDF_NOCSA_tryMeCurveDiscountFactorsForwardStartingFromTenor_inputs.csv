@@ -1,0 +1,14 @@
+generatorFunction,tryMeCurveDiscountFactorsForwardStartingFromTenor
+
+fromDates[],20160802
+
+tenor,5Y2D
+
+curveCollection,EURYC
+
+curveIndex,EURDF_NOCSA
+
+businessDayAdj,MOD_FOLLOWING
+
+calendar,TGT
+
