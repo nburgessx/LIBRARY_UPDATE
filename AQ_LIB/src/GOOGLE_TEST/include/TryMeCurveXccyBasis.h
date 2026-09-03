@@ -1,12 +1,12 @@
 #pragma once
 
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 #include "TryMeCurveAccessors.h"
 
 namespace google_test
 {
     class TryMeCurveXccyBasis
-        : public virtual google_test::InitializeMLibGoogleTest
+        : public virtual google_test::InitializeAQGoogleTest
         , public TryMeCurveAccessors
     {
     public:

@@ -10,35 +10,35 @@ namespace google_test
 
 // MACRO To Initialize a Test Non-Fixture and Clean-Up Aftwerwards Using the Initialize Class Destructor
 #define INITIALIZE_TEST \
-	InitializeMLibGoogleTest c;
+	InitializeAQGoogleTest c;
 
 // MACRO To Initialize a Test Fixture and Clean-Up Aftwerwards Using the Initialize Class Destructor
 #define DECLARE_TEST_FIXTURE(test_name) \
-	class test_name : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest {};
+	class test_name : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest {};
 
 
     //
     // CLASS
-    //    google_test::InitializeMLibGoogleTest
+    //    google_test::InitializeAQGoogleTest
     //
     // PURPOSE
-    //    Base class for test fixtures: initialise / uninitialise MLib
+    //    Base class for test fixtures: initialise / uninitialise AlgoQuantLib
     //
     // SYNPOSIS
     //    #include "mTest.h"
     //
-    //    class OISCurveEUR : public virtual google_test::InitializeMLibGoogleTest { /* ... */ };
+    //    class OISCurveEUR : public virtual google_test::InitializeAQGoogleTest { /* ... */ };
     //
-    class InitializeMLibGoogleTest
+    class InitializeAQGoogleTest
     {
     public:
-        // initialise MLib
-        InitializeMLibGoogleTest();
+        // initialise AlgoQuantLib
+        InitializeAQGoogleTest();
 
-        // uninitialise MLib (unless disabled)
-        virtual ~InitializeMLibGoogleTest();
+        // uninitialise AlgoQuantLib (unless disabled)
+        virtual ~InitializeAQGoogleTest();
 
-        // enable / disable re-initialisation of MLib in between tests;
+        // enable / disable re-initialisation of AlgoQuantLib in between tests;
         // default is on;
         // return previous setting;
         // note: not thread-safe
@@ -53,7 +53,7 @@ namespace google_test
         void tearDown();
 
     protected:
-        // return initialised MLib dataInstance object
+        // return initialised AlgoQuantLib dataInstance object
         LADataInstance* getDataInstance()
         {
             return dataInstance_;
@@ -61,10 +61,10 @@ namespace google_test
 
     private:
         // disable copying
-        InitializeMLibGoogleTest( const InitializeMLibGoogleTest& );
-        InitializeMLibGoogleTest& operator=( const InitializeMLibGoogleTest& );
+        InitializeAQGoogleTest( const InitializeAQGoogleTest& );
+        InitializeAQGoogleTest& operator=( const InitializeAQGoogleTest& );
 
-        static bool doReinit_;			// force MLib re-initialisation after end of test?
+        static bool doReinit_;			// force AlgoQuantLib re-initialisation after end of test?
         LADataInstance* dataInstance_;
     };
 }

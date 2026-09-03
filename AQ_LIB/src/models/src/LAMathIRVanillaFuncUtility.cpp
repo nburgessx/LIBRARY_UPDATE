@@ -2024,7 +2024,7 @@ getSABRConvexityAdjust(	double S0,
 	return CA;
 }
 
-//////////////////////////MLib-Userfunc
+//////////////////////////AlgoQuantLib-Userfunc
 
 double rtsafe( calcBase& cb, const double x1, const double x2, const double xacc)
 {

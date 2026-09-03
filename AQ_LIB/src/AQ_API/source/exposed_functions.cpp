@@ -1,5 +1,5 @@
 
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "exposed_functions.h"
 #include "TypeUtilities.h"
 #include <stdexcept>
@@ -30,7 +30,7 @@
 // ------------------------------------------------------------------------------------------------------------
 //
 
-// pitfalls for exposing MLIBQ functions to Java through SWIG:
+// pitfalls for exposing AlgoQuantLib functions to Java through SWIG:
 // a.) do not return local variable addresses unless unavoidable (in which case consult SWIG to alter the interface for freeing up memory)
 //     e.g. avoid things like "return myString.c_str();" or dynamically allocated const char * 
 //	   If you do need to return a dynamically allocated object (and the client needs to do the cleanup)
@@ -38,7 +38,7 @@
 
 
 //
-// Important MLIBQ Initialization Functions
+// Important AlgoQuantLib Initialization Functions
 // ------------------------------------------------------------------------------------------------------------
 //
 
@@ -57,7 +57,7 @@ std::string setUpMLIB(const std::string& irPropsFullFilePath, const std::string&
 	}
 	catch (LACoreError e)
 	{
-		statusMsg = "#Error: Unable to load configuration. Did you set the MLIBQ environment variable? Error is: ";
+		statusMsg = "#Error: Unable to load configuration. Did you set the AlgoQuantLib environment variable? Error is: ";
 		statusMsg += e.what();
 	}
 
@@ -85,7 +85,7 @@ std::string setupMLIB() { return setUpMLIB( "","" ); }
 std::string initMLIB()  { return setUpMLIB( "","" ); }
 
 
-// Terminate MLIBQ - Should be called before termination MLIBQ anaytics by the client
+// Terminate AlgoQuantLib - Should be called before termination AlgoQuantLib anaytics by the client
 // --------------------------------------------------------------------------------
 
 std::string tearDownMLIB()

@@ -1,4 +1,4 @@
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "TypeUtilities.h"
 #include "mirGetDF.h"
 #include "LADate.h"
@@ -35,7 +35,7 @@ double mirGetDF1(double Term,
 		LAString interpolation(Interpolation.c_str());
 		LAString curveName(CurveName.c_str());
 
-		std::vector<double> DFs = validation_api::tryMirGetDF1(etrading::InitializeMLibETrading::instance().dataInstance(), terms, curveID, dayCount, interpolation, IsBasisFlag, curveName);
+		std::vector<double> DFs = validation_api::tryMirGetDF1(etrading::InitializeAQETrading::instance().dataInstance(), terms, curveID, dayCount, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
 	catch (LACoreError& mesx) 
@@ -71,7 +71,7 @@ std::vector<double> mirGetDF1(const std::vector<double>& Terms,
 		LAString interpolation(Interpolation.c_str());
 		LAString curveName(CurveName.c_str());
 
-		ret = validation_api::tryMirGetDF1(etrading::InitializeMLibETrading::instance().dataInstance(), Terms, curveID, dayCount, interpolation, IsBasisFlag, curveName);
+		ret = validation_api::tryMirGetDF1(etrading::InitializeAQETrading::instance().dataInstance(), Terms, curveID, dayCount, interpolation, IsBasisFlag, curveName);
 	} 
 	catch (LACoreError& mesx) 
 	{
@@ -115,7 +115,7 @@ double mirGetDF2(const std::string& Term,
 		LAString interpolation(Interpolation.c_str());
 		LAString curveName(CurveName.c_str());
 
-		std::vector<double> DFs = validation_api::tryMirGetDF2(etrading::InitializeMLibETrading::instance().dataInstance(), terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		std::vector<double> DFs = validation_api::tryMirGetDF2(etrading::InitializeAQETrading::instance().dataInstance(), terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
 	catch (LACoreError& mesx) 
@@ -160,7 +160,7 @@ std::vector<double> mirGetDF2(const std::vector<std::string>& Terms,
 		LAString interpolation(Interpolation.c_str());
 		LAString curveName(CurveName.c_str());
 
-		ret = validation_api::tryMirGetDF2(etrading::InitializeMLibETrading::instance().dataInstance(), terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		ret = validation_api::tryMirGetDF2(etrading::InitializeAQETrading::instance().dataInstance(), terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
 	catch (LACoreError& mesx) 
 	{
@@ -209,7 +209,7 @@ double mirGetDF3(const std::string& FromDate,
 		LAString interpolation(Interpolation.c_str());
 		LAString curveName(CurveName.c_str());
 
-		std::vector<double> DFs = validation_api::tryMirGetDF3(etrading::InitializeMLibETrading::instance().dataInstance(), fromDates, toDates, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		std::vector<double> DFs = validation_api::tryMirGetDF3(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, toDates, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
 	catch (LACoreError& mesx) 
@@ -260,7 +260,7 @@ std::vector<double> mirGetDF3(const std::string& FromDate,
 		LAString interpolation(Interpolation.c_str());
 		LAString curveName(CurveName.c_str());
 
-		ret = validation_api::tryMirGetDF3(etrading::InitializeMLibETrading::instance().dataInstance(), fromDates, toDates, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		ret = validation_api::tryMirGetDF3(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, toDates, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
 	catch (LACoreError& mesx) 
 	{
@@ -310,7 +310,7 @@ double mirGetDF4(const std::string& FromDate,
 		LAString interpolation(Interpolation.c_str());
 		LAString curveName(CurveName.c_str());
 
-		std::vector<double> DFs = validation_api::tryMirGetDF4(etrading::InitializeMLibETrading::instance().dataInstance(), fromDates, terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		std::vector<double> DFs = validation_api::tryMirGetDF4(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
 	catch (LACoreError& mesx) 
@@ -358,7 +358,7 @@ std::vector<double> mirGetDF4(const std::vector<std::string>& FromDates,
 		LAString interpolation(Interpolation.c_str());
 		LAString curveName(CurveName.c_str());
 
-		ret = validation_api::tryMirGetDF4(etrading::InitializeMLibETrading::instance().dataInstance(), fromDates, Terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		ret = validation_api::tryMirGetDF4(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, Terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
 	catch (LACoreError& mesx) 
 	{
@@ -406,7 +406,7 @@ double mirGetDF5(const std::string& FromDate,
 		LAString interpolation(Interpolation.c_str());
 		LAString curveName(CurveName.c_str());
 
-		std::vector<double> DFs = validation_api::tryMirGetDF5(etrading::InitializeMLibETrading::instance().dataInstance(), fromDates, term, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		std::vector<double> DFs = validation_api::tryMirGetDF5(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, term, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
 	catch (LACoreError& mesx) 
@@ -455,7 +455,7 @@ std::vector<double> mirGetDF5(const std::vector<std::string>& FromDates,
 		LAString interpolation(Interpolation.c_str());
 		LAString curveName(CurveName.c_str());
 
-		ret = validation_api::tryMirGetDF5(etrading::InitializeMLibETrading::instance().dataInstance(), fromDates, term, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		ret = validation_api::tryMirGetDF5(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, term, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
 	catch (LACoreError& mesx) 
 	{

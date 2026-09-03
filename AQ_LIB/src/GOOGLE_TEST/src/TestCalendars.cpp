@@ -22,7 +22,7 @@ namespace google_test
 	{
 		// Helper functions
 
-		boost::filesystem::path getMLIBQEnvironmentVariableConfigfolderPath()
+		boost::filesystem::path getConfigFolderPath()
 		{
 			// Config data lives in the source tree at $(AQ)\resources\config.
 			const char* environmentVariablePath = std::getenv( "AQ" );
@@ -43,7 +43,7 @@ namespace google_test
 			// If a full file path is specified use it, otherwise use the pre-defined folder for the path as specified in etrading::FolderConfig
 			if ( ! p.is_absolute() )
 			{
-				p = getMLIBQEnvironmentVariableConfigfolderPath() / p;
+				p = getConfigFolderPath() / p;
 			}
 			return p.string();
 		}

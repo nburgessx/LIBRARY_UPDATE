@@ -1,4 +1,4 @@
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "mirSetUpBasisSwapCurve.h"
 #include "LADate.h"
 #include "LAString.h"
@@ -54,7 +54,7 @@ const std::string mirSetUpBasisSwapCurve(const std::string& CurveID,
 		LAStringMatrix spotFXs;
 		swig::buildStringMatrix(spotFXs, SpotFXs);
 		
-		ret = validation_api::tryMirSetUpBasisSwapCurve(etrading::InitializeMLibETrading::instance().dataInstance(), 
+		ret = validation_api::tryMirSetUpBasisSwapCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
 															curveID, 
 															marketName, 
 															generalProps, 
@@ -133,7 +133,7 @@ const std::string mirSetUpBasisSwapCurve(const std::string& CurveID,
 		LAStringMatrix fraRates;
 		swig::buildStringMatrix(fraRates, FRARates);
 		
-		ret = validation_api::tryMirSetUpBasisSwapCurve(etrading::InitializeMLibETrading::instance().dataInstance(), 
+		ret = validation_api::tryMirSetUpBasisSwapCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
 															curveID, 
 															marketName, 
 															generalProps, 

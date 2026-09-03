@@ -87,8 +87,8 @@ namespace etrading
     bool isNumber( const LAString& inputString );
 
 
-    /* @brief			Get MLib dataInstance object
-    * @output			MLib dataInstance
+    /* @brief			Get AlgoQuantLib dataInstance object
+    * @output			AlgoQuantLib dataInstance
     */
     LADataInstance* getDataInstance();
 

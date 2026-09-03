@@ -851,9 +851,9 @@ namespace etrading
         // If a full file path is specified use it, otherwise use the pre-defined folder for the path as specified in etrading::FolderConfig
         if( !p.is_absolute() )
         {
-            // Get the Google Test Unit Test Input Folder Path using the MLIBQ Environment Variable
-            // Format = MLIBQ Goolge Test DataInstance Path + '/' + path to the 'p' Variable
-            p = FolderConfig::getMLIBQEnvironmentVariableGoogleTestPath() / p;
+            // Get the Google Test Unit Test Input Folder Path using the AlgoQuantLib Environment Variable
+            // Format = AlgoQuantLib Goolge Test DataInstance Path + '/' + path to the 'p' Variable
+            p = FolderConfig::getGoogleTestInputPath() / p;
         }
 
         std::ifstream in( p.string().c_str() );

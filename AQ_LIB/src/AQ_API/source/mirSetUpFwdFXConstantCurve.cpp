@@ -1,4 +1,4 @@
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "mirSetUpFwdFXConstantCurve.h"
 #include "LADate.h"
 #include "LAString.h"
@@ -34,7 +34,7 @@ const std::string mirSetUpFwdFXConstantCurve(const std::string& CurveID,
 		LAStringMatrix fwdFXConstantConv;
 		swig::buildStringMatrix(fwdFXConstantConv, FwdFXConstantConv);
 
-		ret = validation_api::tryMirSetUpFwdFXConstantCurve(etrading::InitializeMLibETrading::instance().dataInstance(), 
+		ret = validation_api::tryMirSetUpFwdFXConstantCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
 																	curveID, 
 																	marketName, 
 																	generalProps, 

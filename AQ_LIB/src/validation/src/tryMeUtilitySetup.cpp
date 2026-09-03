@@ -1,5 +1,5 @@
 #include "LADataInstance.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "LibSetUpETrading.h"
 #include "LAUpdateStaticDataManager.h"
 #include "tryMeUtilitySetup.h"
@@ -29,14 +29,14 @@ using etrading::decorateCurvename;
 
 namespace validation_api
 {
-	/* @brief	Set up MLIBQ - Not to be used with Excel
+	/* @brief	Set up AlgoQuantLib - Not to be used with Excel
      *  @return	A notification string
      */
 	const std::string trySetupMLIB(const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath, const std::string& centralBankCalendarFullFilePath)
 	{
 		
-		// TODO: Move the mutexes down to the MLIBQ singleton on the Object pool 
-		// this fig leaf will NOT be thread safe unless MLIBQ itself is made thread safe
+		// TODO: Move the mutexes down to the AlgoQuantLib singleton on the Object pool 
+		// this fig leaf will NOT be thread safe unless AlgoQuantLib itself is made thread safe
 		// boost::lock_guard<boost::mutex> lock(g_initialization_mutex);
 		
 		// This function has it's own thread guard to ensure single threaded
@@ -46,17 +46,17 @@ namespace validation_api
 
         if (irPropsFullFilePath.size() != 0 && !irPropsFullFilePath.empty())
         {
-            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(irPropsFullFilePath.c_str()), "Failed to initialize MLIBQ. Invalid ir.properties path.");
+            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(irPropsFullFilePath.c_str()), "Failed to initialize AlgoQuantLib. Invalid ir.properties path.");
         }
 
         if (calendarFullFilePath.size() != 0 && !calendarFullFilePath.empty())
         {
-            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(calendarFullFilePath.c_str()), "Failed to initialize MLIBQ. Invalid calendar path.");
+            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(calendarFullFilePath.c_str()), "Failed to initialize AlgoQuantLib. Invalid calendar path.");
         }
 
         if (centralBankCalendarFullFilePath.size() != 0 && !centralBankCalendarFullFilePath.empty())
         {
-            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(centralBankCalendarFullFilePath.c_str()), "Failed to initialize MLIBQ. Invalid central bank calendar path.");
+            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(centralBankCalendarFullFilePath.c_str()), "Failed to initialize AlgoQuantLib. Invalid central bank calendar path.");
         }
 
 		// Original LA Start-Up Code
@@ -90,13 +90,13 @@ namespace validation_api
 
         // Load IR Properties - filepaths are set to LAString* of type NULL if not found
         // ---------------------------------------------------------------------------------------------------------------
-        // Note: The InitializeMLibETrading::instance() method below calls the InitializeMLibETrading constructor,
+        // Note: The InitializeAQETrading::instance() method below calls the InitializeAQETrading constructor,
         // which checks if calendar files have been loaded
         // ---------------------------------------------------------------------------------------------------------------
         const bool checkIfStaticDataLoaded = true;
         const bool checkIfCalendarFileLoaded = true;
         etrading::LAUpdateStaticDataManager::setUpForIRServer(); // TODO: Stop making this lower layer refer to an interface (like Excel)
-        etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *(etrading::InitializeMLibETrading::instance( checkIfStaticDataLoaded, checkIfCalendarFileLoaded ).dataInstance()) );
+        etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *(etrading::InitializeAQETrading::instance( checkIfStaticDataLoaded, checkIfCalendarFileLoaded ).dataInstance()) );
         // ---------------------------------------------------------------------------------------------------------------
 			
         // Disable Thread Locking - since we have a local thread guard
@@ -105,13 +105,13 @@ namespace validation_api
 		// Initialize the Optional LWO Configuration Files - will not throw if unsuccessful
 		validation_api::tryMeUtilityLoadConfigurationFiles();
 
-		return "Initialized MLIBQ";
+		return "Initialized AlgoQuantLib";
 
 		VALID_EXCEPTION_END
 	}
 
 
-	/* @brief	Tear-down MLIBQ - Not to be used with Excel
+	/* @brief	Tear-down AlgoQuantLib - Not to be used with Excel
      *  @return	A notification string
      */
 	const std::string tryTearDownMLIB()
@@ -128,12 +128,12 @@ namespace validation_api
 
 		// Clean-Up Object Pool
 		LACoreDataService::finalize();
-		etrading::InitializeMLibETrading::destroyInstance();
+		etrading::InitializeAQETrading::destroyInstance();
 
         // Clean-Up the Volatility Manager - Is this needed?
         //LALinearRatesVolatilityManager::finalize();
 
-		return std::string("Finalized MLIBQ");
+		return std::string("Finalized AlgoQuantLib");
 
 		VALID_EXCEPTION_END
 	}
@@ -354,7 +354,7 @@ namespace validation_api
 		const size_t nBits = sizeof( dummyPointer ) * 8;
 
         std::stringstream s;
-		s << "MLIBQ_ADDIN: "
+		s << "AlgoQuantLib: "
 		  << "Version Number: " << versionNumber << ". "
 		  << "Architecture: " << nBits << " bit. "
 		  << "Last built on " << validation_api::versionBuildDate() << " at " << validation_api::versionBuildTime() << ".";

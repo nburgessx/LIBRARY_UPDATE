@@ -48,7 +48,7 @@
 #include "CurveBuildProperties.h"
 #include "EnvironmentUtilities.h"
 #include "ObjectUtilities.h"
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 #include "ExampleObjects.h"
 #include "FixingTableSet.h"
 

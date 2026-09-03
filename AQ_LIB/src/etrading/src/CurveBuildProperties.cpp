@@ -86,7 +86,7 @@ namespace etrading
         setFixingDayCalendar(ins.getFixingDayCalendar());
     }
 
-    /// all daycounts are dc_act365(act_365)  in MLib but we should allow this to be settable later, once we move away
+    /// all daycounts are dc_act365(act_365)  in AlgoQuantLib but we should allow this to be settable later, once we move away
     CurveBuildProperties::CurveBuildProperties(
         const CurveTypeEnum curveTypeEnum,
         const std::string& objectName,

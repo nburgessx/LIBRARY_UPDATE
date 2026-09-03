@@ -1873,7 +1873,7 @@ LAMarketData::convertToMLibTerm(const LAString &term)
 
 // 
 /*!
-    @brief search market grid pos correspond to mlib term
+    @brief search market grid pos correspond to AlgoQuantLib term
 
 	@param[in] marketGrid
 	@param[in] term

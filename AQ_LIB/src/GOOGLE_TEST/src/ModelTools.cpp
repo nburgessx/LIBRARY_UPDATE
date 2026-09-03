@@ -9,7 +9,7 @@
 #include "LAMathSwaptionVolUtility.h"
 #include "LAMathParameterUtility.h"
 
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "Dependency.h"
 #include "CurveOis.h"
 #include "CurveStd.h"
@@ -59,7 +59,7 @@ void ModelUtility::SetCurves(const LAString& directory, const LAString& fileName
 void ModelUtility::SetParameters(const LAString& directory, const LAString& paramFileName, const LAString& currency,
                                  const LAStringVector& paramNames, LAStringVector& paramIDs, LADate& asOfDate)
 {
-    LADataInstance* dataInstance = etrading::InitializeMLibETrading::instance().dataInstance();
+    LADataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
 
     // Set file object
     LAString inputFile = directory + paramFileName + LAString(".csv");
@@ -92,7 +92,7 @@ void ModelUtility::SetParameters(const LAString& directory, const LAString& para
 void ModelUtility::SetNonInterpolatedParameters(const LAString& directory, const LAString& paramFileName, const LAString& currency,
                                                 const LAStringVector& paramNames, LAStringVector& paramIDs, LADate& asOfDate)
 {
-    LADataInstance* dataInstance = etrading::InitializeMLibETrading::instance().dataInstance();
+    LADataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
 
     // Set file object
     LAString inputFile = directory + paramFileName + LAString(".csv");

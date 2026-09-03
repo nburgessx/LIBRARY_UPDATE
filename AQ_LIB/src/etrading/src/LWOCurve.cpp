@@ -185,7 +185,7 @@ namespace etrading
             }
         };
 
-        // TODO: because non business days are supplied to OIS in MLIBQ we do not check this for compatabilitiy.... FIX this on both sides.
+        // TODO: because non business days are supplied to OIS in AlgoQuantLib we do not check this for compatabilitiy.... FIX this on both sides.
         /*
         if(curveBuildProps_ && dates.size() > 0)
         {
@@ -533,7 +533,7 @@ namespace etrading
             // Discount Factors stored at Node Points Only
             // ------------------------------------------
             
-            // Native MLIBQ Interpolation
+            // Native AlgoQuantLib Interpolation
             // -------------------------
             const InterpolationEnum interpMethod = curveBuildProps_->interpMethod_;
             double result = LAMathInterpolationUtilities::interpolate( datesAsYearFractions_, discountFactors_, yearFraction, interpMethod );
@@ -567,7 +567,7 @@ namespace etrading
             }
             else
             {
-                //auto idxToRetrieve = getIndexOfDate(dateToEvaluate); // is better but the below is to mimic the old MLIBQ behaviour
+                //auto idxToRetrieve = getIndexOfDate(dateToEvaluate); // is better but the below is to mimic the old AlgoQuantLib behaviour
                 auto idxToRetrieve = getIndexWithPrecision( datesAsYearFractions_, yearFraction );
                 if( idxToRetrieve < 0 )
                 {
@@ -603,7 +603,7 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( ( boost::format( "Unable to retrieve an MLIBQ calendar specified as %s" ) % calendar.c_str() ).str() );
+            throw ETradingException( ( boost::format( "Unable to retrieve an AlgoQuantLib calendar specified as %s" ) % calendar.c_str() ).str() );
         }
     };
 
@@ -639,7 +639,7 @@ namespace etrading
         }
         else
         {
-            throw ETradingException( ( boost::format( "Unable to retrieve an MLIBQ calendar specified as %s" ) % calendar.c_str() ).str() );
+            throw ETradingException( ( boost::format( "Unable to retrieve an AlgoQuantLib calendar specified as %s" ) % calendar.c_str() ).str() );
         }
     };
 
@@ -664,7 +664,7 @@ namespace etrading
             }
             else
             {
-                throw ETradingException( ( boost::format( "Unable to retrieve an MLIBQ calendar specified as %s" ) % calendar.c_str() ).str() );
+                throw ETradingException( ( boost::format( "Unable to retrieve an AlgoQuantLib calendar specified as %s" ) % calendar.c_str() ).str() );
             }
         }
         else
@@ -764,7 +764,7 @@ namespace etrading
 
     std::vector<double> LWOCurve::calculateDiscountFactor( const std::vector<std::string>& tenorStrings, const BusinessDayAdjustmentEnum dayAdjustment, const std::string& calendar ) const
     {
-        // TODO: can get sped up by passing asOfDate and the MLIBQ common calendar pointer
+        // TODO: can get sped up by passing asOfDate and the AlgoQuantLib common calendar pointer
         std::vector<double> retVec;
         for( unsigned int dateCounter = 0u; dateCounter < tenorStrings.size(); dateCounter++ )
         {
@@ -862,7 +862,7 @@ namespace etrading
         }
         else
         {
-            //auto idxToRetrieve = getIndexOfDate(dateToEvaluate); // is better but the below is to mimic the old MLIBQ behaviour
+            //auto idxToRetrieve = getIndexOfDate(dateToEvaluate); // is better but the below is to mimic the old AlgoQuantLib behaviour
             auto idxToRetrieve = getIndexWithPrecision( datesAsYearFractions_, yearFraction );
             if( idxToRetrieve < 0 )
             {
@@ -968,7 +968,7 @@ namespace etrading
         const auto ptrHolidayCalendar = adjInfo.second;
         if( ptrHolidayCalendar == nullptr )
         {
-            throw ETradingException( ( boost::format( "LWOCurve::calculateDiscountFactor(tenorString) - Missing MLIBQ Calendar for calendar (%s)" ) % curveBuildProps_->getPaymentDayCalendar().c_str() ).str() );
+            throw ETradingException( ( boost::format( "LWOCurve::calculateDiscountFactor(tenorString) - Missing AlgoQuantLib Calendar for calendar (%s)" ) % curveBuildProps_->getPaymentDayCalendar().c_str() ).str() );
         };
         date = dayAdjust( date, busDayAdjustment, *ptrHolidayCalendar );
         return date;

@@ -1,7 +1,7 @@
 // Include: Google Test Library
 #include <gTest/gTest.h>
 
-// MLIBQ Includes
+// AlgoQuantLib Includes
 #include "CurveInstruments.h"
 #include "LABasic.h"
 #include "LASplineInterpolation.h"

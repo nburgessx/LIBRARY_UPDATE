@@ -12,44 +12,44 @@ namespace etrading
 
 	//
 	// CLASS
-	//    InitializeMLibETrading
+	//    InitializeAQETrading
 	//
 	// PURPOSE
-	//    To ensure initialisation of MLib DataInstance, Object Pool and Yield Curve Properties
+	//    To ensure initialisation of AlgoQuantLib DataInstance, Object Pool and Yield Curve Properties
 	// 
 	// SYNOPSIS
-	//    #include "InitializeMLibETrading.h"
+	//    #include "InitializeAQETrading.h"
 	// 
-	//    InitializeMLibETrading& instance_ = instance();
+	//    InitializeAQETrading& instance_ = instance();
 	//    const DoubleArray res = etrading::LACurveCalibrationHelpers::outPutCurveFromYieldData( instance_.getDataInstance(), curveId, marketName );
 	// 
-	class InitializeMLibETrading
+	class InitializeAQETrading
 	{
 	public:
 		
         // Singleton: Library Set-Up and Tear-down Methods
-        static InitializeMLibETrading& instance(const bool checkStaticDataLoaded = false, const bool checkIfCalendarLoaded = false); // Set-Up
+        static InitializeAQETrading& instance(const bool checkStaticDataLoaded = false, const bool checkIfCalendarLoaded = false); // Set-Up
         static void destroyInstance(); // Tear-Down
 
         // Re-initialisation (used by google tests)
-		~InitializeMLibETrading();
+		~InitializeAQETrading();
 
 		// Accessors
 		LADataInstance* dataInstance()  { return dataInstance_.get(); }
         CurveCalibrationData* ycStaticDataObject( const LAString& curveCollection, const bool throwIfCurveDoesNotExist = true );
 
 	protected:
-		InitializeMLibETrading(const bool checkStaticDataLoaded = false, const bool checkIfCalendarLoaded = false);  
+		InitializeAQETrading(const bool checkStaticDataLoaded = false, const bool checkIfCalendarLoaded = false);  
 
 	private:
 		
         // Disable Copying & Assignment
-        InitializeMLibETrading(const InitializeMLibETrading& rhs) = delete;
-        InitializeMLibETrading& operator=(const InitializeMLibETrading& rhs) = delete;
+        InitializeAQETrading(const InitializeAQETrading& rhs) = delete;
+        InitializeAQETrading& operator=(const InitializeAQETrading& rhs) = delete;
 
         // Private Member Variables
 		std::unique_ptr<LADataInstance> dataInstance_;
-        static InitializeMLibETrading* instance_;
+        static InitializeAQETrading* instance_;
 	};
 }
 

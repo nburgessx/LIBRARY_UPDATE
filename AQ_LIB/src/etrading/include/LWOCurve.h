@@ -67,7 +67,7 @@ namespace etrading
                     const std::vector<double>& discountFactors,
                     const CurveBuildProperties& curveConvention );
 
-        // these CTOR exists because the day count converter in MLIBQ is not consistent in reverse,
+        // these CTOR exists because the day count converter in AlgoQuantLib is not consistent in reverse,
         // which means that we cannot convert year Fractions back to the dates they came from
         // hence they need to be supplied ....
         LWOCurve(	const std::string& objName,

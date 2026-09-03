@@ -1,5 +1,5 @@
-#include "InitializeMLibGoogleTest.h"				// google_test::InitializeMLibGoogleTest
-#include "InitializeMLibETrading.h"			        // google_test::InitializeMLibETrading
+#include "InitializeAQGoogleTest.h"				// google_test::InitializeAQGoogleTest
+#include "InitializeAQETrading.h"			        // google_test::InitializeAQETrading
 #include "LADataInstance.h"
 #include "LACoreDataService.h"
 #include "LAUpdateStaticDataManager.h"
@@ -18,9 +18,9 @@ namespace google_test
 {
 
 
-    /* static */ bool InitializeMLibGoogleTest::doReinit_ = true;
+    /* static */ bool InitializeAQGoogleTest::doReinit_ = true;
 
-    /* static */ bool InitializeMLibGoogleTest::setMLibReinit( bool onOff )
+    /* static */ bool InitializeAQGoogleTest::setMLibReinit( bool onOff )
     {
         const bool prev = doReinit_;
         doReinit_ = onOff;
@@ -28,7 +28,7 @@ namespace google_test
     }
 
 	// Enable / disable leak checking. Default is off;
-	/* static */ void InitializeMLibGoogleTest::enableLeakCheck( bool onOff )
+	/* static */ void InitializeAQGoogleTest::enableLeakCheck( bool onOff )
 	{
 #if defined (_DEBUG) && defined (GTEST32)
 		if (onOff)
@@ -54,7 +54,7 @@ namespace google_test
 	}
 
 	// Specify the leak report filenme. By default google_test will direct the leak report to stdout.
-	/* static */ void InitializeMLibGoogleTest::setLeakReportFilename(std::string reportFilename)
+	/* static */ void InitializeAQGoogleTest::setLeakReportFilename(std::string reportFilename)
 	{
 #if defined (_DEBUG) && defined (GTEST32)
 
@@ -70,7 +70,7 @@ namespace google_test
 #endif
 	}
 
-    InitializeMLibGoogleTest::InitializeMLibGoogleTest() : dataInstance_( etrading::InitializeMLibETrading::instance().dataInstance() )
+    InitializeAQGoogleTest::InitializeAQGoogleTest() : dataInstance_( etrading::InitializeAQETrading::instance().dataInstance() )
     {
         // Disable Thread Locking - since we have a local thread guard
 		common::LACoreLockControl::enableThreadLocks( false );
@@ -79,12 +79,12 @@ namespace google_test
         LAString loadLWOConfigStatus = validation_api::tryMeUtilityLoadConfigurationFiles();
     }
 
-    InitializeMLibGoogleTest::~InitializeMLibGoogleTest()
+    InitializeAQGoogleTest::~InitializeAQGoogleTest()
     {
         tearDown(); 
     }
 
-    void InitializeMLibGoogleTest::tearDown()
+    void InitializeAQGoogleTest::tearDown()
     {
         // TODO: Clean-up required for now Keep this in synch with the tearDown function within AQ_CLIENT_API exposed_functions.cpp
         // This code should be centralized at some point soon
@@ -95,7 +95,7 @@ namespace google_test
         // Clean-Up Object Pool
 		LACoreDataService::finalize();
 		LALinearRatesVolatilityManager::finalize();
-		etrading::InitializeMLibETrading::destroyInstance();
+		etrading::InitializeAQETrading::destroyInstance();
 
         dataInstance_ = nullptr;
         // never delete the observational pointer ...

@@ -4,12 +4,12 @@
 
 namespace validation_api
 {
- 	 /* @brief	Set-up MLIBQ - Not to be used with Excel
+ 	 /* @brief	Set-up AlgoQuantLib - Not to be used with Excel
      *  @return	A notification string
      */
 	const std::string trySetupMLIB( const std::string& irPropsFullFilePath, const std::string& calendarFullFilePath, const std::string& centralBankCalendarFullFilePath = "" );
 
-	/* @brief	Tear-down MLIBQ - Not to be used with Excel
+	/* @brief	Tear-down AlgoQuantLib - Not to be used with Excel
      *  @return	A notification string
      */
 	const std::string tryTearDownMLIB();

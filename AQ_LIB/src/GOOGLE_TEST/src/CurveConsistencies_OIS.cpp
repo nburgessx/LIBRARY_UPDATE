@@ -8,7 +8,7 @@
 #include "tryMirOISSwapPV.h"
 #include "YieldCurveUtil.h"
 #include "LADateScheduleHelpers.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "tryMeUtilitySetup.h"
 #include <sstream>
 
@@ -287,7 +287,7 @@ namespace google_test
 						}
 					}
 								
-					const double calcParRate = validation_api::tryMirOISParRate( etrading::InitializeMLibETrading::instance().dataInstance(),
+					const double calcParRate = validation_api::tryMirOISParRate( etrading::InitializeAQETrading::instance().dataInstance(),
 								                                                 effectiveDate.stringWithFormat( "YYYYMMDD" ),
 								                                                 maturityTenor,
 								                                                 curveCollection,
@@ -364,11 +364,11 @@ namespace google_test
 
 							double loBasis(0.0);
 							std::stringstream(loBasisStr.getCString()) >> loBasis;
-							loBasis *= 10000;	// Basis are passed to MLib in basis points unit
+							loBasis *= 10000;	// Basis are passed to AlgoQuantLib in basis points unit
 
 							// Compute Libor-OIS basis swap PV
 							const double PV = validation_api::tryMirOISSwapPV( 
-								etrading::InitializeMLibETrading::instance().dataInstance(),
+								etrading::InitializeAQETrading::instance().dataInstance(),
 								1.0,	// notional
 								"PAY",	// payRec
 								effectiveDate.stringWithFormat( "YYYYMMDD" ),

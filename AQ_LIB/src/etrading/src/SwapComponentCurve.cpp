@@ -580,7 +580,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 				}
 			}
 
-			// MLib calculates linear spline join date when:
+			// AlgoQuantLib calculates linear spline join date when:
 			// 1. User specifies to ALWAYS recalculate join date; or
 			// 2. User specifies not to always recalculate join date, but no pre-calculated join date currently exists;
 

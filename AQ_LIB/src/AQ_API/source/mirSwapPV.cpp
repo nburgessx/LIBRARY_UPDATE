@@ -1,4 +1,4 @@
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "mirSwapPV.h"
 #include "LADate.h"
 #include "LAString.h"
@@ -108,7 +108,7 @@ double mirSwapPV(double notional,
 		LAString tRollDay		(TRollDay.c_str());
 		LAString xRollDay		(XRollDay.c_str());
 
-		ret = validation_api::tryMirSwapPV(etrading::InitializeMLibETrading::instance().dataInstance(),
+		ret = validation_api::tryMirSwapPV(etrading::InitializeAQETrading::instance().dataInstance(),
 												notional,
 												payRec,
 												effectiveDate, 

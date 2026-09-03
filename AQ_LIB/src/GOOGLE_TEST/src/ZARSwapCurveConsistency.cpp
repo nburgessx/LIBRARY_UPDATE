@@ -36,7 +36,7 @@ const std::string fileNameZAR3MJ = TEST_FOLDER + "ZAR_SWAP_3M_CURVE.JSON";
 namespace google_test
 {
     // Declare Test Fixture Class
-    class ZAR_SwapCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class ZAR_SwapCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
     public:
 

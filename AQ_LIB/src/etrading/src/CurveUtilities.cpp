@@ -9,7 +9,7 @@
 #include "CurveBuildDefaults.h"
 #include "CurveResultsContainer.h"  // Curve Results and Discount Factor Methods
 #include "CurveValidation.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "LACurveForwardRateHelpers.h"
 #include "LACurvePricingObject.h"
 #include "LADateHelpers.h"
@@ -1174,7 +1174,7 @@ namespace etrading
         curves.reserve(allCurves.size());
 
         // Initialize Yield Curve Pro
-        CurveCalibrationData* curveCalibrationData = etrading::InitializeMLibETrading::instance().ycStaticDataObject( curveCollection, true ); // true = throw if curve does not exist
+        CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject( curveCollection, true ); // true = throw if curve does not exist
 
 		const LAObject& yieldData = curveCalibrationData->getYieldData().get().get();
 
@@ -2561,7 +2561,7 @@ namespace etrading
 	bool isCurveBuiltFromCurveEngine(const LAString& curveCollection, const LAString& curveName)
 	{
 		bool isFromCurveEngine = false;
-		CurveCalibrationData* curveCalibrationData = etrading::InitializeMLibETrading::instance().ycStaticDataObject(curveCollection);
+		CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject(curveCollection);
 		LAString suffix = curveName == "STD" ? "" : "_" + LAString(curveName).toUpper();
 		LADataHolder* dh = &(curveCalibrationData->getYieldData().get().getData(IR_CALIBRATION_DATA_BUILTBYCURVEENGINE + suffix, NOCHECK) );
 		if (dh->isDefined() && !dh->isNull())
@@ -2587,7 +2587,7 @@ namespace etrading
 									bool displayLabels,
 									bool displayInverseMatrix)
 	{
-		CurveCalibrationData* curveCalibrationData = etrading::InitializeMLibETrading::instance().ycStaticDataObject(curveCollection);
+		CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject(curveCollection);
 		LAString suffix = curveEngineObject == "STD" ? "" : "_" + LAString(curveEngineObject).toUpper();
 
 		if (displayInverseMatrix)
@@ -2635,7 +2635,7 @@ namespace etrading
 			throw LACoreInvalidData(error.getCString(), __FILE__, __LINE__);
 		}
 
-		CurveCalibrationData* curveCalibrationData = etrading::InitializeMLibETrading::instance().ycStaticDataObject(curveCollection);
+		CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject(curveCollection);
 		LAString suffix = curveName == "STD" ? "" : "_" + LAString(curveName).toUpper();
 
 		if (displayInverseMatrix)

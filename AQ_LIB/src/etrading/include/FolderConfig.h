@@ -28,7 +28,7 @@ namespace etrading
 		//
 		// Helper functions to help create configuration file path names
 		//
-		static boost::filesystem::path getMLIBQEnvironmentVariableGoogleTestPath();  // Returns MLIBQ Google Test Folder path in the format of boost::filesystem::path
+		static boost::filesystem::path getGoogleTestInputPath();  // Returns AlgoQuantLib Google Test Folder path in the format of boost::filesystem::path
 		static LAString toPath( std::string environmentVariable, std::string suffix ); // Function to return the path stored by the an environment variable
 		static const LAString getCurrentFolder(); // Function returns the folder that the Excel add-in Vanilla.xll is running from
 		static const LAString createFilePath( const LAString* folder, const LAString* fileName );

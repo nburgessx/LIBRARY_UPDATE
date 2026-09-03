@@ -23,12 +23,12 @@ namespace etrading
     */
     std::string getGoogleTestFolder()
     {
-        // Get the Google Test Unit Test Input Folder Path using the MLIBQ Environment Variable
-        // Format = MLIBQ Goolge Test DataInstance Path
+        // Get the Google Test Unit Test Input Folder Path using the AlgoQuantLib Environment Variable
+        // Format = AlgoQuantLib Goolge Test DataInstance Path
 
 		try
 		{
-			boost::filesystem::path fileSystemPath = FolderConfig::getMLIBQEnvironmentVariableGoogleTestPath();
+			boost::filesystem::path fileSystemPath = FolderConfig::getGoogleTestInputPath();
 			// Convert to String
 			std::string filePath = fileSystemPath.string().c_str() + std::string("/");
 			return filePath;

@@ -309,7 +309,7 @@ namespace etrading
         {
 
             // this is the incorrect implementation of this day count but we need
-            // an incorrect implementation to match MLIBQ (this was requested with full knowledge of the trading desk, tokyo quants, etc. cfr. Nicholas Burgess)
+            // an incorrect implementation to match AlgoQuantLib (this was requested with full knowledge of the trading desk, tokyo quants, etc. cfr. Nicholas Burgess)
 
             boost::gregorian::date nextYear( input.year() + 1, 1, 1 );
             auto daysToEndOfYear = daysBetween( input, nextYear );
@@ -346,7 +346,7 @@ namespace etrading
 
             /*
             // this is the correct implementation of this day count but we need
-            // an incorrect implementation to match MLIBQ (this was requested with full knowledge of the trading desk, tokyo quants, etc. cfr. Nicholas Burgess)
+            // an incorrect implementation to match AlgoQuantLib (this was requested with full knowledge of the trading desk, tokyo quants, etc. cfr. Nicholas Burgess)
 
             double fractionLeft = yearFraction;
             boost::gregorian::date iteratorDate = input;
@@ -525,7 +525,7 @@ namespace etrading
                 {
                     f++;
                 }
-                //add followed condition : && fromDate.stringWithFormat("MMDD") != "0229" (a comment from the MLIBQ library)
+                //add followed condition : && fromDate.stringWithFormat("MMDD") != "0229" (a comment from the AlgoQuantLib library)
                 if ( y2 > 2 && isLeapYear( toDate.year() ) && fromDate.year() != toDate.year() )
                 {
                     f++;

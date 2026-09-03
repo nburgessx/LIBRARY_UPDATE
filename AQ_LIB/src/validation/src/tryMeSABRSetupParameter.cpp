@@ -5,7 +5,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "LAMathSwaptionVolUtility.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "RecordMacros.h"
 
 using namespace etrading;
@@ -24,7 +24,7 @@ namespace validation_api
 		// Record Inputs for logs, tests and playback
 		RECORD_INPUTS(gridID, conventionID, gridData);
 		
-		LAMathSwaptionVolUtility::setUpSABRGrid(etrading::InitializeMLibETrading::instance().dataInstance(), gridID, conventionID, gridData);
+		LAMathSwaptionVolUtility::setUpSABRGrid(etrading::InitializeAQETrading::instance().dataInstance(), gridID, conventionID, gridData);
 
 		VALID_EXCEPTION_END
 	}

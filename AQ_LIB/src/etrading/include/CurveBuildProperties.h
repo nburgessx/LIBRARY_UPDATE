@@ -38,7 +38,7 @@ namespace etrading
         CurveBuildProperties( const CurveBuildProperties& ins );
         CurveBuildProperties( const CurveBuildProperties&& moved );
         CurveBuildProperties( const std::string& objectName );
-        /// all daycounts are dc_act365(act_365_ISDA)  in MLib but we should allow this to be settable later, once we move away
+        /// all daycounts are dc_act365(act_365_ISDA)  in AlgoQuantLib but we should allow this to be settable later, once we move away
         CurveBuildProperties(
             const CurveTypeEnum curveTypeEnum,
             const std::string& objectName,

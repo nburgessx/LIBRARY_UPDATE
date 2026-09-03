@@ -4,7 +4,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "LAMathSwaptionVolUtility.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "LACoreUtility.h"
 #include "ScheduleValidation.h"
 #include "ParameterValidation.h"
@@ -74,7 +74,7 @@ namespace validation_api
 			AQ_THROW("Do not input ForwardID and Convention ID at the same time")
 		}
 
-		LADataInstance* dataInstance = etrading::InitializeMLibETrading::instance().dataInstance();
+		LADataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
 
 		LAString curveID("");
 		if (forwardID == LAString(""))

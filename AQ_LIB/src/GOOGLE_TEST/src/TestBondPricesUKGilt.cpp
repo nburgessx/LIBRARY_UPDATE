@@ -1,6 +1,6 @@
 // Include: Google Test Library
 #include <gTest/gTest.h>
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 
 #include "Dependency.h"
 #include "ReadDataFile.h"

@@ -158,7 +158,7 @@ namespace etrading
         void write( const LAString& name, const DoubleMatrix& value );
         void write( const LAString& name, const LabelValueBlock& value );
         void write( const LAString& name, const AnyTypeMatrix& value );  // Boost::Any
-		void write( const LAString& name, const VariantMatrix& value);	 // In-house MLIBQ Variant
+		void write( const LAString& name, const VariantMatrix& value);	 // In-house AlgoQuantLib Variant
         //
         // printing native types and arrays of native types
         //
@@ -182,7 +182,7 @@ namespace etrading
         // Note: not thread-safe.
         static bool recordEnabled();
 
-        // Enable/disable MLib record flag.
+        // Enable/disable AlgoQuantLib record flag.
         // Note: not thread-safe.
         static bool setRecordFlag( bool enableRecording );
 

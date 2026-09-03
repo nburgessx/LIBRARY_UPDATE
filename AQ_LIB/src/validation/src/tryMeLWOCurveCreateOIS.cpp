@@ -161,8 +161,8 @@ namespace validation_api
         LAString interpolation = etrading::trim_to_upper( etrading::getCurveInterpolation( curveCollection, staticDataTable ).getCString() ).c_str();
         auto& env = etrading::Environment::defaultEnv();
 
-        // AsOfDate and Calendar to get the start of the year fractions (and whether date is a holiday -> not in MLIBQ) +
-        // CurveBuildProperties because it creates the MLIBQ Calendar
+        // AsOfDate and Calendar to get the start of the year fractions (and whether date is a holiday -> not in AlgoQuantLib) +
+        // CurveBuildProperties because it creates the AlgoQuantLib Calendar
         LabelValueBlock curveConvLVB( curveConv );
         LADate  effectiveDate = curveConvLVB.getCompulsoryValueAsDate( "ASOFDATE" );
 

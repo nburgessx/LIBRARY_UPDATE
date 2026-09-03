@@ -268,7 +268,7 @@ namespace etrading
     *  @param [in]		liborRate			                The natural Libor rate in %
     *  @param [in]		couponYearFraction		            Coupon Year Fraction
     *  @param [in]		timeToMaturity	                    The time to maturity for Libor Coupon
-    *  @param [in]		fixingDateYearFraction	            Fixing Year Fraction from Accrual Start to Fixing Date. More precisely from the natural fixing to the unnatural fixing. In MLIBQ curves and swaps we have natural fixing date = accrual start.
+    *  @param [in]		fixingDateYearFraction	            Fixing Year Fraction from Accrual Start to Fixing Date. More precisely from the natural fixing to the unnatural fixing. In AlgoQuantLib curves and swaps we have natural fixing date = accrual start.
     *  @param [in]		startDiscountFactor	                OIS Discount Factor on the Natural Libor Fixing Start Date. This is the Accrual Start Date when there is no fixing lag
     *  @param [in]		endDiscountFactor	                OIS Discount Factor on the Natural Libor Fixing End Date. This is the Accrual End Date when there is no fixing lag
     *  @param [in]		useHullApproximation                Use the Hull Approximation, Defaults to false: In the log-normal case the expontential term exp(x) is approximated as ( 1 + x )
@@ -292,7 +292,7 @@ namespace etrading
     *  @param [in]		liborRate			                The natural Libor rate in %
     *  @param [in]		couponYearFraction		            Coupon Year Fraction
     *  @param [in]		timeToMaturity	                    The time to maturity for Libor Coupon
-    *  @param [in]		fixingDateYearFraction	            Fixing Year Fraction from Accrual Start to Fixing Date. More precisely from the natural fixing to the unnatural fixing. In MLIBQ curves and swaps we have natural fixing date = accrual start.
+    *  @param [in]		fixingDateYearFraction	            Fixing Year Fraction from Accrual Start to Fixing Date. More precisely from the natural fixing to the unnatural fixing. In AlgoQuantLib curves and swaps we have natural fixing date = accrual start.
     *  @param [in]		startDiscountFactor	                OIS Discount Factor on the Natural Libor Fixing Start Date. This is the Accrual Start Date when there is no fixing lag
     *  @param [in]		endDiscountFactor	                OIS Discount Factor on the Natural Libor Fixing End Date. This is the Accrual End Date when there is no fixing lag
     *  @param [in]		useHullApproximation                Use the Hull Approximation, Defaults to false: In the log-normal case the expontential term exp(x) is approximated as ( 1 + x )
@@ -337,7 +337,7 @@ namespace etrading
     *  @param [in]		liborRate			                The natural Libor rate in %
     *  @param [in]		couponYearFraction		            Coupon Year Fraction
     *  @param [in]		timeToMaturity	                    The time to maturity for Libor Coupon
-    *  @param [in]		fixingDateYearFraction	            Fixing Year Fraction from Accrual Start to Fixing Date. More precisely from the natural fixing to the unnatural fixing. In MLIBQ curves and swaps we have natural fixing date = accrual start.
+    *  @param [in]		fixingDateYearFraction	            Fixing Year Fraction from Accrual Start to Fixing Date. More precisely from the natural fixing to the unnatural fixing. In AlgoQuantLib curves and swaps we have natural fixing date = accrual start.
     *  @param [in]		impliedLiborOrStubRate              The Libor stub rate for the arbitrary coupon period %
     *  @param [in]		useHullApproximation                Use the Hull Approximation, Defaults to false: In the log-normal case the expontential term exp(x) is approximated as ( 1 + x )
     *  @return			The convexity adjustment to the natural Libor rate in %
@@ -360,7 +360,7 @@ namespace etrading
     *  @param [in]		liborRate			                The natural Libor rate in %
     *  @param [in]		couponYearFraction		            Coupon Year Fraction
     *  @param [in]		timeToMaturity	                    The time to maturity for Libor Coupon
-    *  @param [in]		fixingDateYearFraction	            Fixing Year Fraction from Accrual Start to Fixing Date. More precisely from the natural fixing to the unnatural fixing. In MLIBQ curves and swaps we have natural fixing date = accrual start.
+    *  @param [in]		fixingDateYearFraction	            Fixing Year Fraction from Accrual Start to Fixing Date. More precisely from the natural fixing to the unnatural fixing. In AlgoQuantLib curves and swaps we have natural fixing date = accrual start.
     *  @param [in]		impliedLiborOrStubRate	            The Libor stub rate for the arbitrary coupon period %
     *  @param [in]		useHullApproximation                Use the Hull Approximation, Defaults to false: In the log-normal case the expontential term exp(x) is approximated as ( 1 + x )
     *  @return			The convexity adjusted Libor Rate in %

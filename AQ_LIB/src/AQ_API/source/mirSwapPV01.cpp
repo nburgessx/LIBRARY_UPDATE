@@ -1,4 +1,4 @@
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "mirSwapPV01.h"
 #include "TypeUtilities.h"
 #include "tryMirSwapPV01.h"
@@ -80,7 +80,7 @@ double mirSwapPV01(double notional,
 		// marshall all inputs		
 		using swig::fromStringToLAString;
 		
-		ret = validation_api::tryMirSwapPV01(etrading::InitializeMLibETrading::instance().dataInstance(),
+		ret = validation_api::tryMirSwapPV01(etrading::InitializeAQETrading::instance().dataInstance(),
 												notional,
 												fromStringToLAString(payRec),
 												fromStringToLAString(effectDt),

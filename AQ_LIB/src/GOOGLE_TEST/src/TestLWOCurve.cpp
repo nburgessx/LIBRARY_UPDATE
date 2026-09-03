@@ -51,7 +51,7 @@
 #include "CurveBuildProperties.h"
 #include "EnvironmentUtilities.h"
 #include "ObjectUtilities.h"
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 #include "ExampleObjects.h"
 #include "Dependency.h"
 
@@ -64,14 +64,14 @@ namespace google_test
 #define SK2(NAME,C1_TYPE,C2_TYPE,C1_NAME,C2_NAME) \
     #NAME, 2, boost::assign::list_of(etrading::##C1_TYPE)(etrading::##C2_TYPE), boost::assign::list_of(#C1_NAME)(#C2_NAME)  \
 
-	// Declare Test will Set-Up the Test Fixture Class which inherits the MLIBQ tear-down / clean-up class
+	// Declare Test will Set-Up the Test Fixture Class which inherits the AlgoQuantLib tear-down / clean-up class
 	DECLARE_TEST_FIXTURE(TestLWOCurve);
 
     TEST_F( TestLWOCurve, UNIT_LWOCurve )
     {
-		// Creating an instance of InitializeMLibGoogleTest loads in the calendars.
-		// When this object goes out of scope MLIBQ is shut down gracefully.
-        // InitializeMLibGoogleTest instance; // Resolved using the DECLARE_TEST_FIXTURE macro above
+		// Creating an instance of InitializeAQGoogleTest loads in the calendars.
+		// When this object goes out of scope AlgoQuantLib is shut down gracefully.
+        // InitializeAQGoogleTest instance; // Resolved using the DECLARE_TEST_FIXTURE macro above
 
         auto& env = Environment::defaultEnv();
         auto& curveOutputsInCache = env.getCache<LWOCurve>();

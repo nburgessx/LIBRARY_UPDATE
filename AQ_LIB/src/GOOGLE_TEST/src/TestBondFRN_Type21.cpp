@@ -1,6 +1,6 @@
 // Include: Google Test Library
 #include <gTest/gTest.h>
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 #include "FolderConfig.h"
 
 #include "LWOUtilities.h"
@@ -52,9 +52,9 @@ namespace
 		boost::filesystem::path inputPath( filePath );
 		if( ! inputPath.is_absolute() )
         {
-            // Get the Google Test Unit Test Input Folder Path using the MLIBQ Environment Variable
-            // Format = MLIBQ Goolge Test DataInstance Path + '/' + path to the 'p' Variable
-            inputPath = etrading::FolderConfig::getMLIBQEnvironmentVariableGoogleTestPath() / inputPath;
+            // Get the Google Test Unit Test Input Folder Path using the AlgoQuantLib Environment Variable
+            // Format = AlgoQuantLib Goolge Test DataInstance Path + '/' + path to the 'p' Variable
+            inputPath = etrading::FolderConfig::getGoogleTestInputPath() / inputPath;
         }
 
 		std::vector<std::string> allMatchingFiles;

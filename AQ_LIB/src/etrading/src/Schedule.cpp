@@ -479,7 +479,7 @@ namespace etrading
         DateVector accrualDates = accrualStartDates_;
         accrualDates.push_back(accrualStartDates_.back());
 
-        //*** In MLib Xccy curve builindg, fxFixingDate(i) is the same as paymentDate(i-1), i.e. same as accrualStartDate(i)
+        //*** In AlgoQuantLib Xccy curve builindg, fxFixingDate(i) is the same as paymentDate(i-1), i.e. same as accrualStartDate(i)
        fxFixingDates = validateAndGenerateFixingSchedule(   accrualDates,
 															toString(fxFixingbusinessDayAdj_).c_str(),
 															fxFixingCalendar_,

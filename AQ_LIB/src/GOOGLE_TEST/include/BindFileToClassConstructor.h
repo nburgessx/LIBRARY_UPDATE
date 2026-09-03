@@ -7,7 +7,7 @@ namespace google_test
     //   google_test::BindFileToClassConstructor
     //
     // PURPOSE
-    //   Encode MLib classConstructuctorName(s) input file name in a class
+    //   Encode AlgoQuantLib classConstructuctorName(s) input file name in a class
     //   for use in compile-time dependency graphs.
     //
     // SYNPOSIS

@@ -1,4 +1,4 @@
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "mirGetForwardRate.h"
 #include "TypeUtilities.h"
 #include "LAString.h"
@@ -48,7 +48,7 @@ std::vector<double> mirGetForwardRate2( const std::vector<std::string>& fromDate
 		LAString interp(interpolation.c_str());
 		LAString cName(curveName.c_str());
 
-		results = validation_api::tryMirGetForwardRate2(etrading::InitializeMLibETrading::instance().dataInstance(), fromDateVec, toDateVec, cId, freq, dayC, sRule, cal, interp, cName, isFwdInterp, useFwdData);
+		results = validation_api::tryMirGetForwardRate2(etrading::InitializeAQETrading::instance().dataInstance(), fromDateVec, toDateVec, cId, freq, dayC, sRule, cal, interp, cName, isFwdInterp, useFwdData);
 
 	} 
 	catch (LACoreError& mesx) 

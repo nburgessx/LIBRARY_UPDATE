@@ -1,7 +1,7 @@
 // TestCurveMarketDataUseParameter.cpp
 
 // Test Includes
-#include "InitializeMLibGoogleTest.h"			// Load static and gtest.h
+#include "InitializeAQGoogleTest.h"			// Load static and gtest.h
 #include "GetGoogleTestFolder.h"
 #include "RecordMacros.h"						// Logfile Macros
 #include "ResultsProcessor.h"					// Test Rebase Methods

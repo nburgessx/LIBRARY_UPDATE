@@ -6,7 +6,7 @@
 
 #include "LAMathBaseFuncUtility.h"
 
-////////////////////////////MLib-Userfunc
+////////////////////////////AlgoQuantLib-Userfunc
 void 
 LAMathBaseFuncUtility::adjustunit(double& ret, LAString& optiontype)
 {

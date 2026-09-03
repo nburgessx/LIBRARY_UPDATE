@@ -11,14 +11,14 @@
 
 #pragma once
 
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 #include "ReadDataFile.h"
 #include "BondFactory.h"
 #include <string>
 
 namespace google_test
 {
-    class CreateFixedBond : public virtual google_test::InitializeMLibGoogleTest
+    class CreateFixedBond : public virtual google_test::InitializeAQGoogleTest
     {
     public:
         etrading::BondPtr createFixedBondFromInputFile( const std::string& inputFile );

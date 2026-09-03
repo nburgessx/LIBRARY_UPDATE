@@ -55,7 +55,7 @@ namespace etrading
 	{
 
 		// Important Note: Here we Deprecate LA Define Statements from Common and IR Projects
-		// #define statements have been replaced as LAString with MLIBQ prefix
+		// #define statements have been replaced as LAString with AlgoQuantLib prefix
 
 		const LAString AQ_O_N				= "O_N";
 		const LAString AQ_T_N				= "T_N";
@@ -1893,7 +1893,7 @@ void importHybridInterpolationJoinDateDefaults( LACurveStaticDataHolder & static
 				}
 			}
 
-			// MLIBQ calculates linear spline join date when:
+			// AlgoQuantLib calculates linear spline join date when:
 			// 1. User specifies to ALWAYS recalculate join date; or
 			// 2. User specifies not to always recalculate join date, but no pre-calculated join date currently exists;
 
@@ -3872,7 +3872,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 				}
 				else
 				{
-					// Daily Arithmetic Average formula: quotedRate = sumeOf(oisfwdRate_i * tau_i)/tau_T, where tau_T is the yearfraction of the entire tenor, e.g. 1M, 3M, 6M, etc. Reference: formula (3) in "MLib Yield Curves in a Nutshell".
+					// Daily Arithmetic Average formula: quotedRate = sumeOf(oisfwdRate_i * tau_i)/tau_T, where tau_T is the yearfraction of the entire tenor, e.g. 1M, 3M, 6M, etc. Reference: formula (3) in "AlgoQuantLib Yield Curves in a Nutshell".
 					// Here we assume oisfwdRate is constant, the oisfwdRate is the same as quotedRate, as the sumeOf(tau_i) and tau_T cancel out.
 
 					populateOISMidInstrumentRate(mpcSwapRates, futureRates, instrumentType, startdate, enddate, rate);
@@ -3883,7 +3883,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			}
 			case GEOMETRIC_OIS_COMPOUNDING:
 			{
-				// Reference: Geometric Comppunding formula (2) in "MLib Yield Curves in a Nutshell".
+				// Reference: Geometric Comppunding formula (2) in "AlgoQuantLib Yield Curves in a Nutshell".
 
 				// This function GEOMETRIC compounding between startDate and endDate. The target value is the compounded OIS parRate based on the quote ECB fwd rate, this function solves the fwd rate that produce the same compounded OIS parRate.
 				// Here we assume oisfwdRate is constant

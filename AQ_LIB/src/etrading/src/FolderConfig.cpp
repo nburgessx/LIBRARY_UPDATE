@@ -62,10 +62,10 @@ namespace etrading
 	std::shared_ptr< LAString > FolderConfig::cbschedule_path_;
 	std::shared_ptr< LAString > FolderConfig::optional_config_path_;
 
-	/* @brief			Function to set and return the MLIBQ Folder path to the Google Tests.
+	/* @brief			Function to set and return the AlgoQuantLib Folder path to the Google Tests.
     *  @return			Returns Google Test Folder in the format of boost::filesystem::path 
     */
-    boost::filesystem::path FolderConfig::getMLIBQEnvironmentVariableGoogleTestPath()
+    boost::filesystem::path FolderConfig::getGoogleTestInputPath()
     {
         // The GoogleTest input data lives in the source tree at
         // $(AQ)\resources\test\inputs. $(AQ) is set by SetEnvironmentVariables.bat.
@@ -398,7 +398,7 @@ namespace etrading
 	 */
 	 const LAString* FolderConfig::getOptionalConfigPath()
 	{
-        // First attempt: Load the config file using the %MLIBQ% environment variable; this is for developers
+        // First attempt: Load the config file using the %AlgoQuantLib% environment variable; this is for developers
         optional_config_path_.reset( new LAString( OPTIONAL_CONFIG_PATH ) );
 		if (optional_config_path_.get() != NULL && check_file_availability( *optional_config_path_.get() ) ) return optional_config_path_.get();
 

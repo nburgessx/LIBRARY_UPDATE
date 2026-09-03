@@ -41,7 +41,7 @@ namespace etrading
     /* @brief			Function to remove a column from a matrix if it contains blanks, if a row number is specified then only that row is checked for blanks
     *  @param [in]		inputMatrix		            The raw inputMatrix
     *  @param [in]		onlyCheckRowNumber		    The row number to check for blanks, if not specified then all matrix rows will be checked
-    *  @param [in]      removeErrors                Flag to remove MLIBQ errors, when TRUE will remove strings starting with MLIBQ error prefixes '[' and / or '#' symbols
+    *  @param [in]      removeErrors                Flag to remove AlgoQuantLib errors, when TRUE will remove strings starting with AlgoQuantLib error prefixes '[' and / or '#' symbols
     *  @return			Returns a Matrix with blank columns removed
     */
     VariantMatrix removeBlankColumns( const VariantMatrix & inputMatrix, const int & onlyCheckRowNumber = 0, const bool & removeErrors = true );

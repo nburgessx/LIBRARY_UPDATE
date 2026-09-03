@@ -1,6 +1,6 @@
 #include "CurveTenorBasis.h"
 #include "YieldCurveUtil.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "tryMirSetUpBasisSwapCurve.h"
 
 namespace google_test
@@ -54,7 +54,7 @@ namespace google_test
 			try
 			{
 				validation_api::tryMirSetUpBasisSwapCurve(
-					etrading::InitializeMLibETrading::instance().dataInstance(),
+					etrading::InitializeAQETrading::instance().dataInstance(),
 					curveID,
 					marketName,
 					inputFileObj["generalProps"],

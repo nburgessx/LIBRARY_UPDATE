@@ -21,7 +21,7 @@ namespace validation_api
     *  @param [in]		cleanByRow                  Boolean: TRUE = Clean by Row (Default), FALSE = Clean by Column
     *  @param [in]		checkRowColNumber           Int: Row / Column number to check, leave blank to check entire inputMatrix
     *  @param [in]		removeBlanks                Boolean: TRUE = Remove blank data (Default), FALSE = Do not remove blank data
-    *  @param [in]      removeErrors                Flag to remove MLIBQ errors, when TRUE will remove strings starting with MLIBQ error prefixes '[' and / or '#' symbols
+    *  @param [in]      removeErrors                Flag to remove AlgoQuantLib errors, when TRUE will remove strings starting with AlgoQuantLib error prefixes '[' and / or '#' symbols
     *  @return			Returns a Matrix with errors and blank rows removed
     */
     VariantMatrix tryMeUtilityClean( const VariantMatrix &      inputMatrix,
@@ -35,7 +35,7 @@ namespace validation_api
     *  @param [in]		cleanByRow                  Boolean: TRUE = Clean by Row (Default), FALSE = Clean by Column
     *  @param [in]		checkRowColNumber           Int: Row / Column number to check, leave blank to check entire inputMatrix
     *  @param [in]		removeBlanks                Boolean: TRUE = Remove blank data (Default), FALSE = Do not remove blank data
-    *  @param [in]      removeErrors                Flag to remove MLIBQ errors, when TRUE will remove strings starting with MLIBQ error prefixes '[' and / or '#' symbols
+    *  @param [in]      removeErrors                Flag to remove AlgoQuantLib errors, when TRUE will remove strings starting with AlgoQuantLib error prefixes '[' and / or '#' symbols
     *  @return			Returns a Matrix with errors and blank rows removed
     */
     VariantMatrix cleanVariantMatrix( const VariantMatrix &      inputMatrix,

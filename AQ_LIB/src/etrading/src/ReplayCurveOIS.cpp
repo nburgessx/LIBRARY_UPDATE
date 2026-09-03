@@ -3,11 +3,11 @@
 #include "ReplayCurveOIS.h"
 #include "ReadDataFile.h"
 #include "LAUpdateStaticDataManager.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 
 namespace etrading
 {
-    using etrading::InitializeMLibETrading;
+    using etrading::InitializeAQETrading;
 
     const LAString replayCurveOIS( const ReadDataFile::Load& inputFile )
     {
@@ -47,7 +47,7 @@ namespace etrading
         // 3. Build the OIS Curve
         // ----------------------
         const bool checkStaticDataLoaded = true;
-        LAUpdateStaticDataManager::setUpOISCurve( InitializeMLibETrading::instance( checkStaticDataLoaded ).dataInstance(),
+        LAUpdateStaticDataManager::setUpOISCurve( InitializeAQETrading::instance( checkStaticDataLoaded ).dataInstance(),
 												  curveID,
 												  marketName,
 												  generateProps,

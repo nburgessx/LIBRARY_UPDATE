@@ -3,7 +3,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "LAMathSwaptionVolUtility.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include <algorithm>
 #include "RecordMacros.h"
 
@@ -48,7 +48,7 @@ namespace validation_api
 
 		bool isLognormal = (etrading::toVolatilityTypeEnum(volType) != etrading::NORMAL_VOLATILITY);
 
-		double ret = LAMathSwaptionVolUtility::getSABRVol(etrading::InitializeMLibETrading::instance().dataInstance(),
+		double ret = LAMathSwaptionVolUtility::getSABRVol(etrading::InitializeAQETrading::instance().dataInstance(),
 														expiryPoint,
 														tenorPoint,
 														strike,

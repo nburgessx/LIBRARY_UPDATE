@@ -39,7 +39,7 @@ namespace
 	// dates need to be sorted
     // These dates are taken from the above link, which is typically updated once a year for the following year. Both the below
     // and the Central Bank Holiday Calendar file CBSchedule.csv should be updated. The calendar file can be found as follows:
-    // %MLIBQ%/resouce/config/CBSchedule.csv
+    // %AlgoQuantLib%/resouce/config/CBSchedule.csv
 	int schedulesDefault[][nCBDefault] = {
 		// ECB,		BoE,	Fed
 		{ 20150122,	0,		0 },

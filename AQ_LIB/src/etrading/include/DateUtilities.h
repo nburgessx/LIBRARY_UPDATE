@@ -45,7 +45,7 @@ namespace etrading
     // returns the current date and time as a string
     std::string getCurrentDateTime();
 
-    // returns the current date as an MLIBQ LADate
+    // returns the current date as an AlgoQuantLib LADate
     LADate getCurrentMLibDate();
 
     // returns the current decade

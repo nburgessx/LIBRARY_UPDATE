@@ -1,6 +1,6 @@
 // Include: Google Test Library
 #include <gTest/gTest.h>
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 
 #include "ObjectUtilities.h"
 #include "tryMeLWOBond.h"
@@ -31,7 +31,7 @@ namespace google_test
         try
         {
             // Create the Bond from Bond Generator
-			// This assumes the USTREASURY_TYPE1 bond generator has already been loaded during MLIBQ initialisation
+			// This assumes the USTREASURY_TYPE1 bond generator has already been loaded during AlgoQuantLib initialisation
 			etrading::ReadDataFile::Load bondCreateFromGeneratorFileObj = etrading::ReadDataFile::Load( bondInputsFile );
 		
 			const std::string bondObjectName	  = bondCreateFromGeneratorFileObj[ "bondObjectName" ];

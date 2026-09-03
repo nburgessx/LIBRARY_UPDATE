@@ -3,11 +3,11 @@
 #include "ReplayCurveFwdFX.h"
 #include "ReadDataFile.h"
 #include "LAUpdateStaticDataManager.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 
 namespace etrading
 {
-    using etrading::InitializeMLibETrading;
+    using etrading::InitializeAQETrading;
 
     const LAString replayCurveFwdFX( const ReadDataFile::Load& inputFile )
     {
@@ -35,7 +35,7 @@ namespace etrading
         // 3. Build the Fwd FX Curve
         // -------------------------
         const bool checkStaticDataLoaded = true;
-        LAUpdateStaticDataManager::setUpFwdFXConstantCurve( InitializeMLibETrading::instance( checkStaticDataLoaded ).dataInstance(),
+        LAUpdateStaticDataManager::setUpFwdFXConstantCurve( InitializeAQETrading::instance( checkStaticDataLoaded ).dataInstance(),
                 curveID,
                 marketName,
                 fwdfxconstConv,

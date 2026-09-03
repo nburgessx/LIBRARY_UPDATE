@@ -39,7 +39,7 @@ namespace etrading
 			{
 				// Terminate the construction of this object and atomic decrement the instance count
 				instanceCount_.fetch_sub( 1, boost::memory_order_relaxed ); 
-				throw LACoreError( "#Error: Thread Guard: Calling MLIBQ from multiple threads is not currently supported.", __FILE__, __LINE__ );
+				throw LACoreError( "#Error: Thread Guard: Calling AlgoQuantLib from multiple threads is not currently supported.", __FILE__, __LINE__ );
 			}
 		}
 

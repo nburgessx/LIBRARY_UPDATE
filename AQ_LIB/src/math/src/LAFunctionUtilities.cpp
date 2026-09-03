@@ -6,7 +6,7 @@
 
 #include "LAFunctionUtilities.h"
 
-////////////////////////////MLib-Userfunc
+////////////////////////////AlgoQuantLib-Userfunc
 //change str delete space and upper 
 void 
 LAFunctionUtilities::upperdelspace(LAString& input)

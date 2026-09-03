@@ -3,7 +3,7 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "LACoreError.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "tryMeLWOSwapCreation.h"
 
 #include <gTest/gTest.h>
@@ -80,7 +80,7 @@ namespace google_test
         return swapNameResult;
     }
 
-    // Declare test creates the fixture class constructor and initializes MLIBQ calling the start-up routine
+    // Declare test creates the fixture class constructor and initializes AlgoQuantLib calling the start-up routine
     DECLARE_TEST_FIXTURE(TestLWOSwapGenerator);
 
     // Call Test Fixture - We use a fixture so the fixture class contructor can initialize / start-up the library to load the swap generator

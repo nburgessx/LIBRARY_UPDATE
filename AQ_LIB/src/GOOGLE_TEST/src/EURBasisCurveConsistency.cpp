@@ -41,7 +41,7 @@ const std::string fileNameEUR12ML = TEST_FOLDER + "EUR_BASIS_12M_CURVE.JSON";
 namespace google_test
 {
     // Declare Test Fixture Class
-    class EUR_BasisCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class EUR_BasisCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
     public:
 

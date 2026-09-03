@@ -3,7 +3,7 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "tryMeUtilitySetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
@@ -181,7 +181,7 @@ namespace google_test
 
 		const DoubleArray results
 			= validation_api::tryMirGetForwardRate2(
-				etrading::InitializeMLibETrading::instance().dataInstance(),
+				etrading::InitializeAQETrading::instance().dataInstance(),
 				fromDateVector,
 				toDateVector,
 				inputFile["curveId"],

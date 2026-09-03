@@ -9,7 +9,7 @@
 #include <boost/program_options.hpp>
 
 #include "ResultsProcessor.h"
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 
 
 // Control parameter to enable / disable the console pause command
@@ -22,11 +22,11 @@ namespace
 void parse_command_line( int argc, char* argv[] )
 {
     namespace po = boost::program_options;
-    po::options_description desc( "MLIBQ test options" );
+    po::options_description desc( "AlgoQuantLib test options" );
 
     desc.add_options()  ( "help",   "produce help message" )
                         ( "record", "record function input and output logs" )
-                        ( "reinit", "re-initialize MLIBQ between tests" )
+                        ( "reinit", "re-initialize AlgoQuantLib between tests" )
                         ( "rebase", "rebase tests" )
 	                    ( "debug",  "wait for debugger")
 		                ( "leakcheck", "check for memory leaks using VLD")
@@ -49,7 +49,7 @@ void parse_command_line( int argc, char* argv[] )
 
     if ( vm.count( "reinit" ) )
     {
-        google_test::InitializeMLibGoogleTest::setMLibReinit( true );
+        google_test::InitializeAQGoogleTest::setMLibReinit( true );
     }
 
     if ( vm.count( "rebase" ) )
@@ -66,12 +66,12 @@ void parse_command_line( int argc, char* argv[] )
 	if (vm.count("leakcheck"))
 	{
 		// Enable leak checking
-		google_test::InitializeMLibGoogleTest::enableLeakCheck( true );
+		google_test::InitializeAQGoogleTest::enableLeakCheck( true );
 	}
 
 	if (vm.count("leakfilename"))
 	{
-		google_test::InitializeMLibGoogleTest::setLeakReportFilename(vm["leakfilename"].as<std::string>());
+		google_test::InitializeAQGoogleTest::setLeakReportFilename(vm["leakfilename"].as<std::string>());
 	}
 
     if ( vm.count( "pause" ) )
@@ -91,7 +91,7 @@ void parse_command_line( int argc, char* argv[] )
  * and they are not correctly cleaned up on exit because memory blocks allocated to
  * the tyepinfo() and the name() string are assigned the wrong block type.
  * 
- * The typeinfo name() function is used by the boost::spirit library, used from the MLIBQ Variant class.
+ * The typeinfo name() function is used by the boost::spirit library, used from the AlgoQuantLib Variant class.
  * 
  * http://stackoverflow.com/questions/8308671/memory-leaks-after-using-typeinfoname
  *
@@ -151,7 +151,7 @@ int main( int argc, char* argv[] )
         testing::InitGoogleTest( &argc, argv );
 
 		// Disable memory leak checking, by default
-		google_test::InitializeMLibGoogleTest::enableLeakCheck( false );
+		google_test::InitializeAQGoogleTest::enableLeakCheck( false );
 
         // Our own command line arguments
         parse_command_line( argc, argv );

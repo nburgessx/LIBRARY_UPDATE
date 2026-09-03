@@ -4,11 +4,11 @@
 #include <exception>
 
 //
-// Important MLIBQ Initialization Functions
+// Important AlgoQuantLib Initialization Functions
 //
 
 
-// Initialize MLIBQ - Should be called to initialize MLIBQ before using the analytics
+// Initialize AlgoQuantLib - Should be called to initialize AlgoQuantLib before using the analytics
 // ---------------------------------------------------------------------------------
 
 //
@@ -28,7 +28,7 @@ std::string setupMLIB();
 std::string initMLIB();
 
 
-// Terminate MLIBQ - Should be called before termination MLIBQ anaytics by the client
+// Terminate AlgoQuantLib - Should be called before termination AlgoQuantLib anaytics by the client
 // ---------------------------------------------------------------------------------
 std::string tearDownMLIB();
 
@@ -36,7 +36,7 @@ std::string tearDownMLIB();
 //
 // Echo Functions
 //
-// These functions echo the input and return the input as output. This is so we can test the MLIBQ API
+// These functions echo the input and return the input as output. This is so we can test the AlgoQuantLib API
 // ---------------------------------------------------------------------------------
 //
 
@@ -102,7 +102,7 @@ const double sumUp(const double inputArray[], const int sizeOfArray);
 const double sumUp(const std::vector<double>& inputArray);
 
 
-// testing an MLIBQ function that does not require static data
+// testing an AlgoQuantLib function that does not require static data
 double doSomeFormula(const double z);
 
 

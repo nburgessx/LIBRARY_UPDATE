@@ -1,4 +1,4 @@
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "mirOISParRate.h"
 #include "LADate.h"
 #include "LAString.h"
@@ -102,7 +102,7 @@ double mirOISParRate(const std::string& EffDt,
 		LAString tRollDay		(TRollDay.c_str());
 		LAString xRollDay		(XRollDay.c_str());
 	
-		ret = validation_api::tryMirOISParRate(etrading::InitializeMLibETrading::instance().dataInstance(),
+		ret = validation_api::tryMirOISParRate(etrading::InitializeAQETrading::instance().dataInstance(),
 												effectiveDate, 
 												maturity, 
 												curveID, 

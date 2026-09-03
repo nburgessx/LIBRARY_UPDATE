@@ -2,7 +2,7 @@
 #include <gTest/gTest.h>
 
 // Test Includes
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 #include "CurveResultsContainer.h"
 #include "tryMeCurveResults.h"
 #include "CurveUtilities.h"						// Contains Legcacy Curve Discount Factor and Forward Rate Methods
@@ -39,12 +39,12 @@ namespace google_test
 
     // TEST FIXTURE CONSTRUCTOR
     // ------------------------------------------------------------------------------------------------------------------
-    class TestCurveResults : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class TestCurveResults : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
         public:
 
             // Test data has been taken from the example workbook "meCurveResults.xlsx"
-            // This file can be found in folder ... %MLIBQ%/resources/examples/MLIBQ_EXAMPLES/Curve/meCurveResults.xlsx"
+            // This file can be found in folder ... %AlgoQuantLib%/resources/examples/AlgoQuantLib_EXAMPLES/Curve/meCurveResults.xlsx"
             virtual void SetUp()
             {
                 curveType_          = "OIS";            // OIS_CURVETYPE
@@ -397,7 +397,7 @@ namespace google_test
     // ------------------------------------------------------------------------------------------------------------------
 
     // Declare Test Fixture Class
-    class TestCurveResultsVsObjectPool : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class TestCurveResultsVsObjectPool : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
     public:
 
@@ -1641,7 +1641,7 @@ namespace google_test
     // ------------------------------------------------------------------------------------------------------------------
 
     // Declare Test Fixture Class
-    class TestCurveResultsDaycount : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class TestCurveResultsDaycount : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
     public:
 
@@ -1942,7 +1942,7 @@ namespace google_test
     // ------------------------------------------------------------------------------------------------------------------
 
     // Declare Test Fixture Class
-    class TestCurveResultsCurveTenor : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class TestCurveResultsCurveTenor : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
     public:
 

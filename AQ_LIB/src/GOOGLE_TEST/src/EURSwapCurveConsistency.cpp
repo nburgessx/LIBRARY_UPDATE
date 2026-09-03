@@ -39,7 +39,7 @@ const std::string fileNameEUR6ML = TEST_FOLDER + "EUR_SWAP_6M_CURVE.JSON";
 namespace google_test
 {
     // Declare Test Fixture Class
-    class EUR_SwapCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class EUR_SwapCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
     public:
 

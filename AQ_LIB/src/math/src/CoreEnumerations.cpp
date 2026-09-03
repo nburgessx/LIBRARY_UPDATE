@@ -267,7 +267,7 @@ namespace etrading
 
      std::string toString( const DayCountEnum enumValue )
     {
-        //map to string accepted by core mlib LACoreComponentManager.cpp's getDayCount(const LAString &key)
+        //map to string accepted by core AlgoQuantLib LACoreComponentManager.cpp's getDayCount(const LAString &key)
         switch( enumValue )
         {
             case NONE_DAYCOUNT:

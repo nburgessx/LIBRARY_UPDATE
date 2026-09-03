@@ -137,7 +137,7 @@ namespace etrading
     {
         //
         // Important Note: Here we Deprecate LA Define Statements from Common and IR Projects
-        // #define statements have been replaced as LAString with MLIBQ prefix
+        // #define statements have been replaced as LAString with AlgoQuantLib prefix
         //
         extern const LAString AQ_O_N;
         extern const LAString AQ_T_N;

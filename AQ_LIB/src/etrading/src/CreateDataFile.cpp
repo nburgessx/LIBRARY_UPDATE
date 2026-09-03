@@ -515,7 +515,7 @@ namespace etrading
             return outputFolder_ = p;
         }
 
-        // When a given path is not complete, try to complete it with the help of the MLIBQ environment variable
+        // When a given path is not complete, try to complete it with the help of the AlgoQuantLib environment variable
         // ----------------------------------------------------------------------------------------------------
 
         boost::filesystem::path fullPath( p.getCString() );
@@ -523,9 +523,9 @@ namespace etrading
         // If a full file path is specified use it, otherwise use the pre-defined folder for the path as specified in etrading::FolderConfig
         if( !fullPath.is_absolute() )
         {
-            // Get the Google Test Unit Test Input Folder Path using the MLIBQ Environment Variable
-            // Format = MLIBQ Goolge Test DataInstance Path + '/' + path to the 'fullPath' Variable
-            fullPath = FolderConfig::getMLIBQEnvironmentVariableGoogleTestPath() / fullPath;
+            // Get the Google Test Unit Test Input Folder Path using the AlgoQuantLib Environment Variable
+            // Format = AlgoQuantLib Goolge Test DataInstance Path + '/' + path to the 'fullPath' Variable
+            fullPath = FolderConfig::getGoogleTestInputPath() / fullPath;
         }
 
         return outputFolder_ = fullPath.string().c_str();

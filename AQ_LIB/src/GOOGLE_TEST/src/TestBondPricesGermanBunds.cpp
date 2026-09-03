@@ -1,6 +1,6 @@
 // Include: Google Test Library
 #include <gTest/gTest.h>
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 
 #include "BondYields.h"
 #include "BondFactory.h"
@@ -33,7 +33,7 @@ namespace
 
 namespace google_test
 {
-    class TestBondFactory : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class TestBondFactory : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
         public:
 

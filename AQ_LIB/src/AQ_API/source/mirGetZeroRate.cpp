@@ -1,4 +1,4 @@
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "mirGetZeroRate.h"
 #include "TypeUtilities.h"
 #include "LAString.h"
@@ -37,7 +37,7 @@ double mirGetZeroRate1(double Term,
 		LAString interp(interpolation.c_str());
 		LAString cName(curveName.c_str());
 
-		DoubleVector results = validation_api::tryMirGetZeroRate1(etrading::InitializeMLibETrading::instance().dataInstance(), terms, cId, freq, dayC, interp, cName, isFwdInterp);
+		DoubleVector results = validation_api::tryMirGetZeroRate1(etrading::InitializeAQETrading::instance().dataInstance(), terms, cId, freq, dayC, interp, cName, isFwdInterp);
 		ret = results[0];
 
 	} 
@@ -78,7 +78,7 @@ std::vector<double> mirGetZeroRate1(const std::vector<double>& Terms,
 		LAString interp(interpolation.c_str());
 		LAString cName(curveName.c_str());
 
-		ret = validation_api::tryMirGetZeroRate1(etrading::InitializeMLibETrading::instance().dataInstance(), Terms, cId, freq, dayC, interp, cName, isFwdInterp);
+		ret = validation_api::tryMirGetZeroRate1(etrading::InitializeAQETrading::instance().dataInstance(), Terms, cId, freq, dayC, interp, cName, isFwdInterp);
 
 	} 
 	catch (LACoreError& mesx) 
@@ -126,7 +126,7 @@ double mirGetZeroRate2(const std::string& Term,
 		LAString cal(calendar.c_str());
 		LAString cName(curveName.c_str());
 
-		std::vector<double> results = validation_api::tryMirGetZeroRate2(etrading::InitializeMLibETrading::instance().dataInstance(), terms, cId, freq, dayC, slideRule, cal, interp, cName, isFwdInterp);
+		std::vector<double> results = validation_api::tryMirGetZeroRate2(etrading::InitializeAQETrading::instance().dataInstance(), terms, cId, freq, dayC, slideRule, cal, interp, cName, isFwdInterp);
 		ret = results[0];
 
 	} 
@@ -175,7 +175,7 @@ std::vector<double> mirGetZeroRate2(const std::vector<std::string>& Terms,
 		LAString cal(calendar.c_str());
 		LAString cName(curveName.c_str());
 
-		ret = validation_api::tryMirGetZeroRate2(etrading::InitializeMLibETrading::instance().dataInstance(), terms, cId, freq, dayC, slideRule, cal, interp, cName, isFwdInterp);
+		ret = validation_api::tryMirGetZeroRate2(etrading::InitializeAQETrading::instance().dataInstance(), terms, cId, freq, dayC, slideRule, cal, interp, cName, isFwdInterp);
 
 	} 
 	catch (LACoreError& mesx) 

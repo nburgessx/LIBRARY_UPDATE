@@ -39,7 +39,7 @@ namespace google_test
     *  @param [in]		lwoCurveObjectName	            The LWO Curve Object Name - Needed to access the LWO Curve Market Data Object
     *  @param [in]		curveCollection                 Needed for Swap Pricing
     *  @param [in]		swapEffectiveDateYYYYMMDD		The Swap Effective Date as a String with Format YYYYMMDD
-    *  @param [in]		swapGenerator                   The LWO Swap Generator Namee - The Swap Generator is Preloaded on MLIBQ StartUp
+    *  @param [in]		swapGenerator                   The LWO Swap Generator Namee - The Swap Generator is Preloaded on AlgoQuantLib StartUp
     *  @param [in]		tolerance                       Test Tolerance
     *
     * @ return          The function will return nothing, but throws if the test fails and also if no tests were run i.e. when no tenors in the tenorsToReprice list are calibration points

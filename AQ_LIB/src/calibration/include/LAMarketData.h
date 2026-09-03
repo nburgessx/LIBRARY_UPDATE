@@ -142,7 +142,7 @@ public:
 	// convert to M-lib use term
 	static LAString convertToMLibTerm(const LAString &term);
 	//==============================================
-	// search market grid pos correspond to mlib term
+	// search market grid pos correspond to AlgoQuantLib term
 	static bool searchMarketGridPos(const LAStringVector &marketGrid, const LAString &term, unsigned int &pos);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================

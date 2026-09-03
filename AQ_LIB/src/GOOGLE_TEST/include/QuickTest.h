@@ -1,7 +1,7 @@
 // QuickTest.h
 
-// MLib test base class
-#include "InitializeMLibGoogleTest.h"
+// AlgoQuantLib test base class
+#include "InitializeAQGoogleTest.h"
 
 // Google Test Library
 #include <gTest/gTest.h>
@@ -12,7 +12,7 @@ namespace google_test
 
     // Timeout Fixture Class
     class QuickTest
-        : public virtual google_test::InitializeMLibGoogleTest
+        : public virtual google_test::InitializeAQGoogleTest
         , public virtual testing::Test
     {
     protected:

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 #include "CurveAccessors.h"
 #include "LAString.h"
 #include "ReadDataFile.h"
@@ -9,7 +9,7 @@ namespace google_test
 {
     // wrapper for LAUpdateStaticDataManager::setUpSwapCurve
     class CurveStd
-        : public virtual google_test::InitializeMLibGoogleTest
+        : public virtual google_test::InitializeAQGoogleTest
         , public CurveAccessors
     {
     public:

@@ -10,7 +10,7 @@
 #include "CommonConstants.h"
 #include "ContainerUtilities.h"
 #include "CurveValidation.h"        // getCurveAsOfDate
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "LWOUtilities.h"
 
 #include <cctype>
@@ -109,7 +109,7 @@ namespace etrading
             // -------------------------------------------------------------------------
             else
             {
-                // 2a) Try MLIBQ String YYYYMMDD Date Format
+                // 2a) Try AlgoQuantLib String YYYYMMDD Date Format
                 try
                 {
                     outDate = LADate( inDate.getCString(), "YYYYMMDD" );
@@ -261,12 +261,12 @@ namespace etrading
 		return isNumber(s);
     }
 
-    /* @brief			Get MLIBQ dataInstance object
-    * @output			MLIBQ dataInstance
+    /* @brief			Get AlgoQuantLib dataInstance object
+    * @output			AlgoQuantLib dataInstance
     */
     LADataInstance* getDataInstance()
     {
-        return etrading::InitializeMLibETrading::instance( false ).dataInstance();
+        return etrading::InitializeAQETrading::instance( false ).dataInstance();
 
     }
 

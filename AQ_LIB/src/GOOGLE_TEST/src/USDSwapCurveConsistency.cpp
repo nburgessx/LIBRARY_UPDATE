@@ -37,7 +37,7 @@ const std::string fileNameUSD3ML = TEST_FOLDER + "USD_SWAP_3M_CURVE.JSON";
 namespace google_test
 {
     // Declare Test Fixture Class
-    class USD_SwapCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class USD_SwapCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
     public:
 

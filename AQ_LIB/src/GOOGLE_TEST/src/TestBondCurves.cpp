@@ -4,7 +4,7 @@
 #include "CreateDataFile.h"
 #include "ResultsProcessor.h"
 #include "TestHelperUtilities.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "tryMeBondCurves.h"
 #include "tryMeLWOBond.h"
 
@@ -74,9 +74,9 @@ namespace
 		boost::filesystem::path inputPath( filePath );
 		if( ! inputPath.is_absolute() )
         {
-            // Get the Google Test Unit Test Input Folder Path using the MLIBQ Environment Variable
-            // Format = MLIBQ Goolge Test DataInstance Path + '/' + path to the 'p' Variable
-            inputPath = etrading::FolderConfig::getMLIBQEnvironmentVariableGoogleTestPath() / inputPath;
+            // Get the Google Test Unit Test Input Folder Path using the AlgoQuantLib Environment Variable
+            // Format = AlgoQuantLib Goolge Test DataInstance Path + '/' + path to the 'p' Variable
+            inputPath = etrading::FolderConfig::getGoogleTestInputPath() / inputPath;
         }
 
 		std::vector<std::string> allMatchingFiles;
@@ -563,7 +563,7 @@ namespace google_test
 
 			// Load the corresponding file to price the bond from bond curve
 			const std::string priceFromBondCurveFileName = bondObjectName + treasuryPriceFromBondCurveSuffix;
-			const boost::filesystem::path fullFilePath = etrading::FolderConfig::getMLIBQEnvironmentVariableGoogleTestPath() / TEST_DIR / priceFromBondCurveFileName;
+			const boost::filesystem::path fullFilePath = etrading::FolderConfig::getGoogleTestInputPath() / TEST_DIR / priceFromBondCurveFileName;
 			const std::string fullFileNameWithPath = fullFilePath.string();
 			const ReadDataFile::Load priceFromBondCurveFile( fullFileNameWithPath.c_str() );
 
@@ -604,7 +604,7 @@ namespace google_test
 
 			// Load the corresponding file to price the bond from bond curve, and use it to calculate the YIELD from bond curve
 			const std::string priceFromBondCurveFileName = bondObjectName + treasuryPriceFromBondCurveSuffix;
-			const boost::filesystem::path fullFilePath = etrading::FolderConfig::getMLIBQEnvironmentVariableGoogleTestPath() / TEST_DIR / priceFromBondCurveFileName;
+			const boost::filesystem::path fullFilePath = etrading::FolderConfig::getGoogleTestInputPath() / TEST_DIR / priceFromBondCurveFileName;
 			const std::string fullFileNameWithPath = fullFilePath.string();
 			const ReadDataFile::Load priceFromBondCurveFile( fullFileNameWithPath.c_str() );
 
@@ -651,7 +651,7 @@ namespace google_test
 
 			// Load the corresponding file to price the bond from bond curve
 			const std::string priceFromBondCurveFileName = bondObjectName + treasuryPriceFromBondCurveSuffix;
-			const boost::filesystem::path fullFilePath = etrading::FolderConfig::getMLIBQEnvironmentVariableGoogleTestPath() / TEST_DIR / priceFromBondCurveFileName;
+			const boost::filesystem::path fullFilePath = etrading::FolderConfig::getGoogleTestInputPath() / TEST_DIR / priceFromBondCurveFileName;
 			const std::string fullFileNameWithPath = fullFilePath.string();
 			const ReadDataFile::Load priceFromBondCurveFile( fullFileNameWithPath.c_str() );
 

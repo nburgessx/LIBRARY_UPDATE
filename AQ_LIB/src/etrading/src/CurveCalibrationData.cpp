@@ -31,7 +31,7 @@
 #include "LAMatrix.h"
 #include "LAMathFXEntity.h"
 
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "LADateHelpers.h"
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
@@ -7706,7 +7706,7 @@ CurveCalibrationData* CurveCalibrationData::getYieldCurvePro(LAObjectPool& objPo
 	const LAString& curveCollectionID,
 	const LAString& errMsg)
 {
-	LADataInstance* dataInstance = etrading::InitializeMLibETrading::instance().dataInstance();
+	LADataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
 	LAString yieldName(curveCollectionID);
 
 	// get yield data pro

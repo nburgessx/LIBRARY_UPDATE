@@ -12,7 +12,7 @@
 
 #include "CurveValidation.h"
 #include "CurveBuildDefaults.h"
-#include "InitializeMLibETrading.h"
+#include "InitializeAQETrading.h"
 #include "ParameterValidation.h"
 #include "LADefinitions.h"
 #include "LADateScheduleHelpers.h"

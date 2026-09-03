@@ -67,7 +67,7 @@ namespace google_test
 
 
     // Declare Test Fixture Class
-    class TestEuropeanSwaption : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class TestEuropeanSwaption : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
     public:
 

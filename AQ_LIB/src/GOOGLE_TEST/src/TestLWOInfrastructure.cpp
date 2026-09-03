@@ -10,7 +10,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "Dependency.h"
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 
 #include "DataSchema.h"
 #include "CoreEnumerations.h"

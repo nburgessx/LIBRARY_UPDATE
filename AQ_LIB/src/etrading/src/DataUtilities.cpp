@@ -34,7 +34,7 @@ namespace etrading
             return result;
         }
 
-        // Test if the inputVariant of type STRING starts with the MLIBQ error symbol prefix '[' or '#'
+        // Test if the inputVariant of type STRING starts with the AlgoQuantLib error symbol prefix '[' or '#'
         std::string inputValue = inputVariant.getValue<std::string>();
         if ( boost::starts_with( inputValue, "#" ) || boost::starts_with( inputValue, "[" ) )
         {
@@ -523,7 +523,7 @@ namespace etrading
 			tmpMatrix.push_back( stringVector );
 		}
 
-		// MLIBQ LAStringMatrix is represented as : rows x cols
+		// AlgoQuantLib LAStringMatrix is represented as : rows x cols
 		// whereas VariantMatrix is:  cols x rows
 		LAStringMatrix resultMatrix = transpose( tmpMatrix );
 
@@ -571,7 +571,7 @@ namespace etrading
 			tmpMatrix.push_back( stringVector );
 		}
 
-		// MLIBQ LAStringMatrix is represented as : rows x cols
+		// AlgoQuantLib LAStringMatrix is represented as : rows x cols
 		// whereas VariantMatrix is:  cols x rows
 		StandardStringMatrix resultMatrix = transpose( tmpMatrix );
 

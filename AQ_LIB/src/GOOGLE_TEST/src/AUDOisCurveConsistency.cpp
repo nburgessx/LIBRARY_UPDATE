@@ -38,7 +38,7 @@ const std::string fileNameAUD6ML = TEST_FOLDER + "AUD6ML.JSON";
 namespace google_test
 {
     // Declare Test Fixture Class
-    class AUD_OisCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class AUD_OisCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
     public:
 
@@ -49,7 +49,7 @@ namespace google_test
     };
 
     // Declare Test Fixture Class
-    class AUD_OisCurve_LoadCurve_x3 : public virtual testing::Test, public virtual google_test::InitializeMLibGoogleTest
+    class AUD_OisCurve_LoadCurve_x3 : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
     {
     public:
 

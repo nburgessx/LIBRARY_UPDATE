@@ -37,7 +37,7 @@ namespace etrading
             const std::shared_ptr<const InterpolationParameters>& interpolationParameters )
     {
         /*
-        // MLIBQ does the strange thing of inserting 0.0 and 1.0 and the beginning for its interpolation (even if it is already there)
+        // AlgoQuantLib does the strange thing of inserting 0.0 and 1.0 and the beginning for its interpolation (even if it is already there)
         // this only makes a difference if the interpolation is Spline, Constrained Spline
         std::vector<double> xHere(1,0.0);
         xHere.insert(xHere.end(), xs.cbegin(), xs.cend());

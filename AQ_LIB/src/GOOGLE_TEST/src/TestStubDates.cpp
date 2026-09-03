@@ -1,7 +1,7 @@
 // TestStubDates.cpp
 
 // Initialize Google Test Library and include 'DECLARE TEST FIXTURE'
-#include "InitializeMLibGoogleTest.h"
+#include "InitializeAQGoogleTest.h"
 
 // Includes
 #include "LAMathDateUtilities.h"
