@@ -67,14 +67,16 @@ namespace etrading
     */
     boost::filesystem::path FolderConfig::getMLIBQEnvironmentVariableGoogleTestPath()
     {
-        const char* environmentVariablePath = std::getenv( "MLIBQ" );
-            
+        // The GoogleTest input data lives in the source tree at
+        // $(AQ)\resources\test\inputs. $(AQ) is set by SetEnvironmentVariables.bat.
+        const char* environmentVariablePath = std::getenv( "AQ" );
+
         if ( environmentVariablePath == nullptr )
         {
-            throw LACoreInvalidData("#Error: The 'MLIBQ' environment variable has not been set.",__FILE__,__LINE__);
+            throw LACoreInvalidData("#Error: The 'AQ' environment variable has not been set.",__FILE__,__LINE__);
         }
-            
-        boost::filesystem::path resultPath = boost::filesystem::path( environmentVariablePath ) / "resource" / "test" / "inputs";
+
+        boost::filesystem::path resultPath = boost::filesystem::path( environmentVariablePath ) / "resources" / "test" / "inputs";
         return resultPath;
     }
 
