@@ -1,0 +1,517 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugEditAndContinue|Win32">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugEditAndContinue|x64">
+      <Configuration>DebugEditAndContinue</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|Win32">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseProfiler|x64">
+      <Configuration>ReleaseProfiler</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\GTEST\src\AUDOisCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\AUDSwapCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\BuildAllEURCurvesAsSTDSwap.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CZKCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\NZDOisCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\NZDSwapCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\JPYLCHCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\ModelTools.cpp" />
+    <ClCompile Include="..\src\GTEST\src\RepriceCalibrationInstruments.cpp" />
+    <ClCompile Include="..\src\GTEST\src\BuildMarketDataObjectFromFile.cpp" />
+    <ClCompile Include="..\src\GTEST\src\BuildSwapTradeFromGenerator.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CreateFixedBond.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CurveAccessors.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CurveConsistencies_OIS.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CurveConsistencies_STD.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CurveConsistencies_TenorBasis.cpp" />
+    <ClCompile Include="..\src\GTEST\src\EURBasisCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\EUROisCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\EURSwapCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\ExtractCurveCalibrationData.cpp" />
+    <ClCompile Include="..\src\GTEST\src\GBPBasisCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\GBPOisCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\GBPSwapCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\GetGoogleTestFolder.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestAnyTypeUtilities.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondFRN_Type21.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondPricesSpainGovt.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondRepo.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCalendars.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCreditBasketModel.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCreditIndexOption.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurrencyEnum.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveEngineCalibrate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveInterpolation.cpp" />
+    <ClCompile Include="..\src\GTEST\src\EUR_SWAP_3M_CurveInterpolation.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveLinearInterpolation.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveLinearSplineInterpolation.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveMarketDataBumping.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveMarketDataUseParameter.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveResults.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveResultsJacobian.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestDateConverters.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestEuropeanSwaptions.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestIMMFuturesTickers.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestIMMDates.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveSplineInterpolation.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestInflationCurve.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOCurveDiscountFactorsWithSpread.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOInfoBlock.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaWithCurveEngine.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaXCCY_ZAR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDelta_ARR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapFromBespokeSchedule.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapFromStructuredBespokeSchedule.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeDateECB.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeMathConvexity.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeMathVolatility.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeUtilitityLVB.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondCurves.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondPricesUKGilt.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondSpreads.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondGenerator.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestConstantMaturitySwap.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCreditDefaultSwap.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCreditModel.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveDualBootstrapping.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveStreaming.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestIsRegularSwapSchedule.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLiborOisBasisSwaps.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaDualBootstrap.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapGenerator.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeLWOCurveCalibrate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeMathEuropeanIRSwaption.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLeakChecker.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOFra.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOHedgeCurveDelta.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurvePolynomialInterpolation.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestRandomNumbers.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestRiskUtilities.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestSABRCalibration.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestSimpsonsRuleIntegration.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestSolvers.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestStateVariableUtilities.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeMathBlackScholes.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveForwardRates.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CurveFwdFxConst.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CurveOis.cpp" />
+    <ClCompile Include="..\src\GTEST\src\LinearSplineTests.cpp" />
+    <ClCompile Include="..\src\GTEST\src\ResultsProcessor.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondFRNSpreads.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondPrices.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondPricesAustraliaType23Govt.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondPricesFrenchOATsBTANsFixed.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondPricesFrenchOATsBTANsZeroCoupon.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondPricesItalianGovt.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondPricesJapaneseJGBs.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondUtilities.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondYields.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveOisEUR_Compounding.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveOisEUR_SmoothShortEnd.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveReplay.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CurveStd.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CurveTenorBasis.cpp" />
+    <ClCompile Include="..\src\GTEST\src\CurveXccyBasis.cpp" />
+    <ClCompile Include="..\src\GTEST\src\Examples.cpp" />
+    <ClCompile Include="..\src\GTEST\src\Fixtures.cpp" />
+    <ClCompile Include="..\src\GTEST\src\InitializeAQGoogleTest.cpp" />
+    <ClCompile Include="..\src\GTEST\src\InterestRateSwap.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveStdUSD_NonOverridingFwds.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisUSD_FRA.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondPricesGermanBunds.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestDebugMacros.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestExceptionMacros.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestHelperUtilities.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOCurve.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestDataFilesCreate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestDataFilesRead.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestDatesCentralBank.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestDatesECB.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestDatesSwapSchedule.cpp" />
+    <ClCompile Include="..\src\GTEST\src\RunTests.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveFwdFxConstEURGBP.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveFwdFxConstGBPJPY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveFwdFxConstJPYEUR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveFwdFxConstUSDEUR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveOisEUR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveOisGBP.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveOisJPY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveOisUSD.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveStdEUR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveStdEURwithTension.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveStdGBP.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveStdJPY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveStdUSD.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisEUR3M6M.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisGBP3M6M.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisJPY3M6M.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisUSD3M6M.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveXccyBasisEUR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveXccyBasisGBP.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveXccyBasisJPY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestExampleObject.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestFixingTable.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOInfrastructure.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapAmortization.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapCompounding.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDelta.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaXCCY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDeltaXCCY_CSA.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapDelta_JPY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEUROvernightIndexedSwaps.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURTenorBasis.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURUSDXccySwap.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURUSDXccySwapFixedFixed.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURUSDXccySwapFixedFloat.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapEURVariableNotionalSwaps.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapGBPEURXccySwap.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapFloatRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapStubImpactOnParRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapFixedFixed.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapFixedFloat.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapFloatFloat.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapXccyFixedFixed.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapXccyFixedFloat.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestLWOSwapZeroCouponSwapXccyFloatFloat.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMarketDataCollection.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeCurveCheapestToDeliver_USD_SEK.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeCurveGroupingJPY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeCurveOisAUD.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeDateFuturesContract.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeDateYearFraction.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMirDateFunctions.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestMeMathNormalDistribution.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestRiskSwapDeltaLadder.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestRiskTenorBasisCurve.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestStubDates.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTotalReturnSwap.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeEURAssetSwapSpread.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeEUROISParRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeEURSwapParRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeEURSwapPV01.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeEURSwapStubRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeEURWithTensionSwapParRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeGBPSwapParRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeJPYSwapParRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeUSDSwapParRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeUSDSwapParRate_NonOverridingFwds.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestBondPricesUSTreasuries.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestUtilities.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestUtilitiesData.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestUtilitiesInterpolation.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestUtilitiesSetup.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestUtilitiesTime.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestUtilitiesUsername.cpp" />
+    <ClCompile Include="..\src\GTEST\src\EnvironmentAttacker.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestValidateAndConvertStringToDate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestValuationSettings.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestVariantDataType.cpp" />
+    <ClCompile Include="..\src\GTEST\src\Test_IsFwdInter.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeCurveAccessors.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeCurveCTD.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeCurveFwdFxConst.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeCurveOis.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeCurveStd.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeCurveTenorBasis.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeCurveXccyBasis.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestCurveDates.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveFwdFxConstEURGBP.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveFwdFxConstGBPJPY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveFwdFxConstJPYEUR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveFwdFxConstUSDEUR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveOisEUR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveOisGBP.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveOisJPY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveOisUSD.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdEUR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdGBP.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdJPY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdSerialFRA.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdSerialFuture.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveStdUSD.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveTenorBasisEUR3M6M.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveTenorBasisGBP3M6M.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveTenorBasisJPY3M6M.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveTenorBasisJPY3M6MConvergence.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveTenorBasisUSD3M6M.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveXccyBasisEUR.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveXccyBasisGBP.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestCurveXccyBasisJPY.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestTradeEURAssetSwapSpread.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestTradeEUROISParRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestTradeEURSwapParRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TryMeTestTradeEURSwapStubRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\TestTradeGBPSwapStubRate.cpp" />
+    <ClCompile Include="..\src\GTEST\src\USDBasisCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\USDOisCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\USDSwapCurveConsistency.cpp" />
+    <ClCompile Include="..\src\GTEST\src\USD_SWAP_3M_CurveInterpolation.cpp" />
+    <ClCompile Include="..\src\GTEST\src\ZARSwapCurveConsistency.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\GTEST\include\BindFileToClassConstructor.h" />
+    <ClInclude Include="..\src\GTEST\include\ModelTools.h" />
+    <ClInclude Include="..\src\GTEST\include\RepriceCalibrationInstruments.h" />
+    <ClInclude Include="..\src\GTEST\include\BuildMarketDataObjectFromFile.h" />
+    <ClInclude Include="..\src\GTEST\include\BuildSwapTradeFromGenerator.h" />
+    <ClInclude Include="..\src\GTEST\include\CreateFixedBond.h" />
+    <ClInclude Include="..\src\GTEST\include\CurveAccessors.h" />
+    <ClInclude Include="..\src\GTEST\include\CurveFwdFxConst.h" />
+    <ClInclude Include="..\src\GTEST\include\CurveOis.h" />
+    <ClInclude Include="..\src\GTEST\include\CurveStd.h" />
+    <ClInclude Include="..\src\GTEST\include\CurveTenorBasis.h" />
+    <ClInclude Include="..\src\GTEST\include\CurveXccyBasis.h" />
+    <ClInclude Include="..\src\GTEST\include\Dependency.h" />
+    <ClInclude Include="..\src\GTEST\include\ExtractCurveCalibrationData.h" />
+    <ClInclude Include="..\src\GTEST\include\InitializeAQGoogleTest.h" />
+    <ClInclude Include="..\src\GTEST\include\InterestRateSwap.h" />
+    <ClInclude Include="..\src\GTEST\include\QuickTest.h" />
+    <ClInclude Include="..\src\GTEST\include\EnvironmentAttacker.h" />
+    <ClInclude Include="..\src\GTEST\include\ResultsProcessor.h" />
+    <ClInclude Include="..\src\GTEST\include\GetGoogleTestFolder.h" />
+    <ClInclude Include="..\src\GTEST\include\TestHelperUtilities.h" />
+    <ClInclude Include="..\src\GTEST\include\TryMeCurveAccessors.h" />
+    <ClInclude Include="..\src\GTEST\include\TryMeCurveCTD.h" />
+    <ClInclude Include="..\src\GTEST\include\TryMeCurveFwdFxConst.h" />
+    <ClInclude Include="..\src\GTEST\include\TryMeCurveOis.h" />
+    <ClInclude Include="..\src\GTEST\include\TryMeCurveStd.h" />
+    <ClInclude Include="..\src\GTEST\include\TryMeCurveTenorBasis.h" />
+    <ClInclude Include="..\src\GTEST\include\TryMeCurveXccyBasis.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\GTEST\buildscripts\configureVisualLeakDetector32.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\src\GTEST\buildscripts\configureVisualLeakDetector64.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{47CDC7FE-33CC-497A-9A26-7E5010A7F911}</ProjectGuid>
+    <RootNamespace>GTEST</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+    <ProjectName>GTEST</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\out\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\$(ProjectName)\obj\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\googletest-1.17.0\googletest\include;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;GTEST64;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <OpenMPSupport>true</OpenMPSupport>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\math\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\models\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\calibration\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\etrading\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\googletest-1.17.0\build\lib\Debug;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;gtest.lib;QuantLib-vc143-x64-mt-sgd.lib;Adept203-vc143-x64-g.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <TargetMachine>MachineX64</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
+      <LinkStatus>
+      </LinkStatus>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugEditAndContinue|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\googletest-1.17.0\googletest\include;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;GTEST64;_DEBUG;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <OpenMPSupport>true</OpenMPSupport>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\math\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\models\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\calibration\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\etrading\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\googletest-1.17.0\build\lib\Debug;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;gtest.lib;QuantLib-vc143-x64-mt-sgd.lib;Adept203-vc143-x64-g.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <TargetMachine>MachineX64</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
+      <LinkStatus>
+      </LinkStatus>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\googletest-1.17.0\googletest\include;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;GTEST64;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <OpenMPSupport>true</OpenMPSupport>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\math\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\models\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\calibration\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\etrading\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\googletest-1.17.0\build\lib\Release;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;gtest.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseProfiler|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\$(ProjectName)\include;$(SolutionDir)src\math\include;$(SolutionDir)src\models\include;$(SolutionDir)src\calibration\include;$(SolutionDir)src\etrading\include;$(SolutionDir)src\validation\include;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0;$(AQ_EXTERNAL_LIB_PATH)\library\googletest-1.17.0\googletest\include;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\Adept203\include;$(AQ_EXTERNAL_LIB_PATH)\library\Eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN64;GTEST64;NDEBUG;_LIB;ZEROFLOOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4099;4996;4244;4267</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <OpenMPSupport>true</OpenMPSupport>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\math\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\models\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\calibration\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\etrading\out;$(SolutionDir)targets\$(PlatformArchitecture)\$(Configuration)\validation\out;$(AQ_EXTERNAL_LIB_PATH)\library\rapidjson-master\include;$(AQ_EXTERNAL_LIB_PATH)\library\googletest-1.17.0\build\lib\Release;$(AQ_EXTERNAL_LIB_PATH)\library\boost_1_91_0\lib64-msvc-14.3;$(AQ_EXTERNAL_LIB_PATH)\library\QuantLib-1.43\lib;$(AQ_EXTERNAL_LIB_PATH)\library\Adept203\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>math.lib;models.lib;calibration.lib;etrading.lib;validation.lib;gtest.lib;QuantLib-vc143-x64-mt-s.lib;Adept203-vc143-x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

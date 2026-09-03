@@ -9,7 +9,7 @@ endif
 SUBDIRS =  math/src 
 
 SUBDIRS += models/src calibration/src
-SUBDIRS += etrading/src validation_api/src GOOGLE_TEST/src
+SUBDIRS += etrading/src validation_api/src GTEST/src
 SUBDIRS += MLIB_CLIENT_API/source
 
 TESTNINJAFOLDER = ../resource/utilities/Apps/TestNinjaPython

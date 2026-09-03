@@ -18,7 +18,7 @@ namespace google_test
     /* @brief			Function to Reprice Curve Callibration Instruments using Swap Generators. Curves must be loaded independently of this function.
     *                   The function will throw if an instrument does not reprice and also if no trades are repriced i.e. when no tenors in the tenorsToReprice are calibration points
     *
-    *                   For an example of how to use this function, see project: GOOGLE_TEST -> EUROisCurveConsistency.cpp
+    *                   For an example of how to use this function, see project: GTEST -> EUROisCurveConsistency.cpp
     *
     *  @param [in]		calibrationInstrumentType:      The Calibration Market Data Type:       etrading::OIS_MARKETDATA
     *                                                                                           etrading::LIBOR_OIS_BASISSPREAD_MARKETDATA

@@ -59,7 +59,7 @@ void parse_command_line( int argc, char* argv[] )
 
 	if ( vm.count( "debug" ) )
     {
-        std::cout << std::endl << "Please attach to this GOOGLE_TEST.EXE process from your debugger." << std::endl;
+        std::cout << std::endl << "Please attach to this GTEST.EXE process from your debugger." << std::endl;
 		system("PAUSE");
     }
 

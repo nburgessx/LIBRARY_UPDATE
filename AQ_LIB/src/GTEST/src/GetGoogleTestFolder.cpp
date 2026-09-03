@@ -37,9 +37,9 @@ namespace etrading
 		{
 			// It is a fatal error if this try block fails.
 			// We cannot allow this exception to escape since the getGoogleTestFolder() function is called in many test CPP files when the
-			// GOOGLE_TEST.exe process initializes, even before the main() function is called.
+			// GTEST.exe process initializes, even before the main() function is called.
 			//
-			// Write the error message to standard-error and stop the GOOGLE_TEST process cleanly.
+			// Write the error message to standard-error and stop the GTEST process cleanly.
 			// 
 			std::cerr << e.getMsg() << std::endl;
 			exit(1);  // Report failure to the caller.

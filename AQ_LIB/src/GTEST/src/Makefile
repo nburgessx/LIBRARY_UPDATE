@@ -3,7 +3,7 @@ TOPDIR = ../..
 
 include $(TOPDIR)/make.header
 
-INCLUDE += -I$(TOPDIR)/GOOGLE_TEST/include
+INCLUDE += -I$(TOPDIR)/GTEST/include
 INCLUDE += -I$(TOPDIR)/validation_api/include
 INCLUDE += -I$(TOPDIR)/etrading/include
 
@@ -21,8 +21,8 @@ INCLUDE += -I$(ADEPT_HOME)/include
 EIGEN_HOME=$(THIRD_PARTY)/eigen-eigen-b30b87236a1b
 INCLUDE += -I$(EIGEN_HOME)
 
-GOOGLE_TEST_HOME=$(THIRD_PARTY)/googletest-release-1.7.0
-INCLUDE += -I$(GOOGLE_TEST_HOME)/include
+GTEST_HOME=$(THIRD_PARTY)/googletest-release-1.7.0
+INCLUDE += -I$(GTEST_HOME)/include
 
 
 # CFLAGS += -wd80,470,811,858,1224,2358
@@ -51,12 +51,12 @@ LIBS += -Wl,-rpath $(BOOST_HOME)/linux_x86_64/lib
 LIBS += $(ADEPT_HOME)/lib/libadept.a
 
 ## Google Test framework dependency
-LIBS += $(GOOGLE_TEST_HOME)/make/gtest_main.a
+LIBS += $(GTEST_HOME)/make/gtest_main.a
 
 ## Also link in openmp support
 LIBS += -fopenmp
 
-EXEC = GOOGLE_TEST.exe
+EXEC = GTEST.exe
 
 
 
