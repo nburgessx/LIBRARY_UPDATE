@@ -130,8 +130,9 @@ Nicholas's review), `LICENSE` placeholder in place (done).
 Mechanical, low-risk-per-step, high blast radius. Build + baseline-diff after
 each numbered item.
 
-- ☐ **1.1 Macros** `MLIB_* → AQ_*`. Pure token rename in our code (not in
-  third-party headers). Fast, safe, unblocks everything.
+- ☑ **1.1 Macros** `MLIB_* → AQ_*` — commit `927a66d`. 380 files, 4867
+  replacements, word-boundary anchored, generated wrappers excluded. Awaiting
+  Nicholas's build + GoogleTest diff vs `baseline` (expect numerically identical).
 - ☐ **1.2 `AQ_BINDINGS` → `AQ_API`** (D3). In one batch:
   - `projects\AQ_BINDINGS.vcxproj` (+ `.filters`, `.user`) → rename file,
     `<ProjectName>`, `<RootNamespace>`.
