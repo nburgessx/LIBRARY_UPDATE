@@ -41,7 +41,8 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 | D12 | **Q4 — holiday-centre join is `+` only** (Nicholas, this session). Reason: clean break (D9), fresh clients, no legacy user sheets to protect; the only `:`-form data that ships is the ~103 generator JSON, which we migrate ourselves; and `:` is heavily overloaded (`DATA_COLL_DEL`, curve-name lists in the same generator files). The `splitCalendarCentres()` helper is written so accepting `:` again is a **one-line toggle** if field feedback ever demands it — but it ships `+`-only. Migrate the 103 JSON calendar fields to `+`. |
 | D13 | **Q5 — Linux / CMake build is in scope**, lower priority (late phase). **End-state gate: not one file anywhere in the tree — source, Makefiles, `make.*`, CMake, `.sln`/`.vcxproj`, scripts, resources, examples, docs — may contain a legacy client name or an old prefix.** Many `resources\` and `examples\` items will be rewritten or removed for the final version. |
 | D14 | **Q6 — category taxonomy locked (13).** See §2.2 / `CLAUDE.md` §5.1. |
-| D15 | **LWO → `AQO`** for the C++ object-framework **classes** (`AQOCurve`, `AQOUtilities`, …); free predicate `isLWOObject → isAQObject`. Public **function** names carrying `LWO` do **not** get an `AQO` prefix — they take the **category** prefix (`aqObjects*` for lifecycle ops, `aq<AssetCategory>*` for handle-based pricing/creation). Recommended `AQO` over `Obj` (brand-consistent, distinctive, terse). See Phase 3.2. |
+| D15 | **LWO → `AQO`** for the C++ object-framework **classes** (`AQOCurve`, `AQOUtilities`, …); free predicate `isLWOObject → isAQObject` (**not** `isAQOObject` — no double-O anywhere; use `AQO` or `AQObject`). Public **function** names carrying `LWO` do **not** get an `AQO` prefix — they take the **category** prefix (`aqObjects*` for lifecycle ops, `aq<AssetCategory>*` for handle-based pricing/creation). See Phase 3.2. |
+| D17 | **`LA` → `AQL`** (not `AQ`). `LA` = "Legacy Analytics" — the whole `LA*` tree is legacy-to-deprecate; the `AQL` ("AQ Legacy") prefix keeps it visually distinct and greppable against new `AQ*` code. Applies to identifiers, files (`LAString.h → AQLString.h`), include-guard macros, error-string text. `MA`/`MB` → `AQ`, confirmed per project. `LAObject → AQLObject`, `LAMath → AQLMath`. |
 | D16 | **Navigation:** category names are a public-API concern and are **not** propagated into `etrading`/`math` file or class names (those stay domain-oriented). The bridge is the `validation` layer: every wrapper is `tryAq<Category><Function>`, foldered by category (Phase 3.5), plus a live `docs\api_map.csv` (Phase 3.6). Judged acceptable — see §"Navigation" note below §2.5. |
 
 Open questions: none blocking. Phase 4 waits on the xlOil worked examples;
@@ -311,15 +312,23 @@ else — they stay domain-oriented.
 
 ## Phase 3 — Identifier rebrand + calendar delimiter  ☐
 
-The big one. `LA` / `MA` / `MB` → `AQ` across ~25,900 identifiers, plus `me*→aq*`
-function bodies, plus `LWO→AQO`. Anchored, case-sensitive, from an approved list
-only (CLAUDE.md §5.5). One project per batch, in dependency order:
+The big one. **`LA` → `AQL`** ("Legacy Analytics" → "AQ Legacy" — keeps the
+legacy tree marked and greppable), `MA` / `MB` → `AQ` (confirm per project),
+plus `me*→aq*` function bodies, plus `LWO→AQO`. Anchored, case-sensitive, from an
+approved list only (CLAUDE.md §5.5). One project per batch, in dependency order:
 `math → models → calibration → etrading → validation → AQ_API`. Build +
 baseline-diff between **every** batch.
 
-- ☐ **3.1** For each project: extract the symbol list matching the prefix
-  pattern → review → rename from the approved list → build → diff. Update natvis
-  and SWIG `.i` in the same commit as the project they describe.
+- ◐ **3.1** For each project: `rebrand\tools\prefix_census.py <project>` →
+  review → sign-off → `git mv` the `LA*` files to `AQL*`, apply the approved
+  identifier map (identifiers + include-guard macros + error-string text), fix
+  `#include "LA*.h"` **tree-wide**, update `.vcxproj`/`.filters` + natvis + SWIG
+  `.i` → build all projects → baseline-diff.
+  - **`math`**: census done, `rebrand\phase3_math_APPROVED.csv` — **173
+    `LA→AQL`**, 6 SKIP (`MAXIMUM`, `MATRIX`, `MATRIX_A`, `MANUALINPUT_VOLDATA`,
+    `MARGINAL_DEFAULT_PROBABILITY_HEADER`, `MARKETDATA_PROPERTIES` — English-word
+    enum values). Zero real `MA*`/`MB*`/`LB*`. 227 `LA*.{cpp,h}` + 4 `LA1D*`
+    files to `git mv`; ~1528 files carry `#include "LA*.h"`.
 - ☐ **3.2 `LWO → AQO`** (D4, D15). Two distinct things:
   - **C++ object-framework classes** get the `AQO` prefix (AlgoQuant Object):
     `LWOCurve → AQOCurve`, `LWOCurveDayAdjustment → AQOCurveDayAdjustment`,
@@ -327,6 +336,9 @@ baseline-diff between **every** batch.
     `IsLWOObject.{h,cpp}` → `AQObjectPredicates.{h,cpp}` with the free function
     `isLWOObject() → isAQObject()`. Folded into the `etrading` batch. Handle
     behaviour (counter, cell-hash, recalc suffix) byte-for-byte unchanged.
+    **Never `AQOObject` (double-O)** — use `AQO` or `AQObject`. Note the legacy
+    `math` class `LAObject` becomes `AQLObject` (distinct from the framework's
+    `AQObject` / `AQO*`), so no clash.
   - **Public function names carrying `LWO`** do **not** become `aqAQO…`. They
     take the **category** prefix by what they do:
     - object-lifecycle ops (`meLWOLoad/Save/Copy/Modify/Delete/Clear/List`) →
@@ -368,8 +380,9 @@ baseline-diff between **every** batch.
   fields keep `:`). `GOOGLE_TEST`: `"SYB+LNB"` builds the expected combined
   holiday set. Details: `rebrand\calendar_delimiter_sites.md`.
 
-**Exit:** `grep -rE "\b(LA|MA|MB|LB|me)[A-Z]"` in `src\` returns only third-party
-/ literals (`mir*` still present — retired in 3c); all configs build; baseline-diff
+**Exit:** `grep -rE "\bLA[A-Z][a-z]|\bLA[0-9]D|\bme[A-Z]"` in `src\` returns only
+third-party / literals (`mir*` still present — retired in 3c; `AQL*` is the
+intended legacy marker and is expected); all configs build; baseline-diff
 **numerically identical** (renames are behaviour-preserving — any delta is a bug,
 and the calendar change is the only intentional behaviour change, covered by its
 own new test).
@@ -592,7 +605,8 @@ current.
   Lower priority than 4–6 but **in scope** — it is part of "no legacy names
   anywhere".
 - ☐ **7.2 Final legacy sweep.** Tree-wide, case-sensitive:
-  `grep -rIE "Mizuho|MLIB|\bme[A-Z]|\bmir[A-Z]|\b(LA|MA|MB|LB)[A-Z]|validation_api|XllPlus|MLIBQ"`
+  `grep -rIE "Mizuho|MLIB|\bme[A-Z]|\bmir[A-Z]|\bLA[A-Z][a-z]|\bLA[0-9]D|\bMA[A-Z][a-z]|validation_api|XllPlus|MLIBQ"`
+  (`AQL*` is the intended legacy prefix — expected, not a hit)
   over the whole `AQ_LIB` tree (source, projects, scripts, resources, examples,
   docs, Linux build). Expected result: **zero hits** outside third-party headers
   and genuine string data. Anything left is fixed or removed.

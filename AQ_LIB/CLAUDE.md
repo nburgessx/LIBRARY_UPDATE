@@ -295,7 +295,8 @@ framework only — *not* bond/credit curves), `Vols`, `Rates`, `Swaps`, `Bonds`
 | MLIB | AQ |
 | `me` (function prefix) | `aq` |
 | `mir` (function prefix) | **deprecate — do not migrate** (produce call-graph first) |
-| `MA`, `MB`, `LA`, `LB` (type/object prefixes) | `AQ` |
+| `LA`, `LB` ("Legacy Analytics" type/object prefixes) | **`AQL`** ("AQ Legacy") — marks legacy-to-deprecate, greppable vs new `AQ*` |
+| `MA`, `MB` (type/object prefixes) | `AQ` — confirm per project (`math` had zero real ones) |
 | `MLIB_*` macros | `AQ_*` |
 | LWO (light-weight objects) — **C++ classes** | **`AQO`** prefix: `AQOCurve`, `AQOUtilities`, `AQOCurveDayAdjustment`, `AQOHandleEnums`; free predicate `isLWOObject → isAQObject`. (Not `Obj` — `AQO` is brand-consistent and distinctive.) |
 | LWO — **public function names** (`meLWO…`) | take the **category** prefix, not `AQO`: lifecycle ops → `aqObjects…`; handle-based pricing/creation → `aq<AssetCategory>…` (`aqSwapsPv`, `aqCurvesMarketDataDisplay`, …). Trading in a handle is an impl detail, not a category. |
@@ -323,11 +324,17 @@ codebase in ways that compile.
   `LA`, `LB`.
 - Word-boundary, case-sensitive, prefix-anchored patterns only — e.g.
   `\bme(?=[A-Z])`.
-- `MA`/`MB`/`LA`/`LB` must be anchored to a following uppercase letter **and**
-  checked against the extracted symbol list, not guessed.
-- **Build the identifier list first, get sign-off, rename from the approved list.**
+- `MA`/`MB`/`LA`/`LB` anchored to a following uppercase letter **and** checked
+  against the extracted symbol list. The real convention is `LA[A-Z][a-z]` /
+  `LA[0-9]D`; `MAX`/`MASK`/`MATRIX`/`LABEL`/`LAST`/`LAPACK` etc. are false
+  positives to skip.
+- **`LA` → `AQL`** (not `AQ`) — "Legacy Analytics" → "AQ Legacy", keeps the
+  legacy tree marked and greppable. `MA`/`MB` → `AQ`.
+- **Build the identifier list first (`rebrand\tools\prefix_census.py`), get
+  sign-off, rename from the approved list.**
 - Reviewable batches — one project or category at a time. Build between each.
 - Never rename inside string literals, third-party headers, or `.APPLES`.
+- `LWO` → `AQO`; predicate stays `isAQObject()`; never write `AQOObject`.
 
 ### 5.6 Renaming Excel functions — clean break
 
