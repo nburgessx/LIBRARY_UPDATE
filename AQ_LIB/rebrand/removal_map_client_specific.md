@@ -26,12 +26,37 @@ Execute in **Phase 1.4a** (after `mir` removal, before the identifier rebrand).
 `tryMeCashflowClient.{h,cpp}`, `tryMeLoanCalculations.{h,cpp}`,
 `tryMeSupervisoryRules.{h,cpp}`.
 
-### `etrading` — securitisation / CLO cluster — delete
-`CashflowEngine.{h,cpp}`, `CashflowModel.{h,cpp}`, `LoanCalculations.cpp`,
-`LoanPortfolio.{h,cpp}`, `LoanValidation.{h,cpp}`, `SyntheticExcessSpread.{h,cpp}`,
-`Tranche.cpp`, `Trigger.{h,cpp}`.
-No non-etrading includer except the `validation` wrappers above (themselves
-dropped) and `GOOGLE_TEST` has no references — clean.
+### `etrading` — securitisation / CLO cluster — ⚠ NOT CLEAN
+
+`CashflowEngine`, `CashflowModel`, `LoanCalculations`, `LoanPortfolio`,
+`LoanValidation`, `SyntheticExcessSpread`, `Tranche`, `Trigger`.
+
+**Entanglement found (was missed in the first pass):**
+`etrading/include/CreditResults.h` — which is on the **KEEP** list (CDS
+result-reporting) — `#include`s `LoanPortfolio.h`, `LoanCalculations.h`,
+`SyntheticExcessSpread.h`, `CashflowEngine.h`, `Trigger.h`, `Tranche.h`, and
+holds a `std::shared_ptr<Trigger>` member. `Trigger.h` in turn `#include`s
+`LoanCalculations.h`. `validation/tryMeUtilitySetup.cpp` uses
+`CreditResultsContainer`. So the cluster cannot be deleted without first
+deciding what `CreditResults` is in the rebranded library:
+
+- **(a)** `CreditResults` is genuinely securitisation code mis-labelled as CDS →
+  the whole `CreditResults` + `CreditResultsContainer` + cluster goes, and
+  `tryMeUtilitySetup.cpp` is adjusted.
+- **(b)** `CreditResults` is real CDS result-reporting that happens to carry
+  vestigial loan/trigger/tranche members → strip those members, keep
+  `CreditResults`, then the cluster deletes cleanly.
+
+**This is a domain call for Nicholas** and needs a proper "what is the `Credit`
+category" design pass — moved to its own step (`MIGRATION_PLAN.md` "Phase 6.0 —
+Credit untangle"), not a Phase 1 mechanical delete.
+
+**Safe subset that CAN go in Phase 1** (no inbound deps from kept code, no test
+deps): the `validation` wrappers `tryMeCashflowClient.*`, `tryMeLoanCalculations.*`,
+`tryMeSupervisoryRules.*`, and `SupervisoryRules.cpp` — **but** `SupervisoryRules.h`
+is `#include`d by `CashflowEngine.cpp` / `CashflowModel.cpp` (both being kept for
+now due to the `CreditResults` entanglement), so even this subset has to wait for
+the untangle. **Net: defer the whole client-credit removal to Phase 6.0.**
 
 ## KEEP — do NOT confuse with the above
 

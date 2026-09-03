@@ -40,10 +40,12 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 | D11 | **Q3 — `AQ_API` confirmed.** |
 | D12 | **Q4 — holiday-centre join is `+` only** (Nicholas, this session). Reason: clean break (D9), fresh clients, no legacy user sheets to protect; the only `:`-form data that ships is the ~103 generator JSON, which we migrate ourselves; and `:` is heavily overloaded (`DATA_COLL_DEL`, curve-name lists in the same generator files). The `splitCalendarCentres()` helper is written so accepting `:` again is a **one-line toggle** if field feedback ever demands it — but it ships `+`-only. Migrate the 103 JSON calendar fields to `+`. |
 | D13 | **Q5 — Linux / CMake build is in scope**, lower priority (late phase). **End-state gate: not one file anywhere in the tree — source, Makefiles, `make.*`, CMake, `.sln`/`.vcxproj`, scripts, resources, examples, docs — may contain a legacy client name or an old prefix.** Many `resources\` and `examples\` items will be rewritten or removed for the final version. |
-| D14 | **Q6 — category taxonomy: review the straw-man in §2.2**, then it is locked into `CLAUDE.md` §5.1. |
+| D14 | **Q6 — category taxonomy locked (13).** See §2.2 / `CLAUDE.md` §5.1. |
+| D15 | **LWO → `AQO`** for the C++ object-framework **classes** (`AQOCurve`, `AQOUtilities`, …); free predicate `isLWOObject → isAQObject`. Public **function** names carrying `LWO` do **not** get an `AQO` prefix — they take the **category** prefix (`aqObjects*` for lifecycle ops, `aq<AssetCategory>*` for handle-based pricing/creation). Recommended `AQO` over `Obj` (brand-consistent, distinctive, terse). See Phase 3.2. |
+| D16 | **Navigation:** category names are a public-API concern and are **not** propagated into `etrading`/`math` file or class names (those stay domain-oriented). The bridge is the `validation` layer: every wrapper is `tryAq<Category><Function>`, foldered by category (Phase 3.5), plus a live `docs\api_map.csv` (Phase 3.6). Judged acceptable — see §"Navigation" note below §2.5. |
 
-All open questions from the first draft are now answered. Nothing in the plan is
-blocked on a decision; Phase 4 still waits on the xlOil worked examples.
+Open questions: none blocking. Phase 4 waits on the xlOil worked examples;
+Phase 6.0 (Credit untangle) needs Nicholas's domain call on `CreditResults`.
 
 ### Pulled forward (done ahead of sequence, at Nicholas's request)
 
@@ -160,19 +162,25 @@ each numbered item.
   `AlgoQuantLib`. **Deferred:** `tryMe*` (206) and `me*` (78) file renames — folded
   into Phase 3 (the `me→aq` identifier rename) to avoid churning `#include`s
   twice; `mir*` files go in 1.4. Awaiting Nicholas's build.
-- ☐ **1.4 Remove `mir*` wholesale** — per the 0.5 call-graph (no inbound `aq`/`me`
-  deps). Delete the 58 `AQ_API\mir*` files, ~35 `validation\tryMir*` files, and
-  the `mir*` lines in `swig_*.i` / `swig_R_wrap.cpp`. Build clean.
-- ☐ **1.4a Remove client-specific modules** — per the 0.6 map: `LoanCalculations`,
-  `SupervisoryRules`, `CashflowClient`, and the confirmed-dead securitisation
-  cluster in `etrading`. Their `validation\tryMe*` wrappers and `GOOGLE_TEST`
-  cases go too. **STOP-gate:** the "VERIFY — KEEP FOR NOW" rows in
-  `rebrand\removal_map_client_specific.md` (Serialize*/SchemaObject,
-  CreditResultsContainer include, DataFrame) — Nicholas has asked to keep these
-  for now and review them at this step. Do not delete them without his explicit
-  go-ahead; if in doubt, keep and move on.
-- ☐ **1.5 Delete `msc*`** (D2) — per the 0.6 map. Add-in files, downstream
-  symbols, resources, tests. Build clean with them gone.
+- ✗ **1.4 Remove `mir*`** — **DEFERRED, not a Phase 1 batch.** The revised 0.5
+  call-graph (`rebrand\callgraph_mir.md`) found **49 `GOOGLE_TEST` files** and
+  `etrading\Replay.cpp` depend on `tryMir*` (22 distinct functions). This is the
+  flagship curve/trade regression suite — deleting `mir` means porting those
+  tests to the `aq` equivalents and re-baselining each. Moved to **Phase 3c**
+  (after the `me→aq` rename gives the target names).
+- ✗ **1.4a Remove client-specific credit modules** — **DEFERRED.** The revised
+  0.6 map found the securitisation cluster (`CashflowEngine/Model`,
+  `LoanPortfolio/Calculations/Validation`, `SyntheticExcessSpread`, `Trigger`,
+  `Tranche`) is **entangled with `CreditResults`** (on the KEEP list):
+  `CreditResults.h` includes six of these headers and holds a
+  `shared_ptr<Trigger>`. Needs a "what is the `Credit` category" design pass
+  first. Moved to **Phase 6.0** (Credit untangle). `SupervisoryRules` /
+  `CashflowClient` / `LoanCalculations` `validation` wrappers go with it.
+- ☐ **1.5 Delete `msc*`** (D2) — the 6 `msc*` add-in files live only in
+  `.APPLES\...\MLIBQ_ADDIN`; the new-tree `AQ_XLL` is a POC that never had them.
+  "Deletion" = **do not port them** in Phase 4. Nothing to remove now. Any
+  `msc*` GoogleTest / resource references are handled in Phase 6.0 with the
+  credit untangle.
 - ☐ **1.6 Namespaces** `validation_api → validation`. Single mechanical rename;
   update the friend/using declarations and the bindings + XLL call sites (the
   POC `AQ_XLL\src\math.cpp` already calls `validation_api::tryMe…`).
@@ -249,14 +257,49 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
   | Credit | Dates, Curves, Credit, Bonds, Math, Generators, Objects, Tools |
   | Full | all 13, incl. Options and Models |
 
-- ☐ **2.5 Generator categories.** Confirm whether generator support is its own
-  `Generators` category plus per-asset constructors (`aqSwapsFromGenerator`,
-  `aqBondsFromGenerator`), or folded entirely into `Objects`. Recommendation:
-  a small `Generators` category for introspection (list / describe / validate)
-  **and** per-asset `…FromGenerator` constructors in the asset categories.
+- ☑ **2.5 Generator categories** (Nicholas). `Generators` category is
+  **introspection only** — `aqGeneratorsList` / `…Describe` / `…Validate`. The
+  construction methods (`aqSwapsFromGenerator`, `aqBondsFromGenerator`, …) live in
+  their **asset categories**, not in `Generators`.
 
 **Exit:** agreed category list + edition→category map in `CLAUDE.md`; 0.7
 inventory fully categorised.
+
+### Navigation — category names vs internal names
+
+**The concern (Nicholas):** the public XLL/API categories (`Dates`, `Curves`,
+`Swaps`, …) are *not* propagated into the `etrading` / `math` file and class
+names (`LACurve*`, `LADate*`, engines, models), so it is hard to go from a
+function seen in Excel to the code that implements it.
+
+**Assessment: real friction, not a blocker — and forcing categories down into
+the implementation layer would make things worse, not better.** Reasons:
+
+- `etrading` / `math` are organised by *C++ design* — a curve class, a
+  calibration engine, a model. One impl file often serves several API
+  categories; one API category is often served by several impl files. A
+  category-named file layout there would fight the code's actual structure.
+- Public "category" is a *presentation* choice that will keep evolving (editions,
+  new asset classes). Pinning implementation file names to it creates churn every
+  time the taxonomy shifts.
+- Precedent: QuantLib, Boost, Eigen all keep public grouping separate from
+  internal file layout.
+
+**What we do instead** (Phase 3.5 / 3.6):
+
+1. **`validation` is the category index.** After Phase 3 every wrapper is
+   `tryAq<Category><Function>` and sits in `src\validation\<category>\`. Open
+   `validation\Curves\`, see every curve function; each wrapper is ~20 lines and
+   names its `etrading` entry point. This is the browsable map.
+2. **`docs\api_map.csv`** — live, shipped: `public name | category | validation
+   wrapper | etrading entry point | test`. One `grep` from any name to its code.
+3. **CI guard** (Phase 7.4): every `aq*` public function must have a matching
+   `tryAq*` wrapper row — keeps the index honest.
+4. Solution Explorer **filters** in `AQ_XLL` / `AQ_API` stay category-grouped
+   (they already are).
+
+`etrading` / `math` file and class names get the `LA→AQ` prefix swap and nothing
+else — they stay domain-oriented.
 
 ---
 
@@ -271,12 +314,41 @@ baseline-diff between **every** batch.
 - ☐ **3.1** For each project: extract the symbol list matching the prefix
   pattern → review → rename from the approved list → build → diff. Update natvis
   and SWIG `.i` in the same commit as the project they describe.
-- ☐ **3.2** `LWO → AQO` rename, folded into the `etrading` batch. Keep the handle
-  behaviour byte-for-byte (D4).
+- ☐ **3.2 `LWO → AQO`** (D4, D15). Two distinct things:
+  - **C++ object-framework classes** get the `AQO` prefix (AlgoQuant Object):
+    `LWOCurve → AQOCurve`, `LWOCurveDayAdjustment → AQOCurveDayAdjustment`,
+    `LWOUtilities → AQOUtilities`, `HandleEnums → AQOHandleEnums`,
+    `IsLWOObject.{h,cpp}` → `AQObjectPredicates.{h,cpp}` with the free function
+    `isLWOObject() → isAQObject()`. Folded into the `etrading` batch. Handle
+    behaviour (counter, cell-hash, recalc suffix) byte-for-byte unchanged.
+  - **Public function names carrying `LWO`** do **not** become `aqAQO…`. They
+    take the **category** prefix by what they do:
+    - object-lifecycle ops (`meLWOLoad/Save/Copy/Modify/Delete/Clear/List`) →
+      **`aqObjects…`** (`aqObjectsLoad`, `aqObjectsCopy`, …)
+    - handle-based pricing/creation (`meLWOSwapPV`, `meLWOSwapCreate`,
+      `meLWOCurveMarketDataDisplay`, `meLWOBondPrice`, …) → their **asset
+      category** (`aqSwapsPv`, `aqSwapsCreate`, `aqCurvesMarketDataDisplay`,
+      `aqBondsPrice`). Trading in a handle is an implementation detail, not a
+      category. The 0.7 inventory row for each `meLWO*` function records its
+      target category.
+  - `tryMeLWO*` validation wrappers follow the same rule: `tryAqObjects*` or
+    `tryAq<AssetCategory>*`.
 - ☐ **3.3** Function prefixes `me* → aq*` / `tryMe* → tryAq*` in `validation` and
   `AQ_API`, plus SWIG `.i`. This is the **clean break** (D9): no `me*` spelling
   survives anywhere, no forwarding aliases. Collect the removed public names into
   a `RELEASE_NOTES` "renamed / removed functions" list as you go.
+- ☐ **3.5 `validation` layer as the category index** (navigation — see below).
+  Rename every wrapper to `tryAq<Category><Function>` and move it into
+  `src\validation\<category>\` (folder + `.filters`), where `<category>` is one
+  of the locked 13. This makes `validation\Curves\` etc. the browsable
+  table-of-contents from any public name to its `etrading` entry point.
+  `etrading` / `math` file names stay **domain-oriented** (organised by class /
+  engine / model, not by API category) — do not force them to match.
+- ☐ **3.6 Live API map** — regenerate `rebrand\xll_function_inventory.csv` (rename
+  it `docs\api_map.csv`, keep it shipped) with the final columns:
+  `public name | category | validation wrapper | etrading entry point | test`.
+  One `grep` from "where is `aqCurvesForwardRate`". A CI check (Phase 7.4)
+  asserts every `aq*` public function has a matching `tryAq*` wrapper row.
 - ☐ **3.4 Calendar delimiter** (D5, D12 — `+` only): add
   `constexpr char CALENDAR_CENTRE_DELIMITER = '+';` and a single
   `splitCalendarCentres()` helper (structured so re-enabling `:` is a one-line
@@ -290,10 +362,38 @@ baseline-diff between **every** batch.
   fields keep `:`). `GOOGLE_TEST`: `"SYB+LNB"` builds the expected combined
   holiday set. Details: `rebrand\calendar_delimiter_sites.md`.
 
-**Exit:** `grep -rE "\b(LA|MA|MB|LB|me|mir)[A-Z]"` in `src\` returns only
-third-party / literals; all configs build; baseline-diff **numerically identical**
-(renames are behaviour-preserving — any delta is a bug, and the calendar change
-is the only intentional behaviour change, covered by its own new test).
+**Exit:** `grep -rE "\b(LA|MA|MB|LB|me)[A-Z]"` in `src\` returns only third-party
+/ literals (`mir*` still present — retired in 3c); all configs build; baseline-diff
+**numerically identical** (renames are behaviour-preserving — any delta is a bug,
+and the calendar change is the only intentional behaviour change, covered by its
+own new test).
+
+---
+
+## Phase 3c — Retire `mir*`  ☐
+
+`mir*` is the legacy Interest-Rates binding stack. 58 `AQ_API\mir*.{cpp,h}`,
+65 `validation\tryMir*.*`, `mir*` blocks in 4 `swig_*.i` + `swig_R_wrap.cpp`.
+**49 `GOOGLE_TEST` files** and `etrading\Replay.cpp` use 22 distinct `tryMir*`
+functions (details: `rebrand\callgraph_mir.md`).
+
+- ☐ **3c.1** For each of the 22 `tryMir*` functions, map to the `tryAq*`
+  equivalent (post-Phase-3 names): `tryAqProductSwapPv`, `tryAqProductOisParRate`,
+  `tryAqCurveCalibrate*`, `tryAqDates*`, `tryAqObjectsCurve*` etc. Any with no
+  equivalent → promote that one `mir` function to `aq` (rename + keep), don't
+  drop the capability.
+- ☐ **3c.2** Migrate the 49 `GOOGLE_TEST` files to the `tryAq*` calls, **one
+  file at a time, re-baselining each** — numbers must match the pre-migration
+  run for that test.
+- ☐ **3c.3** `Replay.cpp` — drop the four `"tryMirSetUp…Curve"` `functionList`
+  keys (the `"tryAqCurveCalibrate*"` keys already point at the same
+  `replayCurve*` functions).
+- ☐ **3c.4** Delete all `mir*` / `tryMir*` files + swig `.i` blocks +
+  `.vcxproj`/`.filters` entries. Regenerate `swig_R_wrap.cpp`. Reword the two
+  `mirCurveGenerate` error strings.
+
+**Exit:** `grep -rE "\bmir[A-Z]|tryMir"` in `src\` is empty; suite green and
+baseline-identical.
 
 ---
 
@@ -421,6 +521,20 @@ against baseline.
 
 ## Phase 6 — Legacy extraction, resources, docs, licence  ☐
 
+- ☐ **6.0 Credit untangle** (was 1.4a). Decide what the `Credit` category is in
+  the rebranded library, then act. `etrading\CreditResults.h` (CDS
+  result-reporting) `#include`s six securitisation-cluster headers
+  (`LoanPortfolio`, `LoanCalculations`, `SyntheticExcessSpread`, `CashflowEngine`,
+  `Trigger`, `Tranche`) and holds a `shared_ptr<Trigger>`; `Trigger.h` includes
+  `LoanCalculations.h`; `validation\tryMeUtilitySetup.cpp` uses
+  `CreditResultsContainer`. Two outcomes (Nicholas's call):
+  (a) `CreditResults` is securitisation code mis-labelled CDS → delete
+  `CreditResults*` + the whole cluster + `tryMeCashflowClient/LoanCalculations/
+  SupervisoryRules` wrappers, adjust `tryMeUtilitySetup`;
+  (b) it is real CDS reporting with vestigial loan/trigger/tranche members →
+  strip those members, then the cluster + client wrappers delete cleanly.
+  Either way: `SupervisoryRules`, `CashflowClient`, `LoanCalculations` go; `msc*`
+  GoogleTest / resource references go. Build + baseline-diff after.
 - ☐ **6.1** Usage-map `calibration` / `math` / `models` — what is reachable from
   `validation` / `etrading`?
 - ☐ **6.2** Extract the live pieces (dates, strings, math utilities) into a clean

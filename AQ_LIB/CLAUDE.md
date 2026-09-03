@@ -297,7 +297,8 @@ framework only — *not* bond/credit curves), `Vols`, `Rates`, `Swaps`, `Bonds`
 | `mir` (function prefix) | **deprecate — do not migrate** (produce call-graph first) |
 | `MA`, `MB`, `LA`, `LB` (type/object prefixes) | `AQ` |
 | `MLIB_*` macros | `AQ_*` |
-| LWO (light-weight objects) | **AQO**, grouped under an object category |
+| LWO (light-weight objects) — **C++ classes** | **`AQO`** prefix: `AQOCurve`, `AQOUtilities`, `AQOCurveDayAdjustment`, `AQOHandleEnums`; free predicate `isLWOObject → isAQObject`. (Not `Obj` — `AQO` is brand-consistent and distinctive.) |
+| LWO — **public function names** (`meLWO…`) | take the **category** prefix, not `AQO`: lifecycle ops → `aqObjects…`; handle-based pricing/creation → `aq<AssetCategory>…` (`aqSwapsPv`, `aqCurvesMarketDataDisplay`, …). Trading in a handle is an impl detail, not a category. |
 | `mir*` (whole stack: `AQ_API\mir*` 58 files, `validation\tryMir*` ~35, `LAXL.cpp` 156 fns) | **delete wholesale** — self-contained, no inbound `aq`/`me` deps (0.5 call-graph) |
 | `msc*`, `LoanCalculations`, `SupervisoryRules`, `CashflowClient` + securitisation cluster | **delete — client-specific**; keep only what `Credit` genuinely needs (0.6 removal map) |
 | project `AQ_BINDINGS` | **`AQ_API`** (agreed) — update `.vcxproj`/`.filters`/`.user`, `.sln`, folder, SWIG `.i`, the 8 `generate*`/`deploy*` batch files, and the pre/post-build `<Command>` lines |
