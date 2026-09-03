@@ -24,14 +24,15 @@ namespace google_test
 
 		boost::filesystem::path getMLIBQEnvironmentVariableConfigfolderPath()
 		{
-			const char* environmentVariablePath = std::getenv( "MLIBQ" );
+			// Config data lives in the source tree at $(AQ)\resources\config.
+			const char* environmentVariablePath = std::getenv( "AQ" );
 
 			if ( environmentVariablePath == nullptr )
 			{
-				throw LACoreInvalidData("#Error: The 'MLIBQ' environment variable has not been set.", __FILE__, __LINE__);
+				throw LACoreInvalidData("#Error: The 'AQ' environment variable has not been set.", __FILE__, __LINE__);
 			}
 
-			boost::filesystem::path resultPath = boost::filesystem::path(environmentVariablePath) / "resource" / "config";
+			boost::filesystem::path resultPath = boost::filesystem::path(environmentVariablePath) / "resources" / "config";
 			return resultPath;
 		}
 
