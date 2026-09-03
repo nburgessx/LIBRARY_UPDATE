@@ -324,13 +324,21 @@ baseline-diff between **every** batch.
   identifier map (identifiers + include-guard macros + error-string text), fix
   `#include "LA*.h"` **tree-wide**, update `.vcxproj`/`.filters` + natvis + SWIG
   `.i` → build all projects → baseline-diff.
-  - ☑ **`math`** — commit `268ed8e`. **204 `LA→AQL`** identifiers (census v1 was
-    ~31 short; reconciled raw-token census + filename cross-check), **235
-    `LA*.{cpp,h}` → `AQL*`** `git mv`. Applied tree-wide: **2266 files,
-    ~90k replacements**. 10 SKIP (6 English-word `MA*` enum values, 4 comment
-    typos/artifacts). Verified: 0 dangling includes, 0 missing vcxproj refs, 0
-    stale guards, 0 `AQAQL`/`AQLL` artifacts. Awaiting Nicholas's all-config
-    build + GoogleTest baseline-diff.
+  - ☑ **`math`** — commits `268ed8e` + `608a79f` fix. 204 `LA→AQL`, 235 files.
+    Build-verified green (clean rebuild). One leak fixed: `LACoreComponentManager`
+    (a `models` file used tree-wide) — its `git mv` was missed; done in `608a79f`.
+  - ☑ **`models`** — commit `15790a98`. **578 `LA→AQL`** (approved map =
+    every `LA*` file stem ∪ owned tokens — the fix for the `math` leak class),
+    **552 files** `git mv`, tree-wide **744 files / ~20,250 replacements**. 11
+    vcxproj-casing merges (`PayOff` vs git's `Payoff`). SKIP `MANUAL`/`MANAGER`
+    (English `#define`s). Verified: 0 broken includes / missing vcxproj / artifacts.
+    Awaiting Nicholas's clean rebuild + GTest diff.
+  - **Follow-up (Phase 3 guard sweep):** `__LAxxx_H__` / `#ifndef LAxxx_h`-with-`_`
+    style include guards are not caught by the `\bLA` anchor — cosmetic, functional;
+    normalise in one pass after all project batches.
+  - Tooling now: `rebrand\tools\prefix_census.py` (stem∪token, fast one-pass) +
+    `rebrand\tools\run_batch.py` (git mv + `\b`-replace + vcxproj-casing merge +
+    verify gate that aborts+reverts on any lock/mismatch).
 - ☐ **3.2 `LWO → AQO`** (D4, D15). Two distinct things:
   - **C++ object-framework classes** get the `AQO` prefix (AlgoQuant Object):
     `LWOCurve → AQOCurve`, `LWOCurveDayAdjustment → AQOCurveDayAdjustment`,
