@@ -56,7 +56,7 @@ public:
 	static void logFileCheck(unsigned int n, const char* logfile)
 	{
 
-		MDFile mdf;
+		AQLFile mdf;
 		OPENMODE mode;
 
 		FILE* fp = fopen(logfile, "r");
@@ -84,7 +84,7 @@ public:
 
 			mdf.closeFile();
 
-			MDFile mdf_w(logfile,MODE_W);//reopen the file as writable mode which initializes the file.
+			AQLFile mdf_w(logfile,MODE_W);//reopen the file as writable mode which initializes the file.
 			for(unsigned int i=0;i<n;i++)
 			{
 				AQLString addrec = logrec[i];

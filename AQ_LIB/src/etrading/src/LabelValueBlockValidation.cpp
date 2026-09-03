@@ -7,7 +7,7 @@
 #include "AQLPriceDataInterpolation.h"
 #include "CommonConstants.h"
 #include <utility>
-#include "LAStaticData.h"
+#include "AQLStaticData.h"
 #include <boost/algorithm/string.hpp>
 
 namespace etrading

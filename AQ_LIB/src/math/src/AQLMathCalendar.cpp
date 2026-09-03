@@ -36,13 +36,13 @@ static AQLDate MIMIMUM_DATE("19500101");
      hold the information of X Mon, Y of the week and  Z day of the week
  
 */
-struct MFFlowDate
+struct AQLFlowDate
 {
     int                 mFMonth;  // month(112)
     int                 mFWeek;   // week(15)
     AQLDayOfWeekEnum              mFWeekly; // day of the week(Sum=0, Mon=1, ..., Sat=6)
     // relational operator
-    bool operator <(const MFFlowDate& d) const
+    bool operator <(const AQLFlowDate& d) const
     {
         return (mFMonth < d.mFMonth ? true :
                 (mFMonth == d.mFMonth ? false : 
@@ -59,7 +59,7 @@ struct AQLMathCalendarInfo
 {
     set<AQLDayOfWeekEnum>         mWeekly;   // holiday of day of the week (day X weekly)
     set<AQLString>       mDays;     // holiday of month and date(X year Y days yearly)
-    set<MFFlowDate>     mFlowDate; // indefinite holiday date(X month Y week Z day of the week)
+    set<AQLFlowDate>     mFlowDate; // indefinite holiday date(X month Y week Z day of the week)
     set<AQLDate>         mDate;     // holiday date(X year Y month X day)
 };
 
@@ -415,7 +415,7 @@ AQLMathCalendarData::setFlowDate(
         {
             mpcalInfo = new AQLMathCalendarInfo;
         }
-        MFFlowDate flow; 
+        AQLFlowDate flow; 
         flow.mFMonth = month;
         flow.mFWeek = week;
         flow.mFWeekly = weekly;
@@ -502,7 +502,7 @@ AQLMathCalendarData::operator+=(
 {
     set<AQLDayOfWeekEnum>::iterator       pw;
     set<AQLString>::iterator     p;
-    set<MFFlowDate>::iterator   p2;
+    set<AQLFlowDate>::iterator   p2;
     set<AQLDate>::iterator       p3;
 // unused.    deque<AQLDate>::iterator     p4;
     try
@@ -749,7 +749,7 @@ AQLMathCalendarData::addFlowDateHoliday(
     }
     // start
     AQLDate          wkdate;
-    set<MFFlowDate>::iterator       p;
+    set<AQLFlowDate>::iterator       p;
 // unused.    set<AQLDate>::iterator           end = list.end();
     int             sYear, eYear, weekly, day;
 

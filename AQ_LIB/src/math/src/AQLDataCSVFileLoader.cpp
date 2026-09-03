@@ -32,14 +32,14 @@ using namespace std;
 
     @param[in] name name of the object
 */
-MDCSVFileLoader::MDCSVFileLoader(const AQLString& name) 
-:MDBase(name)
+AQLCSVFileLoader::AQLCSVFileLoader(const AQLString& name) 
+:AQLBase(name)
 {
 }
 /*!
     @brief destructor
 */
-MDCSVFileLoader::~MDCSVFileLoader(void)
+AQLCSVFileLoader::~AQLCSVFileLoader(void)
 {
 }
 /*!
@@ -51,7 +51,7 @@ MDCSVFileLoader::~MDCSVFileLoader(void)
     @return data
 */
 Records_var     
-MDCSVFileLoader::get(const AQLObjectHolder& objHolder) const
+AQLCSVFileLoader::get(const AQLObjectHolder& objHolder) const
 {
     // define Reterun value
     Records_var ret(new vector<AQLObjectHolder>());
@@ -74,7 +74,7 @@ MDCSVFileLoader::get(const AQLObjectHolder& objHolder) const
     unsigned int i, j, k;
     for (it = filePaths.begin(); it != filePaths.end(); ++it)
     {
-        MDFile file(*it, MODE_R);
+        AQLFile file(*it, MODE_R);
         if (file.getRowCounts() == 0) continue;
         k = 0;
         for (;;)
@@ -163,7 +163,7 @@ MDCSVFileLoader::get(const AQLObjectHolder& objHolder) const
     @param[in] dataInstance pointer to RootObject
 */
 void                
-MDCSVFileLoader::setDataInstance(AQLDataInstance* dataInstance) 
+AQLCSVFileLoader::setDataInstance(AQLDataInstance* dataInstance) 
 {
     mpDataInstance = dataInstance;
 }

@@ -1,5 +1,5 @@
 /*! @file
-    @brief Class to store classes (such as MDBase or derived class).
+    @brief Class to store classes (such as AQLBase or derived class).
 		   This class is used for the registration of database class.
 		   There is ownership of the pointer if mDeleteFlag is true.
 		   The default mDeleteFlag is false. it is able to be selected
@@ -24,16 +24,16 @@
 	@param[in] e pointer to the data get class
 	@param[in] deleteFlag flag whether delete or not the data get class
 */
-MDObjHolder::MDObjHolder(MDBase* e, bool deleteFlag)
+AQLObjHolder::AQLObjHolder(AQLBase* e, bool deleteFlag)
 :mpObj(e), mDeleteFlag(deleteFlag)
 {
 }
 /*!
     @brief copy constructor
 
-	@param[in] objectHolder original MDObjHolder class
+	@param[in] objectHolder original AQLObjHolder class
 */
-MDObjHolder::MDObjHolder(const MDObjHolder& objectHolder)
+AQLObjHolder::AQLObjHolder(const AQLObjHolder& objectHolder)
 :mpObj(objectHolder.mpObj), mDeleteFlag(false)
 {
 }
@@ -41,7 +41,7 @@ MDObjHolder::MDObjHolder(const MDObjHolder& objectHolder)
     @brief destructor
 
 */
-MDObjHolder::~MDObjHolder()
+AQLObjHolder::~AQLObjHolder()
 {
 	if (mDeleteFlag == true)
 		delete mpObj;
@@ -50,11 +50,11 @@ MDObjHolder::~MDObjHolder()
     @brief relational operator through the comparison with Name 
 
 
-	@param[in] objectHolder MDObjHolder class to store data get class to compare
+	@param[in] objectHolder AQLObjHolder class to store data get class to compare
     @return true if it is the same as objectHolder, and false otherwise.
 */
 bool                
-MDObjHolder::operator==(const MDObjHolder& objectHolder) const
+AQLObjHolder::operator==(const AQLObjHolder& objectHolder) const
 {
 	return (mpObj->getName() == objectHolder.mpObj->getName());
 }
@@ -62,11 +62,11 @@ MDObjHolder::operator==(const MDObjHolder& objectHolder) const
     @brief relational operator through the comparison with Name
 
 
-	@param[in] objectHolder MDObjHolder class to store data get class to compare
+	@param[in] objectHolder AQLObjHolder class to store data get class to compare
     @return true if this object < objectHolder true, and false otherwise
 */
 bool                
-MDObjHolder::operator < (const MDObjHolder& objectHolder) const
+AQLObjHolder::operator < (const AQLObjHolder& objectHolder) const
 {
 	return (mpObj->getName() < objectHolder.mpObj->getName());
 }
@@ -77,7 +77,7 @@ MDObjHolder::operator < (const MDObjHolder& objectHolder) const
 	@param[in] b delete or not
 */
 void				
-MDObjHolder::setDeleteFlag(bool b)
+AQLObjHolder::setDeleteFlag(bool b)
 {
 	mDeleteFlag = b;
 }
@@ -85,11 +85,11 @@ MDObjHolder::setDeleteFlag(bool b)
     @brief copy the class to get data
 
 
-	@param[in] objectHolder MDObjHolder class which stores original data
+	@param[in] objectHolder AQLObjHolder class which stores original data
     @return reference to the object
 */
-MDObjHolder&   
-MDObjHolder::copy(const MDObjHolder& objectHolder)
+AQLObjHolder&   
+AQLObjHolder::copy(const AQLObjHolder& objectHolder)
 {
 	if (mpObj == objectHolder.mpObj) return *this;
 	if (mDeleteFlag)

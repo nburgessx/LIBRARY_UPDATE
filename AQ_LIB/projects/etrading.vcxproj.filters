@@ -259,10 +259,10 @@
     <Filter Include="src\CurveAnalytics\CurveEngine">
       <UniqueIdentifier>{f79f722d-956f-4b27-a730-d82753bef617}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\CurveAnalytics\LAStaticData">
+    <Filter Include="include\CurveAnalytics\AQLStaticData">
       <UniqueIdentifier>{cdd669cf-b186-459e-9185-fa8d071e3cb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\CurveAnalytics\LAStaticData">
+    <Filter Include="src\CurveAnalytics\AQLStaticData">
       <UniqueIdentifier>{3f517a55-4c04-4502-bb60-6d0d0d4679b8}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\RiskEngine">
@@ -985,10 +985,10 @@
       <Filter>include\Swap\Pricing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\LAObjectPoolBase.h">
-      <Filter>include\CurveAnalytics\LAStaticData</Filter>
+      <Filter>include\CurveAnalytics\AQLStaticData</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\LAUpdateStaticDataManager.h">
-      <Filter>include\CurveAnalytics\LAStaticData</Filter>
+      <Filter>include\CurveAnalytics\AQLStaticData</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\OMPThreadManager.h">
       <Filter>include\Initialization</Filter>
@@ -1072,10 +1072,10 @@
       <Filter>include\Inflation</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\LAUpdateCurveObject.h">
-      <Filter>include\CurveAnalytics\LAStaticData</Filter>
+      <Filter>include\CurveAnalytics\AQLStaticData</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\LAUpdateModelObject.h">
-      <Filter>include\CurveAnalytics\LAStaticData</Filter>
+      <Filter>include\CurveAnalytics\AQLStaticData</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\SabrMarketData.h">
       <Filter>include\Options\Volatility</Filter>
@@ -1734,10 +1734,10 @@
       <Filter>src\Enums</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\LAObjectPoolBase.cpp">
-      <Filter>src\CurveAnalytics\LAStaticData</Filter>
+      <Filter>src\CurveAnalytics\AQLStaticData</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\LAUpdateStaticDataManager.cpp">
-      <Filter>src\CurveAnalytics\LAStaticData</Filter>
+      <Filter>src\CurveAnalytics\AQLStaticData</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\OMPThreadManager.cpp">
       <Filter>src\Initialization</Filter>
@@ -1815,10 +1815,10 @@
       <Filter>src\Inflation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\LAUpdateCurveObject.cpp">
-      <Filter>src\CurveAnalytics\LAStaticData</Filter>
+      <Filter>src\CurveAnalytics\AQLStaticData</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\LAUpdateModelObject.cpp">
-      <Filter>src\CurveAnalytics\LAStaticData</Filter>
+      <Filter>src\CurveAnalytics\AQLStaticData</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\SabrModel.cpp">
       <Filter>src\Options\Volatility</Filter>

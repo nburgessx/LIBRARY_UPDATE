@@ -6,8 +6,8 @@
 */
 
 
-#ifndef MFDefine_h
-#define MFDefine_h
+#ifndef AQLDefine_h
+#define AQLDefine_h
 
 #ifdef __GNUG__
 #pragma interface

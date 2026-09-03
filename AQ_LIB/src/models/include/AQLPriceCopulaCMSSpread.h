@@ -74,10 +74,10 @@ public:
 //================ VIntegrand ===================================
 enum VType { v1Right, v1Left, v2Right, v2Left };
 
-class MVVIntegrand : public AQLFunction
+class AQLVIntegrand : public AQLFunction
 {
 public:
-    MVVIntegrand(AQLUnivariateDistribution* marginal1_, AQLUnivariateDistribution* marginal2_,
+    AQLVIntegrand(AQLUnivariateDistribution* marginal1_, AQLUnivariateDistribution* marginal2_,
                  AQLBivariateCopula* copula_, double alpha_, double beta_, double K_, VType vType_);
 
     double operator()(double x) const;

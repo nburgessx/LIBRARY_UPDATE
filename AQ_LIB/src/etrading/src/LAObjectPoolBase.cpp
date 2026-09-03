@@ -1,6 +1,6 @@
 //
 // LAObjectPoolBase.cpp
-// This file used to be called Calibrator.cpp and before that LACalibrateModel.cpp
+// This file used to be called Calibrator.cpp and before that AQLCalibrateModel.cpp
 //
 
 #ifdef __GNUG__
@@ -18,12 +18,12 @@
 #include "AQLDataBasics.h"
 #include "AQLDataReference.h"
 #include "AQLRatesSDEBase.h"
-#include "LADefinitions.h"
-#include "LACoreDataService.h"
-#include "LAStaticData.h"
-#include "LADealUtils.h"
+#include "AQLDefinitions.h"
+#include "AQLCoreDataService.h"
+#include "AQLStaticData.h"
+#include "AQLDealUtils.h"
 #include "AQLMathVolatility.h"
-#include "LAMarketData.h"
+#include "AQLMarketData.h"
 
 
 // constructor
@@ -31,7 +31,7 @@
 
 */
 LAObjectPoolBase::LAObjectPoolBase()
-: mpStaticData(&LACoreDataService::getStaticDataManager().getStaticData())
+: mpStaticData(&AQLCoreDataService::getStaticDataManager().getStaticData())
 {
 }
 
@@ -200,7 +200,7 @@ LAObjectPoolBase::loadVolatilityDataAndCalibrate(const AQLString &key, AQLDataIn
 bool
 LAObjectPoolBase::isCalibTarget(const AQLString &ccy) const
 {
-	if (!LAMarketData::isCalibrateModel(LAMarketData::getModelName(ccy)))
+	if (!AQLMarketData::isCalibrateModel(AQLMarketData::getModelName(ccy)))
 	{
 		return false;
 	}
@@ -236,7 +236,7 @@ bool
 LAObjectPoolBase::isCancelForFunding(const AQLString &ccy) const
 {
 
-	AQLStringVector simCur = MADealUtils::getSimulationSDECurrencys();
+	AQLStringVector simCur = AQLDealUtils::getSimulationSDECurrencys();
 	if (simCur.size() == 0)
 		return false;
 

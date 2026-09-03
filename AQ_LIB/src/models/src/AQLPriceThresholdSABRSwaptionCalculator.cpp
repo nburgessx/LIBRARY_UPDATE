@@ -8,10 +8,10 @@
 #include "AQLMathOptionTools.h"
 
 // Threshold SABR option model to use for CMS replication. The volatility is capped by a threshold.
-MVThresholdSABRSwaptionCalculator::MVThresholdSABRSwaptionCalculator(double S0_,
+AQLThresholdSABRSwaptionCalculator::AQLThresholdSABRSwaptionCalculator(double S0_,
                                                                      const vector<double>& sabrParameters_,
                                                                      const vector<double>& extraParameters_)
-: MVSABRSwaptionCalculator(S0_, sabrParameters_)
+: AQLSABRSwaptionCalculator(S0_, sabrParameters_)
 {
     if (extraParameters_.size() < 1)
         AQLCoreInvalidData("Invalid parameter size in Threshold SABR swaption calculator",__FILE__,__LINE__);
@@ -19,7 +19,7 @@ MVThresholdSABRSwaptionCalculator::MVThresholdSABRSwaptionCalculator(double S0_,
     mThreshold = extraParameters_[0];
 }
 
-double MVThresholdSABRSwaptionCalculator::Price(double t, double strike, bool isCall)
+double AQLThresholdSABRSwaptionCalculator::Price(double t, double strike, bool isCall)
 {
     double vol = mSabr.getSABRVol(t, mS0, strike);
     vol = (vol > mThreshold ? mThreshold : vol);

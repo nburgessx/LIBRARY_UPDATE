@@ -1,5 +1,5 @@
-#ifndef MFParameterUtility_h
-#define MFParameterUtility_h
+#ifndef AQLParameterUtility_h
+#define AQLParameterUtility_h
 
 #ifdef __GNUG__
 #pragma interface
@@ -59,10 +59,10 @@ private:
 
 };
 
-class MFParameterMatrix
+class AQLParameterMatrix
 {
 public:
-    MFParameterMatrix(const DoubleMatrix& mat_, const DoubleVector& expiryVec_, const AQLStringVector& idxVec_);
+    AQLParameterMatrix(const DoubleMatrix& mat_, const DoubleVector& expiryVec_, const AQLStringVector& idxVec_);
 
     double LookUp(double expiry, const AQLString& idxID, AQLString interpolationType);
 

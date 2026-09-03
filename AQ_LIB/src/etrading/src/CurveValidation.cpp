@@ -3,16 +3,16 @@
 #include "CurveResultsContainer.h"      // Accessors to Curve Results, Description and Discount Factors
 #include "InitializeAQETrading.h"
 #include "ParameterValidation.h"
-#include "LADefinitions.h"
+#include "AQLDefinitions.h"
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
 #include "LACurveCalibrationHelpers.h"
 #include "AQLPriceDataCalendar.h"
 #include "CurveCalibrationData.h"
-#include "LAMarketData.h"
+#include "AQLMarketData.h"
 #include "AQLPriceDataInterpolation.h"
 #include "CommonConstants.h"
-#include "LAStaticData.h"
+#include "AQLStaticData.h"
 #include "ExceptionMacros.h"
 #include "Solvers.h"
 #include "CurveUtilities.h"
@@ -129,7 +129,7 @@ namespace etrading
         return currency;
     }
 
-    /*  @brief is fwdfx constant curve or not, the logic is from LACalibrateModel.cpp
+    /*  @brief is fwdfx constant curve or not, the logic is from AQLCalibrateModel.cpp
     * @param[in]   currency				Currency or fx ex.JPY/USD
     * @param[in]   staticDataTable  Static data table/market name
     * @param[out]   is fwdfx constant curve or not
@@ -137,7 +137,7 @@ namespace etrading
     bool isFwdFXConst( const AQLString& currency, const AQLString& staticDataTable )
     {
         AQLString tmpCcy = currency;
-        LAStaticData& irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+        AQLStaticData& irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
         AQLString suffix = "." + staticDataTable;
         AQLString str = irStaticData.getStaticData( tmpCcy.toLower() + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST + suffix.toLower() );
         bool isFwdFx = ( str.toUpper() == "TRUE" );
@@ -523,7 +523,7 @@ namespace etrading
             AQLString currency           = getCurveCurrency( curveCollection );
             AQLString keyName            = currency + STATIC_DATA_KEY_YIELD_OIS_DAYCOUNT + "." + marketNameUppercase;
 			keyName.toLower();
-            LAStaticData& irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+            AQLStaticData& irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
             curveDaycount               = irStaticData.getStaticData( keyName );
         }
         else if( curveType == CURVETYPE_SWAP )
@@ -790,7 +790,7 @@ namespace etrading
     */
     AQLString getCurveInterpolation( const AQLString& curveCollection, const AQLString& staticDataTable )
     {
-		LAStaticData& irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+		AQLStaticData& irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 
         //Get curve currency
         AQLString currency = getCurveCurrency( curveCollection );

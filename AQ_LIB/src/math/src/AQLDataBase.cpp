@@ -20,14 +20,14 @@
 
 	@param[in] name name of the object
 */
-MDBase::MDBase(const AQLString& name)
+AQLBase::AQLBase(const AQLString& name)
 :mName(name)
 {
 }
 /*!
     @brief destructor
 */
-MDBase::~MDBase()
+AQLBase::~AQLBase()
 {
 }
 

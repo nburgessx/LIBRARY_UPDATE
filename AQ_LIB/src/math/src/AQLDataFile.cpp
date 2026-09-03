@@ -26,7 +26,7 @@ const char_t*   const writeMode = "w";
 /*!
     @brief constructor
 */
-MDFile::MDFile() : mpFile(NULL), mModified(false)
+AQLFile::AQLFile() : mpFile(NULL), mModified(false)
 {
 }
 /*!
@@ -35,7 +35,7 @@ MDFile::MDFile() : mpFile(NULL), mModified(false)
     @param[in] fileName file name
     @param[in] openMode file open mode
 */
-MDFile::MDFile(const char_t* fileName, OPENMODE openMode)
+AQLFile::AQLFile(const char_t* fileName, OPENMODE openMode)
  : mpFile(NULL), mModified(false)
 {
     openFile(fileName, openMode);
@@ -46,7 +46,7 @@ MDFile::MDFile(const char_t* fileName, OPENMODE openMode)
     @param[in] fileName file name
     @param[in] openMode file open mode
 */
-MDFile::MDFile(const AQLString& fileName, OPENMODE openMode)
+AQLFile::AQLFile(const AQLString& fileName, OPENMODE openMode)
  : mpFile(NULL), mModified(false)
 {
     openFile(fileName, openMode);
@@ -54,7 +54,7 @@ MDFile::MDFile(const AQLString& fileName, OPENMODE openMode)
 /*!
     @brief destructor
 */
-MDFile::~MDFile()
+AQLFile::~AQLFile()
 {
     closeFile();
 }
@@ -66,7 +66,7 @@ MDFile::~MDFile()
     @return file name
 */
 const AQLString&         
-MDFile::getFileName() const
+AQLFile::getFileName() const
 {
     return mFileName;
 }
@@ -76,7 +76,7 @@ MDFile::getFileName() const
     @return the number of records
 */
 const unsigned int          
-MDFile::getRowCounts() const
+AQLFile::getRowCounts() const
 {
     return mRecords.size();
 }
@@ -87,7 +87,7 @@ MDFile::getRowCounts() const
     @return record
 */
 const AQLString&
-MDFile::getRecord(
+AQLFile::getRecord(
     unsigned int rec) const
 {
     return mRecords[rec];
@@ -101,7 +101,7 @@ MDFile::getRecord(
     @return Item
 */
 AQLString                
-MDFile::getItem(
+AQLFile::getItem(
     unsigned int rec, 
     unsigned int from, 
     unsigned int to) const
@@ -121,7 +121,7 @@ MDFile::getItem(
     @return Item
 */
 AQLString                
-MDFile::getItem(
+AQLFile::getItem(
     unsigned int rec, 
     unsigned int num, 
     char_t del) const
@@ -179,7 +179,7 @@ MDFile::getItem(
     @return Item
 */
 unsigned int            
-MDFile::getItemsize(
+AQLFile::getItemsize(
     unsigned int rec, 
     char_t del) const
 {
@@ -214,7 +214,7 @@ MDFile::getItemsize(
     @return Item in the array
 */
 vector<AQLString>        
-MDFile::getItems(
+AQLFile::getItems(
     unsigned int rec, 
     char_t del) const
 {
@@ -257,7 +257,7 @@ MDFile::getItems(
                 MODE_W: write mode
 */
 void                    
-MDFile::openFile(
+AQLFile::openFile(
     const char_t* fileName,
     OPENMODE openMode)
 {
@@ -276,7 +276,7 @@ MDFile::openFile(
                 MODE_W: write mode
 */
 void                    
-MDFile::openFile(
+AQLFile::openFile(
     const AQLString& fileName,
     OPENMODE openMode)
 {
@@ -287,7 +287,7 @@ MDFile::openFile(
 
 */
 void                    
-MDFile::closeFile(void)
+AQLFile::closeFile(void)
 {
     flush();
     mModified = false;
@@ -299,7 +299,7 @@ MDFile::closeFile(void)
     @brief write to a file the contents ofthe buffer area
 */
 void
-MDFile::flush(void)
+AQLFile::flush(void)
 {
     if (mRead)
     {
@@ -338,7 +338,7 @@ MDFile::flush(void)
     @brief clear contents of the file
 */
 void
-MDFile::clear()
+AQLFile::clear()
 {
     if (mpFile != NULL)
     {
@@ -364,7 +364,7 @@ MDFile::clear()
     @param[in] item Item to be replaced
 */      
 void                    
-MDFile::setItem(
+AQLFile::setItem(
     unsigned int rec, 
     unsigned int from, 
     unsigned int to, 
@@ -391,7 +391,7 @@ MDFile::setItem(
     @param[in] item Item to be replaced
 */      
 void                    
-MDFile::setItem(
+AQLFile::setItem(
     unsigned int rec, 
     unsigned int num, 
     char_t del, 
@@ -465,7 +465,7 @@ MDFile::setItem(
     @param[in] str record to be added
 */      
 void                    
-MDFile::addRecord(
+AQLFile::addRecord(
     const AQLString& str)
 {
     if (mRead) // if the read-only, throw an exception.
@@ -487,7 +487,7 @@ MDFile::addRecord(
     @param[in] str record to be inserted
 */  
 void                    
-MDFile::insertRecord(
+AQLFile::insertRecord(
     unsigned int before, 
     const AQLString& str)
 {
@@ -504,7 +504,7 @@ MDFile::insertRecord(
 
 */  
 void
-MDFile::changeOpenMode()
+AQLFile::changeOpenMode()
 {
     if (mpFile != NULL)
     {
@@ -526,7 +526,7 @@ MDFile::changeOpenMode()
 
 */  
 void
-MDFile::init()
+AQLFile::init()
 {
     //must be set file name in mFileName
     mRecords.clear();
@@ -574,7 +574,7 @@ MDFile::init()
     @return file open mode that has been converted to a string
 */
 const char_t*           
-MDFile::getOpenMode(
+AQLFile::getOpenMode(
     OPENMODE openMode)
 {
     switch(openMode)

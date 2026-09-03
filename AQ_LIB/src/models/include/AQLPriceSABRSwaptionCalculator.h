@@ -1,5 +1,5 @@
-#ifndef MVSABRSwaptionCalculator_h
-#define MVSABRSwaptionCalculator_h
+#ifndef AQLSABRSwaptionCalculator_h
+#define AQLSABRSwaptionCalculator_h
 
 #ifdef __GNUG__
 #pragma interface
@@ -10,10 +10,10 @@
 
 using namespace std;
 
-class MVSABRSwaptionCalculator : public AQLPriceSwaptionCalculator
+class AQLSABRSwaptionCalculator : public AQLPriceSwaptionCalculator
 {
 public:
-    MVSABRSwaptionCalculator(double S0_, const vector<double>& sabrParameters_);
+    AQLSABRSwaptionCalculator(double S0_, const vector<double>& sabrParameters_);
     virtual double Price(double t, double strike, bool isCall);
     double BoundStrike(double t, double confidence, bool isUp);
     vector<double> StrikeGrid(double t, double confidence, size_t nPoints);

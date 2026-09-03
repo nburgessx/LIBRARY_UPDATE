@@ -12,7 +12,7 @@
 #include "LACurvePricingObject.h"
 #include "CurveCalibrationData.h"
 #include "AQLCoreComponentManager.h"
-#include "LADefinitions.h"
+#include "AQLDefinitions.h"
 #include "AQLDataReference.h"
 #include "AQLMathDefine.h"
 #include "DataUtilities.h"  // For AQ_TO_STRING macros

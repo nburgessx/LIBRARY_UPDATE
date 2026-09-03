@@ -71,15 +71,15 @@ private:
     @brief Declaration and definition of inner class to represent inner function
 
 	*/
-	class MMInnerFunction : public AQLFunctionBase
+	class AQLInnerFunction : public AQLFunctionBase
 	{
 	public:
 		// Default constructor
-		explicit MMInnerFunction(const AQL1DIntegral* pIntegral);
+		explicit AQLInnerFunction(const AQL1DIntegral* pIntegral);
 		// Destructor
-		~MMInnerFunction();
+		~AQLInnerFunction();
 		// Copy constructor
-		MMInnerFunction(const MMInnerFunction& v);
+		AQLInnerFunction(const AQLInnerFunction& v);
 									//======================================
 									// Make copy(clone) of this class
 		virtual AQLCoreFunctionBase*		clone() const;
@@ -104,7 +104,7 @@ private:
 									// set integral region
 		void						setIntegralRegion(double xl, double xu) {mXl=xl; mXu=xu;};
 
-		MMInnerFunction & operator=( const MMInnerFunction & ) { return *this; }
+		AQLInnerFunction & operator=( const AQLInnerFunction & ) { return *this; }
 
 	private:
 		AQLFunctionBase* mpFunc;				// pointer to function

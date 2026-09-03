@@ -1,5 +1,5 @@
-#ifndef MMAnalyticFormula_h
-#define MMAnalyticFormula_h
+#ifndef AQLAnalyticFormula_h
+#define AQLAnalyticFormula_h
 
 #ifdef __GNUG__
 #pragma interface
@@ -132,7 +132,7 @@ public :
 
 };
 /*!
-Parameter base class for MMDigitalAnalyticFormula
+Parameter base class for AQLDigitalAnalyticFormula
 */
 class AnalyticDGParam : public AnalyticGKParam
 {
@@ -146,7 +146,7 @@ public :
 	virtual AnalyticParam* clone() const { return new AnalyticDGParam(*this);};
 };
 /*!
-Parameter base class for MMDigitalAnalyticFormula
+Parameter base class for AQLDigitalAnalyticFormula
 */
 class AnalyticSBParam : public AnalyticGKParam
 {
@@ -164,7 +164,7 @@ public :
 	virtual AnalyticParam* clone() const { return new AnalyticSBParam(*this);};
 };
 /*!
-Parameter base class MMDigitalAnalyticFormula BlackAnalysis
+Parameter base class AQLDigitalAnalyticFormula BlackAnalysis
 */
 class AnalyticDBParam : public AnalyticGKParam
 {
@@ -282,10 +282,10 @@ public:
 /*!
 Parameter base class for MMCFAnalyticFormula
 */
-	static double MMCFpremCall(AnalyticParam& param);
-	static double MMCFvegaCall(AnalyticParam& param);
-	static double MMCFpremPut(AnalyticParam& param);
-	static double MMCFvegaPut(AnalyticParam& param);
+	static double AQLCFpremCall(AnalyticParam& param);
+	static double AQLCFvegaCall(AnalyticParam& param);
+	static double AQLCFpremPut(AnalyticParam& param);
+	static double AQLCFvegaPut(AnalyticParam& param);
 /*!
 	/////Digital option Formula
 	S		spot price
@@ -330,8 +330,8 @@ Parameter base class for MMCFAnalyticFormula
 */
 
 	//hishida vannaavolga
-	static double MMSBprobUNT (AnalyticParam& param);
-	static double MMSBprobDNT (AnalyticParam& param);
+	static double AQLSBprobUNT (AnalyticParam& param);
+	static double AQLSBprobDNT (AnalyticParam& param);
 
 
 	static double SBmu1(AnalyticParam& param);

@@ -1,5 +1,5 @@
-#ifndef MVReplication_h
-#define MVReplication_h
+#ifndef AQLReplication_h
+#define AQLReplication_h
 
 #ifdef __GNUG__
 #pragma interface
@@ -10,11 +10,11 @@
 
 using namespace std;
 
-//================ MVReplication ===================================
-class MVReplication
+//================ AQLReplication ===================================
+class AQLReplication
 {
 public:
-    MVReplication(AQLPriceSwaptionCalculator* swaptionCalculator_, double shift_, double annuity_, double dfPay_, double tau_, double nCashFlows_, string distributionType_, bool rescale_, double confidence_ = 0.0, int nPoints_ = 0);
+    AQLReplication(AQLPriceSwaptionCalculator* swaptionCalculator_, double shift_, double annuity_, double dfPay_, double tau_, double nCashFlows_, string distributionType_, bool rescale_, double confidence_ = 0.0, int nPoints_ = 0);
 
     double Forward(double T, double deltaT, double S0);
     double Option(double T, double deltaT, double K, bool isCall, double S0);
@@ -46,11 +46,11 @@ private:
     static double mvReplicationThreshold;
 };
 
-//================ MVReplicationIntegrand ===================================
-class MVReplicationIntegrand: public AQLFunction
+//================ AQLReplicationIntegrand ===================================
+class AQLReplicationIntegrand: public AQLFunction
 {
 public:
-    MVReplicationIntegrand(double T_, bool isCall_, AQLPriceSwaptionCalculator* swpnCalculator_);
+    AQLReplicationIntegrand(double T_, bool isCall_, AQLPriceSwaptionCalculator* swpnCalculator_);
     double operator()(double x) const;
 
 private:
@@ -60,7 +60,7 @@ private:
 };
 
 //================ Utilities ===================================
-MVReplication* GetReplicationMethod(string type, AQLPriceSwaptionCalculator* swpnCalculator_, double shift,
+AQLReplication* GetReplicationMethod(string type, AQLPriceSwaptionCalculator* swpnCalculator_, double shift,
                                     double annuity, double dfPay, double tau,
                                     double nCashFlows, double confidence, int nPoints);
 

@@ -12,11 +12,11 @@
 #include "ETradingException.h"
 #include "AQLCoreUtil.h"
 // include these if getting the lambda from a property file
-//#include "LAStaticData.h"
-//#include "LACoreDataService.h"
-//#include "LADefinitions.h"
-//#include "LAStaticDataManager.h"
-//#include "LAStaticData.h"
+//#include "AQLStaticData.h"
+//#include "AQLCoreDataService.h"
+//#include "AQLDefinitions.h"
+//#include "AQLStaticDataManager.h"
+//#include "AQLStaticData.h"
 
 
 namespace etrading
@@ -57,7 +57,7 @@ namespace etrading
         {
             if( boost::math::isnan( lambda ) )
             {
-                //const LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
+                //const AQLStaticData &staticData = AQLCoreDataService::getStaticDataManager().getStaticData();
                 //const AQLString strLambda = staticData.getStaticData(KEY_MONOTONECONVEX_LAMBDA);
                 //lambda = (strLambda == "NO_DATA") ? 0.0 : boost::lexical_cast<double>(std::string(strLambda.getCString()));
                 lambda = 0.0;

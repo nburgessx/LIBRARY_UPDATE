@@ -14,11 +14,11 @@ public :
 	virtual double calc(AnalyticParam& param)=0;
 };
 //0Value
-class MMZeroForError :public AQLBlackScholesBase
+class AQLZeroForError :public AQLBlackScholesBase
 {
 	public :
-	MMZeroForError(){}
-	virtual ~MMZeroForError(){}
+	AQLZeroForError(){}
+	virtual ~AQLZeroForError(){}
 	double calc(AnalyticParam& param){(void)param; return 0.0;}
 };
 
@@ -115,32 +115,32 @@ public :
 };
 
 //MMCF
-class MMCFpremCall : public AQLBlackScholesBase
+class AQLCFpremCall : public AQLBlackScholesBase
 {
 public :
-	MMCFpremCall(){}
-	virtual ~MMCFpremCall(){}
-	double calc(AnalyticParam& param){ return AnalyticFormulae::MMCFpremCall(param);}
+	AQLCFpremCall(){}
+	virtual ~AQLCFpremCall(){}
+	double calc(AnalyticParam& param){ return AnalyticFormulae::AQLCFpremCall(param);}
 };
-class MMCFvegaCall : public AQLBlackScholesBase
+class AQLCFvegaCall : public AQLBlackScholesBase
 {
 public :
-	MMCFvegaCall(){}
-	virtual ~MMCFvegaCall(){}
-	double calc(AnalyticParam& param){ return AnalyticFormulae::MMCFvegaCall(param);}
+	AQLCFvegaCall(){}
+	virtual ~AQLCFvegaCall(){}
+	double calc(AnalyticParam& param){ return AnalyticFormulae::AQLCFvegaCall(param);}
 };
-class MMCFpremPut : public AQLBlackScholesBase
+class AQLCFpremPut : public AQLBlackScholesBase
 {
 public :
-	MMCFpremPut(){}
-	virtual ~MMCFpremPut(){}
-	double calc(AnalyticParam& param){ return AnalyticFormulae::MMCFpremPut(param);}
-};class MMCFvegaPut : public AQLBlackScholesBase
+	AQLCFpremPut(){}
+	virtual ~AQLCFpremPut(){}
+	double calc(AnalyticParam& param){ return AnalyticFormulae::AQLCFpremPut(param);}
+};class AQLCFvegaPut : public AQLBlackScholesBase
 {
 public :
-	MMCFvegaPut(){}
-	virtual ~MMCFvegaPut(){}
-	double calc(AnalyticParam& param){ return AnalyticFormulae::MMCFvegaPut(param);}
+	AQLCFvegaPut(){}
+	virtual ~AQLCFvegaPut(){}
+	double calc(AnalyticParam& param){ return AnalyticFormulae::AQLCFvegaPut(param);}
 };
 //LAGreek
 class AQLGreekpremCall : public AQLBlackScholesBase
@@ -270,657 +270,657 @@ public :
 	double calc(AnalyticParam& param){ return AnalyticFormulae::GKvolgaPut(param);}
 };
 //MMDG
-class MMDGpremCall : public AQLBlackScholesBase
+class AQLDGpremCall : public AQLBlackScholesBase
 {
 public :
-	MMDGpremCall(){}
-	virtual ~MMDGpremCall(){}
+	AQLDGpremCall(){}
+	virtual ~AQLDGpremCall(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGpremCall(param);}
 };
-class MMDGdeltaCall : public AQLBlackScholesBase
+class AQLDGdeltaCall : public AQLBlackScholesBase
 {
 public :
-	MMDGdeltaCall(){}
-	virtual ~MMDGdeltaCall(){}
+	AQLDGdeltaCall(){}
+	virtual ~AQLDGdeltaCall(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGdeltaCall(param);}
 };
-class MMDGgammaCall : public AQLBlackScholesBase
+class AQLDGgammaCall : public AQLBlackScholesBase
 {
 public :
-	MMDGgammaCall(){}
-	virtual ~MMDGgammaCall(){}
+	AQLDGgammaCall(){}
+	virtual ~AQLDGgammaCall(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGgammaCall(param);}
 };
-class MMDGvegaCall : public AQLBlackScholesBase
+class AQLDGvegaCall : public AQLBlackScholesBase
 {
 public :
-	MMDGvegaCall(){}
-	virtual ~MMDGvegaCall(){}
+	AQLDGvegaCall(){}
+	virtual ~AQLDGvegaCall(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGvegaCall(param);}
 };
-class MMDGthetaCall : public AQLBlackScholesBase
+class AQLDGthetaCall : public AQLBlackScholesBase
 {
 public :
-	MMDGthetaCall(){}
-	virtual ~MMDGthetaCall(){}
+	AQLDGthetaCall(){}
+	virtual ~AQLDGthetaCall(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGthetaCall(param);}
 };
-class MMDGrhoCall : public AQLBlackScholesBase
+class AQLDGrhoCall : public AQLBlackScholesBase
 {
 public :
-	MMDGrhoCall(){}
-	virtual ~MMDGrhoCall(){}
+	AQLDGrhoCall(){}
+	virtual ~AQLDGrhoCall(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGrhoCall(param);}
 };
-class MMDGphiCall : public AQLBlackScholesBase
+class AQLDGphiCall : public AQLBlackScholesBase
 {
 public :
-	MMDGphiCall(){}
-	virtual ~MMDGphiCall(){}
+	AQLDGphiCall(){}
+	virtual ~AQLDGphiCall(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGphiCall(param);}
 };
 
-class MMDGpremPut : public AQLBlackScholesBase
+class AQLDGpremPut : public AQLBlackScholesBase
 {
 public :
-	MMDGpremPut(){}
-	virtual ~MMDGpremPut(){}
+	AQLDGpremPut(){}
+	virtual ~AQLDGpremPut(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGpremPut(param);}
 };
-class MMDGdeltaPut : public AQLBlackScholesBase
+class AQLDGdeltaPut : public AQLBlackScholesBase
 {
 public :
-	MMDGdeltaPut(){}
-	virtual ~MMDGdeltaPut(){}
+	AQLDGdeltaPut(){}
+	virtual ~AQLDGdeltaPut(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGdeltaPut(param);}
 };
-class MMDGgammaPut : public AQLBlackScholesBase
+class AQLDGgammaPut : public AQLBlackScholesBase
 {
 public :
-	MMDGgammaPut(){}
-	virtual ~MMDGgammaPut(){}
+	AQLDGgammaPut(){}
+	virtual ~AQLDGgammaPut(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGgammaPut(param);}
 };
-class MMDGvegaPut : public AQLBlackScholesBase
+class AQLDGvegaPut : public AQLBlackScholesBase
 {
 public :
-	MMDGvegaPut(){}
-	virtual ~MMDGvegaPut(){}
+	AQLDGvegaPut(){}
+	virtual ~AQLDGvegaPut(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGvegaPut(param);}
 };
-class MMDGthetaPut : public AQLBlackScholesBase
+class AQLDGthetaPut : public AQLBlackScholesBase
 {
 public :
-	MMDGthetaPut(){}
-	virtual ~MMDGthetaPut(){}
+	AQLDGthetaPut(){}
+	virtual ~AQLDGthetaPut(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGthetaPut(param);}
 };
-class MMDGrhoPut : public AQLBlackScholesBase
+class AQLDGrhoPut : public AQLBlackScholesBase
 {
 public :
-	MMDGrhoPut(){}
-	virtual ~MMDGrhoPut(){}
+	AQLDGrhoPut(){}
+	virtual ~AQLDGrhoPut(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGrhoPut(param);}
 };
-class MMDGphiPut : public AQLBlackScholesBase
+class AQLDGphiPut : public AQLBlackScholesBase
 {
 public :
-	MMDGphiPut(){}
-	virtual ~MMDGphiPut(){}
+	AQLDGphiPut(){}
+	virtual ~AQLDGphiPut(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DGphiPut(param);}
 };
 
 //hishida vannavolga
 
-class MMSBprobUNT : public AQLBlackScholesBase
+class AQLSBprobUNT : public AQLBlackScholesBase
 {
 public :
-	MMSBprobUNT(){}
-	virtual ~MMSBprobUNT(){}
-	double calc(AnalyticParam& param){ return AnalyticFormulae::MMSBprobUNT(param);}
+	AQLSBprobUNT(){}
+	virtual ~AQLSBprobUNT(){}
+	double calc(AnalyticParam& param){ return AnalyticFormulae::AQLSBprobUNT(param);}
 };
-class MMSBprobDNT : public AQLBlackScholesBase
+class AQLSBprobDNT : public AQLBlackScholesBase
 {
 public :
-	MMSBprobDNT(){}
-	virtual ~MMSBprobDNT(){}
-	double calc(AnalyticParam& param){ return AnalyticFormulae::MMSBprobDNT(param);}
+	AQLSBprobDNT(){}
+	virtual ~AQLSBprobDNT(){}
+	double calc(AnalyticParam& param){ return AnalyticFormulae::AQLSBprobDNT(param);}
 };
 //hishida vannavolga
 
 
 //MMSB
-class MMSBpremDIC : public AQLBlackScholesBase
+class AQLSBpremDIC : public AQLBlackScholesBase
 {
 public :
-	MMSBpremDIC(){}
-	virtual ~MMSBpremDIC(){}
+	AQLSBpremDIC(){}
+	virtual ~AQLSBpremDIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBpremDIC(param);}
 };
-class MMSBpremDIP : public AQLBlackScholesBase
+class AQLSBpremDIP : public AQLBlackScholesBase
 {
 public :
-	MMSBpremDIP(){}
-	virtual ~MMSBpremDIP(){}
+	AQLSBpremDIP(){}
+	virtual ~AQLSBpremDIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBpremDIP(param);}
 };
-class MMSBpremDOC : public AQLBlackScholesBase
+class AQLSBpremDOC : public AQLBlackScholesBase
 {
 public :
-	MMSBpremDOC(){}
-	virtual ~MMSBpremDOC(){}
+	AQLSBpremDOC(){}
+	virtual ~AQLSBpremDOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBpremDOC(param);}
 };
-class MMSBpremDOP : public AQLBlackScholesBase
+class AQLSBpremDOP : public AQLBlackScholesBase
 {
 public :
-	MMSBpremDOP(){}
-	virtual ~MMSBpremDOP(){}
+	AQLSBpremDOP(){}
+	virtual ~AQLSBpremDOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBpremDOP(param);}
 };
-class MMSBpremUIC : public AQLBlackScholesBase
+class AQLSBpremUIC : public AQLBlackScholesBase
 {
 public :
-	MMSBpremUIC(){}
-	virtual ~MMSBpremUIC(){}
+	AQLSBpremUIC(){}
+	virtual ~AQLSBpremUIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBpremUIC(param);}
 };
-class MMSBpremUIP : public AQLBlackScholesBase
+class AQLSBpremUIP : public AQLBlackScholesBase
 {
 public :
-	MMSBpremUIP(){}
-	virtual ~MMSBpremUIP(){}
+	AQLSBpremUIP(){}
+	virtual ~AQLSBpremUIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBpremUIP(param);}
 };
-class MMSBpremUOC : public AQLBlackScholesBase
+class AQLSBpremUOC : public AQLBlackScholesBase
 {
 public :
-	MMSBpremUOC(){}
-	virtual ~MMSBpremUOC(){}
+	AQLSBpremUOC(){}
+	virtual ~AQLSBpremUOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBpremUOC(param);}
 };
-class MMSBpremUOP : public AQLBlackScholesBase
+class AQLSBpremUOP : public AQLBlackScholesBase
 {
 public :
-	MMSBpremUOP(){}
-	virtual ~MMSBpremUOP(){}
+	AQLSBpremUOP(){}
+	virtual ~AQLSBpremUOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBpremUOP(param);}
 };
 
-class MMSBdeltaDIC : public AQLBlackScholesBase
+class AQLSBdeltaDIC : public AQLBlackScholesBase
 {
 public :
-	MMSBdeltaDIC(){}
-	virtual ~MMSBdeltaDIC(){}
+	AQLSBdeltaDIC(){}
+	virtual ~AQLSBdeltaDIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBdeltaDIC(param);}
 };
-class MMSBdeltaDIP : public AQLBlackScholesBase
+class AQLSBdeltaDIP : public AQLBlackScholesBase
 {
 public :
-	MMSBdeltaDIP(){}
-	virtual ~MMSBdeltaDIP(){}
+	AQLSBdeltaDIP(){}
+	virtual ~AQLSBdeltaDIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBdeltaDIP(param);}
 };
-class MMSBdeltaDOC : public AQLBlackScholesBase
+class AQLSBdeltaDOC : public AQLBlackScholesBase
 {
 public :
-	MMSBdeltaDOC(){}
-	virtual ~MMSBdeltaDOC(){}
+	AQLSBdeltaDOC(){}
+	virtual ~AQLSBdeltaDOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBdeltaDOC(param);}
 };
-class MMSBdeltaDOP : public AQLBlackScholesBase
+class AQLSBdeltaDOP : public AQLBlackScholesBase
 {
 public :
-	MMSBdeltaDOP(){}
-	virtual ~MMSBdeltaDOP(){}
+	AQLSBdeltaDOP(){}
+	virtual ~AQLSBdeltaDOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBdeltaDOP(param);}
 };
-class MMSBdeltaUIC : public AQLBlackScholesBase
+class AQLSBdeltaUIC : public AQLBlackScholesBase
 {
 public :
-	MMSBdeltaUIC(){}
-	virtual ~MMSBdeltaUIC(){}
+	AQLSBdeltaUIC(){}
+	virtual ~AQLSBdeltaUIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBdeltaUIC(param);}
 };
-class MMSBdeltaUIP : public AQLBlackScholesBase
+class AQLSBdeltaUIP : public AQLBlackScholesBase
 {
 public :
-	MMSBdeltaUIP(){}
-	virtual ~MMSBdeltaUIP(){}
+	AQLSBdeltaUIP(){}
+	virtual ~AQLSBdeltaUIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBdeltaUIP(param);}
 };
-class MMSBdeltaUOC : public AQLBlackScholesBase
+class AQLSBdeltaUOC : public AQLBlackScholesBase
 {
 public :
-	MMSBdeltaUOC(){}
-	virtual ~MMSBdeltaUOC(){}
+	AQLSBdeltaUOC(){}
+	virtual ~AQLSBdeltaUOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBdeltaUOC(param);}
 };
-class MMSBdeltaUOP : public AQLBlackScholesBase
+class AQLSBdeltaUOP : public AQLBlackScholesBase
 {
 public :
-	MMSBdeltaUOP(){}
-	virtual ~MMSBdeltaUOP(){}
+	AQLSBdeltaUOP(){}
+	virtual ~AQLSBdeltaUOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBdeltaUOP(param);}
 };
-class MMSBgammaDIC : public AQLBlackScholesBase
+class AQLSBgammaDIC : public AQLBlackScholesBase
 {
 public :
-	MMSBgammaDIC(){}
-	virtual ~MMSBgammaDIC(){}
+	AQLSBgammaDIC(){}
+	virtual ~AQLSBgammaDIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBgammaDIC(param);}
 };
-class MMSBgammaDIP : public AQLBlackScholesBase
+class AQLSBgammaDIP : public AQLBlackScholesBase
 {
 public :
-	MMSBgammaDIP(){}
-	virtual ~MMSBgammaDIP(){}
+	AQLSBgammaDIP(){}
+	virtual ~AQLSBgammaDIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBgammaDIP(param);}
 };
-class MMSBgammaDOC : public AQLBlackScholesBase
+class AQLSBgammaDOC : public AQLBlackScholesBase
 {
 public :
-	MMSBgammaDOC(){}
-	virtual ~MMSBgammaDOC(){}
+	AQLSBgammaDOC(){}
+	virtual ~AQLSBgammaDOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBgammaDOC(param);}
 };
-class MMSBgammaDOP : public AQLBlackScholesBase
+class AQLSBgammaDOP : public AQLBlackScholesBase
 {
 public :
-	MMSBgammaDOP(){}
-	virtual ~MMSBgammaDOP(){}
+	AQLSBgammaDOP(){}
+	virtual ~AQLSBgammaDOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBgammaDOP(param);}
 };
-class MMSBgammaUIC : public AQLBlackScholesBase
+class AQLSBgammaUIC : public AQLBlackScholesBase
 {
 public :
-	MMSBgammaUIC(){}
-	virtual ~MMSBgammaUIC(){}
+	AQLSBgammaUIC(){}
+	virtual ~AQLSBgammaUIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBgammaUIC(param);}
 };
-class MMSBgammaUIP : public AQLBlackScholesBase
+class AQLSBgammaUIP : public AQLBlackScholesBase
 {
 public :
-	MMSBgammaUIP(){}
-	virtual ~MMSBgammaUIP(){}
+	AQLSBgammaUIP(){}
+	virtual ~AQLSBgammaUIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBgammaUIP(param);}
 };
-class MMSBgammaUOC : public AQLBlackScholesBase
+class AQLSBgammaUOC : public AQLBlackScholesBase
 {
 public :
-	MMSBgammaUOC(){}
-	virtual ~MMSBgammaUOC(){}
+	AQLSBgammaUOC(){}
+	virtual ~AQLSBgammaUOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBgammaUOC(param);}
 };
-class MMSBgammaUOP : public AQLBlackScholesBase
+class AQLSBgammaUOP : public AQLBlackScholesBase
 {
 public :
-	MMSBgammaUOP(){}
-	virtual ~MMSBgammaUOP(){}
+	AQLSBgammaUOP(){}
+	virtual ~AQLSBgammaUOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBgammaUOP(param);}
 };
 
-class MMSBvegaDIC : public AQLBlackScholesBase
+class AQLSBvegaDIC : public AQLBlackScholesBase
 {
 public :
-	MMSBvegaDIC(){}
-	virtual ~MMSBvegaDIC(){}
+	AQLSBvegaDIC(){}
+	virtual ~AQLSBvegaDIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBvegaDIC(param);}
 };
-class MMSBvegaDIP : public AQLBlackScholesBase
+class AQLSBvegaDIP : public AQLBlackScholesBase
 {
 public :
-	MMSBvegaDIP(){}
-	virtual ~MMSBvegaDIP(){}
+	AQLSBvegaDIP(){}
+	virtual ~AQLSBvegaDIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBvegaDIP(param);}
 };
-class MMSBvegaDOC : public AQLBlackScholesBase
+class AQLSBvegaDOC : public AQLBlackScholesBase
 {
 public :
-	MMSBvegaDOC(){}
-	virtual ~MMSBvegaDOC(){}
+	AQLSBvegaDOC(){}
+	virtual ~AQLSBvegaDOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBvegaDOC(param);}
 };
-class MMSBvegaDOP : public AQLBlackScholesBase
+class AQLSBvegaDOP : public AQLBlackScholesBase
 {
 public :
-	MMSBvegaDOP(){}
-	virtual ~MMSBvegaDOP(){}
+	AQLSBvegaDOP(){}
+	virtual ~AQLSBvegaDOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBvegaDOP(param);}
 };
-class MMSBvegaUIC : public AQLBlackScholesBase
+class AQLSBvegaUIC : public AQLBlackScholesBase
 {
 public :
-	MMSBvegaUIC(){}
-	virtual ~MMSBvegaUIC(){}
+	AQLSBvegaUIC(){}
+	virtual ~AQLSBvegaUIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBvegaUIC(param);}
 };
-class MMSBvegaUIP : public AQLBlackScholesBase
+class AQLSBvegaUIP : public AQLBlackScholesBase
 {
 public :
-	MMSBvegaUIP(){}
-	virtual ~MMSBvegaUIP(){}
+	AQLSBvegaUIP(){}
+	virtual ~AQLSBvegaUIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBvegaUIP(param);}
 };
-class MMSBvegaUOC : public AQLBlackScholesBase
+class AQLSBvegaUOC : public AQLBlackScholesBase
 {
 public :
-	MMSBvegaUOC(){}
-	virtual ~MMSBvegaUOC(){}
+	AQLSBvegaUOC(){}
+	virtual ~AQLSBvegaUOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBvegaUOC(param);}
 };
-class MMSBvegaUOP : public AQLBlackScholesBase
+class AQLSBvegaUOP : public AQLBlackScholesBase
 {
 public :
-	MMSBvegaUOP(){}
-	virtual ~MMSBvegaUOP(){}
+	AQLSBvegaUOP(){}
+	virtual ~AQLSBvegaUOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBvegaUOP(param);}
 };
 
-class MMSBthetaDIC : public AQLBlackScholesBase
+class AQLSBthetaDIC : public AQLBlackScholesBase
 {
 public :
-	MMSBthetaDIC(){}
-	virtual ~MMSBthetaDIC(){}
+	AQLSBthetaDIC(){}
+	virtual ~AQLSBthetaDIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBthetaDIC(param);}
 };
-class MMSBthetaDIP : public AQLBlackScholesBase
+class AQLSBthetaDIP : public AQLBlackScholesBase
 {
 public :
-	MMSBthetaDIP(){}
-	virtual ~MMSBthetaDIP(){}
+	AQLSBthetaDIP(){}
+	virtual ~AQLSBthetaDIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBthetaDIP(param);}
 };
-class MMSBthetaDOC : public AQLBlackScholesBase
+class AQLSBthetaDOC : public AQLBlackScholesBase
 {
 public :
-	MMSBthetaDOC(){}
-	virtual ~MMSBthetaDOC(){}
+	AQLSBthetaDOC(){}
+	virtual ~AQLSBthetaDOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBthetaDOC(param);}
 };
-class MMSBthetaDOP : public AQLBlackScholesBase
+class AQLSBthetaDOP : public AQLBlackScholesBase
 {
 public :
-	MMSBthetaDOP(){}
-	virtual ~MMSBthetaDOP(){}
+	AQLSBthetaDOP(){}
+	virtual ~AQLSBthetaDOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBthetaDOP(param);}
 };
-class MMSBthetaUIC : public AQLBlackScholesBase
+class AQLSBthetaUIC : public AQLBlackScholesBase
 {
 public :
-	MMSBthetaUIC(){}
-	virtual ~MMSBthetaUIC(){}
+	AQLSBthetaUIC(){}
+	virtual ~AQLSBthetaUIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBthetaUIC(param);}
 };
-class MMSBthetaUIP : public AQLBlackScholesBase
+class AQLSBthetaUIP : public AQLBlackScholesBase
 {
 public :
-	MMSBthetaUIP(){}
-	virtual ~MMSBthetaUIP(){}
+	AQLSBthetaUIP(){}
+	virtual ~AQLSBthetaUIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBthetaUIP(param);}
 };
-class MMSBthetaUOC : public AQLBlackScholesBase
+class AQLSBthetaUOC : public AQLBlackScholesBase
 {
 public :
-	MMSBthetaUOC(){}
-	virtual ~MMSBthetaUOC(){}
+	AQLSBthetaUOC(){}
+	virtual ~AQLSBthetaUOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBthetaUOC(param);}
 };
-class MMSBthetaUOP : public AQLBlackScholesBase
+class AQLSBthetaUOP : public AQLBlackScholesBase
 {
 public :
-	MMSBthetaUOP(){}
-	virtual ~MMSBthetaUOP(){}
+	AQLSBthetaUOP(){}
+	virtual ~AQLSBthetaUOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBthetaUOP(param);}
 };
 
-class MMSBrhoDIC : public AQLBlackScholesBase
+class AQLSBrhoDIC : public AQLBlackScholesBase
 {
 public :
-	MMSBrhoDIC(){}
-	virtual ~MMSBrhoDIC(){}
+	AQLSBrhoDIC(){}
+	virtual ~AQLSBrhoDIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBrhoDIC(param);}
 };
-class MMSBrhoDIP : public AQLBlackScholesBase
+class AQLSBrhoDIP : public AQLBlackScholesBase
 {
 public :
-	MMSBrhoDIP(){}
-	virtual ~MMSBrhoDIP(){}
+	AQLSBrhoDIP(){}
+	virtual ~AQLSBrhoDIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBrhoDIP(param);}
 };
-class MMSBrhoDOC : public AQLBlackScholesBase
+class AQLSBrhoDOC : public AQLBlackScholesBase
 {
 public :
-	MMSBrhoDOC(){}
-	virtual ~MMSBrhoDOC(){}
+	AQLSBrhoDOC(){}
+	virtual ~AQLSBrhoDOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBrhoDOC(param);}
 };
-class MMSBrhoDOP : public AQLBlackScholesBase
+class AQLSBrhoDOP : public AQLBlackScholesBase
 {
 public :
-	MMSBrhoDOP(){}
-	virtual ~MMSBrhoDOP(){}
+	AQLSBrhoDOP(){}
+	virtual ~AQLSBrhoDOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBrhoDOP(param);}
 };
-class MMSBrhoUIC : public AQLBlackScholesBase
+class AQLSBrhoUIC : public AQLBlackScholesBase
 {
 public :
-	MMSBrhoUIC(){}
-	virtual ~MMSBrhoUIC(){}
+	AQLSBrhoUIC(){}
+	virtual ~AQLSBrhoUIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBrhoUIC(param);}
 };
-class MMSBrhoUIP : public AQLBlackScholesBase
+class AQLSBrhoUIP : public AQLBlackScholesBase
 {
 public :
-	MMSBrhoUIP(){}
-	virtual ~MMSBrhoUIP(){}
+	AQLSBrhoUIP(){}
+	virtual ~AQLSBrhoUIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBrhoUIP(param);}
 };
-class MMSBrhoUOC : public AQLBlackScholesBase
+class AQLSBrhoUOC : public AQLBlackScholesBase
 {
 public :
-	MMSBrhoUOC(){}
-	virtual ~MMSBrhoUOC(){}
+	AQLSBrhoUOC(){}
+	virtual ~AQLSBrhoUOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBrhoUOC(param);}
 };
-class MMSBrhoUOP : public AQLBlackScholesBase
+class AQLSBrhoUOP : public AQLBlackScholesBase
 {
 public :
-	MMSBrhoUOP(){}
-	virtual ~MMSBrhoUOP(){}
+	AQLSBrhoUOP(){}
+	virtual ~AQLSBrhoUOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBrhoUOP(param);}
 };
 
-class MMSBphiDIC : public AQLBlackScholesBase
+class AQLSBphiDIC : public AQLBlackScholesBase
 {
 public :
-	MMSBphiDIC(){}
-	virtual ~MMSBphiDIC(){}
+	AQLSBphiDIC(){}
+	virtual ~AQLSBphiDIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBphiDIC(param);}
 };
-class MMSBphiDIP : public AQLBlackScholesBase
+class AQLSBphiDIP : public AQLBlackScholesBase
 {
 public :
-	MMSBphiDIP(){}
-	virtual ~MMSBphiDIP(){}
+	AQLSBphiDIP(){}
+	virtual ~AQLSBphiDIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBphiDIP(param);}
 };
-class MMSBphiDOC : public AQLBlackScholesBase
+class AQLSBphiDOC : public AQLBlackScholesBase
 {
 public :
-	MMSBphiDOC(){}
-	virtual ~MMSBphiDOC(){}
+	AQLSBphiDOC(){}
+	virtual ~AQLSBphiDOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBphiDOC(param);}
 };
-class MMSBphiDOP : public AQLBlackScholesBase
+class AQLSBphiDOP : public AQLBlackScholesBase
 {
 public :
-	MMSBphiDOP(){}
-	virtual ~MMSBphiDOP(){}
+	AQLSBphiDOP(){}
+	virtual ~AQLSBphiDOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBphiDOP(param);}
 };
-class MMSBphiUIC : public AQLBlackScholesBase
+class AQLSBphiUIC : public AQLBlackScholesBase
 {
 public :
-	MMSBphiUIC(){}
-	virtual ~MMSBphiUIC(){}
+	AQLSBphiUIC(){}
+	virtual ~AQLSBphiUIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBphiUIC(param);}
 };
-class MMSBphiUIP : public AQLBlackScholesBase
+class AQLSBphiUIP : public AQLBlackScholesBase
 {
 public :
-	MMSBphiUIP(){}
-	virtual ~MMSBphiUIP(){}
+	AQLSBphiUIP(){}
+	virtual ~AQLSBphiUIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBphiUIP(param);}
 };
-class MMSBphiUOC : public AQLBlackScholesBase
+class AQLSBphiUOC : public AQLBlackScholesBase
 {
 public :
-	MMSBphiUOC(){}
-	virtual ~MMSBphiUOC(){}
+	AQLSBphiUOC(){}
+	virtual ~AQLSBphiUOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBphiUOC(param);}
 };
-class MMSBphiUOP : public AQLBlackScholesBase
+class AQLSBphiUOP : public AQLBlackScholesBase
 {
 public :
-	MMSBphiUOP(){}
-	virtual ~MMSBphiUOP(){}
+	AQLSBphiUOP(){}
+	virtual ~AQLSBphiUOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::SBphiUOP(param);}
 };
 
 //MMDB
-class MMDBpremKOC : public AQLBlackScholesBase
+class AQLDBpremKOC : public AQLBlackScholesBase
 {
 public :
-	MMDBpremKOC(){}
-	virtual ~MMDBpremKOC(){}
+	AQLDBpremKOC(){}
+	virtual ~AQLDBpremKOC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DBpremKOC(param);}
 };
-class MMDBpremKIC : public AQLBlackScholesBase
+class AQLDBpremKIC : public AQLBlackScholesBase
 {
 public :
-	MMDBpremKIC(){}
-	virtual ~MMDBpremKIC(){}
+	AQLDBpremKIC(){}
+	virtual ~AQLDBpremKIC(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DBpremKIC(param);}
 };
-class MMDBpremKOP : public AQLBlackScholesBase
+class AQLDBpremKOP : public AQLBlackScholesBase
 {
 public :
-	MMDBpremKOP(){}
-	virtual ~MMDBpremKOP(){}
+	AQLDBpremKOP(){}
+	virtual ~AQLDBpremKOP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DBpremKOP(param);}
 };
-class MMDBpremKIP : public AQLBlackScholesBase
+class AQLDBpremKIP : public AQLBlackScholesBase
 {
 public :
-	MMDBpremKIP(){}
-	virtual ~MMDBpremKIP(){}
+	AQLDBpremKIP(){}
+	virtual ~AQLDBpremKIP(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DBpremKIP(param);}
 };
-class MMDBpremRL : public AQLBlackScholesBase
+class AQLDBpremRL : public AQLBlackScholesBase
 {
 public :
-	MMDBpremRL(){}
-	virtual ~MMDBpremRL(){}
+	AQLDBpremRL(){}
+	virtual ~AQLDBpremRL(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DBpremRL(param);}
 };
-class MMDBpremRH : public AQLBlackScholesBase
+class AQLDBpremRH : public AQLBlackScholesBase
 {
 public :
-	MMDBpremRH(){} 
-	virtual ~MMDBpremRH(){}
+	AQLDBpremRH(){} 
+	virtual ~AQLDBpremRH(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DBpremRH(param);}
 };
-class MMDBpremRI : public AQLBlackScholesBase
+class AQLDBpremRI : public AQLBlackScholesBase
 {
 public :
-	MMDBpremRI(){}
-	virtual ~MMDBpremRI(){}
+	AQLDBpremRI(){}
+	virtual ~AQLDBpremRI(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::DBpremRI(param);}
 };
 
-class MMFDdeltaCallSpot : public AQLBlackScholesBase
+class AQLFDdeltaCallSpot : public AQLBlackScholesBase
 {
 public :
-	MMFDdeltaCallSpot(){}
-	virtual ~MMFDdeltaCallSpot(){}
+	AQLFDdeltaCallSpot(){}
+	virtual ~AQLFDdeltaCallSpot(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::FDdeltaCallSpot(param);}
 };
-class MMFDdeltaPutSpot : public AQLBlackScholesBase
+class AQLFDdeltaPutSpot : public AQLBlackScholesBase
 {
 public :
-	MMFDdeltaPutSpot(){}
-	virtual ~MMFDdeltaPutSpot(){}
+	AQLFDdeltaPutSpot(){}
+	virtual ~AQLFDdeltaPutSpot(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::FDdeltaPutSpot(param);}
 };
-class MMFD1stDiffCallSpot : public AQLBlackScholesBase
+class AQLFD1stDiffCallSpot : public AQLBlackScholesBase
 {
 public :
-	MMFD1stDiffCallSpot(){}
-	virtual ~MMFD1stDiffCallSpot(){}
+	AQLFD1stDiffCallSpot(){}
+	virtual ~AQLFD1stDiffCallSpot(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::FD1stDiffCallSpot(param);}
 };
-class MMFD1stDiffPutSpot : public AQLBlackScholesBase
+class AQLFD1stDiffPutSpot : public AQLBlackScholesBase
 {
 public :
-	MMFD1stDiffPutSpot(){}
-	virtual ~MMFD1stDiffPutSpot(){}
+	AQLFD1stDiffPutSpot(){}
+	virtual ~AQLFD1stDiffPutSpot(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::FD1stDiffPutSpot(param);}
 };
-class MMFDdeltaCallFwd : public AQLBlackScholesBase
+class AQLFDdeltaCallFwd : public AQLBlackScholesBase
 {
 public :
-	MMFDdeltaCallFwd(){}
-	virtual ~MMFDdeltaCallFwd(){}
+	AQLFDdeltaCallFwd(){}
+	virtual ~AQLFDdeltaCallFwd(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::FDdeltaCallFwd(param);}
 };
-class MMFDdeltaPutFwd : public AQLBlackScholesBase
+class AQLFDdeltaPutFwd : public AQLBlackScholesBase
 {
 public :
-	MMFDdeltaPutFwd(){}
-	virtual ~MMFDdeltaPutFwd(){}
+	AQLFDdeltaPutFwd(){}
+	virtual ~AQLFDdeltaPutFwd(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::FDdeltaPutFwd(param);}
 };
-class MMFD1stDiffCallFwd : public AQLBlackScholesBase
+class AQLFD1stDiffCallFwd : public AQLBlackScholesBase
 {
 public :
-	MMFD1stDiffCallFwd(){}
-	virtual ~MMFD1stDiffCallFwd(){}
+	AQLFD1stDiffCallFwd(){}
+	virtual ~AQLFD1stDiffCallFwd(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::FD1stDiffCallFwd(param);}
 };
-class MMFD1stDiffPutFwd : public AQLBlackScholesBase
+class AQLFD1stDiffPutFwd : public AQLBlackScholesBase
 {
 public :
-	MMFD1stDiffPutFwd(){}
-	virtual ~MMFD1stDiffPutFwd(){}
+	AQLFD1stDiffPutFwd(){}
+	virtual ~AQLFD1stDiffPutFwd(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::FD1stDiffPutFwd(param);}
 };
-class MMFD2ndDiffCallFwd : public AQLBlackScholesBase
+class AQLFD2ndDiffCallFwd : public AQLBlackScholesBase
 {
 public :
-	MMFD2ndDiffCallFwd(){}
-	virtual ~MMFD2ndDiffCallFwd(){}
+	AQLFD2ndDiffCallFwd(){}
+	virtual ~AQLFD2ndDiffCallFwd(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::FD2ndDiffCallFwd(param);}
 };
-class MMFD2ndDiffCallSpot : public AQLBlackScholesBase
+class AQLFD2ndDiffCallSpot : public AQLBlackScholesBase
 {
 public :
-	MMFD2ndDiffCallSpot(){}
-	virtual ~MMFD2ndDiffCallSpot(){}
+	AQLFD2ndDiffCallSpot(){}
+	virtual ~AQLFD2ndDiffCallSpot(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::FD2ndDiffCallSpot(param);}
 };
 //MMAFF
-class MMAFFpremCall : public AQLBlackScholesBase
+class AQLAFFpremCall : public AQLBlackScholesBase
 {
 public :
-	MMAFFpremCall(){}
-	virtual ~MMAFFpremCall(){}
+	AQLAFFpremCall(){}
+	virtual ~AQLAFFpremCall(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::AFFpremCall(param);}
 };
-class MMAFFpremPut : public AQLBlackScholesBase
+class AQLAFFpremPut : public AQLBlackScholesBase
 {
 public :
-	MMAFFpremPut(){}
-	virtual ~MMAFFpremPut(){}
+	AQLAFFpremPut(){}
+	virtual ~AQLAFFpremPut(){}
 	double calc(AnalyticParam& param){ return AnalyticFormulae::AFFpremPut(param);}
 };

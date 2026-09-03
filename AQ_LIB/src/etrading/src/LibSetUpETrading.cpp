@@ -95,14 +95,14 @@
 #include "AQLPriceConvergenceValue.h"
 #include "AQLCompoundingFunc.h"
 
-#include "LACoreDataService.h"
-#include "LADefinitions.h"
+#include "AQLCoreDataService.h"
+#include "AQLDefinitions.h"
 #include "AQLCoreComponentManager.h"
 
 // fukui
 #include "AQLPriceAccruedInterest.h"
 #include "AQLPriceTradeValue.h"
-#include "LAStaticDataImport.h"
+#include "AQLStaticDataImport.h"
 
 #include "CurveCalibrationData.h"
 #include "CurveCalibration.h"

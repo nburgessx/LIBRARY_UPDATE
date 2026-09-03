@@ -45,8 +45,8 @@ namespace google_test
 {
     // Construct depedent curves from curve source files by calling the curve constructor methods
 
-    ME_BUILD_EUR_CURVE( TestMeCurveOisAUD_1, DIR_OIS_1, DIR_DUMMY_1, DIR_DUMMY_2, DIR_DUMMY_3, DIR_DUMMY_4);
-	ME_BUILD_EUR_CURVE( TestMeCurveOisAUD_2, DIR_OIS_2, DIR_DUMMY_1, DIR_DUMMY_2, DIR_DUMMY_3, DIR_DUMMY_4);
+    AQL_BUILD_EUR_CURVE( TestMeCurveOisAUD_1, DIR_OIS_1, DIR_DUMMY_1, DIR_DUMMY_2, DIR_DUMMY_3, DIR_DUMMY_4);
+	AQL_BUILD_EUR_CURVE( TestMeCurveOisAUD_2, DIR_OIS_2, DIR_DUMMY_1, DIR_DUMMY_2, DIR_DUMMY_3, DIR_DUMMY_4);
 
     
 	// Test 1

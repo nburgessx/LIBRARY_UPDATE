@@ -6,7 +6,7 @@
 #include "CreateDataFile.h"
 
 #include "LAUpdateStaticDataManager.h"
-#include "LAMultiSwapPricer.h"
+#include "AQLMultiSwapPricer.h"
 #include "LACurveForwardRateHelpers.h"
 #include "LACurveCalibrationHelpers.h"
 

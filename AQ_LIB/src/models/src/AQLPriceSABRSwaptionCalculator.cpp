@@ -8,7 +8,7 @@
 #include "AQLMathOptionTools.h"
 
 // SABR option model to use for CMS replication. This is the original SABR model.
-MVSABRSwaptionCalculator::MVSABRSwaptionCalculator(double S0_, const vector<double>& sabrParameters_)
+AQLSABRSwaptionCalculator::AQLSABRSwaptionCalculator(double S0_, const vector<double>& sabrParameters_)
 : AQLPriceSwaptionCalculator(S0_)
 {
     mSabrParameters = sabrParameters_;
@@ -16,12 +16,12 @@ MVSABRSwaptionCalculator::MVSABRSwaptionCalculator(double S0_, const vector<doub
     mSabr = AQLMathSABR_Hagan(mSabrParameters);
 }
 
-double MVSABRSwaptionCalculator::Price(double t, double strike, bool isCall)
+double AQLSABRSwaptionCalculator::Price(double t, double strike, bool isCall)
 {
     return SABRPrice(t, strike, isCall);
 }
 
-double MVSABRSwaptionCalculator::BoundStrike(double t, double confidence, bool isUp)
+double AQLSABRSwaptionCalculator::BoundStrike(double t, double confidence, bool isUp)
 {
     double vol = mSabr.getSABRVol(t, mS0, mS0);
     double stDev = vol * sqrt(t);
@@ -29,7 +29,7 @@ double MVSABRSwaptionCalculator::BoundStrike(double t, double confidence, bool i
     return mS0 * exp(-0.5 * stDev * stDev + w* stDev * confidence);
 }
 
-vector<double> MVSABRSwaptionCalculator::StrikeGrid(double t, double confidence, size_t nPoints)
+vector<double> AQLSABRSwaptionCalculator::StrikeGrid(double t, double confidence, size_t nPoints)
 {
     double vol = mSabr.getSABRVol(t, mS0, mS0);
     // Create log-normal grid
@@ -48,19 +48,19 @@ vector<double> MVSABRSwaptionCalculator::StrikeGrid(double t, double confidence,
     return sGrid;
 }
 
-double MVSABRSwaptionCalculator::SABRPrice(double t, double strike, bool isCall)
+double AQLSABRSwaptionCalculator::SABRPrice(double t, double strike, bool isCall)
 {
     double vol = mSabr.getSABRVol(t, mS0, strike);
     return BlackPrice(t, strike, isCall, mS0, vol);
 }
 
-double MVSABRSwaptionCalculator::SABRIV(double t, double strike)
+double AQLSABRSwaptionCalculator::SABRIV(double t, double strike)
 {
     return mSabr.getSABRVol(t, mS0, strike);
 }
 
 // Check parameter consistency
-void MVSABRSwaptionCalculator::CheckParameters()
+void AQLSABRSwaptionCalculator::CheckParameters()
 {
     if(mSabrParameters.size() != 4) throw AQLCoreInvalidData("SABR params.size() != 4",__FILE__,__LINE__);
     if(mSabrParameters[0] < 0) throw AQLCoreInvalidData("Alpha must be positive",__FILE__,__LINE__);

@@ -5,8 +5,8 @@
 #include "ScheduleValidation.h"
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
-#include "LADefinitions.h"
-#include "LACoreDataService.h"
+#include "AQLDefinitions.h"
+#include "AQLCoreDataService.h"
 #include "LAUpdateStaticDataManager.h"
 
 namespace validation
@@ -20,9 +20,9 @@ namespace validation
 
         AQLDataInstance* dataInstance = etrading::getDataInstance();
         dataInstance->getObjectPool().clear();
-        LACoreDataService::finalize();
+        AQLCoreDataService::finalize();
         etrading::LAUpdateStaticDataManager::setUpForIRServer();
-        LACoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
+        AQLCoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
         etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance );
 
         AQLString ret( "AllEntityPoolCleared" );

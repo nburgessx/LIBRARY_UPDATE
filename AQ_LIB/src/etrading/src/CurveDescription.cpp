@@ -15,7 +15,7 @@
 #include "CurveUtilities.h"				        // DateFromTenor methods
 #include "LACurvePricingObject.h"	            // Methods to get the curve daycount conventions
 #include "AQLEnumConversion.h"		            // Methods to convert enum values to legacy enums
-#include "LADefinitions.h"                      // Needed for the delimiter curve index delimiter token "MULTI_STATIC_DATA_DELIMITER", which is typically a token
+#include "AQLDefinitions.h"                      // Needed for the delimiter curve index delimiter token "MULTI_STATIC_DATA_DELIMITER", which is typically a token
 
 // Interpolation Methods
 #include "AQLMonotoneConvexInterpolation.h"

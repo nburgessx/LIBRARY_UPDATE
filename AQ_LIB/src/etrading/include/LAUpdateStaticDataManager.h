@@ -1,6 +1,6 @@
 //
 // LAUpdateStaticDataManager.h
-// This file was previously called YieldCurveFactory.h and before that LACurveSetup.h
+// This file was previously called YieldCurveFactory.h and before that AQLCurveSetup.h
 //
 #pragma once
 
@@ -22,7 +22,7 @@
 #include "CurveObject.h"
 
 // Forward Declarations
-class LAStaticData;
+class AQLStaticData;
 
 namespace etrading
 {
@@ -268,7 +268,7 @@ namespace etrading
 
         static DoubleMatrix GetPCAResult(AQLDataInstance* dataInstance, const AQLString& type, const AQLString& id);
 
-        static void populateStaticDataManagerForSwapCurve(LAStaticData &irprop,
+        static void populateStaticDataManagerForSwapCurve(AQLStaticData &irprop,
                                                           const AQLString& useMarkets,
                                                           const AQLString& currency,
                                                           const AQLString& curveNames_swap,
@@ -288,7 +288,7 @@ namespace etrading
                                                           const AQLStringMatrix& adjustSwapConv_swap,
                                                           const AQLStringMatrix& adjustSwapRates_swap);
 
-        static void populateStaticDataManagerForOISCurve(LAStaticData &irprop,
+        static void populateStaticDataManagerForOISCurve(AQLStaticData &irprop,
                                                          const AQLString& useMarkets,
                                                          const AQLString& currency,
                                                          const AQLString& curveNames_OIS,
@@ -302,7 +302,7 @@ namespace etrading
                                                          const AQLStringMatrix& lobasisConv_OIS,
                                                          const AQLStringMatrix& swapConv_OIS);
 
-        static void populateStaticDataManagerForTenorBasisCurve(LAStaticData &irprop,
+        static void populateStaticDataManagerForTenorBasisCurve(AQLStaticData &irprop,
                                                           const AQLString& curveName,
                                                           const AQLString& curveNames,
                                                           const AQLString& currency,
@@ -320,6 +320,6 @@ namespace etrading
 
     protected:
         static std::istringstream* createFutureStream(const AQLStringMatrix& future_rates, AQLString& usegrid_future);
-        static void setStaticDataValue(LAStaticData &prop, const AQLString &key, const AQLString &val, const bool is_override = false);
+        static void setStaticDataValue(AQLStaticData &prop, const AQLString &key, const AQLString &val, const bool is_override = false);
     };
 }

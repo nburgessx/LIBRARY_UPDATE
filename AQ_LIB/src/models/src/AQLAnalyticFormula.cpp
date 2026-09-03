@@ -370,7 +370,7 @@ using namespace std;
 	
 */
 
-	double AnalyticFormulae::MMCFpremCall(AnalyticParam& param)
+	double AnalyticFormulae::AQLCFpremCall(AnalyticParam& param)
 	{
 		FORMULAE_BEGIN
 		AnalyticCFParam& x = dynamic_cast<AnalyticCFParam& >(param);
@@ -391,7 +391,7 @@ using namespace std;
 		return ret;
 		FORMULAE_END
 	}
-	double AnalyticFormulae::MMCFvegaCall(AnalyticParam& param)
+	double AnalyticFormulae::AQLCFvegaCall(AnalyticParam& param)
 	{
 		FORMULAE_BEGIN
 		AnalyticCFParam& x = dynamic_cast<AnalyticCFParam& >(param);
@@ -413,7 +413,7 @@ using namespace std;
 		return ret;
 		FORMULAE_END
 	}
-	double AnalyticFormulae::MMCFpremPut(AnalyticParam& param)
+	double AnalyticFormulae::AQLCFpremPut(AnalyticParam& param)
 	{
 		FORMULAE_BEGIN
 		AnalyticCFParam& x = dynamic_cast<AnalyticCFParam& >(param);
@@ -435,7 +435,7 @@ using namespace std;
 		return ret;
 		FORMULAE_END
 	}
-	double AnalyticFormulae::MMCFvegaPut(AnalyticParam& param)
+	double AnalyticFormulae::AQLCFvegaPut(AnalyticParam& param)
 	{
 		FORMULAE_BEGIN
 		AnalyticCFParam& x = dynamic_cast<AnalyticCFParam& >(param);
@@ -633,7 +633,7 @@ using namespace std;
 */
 
 //hishida vannavolga
-	double AnalyticFormulae::MMSBprobUNT(AnalyticParam& param)
+	double AnalyticFormulae::AQLSBprobUNT(AnalyticParam& param)
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);
@@ -654,7 +654,7 @@ using namespace std;
 		return ret;
 		FORMULAE_END
 	}
-	double AnalyticFormulae::MMSBprobDNT(AnalyticParam& param)
+	double AnalyticFormulae::AQLSBprobDNT(AnalyticParam& param)
 	{
 		FORMULAE_BEGIN
 		AnalyticSBParam& x = dynamic_cast<AnalyticSBParam& >(param);

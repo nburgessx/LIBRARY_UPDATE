@@ -34,7 +34,7 @@ namespace etrading
     */
     AQLString getCurveCurrency( const AQLString& curveCollection );
 
-    /*  @brief is fwdfx constant curve or not, the logic is from LACalibrateModel.cpp
+    /*  @brief is fwdfx constant curve or not, the logic is from AQLCalibrateModel.cpp
     * @param[in]   key  currency or fx ex.JPY/USD
     * @param[out]   is fwdfx constant curve or not
     */

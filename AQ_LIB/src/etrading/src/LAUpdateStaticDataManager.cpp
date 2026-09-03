@@ -1,6 +1,6 @@
 //
 // LAUpdateStaticDataManager.cpp
-// This file was previously called YieldCurveFactory.cpp and before that LACurveSetup.cpp
+// This file was previously called YieldCurveFactory.cpp and before that AQLCurveSetup.cpp
 //
 
 #ifdef __GNUG__
@@ -18,18 +18,18 @@
 #include "AQLDataVector.h"
 #include "AQLDataMatrix.h"
 #include "AQLDataReference.h"
-#include "LADefinitions.h"
-#include "LADefinitionsRisk.h"
-#include "LADefinitionsCalibration.h"
-#include "LAStaticData.h"
-#include "LACoreDataService.h"
-#include "LAStaticDataManager.h"
+#include "AQLDefinitions.h"
+#include "AQLDefinitionsRisk.h"
+#include "AQLDefinitionsCalibration.h"
+#include "AQLStaticData.h"
+#include "AQLCoreDataService.h"
+#include "AQLStaticDataManager.h"
 #include "AQLFunctionUtilities.h"
 #include "AQLMathCorrelation.h"
 #include "AQLCompoundingFunc.h"
 #include "AQLMathFXEntity.h"
-#include "LAStaticDataImport.h"
-#include "LAMarketData.h"
+#include "AQLStaticDataImport.h"
+#include "AQLMarketData.h"
 
 #include "FolderConfig.h"
 #include "CurveCalibrationData.h"
@@ -75,7 +75,7 @@ namespace etrading
 												      const AQLString& curveNames_DF,
 												      const AQLString& curveName_DF2)
     {
-	    LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+	    AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 	    AQLObject* pyld = NULL;	
@@ -83,7 +83,7 @@ namespace etrading
 	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
 	    AQLDate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
-	    LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
+	    AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	    AQLString currency;
 	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
@@ -133,7 +133,7 @@ namespace etrading
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISSWAPTENORADJUST);
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_BASEFREQUENCYFLOAT);
 
-        MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
+        AQ_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
@@ -143,7 +143,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	
-	    MLIB_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )
+	    AQ_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )
         for(size_t i=0; i<moneyConv.size(); i++)
         {
 		    AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0];
@@ -153,7 +153,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	
-        MLIB_2D_MATRIX_CHECK( liborConv, "Invalid Libor Fixing and Reset Conventions" )
+        AQ_2D_MATRIX_CHECK( liborConv, "Invalid Libor Fixing and Reset Conventions" )
 	    for(size_t i=0; i<liborConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0];
@@ -163,7 +163,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-        MLIB_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions" )
+        AQ_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions" )
 	    for(size_t i=0; i<swapConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0];
@@ -173,7 +173,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-        MLIB_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
+        AQ_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
 	    for(size_t i=0; i<fraConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0];
@@ -183,7 +183,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-        MLIB_2D_MATRIX_CHECK( xccyBasisConv, "Invalid Xccy Basis Conventions" )
+        AQ_2D_MATRIX_CHECK( xccyBasisConv, "Invalid Xccy Basis Conventions" )
 	    for(size_t i=0; i<xccyBasisConv.size(); i++)
 	    {
 		    AQLString key;
@@ -207,7 +207,7 @@ namespace etrading
 	    }
 	    if (tmpCurrency != "usd") irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MARKETTYPE + ".xccybasis", MARKETTYPE_BASIS);
 
-        MLIB_2D_MATRIX_CHECK( threeSixConv, "Invalid 3X6 Tenor Basis Conventions" )
+        AQ_2D_MATRIX_CHECK( threeSixConv, "Invalid 3X6 Tenor Basis Conventions" )
 	    for(size_t i=0; i<threeSixConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.basis." + threeSixConv[i][0] + ".3m6mbasis";
@@ -218,7 +218,7 @@ namespace etrading
 	    }
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MARKETTYPE + ".3m6mbasis", MARKETTYPE_BASIS);
 
-        MLIB_2D_MATRIX_CHECK( futureConv, "Invalid Futures Conventions" )
+        AQ_2D_MATRIX_CHECK( futureConv, "Invalid Futures Conventions" )
 		for(size_t i=0; i<futureConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.future." + futureConv[i][0];
@@ -239,7 +239,7 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE, liborfile);
 	    }
 	    AQLString liborstream;
-        MLIB_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing Rate Conventions" )
+        AQ_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing Rate Conventions" )
 	    for(size_t i=0; i<liborRates.size(); i++)
 	    {
 		    liborstream += liborRates[i][0];
@@ -254,7 +254,7 @@ namespace etrading
 		    }
 	    }
 	    std::istringstream *pliborstream = new std::istringstream(liborstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(liborfile), pliborstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(liborfile), pliborstream);
 
 	    //set Swap Object;
 	    AQLString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE);
@@ -264,7 +264,7 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE, swapfile);
 	    }
 	    AQLString swapstream;
-        MLIB_2D_MATRIX_CHECK( swapRates, "Invalid Swap Rates" )
+        AQ_2D_MATRIX_CHECK( swapRates, "Invalid Swap Rates" )
 	    for(size_t i=0; i<swapRates.size(); i++)
 	    {
 		    swapstream += swapRates[i][0];
@@ -279,7 +279,7 @@ namespace etrading
 		    }
 	    }
 	    std::istringstream *pswapstream = new std::istringstream(swapstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(swapfile), pswapstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(swapfile), pswapstream);
 
 	    //set fra3m Object;
 	    bool isFRAUse = false;
@@ -304,7 +304,7 @@ namespace etrading
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE, fra3mfile);
 		    }
 		    AQLString fra3mstream;
-            MLIB_2D_MATRIX_CHECK( fra3mRates, "Invalid 3M FRA Rates" )
+            AQ_2D_MATRIX_CHECK( fra3mRates, "Invalid 3M FRA Rates" )
 		    for(size_t i=0; i<fra3mRates.size(); i++)
 		    {
 			    fra3mstream += fra3mRates[i][0];
@@ -319,7 +319,7 @@ namespace etrading
 			    }
 		    }
 		    std::istringstream *pfra3mstream = new std::istringstream(fra3mstream.getCString());
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fra3mfile), pfra3mstream);		
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fra3mfile), pfra3mstream);		
 
 		    //set fra6m Object;
 		    AQLString fra6mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE);
@@ -329,7 +329,7 @@ namespace etrading
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE, fra6mfile);
 		    }
 		    AQLString fra6mstream;
-            MLIB_2D_MATRIX_CHECK( fra6mRates, "Invalid 6M FRA Rates" )
+            AQ_2D_MATRIX_CHECK( fra6mRates, "Invalid 6M FRA Rates" )
 		    for(size_t i=0; i<fra6mRates.size(); i++)
 		    {
 			    fra6mstream += fra6mRates[i][0];
@@ -344,7 +344,7 @@ namespace etrading
 			    }
 		    }
 		    std::istringstream *pfra6mstream = new std::istringstream(fra6mstream.getCString());
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fra6mfile), pfra6mstream);
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fra6mfile), pfra6mstream);
 	    }
 
 	    ///Xccy Basis Rate
@@ -355,7 +355,7 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis", xccyBasisFile);
 	    }
 	    AQLString xccyBasisStream;
-        MLIB_2D_MATRIX_CHECK( xccyBasisRates, "Invalid Xccy Basis Rates" )
+        AQ_2D_MATRIX_CHECK( xccyBasisRates, "Invalid Xccy Basis Rates" )
 	    for(size_t i=0; i<xccyBasisRates.size(); i++)
 	    {
 		    xccyBasisStream += xccyBasisRates[i][0];
@@ -370,7 +370,7 @@ namespace etrading
 		    }
 	    }
 	    std::istringstream *pXccyBasisStream = new std::istringstream(xccyBasisStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(xccyBasisFile), pXccyBasisStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(xccyBasisFile), pXccyBasisStream);
 
 	    ///36 Basis Rate
 	    AQLString threeSixFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis");
@@ -380,7 +380,7 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis", threeSixFile);
 	    }
 	    AQLString threeSixStream;
-        MLIB_2D_MATRIX_CHECK( threeSixRates, "Invalid 3X6 Tenor Basis Rates" )
+        AQ_2D_MATRIX_CHECK( threeSixRates, "Invalid 3X6 Tenor Basis Rates" )
 	    for(size_t i=0; i<threeSixRates.size(); i++)
 	    {
 		    threeSixStream += threeSixRates[i][0];
@@ -395,7 +395,7 @@ namespace etrading
 		    }
 	    }
 	    std::istringstream *pThreeSixStream = new std::istringstream(threeSixStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(threeSixFile), pThreeSixStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(threeSixFile), pThreeSixStream);
 
 	    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),THREESIXBASIS) && threeSixRates.size())
 	    {
@@ -422,7 +422,7 @@ namespace etrading
 			    futureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_future") + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE, futureFile);
 		    }
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(futureFile), createFutureStream(futureRates, usegrid_future));
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(futureFile), createFutureStream(futureRates, usegrid_future));
 	    }
 	
 	    //set Adjust Data Object;
@@ -433,14 +433,14 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis", adjustValueFile);
 	    }
 	    AQLString adjustValueStream;
-	    MLIB_2D_MATRIX_CHECK( adjustData, "Invalid Basis Swap Adjustment or adjustData Rates")
+	    AQ_2D_MATRIX_CHECK( adjustData, "Invalid Basis Swap Adjustment or adjustData Rates")
 	    for(size_t i=0; i<adjustData.size(); i++)
 	    {
 		    adjustValueStream += adjustData[i][0];
 		    adjustValueStream += "," + adjustData[i][1] + LF;	
 	    }
 	    std::istringstream *pAdjustValueStream = new std::istringstream(adjustValueStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(adjustValueFile), pAdjustValueStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(adjustValueFile), pAdjustValueStream);
 
 
 	    ///////////////
@@ -582,7 +582,7 @@ namespace etrading
     {
 		// ============================== 1. CURVE STATIC DATA =====================================================
 		
-		LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+		AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 
@@ -627,7 +627,7 @@ namespace etrading
 	    //insert property
 	    AQLStringMatrix tmpProp(basisConv.size() + swapConv.size() + generateProp.size(), AQLStringVector(2));
 	    AQLString tmpBasisCurveName = XCCYBASIS; tmpBasisCurveName.toLower();
-	    MLIB_2D_MATRIX_CHECK( basisConv, "Invalid Basis Swap Conventions" )
+	    AQ_2D_MATRIX_CHECK( basisConv, "Invalid Basis Swap Conventions" )
         for(size_t i=0; i<basisConv.size(); i++)
 	    {		
 		    AQLString key = tmpCurrency + ".sde.yield.basis." + basisConv[i][0] + "." + tmpBasisCurveName;
@@ -637,7 +637,7 @@ namespace etrading
 		    irStaticData.setStaticData(key,data);
 	    }
 
-        MLIB_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions" )
+        AQ_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions" )
 	    for(size_t i=0; i<swapConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0];
@@ -647,7 +647,7 @@ namespace etrading
 		    irStaticData.setStaticData(key,data);
 	    }
 
-        MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
+        AQ_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0];
@@ -687,7 +687,7 @@ namespace etrading
 		    AQLString basisstream;
 		    AQLString usegrid = "";
 
-            MLIB_2D_MATRIX_CHECK( basisMkt, "Invalid Basis Market Rates" )
+            AQ_2D_MATRIX_CHECK( basisMkt, "Invalid Basis Market Rates" )
 		    for(size_t i=0; i<basisMkt.size(); i++)
 		    {
 			    basisstream += basisMkt[i][0];
@@ -702,7 +702,7 @@ namespace etrading
 			    }
 		    }
 		    std::istringstream *pbasisstream = new std::istringstream(basisstream.getCString());
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(basisfile), pbasisstream);
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(basisfile), pbasisstream);
 
 		    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_USEGRID + "." + tmpBasisCurveName);
 		    int find;
@@ -728,14 +728,14 @@ namespace etrading
 					    STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + tmpBasisCurveName, adjustValueFile);
 			    }
 			    AQLString adjustValueStream;
-                MLIB_2D_MATRIX_CHECK( adjustData, "Invalid Basis Swap Adjustment Data" )
+                AQ_2D_MATRIX_CHECK( adjustData, "Invalid Basis Swap Adjustment Data" )
 			    for(size_t i=0; i<adjustData.size(); i++)
 			    {
 				    adjustValueStream += adjustData[i][0];
 				    adjustValueStream += "," + adjustData[i][1] + LF;	
 			    }
 			    std::istringstream *pAdjustValueStream = new std::istringstream(adjustValueStream.getCString());
-			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(adjustValueFile), pAdjustValueStream);
+			    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(adjustValueFile), pAdjustValueStream);
 		    }
 	    }
 
@@ -788,7 +788,7 @@ namespace etrading
 															const AQLStringMatrix& swapRates,
 															const AQLStringMatrix& swapConv )
 	{
-		LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+		AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 		
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 	    AQLObject* pyld = NULL;
@@ -796,7 +796,7 @@ namespace etrading
 	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
 	    AQLDate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
-	    LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
+	    AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	    AQLString currency;
 	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 
@@ -876,7 +876,7 @@ namespace etrading
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_ISARBFREE);
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DFCURVENAME + staticDataSuffix);
 
-	    MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions")
+	    AQ_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions")
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
@@ -899,7 +899,7 @@ namespace etrading
         // Pay attention to the use of lower case here.
         bool requireLiborOisAndSwapData = false;
 
-        MLIB_2D_MATRIX_CHECK( oisConv, "Invalid OIS Conventions")	
+        AQ_2D_MATRIX_CHECK( oisConv, "Invalid OIS Conventions")	
 	    for(size_t i=0; i<oisConv.size(); i++)
 	    {
             AQLString oisConventionKey = oisConv[i][0];
@@ -944,7 +944,7 @@ namespace etrading
 	    AQLString fedFundFutureStream;
 	    AQLString usegrid_ois = "";
 	    AQLString usegrid_fffuture = "";
-        MLIB_2D_MATRIX_CHECK( oisRates, "Invalid OIS Swap Rates" )
+        AQ_2D_MATRIX_CHECK( oisRates, "Invalid OIS Swap Rates" )
 	    for(size_t i=0; i<oisRates.size(); i++)
 	    {
 		    if (oisRates[i][0].findString("FF") != -1)
@@ -1058,9 +1058,9 @@ namespace etrading
 		    }
 	    }
  	    std::istringstream *pOISStream = new std::istringstream(oisStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(oisFile), pOISStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(oisFile), pOISStream);
 	    std::istringstream *pFedFundFutureStream = new std::istringstream(fedFundFutureStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fedFundFutureFile), pFedFundFutureStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fedFundFutureFile), pFedFundFutureStream);
 
 
 	    ///////////////
@@ -1084,7 +1084,7 @@ namespace etrading
 	    }
 
 	    AQLString histStream;
-	    MLIB_2D_MATRIX_CHECK( histRates, "Invalid OIS Fixing and Reset Rates")
+	    AQ_2D_MATRIX_CHECK( histRates, "Invalid OIS Fixing and Reset Rates")
 	    for(size_t i=0; i<histRates.size(); i++)
 	    {
 		    const AQLDate& histdate = stringToDate(histRates[i][0]);
@@ -1095,7 +1095,7 @@ namespace etrading
 		    histStream += LF;
 	    }
 	    std::istringstream *pHISTStream = new std::istringstream(histStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(histFile), pHISTStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(histFile), pHISTStream);
 
         // Check if Libor-OIS and Swap Data is Required
         if ( requireLiborOisAndSwapData )
@@ -1103,7 +1103,7 @@ namespace etrading
             AQ_REQUIRE( lobasisConv.size() > 0, "Missing Static Data: Libor-OIS Basis Conventions are Required when the OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
         }
 
-        MLIB_2D_MATRIX_CHECK( lobasisConv, "Invalid Libor-OIS Basis Conventions")
+        AQ_2D_MATRIX_CHECK( lobasisConv, "Invalid Libor-OIS Basis Conventions")
 	    for(size_t i=0; i<lobasisConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.basis." + lobasisConv[i][0] + staticDataSuffix;
@@ -1126,7 +1126,7 @@ namespace etrading
         }
 
 	    AQLString lobasisstream;
-	    MLIB_2D_MATRIX_CHECK( lobasisRates, "Invalid Libor-OIS Basis Rates")
+	    AQ_2D_MATRIX_CHECK( lobasisRates, "Invalid Libor-OIS Basis Rates")
 		const size_t lobasisColumnSize = ( lobasisRates.size() > 0 ) ? lobasisRates[0].size() : 0;
 
 		for(size_t i=0; i<lobasisRates.size(); i++)
@@ -1153,7 +1153,7 @@ namespace etrading
 			lobasisstream += LF;
 	    }
 	    std::istringstream *plobasisstream = new std::istringstream(lobasisstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(lobasisfile), plobasisstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(lobasisfile), plobasisstream);
 
         // Check if Libor-OIS and Swap Data is Required
         if ( requireLiborOisAndSwapData )
@@ -1161,7 +1161,7 @@ namespace etrading
             AQ_REQUIRE( swapConv.size() > 0, "Missing Static Data: Swap Conventions are Required when the OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
         }
 
-	    MLIB_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions")
+	    AQ_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions")
 	    for(size_t i=0; i<swapConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0] + staticDataSuffix;
@@ -1184,7 +1184,7 @@ namespace etrading
         }
 
 	    AQLString swapstream;
-	    MLIB_2D_MATRIX_CHECK( swapRates, "Invalid Swap Rates")
+	    AQ_2D_MATRIX_CHECK( swapRates, "Invalid Swap Rates")
 	    for(size_t i=0; i<swapRates.size(); i++)
 	    {
 			//Swap Tenor
@@ -1203,7 +1203,7 @@ namespace etrading
 
 		}
 	    std::istringstream *pswapstream = new std::istringstream(swapstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(swapfile), pswapstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(swapfile), pswapstream);
 	
 
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MARKETTYPE + staticDataSuffix, MARKETTYPE_SWAP);
@@ -1296,7 +1296,7 @@ namespace etrading
 															 const AQLString& curveNames,
 															 const AQLString& curveName_DF2 )
 	{
-		LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+		AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 		
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 	    AQLObject* pyld = NULL;
@@ -1304,7 +1304,7 @@ namespace etrading
 	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
 	    AQLDate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
-	    LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
+	    AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	    AQLString currency;
 	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
@@ -1425,7 +1425,7 @@ namespace etrading
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ALWAYSCALCJOINDATE + staticDataSuffix);
 
 	    bool isswaptenoradjust = false;
-	    MLIB_2D_MATRIX_CHECK( generateProp, "Invalid CurveProperties or generateProp Conventions" )
+	    AQ_2D_MATRIX_CHECK( generateProp, "Invalid CurveProperties or generateProp Conventions" )
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
@@ -1446,7 +1446,7 @@ namespace etrading
 		    }
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )	
+	    AQ_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )	
 	    for(size_t i=0; i<moneyConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
@@ -1456,7 +1456,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	
-	    MLIB_2D_MATRIX_CHECK( liborConv, "Invalid Libor Fixing and Reset Conventions" )
+	    AQ_2D_MATRIX_CHECK( liborConv, "Invalid Libor Fixing and Reset Conventions" )
 	    for(size_t i=0; i<liborConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
@@ -1466,7 +1466,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions" )
+	    AQ_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions" )
 	    for(size_t i=0; i<swapConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv[i][0] + staticDataSuffix;
@@ -1476,7 +1476,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
+	    AQ_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
 	    for(size_t i=0; i<fraConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
@@ -1486,7 +1486,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( futureConv, "Invalid Future Conventions" )
+	    AQ_2D_MATRIX_CHECK( futureConv, "Invalid Future Conventions" )
 	    for(size_t i=0; i<futureConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.future." + futureConv[i][0] + staticDataSuffix;
@@ -1516,7 +1516,7 @@ namespace etrading
 			    adjsuffix_data.toLower();
 		    }
 
-		    MLIB_2D_MATRIX_CHECK( adjustSwapConv, "Invalid Basis Swap Adjustment or adjustSwapConv Conventions")
+		    AQ_2D_MATRIX_CHECK( adjustSwapConv, "Invalid Basis Swap Adjustment or adjustSwapConv Conventions")
 		    for(size_t i=0; i<adjustSwapConv.size(); i++)
 		    {
 			    AQLString key = tmpCurrency + ".sde.yield.basis." + adjustSwapConv[i][0] + adjsuffix_prop;
@@ -1542,7 +1542,7 @@ namespace etrading
 
 		    AQLString adjstream;
 		    AQLString usegrid = "";
-            MLIB_2D_MATRIX_CHECK( adjustSwapRates, "Invalid Basis Swap Adjustment or adjustSwapRates Rates" )
+            AQ_2D_MATRIX_CHECK( adjustSwapRates, "Invalid Basis Swap Adjustment or adjustSwapRates Rates" )
 		    for(size_t i=0; i<adjustSwapRates.size(); i++)
 		    {
 			    adjstream += adjustSwapRates[i][0];
@@ -1557,7 +1557,7 @@ namespace etrading
 			    }
 		    }
 		    std::istringstream *padjstream = new std::istringstream(adjstream.getCString());
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(adjfile), padjstream);
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(adjfile), padjstream);
 
 		    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_USEGRID + "." + tmpBasisCurveName);
 		    int find;
@@ -1592,7 +1592,7 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
 	    }
 	    AQLString liborstream;
-        MLIB_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing Rates" )
+        AQ_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing Rates" )
 	    for(size_t i=0; i<liborRates.size(); i++)
 	    {
 		    liborstream += liborRates[i][0];
@@ -1613,7 +1613,7 @@ namespace etrading
 		    }
 	    }
 	    std::istringstream *pliborstream = new std::istringstream(liborstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(liborfile), pliborstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(liborfile), pliborstream);
 
 	    //set fwd swap
 	    bool areSwapsForwardStarting = false;
@@ -1633,7 +1633,7 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix, swapfile);
 	    }
 	    AQLString swapstream;
-        MLIB_2D_MATRIX_CHECK( swapRates, "Invalid Swap Rates" )
+        AQ_2D_MATRIX_CHECK( swapRates, "Invalid Swap Rates" )
 	    for(size_t i=0; i<swapRates.size(); i++)
 	    {
 		    swapstream += swapRates[i][0];
@@ -1695,7 +1695,7 @@ namespace etrading
 		    swapstream += LF;
 	    }
 	    std::istringstream *pswapstream = new std::istringstream(swapstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(swapfile), pswapstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(swapfile), pswapstream);
 
 	    //set FRA Object;
 	    bool isFRAUse = false;
@@ -1725,14 +1725,14 @@ namespace etrading
 			    AQLString fra3mstream = etrading::buildFRAMarketDataFile(fraFile, fra3mRates, areSwapsForwardStarting, usegrid_fra);	
 
 			    std::istringstream *pfra3mstream = new std::istringstream(fra3mstream.getCString());
-			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra3mstream);
+			    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fraFile), pfra3mstream);
 		    }
 		    else if (fra6mRates.size() != 0)
 		    {
 			    AQLString fra6mstream = etrading::buildFRAMarketDataFile(fraFile, fra6mRates, areSwapsForwardStarting, usegrid_fra);
 
 			    std::istringstream *pfra6mstream = new std::istringstream(fra6mstream.getCString());
-			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra6mstream);
+			    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fraFile), pfra6mstream);
 		    }
 		    else
 		    {
@@ -1761,7 +1761,7 @@ namespace etrading
 			    futureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_future") + suffix_data + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix, futureFile);
 		    }
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(futureFile), createFutureStream(futureRates, usegrid_future));
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(futureFile), createFutureStream(futureRates, usegrid_future));
 	    }
 
 	    ///////////////
@@ -1926,14 +1926,14 @@ namespace etrading
 															  const AQLStringMatrix& liborConv,
 															  const AQLStringMatrix& liborRates )
 	{
-		LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+		AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 
 	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
 	    AQLDate asofdate = stringToDate( chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1) );
-        LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
+        AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	    AQLString currency;
 	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
@@ -2036,7 +2036,7 @@ namespace etrading
 	    }
 
 	    //basis info
-	    MLIB_2D_MATRIX_CHECK( basisConv, "Invalid Basis Conventions" )
+	    AQ_2D_MATRIX_CHECK( basisConv, "Invalid Basis Conventions" )
         for(size_t i=0; i<basisConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.basis." + basisConv[i][0] + staticDataSuffix;
@@ -2049,7 +2049,7 @@ namespace etrading
 		    irStaticData.setStaticData(key,data);
 	    }
 	    //generator info
-	    MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties" )
+	    AQ_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties" )
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
@@ -2059,7 +2059,7 @@ namespace etrading
 		    irStaticData.setStaticData(key,data);
 	    }
 	    //money info
-	    MLIB_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )
+	    AQ_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )
 	    for(size_t i=0; i<moneyConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
@@ -2069,7 +2069,7 @@ namespace etrading
 		    irStaticData.setStaticData(key,data);
 	    }
 	    //FRA info
-	    MLIB_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
+	    AQ_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
 	    for(size_t i=0; i<fraConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
@@ -2079,7 +2079,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	    //fwdfx info
-	    MLIB_2D_MATRIX_CHECK( fwdConv, "Invalid Forward FX Conventions" )
+	    AQ_2D_MATRIX_CHECK( fwdConv, "Invalid Forward FX Conventions" )
 	    for(size_t i=0; i<fwdConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.basis.fwdfx." + fwdConv[i][0] + staticDataSuffix;
@@ -2089,7 +2089,7 @@ namespace etrading
 		    irStaticData.setStaticData(key,data);
 	    }
 	    // Libor market convention
-	    MLIB_2D_MATRIX_CHECK( liborConv, "Invalid Libor Conventions" )
+	    AQ_2D_MATRIX_CHECK( liborConv, "Invalid Libor Conventions" )
 	    for(size_t i=0; i<liborConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
@@ -2115,7 +2115,7 @@ namespace etrading
 				    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
 			    }
 			    AQLString liborstream;
-                MLIB_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing or Reset Rates" )
+                AQ_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing or Reset Rates" )
 			    for(size_t i=0; i<liborRates.size(); i++)
 			    {
 				    liborstream += liborRates[i][0];
@@ -2136,7 +2136,7 @@ namespace etrading
 				    }
 			    }
 			    std::istringstream *pliborstream = new std::istringstream(liborstream.getCString());
-			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(liborfile), pliborstream);
+			    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(liborfile), pliborstream);
 		    }
 	    }
 
@@ -2175,7 +2175,7 @@ namespace etrading
 		
 		    AQLString fraStream = etrading::buildFRAMarketDataFile(fraFile, fraRates, areSwapsForwardStarting, fraUseGrid);	
 		    std::istringstream *pfraStream = new std::istringstream(fraStream.getCString());
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfraStream);
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fraFile), pfraStream);
 	    }
 
 	    //set fwd basis
@@ -2195,7 +2195,7 @@ namespace etrading
 	    }
 	    AQLString basisstream;
 	    AQLString usegrid = "";
-	    MLIB_2D_MATRIX_CHECK( basisRates, "Invalid Basis Rates" )
+	    AQ_2D_MATRIX_CHECK( basisRates, "Invalid Basis Rates" )
 	    for (unsigned int i = 0; i < basisRates.size();i++)
 	    {
 		    basisstream += basisRates[i][0];
@@ -2256,13 +2256,13 @@ namespace etrading
 		    basisstream += LF;
 	    }
 	    std::istringstream *pbasisstream = new std::istringstream(basisstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(basisfile), pbasisstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(basisfile), pbasisstream);
 
 	    //fwdfx file
 	    AQLString fwdfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + staticDataSuffix);
 	    AQLString fwdstream;
 	    AQLString fwdusegrid = "";
-	    MLIB_2D_MATRIX_CHECK( fwdFXs, "Invalid Forward FXs" )
+	    AQ_2D_MATRIX_CHECK( fwdFXs, "Invalid Forward FXs" )
 	    for (unsigned int i = 0; i < fwdFXs.size();i++)
 	    {
 		    fwdstream += fwdFXs[i][0];
@@ -2283,7 +2283,7 @@ namespace etrading
 		    }
 	    }
 	    std::istringstream *pfwdstream = new std::istringstream(fwdstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fwdfile), pfwdstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fwdfile), pfwdstream);
 
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATECURVEID, curveID);
 
@@ -2368,7 +2368,7 @@ namespace etrading
 	    }
 	    pFwd->getName().convertFromString(FORWARDFX);
 	    pFwd->getFXType().convertFromString("FORWARDRATE");
-	    LACoreDataService::setContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD, FORWARDFX);
+	    AQLCoreDataService::setContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD, FORWARDFX);
 	    const int ccySize = spotFXs.size();
 	    AQLStringVector ccys(ccySize);
 	    DoubleVector spotrates(ccySize);
@@ -2477,14 +2477,14 @@ namespace etrading
 																	 const AQLStringMatrix& generateProp,
 																	 const AQLString& curveNames)
 	{
-		LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+		AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 		
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 
 	    AQLStringMatrix tmpInfo = generateProp;
 	    upper(tmpInfo);
 	    AQLDate asofdate = stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
-        LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
+        AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	    AQLString currency;
 	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
@@ -2560,7 +2560,7 @@ namespace etrading
 		    irStaticData.setStaticData( key, data );
 	    }
 	    //basis info
-	    MLIB_2D_MATRIX_CHECK( fwdfxconstConv, "Invalid Forward FX Const Conventions" )
+	    AQ_2D_MATRIX_CHECK( fwdfxconstConv, "Invalid Forward FX Const Conventions" )
 	    for(size_t i=0; i<fwdfxconstConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.basis." + fwdfxconstConv[i][0] + staticDataSuffix;
@@ -2570,7 +2570,7 @@ namespace etrading
 		    irStaticData.setStaticData(key,data);
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
+	    AQ_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
 	    for(size_t i=0; i<generateProp.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
@@ -2648,7 +2648,7 @@ namespace etrading
     }
 
 
-    void LAUpdateStaticDataManager::populateStaticDataManagerForSwapCurve(LAStaticData &irStaticData,
+    void LAUpdateStaticDataManager::populateStaticDataManagerForSwapCurve(AQLStaticData &irStaticData,
 									    const AQLString& useMarkets,
 									    const AQLString& currency,
 									    const AQLString& curveNames_swap,
@@ -2744,7 +2744,7 @@ namespace etrading
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ALWAYSCALCJOINDATE + suffix_prop_swap);
 
 	    bool isswaptenoradjust = false;
-	    MLIB_2D_MATRIX_CHECK( generateProp_swap, "Invalid Curve Properties or GenerateProp Conventions" )
+	    AQ_2D_MATRIX_CHECK( generateProp_swap, "Invalid Curve Properties or GenerateProp Conventions" )
 	    for (size_t i = 0; i<generateProp_swap.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.generator." + generateProp_swap[i][0] + suffix_prop_swap;
@@ -2765,7 +2765,7 @@ namespace etrading
 		    }
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( moneyConv_swap, "Invalid Money Market Conventions" )
+	    AQ_2D_MATRIX_CHECK( moneyConv_swap, "Invalid Money Market Conventions" )
 	    for (size_t i = 0; i<moneyConv_swap.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.moneymarket." + moneyConv_swap[i][0] + suffix_prop_swap;
@@ -2775,7 +2775,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( liborConv_swap, "Invalid Libor Fixing Conventions" )
+	    AQ_2D_MATRIX_CHECK( liborConv_swap, "Invalid Libor Fixing Conventions" )
 	    for (size_t i = 0; i<liborConv_swap.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.libor." + liborConv_swap[i][0] + suffix_prop_swap;
@@ -2785,7 +2785,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( swapConv_swap, "Invalid Swap Conventions" )
+	    AQ_2D_MATRIX_CHECK( swapConv_swap, "Invalid Swap Conventions" )
 	    for (size_t i = 0; i<swapConv_swap.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.swap." + swapConv_swap[i][0] + suffix_prop_swap;
@@ -2795,7 +2795,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( fraConv_swap, "Invalid FRA Conventions" )
+	    AQ_2D_MATRIX_CHECK( fraConv_swap, "Invalid FRA Conventions" )
 	    for (size_t i = 0; i<fraConv_swap.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.fra." + fraConv_swap[i][0] + suffix_prop_swap;
@@ -2805,7 +2805,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( futureConv_swap, "Invalid Future Conventions" )
+	    AQ_2D_MATRIX_CHECK( futureConv_swap, "Invalid Future Conventions" )
 	    for (size_t i = 0; i<futureConv_swap.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.future." + futureConv_swap[i][0] + suffix_prop_swap;
@@ -2833,7 +2833,7 @@ namespace etrading
 			    adjsuffix_data.toLower();
 		    }
 
-		    MLIB_2D_MATRIX_CHECK( adjustSwapConv_swap, "Invalid Future Conventions" )
+		    AQ_2D_MATRIX_CHECK( adjustSwapConv_swap, "Invalid Future Conventions" )
 		    for (size_t i = 0; i<adjustSwapConv_swap.size(); i++)
 		    {
 			    AQLString key = currency + ".sde.yield.basis." + adjustSwapConv_swap[i][0] + adjsuffix_prop;
@@ -2859,7 +2859,7 @@ namespace etrading
 
 		    AQLString adjstream;
 		    AQLString usegrid = "";
-		    MLIB_2D_MATRIX_CHECK( adjustSwapRates_swap, "Invalid Basis Swap Rates / AdjustSwapRates Conventions" )
+		    AQ_2D_MATRIX_CHECK( adjustSwapRates_swap, "Invalid Basis Swap Rates / AdjustSwapRates Conventions" )
 		    for (size_t i = 0; i<adjustSwapRates_swap.size(); i++)
 		    {
 			    adjstream += adjustSwapRates_swap[i][0];
@@ -2874,7 +2874,7 @@ namespace etrading
 			    }
 		    }
 		    std::istringstream *padjstream = new std::istringstream(adjstream.getCString());
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(adjfile), padjstream);
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(adjfile), padjstream);
 
 		    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_USEGRID + "." + tmpBasisCurveName);
 		    int find;
@@ -2907,7 +2907,7 @@ namespace etrading
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap, liborfile);
 	    }
 	    AQLString liborstream;
-	    MLIB_2D_MATRIX_CHECK( liborRates_swap, "Invalid Libor Rates" )
+	    AQ_2D_MATRIX_CHECK( liborRates_swap, "Invalid Libor Rates" )
 	    for (size_t i = 0; i<liborRates_swap.size(); i++)
 	    {
 		    liborstream += liborRates_swap[i][0];
@@ -2928,7 +2928,7 @@ namespace etrading
 		    }
 	    }
 	    std::istringstream *pliborstream = new std::istringstream(liborstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(liborfile), pliborstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(liborfile), pliborstream);
 
 	    //set fwd swap
 	    bool areSwapsForwardStarting = false;
@@ -2948,7 +2948,7 @@ namespace etrading
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap, swapfile);
 	    }
 	    AQLString swapstream;
-	    MLIB_2D_MATRIX_CHECK( swapRates_swap, "Invalid Swap Rates" )
+	    AQ_2D_MATRIX_CHECK( swapRates_swap, "Invalid Swap Rates" )
 	    for (size_t i = 0; i<swapRates_swap.size(); i++)
 	    {
 		    swapstream += swapRates_swap[i][0];
@@ -3010,7 +3010,7 @@ namespace etrading
 		    swapstream += LF;
 	    }
 	    std::istringstream *pswapstream = new std::istringstream(swapstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(swapfile), pswapstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(swapfile), pswapstream);
 
 	    //set FRA Object;
 	    bool isFRAUse = false;
@@ -3040,14 +3040,14 @@ namespace etrading
 			    AQLString fra3mstream = etrading::buildFRAMarketDataFile(fraFile, fra3mRates_swap, areSwapsForwardStarting, usegrid_fra);
 
 			    std::istringstream *pfra3mstream = new std::istringstream(fra3mstream.getCString());
-			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra3mstream);
+			    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fraFile), pfra3mstream);
 		    }
 		    else if (fra6mRates_swap.size() != 0)
 		    {
 			    AQLString fra6mstream = etrading::buildFRAMarketDataFile(fraFile, fra6mRates_swap, areSwapsForwardStarting, usegrid_fra);
 
 			    std::istringstream *pfra6mstream = new std::istringstream(fra6mstream.getCString());
-			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra6mstream);
+			    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fraFile), pfra6mstream);
 		    }
 		    else
 		    {
@@ -3076,7 +3076,7 @@ namespace etrading
 			    futureFile = AQLString("data/in/") + currency + AQLString("_yield_future") + suffix_data_swap + AQLString(".csv");
 			    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap, futureFile);
 		    }
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(futureFile), createFutureStream(futureRates_swap, usegrid_future));
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(futureFile), createFutureStream(futureRates_swap, usegrid_future));
 	    }
 
 
@@ -3148,7 +3148,7 @@ namespace etrading
 	    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + suffix_prop_swap, CURVETYPE_SWAP);
     }
 
-    void LAUpdateStaticDataManager::populateStaticDataManagerForOISCurve(LAStaticData &irStaticData,
+    void LAUpdateStaticDataManager::populateStaticDataManagerForOISCurve(AQLStaticData &irStaticData,
 													    const AQLString& useMarkets,
 													    const AQLString& currency,
 													    const AQLString& curveNames_OIS,
@@ -3228,7 +3228,7 @@ namespace etrading
 
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_DFCURVENAME + suffix_prop_OIS);
 
-	    MLIB_2D_MATRIX_CHECK( generateProp_OIS, "Invalid OIS Curve Properties / GenerateProps" )
+	    AQ_2D_MATRIX_CHECK( generateProp_OIS, "Invalid OIS Curve Properties / GenerateProps" )
 	    for (size_t i = 0; i<generateProp_OIS.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.generator." + generateProp_OIS[i][0] + suffix_prop_OIS;
@@ -3248,7 +3248,7 @@ namespace etrading
         irStaticData.removeStaticData( currency + STATIC_DATA_KEY_YIELD_OIS_COMPOUNDINGMETHOD + suffix_prop_OIS );
 		irStaticData.removeStaticData( currency + STATIC_DATA_KEY_YIELD_OIS_INTERPOLATIONJOINDATE + suffix_prop_OIS);
 
-	    MLIB_2D_MATRIX_CHECK( oisConv_OIS, "Invalid OIS Conventions" )
+	    AQ_2D_MATRIX_CHECK( oisConv_OIS, "Invalid OIS Conventions" )
 	    for (size_t i = 0; i<oisConv_OIS.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.ois." + oisConv_OIS[i][0] + suffix_prop_OIS;
@@ -3284,7 +3284,7 @@ namespace etrading
 	    AQLString usegrid_ois = "";
 	    AQLString usegrid_fffuture = "";
 	
-	    MLIB_2D_MATRIX_CHECK( oisRates_OIS, "Invalid OIS Rates" )
+	    AQ_2D_MATRIX_CHECK( oisRates_OIS, "Invalid OIS Rates" )
 	    for (size_t i = 0; i<oisRates_OIS.size(); i++)
 	    {
 		    if (oisRates_OIS[i][0].findString("FF") != -1)
@@ -3371,9 +3371,9 @@ namespace etrading
 		    }
 	    }
 	    std::istringstream *pOISStream = new std::istringstream(oisStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(oisFile), pOISStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(oisFile), pOISStream);
 	    std::istringstream *pFedFundFutureStream = new std::istringstream(fedFundFutureStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fedFundFutureFile), pFedFundFutureStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fedFundFutureFile), pFedFundFutureStream);
 
 
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_USEGRID + suffix_prop_OIS);
@@ -3394,7 +3394,7 @@ namespace etrading
 	    }
 
 	    AQLString histStream;
-	    MLIB_2D_MATRIX_CHECK( histRates_OIS, "Invalid OIS Fixing and Reset Rates" )
+	    AQ_2D_MATRIX_CHECK( histRates_OIS, "Invalid OIS Fixing and Reset Rates" )
 	    for (size_t i = 0; i<histRates_OIS.size(); i++)
 	    {
 		    const AQLDate& histdate = stringToDate(histRates_OIS[i][0]);
@@ -3405,9 +3405,9 @@ namespace etrading
 		    histStream += LF;
 	    }
 	    std::istringstream *pHISTStream = new std::istringstream(histStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(histFile), pHISTStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(histFile), pHISTStream);
 
-	    MLIB_2D_MATRIX_CHECK( lobasisConv_OIS, "Invalid Libor-OIS Basis Conventions" )
+	    AQ_2D_MATRIX_CHECK( lobasisConv_OIS, "Invalid Libor-OIS Basis Conventions" )
 	    for (size_t i = 0; i<lobasisConv_OIS.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.basis." + lobasisConv_OIS[i][0] + suffix_prop_OIS;
@@ -3424,7 +3424,7 @@ namespace etrading
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS, lobasisfile);
 	    }
 	    AQLString lobasisstream;
-	    MLIB_2D_MATRIX_CHECK( lobasisRates_OIS, "Invalid Libor-OIS Basis Rates" )
+	    AQ_2D_MATRIX_CHECK( lobasisRates_OIS, "Invalid Libor-OIS Basis Rates" )
 		const size_t lobasisColumnSize = ( lobasisRates_OIS.size() > 0 ) ? lobasisRates_OIS[0].size() : 0;
 
 	    for (size_t i = 0; i<lobasisRates_OIS.size(); i++)
@@ -3451,9 +3451,9 @@ namespace etrading
 			lobasisstream += LF;
 	    }
 	    std::istringstream *plobasisstream = new std::istringstream(lobasisstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(lobasisfile), plobasisstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(lobasisfile), plobasisstream);
 
-	    MLIB_2D_MATRIX_CHECK( swapConv_OIS, "Invalid Swap Conventions" )
+	    AQ_2D_MATRIX_CHECK( swapConv_OIS, "Invalid Swap Conventions" )
 	    for (size_t i = 0; i<swapConv_OIS.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.swap." + swapConv_OIS[i][0] + suffix_prop_OIS;
@@ -3475,7 +3475,7 @@ namespace etrading
 
 
 	// =====================================================================================================================
-    void LAUpdateStaticDataManager::populateStaticDataManagerForTenorBasisCurve(LAStaticData &irStaticData, 
+    void LAUpdateStaticDataManager::populateStaticDataManagerForTenorBasisCurve(AQLStaticData &irStaticData, 
 																				const AQLString& curveName,
 																				const AQLString& curveNames,
 																				const AQLString& currency,
@@ -3551,7 +3551,7 @@ namespace etrading
 	    }
 
 	    //basis info
-	    MLIB_2D_MATRIX_CHECK( basisConv, "Invalid Basis Conventions" )
+	    AQ_2D_MATRIX_CHECK( basisConv, "Invalid Basis Conventions" )
 	    for (size_t i = 0; i<basisConv.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.basis." + basisConv[i][0] + staticDataSuffix;
@@ -3564,7 +3564,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	    //generator info
-	    MLIB_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
+	    AQ_2D_MATRIX_CHECK( generateProp, "Invalid Curve Properties or generateProp Conventions" )
 	    for (size_t i = 0; i<generateProp.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.generator." + generateProp[i][0] + staticDataSuffix;
@@ -3574,7 +3574,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	    //money info
-	    MLIB_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )
+	    AQ_2D_MATRIX_CHECK( moneyConv, "Invalid Money Market Conventions" )
 	    for (size_t i = 0; i<moneyConv.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.moneymarket." + moneyConv[i][0] + staticDataSuffix;
@@ -3584,7 +3584,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	    //FRA info
-	    MLIB_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
+	    AQ_2D_MATRIX_CHECK( fraConv, "Invalid FRA Conventions" )
 	    for (size_t i = 0; i<fraConv.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.fra." + fraConv[i][0] + staticDataSuffix;
@@ -3594,7 +3594,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	    //fwdfx info
-	    MLIB_2D_MATRIX_CHECK( fwdConv, "Invalid Forward FX Conventions" )
+	    AQ_2D_MATRIX_CHECK( fwdConv, "Invalid Forward FX Conventions" )
 	    for (size_t i = 0; i<fwdConv.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.basis.fwdfx." + fwdConv[i][0] + staticDataSuffix;
@@ -3604,7 +3604,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	    // Libor market convention
-	    MLIB_2D_MATRIX_CHECK( liborConv, "Invalid Libor Fixings and Reset Conventions" )
+	    AQ_2D_MATRIX_CHECK( liborConv, "Invalid Libor Fixings and Reset Conventions" )
 	    for (size_t i = 0; i<liborConv.size(); i++)
 	    {
 		    AQLString key = currency + ".sde.yield.libor." + liborConv[i][0] + staticDataSuffix;
@@ -3630,7 +3630,7 @@ namespace etrading
 				    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
 			    }
 			    AQLString liborstream;
-			    MLIB_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing and Reset Rates" )
+			    AQ_2D_MATRIX_CHECK( liborRates, "Invalid Libor Fixing and Reset Rates" )
 			    for (size_t i = 0; i<liborRates.size(); i++)
 			    {
 				    liborstream += liborRates[i][0];
@@ -3651,7 +3651,7 @@ namespace etrading
 				    }
 			    }
 			    std::istringstream *pliborstream = new std::istringstream(liborstream.getCString());
-			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(liborfile), pliborstream);
+			    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(liborfile), pliborstream);
 		    }
 	    }
 
@@ -3690,7 +3690,7 @@ namespace etrading
 
 		    AQLString fraStream = etrading::buildFRAMarketDataFile(fraFile, fraRates, areSwapsForwardStarting, fraUseGrid);
 		    std::istringstream *pfraStream = new std::istringstream(fraStream.getCString());
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfraStream);
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fraFile), pfraStream);
 	    }
 
 	    //set fwd basis
@@ -3710,7 +3710,7 @@ namespace etrading
 	    }
 	    AQLString basisstream;
 	    AQLString usegrid = "";
-	    MLIB_2D_MATRIX_CHECK( basisRates, "Invalid Basis Rates" )
+	    AQ_2D_MATRIX_CHECK( basisRates, "Invalid Basis Rates" )
 	    for (unsigned int i = 0; i < basisRates.size(); i++)
 	    {
 		    basisstream += basisRates[i][0];
@@ -3771,13 +3771,13 @@ namespace etrading
 		    basisstream += LF;
 	    }
 	    std::istringstream *pbasisstream = new std::istringstream(basisstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(basisfile), pbasisstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(basisfile), pbasisstream);
 
 	    //fwdfx file
 	    AQLString fwdfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + staticDataSuffix);
 	    AQLString fwdstream;
 	    AQLString fwdusegrid = "";
-	    MLIB_2D_MATRIX_CHECK( fwdFXs, "Invalid Forward FX Rates" )
+	    AQ_2D_MATRIX_CHECK( fwdFXs, "Invalid Forward FX Rates" )
 	    for (unsigned int i = 0; i < fwdFXs.size(); i++)
 	    {
 		    fwdstream += fwdFXs[i][0];
@@ -3798,7 +3798,7 @@ namespace etrading
 		    }
 	    }
 	    std::istringstream *pfwdstream = new std::istringstream(fwdstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fwdfile), pfwdstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fwdfile), pfwdstream);
 
 	    // Set up UseGrids
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_USEGRID + staticDataSuffix);
@@ -3886,7 +3886,7 @@ namespace etrading
 													        const AQLStringMatrix& commonParams,
 													        const std::vector<etrading::CurveObjectDataPtr>& curveDataCollection)
     {
-	    LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+	    AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 	    AQLObject* pyld = NULL;
 
@@ -3955,7 +3955,7 @@ namespace etrading
 	    }
 
 	    // Add common params to Property Manager
-	    MLIB_2D_MATRIX_CHECK( commonParams, "Invalid CommonParameters Data Block" )
+	    AQ_2D_MATRIX_CHECK( commonParams, "Invalid CommonParameters Data Block" )
 	    for (size_t i = 0; i<commonParams.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.globalenginecurves." + commonParams[i][0] + staticDataSuffix;
@@ -3995,7 +3995,7 @@ namespace etrading
 			    AQLStringMatrix tmpInfo = curveData.curveConvLVB_.toLAStringMatrix(); // Curve Conventions are LVBs
 			    upper(tmpInfo);
 			    AQLDate asofdate = stringToDate(chgrow(tmpInfo, CURVEINPUT_ASOFDATE, 1));
-			    LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
+			    AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 			
 			    // Populate all relevant parameters and market data to property manager
 			    populateStaticDataManagerForOISCurve(irStaticData,
@@ -4140,7 +4140,7 @@ namespace etrading
 									                        const AQLStringMatrix& adjustSwapConv_swap,
 									                        const AQLStringMatrix& adjustSwapRates_swap )
     {
-	    LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+	    AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 
 
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
@@ -4149,7 +4149,7 @@ namespace etrading
 	    AQLStringMatrix tmpInfo = generateProp_swap;
 	    upper(tmpInfo);
 	    AQLDate asofdate	= stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
-	    LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
+	    AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	    AQLString currency;
 	    AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
 	    if (objHolder.isDefined())
@@ -4225,7 +4225,7 @@ namespace etrading
 	    }
 	
 	    // Add common params to Property Manager
-	    MLIB_2D_MATRIX_CHECK( commonParams, "Invalid CommonParameters Data Block" )
+	    AQ_2D_MATRIX_CHECK( commonParams, "Invalid CommonParameters Data Block" )
 	    for (size_t i = 0; i<commonParams.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.dualbootstrap." + commonParams[i][0] + staticDataSuffix;
@@ -4314,7 +4314,7 @@ namespace etrading
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ALWAYSCALCJOINDATE + suffix_prop_swap);
 
 	    bool isswaptenoradjust = false;
-	    MLIB_2D_MATRIX_CHECK( generateProp_swap, "Invalid CurveProperties or generatorProp Conventions" )
+	    AQ_2D_MATRIX_CHECK( generateProp_swap, "Invalid CurveProperties or generatorProp Conventions" )
 	    for(size_t i=0; i<generateProp_swap.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp_swap[i][0] + suffix_prop_swap;
@@ -4335,7 +4335,7 @@ namespace etrading
 		    }
 	    }
 	
-	    MLIB_2D_MATRIX_CHECK( moneyConv_swap, "Invalid Money Market Conventions" )
+	    AQ_2D_MATRIX_CHECK( moneyConv_swap, "Invalid Money Market Conventions" )
 	    for(size_t i=0; i<moneyConv_swap.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.moneymarket." + moneyConv_swap[i][0] + suffix_prop_swap;
@@ -4345,7 +4345,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	
-	    MLIB_2D_MATRIX_CHECK( liborConv_swap, "Invalid Libor Fixing and Reset Conventions" )
+	    AQ_2D_MATRIX_CHECK( liborConv_swap, "Invalid Libor Fixing and Reset Conventions" )
 	    for(size_t i=0; i<liborConv_swap.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.libor." + liborConv_swap[i][0] + suffix_prop_swap;
@@ -4355,7 +4355,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 	
-	    MLIB_2D_MATRIX_CHECK( swapConv_swap, "Invalid Libor Fixing and Reset Conventions" )
+	    AQ_2D_MATRIX_CHECK( swapConv_swap, "Invalid Libor Fixing and Reset Conventions" )
 	    for(size_t i=0; i<swapConv_swap.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv_swap[i][0] + suffix_prop_swap;
@@ -4365,7 +4365,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( fraConv_swap, "Invalid FRA Conventions" )
+	    AQ_2D_MATRIX_CHECK( fraConv_swap, "Invalid FRA Conventions" )
 	    for(size_t i=0; i<fraConv_swap.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.fra." + fraConv_swap[i][0] + suffix_prop_swap;
@@ -4375,7 +4375,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }
 
-	    MLIB_2D_MATRIX_CHECK( futureConv_swap, "Invalid Futures Conventions" )
+	    AQ_2D_MATRIX_CHECK( futureConv_swap, "Invalid Futures Conventions" )
 	    for(size_t i=0; i<futureConv_swap.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.future." + futureConv_swap[i][0] + suffix_prop_swap;
@@ -4403,7 +4403,7 @@ namespace etrading
 			    adjsuffix_data.toLower();
 		    }
 		
-		    MLIB_2D_MATRIX_CHECK( adjustSwapConv_swap, "Invalid Basis Swap or AdjustSwapConv Conventions" )
+		    AQ_2D_MATRIX_CHECK( adjustSwapConv_swap, "Invalid Basis Swap or AdjustSwapConv Conventions" )
 		    for(size_t i=0; i<adjustSwapConv_swap.size(); i++)
 		    {
 			    AQLString key = tmpCurrency + ".sde.yield.basis." + adjustSwapConv_swap[i][0] + adjsuffix_prop;
@@ -4429,7 +4429,7 @@ namespace etrading
 
 		    AQLString adjstream;
 		    AQLString usegrid = "";
-		    MLIB_2D_MATRIX_CHECK( adjustSwapConv_swap, "Invalid Basis Swap Rates or AdjustSwapRates Rates" )
+		    AQ_2D_MATRIX_CHECK( adjustSwapConv_swap, "Invalid Basis Swap Rates or AdjustSwapRates Rates" )
 		    for(size_t i=0; i<adjustSwapRates_swap.size(); i++)
 		    {
 			    adjstream += adjustSwapRates_swap[i][0];
@@ -4444,7 +4444,7 @@ namespace etrading
 			    }
 		    }
 		    std::istringstream *padjstream = new std::istringstream(adjstream.getCString());
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(adjfile), padjstream);
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(adjfile), padjstream);
 
 		    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_USEGRID + "." + tmpBasisCurveName);
 		    int find;
@@ -4477,7 +4477,7 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap, liborfile);
 	    }
 	    AQLString liborstream;
-	    MLIB_2D_MATRIX_CHECK( liborRates_swap, "Invalid Libor Fixing and Reset Rates" )
+	    AQ_2D_MATRIX_CHECK( liborRates_swap, "Invalid Libor Fixing and Reset Rates" )
 	    for(size_t i=0; i<liborRates_swap.size(); i++)
 	    {
 		    liborstream += liborRates_swap[i][0];
@@ -4498,7 +4498,7 @@ namespace etrading
 		    }
 	    }
 	    std::istringstream *pliborstream = new std::istringstream(liborstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(liborfile), pliborstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(liborfile), pliborstream);
 
 	    //set fwd swap
 	    bool areSwapsForwardStarting = false;
@@ -4518,7 +4518,7 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap, swapfile);
 	    }
 	    AQLString swapstream;
-	    MLIB_2D_MATRIX_CHECK( swapRates_swap, "Invalid Swap Rates" )
+	    AQ_2D_MATRIX_CHECK( swapRates_swap, "Invalid Swap Rates" )
 	    for(size_t i=0; i<swapRates_swap.size(); i++)
 	    {
 		    swapstream += swapRates_swap[i][0];
@@ -4580,7 +4580,7 @@ namespace etrading
 		    swapstream += LF;
 	    }
 	    std::istringstream *pswapstream = new std::istringstream(swapstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(swapfile), pswapstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(swapfile), pswapstream);
 
 	    //set FRA Object;
 	    bool isFRAUse = false;
@@ -4610,14 +4610,14 @@ namespace etrading
 			    AQLString fra3mstream = etrading::buildFRAMarketDataFile(fraFile, fra3mRates_swap, areSwapsForwardStarting, usegrid_fra);	
 
 			    std::istringstream *pfra3mstream = new std::istringstream(fra3mstream.getCString());
-			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra3mstream);
+			    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fraFile), pfra3mstream);
 		    }
 		    else if (fra6mRates_swap.size() != 0)
 		    {
 			    AQLString fra6mstream = etrading::buildFRAMarketDataFile(fraFile, fra6mRates_swap, areSwapsForwardStarting, usegrid_fra);
 
 			    std::istringstream *pfra6mstream = new std::istringstream(fra6mstream.getCString());
-			    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fraFile), pfra6mstream);
+			    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fraFile), pfra6mstream);
 		    }
 		    else
 		    {
@@ -4646,7 +4646,7 @@ namespace etrading
 			    futureFile = AQLString("data/in/") + tmpCurrency + AQLString("_yield_future") + suffix_data_swap + AQLString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap, futureFile);
 		    }
-		    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(futureFile), createFutureStream(futureRates_swap, usegrid_future));
+		    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(futureFile), createFutureStream(futureRates_swap, usegrid_future));
 	    }
 
 	    ///////////////
@@ -4790,7 +4790,7 @@ namespace etrading
 	
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_DFCURVENAME + suffix_prop_OIS);
 	
-	    MLIB_2D_MATRIX_CHECK( generateProp_OIS, "Invalid CurveProperties or generateProp Conventions" )
+	    AQ_2D_MATRIX_CHECK( generateProp_OIS, "Invalid CurveProperties or generateProp Conventions" )
 	    for(size_t i=0; i<generateProp_OIS.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.generator." + generateProp_OIS[i][0] + suffix_prop_OIS;
@@ -4810,7 +4810,7 @@ namespace etrading
         irStaticData.removeStaticData( tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_COMPOUNDINGMETHOD + suffix_prop_OIS );
 		irStaticData.removeStaticData( tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_INTERPOLATIONJOINDATE + suffix_prop_OIS);
 
-	    MLIB_2D_MATRIX_CHECK( oisConv_OIS, "Invalid OIS Swap Conventions" )	
+	    AQ_2D_MATRIX_CHECK( oisConv_OIS, "Invalid OIS Swap Conventions" )	
 	    for(size_t i=0; i<oisConv_OIS.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.ois." + oisConv_OIS[i][0] + suffix_prop_OIS;
@@ -4846,7 +4846,7 @@ namespace etrading
 	    AQLString usegrid_ois = "";
 	    AQLString usegrid_fffuture = "";
 
-	    MLIB_2D_MATRIX_CHECK( oisRates_OIS, "Invalid OIS Swap Rates" )	
+	    AQ_2D_MATRIX_CHECK( oisRates_OIS, "Invalid OIS Swap Rates" )	
 	    for(size_t i=0; i<oisRates_OIS.size(); i++)
 	    {
 		    if (oisRates_OIS[i][0].findString("FF") != -1)
@@ -4933,9 +4933,9 @@ namespace etrading
 		    }
 	    }
  	    std::istringstream *pOISStream = new std::istringstream(oisStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(oisFile), pOISStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(oisFile), pOISStream);
 	    std::istringstream *pFedFundFutureStream = new std::istringstream(fedFundFutureStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fedFundFutureFile), pFedFundFutureStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fedFundFutureFile), pFedFundFutureStream);
 
 
 	    ///////////////
@@ -4958,7 +4958,7 @@ namespace etrading
 	    }
 
 	    AQLString histStream;
-	    MLIB_2D_MATRIX_CHECK( histRates_OIS, "Invalid OIS Fixing and Reset Rates" )
+	    AQ_2D_MATRIX_CHECK( histRates_OIS, "Invalid OIS Fixing and Reset Rates" )
 	    for(size_t i=0; i<histRates_OIS.size(); i++)
 	    {
 		    const AQLDate& histdate = stringToDate(histRates_OIS[i][0]);
@@ -4969,9 +4969,9 @@ namespace etrading
 		    histStream += LF;
 	    }
 	    std::istringstream *pHISTStream = new std::istringstream(histStream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(histFile), pHISTStream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(histFile), pHISTStream);
 
-	    MLIB_2D_MATRIX_CHECK( lobasisConv_OIS, "Invalid Libor-OIS Basis Conventions" )
+	    AQ_2D_MATRIX_CHECK( lobasisConv_OIS, "Invalid Libor-OIS Basis Conventions" )
 	    for(size_t i=0; i<lobasisConv_OIS.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.basis." + lobasisConv_OIS[i][0] + suffix_prop_OIS;
@@ -4988,7 +4988,7 @@ namespace etrading
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS, lobasisfile);
 	    }
 	    AQLString lobasisstream;
-	    MLIB_2D_MATRIX_CHECK( lobasisRates_OIS, "Invalid Libor-OIS Basis Rates" )
+	    AQ_2D_MATRIX_CHECK( lobasisRates_OIS, "Invalid Libor-OIS Basis Rates" )
 		const size_t lobasisColumnSize = ( lobasisRates_OIS.size() > 0 ) ? lobasisRates_OIS[0].size() : 0;
 
 	    for(size_t i=0; i<lobasisRates_OIS.size(); i++)
@@ -5015,9 +5015,9 @@ namespace etrading
 			lobasisstream += LF;
 	    }
 	    std::istringstream *plobasisstream = new std::istringstream(lobasisstream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(lobasisfile), plobasisstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(lobasisfile), plobasisstream);
 
-	    MLIB_2D_MATRIX_CHECK( swapConv_OIS, "Invalid Swap Conventions" )
+	    AQ_2D_MATRIX_CHECK( swapConv_OIS, "Invalid Swap Conventions" )
 	    for(size_t i=0; i<swapConv_OIS.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.swap." + swapConv_OIS[i][0] + suffix_prop_OIS;
@@ -5065,10 +5065,10 @@ namespace etrading
     // Set-up for irserver, create property file stream
     void LAUpdateStaticDataManager::setUpForIRServer()
     {
-	    LACoreDataService::initialize();
-	    LACoreDataService::setContext(CONTEXT_KEY_ISPRICER, "TRUE");
-	    LACoreDataService::setContext(CONTEXT_KEY_ISEXCELREQUEST, "TRUE");
-	    LACoreDataService::setContext(ARG_KEY_FILENUM, "");
+	    AQLCoreDataService::initialize();
+	    AQLCoreDataService::setContext(CONTEXT_KEY_ISPRICER, "TRUE");
+	    AQLCoreDataService::setContext(CONTEXT_KEY_ISEXCELREQUEST, "TRUE");
+	    AQLCoreDataService::setContext(ARG_KEY_FILENUM, "");
 
 	    // create property stream
 	    std::istringstream *pPropSf = new std::istringstream();
@@ -5076,31 +5076,31 @@ namespace etrading
 	    std::istringstream *pGpropSf = new std::istringstream();
 	    std::istringstream *pCprofSf = new std::istringstream();
 	    // set prop
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName("ir.properties"), pPropSf);
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName("grid.properties"), pGpropSf);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName("ir.properties"), pPropSf);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName("grid.properties"), pGpropSf);
 	    // set risk prop
-	    LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
+	    AQLStaticData &staticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 		staticData.setStaticData(KEY_RISK_SCENARIO_FILE, "risk.properties");
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName("risk.properties"), pRPropSf);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName("risk.properties"), pRPropSf);
 	    // set max leg num
 	    staticData.setStaticData(KEY_DEAL_LEG_MAXNUM, "2");
 	    // set polynomial dimension
 	    staticData.setStaticData(KEY_SIMULATION_LSMC_BASEFUNCDIM, "2");
 	    //set calib prop
-	    //this is for avoiding LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == AQ_NO_DATA
-	    LACoreDataService::setContext(ARG_KEY_NOCALIBTHREAD, "tmp");
+	    //this is for avoiding AQLCoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == AQ_NO_DATA
+	    AQLCoreDataService::setContext(ARG_KEY_NOCALIBTHREAD, "tmp");
 	    staticData.setStaticData(KEY_CALIB_SCENARIO_FILE, "calib.properties"); 
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName("calib.properties"), pCprofSf);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName("calib.properties"), pCprofSf);
 	    staticData.setStaticData(KEY_SDE_CALIB_MODEL, "hw:ptberg");
 	    staticData.setStaticData(KEY_SDE_PV_CALIB_TARGET_CURRENCY, "ALL");
 
 	    //set isrealcalibmode //default is false
-	    LAStaticData &rprop = LACoreDataService::getStaticDataManager().getRiskStaticData();
+	    AQLStaticData &rprop = AQLCoreDataService::getStaticDataManager().getRiskStaticData();
 	    rprop.setStaticData(RISK_KEY_CALIB_ISREALCALIB,"false");
 	    //rprop.setStaticData(RISK_KEY_CALIB_ISREALCALIB,"true");
 	
-	    //this is for avoiding !LAMarketData::isCalibrateEnd(dIRModelName, objPool) ...
-	    LAStaticData &cprop = LACoreDataService::getStaticDataManager().getCalibStaticData();
+	    //this is for avoiding !AQLMarketData::isCalibrateEnd(dIRModelName, objPool) ...
+	    AQLStaticData &cprop = AQLCoreDataService::getStaticDataManager().getCalibStaticData();
 	    cprop.setStaticData(KEY_CALIB_WAIT_TIME, "10");
 	    //seriarize set
 	    cprop.setStaticData(KEY_CALIB_SERIALIZE_STATUS, "normal");
@@ -5142,7 +5142,7 @@ namespace etrading
 	    const AQLString* filepath = etrading::FolderConfig::ir_prop_path();
     
         // Track if Property Files have been loaded
-        LAStaticDataImport::getInstance().setIsStaticDataLoaded( ( filepath != NULL ) ? true : false );
+        AQLStaticDataImport::getInstance().setIsStaticDataLoaded( ( filepath != NULL ) ? true : false );
         
         if(filepath==NULL) return;
 
@@ -5156,7 +5156,7 @@ namespace etrading
 		    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 	    }
 
-        LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+        AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 	    std::string line;
 	    size_t line_num = 0;
 	    while (getline(fin, line)){
@@ -5194,7 +5194,7 @@ namespace etrading
 	    const AQLString* filepath = etrading::FolderConfig::calib_prop_path();
     
         // Track if Property Files have been loaded
-        LAStaticDataImport::getInstance().setIsStaticDataLoaded( ( filepath != NULL ) ? true : false );
+        AQLStaticDataImport::getInstance().setIsStaticDataLoaded( ( filepath != NULL ) ? true : false );
     
         if(filepath==NULL) return;
 
@@ -5208,7 +5208,7 @@ namespace etrading
 		    throw AQLCoreInvalidData(sst.str().c_str(), __FILE__, __LINE__);
 	    }
 
-        LAStaticData &calibprop = LACoreDataService::getStaticDataManager().getCalibStaticData();
+        AQLStaticData &calibprop = AQLCoreDataService::getStaticDataManager().getCalibStaticData();
 	    std::string line;
 	    size_t line_num = 0;
 	    while (getline(fin, line)){
@@ -5248,7 +5248,7 @@ namespace etrading
     LAUpdateStaticDataManager
     ::resetService()
     {
-	    LACoreDataService::finalize();
+	    AQLCoreDataService::finalize();
 	    setUpForIRServer();
     }
 
@@ -5333,7 +5333,7 @@ namespace etrading
 
     */
     void
-    LAUpdateStaticDataManager::setStaticDataValue(LAStaticData &staticData, const AQLString &key, const AQLString &val, const bool is_override)
+    LAUpdateStaticDataManager::setStaticDataValue(AQLStaticData &staticData, const AQLString &key, const AQLString &val, const bool is_override)
     {
 	    if (is_override)
 	    {
@@ -5354,16 +5354,16 @@ namespace etrading
     {
 	    // save in string stream
 	    AQLString stream;
-	    MLIB_2D_MATRIX_CHECK( fundingSpread, "Invalid Funding Spreads")
+	    AQ_2D_MATRIX_CHECK( fundingSpread, "Invalid Funding Spreads")
 	    for (unsigned int i = 0; i < fundingSpread.size(); ++i)
 	    {
 		    stream += fundingSpread[i][0];
 		    stream += "," + fundingSpread[i][1] + LF;
 	    }
-	    LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
+	    AQLStaticData &staticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 	    AQLString fdspdfile = staticData.getStaticData(KEY_FUNDINGSPREAD_FILE);
 	    std::istringstream *pstream = new std::istringstream(stream.getCString());
-	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName(fdspdfile), pstream);
+	    AQLCoreDataService::setIStringStream(AQLMarketData::getNumFileName(fdspdfile), pstream);
     }
 
     void
@@ -5492,14 +5492,14 @@ namespace etrading
 												     const AQLStringMatrix& curveConv,
 												     const AQLStringVector& collateralCurves)
     {
-	    LAStaticData &irStaticData = LACoreDataService::getStaticDataManager().getStaticData();
+	    AQLStaticData &irStaticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 	    AQLObjectPool &objPool = dataInstance->getObjectPool();
 
 	    AQLStringMatrix tmpInfo = curveConv;
 	    upper(tmpInfo);
 
 	    AQLDate asofdate = stringToDate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
-        LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
+        AQLCoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	
 	    AQLString currency;
 	    AQLObjectHolder objHolder = objPool.getObject(curveCollection, ENCHKTYPE_NOCHECK);
@@ -5561,7 +5561,7 @@ namespace etrading
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + staticDataSuffix, curveType);
 
 	    // general info
-	    MLIB_2D_MATRIX_CHECK( curveConv, "Invalid Curve Properties or Curve Conventions")
+	    AQ_2D_MATRIX_CHECK( curveConv, "Invalid Curve Properties or Curve Conventions")
 	    for(size_t i=0; i<curveConv.size(); i++)
 	    {
 		    AQLString key = tmpCurrency + ".sde.yield.generator." + curveConv[i][0] + staticDataSuffix;

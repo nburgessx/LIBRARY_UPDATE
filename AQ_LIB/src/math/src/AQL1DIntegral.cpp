@@ -80,7 +80,7 @@ AQL1DIntegral::integrate(const AQLFunctionBase& f,
 {
 	if (x.size() == 1)return integrate(f, x[0].first, x[0].second);
 
-	MMInnerFunction innerfunc(this);
+	AQLInnerFunction innerfunc(this);
 	innerfunc.setFunc(f);
 	innerfunc.setIntegralRegion(x[x.size()-1].first, x[x.size()-1].second);
 	for (int i = x.size() - 2; i >= 0; i--)
@@ -185,7 +185,7 @@ double AQL1DIntegral::IntegrateByEqualIntervals(const AQLFunctionBase& f, double
     @brief  constructor
 	@param[in] pIntegral: pointer to integral method
 */
-AQL1DIntegral::MMInnerFunction::MMInnerFunction(const AQL1DIntegral* pIntegral)
+AQL1DIntegral::AQLInnerFunction::AQLInnerFunction(const AQL1DIntegral* pIntegral)
 :AQLFunctionBase(), mpFunc(NULL), mXl(0), mXu(0), mpIntegral(pIntegral)
 {
 }
@@ -193,7 +193,7 @@ AQL1DIntegral::MMInnerFunction::MMInnerFunction(const AQL1DIntegral* pIntegral)
 /*!
     @brief  destructor
 */
-AQL1DIntegral::MMInnerFunction::~MMInnerFunction()
+AQL1DIntegral::AQLInnerFunction::~AQLInnerFunction()
 {
 	delete mpFunc;
 }
@@ -201,7 +201,7 @@ AQL1DIntegral::MMInnerFunction::~MMInnerFunction()
 /*!
     @brief  copy constructor
 */
-AQL1DIntegral::MMInnerFunction::MMInnerFunction(const MMInnerFunction& v)
+AQL1DIntegral::AQLInnerFunction::AQLInnerFunction(const AQLInnerFunction& v)
 :AQLFunctionBase(v)
 {
 	mpFunc = dynamic_cast<AQLFunctionBase*>(v.mpFunc->clone());
@@ -215,11 +215,11 @@ AQL1DIntegral::MMInnerFunction::MMInnerFunction(const MMInnerFunction& v)
     @return Deep copy of this class
 */
 AQLCoreFunctionBase*
-AQL1DIntegral::MMInnerFunction::clone()const
+AQL1DIntegral::AQLInnerFunction::clone()const
 {
     try 
 	{
-		return new MMInnerFunction(*this);
+		return new AQLInnerFunction(*this);
     }
     catch (bad_alloc & e)
 	{
@@ -235,7 +235,7 @@ AQL1DIntegral::MMInnerFunction::clone()const
 	@return inner function value
 */
 double
-AQL1DIntegral::MMInnerFunction::operator()(const DoubleArray& x) const
+AQL1DIntegral::AQLInnerFunction::operator()(const DoubleArray& x) const
 {
 	DoubleArray tmp = x;
 	tmp.resize(x.size() + 1);
@@ -249,7 +249,7 @@ AQL1DIntegral::MMInnerFunction::operator()(const DoubleArray& x) const
     @param[in] f: pointer to function
 */
 void
-AQL1DIntegral::MMInnerFunction::setFunc(const AQLFunctionBase& method)
+AQL1DIntegral::AQLInnerFunction::setFunc(const AQLFunctionBase& method)
 {
 	mpFunc = dynamic_cast<AQLFunctionBase*>(method.clone());
 }

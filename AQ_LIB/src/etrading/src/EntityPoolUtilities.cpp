@@ -4,10 +4,10 @@
 #include "LACurveForwardRateHelpers.h"
 #include "CurveCalibrationData.h"
 #include "AQLDataVector.h"
-#include "LADefinitions.h"
+#include "AQLDefinitions.h"
 #include "TypeHelpers.h"
 #include "ParameterValidation.h"
-#include "LACoreDataService.h"
+#include "AQLCoreDataService.h"
 #include "LAUpdateStaticDataManager.h"
 
 namespace etrading
@@ -51,7 +51,7 @@ namespace etrading
 		// 1. Remove properties from the property manager singleton object
 
 		LAUpdateStaticDataManager::setUpForIRServer();
-        LACoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
+        AQLCoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
         LAUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance );
 
 		//------------------------------------------------------------------------

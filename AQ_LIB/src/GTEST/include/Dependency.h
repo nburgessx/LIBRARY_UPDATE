@@ -141,7 +141,7 @@ namespace google_test
 
     // Macro that builds all EUR curves in order, using dependency4 above, as long as curve source files are given
     // Build Order: OIS, 6ML, 3ML, 12ML, 1ML
-#define ME_BUILD_EUR_CURVE(test_name, source_ois, source_1m, source_3m, source_6m, source_12m)	\
+#define AQL_BUILD_EUR_CURVE(test_name, source_ois, source_1m, source_3m, source_6m, source_12m)	\
     class test_name : public testing::Test, public virtual google_test::InitializeAQGoogleTest, public Dependency4<  BindFileToClassConstructor< TryMeCurveTenorBasis, source_1m >,	\
         BindFileToClassConstructor< TryMeCurveOis,		  source_ois >,	\
         BindFileToClassConstructor< TryMeCurveStd,        source_6m >,	\
@@ -150,7 +150,7 @@ namespace google_test
 
     // Macro that builds all JPY curves in order as long as curve source files are given
     // Build Order: OIS, 6ML, 3ML, 1ML, 12ML
-#define ME_BUILD_JPY_CURVE(test_name, source_ois, source_1m, source_3m, source_6m, source_12m)	\
+#define AQL_BUILD_JPY_CURVE(test_name, source_ois, source_1m, source_3m, source_6m, source_12m)	\
     class test_name : public testing::Test, public virtual google_test::InitializeAQGoogleTest, public Dependency4<  BindFileToClassConstructor< TryMeCurveTenorBasis, source_12m >,	\
         BindFileToClassConstructor< TryMeCurveOis,		  source_ois >,	\
         BindFileToClassConstructor< TryMeCurveStd,         source_6m >,	\
@@ -159,7 +159,7 @@ namespace google_test
 
     // Macro that builds all USD curves in order as long as curve source files are given
     // Build Order: OIS, 3ML, 6ML, 12ML, 1ML
-#define ME_BUILD_USD_CURVE(test_name, source_ois, source_1m, source_3m, source_6m, source_12m)	\
+#define AQL_BUILD_USD_CURVE(test_name, source_ois, source_1m, source_3m, source_6m, source_12m)	\
     class test_name : public testing::Test, public virtual google_test::InitializeAQGoogleTest, public Dependency4<  BindFileToClassConstructor< TryMeCurveTenorBasis, source_1m >,	\
         BindFileToClassConstructor< TryMeCurveOis,		  source_ois >,	\
         BindFileToClassConstructor< TryMeCurveStd,         source_3m >,	\
@@ -168,7 +168,7 @@ namespace google_test
 
     // Macro that builds all GBP curves in order as long as curve source files are given
     // Build Order: OIS, 6ML, 3ML, 12ML, 1ML
-#define ME_BUILD_GBP_CURVE(test_name, source_ois, source_1m, source_3m, source_6m, source_12m)	\
+#define AQL_BUILD_GBP_CURVE(test_name, source_ois, source_1m, source_3m, source_6m, source_12m)	\
     class test_name : public testing::Test, public virtual google_test::InitializeAQGoogleTest, public Dependency4<  BindFileToClassConstructor< TryMeCurveTenorBasis, source_1m >,	\
         BindFileToClassConstructor< TryMeCurveOis,		  source_ois >,	\
         BindFileToClassConstructor< TryMeCurveStd,         source_6m >,	\
@@ -188,7 +188,7 @@ namespace google_test
 
     // Macro that builds all EURUSD Xccy curves in order, using dependency5 above, as long as curve source files are given
     // Build Order: USDOIS, USD3M, EUROIS, EUR6M, EUR3M, EURUSDXCCY
-#define ME_BUILD_EURUSD_XCCY_CURVE(test_name, usd_source_ois, usd_source_3m, eur_source_ois, eur_source_6m, eur_source_3m, eur_source_xccy ) \
+#define AQL_BUILD_EURUSD_XCCY_CURVE(test_name, usd_source_ois, usd_source_3m, eur_source_ois, eur_source_6m, eur_source_3m, eur_source_xccy ) \
     class test_name : public testing::Test, public virtual google_test::InitializeAQGoogleTest, public Dependency5<  BindFileToClassConstructor<  TryMeCurveXccyBasis, eur_source_xccy  >,   \
         BindFileToClassConstructor< TryMeCurveOis,	        usd_source_ois >,	\
         BindFileToClassConstructor< TryMeCurveStd,          usd_source_3m >,	\
@@ -198,7 +198,7 @@ namespace google_test
 
 
 
-#define ME_BUILD_EURUSD_JPYUSD_XCCY_CURVE(test_name, usd_source_ois, usd_source_3m, eur_source_ois, eur_source_6m, eur_source_3m, eur_source_xccy, jpy_source_ois, jpy_source_6m_jscc, jpy_source_6m_lch, jpy_source_3m_lch, jpy_source_xccy ) \
+#define AQL_BUILD_EURUSD_JPYUSD_XCCY_CURVE(test_name, usd_source_ois, usd_source_3m, eur_source_ois, eur_source_6m, eur_source_3m, eur_source_xccy, jpy_source_ois, jpy_source_6m_jscc, jpy_source_6m_lch, jpy_source_3m_lch, jpy_source_xccy ) \
     class test_name : public testing::Test, public virtual google_test::InitializeAQGoogleTest, public Dependency10<  BindFileToClassConstructor<  TryMeCurveXccyBasis, jpy_source_xccy  >,   \
         BindFileToClassConstructor< TryMeCurveOis,	        usd_source_ois >,	\
         BindFileToClassConstructor< TryMeCurveStd,          usd_source_3m >,	\
@@ -212,7 +212,7 @@ namespace google_test
 		BindFileToClassConstructor< TryMeCurveTenorBasis,   jpy_source_3m_lch > >  {};
  
 
-#define ME_BUILD_GBPEUR_FWD_CURVE(test_name, usd_source_ois, usd_source_3m, eur_source_ois, eur_source_6m, eur_source_3m, eur_source_xccy, gbp_source_ois, gbp_source_6m, gbp_source_3m, gbp_source_xccy, gbp_eur_csa ) \
+#define AQL_BUILD_GBPEUR_FWD_CURVE(test_name, usd_source_ois, usd_source_3m, eur_source_ois, eur_source_6m, eur_source_3m, eur_source_xccy, gbp_source_ois, gbp_source_6m, gbp_source_3m, gbp_source_xccy, gbp_eur_csa ) \
     class test_name : public testing::Test, public virtual google_test::InitializeAQGoogleTest, public Dependency10<  BindFileToClassConstructor<  TryMeCurveFwdFxConst, gbp_eur_csa  >,   \
         BindFileToClassConstructor< TryMeCurveOis,	        usd_source_ois >,	\
         BindFileToClassConstructor< TryMeCurveStd,          usd_source_3m >,	\

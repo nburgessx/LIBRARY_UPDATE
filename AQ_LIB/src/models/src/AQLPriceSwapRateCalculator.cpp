@@ -92,13 +92,13 @@ double SwapRateInfo::CMSForward(double fwd, double annuity, double T, double dfP
     if (model == "CMSMarketN")
     {
         double vol = tailParameters[1];
-        double R0 = MVReplication::R(fwd, Tau(), deltaT, NCashFlows());
+        double R0 = AQLReplication::R(fwd, Tau(), deltaT, NCashFlows());
         return fwd + R0 * vol * vol * T;
     }
     else if (model == "CMSMarketLogN")
     {
         double vol = tailParameters[1];
-        double R0 = MVReplication::R(fwd, Tau(), deltaT, NCashFlows());
+        double R0 = AQLReplication::R(fwd, Tau(), deltaT, NCashFlows());
         double sfwd = fwd + mShift;
         return fwd + R0 * sfwd * sfwd * (exp(vol * vol * T) - 1.0);
     }
@@ -106,7 +106,7 @@ double SwapRateInfo::CMSForward(double fwd, double annuity, double T, double dfP
     {
         AQLPriceSwaptionCalculator* swpnCalculator = GetSwaptionCalculator(mRepConfig.swaptionModel, fwd + mShift,
             sabrParameters, tailParameters);
-        MVReplication* rep = GetReplicationMethod(mRepConfig.replicationModel, swpnCalculator, mShift, annuity,
+        AQLReplication* rep = GetReplicationMethod(mRepConfig.replicationModel, swpnCalculator, mShift, annuity,
             dfPay, Tau(), NCashFlows(),
             mRepConfig.confidence, mRepConfig.nPoints);
 
@@ -134,20 +134,20 @@ double SwapRateInfo::CMSForward(AQLDate valDate, CashFlowTiming cf)
     if (mRepConfig.swaptionModel == "CMSMarketN")
     {
         double vol = tails[1];
-        double R0 = MVReplication::R(fwd, tau, deltaT, nCashFlows);
+        double R0 = AQLReplication::R(fwd, tau, deltaT, nCashFlows);
         cmsFwd = fwd + R0 * vol * vol * expiry;
     }
     else if (mRepConfig.swaptionModel == "CMSMarketLogN")
     {
         double vol = tails[1];
-        double R0 = MVReplication::R(fwd, tau, deltaT, nCashFlows);
+        double R0 = AQLReplication::R(fwd, tau, deltaT, nCashFlows);
         double sfwd = fwd + mShift;
         cmsFwd = fwd + R0 * sfwd * sfwd * (exp(vol * vol * expiry) - 1.0);
     }
     else
     {
         AQLPriceSwaptionCalculator* swpnCalculator = GetSwaptionCalculator(mRepConfig.swaptionModel, fwd + mShift, sabr, tails);
-        MVReplication* rep = GetReplicationMethod(mRepConfig.replicationModel, swpnCalculator, mShift, annuity, dfPay, tau,
+        AQLReplication* rep = GetReplicationMethod(mRepConfig.replicationModel, swpnCalculator, mShift, annuity, dfPay, tau,
             nCashFlows, mRepConfig.confidence, mRepConfig.nPoints);
 
         cmsFwd = rep->Forward(expiry, deltaT, fwd);
@@ -173,7 +173,7 @@ void SwapRateInfo::CMSDistribution(AQLDate valDate, CashFlowTiming cf, double& c
     {
         double vol = tails[1];
         double stDev = vol * sqrt(expiry);
-        double correction = MVReplication::R(fwd, tau, deltaT, nCashFlows) * stDev * stDev;
+        double correction = AQLReplication::R(fwd, tau, deltaT, nCashFlows) * stDev * stDev;
         cmsFwd = fwd + correction;
         double atmStrike = cmsFwd;
         double swpnCap = BachelierPrice(expiry, atmStrike, true, fwd, vol);
@@ -187,7 +187,7 @@ void SwapRateInfo::CMSDistribution(AQLDate valDate, CashFlowTiming cf, double& c
     else
     {
         AQLPriceSwaptionCalculator* swpnCalculator = GetSwaptionCalculator(mRepConfig.swaptionModel, fwd + mShift, sabr, tails);
-        MVReplication* rep = GetReplicationMethod(mRepConfig.replicationModel, swpnCalculator, mShift, annuity, dfPay, tau,
+        AQLReplication* rep = GetReplicationMethod(mRepConfig.replicationModel, swpnCalculator, mShift, annuity, dfPay, tau,
                                                   nCashFlows, mRepConfig.confidence, mRepConfig.nPoints);
 
         cmsFwd = rep->Forward(expiry, deltaT, fwd);

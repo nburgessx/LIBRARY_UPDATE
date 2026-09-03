@@ -352,9 +352,9 @@ AQLPriceDriftHWQuantAdjustment::setUp() const
 	_v.setInterpolation(inter);
 	
 	//
-	MMHWQAdjInnerFunc1 func1(hwMR, hwSigma, _v);
-	MMHWQAdjInnerFunc2 func2(hwMR, hwSigma, _v, _s);
-	MMHWQAdjInnerFunc3 func3(hwMR, hwSigma, _v, _s);
+	AQLHWQAdjInnerFunc1 func1(hwMR, hwSigma, _v);
+	AQLHWQAdjInnerFunc2 func2(hwMR, hwSigma, _v, _s);
+	AQLHWQAdjInnerFunc3 func3(hwMR, hwSigma, _v, _s);
 
 	AQLGaussLegendre gl(GAUSSLEGENDREPOINTNUM);
 	for (unsigned int i = 0; i < size; i++)

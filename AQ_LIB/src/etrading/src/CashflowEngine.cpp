@@ -7,7 +7,7 @@
 #include "CoreEnumerations.h"
 #include "LabelValueBlock.h"
 
-#include "LADefinitions.h"							// AQLStringMatrix
+#include "AQLDefinitions.h"							// AQLStringMatrix
 #include "LADateScheduleHelpers.h"					// validateDate()
 #include "AQLMathDateUtilities.h"					// getLADate( int excelDate )
 #include "LACurveForwardRateHelpers.h"				// getMultiSpotDiscountFactors

@@ -16,7 +16,7 @@ using etrading::STATE_VARIABLE_LOG_DF;
 using etrading::STATE_VARIABLE_DF;
 
 // Class Forward Declarations
-class LAStaticData;
+class AQLStaticData;
 class CurveCalibrationData;
 class AQLObjectPool;
 class AQLInterpolationBase;
@@ -255,7 +255,7 @@ namespace etrading
 	*  @param [in]		asOfDate			As of date of curve
 	*  @param [in]		isBasisCurve		Is the current curve a basis curve?
 	*/
-	void populateFRADataToEntityPool(LAStaticData * mpStaticData,
+	void populateFRADataToEntityPool(AQLStaticData * mpStaticData,
 									 CurveCalibrationData &curveCalibrationData,
 									 AQLString& refData,
 									 AQLObjectPool& objPool,
@@ -566,7 +566,7 @@ namespace etrading
 	*  @param [in]		fixingSource		Source of libor fixing
 	*  @return			Libor rate that matches spot rate term (if provided)
 	*/
-	double populateCashInstrumentsToEntityPool(LAStaticData * mpStaticData,
+	double populateCashInstrumentsToEntityPool(AQLStaticData * mpStaticData,
 											   AQLString& refData,
 											   AQLObjectPool& objPool,
 											   const AQLString& currency,
@@ -588,7 +588,7 @@ namespace etrading
 
 		@return Property data value
 	*/
-	AQLString getGridStaticData(LAStaticData * mpStaticData, const AQLString &key, const AQLString &curve, const AQLString &grid);
+	AQLString getGridStaticData(AQLStaticData * mpStaticData, const AQLString &key, const AQLString &curve, const AQLString &grid);
 
 	/*! @brief Price the PVs of a group of OIS swaps (either outright or Libor-OIS basis swap)
 

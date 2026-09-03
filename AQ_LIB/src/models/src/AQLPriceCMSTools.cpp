@@ -17,7 +17,7 @@
 #include "AQLDataReference.h"
 #include "AQLCoreComponentManager.h"
 
-MVCurveWrap::MVCurveWrap(AQLDataInstance* dataInstance, const AQLString& curveID, const AQLString& curveName)
+AQLCurveWrap::AQLCurveWrap(AQLDataInstance* dataInstance, const AQLString& curveID, const AQLString& curveName)
 {
     AQLString interpolation = AQLString("SPLINE");
     AQLString calendar = AQLString("TKB:LNB");
@@ -36,7 +36,7 @@ MVCurveWrap::MVCurveWrap(AQLDataInstance* dataInstance, const AQLString& curveID
     mCurveName = curveName;
 }
 
-double MVCurveWrap::P(AQLDate date)
+double AQLCurveWrap::P(AQLDate date)
 {
     mpCoreCurve->setCurveType(mCurveName);
     return mpCoreCurve->getDF(mBaseDate, date);

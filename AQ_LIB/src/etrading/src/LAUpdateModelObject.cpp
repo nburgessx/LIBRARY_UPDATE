@@ -21,10 +21,10 @@
 #include "AQLRatesTermStructureSDE.h"
 #include "AQLRatesLJTermStructureSDE.h"
 #include "AQLRatesCurveLinearInterpolation.h"
-#include "LADealUtils.h"
+#include "AQLDealUtils.h"
 
-#include "LACoreDataService.h"
-#include "LAStaticData.h"
+#include "AQLCoreDataService.h"
+#include "AQLStaticData.h"
 #include "AQLDataVector.h"
 #include "AQLDataProcedure.h"
 #include "AQLLinearInterpolation.h"

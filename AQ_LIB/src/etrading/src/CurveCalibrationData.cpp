@@ -10,7 +10,7 @@
 #include <boost/math/special_functions/round.hpp>
 
 #include "ExceptionMacros.h"
-#include "LADefinitions.h"
+#include "AQLDefinitions.h"
 #include "AQLMathDefine.h"
 #include "AQLBasic.h"
 #include "AQLPriceDataConvention.h"

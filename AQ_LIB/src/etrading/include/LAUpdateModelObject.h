@@ -11,7 +11,7 @@
 class AQLDataInstance;
 class AQLRatesCurveLogLinearInterpolation;
 class AQLMathCorrelation;
-class LAStaticData;
+class AQLStaticData;
 
 //===================== Class Declare UpdateObjectPoolForSDEsAndCurves==================================
 /*! 

@@ -116,11 +116,11 @@ namespace google_test
     //
     // Build the Yield Curve by calling the Curve Constructor Classes in the correct order, respecting curve dependencies.
     //
-    // All curves name MUST be defined for the ME_BUILD_EURUSD_XCCY_CURVE macro to work.
+    // All curves name MUST be defined for the AQL_BUILD_EURUSD_XCCY_CURVE macro to work.
     // If any curve is not in use and not defined, simply assign a "" to the curve name.
     //
 	
-	ME_BUILD_EURUSD_JPYUSD_XCCY_CURVE( TestLWOSwapDeltaXCCY, USDYC_OIS, USDYC_STD, EURYC_OIS, EURYC_STD, EURYC_3M6M, EURYC_XCCY, JPYYC_OIS, JPYYC_JSCC_STD, JPYYC_LCH_6M, JPYYC_LCH_3M, JPYYC_XCCY );
+	AQL_BUILD_EURUSD_JPYUSD_XCCY_CURVE( TestLWOSwapDeltaXCCY, USDYC_OIS, USDYC_STD, EURYC_OIS, EURYC_STD, EURYC_3M6M, EURYC_XCCY, JPYYC_OIS, JPYYC_JSCC_STD, JPYYC_LCH_6M, JPYYC_LCH_3M, JPYYC_XCCY );
 
 
 	// 1. Valuation Currency in USD for both XCCY swaps. USDCSA for both swaps.

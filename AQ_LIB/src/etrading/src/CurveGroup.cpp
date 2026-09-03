@@ -12,7 +12,7 @@
 #include "CurveGroup.h"
 #include "ExceptionMacros.h"
 #include "CurveValidation.h"			        // Convert Dates to Terms and vice versa
-#include "LADefinitions.h"                      // Needed for the delimiter curve index delimiter token "MULTI_STATIC_DATA_DELIMITER", which is typically a token
+#include "AQLDefinitions.h"                      // Needed for the delimiter curve index delimiter token "MULTI_STATIC_DATA_DELIMITER", which is typically a token
 #include "LWOUtilities.h"						// Undecorate LWO Handles and getCurveCollection method
 #include "CoreEnumerations.h"					// For trim_to_upper() method
 

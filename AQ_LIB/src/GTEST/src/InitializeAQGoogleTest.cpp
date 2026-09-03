@@ -1,9 +1,9 @@
 #include "InitializeAQGoogleTest.h"				// google_test::InitializeAQGoogleTest
 #include "InitializeAQETrading.h"			        // google_test::InitializeAQETrading
 #include "AQLDataInstance.h"
-#include "LACoreDataService.h"
+#include "AQLCoreDataService.h"
 #include "LAUpdateStaticDataManager.h"
-#include "LADefinitions.h"
+#include "AQLDefinitions.h"
 #include "AQLLinearRatesVolatilityManager.h"
 #include "EnvironmentUtilities.h"
 #include "tryMeUtilitySetup.h"
@@ -93,7 +93,7 @@ namespace google_test
         etrading::deleteAllObjects( etrading::Environment::defaultEnv() );  
         
         // Clean-Up Object Pool
-		LACoreDataService::finalize();
+		AQLCoreDataService::finalize();
 		AQLLinearRatesVolatilityManager::finalize();
 		etrading::InitializeAQETrading::destroyInstance();
 

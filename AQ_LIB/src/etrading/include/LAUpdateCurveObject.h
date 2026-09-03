@@ -1,13 +1,13 @@
 //
 // LAUpdateCurveObject.h
-// This file used to be called CalibratorIR.h and before that LACalibrateModelIR.h
+// This file used to be called CalibratorIR.h and before that AQLCalibrateModelIR.h
 //
 #pragma once
 
 #include "AQLString.h"
 #include "LAObjectPoolBase.h"
-#include "LADefinitions.h"		// Required for CONTEXT_KEY_ASOFDATE key 
-#include "LACoreDataService.h"	// Required to import the
+#include "AQLDefinitions.h"		// Required for CONTEXT_KEY_ASOFDATE key 
+#include "AQLCoreDataService.h"	// Required to import the
 #include <map>
 
 
@@ -20,7 +20,7 @@ class AQLDataInstance;
 class AQLRatesCurveLogLinearInterpolation;
 class AQLMathCorrelation;
 class CurveCalibrationData;
-class LAStaticData;
+class AQLStaticData;
 class AQLMathYieldCurve;
 class AQLObject;
 class AQLObjectPool;
@@ -85,7 +85,7 @@ public:
 			  tenorBasisMarkets_(AQLStringVector())
 		{
 			// Update the curve AsOfDate
-			asOfDate_ = AQLDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
+			asOfDate_ = AQLDate(AQLCoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
 
 			// Must keep a copy of lower case currency for property manager references
 			currencyLowercase_.toLower();
@@ -262,7 +262,7 @@ protected:
 	virtual bool checkFrequency(const AQLString& freq, const AQLString& mktRateTerm) const;
 	
 	// Configure curve by preparing data used for calibration
-	void configureCurve(LAStaticData *mpStaticData,
+	void configureCurve(AQLStaticData *mpStaticData,
 						CurveCalibrationData *curveCalibrationData,
 						AQLMathYieldCurve *yc,
 						AQLDataInstance &dataInstance,

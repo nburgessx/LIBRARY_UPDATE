@@ -22,7 +22,7 @@
 
 #include "CurveMarketData.h"
 #include "ExceptionMacros.h"
-#include "LADefinitions.h"
+#include "AQLDefinitions.h"
 #include "CurveResultsContainer.h"
 
 

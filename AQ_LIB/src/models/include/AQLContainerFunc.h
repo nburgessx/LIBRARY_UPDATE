@@ -3,8 +3,8 @@
 
 */
 //  2012, AlgoQuantHub.
-#ifndef MMContainer_h
-#define MMContainer_h
+#ifndef AQLContainer_h
+#define AQLContainer_h
 
 #include "AQLFunction.h"
 #include <cmath>

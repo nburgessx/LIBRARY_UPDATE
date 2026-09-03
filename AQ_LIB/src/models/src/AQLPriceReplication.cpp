@@ -10,11 +10,11 @@
 #include "AQLMathOptionTools.h"
 #include "AQLFunctionUtilities.h"
 
-double MVReplication::mvReplicationThreshold = 0.00001;
-//================ MVReplication ===================================
+double AQLReplication::mvReplicationThreshold = 0.00001;
+//================ AQLReplication ===================================
 // Replication under the Swap Yield Terminal Swap Rate model. Contains the generic replication (full integration), but also the particular
 // cases of LogNormal (Hagan) and Normal projections.
-MVReplication::MVReplication(AQLPriceSwaptionCalculator* swpnCalculator_,
+AQLReplication::AQLReplication(AQLPriceSwaptionCalculator* swpnCalculator_,
                              double shift_, double annuity_, double dfPay_, double tau_, double nCashFlows_,
                              string distributionType_, bool rescale_, double confidence_ , int nPoints_)
 {
@@ -30,7 +30,7 @@ MVReplication::MVReplication(AQLPriceSwaptionCalculator* swpnCalculator_,
     mNPoints = nPoints_;
 }
 
-double MVReplication::Forward(double T, double deltaT, double S0)
+double AQLReplication::Forward(double T, double deltaT, double S0)
 {
     double basePrice = S0;
     double adjustment;
@@ -45,7 +45,7 @@ double MVReplication::Forward(double T, double deltaT, double S0)
     return S0 + adjustment;
 }
 
-double MVReplication::Option(double T, double deltaT, double K, bool isCall, double S0)
+double AQLReplication::Option(double T, double deltaT, double K, bool isCall, double S0)
 {
     K += mShift;
     double basePrice = mSwpnCalculator->Price(T, K, isCall);
@@ -61,7 +61,7 @@ double MVReplication::Option(double T, double deltaT, double K, bool isCall, dou
     return basePrice + adjustment;
 }
 
-double MVReplication::ForwardAdjustment(double T, double deltaT, double S0)
+double AQLReplication::ForwardAdjustment(double T, double deltaT, double S0)
 {
     if (mDistributionType == "LogNormal")
         return LogNormalForwardAdjustment(T, deltaT, S0);
@@ -73,7 +73,7 @@ double MVReplication::ForwardAdjustment(double T, double deltaT, double S0)
         throw AQLCoreInvalidData("Unknown distribution type in replication",__FILE__,__LINE__);
 }
 
-double MVReplication::OptionAdjustment(double T, double deltaT, double K, bool isCall, double S0)
+double AQLReplication::OptionAdjustment(double T, double deltaT, double K, bool isCall, double S0)
 {
     if (mDistributionType == "LogNormal")
         return LogNormalOptionAdjustment(T, deltaT, K, isCall, S0);
@@ -85,7 +85,7 @@ double MVReplication::OptionAdjustment(double T, double deltaT, double K, bool i
         throw AQLCoreInvalidData("Unknown distribution type in replication",__FILE__,__LINE__);
 }
 
-double MVReplication::NormalForwardAdjustment(double T, double deltaT, double S0)
+double AQLReplication::NormalForwardAdjustment(double T, double deltaT, double S0)
 {
     double optionPrice = mSwpnCalculator->Price(T, S0, true);
     double vol = BachelierImpliedVolatility(optionPrice, T, S0, true, S0);
@@ -94,7 +94,7 @@ double MVReplication::NormalForwardAdjustment(double T, double deltaT, double S0
     //return Theta(S0, tau, deltaT, nCashFlows) / S0 * stDev * stDev;
 }
 
-double MVReplication::LogNormalForwardAdjustment(double T, double deltaT, double S0)
+double AQLReplication::LogNormalForwardAdjustment(double T, double deltaT, double S0)
 {
     double optionPrice = mSwpnCalculator->Price(T, S0, true);
     double vol = BlackImpliedVolatility(optionPrice, T, S0, true, S0);
@@ -103,7 +103,7 @@ double MVReplication::LogNormalForwardAdjustment(double T, double deltaT, double
     //return Theta(S0, tau, deltaT, nCashFlows) * S0 * (exp(stDev * stDev) - 1.0);
 }
 
-double MVReplication::ReplicationForwardAdjustment(double T, double deltaT, double S0)
+double AQLReplication::ReplicationForwardAdjustment(double T, double deltaT, double S0)
 {
     //// By put-call parity at ATM ////
     //double K = S0;
@@ -112,7 +112,7 @@ double MVReplication::ReplicationForwardAdjustment(double T, double deltaT, doub
     //return cap - floor;
 
     //// By direct integration ////
-    MVReplicationIntegrand integrand(T, true, mSwpnCalculator);
+    AQLReplicationIntegrand integrand(T, true, mSwpnCalculator);
 
     //// Integration bounds
     //double lowBound = 0.0;
@@ -136,7 +136,7 @@ double MVReplication::ReplicationForwardAdjustment(double T, double deltaT, doub
     return S0 * S0 * (2.0 * integral / (S0 * S0) - 1.0);
 }
 
-double MVReplication::NormalOptionAdjustment(double T, double deltaT, double K, bool isCall, double S0)
+double AQLReplication::NormalOptionAdjustment(double T, double deltaT, double K, bool isCall, double S0)
 {
     double optionPrice = mSwpnCalculator->Price(T, K, isCall);
     double vol = BachelierImpliedVolatility(optionPrice, T, K, isCall, S0);
@@ -146,7 +146,7 @@ double MVReplication::NormalOptionAdjustment(double T, double deltaT, double K, 
     //return Theta(S0, tau, deltaT, nCashFlows) / S0 * w * stDev * stDev * AQLDist::normsdist(w * (S0 - K) / stDev);
 }
 
-double MVReplication::LogNormalOptionAdjustment(double T, double deltaT, double K, bool isCall, double S0)
+double AQLReplication::LogNormalOptionAdjustment(double T, double deltaT, double K, bool isCall, double S0)
 {
     double optionPrice = mSwpnCalculator->Price(T, K, isCall);
     double vol = BlackImpliedVolatility(optionPrice, T, K, isCall, S0);
@@ -163,10 +163,10 @@ double MVReplication::LogNormalOptionAdjustment(double T, double deltaT, double 
     //return Theta(S0, tau, deltaT, nCashFlows) * w * (t1 - t2 + t3);
 }
 
-double MVReplication::ReplicationOptionAdjustment(double T, double deltaT, double K, bool isCall, double S0)
+double AQLReplication::ReplicationOptionAdjustment(double T, double deltaT, double K, bool isCall, double S0)
 {
     // Integrand
-    MVReplicationIntegrand integrand(T, isCall, mSwpnCalculator);
+    AQLReplicationIntegrand integrand(T, isCall, mSwpnCalculator);
 
     // Integration bounds
     double epsilon = 1e-6;
@@ -223,19 +223,19 @@ double MVReplication::ReplicationOptionAdjustment(double T, double deltaT, doubl
 }
 
 // R function of Mercurio-Pallavicini for the Linear Swap Rate model
-double MVReplication::R(double S0, double tau, double deltaT, double nCashFlows)
+double AQLReplication::R(double S0, double tau, double deltaT, double nCashFlows)
 {
     return G1(S0, tau, deltaT, nCashFlows) / G(S0, tau, deltaT, nCashFlows);
 }
 
 // Theta function of Mercurio-Pallavicini for the Linear Swap Rate model
-double MVReplication::Theta(double S0, double tau, double deltaT, double nCashFlows)
+double AQLReplication::Theta(double S0, double tau, double deltaT, double nCashFlows)
 {
     return S0 * G1(S0, tau, deltaT, nCashFlows) / G(S0, tau, deltaT, nCashFlows);
 }
 
 // G function of Mercurio-Pallavicini for the Linear Swap Rate model
-double MVReplication::G(double S0, double tau, double deltaT, double nCashFlows)
+double AQLReplication::G(double S0, double tau, double deltaT, double nCashFlows)
 {
     double g, p = 1.0 / tau;
     if (abs(S0) < mvReplicationThreshold)
@@ -250,7 +250,7 @@ double MVReplication::G(double S0, double tau, double deltaT, double nCashFlows)
 }
 
 // Differential of the G function of Mercurio-Pallavicini for the Linear Swap Rate model
-double MVReplication::G1(double S0, double tau, double deltaT, double nCashFlows)
+double AQLReplication::G1(double S0, double tau, double deltaT, double nCashFlows)
 {
     double dg, p = 1.0 / tau;
     if (abs(S0) < mvReplicationThreshold)
@@ -268,33 +268,33 @@ double MVReplication::G1(double S0, double tau, double deltaT, double nCashFlows
     return dg;
 }
 
-//================ MVReplicationIntegrand ===================================
-MVReplicationIntegrand::MVReplicationIntegrand(double T_, bool isCall_, AQLPriceSwaptionCalculator* swpnCalculator_)
+//================ AQLReplicationIntegrand ===================================
+AQLReplicationIntegrand::AQLReplicationIntegrand(double T_, bool isCall_, AQLPriceSwaptionCalculator* swpnCalculator_)
 {
     mT = T_;
     mIsCall = isCall_;
     mSwpnCalculator = swpnCalculator_;
 }
 
-double MVReplicationIntegrand::operator()(double x) const
+double AQLReplicationIntegrand::operator()(double x) const
 {
     return mSwpnCalculator->Price(mT, x, mIsCall);
 }
 
 //================ Utilities ===================================
-MVReplication* GetReplicationMethod(string type, AQLPriceSwaptionCalculator* swpnCalculator, double shift,
+AQLReplication* GetReplicationMethod(string type, AQLPriceSwaptionCalculator* swpnCalculator, double shift,
                                      double annuity, double dfPay, double tau,
                                      double nCashFlows, double confidence, int nPoints)
 {
-    MVReplication* replication;
+    AQLReplication* replication;
     if (type == "Hagan")
-        replication = new MVReplication(swpnCalculator, shift, annuity, dfPay, tau, nCashFlows, "LogNormal", false, confidence, nPoints);
+        replication = new AQLReplication(swpnCalculator, shift, annuity, dfPay, tau, nCashFlows, "LogNormal", false, confidence, nPoints);
     else if (type == "Rescaled Hagan")
-        replication = new MVReplication(swpnCalculator, shift, annuity, dfPay, tau, nCashFlows, "LogNormal", true, confidence, nPoints);
+        replication = new AQLReplication(swpnCalculator, shift, annuity, dfPay, tau, nCashFlows, "LogNormal", true, confidence, nPoints);
     else if (type == "Normal Hagan")
-        replication = new MVReplication(swpnCalculator, shift, annuity, dfPay, tau, nCashFlows, "Normal", true, confidence, nPoints);
+        replication = new AQLReplication(swpnCalculator, shift, annuity, dfPay, tau, nCashFlows, "Normal", true, confidence, nPoints);
     else if (type == "Mercurio")
-        replication = new MVReplication(swpnCalculator, shift, annuity, dfPay, tau, nCashFlows, "Generic", true, confidence, nPoints);
+        replication = new AQLReplication(swpnCalculator, shift, annuity, dfPay, tau, nCashFlows, "Generic", true, confidence, nPoints);
     else
         throw AQLCoreInvalidData(("Unknown replication model type: " + type).c_str(),__FILE__,__LINE__);
 

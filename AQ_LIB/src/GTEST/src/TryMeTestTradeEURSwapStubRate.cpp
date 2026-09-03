@@ -73,7 +73,7 @@ namespace google_test
     // All tenor curve name MUST be defined for the ADD_EUR_CURVE_DEPENDENCIES macro to work.
     // If any curve is not in use and not defined, simply assign a "" to the curve name.
     //
-    ME_BUILD_EUR_CURVE( TryMeTestTradeEURSwapStubRate, Test1_DIR_EURYC_OIS, Test1_DIR_EURYC_1M, Test1_DIR_EURYC_3M, Test1_DIR_EURYC_6M, Test1_DIR_EURYC_12M );
+    AQL_BUILD_EUR_CURVE( TryMeTestTradeEURSwapStubRate, Test1_DIR_EURYC_OIS, Test1_DIR_EURYC_1M, Test1_DIR_EURYC_3M, Test1_DIR_EURYC_6M, Test1_DIR_EURYC_12M );
 
     //
     // Call Test Fixture
@@ -121,7 +121,7 @@ namespace google_test
     // All tenor curve name MUST be defined for the ADD_EUR_CURVE_DEPENDENCIES macro to work.
     // If any curve is not in use and not defined, simply assign a "" to the curve name.
     //
-    ME_BUILD_EUR_CURVE( TryMeTestTradeEURSwapStubRate2, Test2_DIR_EURYC_OIS, Test2_DIR_EURYC_1M, Test2_DIR_EURYC_3M, Test2_DIR_EURYC_6M, Test2_DIR_EURYC_12M );
+    AQL_BUILD_EUR_CURVE( TryMeTestTradeEURSwapStubRate2, Test2_DIR_EURYC_OIS, Test2_DIR_EURYC_1M, Test2_DIR_EURYC_3M, Test2_DIR_EURYC_6M, Test2_DIR_EURYC_12M );
 
     //
     // Call Test Fixture
@@ -168,7 +168,7 @@ namespace google_test
     // All tenor curve name MUST be defined for the ADD_EUR_CURVE_DEPENDENCIES macro to work.
     // If any curve is not in use and not defined, simply assign a "" to the curve name.
     //
-    ME_BUILD_EUR_CURVE( TryMeTestTradeEURSwapStubRate3, Test3_DIR_EURYC_OIS, Test3_DIR_EURYC_1M, Test3_DIR_EURYC_3M, Test3_DIR_EURYC_6M, Test3_DIR_EURYC_12M );
+    AQL_BUILD_EUR_CURVE( TryMeTestTradeEURSwapStubRate3, Test3_DIR_EURYC_OIS, Test3_DIR_EURYC_1M, Test3_DIR_EURYC_3M, Test3_DIR_EURYC_6M, Test3_DIR_EURYC_12M );
 
     //
     // Call Test Fixture
@@ -215,7 +215,7 @@ namespace google_test
     // All tenor curve name MUST be defined for the ADD_EUR_CURVE_DEPENDENCIES macro to work.
     // If any curve is not in use and not defined, simply assign a "" to the curve name.
     
-    ME_BUILD_EUR_CURVE( TryMeTestTradeEURSwapStubRate4, Test4_DIR_EURYC_OIS, Test4_DIR_EURYC_1M, Test4_DIR_EURYC_3M, Test4_DIR_EURYC_6M, Test4_DIR_EURYC_12M );
+    AQL_BUILD_EUR_CURVE( TryMeTestTradeEURSwapStubRate4, Test4_DIR_EURYC_OIS, Test4_DIR_EURYC_1M, Test4_DIR_EURYC_3M, Test4_DIR_EURYC_6M, Test4_DIR_EURYC_12M );
     
     //
     // Call Test Fixture

@@ -1,5 +1,5 @@
-#ifndef MMNl2sol_h
-#define MMNl2sol_h
+#ifndef AQLNl2sol_h
+#define AQLNl2sol_h
 
 #include <vector>
 #include "AQLFunctionVector.h"

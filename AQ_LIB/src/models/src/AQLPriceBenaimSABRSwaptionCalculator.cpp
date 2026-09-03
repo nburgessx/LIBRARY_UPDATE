@@ -10,9 +10,9 @@
 #include "AQLMathOptionTools.h"
 
 // Benaim SABR option model to use for CMS replication. The price tails are replaced by parametric functions with smooth junction.
-MVBenaimSABRSwaptionCalculator::MVBenaimSABRSwaptionCalculator(double S0_, const vector<double>& sabrParameters_,
+AQLBenaimSABRSwaptionCalculator::AQLBenaimSABRSwaptionCalculator(double S0_, const vector<double>& sabrParameters_,
                                                                const vector<double>& extraParameters_, bool useLeft)
-: MVSABRSwaptionCalculator(S0_, sabrParameters_)
+: AQLSABRSwaptionCalculator(S0_, sabrParameters_)
 {
     if (extraParameters_.size() < 4)
         AQLCoreInvalidData("Invalid parameter size in Benaim SABR swaption calculator",__FILE__,__LINE__);
@@ -27,7 +27,7 @@ MVBenaimSABRSwaptionCalculator::MVBenaimSABRSwaptionCalculator(double S0_, const
     mTCache = -12.34;
 }
 
-void MVBenaimSABRSwaptionCalculator::CheckCache(double t)
+void AQLBenaimSABRSwaptionCalculator::CheckCache(double t)
 {
     if (!eq(t, mTCache, mTThreshold))
     {
@@ -82,7 +82,7 @@ void MVBenaimSABRSwaptionCalculator::CheckCache(double t)
     }
 }
 
-double MVBenaimSABRSwaptionCalculator::Price(double t, double strike, bool isCall)
+double AQLBenaimSABRSwaptionCalculator::Price(double t, double strike, bool isCall)
 {
     double price;
     if (abs(t) < 0.00001)

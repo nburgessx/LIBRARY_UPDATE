@@ -1,6 +1,6 @@
 //
 // LAUpdateObjectPoolForCurves.h
-// This file used to be called CalibratorIR.h and before that LACalibrateModelIR.h
+// This file used to be called CalibratorIR.h and before that AQLCalibrateModelIR.h
 //
 #pragma once
 
@@ -17,7 +17,7 @@ class AQLMathCorrelation;
 #endif 
 
 class BasisCurveCalibration;
-class LAStaticData;
+class AQLStaticData;
 class AQLMathYieldCurve;
 class AQLObject;
 class AQLObjectPool;
@@ -145,7 +145,7 @@ protected:
 	virtual bool checkFrequency(const AQLString& freq, const AQLString& mktRateTerm) const;
 	
 	//! Configure curve by preparing data used for calibration
-	void configureCurve(LAStaticData *mpStaticData,
+	void configureCurve(AQLStaticData *mpStaticData,
 							BasisCurveCalibration *basisCurveEngine,
 							AQLMathYieldCurve *yc,
 							AQLDataInstance &dataInstance,

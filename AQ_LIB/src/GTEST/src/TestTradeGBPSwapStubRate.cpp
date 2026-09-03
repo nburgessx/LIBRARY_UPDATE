@@ -44,7 +44,7 @@ namespace google_test
 {
 
 	//Note that "GBP_3M" is the standard curve in the test
-	ME_BUILD_GBP_CURVE(TestTradeGBPSwapStubRate, GBP_OIS, GBP_1M, GBP_6M, GBP_3M, GBP_12M);
+	AQL_BUILD_GBP_CURVE(TestTradeGBPSwapStubRate, GBP_OIS, GBP_1M, GBP_6M, GBP_3M, GBP_12M);
 
 	TEST_F(TestTradeGBPSwapStubRate, SNAPSHOT_tryMe_stubRateFromFixingTable )
     {

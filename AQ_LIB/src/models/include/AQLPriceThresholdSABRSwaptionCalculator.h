@@ -1,5 +1,5 @@
-#ifndef MVThresholdSABRSwaptionCalculator_h
-#define MVThresholdSABRSwaptionCalculator_h
+#ifndef AQLThresholdSABRSwaptionCalculator_h
+#define AQLThresholdSABRSwaptionCalculator_h
 
 #ifdef __GNUG__
 #pragma interface
@@ -7,10 +7,10 @@
 //////////
 #include "AQLPriceSABRSwaptionCalculator.h"
 
-class MVThresholdSABRSwaptionCalculator : public MVSABRSwaptionCalculator
+class AQLThresholdSABRSwaptionCalculator : public AQLSABRSwaptionCalculator
 {
 public:
-    MVThresholdSABRSwaptionCalculator(double S0_, const vector<double>& sabrParameters_,
+    AQLThresholdSABRSwaptionCalculator(double S0_, const vector<double>& sabrParameters_,
                                       const vector<double>& extraParameters_);
     double Price(double t, double strike, bool isCall);
 

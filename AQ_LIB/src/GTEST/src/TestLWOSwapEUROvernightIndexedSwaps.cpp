@@ -65,7 +65,7 @@ namespace google_test
     // All tenor curve name MUST be defined for the ADD_EUR_CURVE_DEPENDENCIES macro to work.
     // If any curve is not in use and not defined, simply assign a "" to the curve name.
     //
-    ME_BUILD_EUR_CURVE( TestLWOSwapEUROvernightIndexedSwaps, EURYC_OIS, EURYC_1M, EURYC_3M, EURYC_6M, EURYC_12M );
+    AQL_BUILD_EUR_CURVE( TestLWOSwapEUROvernightIndexedSwaps, EURYC_OIS, EURYC_1M, EURYC_3M, EURYC_6M, EURYC_12M );
 
 
     //

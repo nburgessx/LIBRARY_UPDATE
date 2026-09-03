@@ -1,15 +1,15 @@
 //
 //  LACurveMarketDataHelpers.cpp
-//  This file was previous called YieldCurveMarketUti1s.cpp and before that LAMarketData.cpp
+//  This file was previous called YieldCurveMarketUti1s.cpp and before that AQLMarketData.cpp
 //
 
 #include "LACurveMarketDataHelpers.h"
 #include "AQLDataReference.h"
-#include "LAStaticData.h"
+#include "AQLStaticData.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLPriceDataInterpolation.h"
 #include "AQLAlgorithm.h"
-#include "LADefinitionsCalibration.h"
+#include "AQLDefinitionsCalibration.h"
 #include "CurveInstruments.h"
 
 using namespace std;
@@ -45,7 +45,7 @@ LACurveMarketDataHelpers::resetMarketDataUsingLibor(CurveCalibrationData &curve,
 {
 	AQLString tmpCurrency = ccy;
 	tmpCurrency.toLower();
-	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
+	AQLStaticData &staticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 
 	AQLString suffix = "";
 	AQLString data_suffix = "";
@@ -58,7 +58,7 @@ LACurveMarketDataHelpers::resetMarketDataUsingLibor(CurveCalibrationData &curve,
 			data_suffix = "_" + *pCurveType;
 		}
 	}
-	//MAIndexData index = getIndexInfoLibor(ccy);
+	//AQLIndexData index = getIndexInfoLibor(ccy);
 	//AQLDataMultiReference &refMarkets = curve.getMarketData();
 	AQLDataMultiReference &refMarkets = dynamic_cast<AQLDataMultiReference &>(curve.getData(CALIBRATION_DATA_MARKETDATA + data_suffix, ISNOTNULL).get()); 
 	const int mSize = refMarkets.getSize();
@@ -316,7 +316,7 @@ void LACurveMarketDataHelpers::restoreSwapRateFromLibor(CurveCalibrationData &cu
 	// get swap information
 	AQLString tmpCurrency = ccy;
 	tmpCurrency.toLower();
-	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
+	AQLStaticData &staticData = AQLCoreDataService::getStaticDataManager().getStaticData();
 	// daycount
 	AQLPriceDataDayCount dc;
 	AQLString dcStr = staticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_DAYCOUNT + suffix).toUpper();

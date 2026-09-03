@@ -18,7 +18,7 @@
 
 #include "AQLMathYieldCurvePro.h"
 #include "CurveCalibration.h"
-#include "LADefinitions.h"
+#include "AQLDefinitions.h"
 
 #ifndef IR_CALIBRATION_DATA_AGTCURVECOLLECTION
 #define IR_CALIBRATION_DATA_AGTCURVECOLLECTION	 "AgtCurveCollection"		//!<  Against curve collection for Constant FX FWD

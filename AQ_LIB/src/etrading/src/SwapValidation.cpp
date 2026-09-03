@@ -5,11 +5,11 @@
 #include "LACurveForwardRateHelpers.h"
 #include "AQLPriceDataCalendar.h"
 #include <cctype>
-#include "LAMarketData.h"
+#include "AQLMarketData.h"
 #include "AQLPriceDataInterpolation.h"
 #include "CommonConstants.h"
 #include <utility>
-#include "LAStaticData.h"
+#include "AQLStaticData.h"
 #include <cmath>
 #include <boost/algorithm/string.hpp>
 

@@ -65,7 +65,7 @@ namespace google_test
     // Build the Yield Curve by calling the Curve Constructor Classes in the correct order, respecting curve dependencies.
     //
     //
-    ME_BUILD_EUR_CURVE( TestLWOSwapFloatRatesFixingsAndStubs, EURYC_OIS, EURYC_1M, EURYC_3M, EURYC_6M, EURYC_12M);
+    AQL_BUILD_EUR_CURVE( TestLWOSwapFloatRatesFixingsAndStubs, EURYC_OIS, EURYC_1M, EURYC_3M, EURYC_6M, EURYC_12M);
     
     //
     // Call Test Fixture

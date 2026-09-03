@@ -18,7 +18,7 @@
 #include "LWOUtilities.h"
 #include "CommonConstants.h"
 
-#include "LADefinitions.h"
+#include "AQLDefinitions.h"
 #include "AQLDataBasics.h"
 #include "AQLDataReference.h"
 #include "AQLDataMatrix.h"

@@ -36,10 +36,10 @@ struct CurveInfo
     bool isFwdInterpolated;
 };
 
-class MVCurveWrap
+class AQLCurveWrap
 {
 public:
-    MVCurveWrap(AQLDataInstance* dataInstance, const AQLString& curveID, const AQLString& curveName);
+    AQLCurveWrap(AQLDataInstance* dataInstance, const AQLString& curveID, const AQLString& curveName);
 
     double P(AQLDate date);
 

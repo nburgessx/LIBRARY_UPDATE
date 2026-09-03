@@ -2,7 +2,7 @@
 
 
 #include "InterestRateSwap.h"
-#include "LAMultiSwapPricer.h"
+#include "AQLMultiSwapPricer.h"
 #include "AQLCoreError.h"
 #include "tryMirGetParRate.h"
 #include "tryMirSwapPV.h"

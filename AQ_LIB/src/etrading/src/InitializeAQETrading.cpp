@@ -2,9 +2,9 @@
 #include "FolderConfig.h"
 #include "LibSetUpETrading.h"
 #include "LAUpdateStaticDataManager.h"
-#include "LACoreDataService.h"
-#include "LADefinitions.h"
-#include "LAStaticDataImport.h"
+#include "AQLCoreDataService.h"
+#include "AQLDefinitions.h"
+#include "AQLStaticDataImport.h"
 #include "LACurveForwardRateHelpers.h"
 #include "CurveCalibrationData.h"
 #include "ExceptionMacros.h"
@@ -24,7 +24,7 @@ namespace etrading
 	    // moved from LibSetUp/initialize;
 	    libSetUpETrading(dataInstance_.get(), checkIfCalendarLoaded);
 	    LAUpdateStaticDataManager::setUpForIRServer();
-	    LACoreDataService::setContext(CONTEXT_KEY_ISSETCURVEID, "TRUE");
+	    AQLCoreDataService::setContext(CONTEXT_KEY_ISSETCURVEID, "TRUE");
 	    LAUpdateStaticDataManager::setUpDefaultIRStaticData(*dataInstance_);
 	    if(checkStaticDataLoaded) checkIfStaticDataLoaded();
 		FolderConfig::setupOptionalStartupConfig();
@@ -34,7 +34,7 @@ namespace etrading
     {
 	    // from mirClearEntityPoolAndReadProperty
 	    dataInstance_->getObjectPool().clear();
-	    LACoreDataService::finalize();
+	    AQLCoreDataService::finalize();
     }
 
     InitializeAQETrading& InitializeAQETrading::instance(const bool checkStaticDataLoaded, const bool checkIfCalendarLoaded)

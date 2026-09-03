@@ -16,7 +16,7 @@
 
 #include "AQLMathYieldCurvePro.h" // *** Include this just to use the define constants
 #include "CurveCalibration.h"
-#include "LADefinitions.h"
+#include "AQLDefinitions.h"
 #include "LACurvePricingObject.h"
 
 #ifndef IR_CALIBRATION_DATA_AGTCURVECOLLECTION

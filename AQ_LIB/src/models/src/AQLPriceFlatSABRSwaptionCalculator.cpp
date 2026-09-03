@@ -10,9 +10,9 @@
 #include "AQLMathOptionTools.h"
 
 // Flat SABR option model to use for CMS replication. The price tails are replaced by constants.
-MVFlatSABRSwaptionCalculator::MVFlatSABRSwaptionCalculator(double S0_, const vector<double>& sabrParameters_,
+AQLFlatSABRSwaptionCalculator::AQLFlatSABRSwaptionCalculator(double S0_, const vector<double>& sabrParameters_,
                                                            const vector<double>& extraParameters_)
-: MVSABRSwaptionCalculator(S0_, sabrParameters_)
+: AQLSABRSwaptionCalculator(S0_, sabrParameters_)
 {
     if (extraParameters_.size() < 2)
         AQLCoreInvalidData("Invalid parameter size in Flat SABR swaption calculator",__FILE__,__LINE__);
@@ -24,7 +24,7 @@ MVFlatSABRSwaptionCalculator::MVFlatSABRSwaptionCalculator(double S0_, const vec
     mTCache = -12.34;
 }
 
-void MVFlatSABRSwaptionCalculator::CheckCache(double t)
+void AQLFlatSABRSwaptionCalculator::CheckCache(double t)
 {
     if (!eq(t, mTCache, mTThreshold))
     {
@@ -45,7 +45,7 @@ void MVFlatSABRSwaptionCalculator::CheckCache(double t)
     }
 }
 
-double MVFlatSABRSwaptionCalculator::Price(double t, double strike, bool isCall)
+double AQLFlatSABRSwaptionCalculator::Price(double t, double strike, bool isCall)
 {
     double price;
     if (abs(t) < 0.00001)

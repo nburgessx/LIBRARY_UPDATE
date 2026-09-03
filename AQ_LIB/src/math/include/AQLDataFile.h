@@ -4,8 +4,8 @@
 */
 
 
-#ifndef MDFile_h
-#define MDFile_h
+#ifndef AQLFile_h
+#define AQLFile_h
 
 #ifdef __GNUG__
 #pragma interface
@@ -31,16 +31,16 @@ enum OPENMODE// file open mode
     @brief Class to provide an access to file.
 		   It provides functions to get and record data from files.	
 */
-class MDFile
+class AQLFile
 {
 public:
 //  LIFECYCLE
 	// constructor
-	MDFile();
-	explicit MDFile(const char_t* fileName, OPENMODE openMode);
-	explicit MDFile(const AQLString& fileName, OPENMODE openMode);
+	AQLFile();
+	explicit AQLFile(const char_t* fileName, OPENMODE openMode);
+	explicit AQLFile(const AQLString& fileName, OPENMODE openMode);
 	// destructor
-	virtual ~MDFile();
+	virtual ~AQLFile();
 
 //  QUERYS
 	// check whether it is opened
@@ -107,8 +107,8 @@ private:
 	bool					mRead;// read flag
 
 //member functions which are not available
-	MDFile(const MDFile& file);
-	MDFile& operator=(const MDFile& file);
+	AQLFile(const AQLFile& file);
+	AQLFile& operator=(const AQLFile& file);
 };
 
 #endif

@@ -10,7 +10,7 @@
 #include "ExceptionMacros.h"
 
 // LA Includes
-#include "LAStaticData.h"
+#include "AQLStaticData.h"
 #include "LADateHelpers.h"
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"

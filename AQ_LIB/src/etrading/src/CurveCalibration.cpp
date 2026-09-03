@@ -27,7 +27,7 @@
 #include "AQLDataReference.h"
 #include "AQLObjectPool.h"
 #include "AQLDataInstance.h"
-#include "LADefinitions.h"
+#include "AQLDefinitions.h"
 
 #include "BasisComponentCurve.h"
 #include "LADateHelpers.h"
@@ -45,8 +45,8 @@
 #include "SwapComponentCurve.h"
 #include "GlobalCurveCalibrationEngine.h"
 #include "RecordMacros.h"
-#include "LACoreDataService.h"
-#include "LAStaticDataManager.h"
+#include "AQLCoreDataService.h"
+#include "AQLStaticDataManager.h"
 #include "CurveResultsContainer.h" // for curve container, pre- and post-results accessors
 
 namespace etrading

@@ -75,28 +75,28 @@ protected:
 	void						setUp() const;
 
 
-class MMHWQAdjInnerFunc1 : public AQLFunctionBase
+class AQLHWQAdjInnerFunc1 : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
 	// constructor
-	MMHWQAdjInnerFunc1(const AQLMathHWFuncMR& mr, const AQLFunctionBase& irvol, const AQLFunctionBase& fxvol)
+	AQLHWQAdjInnerFunc1(const AQLMathHWFuncMR& mr, const AQLFunctionBase& irvol, const AQLFunctionBase& fxvol)
 		:mpMR(&mr), mpIRVol(&irvol), mpFxVol(&fxvol) {;}
 	// destructor
-	virtual ~MMHWQAdjInnerFunc1() {;}
+	virtual ~AQLHWQAdjInnerFunc1() {;}
 
 
 //  QUERY
 
 								//======================================
 								// Make copy(clone) of this class
-	virtual AQLCoreFunctionBase*     clone() const {return new MMHWQAdjInnerFunc1(*this);}
+	virtual AQLCoreFunctionBase*     clone() const {return new AQLHWQAdjInnerFunc1(*this);}
 	                            //==========================================
 	                            // return function value
 	virtual double				operator()(const DoubleArray& x) const {return operator()(x[0]);}
 
 	//20061017--David--Remove warning:C4512
-	MMHWQAdjInnerFunc1 & operator=( const MMHWQAdjInnerFunc1 & ) { return *this; }
+	AQLHWQAdjInnerFunc1 & operator=( const AQLHWQAdjInnerFunc1 & ) { return *this; }
 
 	virtual double				operator()(double x) const
 								{
@@ -108,28 +108,28 @@ private:
 	const AQLFunctionBase* mpFxVol;
 };
 
-class MMHWQAdjInnerFunc2 : public AQLFunctionBase
+class AQLHWQAdjInnerFunc2 : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
 	// constructor
-	MMHWQAdjInnerFunc2(const AQLMathHWFuncMR& mr, const AQLFunctionBase& irvol, const AQLFunctionBase& fxvol, const AQLFunctionBase& s)
+	AQLHWQAdjInnerFunc2(const AQLMathHWFuncMR& mr, const AQLFunctionBase& irvol, const AQLFunctionBase& fxvol, const AQLFunctionBase& s)
 		:mpMR(&mr), mpIRVol(&irvol), mpFxVol(&fxvol), mpS(&s) {;}
 	// destructor
-	virtual ~MMHWQAdjInnerFunc2() {;}
+	virtual ~AQLHWQAdjInnerFunc2() {;}
 
 
 //  QUERY
 
 								//======================================
 								// Make copy(clone) of this class
-	virtual AQLCoreFunctionBase*     clone() const {return new MMHWQAdjInnerFunc2(*this);}
+	virtual AQLCoreFunctionBase*     clone() const {return new AQLHWQAdjInnerFunc2(*this);}
 	                            //==========================================
 	                            // return function value
 	virtual double				operator()(const DoubleArray& x) const {return operator()(x[0]);}
 
 	//20061017--David--Remove warning:C4512
-	MMHWQAdjInnerFunc2 & operator=( const MMHWQAdjInnerFunc2 & ) { return *this; }
+	AQLHWQAdjInnerFunc2 & operator=( const AQLHWQAdjInnerFunc2 & ) { return *this; }
 
 	virtual double				operator()(double x) const
 								{
@@ -142,28 +142,28 @@ private:
 	const AQLFunctionBase* mpS;
 };
 
-class MMHWQAdjInnerFunc3 : public AQLFunctionBase
+class AQLHWQAdjInnerFunc3 : public AQLFunctionBase
 {
 public:
 //  LIFECYCLE
 	// constructor
-	MMHWQAdjInnerFunc3(const AQLMathHWFuncMR& mr, const AQLFunctionBase& irvol, const AQLFunctionBase& fxvol, const AQLFunctionBase& s)
+	AQLHWQAdjInnerFunc3(const AQLMathHWFuncMR& mr, const AQLFunctionBase& irvol, const AQLFunctionBase& fxvol, const AQLFunctionBase& s)
 		:mpMR(&mr), mpIRVol(&irvol), mpFxVol(&fxvol), mpS(&s) {;}
 	// destructor
-	virtual ~MMHWQAdjInnerFunc3() {;}
+	virtual ~AQLHWQAdjInnerFunc3() {;}
 
 
 //  QUERY
 
 								//======================================
 								// Make copy(clone) of this class
-	virtual AQLCoreFunctionBase*     clone() const {return new MMHWQAdjInnerFunc3(*this);}
+	virtual AQLCoreFunctionBase*     clone() const {return new AQLHWQAdjInnerFunc3(*this);}
 	                            //==========================================
 	                            // return function value
 	virtual double				operator()(const DoubleArray& x) const {return operator()(x[0]);}
 
 	//20061017--David--Remove warning:C4512
-	MMHWQAdjInnerFunc3 & operator=( const MMHWQAdjInnerFunc3 & ) { return *this; }
+	AQLHWQAdjInnerFunc3 & operator=( const AQLHWQAdjInnerFunc3 & ) { return *this; }
 
 	virtual double				operator()(double x) const
 								{

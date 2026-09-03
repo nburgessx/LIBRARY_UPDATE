@@ -9,8 +9,8 @@
 #include "ScheduleValidation.h"
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
-#include "LADefinitions.h"
-#include "LACoreDataService.h"
+#include "AQLDefinitions.h"
+#include "AQLCoreDataService.h"
 #include "EntityPoolUtilities.h"
 #include "CreateDataFile.h"
 #include "Environment.h"
@@ -60,8 +60,8 @@ namespace validation
         }
 
 		// Original LA Start-Up Code
-		LACoreDataService::setContext(CONTEXT_KEY_ISEXCELREQUEST, "FALSE");  // was set to true in previous statement
-		LACoreDataService::setContext(CONTEXT_KEY_ISSETCURVEID, "TRUE");
+		AQLCoreDataService::setContext(CONTEXT_KEY_ISEXCELREQUEST, "FALSE");  // was set to true in previous statement
+		AQLCoreDataService::setContext(CONTEXT_KEY_ISSETCURVEID, "TRUE");
 
         // Excel Addin Config: set the calendar filepath member variable
 		AQLString calendarFullFileName(calendarFullFilePath.c_str());
@@ -127,7 +127,7 @@ namespace validation
 		etrading::CreditResultsContainer::getInstance().deleteAllCreditResults();
 
 		// Clean-Up Object Pool
-		LACoreDataService::finalize();
+		AQLCoreDataService::finalize();
 		etrading::InitializeAQETrading::destroyInstance();
 
         // Clean-Up the Volatility Manager - Is this needed?
@@ -148,9 +148,9 @@ namespace validation
 
         AQLDataInstance* dataInstance = etrading::getDataInstance();
         dataInstance->getObjectPool().clear();
-        LACoreDataService::finalize();
+        AQLCoreDataService::finalize();
         etrading::LAUpdateStaticDataManager::setUpForIRServer();
-        LACoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
+        AQLCoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
         etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *dataInstance );
 
         AQLString ret( "Cleared the Object Pool Cache" );
@@ -229,9 +229,9 @@ namespace validation
         AQLDataInstance* dataInstance = etrading::getDataInstance();
         dataInstance->getObjectPool().clear();
 
-        LACoreDataService::finalize();
+        AQLCoreDataService::finalize();
         etrading::LAUpdateStaticDataManager::setUpForIRServer();
-        LACoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
+        AQLCoreDataService::setContext( CONTEXT_KEY_ISSETCURVEID, "TRUE" );
 
         //Check if the file exists
         if ( filepath.size() != 0 )

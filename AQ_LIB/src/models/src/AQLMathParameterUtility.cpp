@@ -200,7 +200,7 @@ double AQLMathParameterObject::Lookup(AQLDate asOfDate, AQLDate expDate, const A
                                   const DoubleMatrix& dataMatrix, AQLString interpolationType)
 {
     double expPoint_d = ModelTime(asOfDate, expDate);
-    MFParameterMatrix parameterMatrix(dataMatrix, expiryVec, indexVec);
+    AQLParameterMatrix parameterMatrix(dataMatrix, expiryVec, indexVec);
     return parameterMatrix.LookUp(expPoint_d, idxPoint, interpolationType);
 }
 
@@ -229,12 +229,12 @@ void AQLMathParameterObject::SetMatrixData(const DoubleMatrix& data, AQLStringMa
             matrix[1 + i][1 + j] = AQLString(n2s(data[i][j]).c_str());
 }
 
-MFParameterMatrix::MFParameterMatrix(const DoubleMatrix& mat_, const DoubleVector& mExpiries_, const AQLStringVector& mIndexes_)
+AQLParameterMatrix::AQLParameterMatrix(const DoubleMatrix& mat_, const DoubleVector& mExpiries_, const AQLStringVector& mIndexes_)
 : mMatrix(mat_), mExpiries(mExpiries_), mIndexes(mIndexes_)
 {
 }
 
-double MFParameterMatrix::LookUp(double expiry, const AQLString& indexID, AQLString interpolationType)
+double AQLParameterMatrix::LookUp(double expiry, const AQLString& indexID, AQLString interpolationType)
 {
     if(expiry < 0.0)
         throw AQLCoreInvalidData("Expiry is negative", __FILE__, __LINE__);

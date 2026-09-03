@@ -3,8 +3,8 @@
 */
 
 
-#ifndef MDBase_h
-#define MDBase_h
+#ifndef AQLBase_h
+#define AQLBase_h
 
 #ifdef __GNUG__
 #pragma interface
@@ -15,20 +15,20 @@
 #include "AQLCoreAutoPtr.h"
 #include <vector>
 
-// MDBase object name 
-#define    MDBASE "Base"
+// AQLBase object name 
+#define    AQLBASE "Base"
 
 /*! 
     @brief Virtual base class to get data.
 */
-class MDBase
+class AQLBase
 {
 public:
 //  LIFECYCLE
     // constructor
-    MDBase(const AQLString& name=MDBASE);
+    AQLBase(const AQLString& name=AQLBASE);
     // destructor
-    virtual ~MDBase(void);
+    virtual ~AQLBase(void);
 
 //  QUERY
     // get name of the object

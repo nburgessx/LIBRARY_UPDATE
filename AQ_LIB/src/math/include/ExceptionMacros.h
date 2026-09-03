@@ -76,8 +76,8 @@ if ( !matrix.empty() && minColumnSize>0 ) \
 #endif
 
 // Macro to check the size of a matrix and throw if the matrix does not have at least 2 columns
-#ifndef MLIB_2D_MATRIX_CHECK
-#define MLIB_2D_MATRIX_CHECK( matrix, error_message ) \
+#ifndef AQ_2D_MATRIX_CHECK
+#define AQ_2D_MATRIX_CHECK( matrix, error_message ) \
 if ( !matrix.empty() ) \
 { \
     std::ostringstream nested_ss; \

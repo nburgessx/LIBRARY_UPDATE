@@ -1,6 +1,6 @@
 //
 // LAObjectPoolBase.h
-// This file used to be called Calibrator.h and before that LACalibrateModel.h
+// This file used to be called Calibrator.h and before that AQLCalibrateModel.h
 //
 #pragma once
 
@@ -18,7 +18,7 @@ class AQLDataInstance;
 class AQLRatesCurveLogLinearInterpolation;
 class AQLMathCorrelation;
 class AQLMathVolatility;
-class LAStaticData;
+class AQLStaticData;
 
 //===================== Class Declare LAObjectPoolBase ==================================
 /*! 
@@ -119,6 +119,6 @@ protected:
 	// check calibrarion target currency or fx
 	virtual  bool isCalibTarget(const AQLString &ccy) const;
 
-	LAStaticData *mpStaticData; // property accessor
+	AQLStaticData *mpStaticData; // property accessor
 };
 

@@ -36,7 +36,7 @@
 #include "EnvironmentPool.h"
 #include "tryMeLWOGrid.h"
 #include "AQLCoreComponentManager.h"
-#include "LACalibrateModelIR.h"
+#include "AQLCalibrateModelIR.h"
 #include "EntityPoolUtilities.h"
 #include "CurveResultsContainer.h"
 

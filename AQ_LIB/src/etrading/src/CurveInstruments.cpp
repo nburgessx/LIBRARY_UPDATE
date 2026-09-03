@@ -15,10 +15,10 @@
 // LA Headers - Put these last so that legacy defines don't conflict
 #include "LACurveForwardRateHelpers.h"
 #include "LADateScheduleHelpers.h"
-#include "LAStaticData.h"
+#include "AQLStaticData.h"
 #include "AQLFunctionUtilities.h"
-#include "LAMarketData.h"
-#include "LACoreDataService.h"
+#include "AQLMarketData.h"
+#include "AQLCoreDataService.h"
 #include "AQLInterpolationBase.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLAlgorithm.h"
@@ -27,7 +27,7 @@
 #include "AQLPriceDataCalendar.h"
 #include "AQLBasic.h"
 #include "AQLMatrix.h"
-#include "LADefinitions.h"		// Put legacy defines last
+#include "AQLDefinitions.h"		// Put legacy defines last
 #include "AQLMathDefine.h"       // Put legacy defines last
 #include "CurveUtilities.h"		// accrualPeriod method
 #include "CurveValidation.h"
@@ -166,7 +166,7 @@ namespace etrading
 	*  @param [in]		asOfDate					As of date of curve
 	*  @param [in]		isBasisCurve				Is the current curve a basis curve?
 	*/
-	void populateFRADataToEntityPool(LAStaticData * mpStaticData,
+	void populateFRADataToEntityPool(AQLStaticData * mpStaticData,
 									 CurveCalibrationData &curveCalibrationData,
 									 AQLString& refData,
 									 AQLObjectPool& objPool,
@@ -224,7 +224,7 @@ namespace etrading
 			{
 				throw AQLCoreInvalidData("No FRA File", __FILE__, __LINE__);
 			}
-			MAFileAccessor fraFile(LAMarketData::getNumFileName(fraFileName));
+			AQLFileAccessor fraFile(AQLMarketData::getNumFileName(fraFileName));
 			AQLStringMatrix fraDataMtx;
 			fraFile.readAllData(MARKET_DATA_DELIMITER, fraDataMtx);
 			fraFile.close();
@@ -1962,7 +1962,7 @@ namespace etrading
 		@param[in] grid
 		@return Property data value
 	*/
-	AQLString getGridStaticData(LAStaticData * mpStaticData, const AQLString &key, const AQLString &curve, const AQLString &grid)
+	AQLString getGridStaticData(AQLStaticData * mpStaticData, const AQLString &key, const AQLString &curve, const AQLString &grid)
 	{
 		AQLString suffix = "." + grid + curve;
 		suffix.toLower();
@@ -1998,7 +1998,7 @@ namespace etrading
 	*  @param [in]		fixingSource				Source of libor fixing
 	*  @return			Libor rate that matches spot rate term (if provided)
 	*/
-	double populateCashInstrumentsToEntityPool(LAStaticData * mpStaticData,
+	double populateCashInstrumentsToEntityPool(AQLStaticData * mpStaticData,
 											   AQLString& refData,
 											   AQLObjectPool& objPool,
 											   const AQLString& currency,
@@ -2013,7 +2013,7 @@ namespace etrading
 											   const AQLString& spotRateTerm)
 	{
 		AQLString liborFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
-		MAFileAccessor liborFile(LAMarketData::getNumFileName(liborFileName));
+		AQLFileAccessor liborFile(AQLMarketData::getNumFileName(liborFileName));
 		AQLStringMatrix liborDataMtx;
 		if (!isFwdFX)
 		{
@@ -2238,7 +2238,7 @@ namespace etrading
 				// set eomroll
 				mktData->add(IR_CALIBRATION_DATA_ISEOMROLL, new AQLDataBool(isEOMRollL));
 				// set term
-				mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(LAMarketData::convertToMLibTerm(term));
+				mktData->add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(AQLMarketData::convertToMLibTerm(term));
 				//grid use
 				if (liborUseGrid.size() != 0 && find(liborUseGrid.begin(), liborUseGrid.end(), term) == liborUseGrid.end())
 				{
@@ -3317,7 +3317,7 @@ namespace etrading
 	// Helper function to populate the input fixings to the market date object
 	void populateHistoricalDataToMarketData(AQLObject *mktData, const AQLString& oisHistFileName)
 	{
-		MAFileAccessor oisHistFile(LAMarketData::getNumFileName(oisHistFileName));
+		AQLFileAccessor oisHistFile(AQLMarketData::getNumFileName(oisHistFileName));
 		AQLStringMatrix oisHistDataMtx;
 		oisHistFile.readAllData(MARKET_DATA_DELIMITER, oisHistDataMtx);
 		oisHistFile.close();

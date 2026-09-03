@@ -83,9 +83,9 @@ double AQLPriceCopulaCMSSpread::Call(double alpha, double beta, double K,
     // V1
     AQLFunction* v1Integrand;
     if (beta > 0.0)
-        v1Integrand = new MVVIntegrand(marginal1, marginal2, copula, alpha, beta, K, v1Right);
+        v1Integrand = new AQLVIntegrand(marginal1, marginal2, copula, alpha, beta, K, v1Right);
     else
-        v1Integrand = new MVVIntegrand(marginal1, marginal2, copula, alpha, beta, K, v1Left);
+        v1Integrand = new AQLVIntegrand(marginal1, marginal2, copula, alpha, beta, K, v1Left);
 
     lwBound = marginal1->Bound(mConfidence, Lower);
     upBound = marginal1->Bound(mConfidence, Upper);
@@ -93,9 +93,9 @@ double AQLPriceCopulaCMSSpread::Call(double alpha, double beta, double K,
     // V2
     AQLFunction* v2Integrand;
     if (alpha > 0.0)
-        v2Integrand = new MVVIntegrand(marginal1, marginal2, copula, alpha, beta, K, v2Right);
+        v2Integrand = new AQLVIntegrand(marginal1, marginal2, copula, alpha, beta, K, v2Right);
     else
-        v2Integrand = new MVVIntegrand(marginal1, marginal2, copula, alpha, beta, K, v2Left);
+        v2Integrand = new AQLVIntegrand(marginal1, marginal2, copula, alpha, beta, K, v2Left);
 
     lwBound = marginal2->Bound(mConfidence, Lower);
     upBound = marginal2->Bound(mConfidence, Upper);
@@ -197,7 +197,7 @@ double AQLPriceCopulaSpreadUtility::SecondDiff(double S, AQLUnivariateDistributi
 }
 
 //================ VIntegrand ===================================
-MVVIntegrand::MVVIntegrand(AQLUnivariateDistribution* marginal1_, AQLUnivariateDistribution* marginal2_,
+AQLVIntegrand::AQLVIntegrand(AQLUnivariateDistribution* marginal1_, AQLUnivariateDistribution* marginal2_,
                            AQLBivariateCopula* copula_, double alpha_, double beta_, double K_, VType vType_)
 {
     mMarginal1 = marginal1_;
@@ -209,7 +209,7 @@ MVVIntegrand::MVVIntegrand(AQLUnivariateDistribution* marginal1_, AQLUnivariateD
     mVType = vType_;
 }
 
-double MVVIntegrand::operator()(double x) const
+double AQLVIntegrand::operator()(double x) const
 {
     double v;
     if (mVType == v1Right)

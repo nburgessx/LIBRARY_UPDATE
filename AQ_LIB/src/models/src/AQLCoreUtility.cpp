@@ -219,7 +219,7 @@ AQLCoreUtility::findEntity(AQLDataInstance* dataInstance, const AQLString& keyna
 void 
 AQLCoreUtility::dataLoad(const AQLString& fname, AQLDataInstance &dataInstance, bool isolddataclear, bool iscompletedependency)
 {
-	MDCSVFileLoader fileLoader;
+	AQLCSVFileLoader fileLoader;
 	fileLoader.setDataInstance(&dataInstance);
 
 	AQLObject* e = new AQLObject;
