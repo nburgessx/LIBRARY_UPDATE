@@ -133,7 +133,11 @@ each numbered item.
 - ☑ **1.1 Macros** `MLIB_* → AQ_*` — commit `927a66d`. 380 files, 4867
   replacements, word-boundary anchored, generated wrappers excluded. Awaiting
   Nicholas's build + GoogleTest diff vs `baseline` (expect numerically identical).
-- ☐ **1.2 `AQ_BINDINGS` → `AQ_API`** (D3). In one batch:
+- ☑ **1.2 `AQ_BINDINGS` → `AQ_API`** (D3) — commit `988a3c1`. Folder + 3 project
+  files (`git mv`, 168 src files), `.sln`, `<ProjectName>`/`<RootNamespace>`, 8
+  batch files + their vars, pre/post-build commands. All vcxproj file refs verified
+  on disk. Awaiting Nicholas's rebuild of the `*Python/*CSharp/*Java/*R` configs
+  + generate/deploy. Original detail:
   - `projects\AQ_BINDINGS.vcxproj` (+ `.filters`, `.user`) → rename file,
     `<ProjectName>`, `<RootNamespace>`.
   - `AQ_2022.sln` — project name and path (GUID unchanged).
