@@ -43,7 +43,7 @@ AQ_LIB\
 │   ├── validation\                     single entry / contract layer
 │   ├── AQ_API\                        SWIG bindings (Py/C#/Java/R)
 │   ├── AQ_XLL\                         xlOil Excel add-in
-│   └── GOOGLE_TEST\                    test suite
+│   └── GTEST\                    test suite
 ├── resources\                   end-user spreadsheets, pricing toolkits, guides
 └── targets\                     build output (generated; not in source control)
 ```
@@ -51,7 +51,7 @@ AQ_LIB\
 ### Layer model
 
 ```
-  AQ_API (Py/C#/Java/R)         AQ_XLL (Excel)          GOOGLE_TEST
+  AQ_API (Py/C#/Java/R)         AQ_XLL (Excel)          GTEST
                  \                 /                     (sees everything)
                   ▼               ▼                            |
               ┌──────────────────────────┐                     |
@@ -162,11 +162,11 @@ customisation surface that needs **no recompilation**:
 
 ## Testing
 
-`GOOGLE_TEST` sits at the top of the stack and can reach every layer. Its cases
+`GTEST` sits at the top of the stack and can reach every layer. Its cases
 are generated from the input/output recordings captured in `validation`, so the
 test surface tracks the API surface.
 
-Run the `GOOGLE_TEST` project, or the batch and spreadsheet test harnesses under
+Run the `GTEST` project, or the batch and spreadsheet test harnesses under
 `resources\test`.
 
 ---

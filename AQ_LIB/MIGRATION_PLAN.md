@@ -78,7 +78,7 @@ Nothing else starts until this is green.
   the path used).
 - ☐ **0.3** **Capture the pre-rebrand test baseline.** Build current `validation`
   with input/output recording on; run the full existing exercise set (bindings
-  smoke tests, `GOOGLE_TEST`, the `resources\test` batch and Excel tests); save
+  smoke tests, `GTEST`, the `resources\test` batch and Excel tests); save
   the recordings as `baseline/` outside the build tree. This is the diff target
   for every later stage. *(Nicholas — needs a build; see `rebrand\00_phase0_status.md`.)*
 - ☐ **0.4** Git: commit current state, tag `baseline`. Adopt branch-per-stage +
@@ -157,14 +157,14 @@ each numbered item.
   - Rebuild every `*Python/*CSharp/*Java/*R` config; regenerate and redeploy.
 - ◐ **1.3 File/folder renames** — commit `1377330`. Done: `InitializeMLibETrading.*`
   → `InitializeAQETrading.*`, `InitializeMLibGoogleTest.*` → `InitializeAQGoogleTest.*`
-  (class + 124 includes + `etrading`/`GOOGLE_TEST` vcxproj), `mlib_ReadMe.txt`
+  (class + 124 includes + `etrading`/`GTEST` vcxproj), `mlib_ReadMe.txt`
   deleted, `getMLIBQEnvironmentVariable*` → `getGoogleTestInputPath` /
   `getConfigFolderPath`, `MLib`/`MLIBQ` product refs in comments/messages →
   `AlgoQuantLib`. **Deferred:** `tryMe*` (206) and `me*` (78) file renames — folded
   into Phase 3 (the `me→aq` identifier rename) to avoid churning `#include`s
   twice; `mir*` files go in 1.4. Awaiting Nicholas's build.
 - ✗ **1.4 Remove `mir*`** — **DEFERRED, not a Phase 1 batch.** The revised 0.5
-  call-graph (`rebrand\callgraph_mir.md`) found **49 `GOOGLE_TEST` files** and
+  call-graph (`rebrand\callgraph_mir.md`) found **49 `GTEST` files** and
   `etrading\Replay.cpp` depend on `tryMir*` (22 distinct functions). This is the
   flagship curve/trade regression suite — deleting `mir` means porting those
   tests to the `aq` equivalents and re-baselining each. Moved to **Phase 3c**
@@ -224,10 +224,10 @@ apply it. **§2.2 below is the table Nicholas asked to review.**
     `SupervisoryRules`, `CashflowClient`.
   - Old bindings: `Curve`, `Date`, `LWO`, `Product`, `Utility`, plus `mir*`.
   - `validation` wrappers: `tryMe` + `<Category>` + `<Func>`.
-  - `GOOGLE_TEST`: test-suite naming.
+  - `GTEST`: test-suite naming.
 - ☑ **2.2 Canonical category list — LOCKED (Nicholas, this session).** 13
   categories, applied identically in `validation`, `AQ_XLL`, `AQ_API` and
-  `GOOGLE_TEST`:
+  `GTEST`:
 
   | Category | Covers | Prefix example |
   |---|---|---|
@@ -379,7 +379,7 @@ baseline-diff between **every** batch.
   `LAMathDateCalculations.cpp` (rebuild with `+`). **Leave every other
   `toToken(':')` alone** — `:` stays the generic list separator. Migrate the
   ~103 generator JSON files' **calendar fields only** to `+` (curve-name-list
-  fields keep `:`). `GOOGLE_TEST`: `"SYB+LNB"` builds the expected combined
+  fields keep `:`). `GTEST`: `"SYB+LNB"` builds the expected combined
   holiday set. Details: `rebrand\calendar_delimiter_sites.md`.
 
 **Exit:** `grep -rE "\bLA[A-Z][a-z]|\bLA[0-9]D|\bme[A-Z]"` in `src\` returns only
@@ -395,7 +395,7 @@ own new test).
 
 `mir*` is the legacy Interest-Rates binding stack. 58 `AQ_API\mir*.{cpp,h}`,
 65 `validation\tryMir*.*`, `mir*` blocks in 4 `swig_*.i` + `swig_R_wrap.cpp`.
-**49 `GOOGLE_TEST` files** and `etrading\Replay.cpp` use 22 distinct `tryMir*`
+**49 `GTEST` files** and `etrading\Replay.cpp` use 22 distinct `tryMir*`
 functions (details: `rebrand\callgraph_mir.md`).
 
 - ☐ **3c.1** For each of the 22 `tryMir*` functions, map to the `tryAq*`
@@ -403,7 +403,7 @@ functions (details: `rebrand\callgraph_mir.md`).
   `tryAqCurveCalibrate*`, `tryAqDates*`, `tryAqObjectsCurve*` etc. Any with no
   equivalent → promote that one `mir` function to `aq` (rename + keep), don't
   drop the capability.
-- ☐ **3c.2** Migrate the 49 `GOOGLE_TEST` files to the `tryAq*` calls, **one
+- ☐ **3c.2** Migrate the 49 `GTEST` files to the `tryAq*` calls, **one
   file at a time, re-baselining each** — numbers must match the pre-migration
   run for that test.
 - ☐ **3c.3** `Replay.cpp` — drop the four `"tryMirSetUp…Curve"` `functionList`
@@ -431,7 +431,7 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
   kept helpers onto `ExcelObj` / `ExcelArray`. Delete the XLL+ boilerplate.
 - ☐ **4.3** Write the porting template doc from the examples: old `_Impl` →
   `XLO_FUNC_START/END` + `.help()/.arg()`, plus the required `validation`
-  wrapper + `GOOGLE_TEST` case per function.
+  wrapper + `GTEST` case per function.
 - ☐ **4.4** Remove the dead `XllPlus\7.0\...` include/lib paths from
   `AQ_XLL.vcxproj`.
 - ☐ **4.5 Editions & manifest gating** — see **Phase 4a** below; the mechanism is
@@ -444,7 +444,7 @@ canonical marshalling / handle-I/O / array-return / error-convention pattern.
   (Dates → Tools → Curves → Swaps → Bonds → Credit → Rates → Vols → Options →
   Math → Models → Generators → Objects), driven by the 0.7 inventory and the
   locked Phase 2 categories. Per function: confirm it is a "keep" → port `_Impl`
-  → `validation` wrapper → `GOOGLE_TEST` case → tick the inventory row. Build +
+  → `validation` wrapper → `GTEST` case → tick the inventory row. Build +
   run suite per category.
 - ☐ **4.8 Generator + config wiring** — see **Phase 4b**.
 
@@ -480,7 +480,7 @@ not locked):
   `AQ_XLL` and `AQ_API`).
 - ☐ **4a.3** `config\editions.json` from the 2.4 table; a `Full` `licence.json`
   for dev.
-- ☐ **4a.4** `GOOGLE_TEST` / smoke: each edition registers exactly its categories
+- ☐ **4a.4** `GTEST` / smoke: each edition registers exactly its categories
   and nothing else; `aqToolsEdition()` agrees.
 
 ---
@@ -505,7 +505,7 @@ the library's no-recompile customisation surface:
   `resources\config\{SWAP,BOND,CURVE}_GENERATOR`.
 
 - ☐ **4b.1** Document the generator JSON schema; add a schema-validation
-  `GOOGLE_TEST` over the shipped set.
+  `GTEST` over the shipped set.
 - ☐ **4b.2** `Generators` category (2.5): `aqGeneratorsList` / `…Describe` /
   `…Validate`, plus per-asset `aqSwapsFromGenerator` / `aqBondsFromGenerator` /
   etc.
@@ -527,12 +527,12 @@ the library's no-recompile customisation surface:
 - ☐ **5.2** Wire `AQ_API` module import to the Phase 4a edition gate; ship
   `config` (editions + calendars + generators) with every language package
   (4b.3). Smoke each edition per language.
-- ☐ **5.3** Fill priority `GOOGLE_TEST` gaps:
+- ☐ **5.3** Fill priority `GTEST` gaps:
   - Yield-curve framework + Jacobian risk vs bump-and-revalue.
   - Fixed-income price/yield vs Bloomberg (both directions) — regression lock.
   - Date logic (it moved out of legacy in Phase 6).
   - Generator round-trips per asset (4b.5).
-- ☐ **5.4** Wire the `validation`-recording → `GOOGLE_TEST` generation so new
+- ☐ **5.4** Wire the `validation`-recording → `GTEST` generation so new
   wrappers get cases automatically.
 
 **Exit:** all four languages build and pass; new coverage merged; suite green
@@ -614,7 +614,7 @@ current.
   and genuine string data. Anything left is fixed or removed.
 - ☐ **7.3** Full green build, all 12 Windows configs + Linux; full suite green;
   baseline-diff clean (bar the intended calendar change).
-- ☐ **7.4 CI** — a pipeline that builds the key configs, runs `GOOGLE_TEST`, and
+- ☐ **7.4 CI** — a pipeline that builds the key configs, runs `GTEST`, and
   runs `clang-format --dry-run --Werror` + the `clang-tidy` naming check as
   gates; the rest of `clang-tidy` as a non-blocking report. Wire it against the
   new clean repo.

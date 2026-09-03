@@ -64,7 +64,7 @@ AQ_LIB\
 │   ├── validation\               single entry / contract layer (§4)  [namespace still validation_api]
 │   ├── AQ_BINDINGS\              SWIG bindings — RENAME PENDING → AQ_API (§5.4)
 │   ├── AQ_XLL\                   xlOil Excel add-in — POC only, port pending (§6)
-│   └── GOOGLE_TEST\              test suite, sees the whole library
+│   └── GTEST\              test suite, sees the whole library
 ├── resources\                    end-user spreadsheets, toolkits, research guides
 └── targets\                      build output (git-ignored, regenerated)
 ```
@@ -180,7 +180,7 @@ header churn**. See `..\..\CLAUDE.md` §7 for the exact header text.
 ## 4. Architecture — how code flows
 
 ```
-   AQ_API (SWIG: Py/C#/Java/R)        AQ_XLL (xlOil add-in)        GOOGLE_TEST
+   AQ_API (SWIG: Py/C#/Java/R)        AQ_XLL (xlOil add-in)        GTEST
                 \                        /                          (sees all)
                  \                      /                              |
                   ▼                    ▼                               |
@@ -205,7 +205,7 @@ header churn**. See `..\..\CLAUDE.md` §7 for the exact header text.
 
 Every public call — bindings and XLL — routes through `validation`. Nothing
 bypasses it. It (1) validates inputs once so every language returns identical
-results, and (2) records inputs/outputs, from which `GOOGLE_TEST` cases are
+results, and (2) records inputs/outputs, from which `GTEST` cases are
 generated.
 
 Functions here carry a `try` prefix: `try` + library + category + function, e.g.
@@ -219,7 +219,7 @@ not expose `etrading` symbols directly to `AQ_API` or `AQ_XLL`.
 
 - **Lowercase project name = statically linked; Uppercase = dynamically linked.**
   `math`, `models`, `calibration`, `etrading`, `validation` are static;
-  `AQ_API`, `AQ_XLL`, `GOOGLE_TEST` are dynamic.
+  `AQ_API`, `AQ_XLL`, `GTEST` are dynamic.
 - **Project name ≠ output name.** All consumer artefacts are named
   **AlgoQuantLib** so users write `import AlgoQuantLib`:
   `AlgoQuantLib.pyd` / `AlgoQuantLib.xll` / `AlgoQuantLib.dll`.
@@ -268,7 +268,7 @@ framework only — *not* bond/credit curves), `Vols`, `Rates`, `Swaps`, `Bonds`
 `Math` (low-level building blocks for own-calculation / result replication),
 `Models` (may be sparse initially), `Generators`, `Objects`, `Tools`. **No**
 `Products` category. Use these 13, identically in `validation` / `AQ_XLL` /
-`AQ_API` / `GOOGLE_TEST`. Detail: `MIGRATION_PLAN.md` §2.2.
+`AQ_API` / `GTEST`. Detail: `MIGRATION_PLAN.md` §2.2.
 
 ### 5.2 Two orthogonal groupings — do not conflate
 
@@ -412,7 +412,7 @@ Do not delete outright — check what is needed first.
 
 ---
 
-## 8. Testing (`GOOGLE_TEST`)
+## 8. Testing (`GTEST`)
 
 GoogleTest 1.17, top of the stack. Cases are generated from the `validation`
 input/output recordings.
