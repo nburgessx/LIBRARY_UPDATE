@@ -26,7 +26,7 @@
 #include "AQLDataMultiReference.h"
 #include "AQLObjectPool.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LADefinitionsRisk.h"

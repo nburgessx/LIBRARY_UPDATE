@@ -21,9 +21,9 @@
 #include "LACalibrateModelFX.h"
 #include "AQLDataInstance.h"
 #include "AQLFunctionManager.h"
-#include "LARatesSpotSDE.h"
-#include "LARatesLJSpotSDE.h"
-#include "LARatesScalarLinearInterpolation.h"
+#include "AQLRatesSpotSDE.h"
+#include "AQLRatesLJSpotSDE.h"
+#include "AQLRatesScalarLinearInterpolation.h"
 #include "LACoreDataService.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
@@ -56,7 +56,7 @@ LACalibrateModelFX::~LACalibrateModelFX(void)
 	@param[in] fx
 	@param[in] dataInstance
 */
-LARatesSDEBase *
+AQLRatesSDEBase *
 LACalibrateModelFX::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
@@ -64,11 +64,11 @@ LACalibrateModelFX::createSDEInstance(const AQLString &fx, AQLDataInstance &data
 	// check LJ
 	if (isLJ(fx))
 	{
-		return new LARatesLJSpotSDE(type);
+		return new AQLRatesLJSpotSDE(type);
 	}
 	else
 	{
-		return new LARatesSpotSDE(type);
+		return new AQLRatesSpotSDE(type);
 	}
 }
 
@@ -82,7 +82,7 @@ LACalibrateModelFX::createSDEInstance(const AQLString &fx, AQLDataInstance &data
 
 */
 void
-LACalibrateModelFX::setNumeraire(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFX::setNumeraire(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	(void)fx;
 	(void)sde;
@@ -96,10 +96,10 @@ LACalibrateModelFX::setNumeraire(const AQLString &fx, LARatesSDEBase &sde) const
 	@param[out] sde
 */
 void
-LACalibrateModelFX::setOutputTemplate(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFX::setOutputTemplate(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	(void)fx;
-	sde.setOutputTemplate(new LARatesPathElementScalar());
+	sde.setOutputTemplate(new AQLRatesPathElementScalar());
 }
 
 // 
@@ -110,10 +110,10 @@ LACalibrateModelFX::setOutputTemplate(const AQLString &fx, LARatesSDEBase &sde) 
 	@param[out] sde
 */
 void
-LACalibrateModelFX::setInterpolationMethod(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFX::setInterpolationMethod(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	(void)fx;
-	sde.setInterpolationMethod(new LARatesScalarLinearInterpolation());
+	sde.setInterpolationMethod(new AQLRatesScalarLinearInterpolation());
 }
 
 // 

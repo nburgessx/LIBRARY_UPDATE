@@ -17,10 +17,10 @@
 #include "AQLDataReference.h"
 #include "LACurvePricingObject.h"
 
-#include "LAMathCorrelation.h"
-#include "LARatesTermStructureSDE.h"
-#include "LARatesLJTermStructureSDE.h"
-#include "LARatesCurveLinearInterpolation.h"
+#include "AQLMathCorrelation.h"
+#include "AQLRatesTermStructureSDE.h"
+#include "AQLRatesLJTermStructureSDE.h"
+#include "AQLRatesCurveLinearInterpolation.h"
 #include "LADealUtils.h"
 
 #include "LACoreDataService.h"

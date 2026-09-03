@@ -8,9 +8,9 @@
 
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
-#include "LAMathJamshidianSwaption.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
+#include "AQLMathJamshidianSwaption.h"
 #include "LAModelSetup.h"
 #include "LACoreDataService.h"
 #include "LAMarketData.h"

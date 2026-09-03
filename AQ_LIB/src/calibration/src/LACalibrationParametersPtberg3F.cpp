@@ -24,7 +24,7 @@
 #include "AQLPriceDataType.h"
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
-#include "LAMathHWFuncMR.h"
+#include "AQLMathHWFuncMR.h"
 #include "AQLMathDefine.h"
 #include "LADealUtils.h"
 #include "LACalibrationParametersPtberg3F.h"
@@ -35,10 +35,10 @@
 #include "LADefinitionsPtberg.h"
 #include "LAMarketDataHW.h"
 #include "LAMarketData.h"
-#include "LAMathJamshidianSwaption.h"
-#include "LAMathJamshidianSwaptionByImplyVol.h"
-#include "LAMathAntonovFXOption.h"
-#include "LAPriceFXDisplacedDiffusionCalibration3F.h"
+#include "AQLMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaptionByImplyVol.h"
+#include "AQLMathAntonovFXOption.h"
+#include "AQLPriceFXDisplacedDiffusionCalibration3F.h"
 
 using namespace std;
 

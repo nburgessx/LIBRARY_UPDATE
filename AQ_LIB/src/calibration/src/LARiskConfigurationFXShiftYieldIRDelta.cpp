@@ -486,7 +486,7 @@ LARiskConfigurationFXShiftYieldIRDelta::createBaseScenarioEntity(const AQLString
 
 	const AQLString bYieldName = LAMarketData::getBaseYieldName(ccy); 
 	AQLObjectPool& objPool = dataInstance.getObjectPool();
-	const LAMathYieldCurve &bYield = dynamic_cast<const LAMathYieldCurve &>
+	const AQLMathYieldCurve &bYield = dynamic_cast<const AQLMathYieldCurve &>
 					(objPool.getObject(bYieldName, ENCHKTYPE_ISDEFINED).get());
 
 	ret.push_back(bYield.clone());

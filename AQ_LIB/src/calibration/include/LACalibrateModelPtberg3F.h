@@ -22,7 +22,7 @@
 
 
 class AQLDataInstance;
-class LAMathVolatility;
+class AQLMathVolatility;
 class LACalibrationParametersPtberg;
 
 //===================== Class Declare LACalibrateModelPtberg3F==================================
@@ -45,14 +45,14 @@ public:
 protected:
 	//==============================================
 	// set drift 
-	virtual  void setDrift(const AQLString &fx, LARatesSDEBase &sde)  const;
+	virtual  void setDrift(const AQLString &fx, AQLRatesSDEBase &sde)  const;
 	//==============================================
 	// get sde Type
 	virtual  SDE_TYPE getSDEType(const AQLString &fx) const;
 private:
 	//==============================================
 	// set volatility object
-	void setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const;
+	void setUpVolEntity(const AQLString &fx, AQLMathVolatility &vol) const;
 	//==============================================
 	// create calibration info
 	virtual LACalibrationParametersPtberg *createCalibInfoCreator(void) const;

@@ -55,7 +55,7 @@ LARiskConfigurationYieldIRDeltaSimple::createMarketBumpYieldEntity(const AQLStri
 		attrSuffix = "_" + param.targetCurveType;
 	}
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
-	LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &bYieldPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get());
 	AQLDataMultiReference &refMarketDatas = dynamic_cast<AQLDataMultiReference &>
 		                                  (bYieldPro.getData(CALIBRATION_DATA_MARKETDATA + attrSuffix, ISNOTNULL).get());

@@ -14,18 +14,18 @@
 #include "AQLBasic.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataCalendar.h"
-#include "LAMathDateCalculations.h"
-#include "LAMathPathEntity.h"
-#include "LAMathVolatility.h"
+#include "AQLMathDateCalculations.h"
+#include "AQLMathPathEntity.h"
+#include "AQLMathVolatility.h"
 #include "AQLPriceDataDayCount.h"
 #include "LADefinitions.h"
 #include "LADefinitionsLMM.h"
 #include "LACoreDataService.h"
 #include "LAStaticDataManager.h"
 #include "LAFileAccessor.h"
-#include "LAMathVolFuncLMM.h"
-#include "LAMathVolFuncWave.h"
-#include "LAMathVolFuncStructureBase.h"
+#include "AQLMathVolFuncLMM.h"
+#include "AQLMathVolFuncWave.h"
+#include "AQLMathVolFuncStructureBase.h"
 #include "LADealUtils.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
@@ -113,7 +113,7 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 	cal.convertFromString(CITY_LnB);
 
 	DateVector dates;
-	LAMathDateCalculations::generateSchedule(start, end, freq, true, 0, 0, 0, dates, &sliding, &cal);
+	AQLMathDateCalculations::generateSchedule(start, end, freq, true, 0, 0, 0, dates, &sliding, &cal);
 	
 	DateVector exDates;
 	unsigned int exTSize = exTenor.size();
@@ -125,7 +125,7 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 			// sliding
 			AQLPriceDataSlidingRule sld_nochange;
 			sld_nochange.convertFromString(SLIDING_NO_CHANGE);
-			exDates[i] = LAMathDateCalculations::getDate(asOfDate, exTenor[i], sld_nochange, NULL, true);
+			exDates[i] = AQLMathDateCalculations::getDate(asOfDate, exTenor[i], sld_nochange, NULL, true);
 		}
 		if (exDates[0] == start)
 		{

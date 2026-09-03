@@ -38,13 +38,13 @@
 #include "LACoreDataService.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
-#include "LAMathDateUtilities.h"
-#include "LAMathCurveFuncUtility.h"
-#include "LAMathIRVanillaFuncUtility.h"
+#include "AQLMathDateUtilities.h"
+#include "AQLMathCurveFuncUtility.h"
+#include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
-#include "LAPriceFXVolatility.h"
-#include "LAMathDateCalculations.h"
-#include "LAMathFXVanillaFuncUtility.h"
+#include "AQLPriceFXVolatility.h"
+#include "AQLMathDateCalculations.h"
+#include "AQLMathFXVanillaFuncUtility.h"
 #include "LACoreDataService.h"
 #include <sstream>
 #include "LACalibratePool.h"
@@ -53,7 +53,7 @@
 #include "LACalibrationParametersFXVannaVolga.h"
 #include "AQLDataMatrix.h"
 #include "ConstantDeclarations.h"
-#include "LAMathVolFuncFXVannaVolga.h"
+#include "AQLMathVolFuncFXVannaVolga.h"
 #include "AQLFindRootBrent.h"
 
 using namespace std;
@@ -114,7 +114,7 @@ LACalibrateFXVannaVolga::setUp(AQLObjectPool &objPool,  const MAScenarioParam &p
 		AQLString msg = dYieldName + " is not registered in EntityPool";
 		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
-	const LAMathYieldCurve &dYield = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(dYieldName, ENCHKTYPE_ISDEFINED).get());
+	const AQLMathYieldCurve &dYield = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(dYieldName, ENCHKTYPE_ISDEFINED).get());
 	const AQLString &dYieldDataName = dYield.getYieldData().get().getName();
 	mdYieldDataName =  dYield.getYieldData().get().getName();
 
@@ -125,13 +125,13 @@ LACalibrateFXVannaVolga::setUp(AQLObjectPool &objPool,  const MAScenarioParam &p
 		AQLString msg = fYieldName + " is not registered in EntityPool";
 		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
-	const LAMathYieldCurve &fYield = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(fYieldName, ENCHKTYPE_ISDEFINED).get());
+	const AQLMathYieldCurve &fYield = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(fYieldName, ENCHKTYPE_ISDEFINED).get());
 	const AQLString &fYieldDataName = fYield.getYieldData().get().getName();
 	mfYieldDataName =  fYield.getYieldData().get().getName();
 
 	
 	// spot fx
-	LAMathFXEntity fx_tmp = *LAMarketData::getFXEntity(objPool, "FORWARDRATE");
+	AQLMathFXEntity fx_tmp = *LAMarketData::getFXEntity(objPool, "FORWARDRATE");
 	fx_tmp.getFXType() = "FIXEDRATE";
 	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(param.ccy, ccys);
@@ -534,7 +534,7 @@ LACalibrateFXVannaVolga::setUp(AQLObjectPool &objPool,  const MAScenarioParam &p
 
 	//vanna volga
 	AQLString matumethod = dynamic_cast<const AQLDataString &>(calibInfo.getData("MaturityMethod", ISNOTNULL).get()).get();
-	LAMathFXVolatilitySurfaceGenerate::SetATMInterpolationMethod( matumethod, mAtmMethod );
+	AQLMathFXVolatilitySurfaceGenerate::SetATMInterpolationMethod( matumethod, mAtmMethod );
 
 	//same as fxstrglslv 
 	unsigned int vecSize = optionMatVec.size();
@@ -554,7 +554,7 @@ LACalibrateFXVannaVolga::setUp(AQLObjectPool &objPool,  const MAScenarioParam &p
 		//correnct
 		
 		//test
-		mFxParams[i] = LAMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*mpDataInstance,mdYieldDataName,mfYieldDataName,optionMatDates[i],
+		mFxParams[i] = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*mpDataInstance,mdYieldDataName,mfYieldDataName,optionMatDates[i],
 			optionDelDates[i],mSpotRate,deltaTypes[i],atmTypes[i],cal);
 		mMatuTerms365[i] = mFxParams[i].T;
 
@@ -567,27 +567,27 @@ LACalibrateFXVannaVolga::setUp(AQLObjectPool &objPool,  const MAScenarioParam &p
 			if ("ATM" == keystr)
 			{
 				mSmileData[i].vols[j] = volATMVec[i];
-				mSmileData[i].strikes[j] =  LAMathFXVolatilitySurfaceGenerate::GetATMStrike(volATMVec[i],mFxParams[i]);
+				mSmileData[i].strikes[j] =  AQLMathFXVolatilitySurfaceGenerate::GetATMStrike(volATMVec[i],mFxParams[i]);
 			}
 			else if ("25DHIGH" == keystr)
 			{
 				mSmileData[i].vols[j] = vol25DHVec[i];
-				mSmileData[i].strikes[j] = AQLMath::exp(LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(0.25, vol25DHVec[i], 1, mFxParams[i] ) ) * mFxParams[i].F;
+				mSmileData[i].strikes[j] = AQLMath::exp(AQLMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(0.25, vol25DHVec[i], 1, mFxParams[i] ) ) * mFxParams[i].F;
 			}
 			else if ("10DHIGH" == keystr)
 			{
 				mSmileData[i].vols[j] = vol10DHVec[i];
-				mSmileData[i].strikes[j] = AQLMath::exp(LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(0.10, vol10DHVec[i], 1, mFxParams[i] ) ) * mFxParams[i].F;
+				mSmileData[i].strikes[j] = AQLMath::exp(AQLMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(0.10, vol10DHVec[i], 1, mFxParams[i] ) ) * mFxParams[i].F;
 			}
 			else if ("25DLOW" == keystr)
 			{
 				mSmileData[i].vols[j] = vol25DLVec[i];
-				mSmileData[i].strikes[j] = AQLMath::exp(LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(-0.25, vol25DLVec[i], -1, mFxParams[i] ) ) * mFxParams[i].F;
+				mSmileData[i].strikes[j] = AQLMath::exp(AQLMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(-0.25, vol25DLVec[i], -1, mFxParams[i] ) ) * mFxParams[i].F;
 			}
 			else if ("10DLOW" == keystr)
 			{
 				mSmileData[i].vols[j] = vol10DLVec[i];
-				mSmileData[i].strikes[j] = AQLMath::exp(LAMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(-0.10, vol10DLVec[i], -1, mFxParams[i] ) ) * mFxParams[i].F;
+				mSmileData[i].strikes[j] = AQLMath::exp(AQLMathFXVolatilitySurfaceGenerate::FindLogStrikeFromDelta(-0.10, vol10DLVec[i], -1, mFxParams[i] ) ) * mFxParams[i].F;
 			}
 			else 
 				throw AQLCoreInvalidData("VannaVola BaseStrikes Error",__FILE__,__LINE__);
@@ -647,7 +647,7 @@ LACalibrateFXVannaVolga::doCalibrate()
 		throw AQLCoreInvalidData("DataInstance member is NULL", __FILE__, __LINE__);
 	}
 
-	LAMathVolFuncFXVannaVolga* method = new LAMathVolFuncFXVannaVolga(mpDataInstance,mAtmMethod,mFxParams,mSmileData,mMatuTerms365,
+	AQLMathVolFuncFXVannaVolga* method = new AQLMathVolFuncFXVannaVolga(mpDataInstance,mAtmMethod,mFxParams,mSmileData,mMatuTerms365,
 												mdYieldDataName,mfYieldDataName,mSpotRate);
 	mpFunc->setRealFunction(*method);
 	mpFunc->setOn();

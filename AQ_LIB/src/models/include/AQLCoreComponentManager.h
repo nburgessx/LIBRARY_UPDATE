@@ -7,7 +7,7 @@
 #include "AQLDate.h"
 #include "AQLCoreAppError.h"
 #include <map>
-#include "LABlackScholesCalc.h"
+#include "AQLBlackScholesCalc.h"
 #include "ConstantDeclarations.h"
 
 class AQLString;
@@ -22,7 +22,7 @@ public:
 	static std::map<AQLString, AQLString>&		getDayCountMap();
 	static std::map<AQLString, AQLString>&		getBasisTypeMap();
 	static std::map<AQLString, AQLString>&		getBasisIndexMap();
-	static std::map<AQLString, LABlackScholesBase*>&		getBlackComponentMap(); 
+	static std::map<AQLString, AQLBlackScholesBase*>&		getBlackComponentMap(); 
 	static std::map<AQLString, AnalyticParam*>&	getBlackParamComponentMap(); 
 	
 	static void deleteBlackComponentMap();
@@ -52,7 +52,7 @@ private:
 	static std::map<AQLString, AQLString>			dayCountMap;
 	static std::map<AQLString, AQLString>			basisTypeMap;
 	static std::map<AQLString, AQLString>			basisIndexMap;
-	static std::map<AQLString, LABlackScholesBase*>		blackComponentMap;
+	static std::map<AQLString, AQLBlackScholesBase*>		blackComponentMap;
 	static std::map<AQLString, AnalyticParam*>	blackParamComponentMap;
 
 };

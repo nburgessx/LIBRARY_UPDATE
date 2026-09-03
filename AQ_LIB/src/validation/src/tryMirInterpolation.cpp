@@ -1,5 +1,5 @@
 #include "tryMirInterpolation.h"
-#include "LAMathInterpolationUtilities.h"
+#include "AQLMathInterpolationUtilities.h"
 #include "CreateDataFile.h"
 #include "CurveValidation.h"
 #include "LabelValueBlockValidation.h"
@@ -37,7 +37,7 @@ namespace validation
         AQ_REQUIRE( array1.size() == array2.size(), "Invalid Interpolation Data: xValues and yValues must be the same size")
 		AQ_REQUIRE( array1.size() == 0, "Invalid Interpolation Data: Interpolation data is empty")
         
-		const double result = LAMathInterpolationUtilities::interpolate( array1, array2, point, interpolation.c_str() );
+		const double result = AQLMathInterpolationUtilities::interpolate( array1, array2, point, interpolation.c_str() );
 		RECORD_OUTPUTS_AND_RETURN_RESULT( result );
         
         VALID_EXCEPTION_END

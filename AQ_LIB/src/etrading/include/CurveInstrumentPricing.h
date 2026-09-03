@@ -24,7 +24,7 @@ class AQLDataReference;
 class AQLPriceDataSlidingRule;
 
 class AQLDataBool;
-class etrading::LAMathPathYieldCurve;
+class etrading::AQLMathPathYieldCurve;
 
 struct StubRateAndFixingDate
 {

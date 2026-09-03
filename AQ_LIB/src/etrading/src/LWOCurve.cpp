@@ -13,7 +13,7 @@
 #include "LWOUtilities.h"
 #include "LADateScheduleHelpers.h"
 #include "EntityPoolUtilities.h"
-#include "LAMathInterpolationUtilities.h"
+#include "AQLMathInterpolationUtilities.h"
 
 namespace etrading
 {
@@ -505,7 +505,7 @@ namespace etrading
         else
         {
             double yearFractionForToDate = getYearFractionFromDayCount( etrading::ACT_ACT_DAYCOUNT, asOfDate, toDate );
-            // call the interpolate in Entitypool = LAMathInterpolationUtilities::interpolate
+            // call the interpolate in Entitypool = AQLMathInterpolationUtilities::interpolate
             return calculateDiscountFactor( yearFractionForToDate );
         }
     };
@@ -536,7 +536,7 @@ namespace etrading
             // Native AlgoQuantLib Interpolation
             // -------------------------
             const InterpolationEnum interpMethod = curveBuildProps_->interpMethod_;
-            double result = LAMathInterpolationUtilities::interpolate( datesAsYearFractions_, discountFactors_, yearFraction, interpMethod );
+            double result = AQLMathInterpolationUtilities::interpolate( datesAsYearFractions_, discountFactors_, yearFraction, interpMethod );
             return result;
 
             // LWO Independent Interpolation

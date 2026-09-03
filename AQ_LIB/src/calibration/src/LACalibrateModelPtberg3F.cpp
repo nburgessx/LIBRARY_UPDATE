@@ -20,7 +20,7 @@
 
 #include "LACalibrateModelPtberg3F.h"
 #include "LACalibrationParametersPtberg3F.h"
-#include "LAPriceDriftFXLogNumeraire.h"
+#include "AQLPriceDriftFXLogNumeraire.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
 #include "LAPtbergUtils.h"
@@ -55,7 +55,7 @@ LACalibrateModelPtberg3F::~LACalibrateModelPtberg3F(void)
 
 */
 void
-LACalibrateModelPtberg3F::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelPtberg3F::setDrift(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
@@ -63,7 +63,7 @@ LACalibrateModelPtberg3F::setDrift(const AQLString &fx, LARatesSDEBase &sde) con
 	AQLString sdeName_d = mpStaticData->getStaticData(ccys[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 	AQLString sdeName_f = mpStaticData->getStaticData(ccys[1].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 	
-	vector<AQLFunctionBase*> drift(1,  new LAPriceDriftFXLogNumeraire(sdeName_d, sdeName_f));
+	vector<AQLFunctionBase*> drift(1,  new AQLPriceDriftFXLogNumeraire(sdeName_d, sdeName_f));
 	sde.setDrift(drift);
 }
 

@@ -28,13 +28,13 @@
 #include "AQLDataReference.h"
 #include "AQLDataProcedure.h"
 #include "AQLDataMultiReference.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
 #include "LAScenarioConfigurationYieldCurveMultiParallel.h"
 #include "LAMarketData.h"
 #include "AQLBasic.h"
-#include "LAPriceYieldGenerator.h"
-#include "LAPriceArbFreeGenerator.h"
+#include "AQLPriceYieldGenerator.h"
+#include "AQLPriceArbFreeGenerator.h"
 
 using namespace std;
 
@@ -71,7 +71,7 @@ vector<AQLObject *>
 LAScenarioConfigurationYieldCurveMultiParallel::createScenario(AQLDataInstance &dataInstance, const MAScenarioParam &param) const
 {
 	// get ArbFree Flag
-	const bool isArbFree = dynamic_cast<const AQLDataBool&>(dynamic_cast<LAMathYieldCurvePro &>
+	const bool isArbFree = dynamic_cast<const AQLDataBool&>(dynamic_cast<AQLMathYieldCurvePro &>
 						(dataInstance.getObjectPool().getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get())
 						.getIsArbFree()).get();
 
@@ -90,7 +90,7 @@ LAScenarioConfigurationYieldCurveMultiParallel::createScenario(AQLDataInstance &
 	// get yield
 	AQLString bYieldName = param.targetName;
 	
-	const LAMathYieldCurve &bYield = dynamic_cast<const LAMathYieldCurve &>
+	const AQLMathYieldCurve &bYield = dynamic_cast<const AQLMathYieldCurve &>
 					(objPool.getObject(bYieldName, ENCHKTYPE_ISDEFINED).get());
 
 	// get yield data
@@ -99,7 +99,7 @@ LAScenarioConfigurationYieldCurveMultiParallel::createScenario(AQLDataInstance &
 						(bYieldData.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 
 	// get yield data pro
-	LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &bYieldPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get());
 	
 	LAMarketData::sortMarketData(bYieldPro);
@@ -181,17 +181,17 @@ LAScenarioConfigurationYieldCurveMultiParallel::createScenario(AQLDataInstance &
 		cYieldData = &objHolder.get();
 	}
 
-	LAMathYieldCurve *cYield = 0;
+	AQLMathYieldCurve *cYield = 0;
 	const AQLString cYieldName = bYieldName + suffix; 
 	objHolder = objPool.getObject(cYieldName, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
-		cYield = dynamic_cast<LAMathYieldCurve *>(bYield.clone());
+		cYield = dynamic_cast<AQLMathYieldCurve *>(bYield.clone());
 		cYield->getName().set(cYieldName);
 	}
 	else
 	{
-		cYield = &dynamic_cast<LAMathYieldCurve &>(objHolder.get());
+		cYield = &dynamic_cast<AQLMathYieldCurve &>(objHolder.get());
 	}
 	
 	// set yield data yield curve pro and yield curve

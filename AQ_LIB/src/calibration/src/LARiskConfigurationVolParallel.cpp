@@ -26,7 +26,7 @@
 #include "AQLDataMultiReference.h"
 #include "AQLDataReference.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LAMarketData.h"
@@ -34,7 +34,7 @@
 #include "LAScenarioConfigurationManager.h"
 #include "LACalibrationParameters.h"
 #include "LACalibrationParametersManager.h"
-#include "LAMathYieldCurve.h"
+#include "AQLMathYieldCurve.h"
 
 using namespace std;
 

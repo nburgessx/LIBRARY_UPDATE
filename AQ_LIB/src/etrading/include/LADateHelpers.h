@@ -10,8 +10,8 @@
 #include "AQLDate.h"
 #include "AQLCoreAppError.h"
 #include "AQLCoreTemplateType.h"
-#include "LAMathCentralBank.h"
-#include "LAMathDateCalculations.h"
+#include "AQLMathCentralBank.h"
+#include "AQLMathDateCalculations.h"
 
 class AQLString;
 class AQLObject;
@@ -110,7 +110,7 @@ namespace etrading
         static void convertToDateGrid(const AQLDate &asofDate, const DoubleArray &terms, DateVector &dates);
 
         // Return the frequency in months for comparing two frequencies, not for accurate calculations
-		// *** Duplicate method in LAMathDateCalculations.cpp ***
+		// *** Duplicate method in AQLMathDateCalculations.cpp ***
         static double getPeriodFrequencyInMonths(const AQLString& freq);
 
         // calc compounding times

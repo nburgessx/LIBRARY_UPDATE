@@ -1,7 +1,7 @@
 // TestDatesECB.cpp
 
 // Includes: This Library
-#include "LAMathCentralBank.h"
+#include "AQLMathCentralBank.h"
 #include "LADateHelpers.h"
 
 #include "tryMirGetNextECBDate.h"
@@ -26,7 +26,7 @@ namespace google_test
         const AQLDate today( "20151008" );
         EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( today ), true );
 
-        const AQLDate ecbLast = LAMathCentralBank::meetingSchedule( "ecb" ).back();
+        const AQLDate ecbLast = AQLMathCentralBank::meetingSchedule( "ecb" ).back();
         EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( ecbLast ), false );
         EXPECT_EQ(etrading::LADateHelpers::haveNextECBDate( ecbLast, false ), true );
 
@@ -52,7 +52,7 @@ namespace google_test
         EXPECT_EQ( validation::tryMirGetNextECBDate( d1 ), ecb2 );
         EXPECT_EQ( validation::tryMirGetNextECBDate( d1, false ), ecb2 );
 
-        const AQLDate ecbLast = LAMathCentralBank::meetingSchedule( "ECB" ).back();
+        const AQLDate ecbLast = AQLMathCentralBank::meetingSchedule( "ECB" ).back();
         EXPECT_EQ( validation::tryMirGetNextECBDate( ecbLast, false ), ecbLast );
 
         EXPECT_THROW( validation::tryMirGetNextECBDate( ecbLast ), AQLCoreError );

@@ -29,7 +29,7 @@
 #include "AQLDataVector.h"
 #include "AQLDataMultiReference.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LADealUtils.h"
@@ -644,7 +644,7 @@ LARiskConfigurationVolFXVega::storeFXAdditionalInfo(AQLObjectPool &objPool, cons
 	{
 		return;
 	}
-	LAMathFXEntity* pFXEntity = LAMarketData::getFXEntity(objPool, "FORWARDRATE");;
+	AQLMathFXEntity* pFXEntity = LAMarketData::getFXEntity(objPool, "FORWARDRATE");;
 
 	double Term;
 	for (size_t i = 0; i < grifSize; ++i)
@@ -663,9 +663,9 @@ LARiskConfigurationVolFXVega::storeFXAdditionalInfo(AQLObjectPool &objPool, cons
 		// spotdate for calc term
 		int spotlag = dynamic_cast<const AQLDataInt &>(calibInfo.getData(PRICING_DATA_TERMSPOTLAG, ISNOTNULL).get());
 		AQLDate asofDate(LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE).getCString());
-		AQLDate optionSpotDate = LAMathDateCalculations::getFXSpotDate(param.ccy, asofDate, strTermCal, spotlag, true);
-		AQLDate settleDate = LAMathDateCalculations::getDate(optionSpotDate, gridTerm, termSliding, &termCal, true);
-		AQLDate calcDate = LAMathDateCalculations::getFXSpotDate(param.ccy, settleDate, strTermCal, -spotlag, true);
+		AQLDate optionSpotDate = AQLMathDateCalculations::getFXSpotDate(param.ccy, asofDate, strTermCal, spotlag, true);
+		AQLDate settleDate = AQLMathDateCalculations::getDate(optionSpotDate, gridTerm, termSliding, &termCal, true);
+		AQLDate calcDate = AQLMathDateCalculations::getFXSpotDate(param.ccy, settleDate, strTermCal, -spotlag, true);
 		const double term = termDC.getTerm(asofDate, calcDate, isIncludeLast);
 
 		fwdFXRates[i] = pFXEntity->getRate(fxCurrencies[1], fxCurrencies[0], term);

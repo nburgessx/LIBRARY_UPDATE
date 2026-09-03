@@ -25,9 +25,9 @@
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLMathDefine.h"
-#include "LAMathInterpolationUtilities.h"
-#include "LACompoundingFunc.h"
-#include "LAMathDateUtilities.h"
+#include "AQLMathInterpolationUtilities.h"
+#include "AQLCompoundingFunc.h"
+#include "AQLMathDateUtilities.h"
 #include "AQLEnumConversion.h"				// include toLADaycount and toLARateConvention
 
 namespace etrading
@@ -309,7 +309,7 @@ namespace etrading
 		AQLPriceDataConvention convention( priceDataDayCount.getDayCount(), SIMPL );
 
 		double prevDiscountFactorWithSpread = 1.0;      // At curve asOfDate, the discount factor is 1.0;
-		AQLString tmpDayCount( curveDayCount.c_str() );  // Non-const AQLString Needed for LAMathDateUtilities::getTerm()
+		AQLString tmpDayCount( curveDayCount.c_str() );  // Non-const AQLString Needed for AQLMathDateUtilities::getTerm()
 
 		/* Iterate over the schedule payment dates and calculate discount factors by applying a spread to the forward rate in each schedule period
 		 */
@@ -342,7 +342,7 @@ namespace etrading
 			// Calculate the accrual period year fraction
 			const AQLDate accrualStartDate = scheduleAccrualStartDates[i];
 			const AQLDate accrualEndDate = scheduleAccrualEndDates[i];
-			const double yearFraction = LAMathDateUtilities::getTerm( accrualStartDate, accrualEndDate, tmpDayCount );
+			const double yearFraction = AQLMathDateUtilities::getTerm( accrualStartDate, accrualEndDate, tmpDayCount );
 
 			/* Calculate the period rate of return implied from ( forward rate + spread )
 			*  and then calculate the total discount factor
@@ -1591,28 +1591,28 @@ namespace etrading
             x[n+i]     = yearFraction;
             x[n*2 + i] = spread;
         }
-        std::shared_ptr<LACompoundMethod> method;
+        std::shared_ptr<AQLCompoundMethod> method;
         switch(compound_type)
         {
                 case etrading::LACurveForwardRateHelpers::COMPOUND_NORMAL:
                 {
-                    method.reset(new LACompoundMethod7());
+                    method.reset(new AQLCompoundMethod7());
                     break;
                 }
                 case etrading::LACurveForwardRateHelpers::COMPOUND_FLAT:
                 {
-                    method.reset(new LACompoundMethod8());
+                    method.reset(new AQLCompoundMethod8());
                     break;
                 }
                 case etrading::LACurveForwardRateHelpers::COMPOUND_SIMPLE:
                 {
-                    method.reset(new LACompoundMethod9());
+                    method.reset(new AQLCompoundMethod9());
                     x.push_back(dc.getTerm(start_date, end_date));
                     break;
                 }
                 case etrading::LACurveForwardRateHelpers::AVERAGE:
                 {
-                    method.reset(new LACompoundMethod11());
+                    method.reset(new AQLCompoundMethod11());
                     break;
                 }
         }
@@ -1783,7 +1783,7 @@ namespace etrading
      
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
-		return LAMathInterpolationUtilities::interpolate( xValues, yValues, xPoint, interpolationMethod, joinXValue);
+		return AQLMathInterpolationUtilities::interpolate( xValues, yValues, xPoint, interpolationMethod, joinXValue);
     }
 
 	// Interpolate a vector of xPoints
@@ -1795,7 +1795,7 @@ namespace etrading
 	{
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
-		return LAMathInterpolationUtilities::interpolate( xValues, yValues, xPoints, interpolationMethod, joinXValue);
+		return AQLMathInterpolationUtilities::interpolate( xValues, yValues, xPoints, interpolationMethod, joinXValue);
 	}
 
 	/* @brief			Method to differentiate an interpolation function at a single point
@@ -1814,7 +1814,7 @@ namespace etrading
     {
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
-		return LAMathInterpolationUtilities::differentiate( xValues, yValues, xPoint, interpolationMethod, joinXValue );
+		return AQLMathInterpolationUtilities::differentiate( xValues, yValues, xPoint, interpolationMethod, joinXValue );
     }
 
 	/* @brief			Method to differentiate an interpolation function on a vector of single points
@@ -1833,7 +1833,7 @@ namespace etrading
 	{
 		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
 		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
-		return LAMathInterpolationUtilities::differentiate( xValues, yValues, xPoints, interpolationMethod, joinXValue );
+		return AQLMathInterpolationUtilities::differentiate( xValues, yValues, xPoints, interpolationMethod, joinXValue );
 	}
 
 	/* @brief			Method to differentiate an interpolation function discreteley given a start and end point
@@ -1858,7 +1858,7 @@ namespace etrading
 		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
 		
 		// Native derivatives will be in the curve Act365 daycount basis
-		const double derivativeAct365 = LAMathInterpolationUtilities::differentiate( xValues, yValues, fromXPoint, toXPoint, interpolationMethod, joinXValue );
+		const double derivativeAct365 = AQLMathInterpolationUtilities::differentiate( xValues, yValues, fromXPoint, toXPoint, interpolationMethod, joinXValue );
 		
 		// *** IMPORTANT *** Calculate derivative in the accrual daycount basis not the internal curve Act/365 daycount basis
 		const double derivativeAccrualBasis = derivativeAct365 * daycountConversionFactor( fromXPoint, toXPoint, asOfDate, accrualDaycount, compoundFrequency );
@@ -1887,7 +1887,7 @@ namespace etrading
 		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
 		
 		// Native derivatives will be in the curve Act365 daycount basis
-		const DoubleVector derivativesAct365 = LAMathInterpolationUtilities::differentiate( xValues, yValues, fromXPoints, toXPoints, interpolationMethod, joinXValue );
+		const DoubleVector derivativesAct365 = AQLMathInterpolationUtilities::differentiate( xValues, yValues, fromXPoints, toXPoints, interpolationMethod, joinXValue );
 		
 		// *** IMPORTANT *** Calculate derivatives in the accrual daycount basis not the internal curve Act/365 daycount basis
 		DoubleVector derivativesAccrualBasis = derivativesAct365;
@@ -1948,7 +1948,7 @@ namespace etrading
 				const double joinXValueAccrualBasis = joinXValue * daycountConversionFactor( 0.0, joinXValue, asOfDate, accrualDaycount, compoundFrequency );
 				
 				// Get the integrals in the accrual daycount basis
-				const double integralAccrualBasis = LAMathInterpolationUtilities::integrate( xValuesAccrualBasis, yValues, lowerBoundAccrualBasis, upperBoundAccrualBasis, interpolationMethod, joinXValueAccrualBasis);
+				const double integralAccrualBasis = AQLMathInterpolationUtilities::integrate( xValuesAccrualBasis, yValues, lowerBoundAccrualBasis, upperBoundAccrualBasis, interpolationMethod, joinXValueAccrualBasis);
 				return integralAccrualBasis;
 			}
 			case IntegrationDaycountAdjustment::ADJUST_OUTPUTS:
@@ -1956,7 +1956,7 @@ namespace etrading
 				// Transform the Outputs from Act/365 to Accrual Daycount Basis
 				// ===========================================================
 				// Get the integrals in the accrual daycount basis
-				const double integralAct365 = LAMathInterpolationUtilities::integrate( xValues, yValues, lowerBound, upperBound, interpolationMethod, joinXValue);
+				const double integralAct365 = AQLMathInterpolationUtilities::integrate( xValues, yValues, lowerBound, upperBound, interpolationMethod, joinXValue);
 				
 				// *** IMPORTANT *** Calculate xValues in the accrual daycount basis not the internal curve Act/365 daycount basis
 				const double integralAccrualBasis = integralAct365 * daycountConversionFactor( lowerBound, upperBound, asOfDate, accrualDaycount, compoundFrequency );
@@ -1966,7 +1966,7 @@ namespace etrading
 			{
 				// Keep the integral in the curve Act/365 daycount basis
 				// ===========================================================
-				const double integralAct365 = LAMathInterpolationUtilities::integrate( xValues, yValues, lowerBound, upperBound, interpolationMethod, joinXValue);
+				const double integralAct365 = AQLMathInterpolationUtilities::integrate( xValues, yValues, lowerBound, upperBound, interpolationMethod, joinXValue);
 				return integralAct365;
 			}
 			default:
@@ -2018,7 +2018,7 @@ namespace etrading
 				const double joinXValueAccrualBasis = joinXValue * daycountConversionFactor( 0.0, joinXValue, asOfDate, accrualDaycount, compoundFrequency );		
 				
 				// Get the integrals in the accrual daycount basis, *** IMPORTANT *** use xValuesAccrualBasis
-				const DoubleVector integralsAccrualBasis = LAMathInterpolationUtilities::integrate( xValuesAccrualBasis, yValues, lowerBoundsAccrualBasis, upperBoundsAccrualBasis, interpolationMethod, joinXValueAccrualBasis);
+				const DoubleVector integralsAccrualBasis = AQLMathInterpolationUtilities::integrate( xValuesAccrualBasis, yValues, lowerBoundsAccrualBasis, upperBoundsAccrualBasis, interpolationMethod, joinXValueAccrualBasis);
 				return integralsAccrualBasis;
 			}
 			case IntegrationDaycountAdjustment::ADJUST_OUTPUTS:
@@ -2026,7 +2026,7 @@ namespace etrading
 				// Transform the Outputs from Act/365 to Accrual Daycount Basis
 				// ===========================================================
 				// Get the integrals in the accrual daycount basis
-				const DoubleVector integralAct365 = LAMathInterpolationUtilities::integrate( xValues, yValues, lowerBounds, upperBounds, interpolationMethod, joinXValue);
+				const DoubleVector integralAct365 = AQLMathInterpolationUtilities::integrate( xValues, yValues, lowerBounds, upperBounds, interpolationMethod, joinXValue);
 				
 				// *** IMPORTANT *** Calculate xValues in the accrual daycount basis not the internal curve Act/365 daycount basis
 				DoubleVector integralAccrualBasis = integralAct365;
@@ -2040,7 +2040,7 @@ namespace etrading
 			{
 				// Keep the integral in the curve Act/365 daycount basis
 				// ===========================================================
-				const DoubleVector integralAct365 = LAMathInterpolationUtilities::integrate( xValues, yValues, lowerBounds, upperBounds, interpolationMethod, joinXValue);
+				const DoubleVector integralAct365 = AQLMathInterpolationUtilities::integrate( xValues, yValues, lowerBounds, upperBounds, interpolationMethod, joinXValue);
 				return integralAct365;
 			}
 			default:

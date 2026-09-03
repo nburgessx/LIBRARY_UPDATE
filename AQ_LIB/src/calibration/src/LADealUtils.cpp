@@ -26,10 +26,10 @@
 #include "AQLDataValuation.h"
 #include "AQLDataBasics.h"
 #include "AQLDataMultiReference.h"
-#include "LAPricePortfolioValue.h"
-#include "LAPricePayOff.h"
-#include "LAPriceCashFlowGenerator.h"
-#include "LAPriceTradeValue.h"
+#include "AQLPricePortfolioValue.h"
+#include "AQLPricePayOff.h"
+#include "AQLPriceCashFlowGenerator.h"
+#include "AQLPriceTradeValue.h"
 #include "LADefinitions.h"
 #include "LACoreDataService.h"
 #include "LAStaticDataManager.h"
@@ -39,16 +39,16 @@
 #include "LALogger.h"
 #include "LADefinitionsCalibration.h"
 #include "LAMarketData.h"
-#include "LALinearRatesOptionValue.h"
-#include "LALinearRatesOptionValueDataProvider.h"
-#include "LALinearRatesSwapTradeValue.h"
-#include "LAMathIndexEntity.h"
-#include "LAPriceIRSwaptionValueFromCashFlow.h"
-#include "LAMathInterpolationUtilities.h"
-#include "LAMathDateCalculations.h"
-#include "LAPriceConvergenceValue.h"
+#include "AQLLinearRatesOptionValue.h"
+#include "AQLLinearRatesOptionValueDataProvider.h"
+#include "AQLLinearRatesSwapTradeValue.h"
+#include "AQLMathIndexEntity.h"
+#include "AQLPriceIRSwaptionValueFromCashFlow.h"
+#include "AQLMathInterpolationUtilities.h"
+#include "AQLMathDateCalculations.h"
+#include "AQLPriceConvergenceValue.h"
 #include "LADefinitionsIRSABR.h"
-#include "LAPriceIRCapFloorOptionValue.h"
+#include "AQLPriceIRCapFloorOptionValue.h"
 //#include "LAPriceNDSSwaptionValue.h"
 #include <algorithm>
 #include <cmath>
@@ -467,7 +467,7 @@ MADealUtils::getMaxTermFromPlainVanilla(const AQLObjectHolder &objHolder, const 
 	//if option
 	if (val.isTypeOf(FN_PLAINVANILLAVALUE))
 	{
-		const LALinearRatesOptionValue & val2 = dynamic_cast<const LALinearRatesOptionValue &>(val);
+		const AQLLinearRatesOptionValue & val2 = dynamic_cast<const AQLLinearRatesOptionValue &>(val);
 		const AQLDate& expirydate = val2.getMaturityDate(e,NULL);
 		const AQLDate& deliverydate = val2.getDeliveryDate(e,NULL);
 		maxDate = (expirydate > deliverydate) ? expirydate : deliverydate;
@@ -538,7 +538,7 @@ MADealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 	cal.convertFromString(cal_str);
 	for (size_t i = 0; i < expiryVec_str.size(); ++i)
 	{
-		AQLDate toDate = LAMathDateCalculations::getDate(asOfDate, expiryVec_str[i], sr, &cal,true);
+		AQLDate toDate = AQLMathDateCalculations::getDate(asOfDate, expiryVec_str[i], sr, &cal,true);
 		expiryVec[i] = act365ISDA.getTerm(asOfDate, toDate, true);
 	}
 	// tenor string and tenor vector
@@ -547,7 +547,7 @@ MADealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 	for (unsigned int i = 0; i < tenorVec_str.size(); i++)
 	{
 		int y,m,d,w;
-		LAMathDateCalculations::termStrtoYMDW(tenorVec_str[i], y, m, d, w);
+		AQLMathDateCalculations::termStrtoYMDW(tenorVec_str[i], y, m, d, w);
 		tenorVec[i] = static_cast<double > (y) + static_cast<double > (m) / 12;
 	}
 
@@ -581,13 +581,13 @@ MADealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 			{
 				const AQLString tenor = tenorInfos[0].toUpper();
 				int y, m, d, w;
-				LAMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
+				AQLMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 				const double tenor_d = static_cast<double>(y) + static_cast<double>(m) / 12;
 				addCalibTargetFlag(ret, expiryTerm, tenor_d, expiryVec, tenorVec);
 			}
 			else if (tenorInfos.size() == 3)
 			{
-				LAPriceIRSwaptionValueFromCashFlow val_swaption;
+				AQLPriceIRSwaptionValueFromCashFlow val_swaption;
 				const AQLDate startDate(tenorInfos[0].getCString());
 				const AQLDate endDate(tenorInfos[1].getCString());
 				AQLObject entityInfo;
@@ -600,7 +600,7 @@ MADealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 				//get tenor
 				const AQLString tenor = val_swaption.getNearestTenorString(entityInfo, frequency);
 				int y, m, d, w;
-				LAMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
+				AQLMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 				const double tenor_d = static_cast<double>(y) + static_cast<double>(m) / 12;
 				addCalibTargetFlag(ret, expiryTerm, tenor_d, expiryVec, tenorVec);
 			}
@@ -654,11 +654,11 @@ MADealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 			if (pVal->isTypeOf(FN_IR_PLAINVANILLASWAPTRADEVALUE) || pVal->isTypeOf(FN_IR_CAPFLOOROPTIONVALUE))
 			{
 				if(pVal->isTypeOf(FN_IR_PLAINVANILLASWAPTRADEVALUE)){
-					const LALinearRatesSwapTradeValue* swap_trade_value = dynamic_cast<const LALinearRatesSwapTradeValue*>(pVal);
+					const AQLLinearRatesSwapTradeValue* swap_trade_value = dynamic_cast<const AQLLinearRatesSwapTradeValue*>(pVal);
 					if(!swap_trade_value->hasCashflow(*tradeEntities[i])) continue;
 				}
 				if(pVal->isTypeOf(FN_IR_CAPFLOOROPTIONVALUE)){
-					const LAPriceIRCapFloorOptionValue* capfloor_value = dynamic_cast<const LAPriceIRCapFloorOptionValue*>(pVal);
+					const AQLPriceIRCapFloorOptionValue* capfloor_value = dynamic_cast<const AQLPriceIRCapFloorOptionValue*>(pVal);
 					if(!capfloor_value->hasCashflow(*tradeEntities[i])) continue;
 				}
 
@@ -695,7 +695,7 @@ MADealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 										if (dh->isDefined() && !dh->isNull())
 										{
 											const AQLString& caModel = dynamic_cast<const AQLDataString&>(dh->get()).get();
-											isDelayedConvexityAdjusted = LAMathIndexEntity::isDelayedConvexityAdjustModel(caModel) && (indexType == LIBOR);
+											isDelayedConvexityAdjusted = AQLMathIndexEntity::isDelayedConvexityAdjustModel(caModel) && (indexType == LIBOR);
 										}
 
 										if (pVal->isTypeOf(FN_IR_PLAINVANILLASWAPTRADEVALUE) && indexType != CMS && !isDelayedConvexityAdjusted) continue;
@@ -723,7 +723,7 @@ MADealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 										//get tenor
 										tenor = dynamic_cast<const AQLDataString &>(indexs.get(i_index).getData(PRICING_DATA_ACCESSORY, ISNOTNULL).get()).get();
 										int y,m,d,w;
-										LAMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
+										AQLMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 										double tenor_d = static_cast<double > (y) + static_cast<double > (m) / 12;
 									
 										addCalibTargetFlag(ret, expiryTerm, tenor_d, expiryVec, tenorVec);
@@ -741,7 +741,7 @@ MADealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 				const AQLDataMultiReference& legs = dynamic_cast<const AQLDataMultiReference &>(tradeEntities[i]->getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL).get());
 				if (legs.getSize() != 2)
 					throw AQLCoreInvalidData("Swaption Underlyings error",__FILE__,__LINE__);
-				const LAPriceIRSwaptionValueFromCashFlow& val_swaption = dynamic_cast<const LAPriceIRSwaptionValueFromCashFlow &> (*pVal);
+				const AQLPriceIRSwaptionValueFromCashFlow& val_swaption = dynamic_cast<const AQLPriceIRSwaptionValueFromCashFlow &> (*pVal);
 				if(!val_swaption.hasCashflow(*tradeEntities[i])) continue;
                 
 				//check currency
@@ -766,7 +766,7 @@ MADealUtils::getCalibTargetIRVolGrids(AQLObjectPool &objPool,
 				//get tenor
 				tenor = val_swaption.getNearestTenorString(floatleg, frequency);
 				int y,m,d,w;
-				LAMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
+				AQLMathDateCalculations::termStrtoYMDW(tenor, y, m, d, w);
 				double tenor_d = static_cast<double > (y) + static_cast<double > (m) / 12;
 
 				expiryTerm = AQLMath::max(expiryTerm, 0.0);
@@ -820,7 +820,7 @@ MADealUtils::addCalibTargetFlag( BoolMatrix& calibTaretMat,
 	}
 	else
 	{
-		index_te = LAMathInterpolationUtilities::searchIndex(tenorVec, tenor);
+		index_te = AQLMathInterpolationUtilities::searchIndex(tenorVec, tenor);
 	}
 
 	unsigned int index_ex;
@@ -834,7 +834,7 @@ MADealUtils::addCalibTargetFlag( BoolMatrix& calibTaretMat,
 	}
 	else
 	{
-		index_ex = LAMathInterpolationUtilities::searchIndex(expiryVec, expiry);
+		index_ex = AQLMathInterpolationUtilities::searchIndex(expiryVec, expiry);
 	}
 
 	if( index_ex == 0 && index_te == 0 )

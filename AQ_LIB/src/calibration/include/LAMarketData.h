@@ -22,8 +22,8 @@
 #include "AQLDataMultiReference.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataCalendar.h"
-#include "LAMathDateCalculations.h"
-#include "LAMathYieldCurvePro.h"
+#include "AQLMathDateCalculations.h"
+#include "AQLMathYieldCurvePro.h"
 #include "AQLPriceDataDayCount.h"
 #include "LADefinitions.h"
 #include "LADefinitionsRisk.h"
@@ -32,10 +32,10 @@
 #include "LAFileAccessor.h"
 
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
-#include "LAMathPathEntity.h"
-#include "LAMathFXEntity.h"
+#include "AQLMathPathEntity.h"
+#include "AQLMathFXEntity.h"
 #include "LARiskConfiguration.h"
-#include "LAMathPlainVanillaEntity.h"
+#include "AQLMathPlainVanillaEntity.h"
 #endif
 
 
@@ -107,21 +107,21 @@ public:
 
 	//==============================================
 	// reset marketdata use libor
-	static void resetMarketDataUseL(LAMathYieldCurvePro &curve, const AQLString &ccy, const AQLString *pCurveType = 0);
+	static void resetMarketDataUseL(AQLMathYieldCurvePro &curve, const AQLString &ccy, const AQLString *pCurveType = 0);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================
 	// get path object from object pool
-	static LAMathPathEntity *getPathEnitty(AQLObjectPool &objPool);
+	static AQLMathPathEntity *getPathEnitty(AQLObjectPool &objPool);
 	//==============================================
 	// get fx object from object pool
-	static LAMathFXEntity *getFXEntity(AQLObjectPool &objPool, const AQLString &type);
+	static AQLMathFXEntity *getFXEntity(AQLObjectPool &objPool, const AQLString &type);
 	//==============================================
 	// get fx object from object pool
-	static void setUpMarket2FXEntity(LAMathFXEntity &fx);
+	static void setUpMarket2FXEntity(AQLMathFXEntity &fx);
 #endif
 	//==============================================
 	// sort yield curve reference
-	static void sortMarketData(LAMathYieldCurvePro &ypro);
+	static void sortMarketData(AQLMathYieldCurvePro &ypro);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================
 	// get volatility function file path
@@ -179,11 +179,11 @@ public:
 #endif
 	//==============================================
 	// restor swap rate 
-	static void restoreSwapRateFromL(LAMathYieldCurvePro &curve, const std::map<AQLString, double> &sRateMap, const AQLString &ccy, const AQLString *pCurveType = 0);
+	static void restoreSwapRateFromL(AQLMathYieldCurvePro &curve, const std::map<AQLString, double> &sRateMap, const AQLString &ccy, const AQLString *pCurveType = 0);
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================
 	// get plainvanilla object from object pool
-	static LAMathPlainVanillaEntity *getPlainVanillaEntity(AQLObjectPool &objPool);
+	static AQLMathPlainVanillaEntity *getPlainVanillaEntity(AQLObjectPool &objPool);
 	//==============================================
 	// get maturity term from object pool
 	static double getMaturityTermFromPlainVanillaEntity(AQLObject& trade, const AQLDate& asOfDate);
@@ -261,7 +261,7 @@ public:
 		
 		if (t_lterm.findString("ED") != -1 || t_lterm.findString("FF") != -1) 
 		{
-			ldate = LAMathDateCalculations::getIMMDateFromTerm(asof, t_lterm);
+			ldate = AQLMathDateCalculations::getIMMDateFromTerm(asof, t_lterm);
 		}
 		else
 		{
@@ -283,15 +283,15 @@ public:
 				t_lterm = LAMarketData::convertToMLibTerm(t_lterm);
 			}
 			// fra
-			if (t_lterm.findString("X") != -1) t_lterm = LAPriceYieldGenerator::changeFRATermFormat(t_lterm);
+			if (t_lterm.findString("X") != -1) t_lterm = AQLPriceYieldGenerator::changeFRATermFormat(t_lterm);
 
-			ldate = LAMathDateCalculations::getDate(asof, t_lterm, true);
+			ldate = AQLMathDateCalculations::getDate(asof, t_lterm, true);
 		}
 		
 		// right
 		if (t_rterm.findString("ED") != -1 || t_rterm.findString("FF") != -1) 
 		{
-			rdate = LAMathDateCalculations::getIMMDateFromTerm(asof, t_rterm);
+			rdate = AQLMathDateCalculations::getIMMDateFromTerm(asof, t_rterm);
 		}
 		else
 		{
@@ -312,9 +312,9 @@ public:
 				t_rterm = LAMarketData::convertToMLibTerm(t_rterm);
 			}
 			// fra
-			if (t_rterm.findString("X") != -1) t_rterm = LAPriceYieldGenerator::changeFRATermFormat(t_rterm);
+			if (t_rterm.findString("X") != -1) t_rterm = AQLPriceYieldGenerator::changeFRATermFormat(t_rterm);
 
-			rdate = LAMathDateCalculations::getDate(asof, t_rterm, true);
+			rdate = AQLMathDateCalculations::getDate(asof, t_rterm, true);
 		}
 
 		return ldate < rdate;

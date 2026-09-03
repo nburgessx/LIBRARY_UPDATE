@@ -26,9 +26,9 @@
 #include "LAScenarioConfiguration.h"
 #include "AQLDate.h"
 #include "AQLPriceDataDayCount.h"
-#include "LAMathFXUtility.h"
-#include "LAMathVolFuncSZDD.h"
-#include "LAPriceFXVolatility.h"
+#include "AQLMathFXUtility.h"
+#include "AQLMathVolFuncSZDD.h"
+#include "AQLPriceFXVolatility.h"
 #include "AQLConstant.h"
 #include "AQLBasic.h"
 #include "LACalibrationFunc.h"
@@ -287,10 +287,10 @@ LACalibrateVolatilitySZ::createVolatility(const AQLStringVector &filePath, const
 			}
 		}
 
-		const LAMathYieldCurve &dYield = dynamic_cast<const LAMathYieldCurve &>(objPool->getObject(param->refName[0], ENCHKTYPE_ISDEFINED).get());
-		const LAMathYieldCurve &fYield = dynamic_cast<const LAMathYieldCurve &>(objPool->getObject(param->refName[1], ENCHKTYPE_ISDEFINED).get());
+		const AQLMathYieldCurve &dYield = dynamic_cast<const AQLMathYieldCurve &>(objPool->getObject(param->refName[0], ENCHKTYPE_ISDEFINED).get());
+		const AQLMathYieldCurve &fYield = dynamic_cast<const AQLMathYieldCurve &>(objPool->getObject(param->refName[1], ENCHKTYPE_ISDEFINED).get());
 
-		LAMathFXEntity fx_tmp = *LAMarketData::getFXEntity(*objPool, "USEMODEL");
+		AQLMathFXEntity fx_tmp = *LAMarketData::getFXEntity(*objPool, "USEMODEL");
 		fx_tmp.getFXType() = "FIXEDRATE";
 
 		AQLStringVector ccys;
@@ -328,8 +328,8 @@ LACalibrateVolatilitySZ::createVolatility(const AQLStringVector &filePath, const
 		}
 
 		// ceck DDL
-		LAMathVolFuncFX *funcFX = 0;
-		funcFX = new LAMathVolFuncSZDD(timeGrid, fFx, fBeta, fTheta, fKappa, fEpsilon, param->ccy, fSigma);
+		AQLMathVolFuncFX *funcFX = 0;
+		funcFX = new AQLMathVolFuncSZDD(timeGrid, fFx, fBeta, fTheta, fKappa, fEpsilon, param->ccy, fSigma);
 		
 		return funcFX;
 	}	

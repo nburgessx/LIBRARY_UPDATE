@@ -34,9 +34,9 @@ enum SCENARIONUM
 
 class AQLObjectPool;
 class AQLObject;
-class LARatesSDEBase;
-class LARatesCurveLogLinearInterpolation;
-class LAMathCorrelation;
+class AQLRatesSDEBase;
+class AQLRatesCurveLogLinearInterpolation;
+class AQLMathCorrelation;
 class LAStaticData;
 struct MAScenarioParam;
 
@@ -183,7 +183,7 @@ protected:
 	//          a vector with one risk curve name if all risk curves are the same,
 	//          a vector with risk curve names whose number is the same as the risk grids,
 	//          where a risk curve name is the curve type which is suitable to be passed to
-	//          LAMathYieldCurvePro::setCurveType (for example, "JPYOIS") to deduce the forward rate changes
+	//          AQLMathYieldCurvePro::setCurveType (for example, "JPYOIS") to deduce the forward rate changes
 	//          against the market rate bumps;
 	//          This class simply returns a vector which contains one empty AQLString object
 	virtual AQLStringVector getIMMRiskYieldCurveName(const AQLString &ccy) const;

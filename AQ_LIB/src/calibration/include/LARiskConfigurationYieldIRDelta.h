@@ -76,7 +76,7 @@ protected:
 	//          a vector with one risk curve name if all risk curves are the same,
 	//          a vector with risk curve names whose number is the same as the risk grids,
 	//          where a risk curve name is the curve type which is suitable to be passed to
-	//          LAMathYieldCurvePro::setCurveType (for example, "JPYOIS") to deduce the forward rate changes
+	//          AQLMathYieldCurvePro::setCurveType (for example, "JPYOIS") to deduce the forward rate changes
 	//          against the market rate bumps
 	virtual AQLStringVector getIMMRiskYieldCurveName(const AQLString &ccy) const;
 

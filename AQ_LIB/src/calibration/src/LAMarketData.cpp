@@ -20,13 +20,13 @@
 #include "LADefinitionsHW.h"
 #include "LADefinitionsPtberg.h"
 #include "LAScenarioConfiguration.h"
-#include "LAMathPlainVanillaEntity.h"
-#include "LALinearRatesOptionValue.h"
-#include "LAPricePortfolioValue.h"
-#include "LAMathCurveFuncUtility.h"
-#include "LAMathDateUtilities.h"
+#include "AQLMathPlainVanillaEntity.h"
+#include "AQLLinearRatesOptionValue.h"
+#include "AQLPricePortfolioValue.h"
+#include "AQLMathCurveFuncUtility.h"
+#include "AQLMathDateUtilities.h"
 
-#include "LAMathSwaptionVolUtility.h"
+#include "AQLMathSwaptionVolUtility.h"
 #include "LACoreDataService.h"
 
 #ifndef STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_SWAPTION_VOL_FILE
@@ -137,12 +137,12 @@ LAMarketData::registCalendar(const AQLString &fileName)
 		AQLDate asofdate = AQLDate(asofdateStr.getCString());
 		if (terms[0].size() != 0) 
 		{
-			boundDates[0] = LAMathDateCalculations::getDate(asofdate, terms[0], false);
+			boundDates[0] = AQLMathDateCalculations::getDate(asofdate, terms[0], false);
 			isBounds[0] = true;
 		}
 		if (terms[1].size() != 0) 
 		{
-			boundDates[1] = LAMathDateCalculations::getDate(asofdate, terms[1], true);
+			boundDates[1] = AQLMathDateCalculations::getDate(asofdate, terms[1], true);
 			isBounds[1] = true;
 		}
 	}
@@ -192,7 +192,7 @@ LAMarketData::registCalendar(const AQLString &fileName)
 	@param[in] ccy
 */
 void 
-LAMarketData::resetMarketDataUseL(LAMathYieldCurvePro &curve, const AQLString &ccy, const AQLString *pCurveType)
+LAMarketData::resetMarketDataUseL(AQLMathYieldCurvePro &curve, const AQLString &ccy, const AQLString *pCurveType)
 {
 	AQLString tmpCurrency = ccy;
 	tmpCurrency.toLower();
@@ -276,7 +276,7 @@ LAMarketData::resetMarketDataUseL(LAMathYieldCurvePro &curve, const AQLString &c
 
 			if (dataType == YIELD_TYPE_FRA3M || dataType == YIELD_TYPE_FRA6M) 
 			{
-				termStr = LAPriceYieldGenerator::changeFRATermFormat(termStr);
+				termStr = AQLPriceYieldGenerator::changeFRATermFormat(termStr);
 				mktData.remove(IR_CALIBRATION_DATA_TERM);
 				mktData.add(IR_CALIBRATION_DATA_TERM, new AQLDataString()).convertFromString(termStr);
 			}
@@ -290,7 +290,7 @@ LAMarketData::resetMarketDataUseL(LAMathYieldCurvePro &curve, const AQLString &c
 			if (find(liborYTerm.begin(), liborYTerm.end(), searchTerm) == liborYTerm.end())
 			{
 				// calc date from spotDate
-				AQLDate date = LAMathDateCalculations::getDate(spotDate, termStr, sliding, &cal, true);
+				AQLDate date = AQLMathDateCalculations::getDate(spotDate, termStr, sliding, &cal, true);
 					
 				double term     = dc.getTerm(asOfDate, date);
 				double df       = inter.value(term);
@@ -640,7 +640,7 @@ LAMarketData::getAsofDate(const AQLObjectPool &objPool)
 		{
 			if (it->second.isTypeOf(ENTITY_PLAINVANILLA))
 			{
-				return dynamic_cast<const LAMathPlainVanillaEntity&>
+				return dynamic_cast<const AQLMathPlainVanillaEntity&>
 								(it->second.get()).getAsOfDate().get();
 			}
 			++it;
@@ -652,7 +652,7 @@ LAMarketData::getAsofDate(const AQLObjectPool &objPool)
 		{
 			if (it->second.isTypeOf(ENTITY_PATH))
 			{
-				return dynamic_cast<const LAMathPathEntity&>
+				return dynamic_cast<const AQLMathPathEntity&>
 								(it->second.get()).getAsOfDate().get();
 			}
 			++it;
@@ -680,12 +680,12 @@ LAMarketData::getTimeGridDayCount(const AQLObjectPool &objPool)
 	{
 		if (it->second.isTypeOf(ENTITY_PATH))
 		{
-			return dynamic_cast<const LAMathPathEntity&>
+			return dynamic_cast<const AQLMathPathEntity&>
 							(it->second.get()).getDayCount().convertToString();
 		}
 		else if (it->second.isTypeOf(ENTITY_PLAINVANILLA))
 		{
-			return dynamic_cast<const LAMathPlainVanillaEntity&>
+			return dynamic_cast<const AQLMathPlainVanillaEntity&>
 							(it->second.get()).getDayCount().convertToString();
 		}
 		++it;
@@ -696,21 +696,21 @@ LAMarketData::getTimeGridDayCount(const AQLObjectPool &objPool)
 
 // 
 /*!
-    @brief get LAMathPathEntity from object pool
+    @brief get AQLMathPathEntity from object pool
 
 	@param[in] objPool
-	@return LAMathPathEntity &
+	@return AQLMathPathEntity &
 */
-LAMathPathEntity * 
+AQLMathPathEntity * 
 LAMarketData::getPathEnitty(AQLObjectPool &objPool)
 {
-	LAMathPathEntity *pPath = 0;
+	AQLMathPathEntity *pPath = 0;
 	EntityIter it = objPool.begin();
 	while (it != objPool.end())
 	{
 		if (it->second.isTypeOf(ENTITY_PATH))
 		{
-			LAMathPathEntity &tmpPath = dynamic_cast<LAMathPathEntity &>(it->second.get());
+			AQLMathPathEntity &tmpPath = dynamic_cast<AQLMathPathEntity &>(it->second.get());
 			const AQLDataHolder &attrIsRisk = tmpPath.getData(AP_CALIBRATION_DATA_ISRISKENTITY, NOCHECK);
 			// get original object (not for risk)
 			if (!attrIsRisk.isDefined() || attrIsRisk.isNull())
@@ -736,25 +736,25 @@ LAMarketData::getPathEnitty(AQLObjectPool &objPool)
 
 // 
 /*!
-    @brief get LAMathFXEntity from object pool
+    @brief get AQLMathFXEntity from object pool
 
 	get original object (not for risk)
 
 	@param[in] objPool
 	@param[in] type
-	@return LAMathFXEntity &
+	@return AQLMathFXEntity &
 */
-LAMathFXEntity * 
+AQLMathFXEntity * 
 LAMarketData::getFXEntity(AQLObjectPool &objPool, const AQLString &type)
 {
 	AQLString ltype = type;
-	LAMathFXEntity *pFX = 0;
+	AQLMathFXEntity *pFX = 0;
 	EntityIter it = objPool.begin();
 	while (it != objPool.end())
 	{
 		if (it->second.isTypeOf(ENTITY_FX))
 		{
-			LAMathFXEntity &tmpFx = dynamic_cast<LAMathFXEntity &>(it->second.get());
+			AQLMathFXEntity &tmpFx = dynamic_cast<AQLMathFXEntity &>(it->second.get());
 			AQLString tmpType = tmpFx.getFXType().get();
 			if (ltype.toUpper() == tmpType.toUpper())
 			{
@@ -784,13 +784,13 @@ LAMarketData::getFXEntity(AQLObjectPool &objPool, const AQLString &type)
 
 // 
 /*!
-    @brief setup mareket data to LAMathFXEntity
+    @brief setup mareket data to AQLMathFXEntity
 
 	@param[in, out] fx
 
 */
 void
-LAMarketData::setUpMarket2FXEntity(LAMathFXEntity &fx)
+LAMarketData::setUpMarket2FXEntity(AQLMathFXEntity &fx)
 {
 	// set asof date
 	AQLString asofstr = LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE);
@@ -1672,7 +1672,7 @@ LAMarketData::getFXKey(const AQLString &ccy1, const AQLString &ccy2)
 	@param[out] ypro
 */
 void
-LAMarketData::sortMarketData(LAMathYieldCurvePro &ypro)
+LAMarketData::sortMarketData(AQLMathYieldCurvePro &ypro)
 {
 	AQLDataMultiReference &refMarketDatas = ypro.getMarketData();
 	const unsigned int dataSize =refMarketDatas.getSize();
@@ -2017,7 +2017,7 @@ LAMarketData::getVolatilityVal(const AQLString &fileName, const AQLString &termR
 		// create rowTerm
 		for (unsigned int i = 1; i < rowSize; ++i)
 		{
-			AQLDate date = LAMathDateCalculations::getDate(asof, volDataMtx[i][0], true);
+			AQLDate date = AQLMathDateCalculations::getDate(asof, volDataMtx[i][0], true);
 			rowTerm[i] = act_365.getTerm(asof, date);
 		}
 		// sorted rowTerm
@@ -2027,7 +2027,7 @@ LAMarketData::getVolatilityVal(const AQLString &fileName, const AQLString &termR
 		// create colTerm
 		for (unsigned int i = 1; i < colSize; ++i)
 		{
-			AQLDate date = LAMathDateCalculations::getDate(asof, volDataMtx[0][i], true);
+			AQLDate date = AQLMathDateCalculations::getDate(asof, volDataMtx[0][i], true);
 			colTerm[i] = act_365.getTerm(asof, date);
 		}
 		// sorted rowTerm
@@ -2046,10 +2046,10 @@ LAMarketData::getVolatilityVal(const AQLString &fileName, const AQLString &termR
 				valMtx[rowPos][colPos] = volDataMtx[i][j].getDoubleValue();
 			}
 		}
-		AQLDate t_rowDate = LAMathDateCalculations::getDate(asof, termRow, true);
+		AQLDate t_rowDate = AQLMathDateCalculations::getDate(asof, termRow, true);
 		double t_rowTerm = act_365.getTerm(asof, t_rowDate);
 
-		AQLDate t_colDate = LAMathDateCalculations::getDate(asof, termCol, true);
+		AQLDate t_colDate = AQLMathDateCalculations::getDate(asof, termCol, true);
 		double t_colTerm = act_365.getTerm(asof, t_colDate);
 
 		AQLAlgorithm::locate<DoubleArray, double>(s_rowTerm, t_rowTerm, s_rowTerm.size(), rowPos); 
@@ -2223,7 +2223,7 @@ LAMarketData::getCalibDataName(const AQLString &calcType, const AQLString &yield
 AQLString
 LAMarketData::getYieldDataName(AQLObjectPool &objPool, const AQLString &ycName)
 {
-	const LAMathYieldCurve &yc = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(ycName, ENCHKTYPE_ISDEFINED).get());
+	const AQLMathYieldCurve &yc = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(ycName, ENCHKTYPE_ISDEFINED).get());
 	return yc.getYieldData().get().getName();
 }
 
@@ -2442,7 +2442,7 @@ LAMarketData::setUpScenario(MAScenarioParam& param)
 	@param[in] ccy
 */
 void 
-LAMarketData::restoreSwapRateFromL(LAMathYieldCurvePro &curve, const map<AQLString, double> &sRateMap, const AQLString &ccy, const AQLString *pCurveType)
+LAMarketData::restoreSwapRateFromL(AQLMathYieldCurvePro &curve, const map<AQLString, double> &sRateMap, const AQLString &ccy, const AQLString *pCurveType)
 {
 	AQLString suffix = "";
 	AQLString data_suffix = "";
@@ -2542,23 +2542,23 @@ LAMarketData::restoreSwapRateFromL(LAMathYieldCurvePro &curve, const map<AQLStri
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 // 
 /*!
-    @brief get LAMathPathEntity from object pool
+    @brief get AQLMathPathEntity from object pool
 
 	@param[in] objPool
-	@return LAMathPathEntity &
+	@return AQLMathPathEntity &
 */
-LAMathPlainVanillaEntity * 
+AQLMathPlainVanillaEntity * 
 LAMarketData::getPlainVanillaEntity(AQLObjectPool &objPool)
 {
-	LAMathPlainVanillaEntity *pVanilla = 0;
+	AQLMathPlainVanillaEntity *pVanilla = 0;
 	EntityIter it = objPool.begin();
 	while (it != objPool.end())
 	{
 		if (it->second.isTypeOf(ENTITY_PLAINVANILLA))
 		{
-			//pVanilla = &dynamic_cast<LAMathPlainVanillaEntity&>(it->second.get());
+			//pVanilla = &dynamic_cast<AQLMathPlainVanillaEntity&>(it->second.get());
 		
-			LAMathPlainVanillaEntity &tmpVanilla = dynamic_cast<LAMathPlainVanillaEntity &>(it->second.get());
+			AQLMathPlainVanillaEntity &tmpVanilla = dynamic_cast<AQLMathPlainVanillaEntity &>(it->second.get());
 			const AQLDataHolder &attrIsRisk = tmpVanilla.getData(AP_CALIBRATION_DATA_ISRISKENTITY, NOCHECK);
 			// get original object (not for risk)
 			if (!attrIsRisk.isDefined() || attrIsRisk.isNull())
@@ -2683,9 +2683,9 @@ LAMarketData::getCalendarTime(const AQLDate& asOfDate, AQLString strTerm)
 	{
 		AQLStringVector tmpStrTerm = strTerm.toToken('_');
 		if (tmpStrTerm.size() != 2) throw AQLCoreInvalidData("Format of grid term is not supported!",__FILE__,__LINE__);
-		strTerm = LAPriceYieldGenerator::changeFRATermFormat(tmpStrTerm[1]);
+		strTerm = AQLPriceYieldGenerator::changeFRATermFormat(tmpStrTerm[1]);
 		
-		AQLDate date = LAMathDateCalculations::getDate(asOfDate,strTerm,sl,&cal,true);
+		AQLDate date = AQLMathDateCalculations::getDate(asOfDate,strTerm,sl,&cal,true);
 		ret = dayCount.getTerm(asOfDate, date);
 	}
 	else if (strTerm.findString("FUTURE") != -1)
@@ -2693,7 +2693,7 @@ LAMarketData::getCalendarTime(const AQLDate& asOfDate, AQLString strTerm)
 		AQLStringVector tmpStrTerm = strTerm.toToken('_');
 		if (tmpStrTerm.size() != 2) throw AQLCoreInvalidData("Format of grid term is not supported!",__FILE__,__LINE__);
 		
-		AQLDate date = LAMathDateCalculations::getIMMDateFromTerm(asOfDate, tmpStrTerm[1]);
+		AQLDate date = AQLMathDateCalculations::getIMMDateFromTerm(asOfDate, tmpStrTerm[1]);
 		date.addMonths(3);
 		ret = dayCount.getTerm(asOfDate, date);
 	}
@@ -2705,7 +2705,7 @@ LAMarketData::getCalendarTime(const AQLDate& asOfDate, AQLString strTerm)
 			if (tmpStrTerm.size() != 2 && tmpStrTerm.size() != 3 && tmpStrTerm.size() != 4) throw AQLCoreInvalidData("Format of grid term is not supported!",__FILE__,__LINE__);
 			strTerm = tmpStrTerm[1];
 		}
-		AQLDate date = LAMathDateCalculations::getDate(asOfDate,strTerm,sl,&cal,true);
+		AQLDate date = AQLMathDateCalculations::getDate(asOfDate,strTerm,sl,&cal,true);
 		ret = dayCount.getTerm(asOfDate, date);
 	}
 	return ret;
@@ -2771,7 +2771,7 @@ LAMarketData::getFutureVolFromSwaption(const AQLString &ccy, const AQLDate &expi
 	for (unsigned int i = 1; i < rowSize; i++)
 	{
 		optionMat = volDataMtx[i][0]; optionMat.toUpper();
-		AQLDate toDate = LAMathDateCalculations::getDate(asOfDate,optionMat,true);
+		AQLDate toDate = AQLMathDateCalculations::getDate(asOfDate,optionMat,true);
 		optionMatVec[i - 1] = act_365.getTerm(asOfDate,toDate,true);
 	}
 	
@@ -3326,7 +3326,7 @@ LAMarketData::getSwapConvention(AQLObjectPool &objPool, const AQLString& optionM
 	{
 		throw AQLCoreInvalidData("Model Name was not found in LMM, HWDD, IRSABR", __FILE__, __LINE__);
 	}
-	LAMathYieldCurve &bYield = dynamic_cast<LAMathYieldCurve &>(objPool.getObject(curveName, ENCHKTYPE_ISDEFINED).get());
+	AQLMathYieldCurve &bYield = dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(curveName, ENCHKTYPE_ISDEFINED).get());
 
 	// get curve ID
 	const AQLObject &bYieldData = bYield.getYieldData().get().get();

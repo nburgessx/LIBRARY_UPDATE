@@ -6,10 +6,10 @@
 
 #include "AQLCoreTemplateType.h"
 #include "LACalibrate.h"
-#include "LAMathFXVolatilitySurfaceGenerate.h"
+#include "AQLMathFXVolatilitySurfaceGenerate.h"
 
 class AQLObject;
-class LAMathYieldCurve;
+class AQLMathYieldCurve;
 
 class LACalibrateFXStrangleSolver : public LACalibrate
 {

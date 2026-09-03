@@ -19,7 +19,7 @@
 
 
 #include "LADataInstanceConfigurationRisk.h"
-#include "LAMathFXEntity.h"
+#include "AQLMathFXEntity.h"
 #include "LAMarketData.h"
 #include "LARiskConfigurationManager.h"
 

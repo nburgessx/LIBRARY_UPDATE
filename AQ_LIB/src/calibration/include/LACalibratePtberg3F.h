@@ -8,7 +8,7 @@
 #include "LACalibratePtberg.h"
 
 class AQLObject;
-class LAMathYieldCurve;
+class AQLMathYieldCurve;
 
 class LACalibratePtberg3F : public LACalibratePtberg
 {

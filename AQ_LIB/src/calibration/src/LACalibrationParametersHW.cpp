@@ -24,7 +24,7 @@
 #include "AQLPriceDataType.h"
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
-#include "LAMathHWFuncMR.h"
+#include "AQLMathHWFuncMR.h"
 #include "AQLMathDefine.h"
 #include "LADealUtils.h"
 #include "LACalibrationParametersHW.h"
@@ -34,8 +34,8 @@
 #include "LADefinitionsHW.h"
 #include "LAMarketDataHW.h"
 #include "LAMarketData.h"
-#include "LAMathJamshidianSwaption.h"
-#include "LAMathJamshidianSwaptionByImplyVol.h"
+#include "AQLMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaptionByImplyVol.h"
 
 using namespace std;
 

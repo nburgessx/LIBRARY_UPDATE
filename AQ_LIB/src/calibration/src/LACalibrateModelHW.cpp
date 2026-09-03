@@ -15,40 +15,40 @@
 #include "AQLFunctionManager.h"
 #include "AQLDataReference.h"
 #include "AQLAlgorithm.h"
-#include "LAMathVolFuncBase.h"
-#include "LAMathCorrelation.h"
-#include "LAMathYieldCurve.h"
-#include "LAPriceYieldGenerator.h"
-#include "LAMathVolatility.h"
+#include "AQLMathVolFuncBase.h"
+#include "AQLMathCorrelation.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLPriceYieldGenerator.h"
+#include "AQLMathVolatility.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLSplineInterpolation.h"
 #include "AQLPriceDataInterpolation.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataDayCount.h"
 #include "AQLPriceDataFunction.h"
-#include "LARatesNumeraireBankAccount.h"
-#include "LARatesNumeraireDiscountBond.h"
-#include "LAModelDynamicsHW1FCurve.h"
-#include "LAPriceDriftQuantAdjustment.h"
-#include "LARatesEulerMaruyama.h"
+#include "AQLRatesNumeraireBankAccount.h"
+#include "AQLRatesNumeraireDiscountBond.h"
+#include "AQLModelDynamicsHW1FCurve.h"
+#include "AQLPriceDriftQuantAdjustment.h"
+#include "AQLRatesEulerMaruyama.h"
 #include "LACalibrateModelIR.h"
-#include "LAMathVolFuncWave.h"
-#include "LAMathVolFuncStructureBase.h"
+#include "AQLMathVolFuncWave.h"
+#include "AQLMathVolFuncStructureBase.h"
 #include "LAMarketData.h"
 #include "LAMarketDataHW.h"
-#include "LARatesCurveLogLinearInterpolation.h"
+#include "AQLRatesCurveLogLinearInterpolation.h"
 #include "LADefinitionsHW.h"
-#include "LARatesSpotSDE.h"
-#include "LARatesLJSpotSDE.h"
-#include "LARatesNumeraireBankAccountHW.h"
-#include "LARatesHWIntegral.h"
-#include "LAMathVolFuncHW.h"
-#include "LAPriceDriftHW.h"
-#include "LAPriceDriftHWQuantAdjustment.h"
+#include "AQLRatesSpotSDE.h"
+#include "AQLRatesLJSpotSDE.h"
+#include "AQLRatesNumeraireBankAccountHW.h"
+#include "AQLRatesHWIntegral.h"
+#include "AQLMathVolFuncHW.h"
+#include "AQLPriceDriftHW.h"
+#include "AQLPriceDriftHWQuantAdjustment.h"
 #include "LAStaticData.h"
 #include "LADealUtils.h"
 #include "LACalibrateVolatilityHW.h"
-#include "LARatesCurveHWInterpolation.h"
+#include "AQLRatesCurveHWInterpolation.h"
 #include "LAScenarioConfiguration.h"
 #include "LACalibrationParametersHW.h"
 
@@ -131,20 +131,20 @@ LACalibrateModelHW::isLJ(const AQLString &currency) const
 	@param[in]  currency
 	@param[in]  dataInstance
 */
-LARatesSDEBase *
+AQLRatesSDEBase *
 LACalibrateModelHW::createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	SDE_TYPE type = getSDEType(currency);
-	LARatesSpotSDE *psde = 0;
+	AQLRatesSpotSDE *psde = 0;
 	// check LJ
 	if (isLJ(currency))
 	{
-		psde =  new LARatesLJSpotSDE(type);
+		psde =  new AQLRatesLJSpotSDE(type);
 	}
 	else
 	{
-		psde =  new LARatesSpotSDE(type);
+		psde =  new AQLRatesSpotSDE(type);
 	}
 
 	return psde;
@@ -158,13 +158,13 @@ LACalibrateModelHW::createSDEInstance(const AQLString &currency, AQLDataInstance
 	@param[out] sde
 */
 void
-LACalibrateModelHW::setVolatility(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setVolatility(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString key_ccy = currency;
 	AQLString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 
 	vector<vector<AQLFunctionBase *> > volMtx(1);
-	volMtx[0] = vector<AQLFunctionBase *>(1, new LAMathVolFuncBase(sdeName, 0, 0, true));
+	volMtx[0] = vector<AQLFunctionBase *>(1, new AQLMathVolFuncBase(sdeName, 0, 0, true));
 	sde.setVolatility(volMtx);
 }
 
@@ -176,7 +176,7 @@ LACalibrateModelHW::setVolatility(const AQLString &currency, LARatesSDEBase &sde
 
 */
 void
-LACalibrateModelHW::setDrift(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setDrift(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString key_ccy = currency;
 	AQLString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
@@ -207,7 +207,7 @@ LACalibrateModelHW::setDrift(const AQLString &currency, LARatesSDEBase &sde) con
 		else
 		{
 			// domestic drift
-			driftVec[0] = new LAPriceDriftHW(sdeName);
+			driftVec[0] = new AQLPriceDriftHW(sdeName);
 		}
 	}
 	else
@@ -218,7 +218,7 @@ LACalibrateModelHW::setDrift(const AQLString &currency, LARatesSDEBase &sde) con
 			throw AQLCoreInvalidData("Sigle currency support only one currency", __FILE__, __LINE__);
 		}
 
-		driftVec[0] = new LAPriceDriftHW(sdeName);
+		driftVec[0] = new AQLPriceDriftHW(sdeName);
 	}
 	sde.setDrift(driftVec);
 }
@@ -232,10 +232,10 @@ LACalibrateModelHW::setDrift(const AQLString &currency, LARatesSDEBase &sde) con
 
 */
 void
-LACalibrateModelHW::setNumeraire(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setNumeraire(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	(void)currency;
-	sde.setNumeraire(new LARatesNumeraireBankAccountHW());
+	sde.setNumeraire(new AQLRatesNumeraireBankAccountHW());
 	/*if (MADealUtils::getSimulationSDECurrencys().size()==1)
     {
         sde.getNumeraire()->isCancelSpread(true);
@@ -250,10 +250,10 @@ LACalibrateModelHW::setNumeraire(const AQLString &currency, LARatesSDEBase &sde)
 
 */
 void
-LACalibrateModelHW::setOutputTemplate(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setOutputTemplate(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	(void)currency;
-	sde.setOutputTemplate(new LARatesPathElementHW1FCurveTMDPT(0.0));
+	sde.setOutputTemplate(new AQLRatesPathElementHW1FCurveTMDPT(0.0));
 }
 
 /*!
@@ -264,10 +264,10 @@ LACalibrateModelHW::setOutputTemplate(const AQLString &currency, LARatesSDEBase 
 
 */
 void
-LACalibrateModelHW::setIntegralFunction(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setIntegralFunction(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString sdeName = getSDEAttrName(currency);
-	sde.setIntegralFunction(new LARatesHWIntegral(LOG_INTEGRAL, sdeName));
+	sde.setIntegralFunction(new AQLRatesHWIntegral(LOG_INTEGRAL, sdeName));
 }
 
 /*!
@@ -290,10 +290,10 @@ LACalibrateModelHW::getFunctionMasterResistName(const AQLString &currency) const
 	@param[out] sde
 */
 void
-LACalibrateModelHW::setInterpolationMethod(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW::setInterpolationMethod(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	currency;
-	sde.setInterpolationMethod(new LARatesCurveHWInterpolation());
+	sde.setInterpolationMethod(new AQLRatesCurveHWInterpolation());
 }
 
 
@@ -320,7 +320,7 @@ LACalibrateModelHW::getCorTye(const AQLString &currency) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelHW::setUpCorFactor(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
+LACalibrateModelHW::setUpCorFactor(const AQLString &currency, AQLMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)currency;
 	(void)cor;
@@ -337,7 +337,7 @@ LACalibrateModelHW::setUpCorFactor(const AQLString &currency, LAMathCorrelation 
 	@param[out] dataInstance
 */
 void
-LACalibrateModelHW::setUpCorData(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
+LACalibrateModelHW::setUpCorData(const AQLString &currency, AQLMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)currency;
 	(void)cor;
@@ -355,7 +355,7 @@ LACalibrateModelHW::setUpCorData(const AQLString &currency, LAMathCorrelation &c
 	@param[out] dataInstance
 */
 void
-LACalibrateModelHW::setUpCorFunc(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
+LACalibrateModelHW::setUpCorFunc(const AQLString &currency, AQLMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)currency;
 	(void)cor;
@@ -384,7 +384,7 @@ LACalibrateModelHW::getVolType(const AQLString &currency) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelHW::setUpVolFunc(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelHW::setUpVolFunc(const AQLString &currency, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	AQLString key_ccy = currency;
 	key_ccy.toLower();
@@ -432,7 +432,7 @@ LACalibrateModelHW::setUpVolFunc(const AQLString &currency, LAMathVolatility &vo
 	@param[out] dataInstance
 */
 void
-LACalibrateModelHW::setUpVolData(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelHW::setUpVolData(const AQLString &currency, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	(void)currency;
 	(void)vol;
@@ -457,7 +457,7 @@ LACalibrateModelHW::setUpVolData(const AQLString &currency, LAMathVolatility &vo
 AQLFunctionBase *
 LACalibrateModelHW::createForeinDrift(const AQLString &fx, const AQLString &sdeBase, const AQLString &sdeName, const AQLString &fx_sdeName) const
 {
-	return new LAPriceDriftHWQuantAdjustment(sdeBase, sdeName, fx_sdeName, new LAPriceDriftHW(sdeName));
+	return new AQLPriceDriftHWQuantAdjustment(sdeBase, sdeName, fx_sdeName, new AQLPriceDriftHW(sdeName));
 }
 
 

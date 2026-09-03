@@ -37,12 +37,12 @@
 #include "AQLLinearInterpolation.h"
 #include "AQLInterpolationBase.h"
 #include "AQLPriceDataDayCount.h"
-#include "LAPriceCFGenUtility.h"
-#include "LAPriceYieldGenerator.h"
+#include "AQLPriceCFGenUtility.h"
+#include "AQLPriceYieldGenerator.h"
 #include "AQLDataReference.h"
-#include "LAAnalyticFormula.h"
-#include "LABlackScholesCalc.h"
-#include "LAMathYieldCurvePro.h"
+#include "AQLAnalyticFormula.h"
+#include "AQLBlackScholesCalc.h"
+#include "AQLMathYieldCurvePro.h"
 #include "AQLDataProcedure.h"
 #include "AQLPriceDataInterpolation.h"
 #include "AQLCoreComponentManager.h"
@@ -50,8 +50,8 @@
 #include "AQLDataMultiReference.h"
 #include "AQLMathValuableEntity.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPriceArbFreeGenerator.h"
-#include "LACoreUtility.h"
+#include "AQLPriceArbFreeGenerator.h"
+#include "AQLCoreUtility.h"
 
 // TODO - Try to remove this file. It contains lots of #defines that clash with external binaries
 #include "ConstantDeclarations.h"
@@ -153,16 +153,16 @@ namespace etrading
 	
 	    //CurveCalibrationData
 	    const AQLObjectHolder ehCur = objPool.getObject(CurveIDTool);
-	    LAMathYieldCurvePro * curveCalibrationData = NULL; 
+	    AQLMathYieldCurvePro * curveCalibrationData = NULL; 
 	    if(!ehCur.isDefined())
 	    {	
-		    curveCalibrationData= new LAMathYieldCurvePro(dataInstance);
+		    curveCalibrationData= new AQLMathYieldCurvePro(dataInstance);
 		    objPool.set(CurveIDTool,curveCalibrationData);
 	    }
 	    else
 	    {
-		    dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get()).reset();
-		    curveCalibrationData	= &dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get());
+		    dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get()).reset();
+		    curveCalibrationData	= &dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get());
 	    }
 	    curveCalibrationData->getName().convertFromString(CurveIDTool);
 	    curveCalibrationData->setDFGenerator(FN_IRYIELDGENERATOR_STR);
@@ -605,7 +605,7 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    mae	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	    mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	    mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 	    mae->add(GRIDREFS,			new AQLDataMultiReference()	).convertFromString(ref);
 	    mae->add(YIELDDATAREF,		new AQLDataReference()		).convertFromString(CurveID);
@@ -763,18 +763,18 @@ namespace etrading
 	    ycp->getYieldData().convertFromString(clonename);
 
 
-	    //LAMathYieldCurvePro
+	    //AQLMathYieldCurvePro
 	    const AQLObjectHolder ehCur = objPool.getObject(CurveIDTool);
-	    LAMathYieldCurvePro * curveCalibrationData	=NULL; 
+	    AQLMathYieldCurvePro * curveCalibrationData	=NULL; 
 	    if(!ehCur.isDefined())
 	    {	
-		    curveCalibrationData= new LAMathYieldCurvePro(dataInstance);
+		    curveCalibrationData= new AQLMathYieldCurvePro(dataInstance);
 		    objPool.set(CurveIDTool,curveCalibrationData);
 	    }
 	    else
 	    {
 		    //dynamic_cast<LACurvePricingObject &>(objPool.getObject(CurveIDTool).get()).reset();
-		    curveCalibrationData	= &dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get());
+		    curveCalibrationData	= &dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get());
 	    }
 	
 	    AQLString ref = bref.subString(0,bref.size()-2);
@@ -940,17 +940,17 @@ namespace etrading
 	    ycp->getInterpolation().convertFromString(interpolation);
 	    ycp->getYieldData().convertFromString(stdCurveID);
 
-	    //LAMathYieldCurvePro
+	    //AQLMathYieldCurvePro
 	    const AQLObjectHolder ehCur = objPool.getObject(CurveIDTool);
-	    LAMathYieldCurvePro * curveCalibrationData	=NULL; 
+	    AQLMathYieldCurvePro * curveCalibrationData	=NULL; 
 	    if(!ehCur.isDefined())
 	    {	
-		    curveCalibrationData= new LAMathYieldCurvePro(dataInstance);
+		    curveCalibrationData= new AQLMathYieldCurvePro(dataInstance);
 		    objPool.set(CurveIDTool,curveCalibrationData);
 	    }
 	    else
 	    {
-		    curveCalibrationData	= &dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get());
+		    curveCalibrationData	= &dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get());
 	    }
 	
 	    AQLString ref = bref.subString(0,bref.size()-2);
@@ -1083,16 +1083,16 @@ namespace etrading
 
 	    //CurveCalibrationData
 	    const AQLObjectHolder ehCur = objPool.getObject(CurveIDTool);
-	    LAMathYieldCurvePro * curveCalibrationData	=NULL; 
+	    AQLMathYieldCurvePro * curveCalibrationData	=NULL; 
 	    if(!ehCur.isDefined())
 	    {	
-		    curveCalibrationData= new LAMathYieldCurvePro(dataInstance);
+		    curveCalibrationData= new AQLMathYieldCurvePro(dataInstance);
 		    objPool.set(CurveIDTool,curveCalibrationData);
 	    }
 	    else
 	    {
-		    dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get()).reset();
-		    curveCalibrationData	= &dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get());
+		    dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get()).reset();
+		    curveCalibrationData	= &dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(CurveIDTool).get());
 	    }
 	    curveCalibrationData->getName().convertFromString(CurveIDTool);
 
@@ -1182,7 +1182,7 @@ namespace etrading
 			    mme= &objPool.getObject(name).get();
 		    }
 
-		    rate = LACoreUtility::changeDoubleFromString(searchvecbycol(monGrid,CURVEINPUT_RATE,true));
+		    rate = AQLCoreUtility::changeDoubleFromString(searchvecbycol(monGrid,CURVEINPUT_RATE,true));
 		    mme->add(CALIBRATION_DATA_NAME,				new AQLDataString(name)							);
 		    mme->add(IR_CALIBRATION_DATA_DATATYPE,		new AQLDataString(type)							);
 		    mme->add(IR_CALIBRATION_DATA_TERM,    		new AQLDataString(term[i])							);
@@ -1227,10 +1227,10 @@ namespace etrading
 	    /**/
 
 	    //set three month libor
-	    const int row_3M = LACoreUtility::findRowsNumber(libGrid,"3M");
+	    const int row_3M = AQLCoreUtility::findRowsNumber(libGrid,"3M");
 	    if( row_3M<0 ) throw AQLCoreInvalidData("3 month libor does not exist.", __FILE__,__LINE__);
 	    //set six month libor
-	    const int row_6M = LACoreUtility::findRowsNumber(libGrid,"6M");
+	    const int row_6M = AQLCoreUtility::findRowsNumber(libGrid,"6M");
 	    if( row_6M<0 ) throw AQLCoreInvalidData("6 month libor does not exist.", __FILE__,__LINE__);
 
 	    for (size_t i=0; i<term_tmp.size(); i++)
@@ -1304,7 +1304,7 @@ namespace etrading
 	    calS.convertFromString(calendar);
 
 	    term = searchvecbycol(swapGrid,CURVEINPUT_TERM,true);
-	    rate = LACoreUtility::changeDoubleFromString(searchvecbycol(swapGrid,CURVEINPUT_RATE,true));
+	    rate = AQLCoreUtility::changeDoubleFromString(searchvecbycol(swapGrid,CURVEINPUT_RATE,true));
 	
 	    if( rate.size() == 0 ) throw AQLCoreInvalidData("input swap market data.", __FILE__,__LINE__);
 	    if( Currency == CURRENCY_USD && !isFRAUse )
@@ -1434,7 +1434,7 @@ namespace etrading
         if( Currency != CURRENCY_USD )
         {
 		    term = searchvecbycol(currGrid,CURVEINPUT_TERM,true);
-		    rate = LACoreUtility::changeDoubleFromString(searchvecbycol(currGrid,CURVEINPUT_RATE,true));
+		    rate = AQLCoreUtility::changeDoubleFromString(searchvecbycol(currGrid,CURVEINPUT_RATE,true));
 
 		    for (size_t i=0; i<term.size(); i++)
 		    {
@@ -1596,7 +1596,7 @@ namespace etrading
 	    if( dc != ldc ) warning += AQLString(" 3ML Leg daycount is not Libor's!");
 	    if( dc2 != ldc ) warning += AQLString(" 6ML Leg daycount is not Libor's!");
 	    term = searchvecbycol(libBasisGrid,CURVEINPUT_TERM,true);
-	    rate = LACoreUtility::changeDoubleFromString(searchvecbycol(libBasisGrid,CURVEINPUT_RATE,true));
+	    rate = AQLCoreUtility::changeDoubleFromString(searchvecbycol(libBasisGrid,CURVEINPUT_RATE,true));
 	    if( rate.size() == 0 ) throw AQLCoreInvalidData("input 3M/6M Libor basis market data.", __FILE__,__LINE__);
 	    if( Currency != CURRENCY_USD && !isFRAUse )
 	    {
@@ -1685,7 +1685,7 @@ namespace etrading
             }
 
 		    term = searchvecbycol(fraGrid3M,CURVEINPUT_TERM,true);
-	        rate = LACoreUtility::changeDoubleFromString(searchvecbycol(fraGrid3M,CURVEINPUT_RATE,true));
+	        rate = AQLCoreUtility::changeDoubleFromString(searchvecbycol(fraGrid3M,CURVEINPUT_RATE,true));
 		    for (size_t i=0; i<term.size(); i++)
 		    {
 			    AQLObject* fra3e	=	NULL;
@@ -1723,7 +1723,7 @@ namespace etrading
 		    }
 
 		    term = searchvecbycol(fraGrid6M,CURVEINPUT_TERM,true);
-	        rate = LACoreUtility::changeDoubleFromString(searchvecbycol(fraGrid6M,CURVEINPUT_RATE,true));
+	        rate = AQLCoreUtility::changeDoubleFromString(searchvecbycol(fraGrid6M,CURVEINPUT_RATE,true));
 		    for (size_t i=0; i<term.size(); i++)
 		    {
 			    AQLObject* fra6e	=	NULL;
@@ -1785,7 +1785,7 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    mae	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	    mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	    mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 	    mae->add(GRIDREFS,			new AQLDataMultiReference()	).convertFromString(ref);
 	    mae->add(YIELDDATAREF,		new AQLDataReference()		).convertFromString(CurveID);
@@ -1891,7 +1891,7 @@ namespace etrading
 	    double rate =0.0;
 
         AQLStringVector term_str = searchvecbycol(bgrid,CURVEINPUT_TERM,true);
-        DoubleVector basisRates = LACoreUtility::changeDoubleFromString(searchvecbycol(bgrid,CURVEINPUT_RATE,true));
+        DoubleVector basisRates = AQLCoreUtility::changeDoubleFromString(searchvecbycol(bgrid,CURVEINPUT_RATE,true));
 	    AQLString name = setUpCurveID + "Market";
 	    AQLObject* be = NULL;
 	    if(!objPool.getObject(name).isDefined())
@@ -1922,7 +1922,7 @@ namespace etrading
 	    be->add("DiscountCurveName",		new AQLDataString(dfCurveName));
         be->add("BasisLeg",	                new AQLDataString(basisLeg)		    );
  
-        LAPriceArbFreeGenerator::setForecastCurve(dataInstance, setUpCurveID);
+        AQLPriceArbFreeGenerator::setForecastCurve(dataInstance, setUpCurveID);
     }
 
     void 
@@ -2016,7 +2016,7 @@ namespace etrading
         AQLPriceDataCalendar calendar;
         calendar.convertFromString( calendar_str );
 
-        LAPriceArbFreeGenerator::generateCdtDFCurve(dataInstance, arbFreeCurveID, forecastCurveID, curveID, spotdate, 
+        AQLPriceArbFreeGenerator::generateCdtDFCurve(dataInstance, arbFreeCurveID, forecastCurveID, curveID, spotdate, 
             calendar, srule, frequency, dc, spread);
     }
 
@@ -2575,7 +2575,7 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::restoreSwapRateFromLibor(LAMathYieldCurvePro &curve, const AQLString &ccy, const std::map<AQLString, double> &sRateMap, AQLStringMatrix sdata)
+    LACurveCalibrationHelpers::restoreSwapRateFromLibor(AQLMathYieldCurvePro &curve, const AQLString &ccy, const std::map<AQLString, double> &sRateMap, AQLStringMatrix sdata)
     {
 	    //AQLDate spotDate	= LADateScheduleHelpers::getLADate(chgrow(sdata,CURVEINPUT_SPOTDATE,1));
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();
@@ -2669,7 +2669,7 @@ namespace etrading
     }
 
     void 
-    LACurveCalibrationHelpers::resetMarketDataUseL(LAMathYieldCurvePro &curve, const AQLString &ccy, AQLStringMatrix ldata)
+    LACurveCalibrationHelpers::resetMarketDataUseL(AQLMathYieldCurvePro &curve, const AQLString &ccy, AQLStringMatrix ldata)
     {
 	    //AQLDate spotDate	= LADateScheduleHelpers::getLADate(chgrow(ldata,CURVEINPUT_SPOTDATE,1));
 	    std::map<AQLString, AQLString>& dvar = AQLCoreComponentManager::getDayCountMap();

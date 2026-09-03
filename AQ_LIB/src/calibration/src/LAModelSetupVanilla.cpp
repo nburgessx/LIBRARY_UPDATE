@@ -28,7 +28,7 @@
 #include "LACoreDataService.h"
 #include "LAStaticDataManager.h"
 #include "LAStaticData.h"
-#include "LAMathYieldCurvePro.h"
+#include "AQLMathYieldCurvePro.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLSplineInterpolation.h"
 #include "AQLParabolicInterpolation.h"
@@ -38,62 +38,62 @@
 #include "AQLMonotoneSplineInterpolation.h"
 #include "AQLConstrainedSplineInterpolation.h"
 #include "AQLStepInterpolation.h"
-#include "LAPricePortfolioValue.h"
-#include "LAPriceYieldGenerator.h"
+#include "AQLPricePortfolioValue.h"
+#include "AQLPriceYieldGenerator.h"
 #include "AQLConstant.h"
 #include "AQLLinearFunc.h"
 #include "AQLQuadraticFunc.h"
 #include "AQLDivideFunc.h"
 #include "AQLMaxFunc.h"
 #include "AQLMinFunc.h"
-#include "LASumFunc.h"
-#include "LAFractionFunc.h"
-#include "LALinearRatesOptionValue.h"
-#include "LAPriceFXOptionValue.h"
-#include "LAMathPlainVanillaEntity.h"
-#include "LAPriceFXDigitalOptionValue.h"
-#include "LAPriceFXDigitalCallSpreadOptionValue.h"
-#include "LAPriceFXKnockoutRebateValue.h"
-#include "LAPriceFXSingleBarrierOptionValue.h"
-#include "LAPriceFXDigitalCallSpreadSingleBarrierOptionValue.h"
-#include "LALinearRatesOptionValueDataProvider.h"
-#include "LAPriceCashFlowGenerator.h"
-#include "LAPriceCouponRainbow.h"
-#include "LAPricePayOff.h"
-#include "LAPriceConvergenceValue.h"
-#include "LAPriceCashValue.h"
-#include "LALinearRatesSwapTradeValue.h"
-#include "LARatesAggregateCouponCapFloor.h"
-#include "LARatesCpnCapFloorFuncForTARN.h"
-#include "LARatesInterSectionFunc.h"
-#include "LARatesUnionFunc.h"
-#include "LASumFunc2.h"
-#include "LAPriceCouponForDigital.h"
-#include "LAPriceCouponForDigital2.h"
-#include "LAPriceCouponMax.h"
-#include "LAPriceCouponMin.h"
-#include "LAPriceCouponRainbowMin.h"
-#include "LAPriceAccruedInterest.h"
-#include "LABlackScholesBaseFunc.h"
-#include "LAPriceIRCapFloorOptionValue.h"
-#include "LABlackScholesCapletOptionPayoff.h"
-#include "LABlackScholesFloorletOptionPayoff.h"
-#include "LABlackScholesCollarOptionPayoff.h"
-#include "LABlackScholesStrangleOptionPayoff.h"
-#include "LABlackScholesStraddleOptionPayoff.h"
-#include "LABlackScholesCapletSpreadOptionPayoff.h"
-#include "LABlackScholesFloorletSpreadOptionPayoff.h"
-#include "LABlackScholesDelayedCapletOptionPayoff.h"
-#include "LABlackScholesDelayedFloorletOptionPayoff.h"
-#include "LABlackScholesDigitalCapletOptionPayoff.h"
-#include "LABlackScholesDigitalFloorletOptionPayoff.h"
-#include "LAPriceIRSwaptionValue.h"
-#include "LAPriceIRSwaptionValueFromCashFlow.h"
-#include "LAPriceArbFreeGenerator.h"
-#include "LACompoundingFunc.h"
-#include "LAPriceOptionGenerator.h"
+#include "AQLSumFunc.h"
+#include "AQLFractionFunc.h"
+#include "AQLLinearRatesOptionValue.h"
+#include "AQLPriceFXOptionValue.h"
+#include "AQLMathPlainVanillaEntity.h"
+#include "AQLPriceFXDigitalOptionValue.h"
+#include "AQLPriceFXDigitalCallSpreadOptionValue.h"
+#include "AQLPriceFXKnockoutRebateValue.h"
+#include "AQLPriceFXSingleBarrierOptionValue.h"
+#include "AQLPriceFXDigitalCallSpreadSingleBarrierOptionValue.h"
+#include "AQLLinearRatesOptionValueDataProvider.h"
+#include "AQLPriceCashFlowGenerator.h"
+#include "AQLPriceCouponRainbow.h"
+#include "AQLPricePayOff.h"
+#include "AQLPriceConvergenceValue.h"
+#include "AQLPriceCashValue.h"
+#include "AQLLinearRatesSwapTradeValue.h"
+#include "AQLRatesAggregateCouponCapFloor.h"
+#include "AQLRatesCpnCapFloorFuncForTARN.h"
+#include "AQLRatesInterSectionFunc.h"
+#include "AQLRatesUnionFunc.h"
+#include "AQLSumFunc2.h"
+#include "AQLPriceCouponForDigital.h"
+#include "AQLPriceCouponForDigital2.h"
+#include "AQLPriceCouponMax.h"
+#include "AQLPriceCouponMin.h"
+#include "AQLPriceCouponRainbowMin.h"
+#include "AQLPriceAccruedInterest.h"
+#include "AQLBlackScholesBaseFunc.h"
+#include "AQLPriceIRCapFloorOptionValue.h"
+#include "AQLBlackScholesCapletOptionPayoff.h"
+#include "AQLBlackScholesFloorletOptionPayoff.h"
+#include "AQLBlackScholesCollarOptionPayoff.h"
+#include "AQLBlackScholesStrangleOptionPayoff.h"
+#include "AQLBlackScholesStraddleOptionPayoff.h"
+#include "AQLBlackScholesCapletSpreadOptionPayoff.h"
+#include "AQLBlackScholesFloorletSpreadOptionPayoff.h"
+#include "AQLBlackScholesDelayedCapletOptionPayoff.h"
+#include "AQLBlackScholesDelayedFloorletOptionPayoff.h"
+#include "AQLBlackScholesDigitalCapletOptionPayoff.h"
+#include "AQLBlackScholesDigitalFloorletOptionPayoff.h"
+#include "AQLPriceIRSwaptionValue.h"
+#include "AQLPriceIRSwaptionValueFromCashFlow.h"
+#include "AQLPriceArbFreeGenerator.h"
+#include "AQLCompoundingFunc.h"
+#include "AQLPriceOptionGenerator.h"
 //#include "LAPriceNDSSwaptionValue.h"
-#include "LAPolynomialPS.h"
+#include "AQLPolynomialPS.h"
 
 //====================LAModelSetupVanilla ==============================
 
@@ -132,9 +132,9 @@ LAModelSetupVanilla::registFunctionMaster(AQLDataInstance &dataInstance)
 	fm.setFunction(new AQLQuadraticMethod(),									FN_QUADRATIC_STR);
 	fm.setFunction(new AQLMaxMethod(),										FN_MAX_STR);
 	fm.setFunction(new AQLMinMethod(),										FN_MIN_STR);
-	fm.setFunction(new LASumMethod(),										FN_SUM_STR);
+	fm.setFunction(new AQLSumMethod(),										FN_SUM_STR);
 	fm.setFunction(new AQLDivideMethod(),									FN_DIVIDE_STR);
-	fm.setFunction(new LAFractionMethod(),									FN_FRACTION_STR);
+	fm.setFunction(new AQLFractionMethod(),									FN_FRACTION_STR);
 	
 	// Interpolation Methods
 	fm.setFunction(new AQLLinearInterpolation(LINEAR_EXTRAPOLATION_TYPE),	FN_LINEARINTERPOLATION_STR);
@@ -199,155 +199,155 @@ LAModelSetupVanilla::registFunctionMaster(AQLDataInstance &dataInstance)
 	}
 	// -------------------------------------------------
 
-	fm.setFunction(new LAMathBasisFunction(), FN_BASISFUNC1_STR);
-	fm.setFunction(new LAMathBasisFunction2(), FN_BASISFUNC2_STR);
-	fm.setFunction(new LARatesAggregateCouponCapFloor(), FN_AGGREGATECOUPONCAPFLOOR_STR);
-	fm.setFunction(new LAPriceCouponRainbowMin(), FN_CPNSLTOPERATORRAINBOWMIN_STR);
-	fm.setFunction(new LARatesInterSectionFunc(), FN_INTERSECTIONFUNC_STR);
-	fm.setFunction(new LARatesUnionFunc(), FN_UNIONFUNC_STR);
-	fm.setFunction(new LARatesCpnCapFloorFuncForTARN(), FN_CPNCAPFLOORFORTARN_STR);
-	fm.setFunction(new LAPriceCouponMax(), FN_CPNSLTOPERATORMAX_STR);
-	fm.setFunction(new LAPriceCouponMin(), FN_CPNSLTOPERATORMIN_STR);	
-	fm.setFunction(new LASumMethod2(), FN_SUM2_STR);
-	fm.setFunction(new LAPriceCouponForDigital(), FN_CPNSLTOPERATORFORDIGITAL_STR);
-	fm.setFunction(new LAPriceCouponForDigital2(), FN_CPNSLTOPERATORFORDIGITAL2_STR);
-	fm.setFunction(new LACompoundMethod(), FN_COMPOUNDING_STR);
-	fm.setFunction(new LACompoundMethod1(), FN_COMPOUNDING1_STR);
-	fm.setFunction(new LACompoundMethod2(), FN_COMPOUNDING2_STR);
-	fm.setFunction(new LACompoundMethod3(), FN_COMPOUNDING3_STR);
-	fm.setFunction(new LACompoundMethod4(), FN_COMPOUNDING4_STR);
-	fm.setFunction(new LACompoundMethod5(), FN_COMPOUNDING5_STR);
-	fm.setFunction(new LACompoundMethod6(), FN_COMPOUNDING6_STR);
-	fm.setFunction(new LACompoundMethod7(), FN_COMPOUNDING7_STR);
-	fm.setFunction(new LACompoundMethod8(), FN_COMPOUNDING8_STR);
-	fm.setFunction(new LACompoundMethod9(), FN_COMPOUNDING9_STR);
-	fm.setFunction(new LACompoundMethod10(), FN_COMPOUNDING10_STR);
+	fm.setFunction(new AQLMathBasisFunction(), FN_BASISFUNC1_STR);
+	fm.setFunction(new AQLMathBasisFunction2(), FN_BASISFUNC2_STR);
+	fm.setFunction(new AQLRatesAggregateCouponCapFloor(), FN_AGGREGATECOUPONCAPFLOOR_STR);
+	fm.setFunction(new AQLPriceCouponRainbowMin(), FN_CPNSLTOPERATORRAINBOWMIN_STR);
+	fm.setFunction(new AQLRatesInterSectionFunc(), FN_INTERSECTIONFUNC_STR);
+	fm.setFunction(new AQLRatesUnionFunc(), FN_UNIONFUNC_STR);
+	fm.setFunction(new AQLRatesCpnCapFloorFuncForTARN(), FN_CPNCAPFLOORFORTARN_STR);
+	fm.setFunction(new AQLPriceCouponMax(), FN_CPNSLTOPERATORMAX_STR);
+	fm.setFunction(new AQLPriceCouponMin(), FN_CPNSLTOPERATORMIN_STR);	
+	fm.setFunction(new AQLSumMethod2(), FN_SUM2_STR);
+	fm.setFunction(new AQLPriceCouponForDigital(), FN_CPNSLTOPERATORFORDIGITAL_STR);
+	fm.setFunction(new AQLPriceCouponForDigital2(), FN_CPNSLTOPERATORFORDIGITAL2_STR);
+	fm.setFunction(new AQLCompoundMethod(), FN_COMPOUNDING_STR);
+	fm.setFunction(new AQLCompoundMethod1(), FN_COMPOUNDING1_STR);
+	fm.setFunction(new AQLCompoundMethod2(), FN_COMPOUNDING2_STR);
+	fm.setFunction(new AQLCompoundMethod3(), FN_COMPOUNDING3_STR);
+	fm.setFunction(new AQLCompoundMethod4(), FN_COMPOUNDING4_STR);
+	fm.setFunction(new AQLCompoundMethod5(), FN_COMPOUNDING5_STR);
+	fm.setFunction(new AQLCompoundMethod6(), FN_COMPOUNDING6_STR);
+	fm.setFunction(new AQLCompoundMethod7(), FN_COMPOUNDING7_STR);
+	fm.setFunction(new AQLCompoundMethod8(), FN_COMPOUNDING8_STR);
+	fm.setFunction(new AQLCompoundMethod9(), FN_COMPOUNDING9_STR);
+	fm.setFunction(new AQLCompoundMethod10(), FN_COMPOUNDING10_STR);
 
 	//cf generator
-	LAPriceCashFlowGenerator *pcf = new LAPriceCashFlowGenerator();
+	AQLPriceCashFlowGenerator *pcf = new AQLPriceCashFlowGenerator();
 	pcf->registerData(dm);
 	fm.setFunction(pcf, FN_IR_CASHFLOWGENERATOR_STR);
 
 	//pay off
-	LAPricePayOff *ppayoff = new LAPricePayOff();
+	AQLPricePayOff *ppayoff = new AQLPricePayOff();
 	ppayoff->registerData(dm);
 	fm.setFunction(ppayoff, FN_IR_PAYOFF_STR);
 	//cpnsltoperatorrainbow
-	LAPriceCouponRainbow *pslt = new LAPriceCouponRainbow();
+	AQLPriceCouponRainbow *pslt = new AQLPriceCouponRainbow();
 	pslt->registerData(dm);
 	fm.setFunction(pslt, FN_CPNSLTOPERATORRAINBOW_STR);
 	
-	LAPriceYieldGenerator *ylg = new LAPriceYieldGenerator();
+	AQLPriceYieldGenerator *ylg = new AQLPriceYieldGenerator();
 	fm.setFunction(ylg, FN_IRYIELDGENERATOR_STR);
 
-	LAPriceArbFreeGenerator *ylg_arb = new LAPriceArbFreeGenerator();
+	AQLPriceArbFreeGenerator *ylg_arb = new AQLPriceArbFreeGenerator();
 	fm.setFunction(ylg_arb, FN_IRARBFREEGENERATOR_STR);
 	
 	// portfolio
-	LAPricePortfolioValue *port = new LAPricePortfolioValue();
+	AQLPricePortfolioValue *port = new AQLPricePortfolioValue();
 	fm.setFunction(port, FN_IR_PORTFOLIOVALUE_STR);		
 	port->registerData(dm);
 
 	//fxoption
-	LAPriceFXOptionValue* pfxop = new LAPriceFXOptionValue();
+	AQLPriceFXOptionValue* pfxop = new AQLPriceFXOptionValue();
 	fm.setFunction(pfxop, FN_FXOPTIONVALUE_STR);
 	pfxop->registerData(dm);
 
 	//fxdigitaloption
-	LAPriceFXDigitalOptionValue* pfxdig = new LAPriceFXDigitalOptionValue();
+	AQLPriceFXDigitalOptionValue* pfxdig = new AQLPriceFXDigitalOptionValue();
 	fm.setFunction(pfxdig, FN_FXDIGITALOPTIONVALUE_STR);
 	pfxdig->registerData(dm);
 	
 	//fxdigitalcallspread
-	LAPriceFXDigitalCallSpreadOptionValue* pfxdigcallspread = new LAPriceFXDigitalCallSpreadOptionValue();
+	AQLPriceFXDigitalCallSpreadOptionValue* pfxdigcallspread = new AQLPriceFXDigitalCallSpreadOptionValue();
 	fm.setFunction(pfxdigcallspread, FN_FXDIGITALCALLSPREADOPTIONVALUE_STR);
 	pfxdigcallspread->registerData(dm);
 
 	//fxknockout
-	LAPriceFXKnockoutRebateValue* pfxknockout = new LAPriceFXKnockoutRebateValue();
+	AQLPriceFXKnockoutRebateValue* pfxknockout = new AQLPriceFXKnockoutRebateValue();
 	fm.setFunction(pfxknockout, FN_FXKNOCKOUTREBATEVALUE_STR);
 	pfxknockout->registerData(dm);
 
 	//fxsinglebarrier
-	LAPriceFXSingleBarrierOptionValue* pfxsingle = new LAPriceFXSingleBarrierOptionValue();
+	AQLPriceFXSingleBarrierOptionValue* pfxsingle = new AQLPriceFXSingleBarrierOptionValue();
 	fm.setFunction(pfxsingle, FN_FXSINGLEBARRIEROPTIONVALUE_STR);
 	pfxsingle->registerData(dm);
 
 	//fxdigitalsinglebarrier
-	LAPriceFXDigitalCallSpreadSingleBarrierOptionValue* pfxdigsingle = new LAPriceFXDigitalCallSpreadSingleBarrierOptionValue();
+	AQLPriceFXDigitalCallSpreadSingleBarrierOptionValue* pfxdigsingle = new AQLPriceFXDigitalCallSpreadSingleBarrierOptionValue();
 	fm.setFunction(pfxdigsingle, FN_FXDIGITALCALLSPREADSINGLEBARRIEROPTIONVALUE_STR);
 	pfxdigsingle->registerData(dm);
 
 	//plainvanilla swap
-	//LALinearRatesSwapTradeValue* pvanillatrade = new LALinearRatesSwapTradeValue();
-	LALinearRatesSwapTradeValue* pvanillatrade = new LALinearRatesSwapTradeValue( new LAPriceAccruedInterest());
+	//AQLLinearRatesSwapTradeValue* pvanillatrade = new AQLLinearRatesSwapTradeValue();
+	AQLLinearRatesSwapTradeValue* pvanillatrade = new AQLLinearRatesSwapTradeValue( new AQLPriceAccruedInterest());
 	fm.setFunction(pvanillatrade, FN_IR_PLAINVANILLASWAPTRADEVALUE_STR);
 	pvanillatrade->registerData(dm);
-	LAPriceCashValue* pcash = new LAPriceCashValue();
+	AQLPriceCashValue* pcash = new AQLPriceCashValue();
 	fm.setFunction(pcash, FN_IR_CASHVALUE_STR);
 	pcash->registerData(dm);
 	
 	
 	//convergence
-	LAPriceConvergenceValue* pconvergece = new LAPriceConvergenceValue();
+	AQLPriceConvergenceValue* pconvergece = new AQLPriceConvergenceValue();
 	fm.setFunction(pconvergece, FN_IR_CONVERGENCEVALUE_STR);
 	pconvergece->registerData(dm);
 
 	//capfloor
-	LAPriceIRCapFloorOptionValue* pcapfloor = new LAPriceIRCapFloorOptionValue();
+	AQLPriceIRCapFloorOptionValue* pcapfloor = new AQLPriceIRCapFloorOptionValue();
 	fm.setFunction(pcapfloor, FN_IR_CAPFLOOROPTIONVALUE_STR);
 	pcapfloor->registerData(dm);
 
 	//swaption
-	LAPriceIRSwaptionValue* pswaption = new LAPriceIRSwaptionValue();
+	AQLPriceIRSwaptionValue* pswaption = new AQLPriceIRSwaptionValue();
 	pswaption->registerData(dm);
 	fm.setFunction(pswaption, FN_IR_SWAPTIONVALUE_STR);
 
-	LAPriceIRSwaptionValueFromCashFlow* pswaption2 = new LAPriceIRSwaptionValueFromCashFlow();
+	AQLPriceIRSwaptionValueFromCashFlow* pswaption2 = new AQLPriceIRSwaptionValueFromCashFlow();
 	fm.setFunction(pswaption2, FN_IR_SWAPTIONVALUEFROMCASHFLOW_STR);
 //#ifndef RH6
 //	LAPriceNDSSwaptionValue* pndsswaption = new LAPriceNDSSwaptionValue();
 //	fm.setFunction(pndsswaption, FN_IR_NDSSWAPTIONVALUE_STR);
 //#endif
-	fm.setFunction(new LAPolynomialPS(1), FN_POLYNOMIALPS_STR);
+	fm.setFunction(new AQLPolynomialPS(1), FN_POLYNOMIALPS_STR);
 	
-	LABlackScholesBaseMethod* pbsbasef = new LABlackScholesBaseMethod();
+	AQLBlackScholesBaseMethod* pbsbasef = new AQLBlackScholesBaseMethod();
 	fm.setFunction(pbsbasef, FN_BSBASEFUNC_STR);
 
-	LABlackScholesCapletOption* pbscaplet = new LABlackScholesCapletOption();
+	AQLBlackScholesCapletOption* pbscaplet = new AQLBlackScholesCapletOption();
 	fm.setFunction(pbscaplet, FN_IR_CAPLETOPTIONFUNC_STR);
 
-	LABlackScholesFloorletOption* pbsfloorlet = new LABlackScholesFloorletOption();
+	AQLBlackScholesFloorletOption* pbsfloorlet = new AQLBlackScholesFloorletOption();
 	fm.setFunction(pbsfloorlet, FN_IR_FLOORLETOPTIONFUNC_STR);
 	
-	LABlackScholesCollarOption* pbscollar = new LABlackScholesCollarOption();
+	AQLBlackScholesCollarOption* pbscollar = new AQLBlackScholesCollarOption();
 	fm.setFunction(pbscollar, FN_IR_COLLAROPTIONFUNC_STR);
 	
-	LABlackScholesStrangleOption* pbsstrangle = new LABlackScholesStrangleOption();
+	AQLBlackScholesStrangleOption* pbsstrangle = new AQLBlackScholesStrangleOption();
 	fm.setFunction(pbsstrangle, FN_IR_STRANGLEOPTIONFUNC_STR);
 
-	LABlackScholesStraddleOption* pbsstraddle = new LABlackScholesStraddleOption();
+	AQLBlackScholesStraddleOption* pbsstraddle = new AQLBlackScholesStraddleOption();
 	fm.setFunction(pbsstraddle, FN_IR_STRADDLEOPTIONFUNC_STR);
 
-	LABlackScholesCapletSpreadOption* pbscapletspread = new LABlackScholesCapletSpreadOption();
+	AQLBlackScholesCapletSpreadOption* pbscapletspread = new AQLBlackScholesCapletSpreadOption();
 	fm.setFunction(pbscapletspread, FN_IR_CAPLETSPREADOPTIONFUNC_STR);
 
-	LABlackScholesFloorletSpreadOption* pbsfloorletspread = new LABlackScholesFloorletSpreadOption();
+	AQLBlackScholesFloorletSpreadOption* pbsfloorletspread = new AQLBlackScholesFloorletSpreadOption();
 	fm.setFunction(pbsfloorletspread, FN_IR_FLOORLETSPREADOPTIONFUNC_STR);
 
-	LABlackScholesDelayedCapletOption* pbsdelayedcaplet = new LABlackScholesDelayedCapletOption();
+	AQLBlackScholesDelayedCapletOption* pbsdelayedcaplet = new AQLBlackScholesDelayedCapletOption();
 	fm.setFunction(pbsdelayedcaplet, FN_IR_DELAYEDCAPLETOPTIONFUNC_STR);
 
-	LABlackSholesDelayedFloorletOption* pbsdelayedfloorlet = new LABlackSholesDelayedFloorletOption();
+	AQLBlackSholesDelayedFloorletOption* pbsdelayedfloorlet = new AQLBlackSholesDelayedFloorletOption();
 	fm.setFunction(pbsdelayedfloorlet, FN_IR_DELAYEDFLOORLETOPTIONFUNC_STR);
 
-	LABlackScholesDigitalCapletOption* pbsdigitalcaplet = new LABlackScholesDigitalCapletOption();
+	AQLBlackScholesDigitalCapletOption* pbsdigitalcaplet = new AQLBlackScholesDigitalCapletOption();
 	fm.setFunction(pbsdigitalcaplet, FN_IR_DIGITALCAPLETOPTIONFUNC_STR);
 
-	LABlackShcolesDigitalFloorletOption* pbsdigitalfloorlet = new LABlackShcolesDigitalFloorletOption();
+	AQLBlackShcolesDigitalFloorletOption* pbsdigitalfloorlet = new AQLBlackShcolesDigitalFloorletOption();
 	fm.setFunction(pbsdigitalfloorlet, FN_IR_DIGITALFLOORLETOPTIONFUNC_STR);
 
-	LAPriceOptionGenerator* popgen = new LAPriceOptionGenerator();
+	AQLPriceOptionGenerator* popgen = new AQLPriceOptionGenerator();
 	fm.setFunction(popgen, FN_IR_OPTIONGENERATOR_STR);
 	popgen->registerData(dm);
 
@@ -377,7 +377,7 @@ void
 LAModelSetupVanilla::registEntityMasterEx(AQLDataInstance &dataInstance)
 {
 	AQLObjectMaster &em = dataInstance.getObjectMaster();
-	em.setEntity(new LAMathPlainVanillaEntity(&dataInstance));
+	em.setEntity(new AQLMathPlainVanillaEntity(&dataInstance));
 }
 
 // 

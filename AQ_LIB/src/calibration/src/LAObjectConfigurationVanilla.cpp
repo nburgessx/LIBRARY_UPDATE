@@ -26,26 +26,26 @@
 #include "LAMarketDataHW.h"
 #include "LADefinitions.h"
 #include "LAObjectConfiguration.h"
-#include "LAMathPlainVanillaEntity.h"
+#include "AQLMathPlainVanillaEntity.h"
 #include "LAMarketData.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
 #include "AQLDataReference.h"
 #include "AQLDataValuation.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "AQLMathValuableEntity.h"
-#include "LALinearRatesOptionValue.h"
-#include "LALinearRatesOptionValueDataProvider.h"
-#include "LAPriceTradeValue.h"
-#include "LALinearRatesSwapTradeValue.h"
+#include "AQLLinearRatesOptionValue.h"
+#include "AQLLinearRatesOptionValueDataProvider.h"
+#include "AQLPriceTradeValue.h"
+#include "AQLLinearRatesSwapTradeValue.h"
 #include "AQLLinearFunc.h"
 #include "AQLPriceDataFunction.h"
-#include "LAMathIndexEntity.h"
-#include "LAMathYieldCurvePro.h"
-#include "LAPriceArbFreeGenerator.h"
+#include "AQLMathIndexEntity.h"
+#include "AQLMathYieldCurvePro.h"
+#include "AQLPriceArbFreeGenerator.h"
 #include "AQLLinearInterpolation.h"
-#include "LAPriceConvergenceValue.h"
-#include "LAMathIRVanillaFuncUtility.h"
+#include "AQLPriceConvergenceValue.h"
+#include "AQLMathIRVanillaFuncUtility.h"
 //#include "LAPriceNDSSwaptionValue.h"
 #include <algorithm>
 
@@ -218,7 +218,7 @@ LAObjectConfigurationVanilla::setUpValuableEntity( AQLObjectPool& objPool ) cons
 void 
 LAObjectConfigurationVanilla::setUpPathEntity(AQLObjectPool &objPool, const AQLString *pPathName) const
 {
-	LAMathPlainVanillaEntity *pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
+	AQLMathPlainVanillaEntity *pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
 	if (!pvanilla)
 	{
 		throw AQLCoreInvalidData("Plain Vanilla object is not set in entitiy pool", __FILE__, __LINE__);
@@ -582,7 +582,7 @@ void
 LAObjectConfigurationVanilla::setUpLiborRateMap(AQLObjectPool &objPool) const
 {
 	AQLDataHolder* dh;
-	LAMathPlainVanillaEntity *pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
+	AQLMathPlainVanillaEntity *pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
 	if (!pvanilla)
 	{
 		throw AQLCoreInvalidData("Plain Vanilla object is not set in entitiy pool", __FILE__, __LINE__);
@@ -598,7 +598,7 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(AQLObjectPool &objPool) const
 		ccy.toLower();
 
 		AQLString yldproname =  LAMarketData::getBaseYieldProName(ccy);
-		LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
+		AQLMathYieldCurvePro &bYieldPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(yldproname, ENCHKTYPE_ISDEFINED).get());
 
 		const AQLDataMultiReference &refMarketDatas = bYieldPro.getMarketData();
@@ -629,7 +629,7 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(AQLObjectPool &objPool) const
 			else if (eom) roll_conv = "EOM";
 			else roll_conv = "NORMAL";
 
-			AQLDate enddate = LAMathDateCalculations::getDate(spotdate, termStr, sld, &cal, true, &roll_conv);
+			AQLDate enddate = AQLMathDateCalculations::getDate(spotdate, termStr, sld, &cal, true, &roll_conv);
 		
 			double term = dc.getTerm(spotdate,enddate,false);
 
@@ -688,7 +688,7 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(AQLObjectPool &objPool) const
 //	//	return;
 //
 //	AQLPriceDataDayCount dc(ACT_365_ISDA);
-//	LAMathPlainVanillaEntity *pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
+//	AQLMathPlainVanillaEntity *pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
 //	if (!pvanilla)
 //	{
 //		throw AQLCoreInvalidData("Plain Vanilla object is not set in entitiy pool", __FILE__, __LINE__);
@@ -837,7 +837,7 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(AQLObjectPool &objPool) const
 //						AQLPriceDataCalendar &cal = dynamic_cast<AQLPriceDataCalendar &>(dh->get());
 //						
 //						AQLDate spotdate = cal.getBusinessDay(asOf,spotlag);
-//						AQLDate enddate = LAMathDateCalculations::getDate(spotdate, termStr, true);
+//						AQLDate enddate = AQLMathDateCalculations::getDate(spotdate, termStr, true);
 //						enddate = (!sld.isNull() && !cal.isNull()) ? sld.getDate(enddate, cal) : enddate;
 //						
 //						double term = dc.getTerm(spotdate,enddate,false);
@@ -935,7 +935,7 @@ LAObjectConfigurationVanilla::setUpLiborRateMap(AQLObjectPool &objPool) const
 //						AQLPriceDataCalendar &cal = dynamic_cast<AQLPriceDataCalendar &>(dh->get());
 //						
 //						AQLDate spotdate = cal.getBusinessDay(asOf,spotlag);
-//						AQLDate enddate = LAMathDateCalculations::getDate(spotdate, termStr, true);
+//						AQLDate enddate = AQLMathDateCalculations::getDate(spotdate, termStr, true);
 //						enddate = (!sld.isNull() && !cal.isNull()) ? sld.getDate(enddate, cal) : enddate;
 //						
 //						double term = dc.getTerm(spotdate,enddate,false);
@@ -1092,7 +1092,7 @@ LAObjectConfigurationVanilla::setUpConvexityAdjustInfo(AQLObjectPool &objPool, A
 												AQLString caModel = dynamic_cast<AQLDataString&>(dh->get()).get();
 												caModel.toUpper();
 												indexInfos.get(l).add(PRICING_DATA_CAMODEL, new AQLDataString()).convertFromString(caModel);
-												isDelayedSwapConvexityAdjusted = LAMathIndexEntity::isDelayedConvexityAdjustModel(caModel);
+												isDelayedSwapConvexityAdjusted = AQLMathIndexEntity::isDelayedConvexityAdjustModel(caModel);
 											}
 										}
 										if (isDelayedSwapConvexityAdjusted || pVal->isTypeOf(FN_IR_CAPFLOOROPTIONVALUE))

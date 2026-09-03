@@ -25,7 +25,7 @@
 #include "AQLDataVector.h"
 #include "AQLDataMultiReference.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LADefinitionsRisk.h"
@@ -37,7 +37,7 @@
 #include "LADefinitionsCalibration.h"
 #include "LACalibrationParameters.h"
 #include "LACalibrationParametersManager.h"
-#include "LAMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaption.h"
 
 using namespace std;
 

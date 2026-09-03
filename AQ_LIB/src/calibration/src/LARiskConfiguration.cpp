@@ -29,7 +29,7 @@
 #include "AQLDataVector.h"
 #include "AQLDataMultiReference.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADealUtils.h"
 #include "LADefinitionsRisk.h"
@@ -39,12 +39,12 @@
 #include "LAStaticData.h"
 #include "LAScenarioConfiguration.h"
 #include "LAScenarioConfigurationManager.h"
-#include "LALinearRatesOptionValue.h"
-#include "LALinearRatesOptionValueDataProvider.h"
+#include "AQLLinearRatesOptionValue.h"
+#include "AQLLinearRatesOptionValueDataProvider.h"
 #include "AQLDataReference.h"
 #include "AQLAlgorithm.h"
-#include "LAPricePayOff.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePayOff.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACalibrationParameters.h"
 #include "LACalibrationParametersManager.h"
 #include "LADefinitionsCalibration.h"
@@ -996,7 +996,7 @@ LARiskConfiguration::getIMMFwdRiskMode(const AQLString &ccy) const
             a vector with one risk curve name if all risk curves are the same,
             a vector with risk curve names whose number is the same as the risk grids,
             where a risk curve name is the curve type which is suitable to be passed to
-            LAMathYieldCurvePro::setCurveType (for example, "JPYOIS") to deduce the forward rate changes
+            AQLMathYieldCurvePro::setCurveType (for example, "JPYOIS") to deduce the forward rate changes
             against the market rate bumps;
             This class simply returns a vector which contains one empty AQLString object
 */
@@ -1469,7 +1469,7 @@ LARiskConfiguration::setUpValuableEntityInfo(const AQLString &ccy, AQLObjectPool
 					}
 					else
 					{
-						tmpdatevec[i] = LAMathDateCalculations::getDate(asOf,tmpchangeGridTerm[i],true);
+						tmpdatevec[i] = AQLMathDateCalculations::getDate(asOf,tmpchangeGridTerm[i],true);
 					}
 					termvec[i] = dc.getTerm(asOf,tmpdatevec[i],false);
 				}
@@ -1675,7 +1675,7 @@ LARiskConfiguration::getCalibTargetFX(const AQLString &ccy, AQLDataInstance &dat
 	if (ccy.findString(FX_DELIMITER) < 0 )
 	{
 		AQLObjectPool &objPool = dataInstance.getObjectPool();
-		LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
+		AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 		fCurveCcys = ycPro.getAffectingCcy();
 	}
@@ -1797,7 +1797,7 @@ LARiskConfiguration::setFXEntityParams(const AQLString& ccy, const AQLString& fx
 	param.isParallel = true;
 	param.isGrid = false;
 	// set target name
-	LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+	AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	param.targetName = targetFX->getName();
 
 	// search shift target currency(foreign currency)
@@ -2307,7 +2307,7 @@ LARiskConfiguration::createBaseForeignYieldEntity(const AQLString &ccy, const AQ
 	param.isFirst = isFirst;
 
 	//get domestic yield data name and calcType
-	LAMathYieldCurvePro &ycPro_fCcy = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro_fCcy = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(fCcy), ENCHKTYPE_ISDEFINED).get());
 	const AQLString& affectedCcy = ycPro_fCcy.getAffectedCcy();
 	const AQLString& baseYieldDataName_baseccy = LAMarketData::getYieldDataName(objPool, LAMarketData::getBaseYieldName(affectedCcy));
@@ -2360,7 +2360,7 @@ LARiskConfiguration::createBaseCollateralYieldEntity(const AQLString &ccy, const
 	param.isCollateralCcy = true;
 
 	//get domestic yield data name and calcType
-	LAMathYieldCurvePro &ycPro_colCcy = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro_colCcy = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(colCcy), ENCHKTYPE_ISDEFINED).get());
 	const AQLString& affectedCcy = ycPro_colCcy.getColAffectedCcy();
 	const AQLString& baseYieldDataName_baseccy = LAMarketData::getYieldDataName(objPool, LAMarketData::getBaseYieldName(affectedCcy));
@@ -2452,7 +2452,7 @@ LARiskConfiguration::getIRBaseExtraTargetNames(const AQLString &ccy, AQLDataInst
 	const AQLString ircur = getIRBaseCurrency(ccy);
 
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
-	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ircur), ENCHKTYPE_ISDEFINED).get());
 
 	// get affecting ccys
@@ -2463,7 +2463,7 @@ LARiskConfiguration::getIRBaseExtraTargetNames(const AQLString &ccy, AQLDataInst
 	cCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
 	for (int i = 0; i < fCurveCcys.size(); ++i)
 	{
-		const LAMathYieldCurvePro &fYcPro = dynamic_cast<LAMathYieldCurvePro &>
+		const AQLMathYieldCurvePro &fYcPro = dynamic_cast<AQLMathYieldCurvePro &>
 							(objPool.getObject(LAMarketData::getBaseYieldProName(fCurveCcys[i]), ENCHKTYPE_ISDEFINED).get());
 		tmpCcys = fYcPro.getColAffectingCcy();
 		cCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
@@ -2472,7 +2472,7 @@ LARiskConfiguration::getIRBaseExtraTargetNames(const AQLString &ccy, AQLDataInst
 	StringSet cfCurveCcys;
 	for (StringSet::const_iterator it = cCurveCcys.begin(); it != cCurveCcys.end(); ++it)
 	{
-		const LAMathYieldCurvePro &cYcPro = dynamic_cast<LAMathYieldCurvePro &>
+		const AQLMathYieldCurvePro &cYcPro = dynamic_cast<AQLMathYieldCurvePro &>
 									(objPool.getObject(LAMarketData::getBaseYieldProName(*it), ENCHKTYPE_ISDEFINED).get());
 		tmpCcys = cYcPro.getAffectingCcy();
 		cfCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
@@ -2530,7 +2530,7 @@ LARiskConfiguration::createIRBaseExtraScenarioEntity(const AQLString &ccy, AQLDa
 	vector<AQLObject *> ret;
 	AQLString bShiftStr = getBaseShiftStr(ccy, index); // base shirt value(string)
 
-	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>
 					(objPool.getObject(LAMarketData::getBaseYieldProName(ircur), ENCHKTYPE_ISDEFINED).get());
 
 	map<AQLString, vector<AQLObject *> > scemap;
@@ -2552,7 +2552,7 @@ LARiskConfiguration::createIRBaseExtraScenarioEntity(const AQLString &ccy, AQLDa
 		else
 			cfCurveCcys.insert(fCurveCcys[i]);
 		// get col affecting ccys
-		const LAMathYieldCurvePro &fYcPro = dynamic_cast<LAMathYieldCurvePro &>
+		const AQLMathYieldCurvePro &fYcPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(fCurveCcys[i]), ENCHKTYPE_ISDEFINED).get());
 		tmpCcys = fYcPro.getColAffectingCcy();
 		cCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
@@ -2564,7 +2564,7 @@ LARiskConfiguration::createIRBaseExtraScenarioEntity(const AQLString &ccy, AQLDa
 		if (sce.size() > 0)
 			scemap[*it] = sce;
 		// get affecting ccys of col affecting ccys
-		const LAMathYieldCurvePro &cYcPro = dynamic_cast<LAMathYieldCurvePro &>
+		const AQLMathYieldCurvePro &cYcPro = dynamic_cast<AQLMathYieldCurvePro &>
 									(objPool.getObject(LAMarketData::getBaseYieldProName(*it), ENCHKTYPE_ISDEFINED).get());
 		tmpCcys = cYcPro.getAffectingCcy();
 		cfCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
@@ -3050,7 +3050,7 @@ LARiskConfiguration::createBaseFXEntity(const AQLString &ccy, AQLDataInstance &d
 	//param.isParallel = true;
 	//param.isGrid = false;
 	//// set target name
-	//LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+	//AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	//param.targetName = targetFX->getName();
 
 	//// search shift target currency(foreign currency)
@@ -3257,7 +3257,7 @@ LARiskConfiguration::createFXBaseExtraScenarioEntity(const AQLString &ccy, AQLDa
 	param.isParallel = true;
 	param.isGrid = false;
 	// set target name
-	LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+	AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	param.targetName = targetFX->getName();
 
 	// search shift target currency(foreign currency)

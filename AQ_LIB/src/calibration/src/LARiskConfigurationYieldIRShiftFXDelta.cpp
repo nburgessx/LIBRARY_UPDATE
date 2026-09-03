@@ -401,13 +401,13 @@ LARiskConfigurationYieldIRShiftFXDelta::createVolatilityEntity(const AQLString &
 	const AQLString modelfx = LAMarketData::getModelName(fxcur);
 	const AQLString riskName = getRiskName();
 	const AQLString ircur = getCrossBaseCurrency(fxcur);
-	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>
 					(objPool.getObject(LAMarketData::getBaseYieldProName(ircur), ENCHKTYPE_ISDEFINED).get());
 	const AQLStringVector& fCurveCcys = ycPro.getAffectingCcy();
 		
 	//yield vol object
 	// set target name
-	LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+	AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	
 	// search shift target currency(foreign currency)
 	AQLStringVector ccys;

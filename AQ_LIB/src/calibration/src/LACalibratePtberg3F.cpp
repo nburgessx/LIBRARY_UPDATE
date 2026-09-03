@@ -38,27 +38,27 @@
 #include "LACoreDataService.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
-#include "LAMathJamshidianSwaption.h"
-#include "LAMathJamshidianSwaptionByImplyVol.h"
-#include "LAMathAntonovFXOption.h"
-#include "LAPriceFXDisplacedDiffusionCalibration3F.h"
-#include "LAMathAntonovFXOptionBetaFixed.h"
-#include "LAMathAntonovFXOptionVolatilityFixed.h"
-#include "LAMathDateUtilities.h"
-#include "LAMathCurveFuncUtility.h"
-#include "LAMathIRVanillaFuncUtility.h"
+#include "AQLMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaptionByImplyVol.h"
+#include "AQLMathAntonovFXOption.h"
+#include "AQLPriceFXDisplacedDiffusionCalibration3F.h"
+#include "AQLMathAntonovFXOptionBetaFixed.h"
+#include "AQLMathAntonovFXOptionVolatilityFixed.h"
+#include "AQLMathDateUtilities.h"
+#include "AQLMathCurveFuncUtility.h"
+#include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
-#include "LAPriceHWCalibration.h"
-#include "LAMathAntonovFXOption.h"
-#include "LAMathVolFuncFX.h"
-#include "LAMathVolFuncFXDD.h"
-#include "LAPriceFXVolatility.h"
-#include "LAMathDateCalculations.h"
-#include "LAMathFXVanillaFuncUtility.h"
+#include "AQLPriceHWCalibration.h"
+#include "AQLMathAntonovFXOption.h"
+#include "AQLMathVolFuncFX.h"
+#include "AQLMathVolFuncFXDD.h"
+#include "AQLPriceFXVolatility.h"
+#include "AQLMathDateCalculations.h"
+#include "AQLMathFXVanillaFuncUtility.h"
 #include "LACoreDataService.h"
 #include <sstream>
 #include "LACalibratePool.h"
-#include "LAMathAnalyticalFormula.h"
+#include "AQLMathAnalyticalFormula.h"
 
 using namespace std;
 // constructor
@@ -285,15 +285,15 @@ LACalibratePtberg3F::setUp(AQLObjectPool &objPool,  const MAScenarioParam &param
 		DoubleArray premVec(MARKETNUM);
 		
 		// ATM
-		premVec[0] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[0] * AQLMath::sqrt(term), strikeVec[0], isCallVec[0] ? 1 : -1) * dDF;
+		premVec[0] = AQLMathAnalyticalFormula::BlackFormula(fwdFX, volVec[0] * AQLMath::sqrt(term), strikeVec[0], isCallVec[0] ? 1 : -1) * dDF;
 		// 25Delta High
-		premVec[1] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[1] * AQLMath::sqrt(term), strikeVec[1], isCallVec[1] ? 1 : -1) * dDF;
+		premVec[1] = AQLMathAnalyticalFormula::BlackFormula(fwdFX, volVec[1] * AQLMath::sqrt(term), strikeVec[1], isCallVec[1] ? 1 : -1) * dDF;
 		// 10Delta High
-		premVec[2] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[2] * AQLMath::sqrt(term), strikeVec[2], isCallVec[2] ? 1 : -1) * dDF;
+		premVec[2] = AQLMathAnalyticalFormula::BlackFormula(fwdFX, volVec[2] * AQLMath::sqrt(term), strikeVec[2], isCallVec[2] ? 1 : -1) * dDF;
 		// 25Delta Low
-		premVec[3] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[3] * AQLMath::sqrt(term), strikeVec[3], isCallVec[3] ? 1 : -1) * dDF;
+		premVec[3] = AQLMathAnalyticalFormula::BlackFormula(fwdFX, volVec[3] * AQLMath::sqrt(term), strikeVec[3], isCallVec[3] ? 1 : -1) * dDF;
 		// 10Delta Low 
-		premVec[4] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[4] * AQLMath::sqrt(term), strikeVec[4], isCallVec[4] ? 1 : -1) * dDF;
+		premVec[4] = AQLMathAnalyticalFormula::BlackFormula(fwdFX, volVec[4] * AQLMath::sqrt(term), strikeVec[4], isCallVec[4] ? 1 : -1) * dDF;
 		//set data for 3F
 		DoubleArray premVec_(MARKETNUM);
 		DoubleArray strikeVec_(MARKETNUM);

@@ -19,7 +19,7 @@
 
 #include "AQLString.h"
 #include "AQLDataInstance.h"
-#include "LAMathVolatility.h"
+#include "AQLMathVolatility.h"
 #include "LARiskConfigurationVolCreator.h"
 #include "LAMarketData.h"
 #include "LAPtbergUtils.h"
@@ -48,22 +48,22 @@ protected :
 	//==============================================
 	// setup volatility method for parallel
 	virtual void setUpVolatilityFuncForParallel(const AQLString &riskName, const AQLString &ccy, AQLDataInstance &dataInstance,
-											LAMathVolatility &vol, SCENARIONUM scenarioNum = SCENARIO_1) const;
+											AQLMathVolatility &vol, SCENARIONUM scenarioNum = SCENARIO_1) const;
 	//==============================================
 	// setup volatility data for parallel
 	virtual void setUpVolatilityDataForParallel(const AQLString &riskName, const AQLString &ccy, AQLDataInstance &dataInstance,
-											LAMathVolatility &vol, SCENARIONUM scenarioNum = SCENARIO_1) const;
+											AQLMathVolatility &vol, SCENARIONUM scenarioNum = SCENARIO_1) const;
 	//==============================================
 	// create volatility object for grid
-	virtual std::vector<LAMathVolatility *> createVolatilityEntityFuncForGrid
+	virtual std::vector<AQLMathVolatility *> createVolatilityEntityFuncForGrid
 					(const AQLString &riskName, const AQLString &key, 
-					AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const { riskName, key, dataInstance, scenarioNum; return std::vector<LAMathVolatility *>(0);}
+					AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const { riskName, key, dataInstance, scenarioNum; return std::vector<AQLMathVolatility *>(0);}
 
 	//==============================================
 	// create volatility object for grid
-	virtual std::vector<LAMathVolatility *> createVolatilityEntityDataForGrid
+	virtual std::vector<AQLMathVolatility *> createVolatilityEntityDataForGrid
 					(const AQLString &riskName, const AQLString &key, 
-					AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const { riskName, key, dataInstance, scenarioNum; return std::vector<LAMathVolatility *>(0);}
+					AQLDataInstance &dataInstance, SCENARIONUM scenarioNum = SCENARIO_1) const { riskName, key, dataInstance, scenarioNum; return std::vector<AQLMathVolatility *>(0);}
 	//==============================================
 	// get calibfile path 
 	virtual AQLString getCalibFilePath(const AQLString &riskName, const AQLString &fx, SCENARIONUM scenarioNum = SCENARIO_1) const;

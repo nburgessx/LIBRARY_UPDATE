@@ -13,61 +13,61 @@
 #include "AQLDataVector.h"
 #include "AQLDataProcedure.h"
 #include "AQLAlgorithm.h"
-#include "LAMathVolFuncBase.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathVolatility.h"
-#include "LAPriceYieldGenerator.h"
-#include "LAMathCorrelation.h"
+#include "AQLMathVolFuncBase.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathVolatility.h"
+#include "AQLPriceYieldGenerator.h"
+#include "AQLMathCorrelation.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLSplineInterpolation.h"
 #include "AQLPriceDataInterpolation.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataDayCount.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPriceDriftLMMTerminal.h"
-#include "LAPriceDriftLMMSpot.h"
-#include "LARatesNumeraireBankAccount.h"
-#include "LARatesNumeraireDiscountBond.h"
-#include "LAModelDynamicsLMMCurve.h"
-#include "LAModelDynamicsDDLMMCurve.h"
-#include "LAPriceDriftQuantAdjustment.h"
-#include "LARatesEulerMaruyama.h"
-#include "LARatesPCIntegral.h"
-#include "LARatesTermStructureSDE.h"
-#include "LARatesLJTermStructureSDE.h"
+#include "AQLPriceDriftLMMTerminal.h"
+#include "AQLPriceDriftLMMSpot.h"
+#include "AQLRatesNumeraireBankAccount.h"
+#include "AQLRatesNumeraireDiscountBond.h"
+#include "AQLModelDynamicsLMMCurve.h"
+#include "AQLModelDynamicsDDLMMCurve.h"
+#include "AQLPriceDriftQuantAdjustment.h"
+#include "AQLRatesEulerMaruyama.h"
+#include "AQLRatesPCIntegral.h"
+#include "AQLRatesTermStructureSDE.h"
+#include "AQLRatesLJTermStructureSDE.h"
 #include "LACalibrateModelIR.h"
 #include "LADefinitionsLMM.h"
 #include "LADefinitionsCalibration.h"
-#include "LAMathCorFuncLMM.h"
-#include "LAMathCorrelationLMM.h"
-#include "LAMathCorrelationLMMDiscAngle.h"
-#include "LAMathCorrelationFuncLMM.h"
-#include "LAMathCorrelationFuncLMMFnB.h"
-#include "LAMathCorrelationFuncLMMFnC.h"
-#include "LAMathLeastSquareCorrelationLMM.h"
+#include "AQLMathCorFuncLMM.h"
+#include "AQLMathCorrelationLMM.h"
+#include "AQLMathCorrelationLMMDiscAngle.h"
+#include "AQLMathCorrelationFuncLMM.h"
+#include "AQLMathCorrelationFuncLMMFnB.h"
+#include "AQLMathCorrelationFuncLMMFnC.h"
+#include "AQLMathLeastSquareCorrelationLMM.h"
 #include "LACalibrationParametersLMM.h"
-#include "LAPriceLMMCalibration.h"
-#include "LAMathVolFuncLMM.h"
-#include "LAMathVolFuncWave.h"
-#include "LAMathVolFuncStructureBase.h"
+#include "AQLPriceLMMCalibration.h"
+#include "AQLMathVolFuncLMM.h"
+#include "AQLMathVolFuncWave.h"
+#include "AQLMathVolFuncStructureBase.h"
 #include "LAMarketData.h"
 #include "LAMarketDataLMM.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
-#include "LARatesCurveLinearInterpolation.h"
-#include "LARatesCurveLogLinearInterpolation.h"
+#include "AQLRatesCurveLinearInterpolation.h"
+#include "AQLRatesCurveLogLinearInterpolation.h"
 #include "LACalibrateVolatilityLMM.h"
-#include "LARatesCurveStepLinearInterpolation.h"
+#include "AQLRatesCurveStepLinearInterpolation.h"
 #include "LAScenarioConfiguration.h"
 
-#include "LAQuantLibOptimizationMethod.h"
-#include "LAQuantLibConjugateGradient.h"
-#include "LAQuantLibSteepestDescent.h"
-#include "LAQuantLibSimplex.h"
-#include "LAQuantLibLevenbergMarquardt.h"
-#include "LAQuantLibBoundaryConstraint.h"
-#include "LAQuantLibProblem.h"
-#include "LAQuantLibArray.h"
+#include "AQLQuantLibOptimizationMethod.h"
+#include "AQLQuantLibConjugateGradient.h"
+#include "AQLQuantLibSteepestDescent.h"
+#include "AQLQuantLibSimplex.h"
+#include "AQLQuantLibLevenbergMarquardt.h"
+#include "AQLQuantLibBoundaryConstraint.h"
+#include "AQLQuantLibProblem.h"
+#include "AQLQuantLibArray.h"
 
 using namespace std;
 
@@ -171,20 +171,20 @@ LACalibrateModelLMM::isLJ(const AQLString &currency) const
 	@param[in]  currency
 	@param[in]  dataInstance
 */
-LARatesSDEBase *
+AQLRatesSDEBase *
 LACalibrateModelLMM::createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	SDE_TYPE type = getSDEType(currency);
-	LARatesTermStructureSDE *psde = 0;
+	AQLRatesTermStructureSDE *psde = 0;
 	// check LJ
 	if (isLJ(currency))
 	{
-		psde =  new LARatesLJTermStructureSDE(type);
+		psde =  new AQLRatesLJTermStructureSDE(type);
 	}
 	else
 	{
-		psde =  new LARatesTermStructureSDE(type);
+		psde =  new AQLRatesTermStructureSDE(type);
 	}
 	// set cap ratio
 	AQLString key_ccy = currency;
@@ -203,7 +203,7 @@ LACalibrateModelLMM::createSDEInstance(const AQLString &currency, AQLDataInstanc
 	@param[out] sde
 */
 void
-LACalibrateModelLMM::setVolatility(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setVolatility(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString key_ccy = currency;
 	AQLString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
@@ -212,7 +212,7 @@ LACalibrateModelLMM::setVolatility(const AQLString &currency, LARatesSDEBase &sd
 	vector<vector<AQLFunctionBase *> > volMtx(size);
 	for (int i = 0; i < size; ++i)
 	{
-		volMtx[i].resize(1, new LAMathVolFuncBase(sdeName, i, 0, false));
+		volMtx[i].resize(1, new AQLMathVolFuncBase(sdeName, i, 0, false));
 	}
 	sde.setVolatility(volMtx);
 }
@@ -225,7 +225,7 @@ LACalibrateModelLMM::setVolatility(const AQLString &currency, LARatesSDEBase &sd
 
 */
 void
-LACalibrateModelLMM::setDrift(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setDrift(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString key_ccy = currency;
 	AQLString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
@@ -255,8 +255,8 @@ LACalibrateModelLMM::setDrift(const AQLString &currency, LARatesSDEBase &sde) co
 			AQLString fx_sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
 			for (int i = 0; i < size; ++i)
 			{
-				driftVec[i] = new LAPriceDriftQuantAdjustment(sdeName, fx_sdeName, i, 
-												new LAPriceDriftLMMSpot(sdeName, i, mTenor, mDeltatenor, skew));
+				driftVec[i] = new AQLPriceDriftQuantAdjustment(sdeName, fx_sdeName, i, 
+												new AQLPriceDriftLMMSpot(sdeName, i, mTenor, mDeltatenor, skew));
 			}
 		}
 		else
@@ -264,7 +264,7 @@ LACalibrateModelLMM::setDrift(const AQLString &currency, LARatesSDEBase &sde) co
 			// domestic drift
 			for (int i = 0; i < size; ++i)
 			{
-				driftVec[i] = new LAPriceDriftLMMSpot(sdeName, i, mTenor, mDeltatenor, skew);
+				driftVec[i] = new AQLPriceDriftLMMSpot(sdeName, i, mTenor, mDeltatenor, skew);
 			}
 		}
 	}
@@ -282,7 +282,7 @@ LACalibrateModelLMM::setDrift(const AQLString &currency, LARatesSDEBase &sde) co
 			// drift spot
 			for (int i = 0; i < size; ++i)
 			{
-				driftVec[i] = new LAPriceDriftLMMSpot(sdeName, i, mTenor, mDeltatenor, skew);
+				driftVec[i] = new AQLPriceDriftLMMSpot(sdeName, i, mTenor, mDeltatenor, skew);
 			}
 
 		}
@@ -291,7 +291,7 @@ LACalibrateModelLMM::setDrift(const AQLString &currency, LARatesSDEBase &sde) co
 			// drift terminal
 			for (int i = 0; i < size; ++i)
 			{
-				driftVec[i] = new LAPriceDriftLMMTerminal(sdeName, i, mTenor, mDeltatenor, skew);
+				driftVec[i] = new AQLPriceDriftLMMTerminal(sdeName, i, mTenor, mDeltatenor, skew);
 			}
 
 		}
@@ -312,11 +312,11 @@ LACalibrateModelLMM::setDrift(const AQLString &currency, LARatesSDEBase &sde) co
 
 */
 void
-LACalibrateModelLMM::setNumeraire(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setNumeraire(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	if (MADealUtils::getSDECurrencys().size() != 1)
 	{
-		sde.setNumeraire(new LARatesNumeraireBankAccount(mTenor.back(), true));
+		sde.setNumeraire(new AQLRatesNumeraireBankAccount(mTenor.back(), true));
 		//sde.getNumeraire()->isCancelSpread(true);
 		//sde.getNumeraire()->isCancelSpread(false);
 	}
@@ -334,11 +334,11 @@ LACalibrateModelLMM::setNumeraire(const AQLString &currency, LARatesSDEBase &sde
 		driftType.toUpper();
 		if (driftType == "SPOT")
 		{
-			sde.setNumeraire(new LARatesNumeraireBankAccount(mTenor.back(), true));
+			sde.setNumeraire(new AQLRatesNumeraireBankAccount(mTenor.back(), true));
 		}
 		else if (driftType == "TERMINAL")
 		{
-			sde.setNumeraire(new LARatesNumeraireDiscountBond(mTenor.back(), true));
+			sde.setNumeraire(new AQLRatesNumeraireDiscountBond(mTenor.back(), true));
 		}
 		else
 		{
@@ -355,7 +355,7 @@ LACalibrateModelLMM::setNumeraire(const AQLString &currency, LARatesSDEBase &sde
 
 */
 void
-LACalibrateModelLMM::setOutputTemplate(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setOutputTemplate(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	
 	double skew = 1.0;
@@ -373,7 +373,7 @@ LACalibrateModelLMM::setOutputTemplate(const AQLString &currency, LARatesSDEBase
 	}
 
 	skew = - AQLMath::log(skew) / AQLMath::log(2.0);
-	sde.setOutputTemplate(new LARatesPathElementDDLMMCurve(skew, constShift, mTenor, mDeltatenor, 0.0));
+	sde.setOutputTemplate(new AQLRatesPathElementDDLMMCurve(skew, constShift, mTenor, mDeltatenor, 0.0));
 }
 
 /*!
@@ -384,7 +384,7 @@ LACalibrateModelLMM::setOutputTemplate(const AQLString &currency, LARatesSDEBase
 
 */
 void
-LACalibrateModelLMM::setIntegralFunction(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setIntegralFunction(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString key_ccy = currency;
 	AQLString integralType = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_LMM_INTEGRAL_TYPE);
@@ -396,15 +396,15 @@ LACalibrateModelLMM::setIntegralFunction(const AQLString &currency, LARatesSDEBa
 	{
 		if (integralType == "LOG_INTEGRAL")
 		{
-			sde.setIntegralFunction(new LARatesPCIntegral(LOG_INTEGRAL));
+			sde.setIntegralFunction(new AQLRatesPCIntegral(LOG_INTEGRAL));
 		}
 		else if (integralType == "NORMAL_INTEGRAL")
 		{
-			sde.setIntegralFunction(new LARatesPCIntegral(NORMAL_INTEGRAL));
+			sde.setIntegralFunction(new AQLRatesPCIntegral(NORMAL_INTEGRAL));
 		}
 		else if (integralType == "LOG_INTEGRAL_LOG_OUTPUT")
 		{
-			sde.setIntegralFunction(new LARatesPCIntegral(LOG_INTEGRAL_LOG_OUTPUT));
+			sde.setIntegralFunction(new AQLRatesPCIntegral(LOG_INTEGRAL_LOG_OUTPUT));
 		}
 		else
 		{
@@ -416,15 +416,15 @@ LACalibrateModelLMM::setIntegralFunction(const AQLString &currency, LARatesSDEBa
 	{
 		if (integralType == "LOG_INTEGRAL")
 		{
-			sde.setIntegralFunction(new LARatesEulerMaruyama(LOG_INTEGRAL));
+			sde.setIntegralFunction(new AQLRatesEulerMaruyama(LOG_INTEGRAL));
 		}
 		else if (integralType == "NORMAL_INTEGRAL")
 		{
-			sde.setIntegralFunction(new LARatesEulerMaruyama(NORMAL_INTEGRAL));
+			sde.setIntegralFunction(new AQLRatesEulerMaruyama(NORMAL_INTEGRAL));
 		}
 		else if (integralType == "LOG_INTEGRAL_LOG_OUTPUT")
 		{
-			sde.setIntegralFunction(new LARatesEulerMaruyama(LOG_INTEGRAL_LOG_OUTPUT));
+			sde.setIntegralFunction(new AQLRatesEulerMaruyama(LOG_INTEGRAL_LOG_OUTPUT));
 		}
 		else
 		{
@@ -470,7 +470,7 @@ LACalibrateModelLMM::getCorTye(const AQLString &currency) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelLMM::setUpCorFactor(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
+LACalibrateModelLMM::setUpCorFactor(const AQLString &currency, AQLMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	setUpCorEntity(currency,cor);
@@ -557,7 +557,7 @@ LACalibrateModelLMM::setUpCorFactor(const AQLString &currency, LAMathCorrelation
 	@param[out] dataInstance
 */
 void
-LACalibrateModelLMM::setUpCorData(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
+LACalibrateModelLMM::setUpCorData(const AQLString &currency, AQLMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	setUpCorEntity(currency, cor);
@@ -597,7 +597,7 @@ LACalibrateModelLMM::setUpCorData(const AQLString &currency, LAMathCorrelation &
 	@param[out] dataInstance
 */
 void
-LACalibrateModelLMM::setUpCorFunc(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const
+LACalibrateModelLMM::setUpCorFunc(const AQLString &currency, AQLMathCorrelation &cor, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	setUpCorEntity(currency, cor);
@@ -619,11 +619,11 @@ LACalibrateModelLMM::setUpCorFunc(const AQLString &currency, LAMathCorrelation &
 		// mExoCalibLMMSetCorFunc
 		if (calibCorParam.corFuncType == CALIB_COR_FUNC_TYPE_B)
 		{
-			corFunc = new LAMathCorrelationFuncLMMFnB(calibCorParam.maxTerm, calibCorParam.funcParam_x, calibCorParam.funcParam_y);
+			corFunc = new AQLMathCorrelationFuncLMMFnB(calibCorParam.maxTerm, calibCorParam.funcParam_x, calibCorParam.funcParam_y);
 		}
 		else if (calibCorParam.corFuncType == CALIB_COR_FUNC_TYPE_C)
 		{
-			corFunc = new LAMathCorrelationFuncLMMFnC(calibCorParam.funcParam_x, calibCorParam.funcParam_y);
+			corFunc = new AQLMathCorrelationFuncLMMFnC(calibCorParam.funcParam_x, calibCorParam.funcParam_y);
 		}
 		else
 		{
@@ -670,19 +670,19 @@ LACalibrateModelLMM::setUpCorFunc(const AQLString &currency, LAMathCorrelation &
 
 		unsigned int factorNum = calibCorParam.factorNum;
 
-		LAMathCorrelationLMMDiscAngle *optCor = NULL;
+		AQLMathCorrelationLMMDiscAngle *optCor = NULL;
 		if (calibCorParam.factorNum < 2)
 		{
 			const DoubleMatrix corr_unit(T_fix.size(), DoubleVector(T_fix.size(), 1.0));
-			optCor = new LAMathCorrelationLMMDiscAngle(corr_unit, T_fix, 1, true);
+			optCor = new AQLMathCorrelationLMMDiscAngle(corr_unit, T_fix, 1, true);
 		}
 		else if (calibCorParam.optCorType == CALIB_OPT_TARGET_TYPE_PCA)
 		{
-			optCor = new LAMathCorrelationLMMDiscAngle(dynamic_cast<LAMathCorrelationFuncLMM*>(corFunc), T_fix, calibCorParam.factorNum);
+			optCor = new AQLMathCorrelationLMMDiscAngle(dynamic_cast<AQLMathCorrelationFuncLMM*>(corFunc), T_fix, calibCorParam.factorNum);
 		}
 		else if (calibCorParam.optCorType == CALIB_OPT_TARGET_TYPE_REDUCERANK_ANGLE_FORMULA)
 		{
-			optCor = new LAMathCorrelationLMMDiscAngle(dynamic_cast<LAMathCorrelationFuncLMM*>(corFunc), T_fix, calibCorParam.factorNum);
+			optCor = new AQLMathCorrelationLMMDiscAngle(dynamic_cast<AQLMathCorrelationFuncLMM*>(corFunc), T_fix, calibCorParam.factorNum);
 		}
 		else
 		{
@@ -691,31 +691,31 @@ LACalibrateModelLMM::setUpCorFunc(const AQLString &currency, LAMathCorrelation &
 		}
 
 		// mExoCalibLMMInitOptCorMethod
-		LAQuantLibOptimizationMethod *optCorMethod = NULL;
-		LAQuantLibCostFunction *costFunc = NULL;
-		LAQuantLibConstraint *constraint = NULL;
-		LAQuantLibEndCriteria *endCriteria = NULL;
-		LAQuantLibProblem *problem = NULL;
+		AQLQuantLibOptimizationMethod *optCorMethod = NULL;
+		AQLQuantLibCostFunction *costFunc = NULL;
+		AQLQuantLibConstraint *constraint = NULL;
+		AQLQuantLibEndCriteria *endCriteria = NULL;
+		AQLQuantLibProblem *problem = NULL;
 		if (optCor->getNoFactors() < 2)
 		{
 			// one factor case
 			// dummy?
-			optCorMethod = new LAQuantLibConjugateGradient();
+			optCorMethod = new AQLQuantLibConjugateGradient();
 		}
 		else
 		{
 			// set up CostFunction
-			costFunc = new LAMathLeastSquareCorrelationLMM(*dynamic_cast<LAMathCorrelationLMMDiscAngle*>(optCor));
+			costFunc = new AQLMathLeastSquareCorrelationLMM(*dynamic_cast<AQLMathCorrelationLMMDiscAngle*>(optCor));
 
 			// Set constraint for optimizers: unconstrained problem
-			constraint = new LAQuantLibBoundaryConstraint(calibCorParam.boundaryMin, calibCorParam.boundaryMax);
+			constraint = new AQLQuantLibBoundaryConstraint(calibCorParam.boundaryMin, calibCorParam.boundaryMax);
 
 			// Set initial guess for optimizer
 			DoubleMatrix theta_ = optCor->getTheta();
 			size_t n = theta_.size();
 			size_t no_of_factor = optCor->getNoFactors();
 
-			LAQuantLibArray x(n * (no_of_factor - 1));
+			AQLQuantLibArray x(n * (no_of_factor - 1));
 			size_t k = 0;
 			for(size_t i = 0; i < n; i++)
 			{
@@ -726,24 +726,24 @@ LACalibrateModelLMM::setUpCorFunc(const AQLString &currency, LAMathCorrelation &
 			}
 
 			// Set end criteria for optimizer
-			endCriteria = new LAQuantLibEndCriteria(calibCorParam.maxIteration, calibCorParam.maxStationaryStateIteration,
+			endCriteria = new AQLQuantLibEndCriteria(calibCorParam.maxIteration, calibCorParam.maxStationaryStateIteration,
 					calibCorParam.rootEpsilon, calibCorParam.functionEpsilon, calibCorParam.gradientNormEpsilon);
 
 			// Set Problem
-			problem = new LAQuantLibProblem(*costFunc, *constraint, x);
+			problem = new AQLQuantLibProblem(*costFunc, *constraint, x);
 
 			// Set Optimization Method
 			if( calibCorParam.optCorMethodType == CALIB_NON_LINEAR_CONJUGATE_GRADIENT_METHOD )
 			{
-				optCorMethod = new LAQuantLibConjugateGradient();
+				optCorMethod = new AQLQuantLibConjugateGradient();
 			}
 			else if( calibCorParam.optCorMethodType == CALIB_STEEPEST_DESCENT_METHOD )
 			{
-				optCorMethod = new LAQuantLibSteepestDescent();
+				optCorMethod = new AQLQuantLibSteepestDescent();
 			}
 			else if( calibCorParam.optCorMethodType == CALIB_SIMPLEX_METHOD )
 			{
-				optCorMethod = new LAQuantLibSimplex(0.0001);
+				optCorMethod = new AQLQuantLibSimplex(0.0001);
 			}
 			else if( calibCorParam.optCorMethodType == CALIB_LEVENBERG_MARQUARDT_METHOD )
 			{
@@ -751,7 +751,7 @@ LACalibrateModelLMM::setUpCorFunc(const AQLString &currency, LAMathCorrelation &
 				double levenbergMarquardtXtol   = 1.0e-8;     //
 				double levenbergMarquardtGtol   = 1.0e-8;     //
 
-				optCorMethod = new LAQuantLibLevenbergMarquardt(levenbergMarquardtEpsfcn, levenbergMarquardtXtol, levenbergMarquardtGtol);
+				optCorMethod = new AQLQuantLibLevenbergMarquardt(levenbergMarquardtEpsfcn, levenbergMarquardtXtol, levenbergMarquardtGtol);
 			}
 		}
 
@@ -775,9 +775,9 @@ LACalibrateModelLMM::setUpCorFunc(const AQLString &currency, LAMathCorrelation &
 		}
 		else
 		{
-			LAQuantLibEndCriteria::Type endCriteriaResult = optCorMethod->minimize(*problem, *endCriteria);
+			AQLQuantLibEndCriteria::Type endCriteriaResult = optCorMethod->minimize(*problem, *endCriteria);
 
-			LAQuantLibArray xMinCalculated = problem->currentValue();
+			AQLQuantLibArray xMinCalculated = problem->currentValue();
 
 			DoubleMatrix factorLoadingOptimized( n_tgrid, DoubleVector(factorNum, 0.0) );
 			DoubleMatrix theta_(n_tgrid, DoubleVector(factorNum - 1, 0.0) );
@@ -926,7 +926,7 @@ LACalibrateModelLMM::setUpCorFunc(const AQLString &currency, LAMathCorrelation &
 		double y = funcParamMtx[1][0].trimLeft().trimRight().getDoubleValue();
 		double max = maxMtx[0][0].getDoubleValue();
 
-		corFunc = new LAMathCorFuncLMM(max, x, y);
+		corFunc = new AQLMathCorFuncLMM(max, x, y);
 		cor.setCorrelation(corFunc);
 		cor.calcFactorLoading();
 
@@ -959,7 +959,7 @@ LACalibrateModelLMM::getVolType(const AQLString &currency) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelLMM::setUpVolFunc(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelLMM::setUpVolFunc(const AQLString &currency, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	setUpVolEntity(currency, vol);
 	AQLString key_ccy = currency;
@@ -1077,9 +1077,9 @@ LACalibrateModelLMM::setUpVolFunc(const AQLString &currency, LAMathVolatility &v
 //			}
 //
 //			AQLString sdeName = getFunctionMasterResistName(currency);
-//			const LARatesSDEBase &sde = dynamic_cast<const LARatesSDEBase &>(dataInstance.getFunctionMaster().getFunction(sdeName).get());
+//			const AQLRatesSDEBase &sde = dynamic_cast<const AQLRatesSDEBase &>(dataInstance.getFunctionMaster().getFunction(sdeName).get());
 //
-//			LARatesCurveLogLinearInterpolation *pInter = dynamic_cast<LARatesCurveLogLinearInterpolation *>(sde.getInterpolationMethod());
+//			AQLRatesCurveLogLinearInterpolation *pInter = dynamic_cast<AQLRatesCurveLogLinearInterpolation *>(sde.getInterpolationMethod());
 //			pInter->setVolForInterpolation(volMat);
 //		}
 //	}
@@ -1093,7 +1093,7 @@ LACalibrateModelLMM::setUpVolFunc(const AQLString &currency, LAMathVolatility &v
 	@param[out] sde
 */
 void
-LACalibrateModelLMM::setInterpolationMethod(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelLMM::setInterpolationMethod(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString key_ccy = currency;
 	key_ccy.toLower();
@@ -1211,13 +1211,13 @@ LACalibrateModelLMM::setInterpolationMethod(const AQLString &currency, LARatesSD
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //
-//			LARatesCurveLogLinearInterpolation *pInter = createCurveLogLinearInterpolation();
+//			AQLRatesCurveLogLinearInterpolation *pInter = createCurveLogLinearInterpolation();
 //			//pInter->setVolForInterpolation(volMat);
 //			sde.setInterpolationMethod(pInter);
 //		}
 //		else
 //		{
-//			LARatesCurveLogLinearInterpolation *pInter = createCurveLogLinearInterpolation();
+//			AQLRatesCurveLogLinearInterpolation *pInter = createCurveLogLinearInterpolation();
 //			//pInter->setVolForInterpolation(volMat);
 //			sde.setInterpolationMethod(pInter);
 //		}
@@ -1225,11 +1225,11 @@ LACalibrateModelLMM::setInterpolationMethod(const AQLString &currency, LARatesSD
 	}
 	else if (interType == "LINEAR")
 	{
-		sde.setInterpolationMethod(new LARatesCurveLinearInterpolation());
+		sde.setInterpolationMethod(new AQLRatesCurveLinearInterpolation());
 	}
 	else if (interType == "STEP")
 	{
-		sde.setInterpolationMethod(new LARatesCurveStepLinearInterpolation());
+		sde.setInterpolationMethod(new AQLRatesCurveStepLinearInterpolation());
 	}
 	else
 	{
@@ -1241,12 +1241,12 @@ LACalibrateModelLMM::setInterpolationMethod(const AQLString &currency, LARatesSD
 /*!
     @brief curve create log linear interpolation
 
-	@return LARatesCurveLogLinearInterpolation *
+	@return AQLRatesCurveLogLinearInterpolation *
 */
-LARatesCurveLogLinearInterpolation *
+AQLRatesCurveLogLinearInterpolation *
 LACalibrateModelLMM::createCurveLogLinearInterpolation() const
 {
-	return new LARatesCurveLogLinearInterpolation();
+	return new AQLRatesCurveLogLinearInterpolation();
 }
 
 // 
@@ -1258,7 +1258,7 @@ LACalibrateModelLMM::createCurveLogLinearInterpolation() const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelLMM::setUpVolData(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelLMM::setUpVolData(const AQLString &currency, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	setUpVolEntity(currency, vol);
@@ -1322,7 +1322,7 @@ LACalibrateModelLMM::setUpVolData(const AQLString &currency, LAMathVolatility &v
 
 */
 void
-LACalibrateModelLMM::setUpCorEntity(const AQLString &currency, LAMathCorrelation &cor) const
+LACalibrateModelLMM::setUpCorEntity(const AQLString &currency, AQLMathCorrelation &cor) const
 {
 	// set grid_T
 	DoubleArray grid_T;
@@ -1385,7 +1385,7 @@ LACalibrateModelLMM::setUpCorEntity(const AQLString &currency, LAMathCorrelation
 	@param[out] vol
 */
 void
-LACalibrateModelLMM::setUpVolEntity(const AQLString &currency, LAMathVolatility &vol) const
+LACalibrateModelLMM::setUpVolEntity(const AQLString &currency, AQLMathVolatility &vol) const
 {
 	// set interpolation
 	AQLString tmpCurrency = currency;

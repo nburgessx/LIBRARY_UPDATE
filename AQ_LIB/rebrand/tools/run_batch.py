@@ -41,6 +41,20 @@ if missing_stems:
         print("   ", s)
     sys.exit(2)
 
+# --- 1b. merge vcxproj/.filters filename casings into the map ---
+# a file's git-stored casing can differ from the casing recorded in the .vcxproj
+# (e.g. Payoff vs PayOff on case-insensitive Windows). Any LA*.<ext> token in a
+# project file whose stem case-insensitively matches a renamed file gets its own
+# map entry so the plain word-boundary replace fixes it.
+new_stem_ci = {b.rsplit(".", 1)[0].lower(): "AQL" + b.rsplit(".", 1)[0][2:]
+               for b, _ in renamed}
+for pf in glob.glob("projects/*.vcxproj") + glob.glob("projects/*.vcxproj.filters"):
+    for tok in re.findall(r"\b(LA[A-Za-z0-9_]+)\.(?:h|hpp|cpp|cxx)\b",
+                          open(pf, encoding="utf-8", errors="replace").read()):
+        if tok not in rmap and tok.lower() in new_stem_ci:
+            rmap[tok] = new_stem_ci[tok.lower()]   # normalise to git's stored casing
+            print("  vcxproj-casing merge: %s -> %s" % (tok, rmap[tok]))
+
 # --- 2. tree-wide identifier replace ---
 keys = sorted(rmap, key=len, reverse=True)
 one = re.compile("|".join(r"\b" + re.escape(k) + r"\b" for k in keys))

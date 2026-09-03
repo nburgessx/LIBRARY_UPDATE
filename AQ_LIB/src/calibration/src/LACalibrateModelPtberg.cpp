@@ -21,27 +21,27 @@
 #include "LACalibrateModelPtberg.h"
 #include "AQLFunctionBase.h"
 #include "AQLFunctionManager.h"
-#include "LAMathVolFuncBase.h"
+#include "AQLMathVolFuncBase.h"
 #include "AQLPriceDataInterpolation.h"
-#include "LAPriceDriftLMMSpot.h"
-#include "LAPriceDriftFX.h"
-#include "LARatesSpotSDE.h"
-#include "LARatesLJSpotSDE.h"
-#include "LARatesEulerMaruyama.h"
+#include "AQLPriceDriftLMMSpot.h"
+#include "AQLPriceDriftFX.h"
+#include "AQLRatesSpotSDE.h"
+#include "AQLRatesLJSpotSDE.h"
+#include "AQLRatesEulerMaruyama.h"
 #include "LACalibrateModelFX.h"
 #include "LADefinitionsPtberg.h"
 #include "LAMarketData.h"
-#include "LAMathVolFuncFX.h"
-#include "LAMathFXAdjuster.h"
-#include "LAMathVolatility.h"
+#include "AQLMathVolFuncFX.h"
+#include "AQLMathFXAdjuster.h"
+#include "AQLMathVolatility.h"
 #include "LAScenarioConfiguration.h"
 #include "LACalibrateVolatilityPtberg.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
 #include "AQLConstant.h"
-#include "LAPriceFXVolatility.h"
-#include "LAPriceFXDDIntegral.h"
-#include "LAPriceFXDDIntegralMelstein.h"
+#include "AQLPriceFXVolatility.h"
+#include "AQLPriceFXDDIntegral.h"
+#include "AQLPriceFXDDIntegralMelstein.h"
 #include "LACalibrationParametersPtberg.h"
 
 using namespace std;
@@ -71,7 +71,7 @@ LACalibrateModelPtberg::~LACalibrateModelPtberg(void)
 	@param[in] fx
 	@param[in] dataInstance
 */
-LARatesSDEBase *
+AQLRatesSDEBase *
 LACalibrateModelPtberg::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	dataInstance;
@@ -79,11 +79,11 @@ LACalibrateModelPtberg::createSDEInstance(const AQLString &fx, AQLDataInstance &
 	// check LJ
 	if (isLJ(fx))
 	{
-		return new LARatesLJSpotSDE(type);
+		return new AQLRatesLJSpotSDE(type);
 	}
 	else
 	{
-		return new LARatesSpotSDE(type);
+		return new AQLRatesSpotSDE(type);
 	}
 }
 
@@ -147,14 +147,14 @@ LACalibrateModelPtberg::isLJ(const AQLString &fx) const
 	@param[out] sde
 */
 void
-LACalibrateModelPtberg::setVolatility(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelPtberg::setVolatility(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
 	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
 	AQLString sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
 
 	vector<vector<AQLFunctionBase *> > volMtx(1);
-	volMtx[0].push_back(new LAMathVolFuncBase(sdeName, 0, 0, true));
+	volMtx[0].push_back(new AQLMathVolFuncBase(sdeName, 0, 0, true));
 	sde.setVolatility(volMtx);
 }
 
@@ -168,7 +168,7 @@ LACalibrateModelPtberg::setVolatility(const AQLString &fx, LARatesSDEBase &sde) 
 
 */
 void
-LACalibrateModelPtberg::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelPtberg::setDrift(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
@@ -176,7 +176,7 @@ LACalibrateModelPtberg::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
 	AQLString sdeName_d = mpStaticData->getStaticData(ccys[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 	AQLString sdeName_f = mpStaticData->getStaticData(ccys[1].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 	
-	vector<AQLFunctionBase*> drift(1,  new LAPriceDriftFX(sdeName_d, sdeName_f));
+	vector<AQLFunctionBase*> drift(1,  new AQLPriceDriftFX(sdeName_d, sdeName_f));
 	sde.setDrift(drift);
 }
 
@@ -190,7 +190,7 @@ LACalibrateModelPtberg::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
 
 */
 void
-LACalibrateModelPtberg::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelPtberg::setIntegralFunction(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
 	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
@@ -204,11 +204,11 @@ LACalibrateModelPtberg::setIntegralFunction(const AQLString &fx, LARatesSDEBase 
 		integralType.toUpper();
 		if (integralType == "MELSTEIN")
 		{
-			sde.setIntegralFunction(new LAPriceFXDDIntegralMelstein());
+			sde.setIntegralFunction(new AQLPriceFXDDIntegralMelstein());
 		}
 		else if (integralType == "EXPLICIT")
 		{
-			sde.setIntegralFunction(new LAPriceFXDDIntegral());
+			sde.setIntegralFunction(new AQLPriceFXDDIntegral());
 		}
 		else
 		{
@@ -222,15 +222,15 @@ LACalibrateModelPtberg::setIntegralFunction(const AQLString &fx, LARatesSDEBase 
 		integralType.toUpper();
 		if (integralType == "LOG_INTEGRAL")
 		{
-			sde.setIntegralFunction(new LARatesEulerMaruyama(LOG_INTEGRAL));
+			sde.setIntegralFunction(new AQLRatesEulerMaruyama(LOG_INTEGRAL));
 		}
 		else if (integralType == "NORMAL_INTEGRAL")
 		{
-			sde.setIntegralFunction(new LARatesEulerMaruyama(NORMAL_INTEGRAL));
+			sde.setIntegralFunction(new AQLRatesEulerMaruyama(NORMAL_INTEGRAL));
 		}
 		else if (integralType == "LOG_INTEGRAL_LOG_OUTPUT")
 		{
-			sde.setIntegralFunction(new LARatesEulerMaruyama(LOG_INTEGRAL_LOG_OUTPUT));
+			sde.setIntegralFunction(new AQLRatesEulerMaruyama(LOG_INTEGRAL_LOG_OUTPUT));
 		}
 		else
 		{
@@ -275,7 +275,7 @@ LACalibrateModelPtberg::getVolType(const AQLString &fx) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelPtberg::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelPtberg::setUpVolFunc(const AQLString &fx, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	setUpVolEntity(fx,vol);
 	AQLStringVector ccys;
@@ -333,7 +333,7 @@ LACalibrateModelPtberg::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol,
 	
 	if (isLJ(fx))
 	{
-		LAPriceFXVolatility *fxVolatility = new LAPriceFXVolatility(method, new AQLConstant(1.0), dynamic_cast<LAMathVolFuncFX *>(method)->getTimeGrid());
+		AQLPriceFXVolatility *fxVolatility = new AQLPriceFXVolatility(method, new AQLConstant(1.0), dynamic_cast<AQLMathVolFuncFX *>(method)->getTimeGrid());
 		vol.setVolatility(fxVolatility);
 	}
 	else
@@ -345,7 +345,7 @@ LACalibrateModelPtberg::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol,
 	//const AQLString &volName = vol.getName().get();
 	//if (isLJ(fx))
 	//{
-	//	LAPriceFXVolatility *fxVolatility = new LAPriceFXVolatility(method, new AQLConstant(1.0), dynamic_cast<LAMathVolFuncFX *>(method)->getTimeGrid());
+	//	AQLPriceFXVolatility *fxVolatility = new AQLPriceFXVolatility(method, new AQLConstant(1.0), dynamic_cast<AQLMathVolFuncFX *>(method)->getTimeGrid());
 	//	dataInstance.getFunctionMaster().setFunction(fxVolatility->clone(), volName + AQLString("_0_0"));
 	//	vol.setVolatility(fxVolatility);
 	//}
@@ -369,7 +369,7 @@ LACalibrateModelPtberg::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol,
 	@param[out] dataInstance
 */
 void
-LACalibrateModelPtberg::setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelPtberg::setUpVolData(const AQLString &fx, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	fx;
 	vol;
@@ -385,7 +385,7 @@ LACalibrateModelPtberg::setUpVolData(const AQLString &fx, LAMathVolatility &vol,
 
 */
 void
-LACalibrateModelPtberg::setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const
+LACalibrateModelPtberg::setUpVolEntity(const AQLString &fx, AQLMathVolatility &vol) const
 {
 	// set interpolation
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);

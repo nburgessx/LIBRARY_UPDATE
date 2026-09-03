@@ -17,8 +17,8 @@
 #include "LWOUtilities.h"
 
 #include "LADateHelpers.h"
-#include "LACompoundingFunc.h"
-#include "LAMathInterpolationUtilities.h"
+#include "AQLCompoundingFunc.h"
+#include "AQLMathInterpolationUtilities.h"
 
 #include "CurveMarketData.h"
 #include "ExceptionMacros.h"

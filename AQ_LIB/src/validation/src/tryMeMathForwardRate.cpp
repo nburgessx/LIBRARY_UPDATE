@@ -6,7 +6,7 @@
 #include "RecordMacros.h"					// Record Macros
 #include "CoreEnumerations.h"				// isHybridInterpolation method
 #include "CurveInterpolation.h"				// CurveInterpolation Class
-#include "LAMathInterpolationUtilities.h"	// includes buildInterpolator
+#include "AQLMathInterpolationUtilities.h"	// includes buildInterpolator
 #include "CurveValidation.h"				// convert curve dates to terms
 
 using etrading::CreateDataFile;
@@ -184,7 +184,7 @@ namespace validation
 
 		// Build Legacy Interpolator Object
 		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
-			= LAMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
+			= AQLMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
 															   joinDateAsDouble );
@@ -242,7 +242,7 @@ namespace validation
 
 		// Build Legacy Interpolator Object
 		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
-			= LAMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
+			= AQLMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
 															   joinDateAsDouble );
@@ -300,7 +300,7 @@ namespace validation
 
 		// Build Legacy Interpolator Object
 		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
-			= LAMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
+			= AQLMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
 															   joinDateAsDouble );
@@ -358,7 +358,7 @@ namespace validation
 
 		// Build Legacy Interpolator Object
 		std::shared_ptr<AQLInterpolationBase> laInterpolationObject
-			= LAMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
+			= AQLMathInterpolationUtilities::buildInterpolator( xValuesAsDouble,
 															   yValues,
 															   interpolationEnum,
 															   joinDateAsDouble );

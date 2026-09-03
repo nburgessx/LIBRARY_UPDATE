@@ -38,14 +38,14 @@
 #include "LACoreDataService.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
-#include "LAMathDateUtilities.h"
-#include "LAMathCurveFuncUtility.h"
-#include "LAMathIRVanillaFuncUtility.h"
+#include "AQLMathDateUtilities.h"
+#include "AQLMathCurveFuncUtility.h"
+#include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
-#include "LAMathVolFuncFXStrangleSolver.h"
-#include "LAPriceFXVolatility.h"
-#include "LAMathDateCalculations.h"
-#include "LAMathFXVanillaFuncUtility.h"
+#include "AQLMathVolFuncFXStrangleSolver.h"
+#include "AQLPriceFXVolatility.h"
+#include "AQLMathDateCalculations.h"
+#include "AQLMathFXVanillaFuncUtility.h"
 #include "LACoreDataService.h"
 #include <sstream>
 #include "AQLBasic.h"
@@ -101,7 +101,7 @@ LACalibrateFXStrangleSolver::setUp(AQLObjectPool &objPool,  const MAScenarioPara
 		AQLString msg = dYieldName + " is not registered in EntityPool";
 		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
-	const LAMathYieldCurve &dYield = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(dYieldName, ENCHKTYPE_ISDEFINED).get());
+	const AQLMathYieldCurve &dYield = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(dYieldName, ENCHKTYPE_ISDEFINED).get());
 	const AQLString &dYieldDataName = dYield.getYieldData().get().getName();
 
 	// get foreign curve
@@ -111,17 +111,17 @@ LACalibrateFXStrangleSolver::setUp(AQLObjectPool &objPool,  const MAScenarioPara
 		AQLString msg = fYieldName + " is not registered in EntityPool";
 		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
-	const LAMathYieldCurve &fYield = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(fYieldName, ENCHKTYPE_ISDEFINED).get());
+	const AQLMathYieldCurve &fYield = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(fYieldName, ENCHKTYPE_ISDEFINED).get());
 	const AQLString &fYieldDataName = fYield.getYieldData().get().getName();
 
 
 	
 	// spot fx
-    LAMathFXEntity* forward_fx = LAMarketData::getFXEntity(objPool, "FORWARDRATE");
+    AQLMathFXEntity* forward_fx = LAMarketData::getFXEntity(objPool, "FORWARDRATE");
     if(forward_fx == NULL){
         throw AQLCoreInvalidData("fx object is not registered.", __FILE__, __LINE__);
     }
-	LAMathFXEntity fx_tmp = *forward_fx;
+	AQLMathFXEntity fx_tmp = *forward_fx;
 	fx_tmp.getFXType() = "FIXEDRATE";
 	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(param.ccy, ccys);
@@ -130,8 +130,8 @@ LACalibrateFXStrangleSolver::setUp(AQLObjectPool &objPool,  const MAScenarioPara
 	//add extra base param
 	mSpotRate += param.extraBaseParam;
 	//
-	//LAMathPlainVanillaEntity& eplain = *(LAMarketData::getPlainVanillaEntity(objPool));
-	//LAMathFXEntity& efx = dynamic_cast<LAMathFXEntity &>(eplain.getFXEntity().get().get());
+	//AQLMathPlainVanillaEntity& eplain = *(LAMarketData::getPlainVanillaEntity(objPool));
+	//AQLMathFXEntity& efx = dynamic_cast<AQLMathFXEntity &>(eplain.getFXEntity().get().get());
 	//AQLStringVector ccys;
 	//LAMarketData::convertToCurrency(param.ccy, ccys);
 	//// set spot rate
@@ -500,18 +500,18 @@ LACalibrateFXStrangleSolver::setUp(AQLObjectPool &objPool,  const MAScenarioPara
 	mWingFactor = dynamic_cast<const AQLDataDoubles &>(calibInfo.getData("WingFactors", ISNOTNULL).get()).get();
 
 	AQLString interpMethod = dynamic_cast<const AQLDataString &>(calibInfo.getData("InterpolationMethod", ISNOTNULL).get()).get();
-	LAMathFXVolatilitySurfaceGenerate::SetInterpolationMethod(interpMethod, mMethod );
+	AQLMathFXVolatilitySurfaceGenerate::SetInterpolationMethod(interpMethod, mMethod );
 
 	AQLString target = dynamic_cast<const AQLDataString &>(calibInfo.getData("DeltaOrStrike", ISNOTNULL).get()).get();
-	LAMathFXVolatilitySurfaceGenerate::SetInterpolationTarget( target, mTarget );
+	AQLMathFXVolatilitySurfaceGenerate::SetInterpolationTarget( target, mTarget );
 
 	AQLString variable = dynamic_cast<const AQLDataString &>(calibInfo.getData("Variable", ISNOTNULL).get()).get();
-	LAMathFXVolatilitySurfaceGenerate::SetInterpolationVariable( variable, mVariable );
+	AQLMathFXVolatilitySurfaceGenerate::SetInterpolationVariable( variable, mVariable );
 	if (mVariable != VariableLogStrike)
 		throw AQLCoreInvalidData("Only LogStrike is supported", __FILE__,__LINE__);
 
 	AQLString matumethod = dynamic_cast<const AQLDataString &>(calibInfo.getData("MaturityMethod", ISNOTNULL).get()).get();
-	LAMathFXVolatilitySurfaceGenerate::SetATMInterpolationMethod( matumethod, mAtmMethod );
+	AQLMathFXVolatilitySurfaceGenerate::SetATMInterpolationMethod( matumethod, mAtmMethod );
 
 	mIsApproximation  = dynamic_cast<const AQLDataBool &>(calibInfo.getData("IsApptoximation", ISNOTNULL).get()).get();
 	//is wing
@@ -528,12 +528,12 @@ LACalibrateFXStrangleSolver::setUp(AQLObjectPool &objPool,  const MAScenarioPara
 	
 	for (unsigned int i = 0; i < vecSize; i++)
 	{
-		/*mFxParams[i] = LAMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*mpDataInstance,dYieldDataName,fYieldDataName,optionMatDates[i],
+		/*mFxParams[i] = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*mpDataInstance,dYieldDataName,fYieldDataName,optionMatDates[i],
                 mSpotRate,deltaTypes[i],atmTypes[i]);*/
 
 		//AQLString cal;
 //		AQLPriceDataCalendar cal;
-		mFxParams[i] = LAMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*mpDataInstance,dYieldDataName,fYieldDataName,optionMatDates[i],
+		mFxParams[i] = AQLMathFXVolatilitySurfaceGenerate::SetFXOptionParam(*mpDataInstance,dYieldDataName,fYieldDataName,optionMatDates[i],
 			optionDelDates[i],mSpotRate,deltaTypes[i],atmTypes[i],cal);
 	
 		mSmileParams[i].atmVol = volATMVec[i];
@@ -656,16 +656,16 @@ LACalibrateFXStrangleSolver::doCalibrate()
 		if (mIsApproximation)
 		{
 			AQLString msg;
-			mSmileData[i] = LAMathFXVolatilitySurfaceGenerate::BuildSmile(mSmileParams[i], mFxParams[i], mIsWing, mWingFactor[i],msg);
+			mSmileData[i] = AQLMathFXVolatilitySurfaceGenerate::BuildSmile(mSmileParams[i], mFxParams[i], mIsWing, mWingFactor[i],msg);
 		}
 		else 
 		{
-			mSmileData[i] = LAMathFXVolatilitySurfaceGenerate::FindStrangleVol(mFxParams[i], mSmileParams[i], mMethod, mTarget, mIsWing, mWingFactor[i]);
+			mSmileData[i] = AQLMathFXVolatilitySurfaceGenerate::FindStrangleVol(mFxParams[i], mSmileParams[i], mMethod, mTarget, mIsWing, mWingFactor[i]);
 		}
 		
 	}
 
-	LAMathVolFuncFXStrangleSolver* method = new LAMathVolFuncFXStrangleSolver(mMethod,mTarget,mVariable,mAtmMethod,mFxParams,mSmileData,mIsWing);
+	AQLMathVolFuncFXStrangleSolver* method = new AQLMathVolFuncFXStrangleSolver(mMethod,mTarget,mVariable,mAtmMethod,mFxParams,mSmileData,mIsWing);
 	mpFunc->setRealFunction(*method);
 	mpFunc->setOn();
 

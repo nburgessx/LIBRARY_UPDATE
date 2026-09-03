@@ -4,7 +4,7 @@
 
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
-#include "LAMathSwaptionVolUtility.h"
+#include "AQLMathSwaptionVolUtility.h"
 #include "InitializeAQETrading.h"
 #include "RecordMacros.h"
 
@@ -24,7 +24,7 @@ namespace validation
 		// Record Inputs for logs, tests and playback
 		RECORD_INPUTS(gridID, conventionID, gridData);
 		
-		LAMathSwaptionVolUtility::setUpSABRGrid(etrading::InitializeAQETrading::instance().dataInstance(), gridID, conventionID, gridData);
+		AQLMathSwaptionVolUtility::setUpSABRGrid(etrading::InitializeAQETrading::instance().dataInstance(), gridID, conventionID, gridData);
 
 		VALID_EXCEPTION_END
 	}

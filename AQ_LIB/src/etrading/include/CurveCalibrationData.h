@@ -1,6 +1,6 @@
 //
 // CurveCalibrationData.h
-// This file was previously called YieldCurvePro.h and before that LAMathYieldCurvePro.h
+// This file was previously called YieldCurvePro.h and before that AQLMathYieldCurvePro.h
 //
 #pragma once
 
@@ -12,9 +12,9 @@
 #include "LACurvePricingObject.h"
 #include "AQLDataBasics.h"
 #include "LADateHelpers.h"
-#include "LAModelDynamicsCurve.h"
+#include "AQLModelDynamicsCurve.h"
 
-#include "LAMathYieldCurvePro.h" // *** Include this just to use the define constants
+#include "AQLMathYieldCurvePro.h" // *** Include this just to use the define constants
 #include "CurveCalibration.h"
 #include "LADefinitions.h"
 #include "LACurvePricingObject.h"
@@ -592,8 +592,8 @@ public:
 
 			AQLString lterm_x = dynamic_cast<const AQLDataString&> ((_Left->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
 			AQLString rterm_x = dynamic_cast<const AQLDataString&> ((_Right->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			AQLString lterm = LAPriceYieldGenerator::changeFRATermFormat(lterm_x);
-			AQLString rterm = LAPriceYieldGenerator::changeFRATermFormat(rterm_x);
+			AQLString lterm = AQLPriceYieldGenerator::changeFRATermFormat(lterm_x);
+			AQLString rterm = AQLPriceYieldGenerator::changeFRATermFormat(rterm_x);
 			asof.setSystemDate();
 			ldate = etrading::LADateHelpers::getDate(asof, lterm, true);
 			rdate = etrading::LADateHelpers::getDate(asof, rterm, true);

@@ -22,13 +22,13 @@
 
 #include "AQLDataInstance.h"
 #include "LACalibrateModelHW3F.h"
-#include "LAPriceDriftHWQuantAdjustment3F.h"
-#include "LARatesHWIntegral3F.h"
-#include "LARatesSpotSDEQuantAdjustment.h"
+#include "AQLPriceDriftHWQuantAdjustment3F.h"
+#include "AQLRatesHWIntegral3F.h"
+#include "AQLRatesSpotSDEQuantAdjustment.h"
 #include "LAStaticData.h"
 #include "LADealUtils.h"
 #include "LAMarketData.h"
-#include "LAPriceQuantAdjustmentHWFXDD.h"
+#include "AQLPriceQuantAdjustmentHWFXDD.h"
 #include "LADefinitionsHW.h"
 #include "LADefinitionsPtberg.h"
 #include "AQLFunctionManager.h"
@@ -62,14 +62,14 @@ LACalibrateModelHW3F::~LACalibrateModelHW3F(void)
 	@param[in]  currency
 	@param[in]  dataInstance
 */
-LARatesSDEBase *
+AQLRatesSDEBase *
 LACalibrateModelHW3F::createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
 	AQLString key_ccy = currency;
 	AQLString sdeName = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 
-	LARatesSpotSDE *psde = 0;
+	AQLRatesSpotSDE *psde = 0;
 	AQLString tmp_baseccy = mBaseCurrency;
 	tmp_baseccy.toLower();
 
@@ -93,16 +93,16 @@ LACalibrateModelHW3F::createSDEInstance(const AQLString &currency, AQLDataInstan
 			AQLString fx_sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
 			const double irThreshold = LAMarketData::getStaticDataValue(*mpStaticData, key_ccy, KEY_HW_QUANTOADJUST_THRESHOLD).getDoubleValue();
 			const double fxThreshold = LAMarketData::getStaticDataValue(*mpStaticData, key_fx, KEY_PTBERG_QUANTOADJUST_THRESHOLD).getDoubleValue();
-			LAPriceQuantAdjustmentHWFXDD *quantAduster = new LAPriceQuantAdjustmentHWFXDD(sdeName, fx_sdeName, false, fxThreshold, irThreshold);
+			AQLPriceQuantAdjustmentHWFXDD *quantAduster = new AQLPriceQuantAdjustmentHWFXDD(sdeName, fx_sdeName, false, fxThreshold, irThreshold);
 			const AQLString quantName = sdeName + "_QuantAdjustmentHWFXDD";
 			dataInstance.getFunctionMaster().setFunction(quantAduster, quantName);
 
-			psde =  new LARatesSpotSDEQuantAdjustment(type, quantAduster);
+			psde =  new AQLRatesSpotSDEQuantAdjustment(type, quantAduster);
 		}
 		else
 		{
 			// domestic drift
-			psde =  new LARatesSpotSDE(type);
+			psde =  new AQLRatesSpotSDE(type);
 		}
 	}
 	else
@@ -113,7 +113,7 @@ LACalibrateModelHW3F::createSDEInstance(const AQLString &currency, AQLDataInstan
 			throw AQLCoreInvalidData("Sigle currency support only one currency", __FILE__, __LINE__);
 		}
 
-		psde =  new LARatesSpotSDE(type);
+		psde =  new AQLRatesSpotSDE(type);
 	}
 
 	return psde;
@@ -128,10 +128,10 @@ LACalibrateModelHW3F::createSDEInstance(const AQLString &currency, AQLDataInstan
 
 */
 void
-LACalibrateModelHW3F::setIntegralFunction(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelHW3F::setIntegralFunction(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString sdeName = getSDEAttrName(currency);
-	sde.setIntegralFunction(new LARatesHWIntegral3F(LOG_INTEGRAL, sdeName));
+	sde.setIntegralFunction(new AQLRatesHWIntegral3F(LOG_INTEGRAL, sdeName));
 }
 
 
@@ -149,6 +149,6 @@ LACalibrateModelHW3F::setIntegralFunction(const AQLString &currency, LARatesSDEB
 AQLFunctionBase*
 LACalibrateModelHW3F::createForeinDrift(const AQLString &fx, const AQLString &sdeBase, const AQLString &sdeName, const AQLString &fx_sdeName) const
 {
-	return new LAPriceDriftHWQuantAdjustment3F(sdeBase, sdeName, fx_sdeName, 
-		new LAPriceDriftHW(sdeName), LAMarketData::getStaticDataValue(*mpStaticData, fx, KEY_PTBERG_QUANTOADJUST_THRESHOLD).getDoubleValue());
+	return new AQLPriceDriftHWQuantAdjustment3F(sdeBase, sdeName, fx_sdeName, 
+		new AQLPriceDriftHW(sdeName), LAMarketData::getStaticDataValue(*mpStaticData, fx, KEY_PTBERG_QUANTOADJUST_THRESHOLD).getDoubleValue());
 }

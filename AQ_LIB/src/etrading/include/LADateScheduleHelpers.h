@@ -14,7 +14,7 @@
 #include "AQLDataInstance.h"
 #include "AQLString.h"
 #include "ConstantDeclarations.h"
-#include "LATime.h"
+#include "AQLTime.h"
 //////////////////////////
 
 // Forward Declarations
@@ -50,8 +50,8 @@ namespace etrading
                                            const AQLString *					rollConvention);
 
 		// Generate a Date Schedule with appropriate use of stubs
-		// Note that there is a duplicate method LAMathDateUtilities::generateSchedule
-		// Default Short/Long Start is determined by LAMathDateUtilities::getStubDateAndType
+		// Note that there is a duplicate method AQLMathDateUtilities::generateSchedule
+		// Default Short/Long Start is determined by AQLMathDateUtilities::getStubDateAndType
         static DateVector generateSchedule(const AQLDate&		start,
 										   const AQLDate&		end,
 										   AQLString&			data_frequency,

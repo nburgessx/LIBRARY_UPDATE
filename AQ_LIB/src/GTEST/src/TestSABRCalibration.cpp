@@ -10,12 +10,12 @@
 #include "LADateScheduleHelpers.h"
 #include "AQLMathDefine.h"
 #include "AQLDataBasics.h"
-#include "LAMathSwaptionVolUtility.h"
-#include "LAMathParameterUtility.h"
-#include "LAPriceCMSTools.h"
+#include "AQLMathSwaptionVolUtility.h"
+#include "AQLMathParameterUtility.h"
+#include "AQLPriceCMSTools.h"
 #include "LADateScheduleHelpers.h"
-#include "LAPriceSABRSwaptionCalculator.h"
-#include "LAMathOptionTools.h"
+#include "AQLPriceSABRSwaptionCalculator.h"
+#include "AQLMathOptionTools.h"
 #include "ModelTools.h"
 
 #include <vector>
@@ -86,48 +86,48 @@ namespace
 		etrading::ReadDataFile::Load conventionInput = etrading::ReadDataFile::Load(DIR_USD_SABR_CONVENTION_INPUTS_1);
 		AQLString convID = conventionInput["conventionID"];
 		AQLStringMatrix convData = conventionInput["convData"];
-		LAMathSwaptionVolUtility::setUpConvention(etrading::getDataInstance(), convID, convData);
+		AQLMathSwaptionVolUtility::setUpConvention(etrading::getDataInstance(), convID, convData);
 
 		// Setup initial Alpha grid
 		etrading::ReadDataFile::Load alphaInput = etrading::ReadDataFile::Load(DIR_USD_SABR_ALPHA_INPUTS_1);
 		AQLString alphaID = alphaInput["gridID"];
 		sabrIDs.push_back(alphaID);
 		AQLStringMatrix alphaMatrix = alphaInput["gridData"];
-		LAMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), alphaID, convID, alphaMatrix);
+		AQLMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), alphaID, convID, alphaMatrix);
 
 		// Setup initial Beta grid
 		etrading::ReadDataFile::Load betaInput = etrading::ReadDataFile::Load(DIR_USD_SABR_BETA_INPUTS_1);
 		AQLString betaID = betaInput["gridID"];
 		sabrIDs.push_back(betaID);
 		AQLStringMatrix betaMatrix = betaInput["gridData"];
-		LAMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), betaID, convID, betaMatrix);
+		AQLMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), betaID, convID, betaMatrix);
 
 		// Setup initial Nu grid
 		etrading::ReadDataFile::Load nuInput = etrading::ReadDataFile::Load(DIR_USD_SABR_NU_INPUTS_1);
 		AQLString nuID = nuInput["gridID"];
 		sabrIDs.push_back(nuID);
 		AQLStringMatrix nuMatrix = nuInput["gridData"];
-		LAMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), nuID, convID, nuMatrix);
+		AQLMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), nuID, convID, nuMatrix);
 
 		// Setup initial Rho grid
 		etrading::ReadDataFile::Load rhoInput = etrading::ReadDataFile::Load(DIR_USD_SABR_RHO_INPUTS_1);
 		AQLString rhoID = rhoInput["gridID"];
 		sabrIDs.push_back(rhoID);
 		AQLStringMatrix rhoMatrix = rhoInput["gridData"];
-		LAMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), rhoID, convID, rhoMatrix);
+		AQLMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), rhoID, convID, rhoMatrix);
 
 		// Setup forward grid
 		etrading::ReadDataFile::Load forwardsInput = etrading::ReadDataFile::Load(DIR_USD_SABR_FORWARDS_INPUTS_1);
 		AQLString temp = forwardsInput["gridID"];
 		forwardID = temp;
 		AQLStringMatrix forwardMatrix = forwardsInput["gridData"];
-		LAMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), forwardID, convID, forwardMatrix);
+		AQLMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), forwardID, convID, forwardMatrix);
 
 		// Setup annuity grid
 		etrading::ReadDataFile::Load annuityInput = etrading::ReadDataFile::Load(DIR_USD_SABR_ANNUITY_INPUTS_1);
 		AQLString annuityID = annuityInput["gridID"];
 		AQLStringMatrix annuityMatrix = annuityInput["gridData"];
-		LAMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), annuityID, convID, annuityMatrix);
+		AQLMathSwaptionVolUtility::setUpSABRGrid(getDataInstance(), annuityID, convID, annuityMatrix);
 
 		// Set up target vols and strikes
 		AQLStringVector volSmileIDs;
@@ -140,7 +140,7 @@ namespace
 			AQLString volSmileID = volInput["gridID"];
 			volSmileIDs.push_back(volSmileID);
 			AQLStringMatrix signMat;
-			LAMathSwaptionVolUtility::setUpSwaptionVol(getDataInstance(), volSmileID, volMatrix, strikeMatrix, signMat);
+			AQLMathSwaptionVolUtility::setUpSwaptionVol(getDataInstance(), volSmileID, volMatrix, strikeMatrix, signMat);
 		}
 
 		// Get other inputs
@@ -184,7 +184,7 @@ namespace
 
 		// Calibrate SABR parameters
 		AQLString msg;
-		LAMathSwaptionVolUtility::calibrateSABRMatrix(getDataInstance(),
+		AQLMathSwaptionVolUtility::calibrateSABRMatrix(getDataInstance(),
 													approxMethod,
 													calibFlag,
 													calibMethod,
@@ -263,10 +263,10 @@ namespace google_test
 		DoubleVector calibratedRho;
 
 		// Retrieve calibrated SABR parameters
-		LAMathSwaptionVolUtility::outPutSABRGrid(getDataInstance(), alphaID, calibratedAlpha, row, column);
-		LAMathSwaptionVolUtility::outPutSABRGrid(getDataInstance(), betaID, calibratedBeta, row, column);
-		LAMathSwaptionVolUtility::outPutSABRGrid(getDataInstance(), nuID, calibratedNu, row, column);
-		LAMathSwaptionVolUtility::outPutSABRGrid(getDataInstance(), rhoID, calibratedRho, row, column);
+		AQLMathSwaptionVolUtility::outPutSABRGrid(getDataInstance(), alphaID, calibratedAlpha, row, column);
+		AQLMathSwaptionVolUtility::outPutSABRGrid(getDataInstance(), betaID, calibratedBeta, row, column);
+		AQLMathSwaptionVolUtility::outPutSABRGrid(getDataInstance(), nuID, calibratedNu, row, column);
+		AQLMathSwaptionVolUtility::outPutSABRGrid(getDataInstance(), rhoID, calibratedRho, row, column);
 
 #ifdef GTEST32
 		AQLString outputFileName_alph = DIR_ALPHA_OUTPUT_32BIT;
@@ -344,7 +344,7 @@ namespace google_test
     //              char * pFirstNonNumber2;
     //				double vol = std::strtod(volMatrix[i][j].getCString(), &pFirstNonNumber2);
 
-	//				double ret = LAMathSwaptionVolUtility::getSABRVol(getDataInstance(),
+	//				double ret = AQLMathSwaptionVolUtility::getSABRVol(getDataInstance(),
 	//																expiryTenor,
 	//																swapTenor,
 	//																strike,
@@ -395,8 +395,8 @@ namespace google_test
 				double expiryTerm = etrading::LADateScheduleHelpers::getTerm(asOfDate, expiryDate, expiryDayCount);
 
 				// Build SABR model using SABR parameters interpolated according the expiry and swap tenor
-				DoubleVector sabrParameters = LAPriceCMSObject::InterpolateParameterMatrix(getDataInstance(), expiryDate, AQLString(swapTenor.c_str()), sabrIDs);
-				LAMathSABR_Hagan sabrModel = LAMathSABR_Hagan(sabrParameters);
+				DoubleVector sabrParameters = AQLPriceCMSObject::InterpolateParameterMatrix(getDataInstance(), expiryDate, AQLString(swapTenor.c_str()), sabrIDs);
+				AQLMathSABR_Hagan sabrModel = AQLMathSABR_Hagan(sabrParameters);
 
 				for (const auto& strikeShift : STRIKE_SHIFTS)
 				{

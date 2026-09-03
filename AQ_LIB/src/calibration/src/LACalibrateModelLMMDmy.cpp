@@ -20,8 +20,8 @@
 
 #include "LACalibrateModelLMMDmy.h"
 #include "AQLDataInstance.h"
-#include "LARatesDmySDE.h"
-#include "LARatesCurveLogLinearInterpolationDmy.h"
+#include "AQLRatesDmySDE.h"
+#include "AQLRatesCurveLogLinearInterpolationDmy.h"
 
 using namespace std;
 
@@ -51,12 +51,12 @@ LACalibrateModelLMMDmy::~LACalibrateModelLMMDmy(void)
 	@param[in]  currency
 	@param[in]  dataInstance
 */
-LARatesSDEBase *
+AQLRatesSDEBase *
 LACalibrateModelLMMDmy::createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const
 {
 	currency;
 	dataInstance;
-	return new LARatesDmySDE();
+	return new AQLRatesDmySDE();
 }
 
 
@@ -64,10 +64,10 @@ LACalibrateModelLMMDmy::createSDEInstance(const AQLString &currency, AQLDataInst
 /*!
     @brief curve create log linear interpolation
 
-	@return LARatesCurveLogLinearInterpolation *
+	@return AQLRatesCurveLogLinearInterpolation *
 */
-LARatesCurveLogLinearInterpolation *
+AQLRatesCurveLogLinearInterpolation *
 LACalibrateModelLMMDmy::createCurveLogLinearInterpolation() const
 {
-	return new LARatesCurveLogLinearInterpolationDmy();
+	return new AQLRatesCurveLogLinearInterpolationDmy();
 }

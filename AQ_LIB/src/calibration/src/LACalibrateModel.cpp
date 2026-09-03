@@ -25,7 +25,7 @@
 #include "AQLFunctionManager.h"
 #include "AQLDataBasics.h"
 #include "AQLDataReference.h"
-#include "LARatesSDEBase.h"
+#include "AQLRatesSDEBase.h"
 #include "LADefinitions.h"
 #include "LAMarketData.h"
 #include "LACoreDataService.h"
@@ -33,7 +33,7 @@
 #include "LADealUtils.h"
 
 #ifndef VISUAL_STUDIO_2010_ANALYTICS
-#include "LAMathVolatility.h"
+#include "AQLMathVolatility.h"
 #endif
 
 
@@ -69,7 +69,7 @@ LACalibrateModel::generateSDE(const AQLString &key, AQLDataInstance &dataInstanc
 {
 	if (isFirst)
 	{
-		LARatesSDEBase *psde = createSDEInstance(key, dataInstance);
+		AQLRatesSDEBase *psde = createSDEInstance(key, dataInstance);
 		// set vol
 		setVolatility(key, *psde);
 		// set drift
@@ -158,19 +158,19 @@ LACalibrateModel::loadVolatilityDataAndCalibrate(const AQLString &key, AQLDataIn
 
 	AQLString volName = PREFIX_VOL + sdeName;
 	AQLObjectHolder objHolder = dataInstance.getObjectPool().getObject(volName);
-	LAMathVolatility *volEntity = 0;
+	AQLMathVolatility *volEntity = 0;
 	if (!objHolder.isDefined())
 	{
 		// create risk object
-		volEntity = new LAMathVolatility(&dataInstance);
+		volEntity = new AQLMathVolatility(&dataInstance);
 		dataInstance.getObjectPool().set(volName, volEntity);	
 	}
 	else
 	{
-		volEntity = &dynamic_cast<LAMathVolatility &>(objHolder.get());
+		volEntity = &dynamic_cast<AQLMathVolatility &>(objHolder.get());
 		volEntity->reset();
 	}
-	//LAMathVolatility *volEntity = new LAMathVolatility(&dataInstance);
+	//AQLMathVolatility *volEntity = new AQLMathVolatility(&dataInstance);
 	AQLDataString &volAttrName = volEntity->getName();
 	volAttrName.set(volName);
 

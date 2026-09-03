@@ -27,7 +27,7 @@
 #include "AQLDataInstance.h"
 #include "AQLString.h"
 #include "LACurvePricingObject.h"
-#include "LATime.h"
+#include "AQLTime.h"
 
 // TODO - Try to remove this file. It contains lots of #defines that clash with external binaries
 #include "ConstantDeclarations.h"

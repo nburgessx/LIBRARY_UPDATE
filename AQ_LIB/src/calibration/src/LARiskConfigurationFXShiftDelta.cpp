@@ -28,7 +28,7 @@
 #include "LACalibrationParametersManager.h"
 #include "LACalibrationParameters.h"
 #include "LADefinitionsCalibration.h"
-#include "LAMathFXUtility.h"
+#include "AQLMathFXUtility.h"
 using namespace std;
 
 // constructor
@@ -318,12 +318,12 @@ LARiskConfigurationFXShiftDelta::createBaseExtraScenarioEntity(const AQLString &
 	vector<AQLObject *> sce;
 
 	// get currencies (and FX pairs) whose SDE models should be recalibrated
-    AQLStringVector curs = LAMathFXUtility::getCurrencyPair(fx);
+    AQLStringVector curs = AQLMathFXUtility::getCurrencyPair(fx);
 	AQLStringVector fxcurs = curs;
 	for(int unsigned i = 0; i < fxcurs.size(); ++i)
 	{
 		AQLString ccy_tmp = fxcurs[i];
-		LAMathYieldCurvePro &ycPro_fCcy = dynamic_cast<LAMathYieldCurvePro &>
+		AQLMathYieldCurvePro &ycPro_fCcy = dynamic_cast<AQLMathYieldCurvePro &>
 			(objPool.getObject(LAMarketData::getBaseYieldProName(ccy_tmp), ENCHKTYPE_ISDEFINED).get());
 		for(int unsigned j = 0; j < ycPro_fCcy.getAffectingCcy().size(); ++j)
 		{
@@ -350,7 +350,7 @@ LARiskConfigurationFXShiftDelta::createBaseExtraScenarioEntity(const AQLString &
 
 		if(FwdFXGrids[curs[i]].isDefined() && FwdFXGrids[curs[i]] != AQ_NO_DATA)
 		{
-			LAMathYieldCurvePro &ycPro_fCcy = dynamic_cast<LAMathYieldCurvePro &>
+			AQLMathYieldCurvePro &ycPro_fCcy = dynamic_cast<AQLMathYieldCurvePro &>
 				(objPool.getObject(LAMarketData::getBaseYieldProName(ccy_tmp), ENCHKTYPE_ISDEFINED).get());
 			AffectedCcy[curs[i]] = ycPro_fCcy.getAffectedCcy();
 			ColAffectedCcy[curs[i]] = ycPro_fCcy.getColAffectedCcy();
@@ -446,12 +446,12 @@ LARiskConfigurationFXShiftDelta::getBaseExtraTargetNames(const AQLString &fx, AQ
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
 	// get currencies (and FX pairs) whose SDE models should be recalibrated
-	AQLStringVector curs = LAMathFXUtility::getCurrencyPair(fx);
+	AQLStringVector curs = AQLMathFXUtility::getCurrencyPair(fx);
 	AQLStringVector fxcurs = curs;
 	for(int unsigned i = 0; i < fxcurs.size(); ++i)
 	{
 		AQLString ccy_tmp = fxcurs[i];
-		LAMathYieldCurvePro &ycPro_fCcy = dynamic_cast<LAMathYieldCurvePro &>
+		AQLMathYieldCurvePro &ycPro_fCcy = dynamic_cast<AQLMathYieldCurvePro &>
 			(objPool.getObject(LAMarketData::getBaseYieldProName(ccy_tmp), ENCHKTYPE_ISDEFINED).get());
 		for(int unsigned j = 0; j < ycPro_fCcy.getAffectingCcy().size(); ++j)
 		{
@@ -535,7 +535,7 @@ LARiskConfigurationFXShiftDelta::createBaseExtraYieldEntity(const AQLString &fx,
 	// set up param
 	MAScenarioParam param;
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+	AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	AQLString calcType = getBaseCalcType(fx, index);
 	AQLString refFX = targetFX->getName();
 	refFX += "_" + calcType;
@@ -563,7 +563,7 @@ LARiskConfigurationFXShiftDelta::createBaseCollateralYieldEntity(const AQLString
 
 	MAScenarioParam param;
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+	AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	AQLString calcType = getBaseCalcType(fx, index);
 	AQLString refFX = targetFX->getName();
 	refFX += "_" + calcType;
@@ -575,7 +575,7 @@ LARiskConfigurationFXShiftDelta::createBaseCollateralYieldEntity(const AQLString
 	param.isExtraFwdFXConstCurveForFXDelta = true;
 
 	param.isParallel = true;
-	LAMathYieldCurvePro &ycPro_ccy = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro_ccy = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 	const AQLString& affectedCcy = ycPro_ccy.getColAffectedCcy();
 	const AQLString& baseYieldDataName_baseccy = LAMarketData::getYieldDataName(objPool, LAMarketData::getBaseYieldName(affectedCcy));

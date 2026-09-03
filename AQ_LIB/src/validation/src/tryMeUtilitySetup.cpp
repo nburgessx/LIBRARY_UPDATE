@@ -131,7 +131,7 @@ namespace validation
 		etrading::InitializeAQETrading::destroyInstance();
 
         // Clean-Up the Volatility Manager - Is this needed?
-        //LALinearRatesVolatilityManager::finalize();
+        //AQLLinearRatesVolatilityManager::finalize();
 
 		return std::string("Finalized AlgoQuantLib");
 

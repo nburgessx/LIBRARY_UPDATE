@@ -148,7 +148,7 @@ LACalibrationParametersFXVannaVolga::createCalibrationInfo(AQLObjectPool &objPoo
 	info->add("MaturityMethod", new AQLDataString()).convertFromString(matumethod.toUpper());
 
 	
-	LAMathFXEntity fx_tmp = *LAMarketData::getFXEntity(objPool, "FORWARDRATE");
+	AQLMathFXEntity fx_tmp = *LAMarketData::getFXEntity(objPool, "FORWARDRATE");
 	unsigned int spotlag = fx_tmp.getSpotLag(fx);
 	AQLString spotlagday = AQLString(static_cast<int>(spotlag)) + "D";
 
@@ -170,8 +170,8 @@ LACalibrationParametersFXVannaVolga::createCalibrationInfo(AQLObjectPool &objPoo
 		//hishida vannavolga warning this must be changed in all of sources
 		//AQLString tmpdate = LAMarketData::convertToMLibTerm(strTerms[i]);
 		AQLString tmpdate = strTerms[i];
-		matuterms[i] = LAMathDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);
-		deliveryterms[i] = LAMathDateCalculations::getDate(matuterms[i],spotlagday,sr,&cal,true);
+		matuterms[i] = AQLMathDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);
+		deliveryterms[i] = AQLMathDateCalculations::getDate(matuterms[i],spotlagday,sr,&cal,true);
 
 		deltatypes[i] = getCalibStaticDataValue(keyFX + FX_KEY_CALIB_VANNAVOLGA_DELTATYPE, lterm);
 		deltatypes[i].toUpper();

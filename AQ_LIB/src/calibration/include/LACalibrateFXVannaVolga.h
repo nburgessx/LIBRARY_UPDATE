@@ -6,7 +6,7 @@
 
 #include "AQLCoreTemplateType.h"
 #include "LACalibrate.h"
-#include "LAMathFXVolatilitySurfaceGenerate.h"
+#include "AQLMathFXVolatilitySurfaceGenerate.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLFunctionBase.h"
 #include "AQLBasic.h"

@@ -26,9 +26,9 @@
 #include "AQLPriceDataManager.h"
 #include "AQLObjectPool.h"
 #include "AQLCoreReferencePool.h"
-#include "LARatesSDEBase.h"
+#include "AQLRatesSDEBase.h"
 #include "AQLDataCSVFileLoader.h"
-#include "LALinearRatesOptionValue.h"
+#include "AQLLinearRatesOptionValue.h"
 #include "LACoreDataService.h"
 #include "LADealUtils.h"
 #include "LAMarketData.h"
@@ -42,9 +42,9 @@
 #include "LAObjectConfigurationManager.h"
 #include "LAObjectConfiguration.h"
 #include "AQLPriceDataFunction.h"
-#include "LALinearRatesSwapTradeValue.h"
-#include "LAPriceLSMCTradeValue.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLLinearRatesSwapTradeValue.h"
+#include "AQLPriceLSMCTradeValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "AQLDataReference.h"
 #include "AQLDataMatrix.h"
 #include "AQLFunctionUtilities.h"
@@ -135,7 +135,7 @@ LADataInstanceConfigurationPV::setUp(void)
 			const AQLStringVector addYearsVec = dataMtx[i][1].toToken(':');
 			for (unsigned int j = 0; j < addYearsVec.size(); ++j)
 			{
-				const AQLDate date = LAMathDateCalculations::getDate(endDate, addYearsVec[j], true);
+				const AQLDate date = AQLMathDateCalculations::getDate(endDate, addYearsVec[j], true);
 				if (date > maxDate)
 				{
 					maxDate = date;
@@ -247,18 +247,18 @@ LADataInstanceConfigurationPV::createPathEntity(AQLDataInstance &dataInstance) c
 	if (mPathEntityName == MARKETPARAM)
 	{
 		//new plainvanilla object
-		LAMathPlainVanillaEntity* pPlain = NULL;
+		AQLMathPlainVanillaEntity* pPlain = NULL;
 		AQLObjectHolder ehpath = objPool.getObject(MARKETPARAM, ENCHKTYPE_NOCHECK);
 		if (!ehpath.isDefined())
 		{
-			pPlain = new LAMathPlainVanillaEntity(&dataInstance);
+			pPlain = new AQLMathPlainVanillaEntity(&dataInstance);
 			objPool.set(MARKETPARAM,pPlain);
 		
 		}
 		else
 		{
-			dynamic_cast<LAMathPlainVanillaEntity &>(objPool.getObject(MARKETPARAM).get()).reset();
-			pPlain = &dynamic_cast<LAMathPlainVanillaEntity &>(objPool.getObject(PATH1).get());
+			dynamic_cast<AQLMathPlainVanillaEntity &>(objPool.getObject(MARKETPARAM).get()).reset();
+			pPlain = &dynamic_cast<AQLMathPlainVanillaEntity &>(objPool.getObject(PATH1).get());
 		}
 		pPlain->getName().convertFromString(MARKETPARAM);
 		pPlain->getDayCount().setDayCount(ACT_365_ISDA);
@@ -270,18 +270,18 @@ LADataInstanceConfigurationPV::createPathEntity(AQLDataInstance &dataInstance) c
 	else
 	{
 		//new path object
-		LAMathPathEntity* pPath = NULL;
+		AQLMathPathEntity* pPath = NULL;
 		AQLObjectHolder ehpath = objPool.getObject(PATH1, ENCHKTYPE_NOCHECK);
 		if (!ehpath.isDefined())
 		{
-			pPath = new LAMathPathEntity(&dataInstance);
+			pPath = new AQLMathPathEntity(&dataInstance);
 			objPool.set(PATH1,pPath);
 		
 		}
 		else
 		{
-			dynamic_cast<LAMathPathEntity &>(objPool.getObject(PATH1).get()).reset();
-			pPath = &dynamic_cast<LAMathPathEntity &>(objPool.getObject(PATH1).get());
+			dynamic_cast<AQLMathPathEntity &>(objPool.getObject(PATH1).get()).reset();
+			pPath = &dynamic_cast<AQLMathPathEntity &>(objPool.getObject(PATH1).get());
 		}
 		pPath->getName().convertFromString(PATH1);
 		pPath->getDayCount().setDayCount(ACT_365_ISDA);
@@ -313,37 +313,37 @@ LADataInstanceConfigurationPV::createFXEntity(AQLDataInstance &dataInstance) con
 	if (mSDECurrencys.size() > 1)
 	{
 		//new fxentity
-		LAMathFXEntity* pFwd = NULL;
+		AQLMathFXEntity* pFwd = NULL;
 		AQLObjectHolder ehfx = objPool.getObject(FORWARDFX, ENCHKTYPE_NOCHECK);
 		if (!ehfx.isDefined())
 		{
-			pFwd = new LAMathFXEntity(&dataInstance);
+			pFwd = new AQLMathFXEntity(&dataInstance);
 			objPool.set(FORWARDFX,pFwd);
 		}
 		else
 		{
-			dynamic_cast<LAMathFXEntity &>(objPool.getObject(FORWARDFX).get()).reset();
-			pFwd = &dynamic_cast<LAMathFXEntity &>(objPool.getObject(FORWARDFX).get());
+			dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FORWARDFX).get()).reset();
+			pFwd = &dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FORWARDFX).get());
 		}
 		pFwd->getName().convertFromString(FORWARDFX);
 		pFwd->getFXType().convertFromString("FORWARDRATE");
 		LAMarketData::setUpMarket2FXEntity(*pFwd);
 
 		//exo case add the usemodel fx object
-		LAMathFXEntity* pFxsde = NULL;
+		AQLMathFXEntity* pFxsde = NULL;
 		if (mPathEntityName == PATH1)
 		{
 			
 			AQLObjectHolder ehfx = objPool.getObject(FXSDE, ENCHKTYPE_NOCHECK);
 			if (!ehfx.isDefined())
 			{
-				pFxsde = new LAMathFXEntity(&dataInstance);
+				pFxsde = new AQLMathFXEntity(&dataInstance);
 				objPool.set(FXSDE,pFxsde);
 			}
 			else
 			{
-				dynamic_cast<LAMathFXEntity &>(objPool.getObject(FXSDE).get()).reset();
-				pFxsde = &dynamic_cast<LAMathFXEntity &>(objPool.getObject(FXSDE).get());
+				dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FXSDE).get()).reset();
+				pFxsde = &dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FXSDE).get());
 			}
 
 			pFxsde->getName().convertFromString(FXSDE);
@@ -353,7 +353,7 @@ LADataInstanceConfigurationPV::createFXEntity(AQLDataInstance &dataInstance) con
 		
 		}
 
-		//LAMathFXEntity* pFX = LAMarketData::getFXEntity(objPool, "FORWARDRATE");
+		//AQLMathFXEntity* pFX = LAMarketData::getFXEntity(objPool, "FORWARDRATE");
 		if (!pFwd)
 			throw AQLCoreInvalidData("ForwardRate FX Object does not exist",__FILE__,__LINE__);
 		AQLString fxName = pFwd->getName();
@@ -368,7 +368,7 @@ LADataInstanceConfigurationPV::createFXEntity(AQLDataInstance &dataInstance) con
 		}
 
         if(calc=="VANILLA"){
-            LAMathPlainVanillaEntity* vanilla = &dynamic_cast<LAMathPlainVanillaEntity&>(objPool.getObject(MARKETPARAM, ENCHKTYPE_ISDEFINED).get());
+            AQLMathPlainVanillaEntity* vanilla = &dynamic_cast<AQLMathPlainVanillaEntity&>(objPool.getObject(MARKETPARAM, ENCHKTYPE_ISDEFINED).get());
             vanilla->getFXEntity().convertFromString(FORWARDFX);
         }
 	}
@@ -419,18 +419,18 @@ LADataInstanceConfigurationPV::loadEntities(AQLDataInstance &dataInstance) const
 	//{
 
 	//	//new plainvanilla object
-	//	LAMathPlainVanillaEntity* pPlain = NULL;
+	//	AQLMathPlainVanillaEntity* pPlain = NULL;
 	//	AQLObjectHolder ehpath = objPool.getObject(MARKETPARAM, ENCHKTYPE_NOCHECK);
 	//	if (!ehpath.isDefined())
 	//	{
-	//		pPlain = new LAMathPlainVanillaEntity(&dataInstance);
+	//		pPlain = new AQLMathPlainVanillaEntity(&dataInstance);
 	//		objPool.set(MARKETPARAM,pPlain);
 	//	
 	//	}
 	//	else
 	//	{
-	//		dynamic_cast<LAMathPlainVanillaEntity &>(objPool.getObject(MARKETPARAM).get()).reset();
-	//		pPlain = &dynamic_cast<LAMathPlainVanillaEntity &>(objPool.getObject(PATH1).get());
+	//		dynamic_cast<AQLMathPlainVanillaEntity &>(objPool.getObject(MARKETPARAM).get()).reset();
+	//		pPlain = &dynamic_cast<AQLMathPlainVanillaEntity &>(objPool.getObject(PATH1).get());
 	//	}
 	//	pPlain->getName().convertFromString(MARKETPARAM);
 	//	pPlain->getDayCount().setDayCount(ACT_365_ISDA);
@@ -442,18 +442,18 @@ LADataInstanceConfigurationPV::loadEntities(AQLDataInstance &dataInstance) const
 	//else
 	//{
 	//	//new path object
-	//	LAMathPathEntity* pPath = NULL;
+	//	AQLMathPathEntity* pPath = NULL;
 	//	AQLObjectHolder ehpath = objPool.getObject(PATH1, ENCHKTYPE_NOCHECK);
 	//	if (!ehpath.isDefined())
 	//	{
-	//		pPath = new LAMathPathEntity(&dataInstance);
+	//		pPath = new AQLMathPathEntity(&dataInstance);
 	//		objPool.set(PATH1,pPath);
 	//	
 	//	}
 	//	else
 	//	{
-	//		dynamic_cast<LAMathPathEntity &>(objPool.getObject(PATH1).get()).reset();
-	//		pPath = &dynamic_cast<LAMathPathEntity &>(objPool.getObject(PATH1).get());
+	//		dynamic_cast<AQLMathPathEntity &>(objPool.getObject(PATH1).get()).reset();
+	//		pPath = &dynamic_cast<AQLMathPathEntity &>(objPool.getObject(PATH1).get());
 	//	}
 	//	pPath->getName().convertFromString(PATH1);
 	//	pPath->getDayCount().setDayCount(ACT_365_ISDA);
@@ -470,37 +470,37 @@ LADataInstanceConfigurationPV::loadEntities(AQLDataInstance &dataInstance) const
 	//if (mSDECurrencys.size() > 1)
 	//{
 	//	//new fxentity
-	//	LAMathFXEntity* pFwd = NULL;
+	//	AQLMathFXEntity* pFwd = NULL;
 	//	AQLObjectHolder ehfx = objPool.getObject(FORWARDFX, ENCHKTYPE_NOCHECK);
 	//	if (!ehfx.isDefined())
 	//	{
-	//		pFwd = new LAMathFXEntity(&dataInstance);
+	//		pFwd = new AQLMathFXEntity(&dataInstance);
 	//		objPool.set(FORWARDFX,pFwd);
 	//	}
 	//	else
 	//	{
-	//		dynamic_cast<LAMathFXEntity &>(objPool.getObject(FORWARDFX).get()).reset();
-	//		pFwd = &dynamic_cast<LAMathFXEntity &>(objPool.getObject(FORWARDFX).get());
+	//		dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FORWARDFX).get()).reset();
+	//		pFwd = &dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FORWARDFX).get());
 	//	}
 	//	pFwd->getName().convertFromString(FORWARDFX);
 	//	pFwd->getFXType().convertFromString("FORWARDRATE");
 	//	LAMarketData::setUpMarket2FXEntity(*pFwd);
 
 	//	//exo case add the usemodel fx object
-	//	LAMathFXEntity* pFxsde = NULL;
+	//	AQLMathFXEntity* pFxsde = NULL;
 	//	if (calc != "VANILLA")
 	//	{
 	//		
 	//		AQLObjectHolder ehfx = objPool.getObject(FXSDE, ENCHKTYPE_NOCHECK);
 	//		if (!ehfx.isDefined())
 	//		{
-	//			pFxsde = new LAMathFXEntity(&dataInstance);
+	//			pFxsde = new AQLMathFXEntity(&dataInstance);
 	//			objPool.set(FXSDE,pFxsde);
 	//		}
 	//		else
 	//		{
-	//			dynamic_cast<LAMathFXEntity &>(objPool.getObject(FXSDE).get()).reset();
-	//			pFxsde = &dynamic_cast<LAMathFXEntity &>(objPool.getObject(FXSDE).get());
+	//			dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FXSDE).get()).reset();
+	//			pFxsde = &dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FXSDE).get());
 	//		}
 
 	//		pFxsde->getName().convertFromString(FXSDE);
@@ -510,7 +510,7 @@ LADataInstanceConfigurationPV::loadEntities(AQLDataInstance &dataInstance) const
 	//	
 	//	}
 
-	//	//LAMathFXEntity* pFX = LAMarketData::getFXEntity(objPool, "FORWARDRATE");
+	//	//AQLMathFXEntity* pFX = LAMarketData::getFXEntity(objPool, "FORWARDRATE");
 	//	if (!pFwd)
 	//		throw AQLCoreInvalidData("ForwardRate FX Object does not exist",__FILE__,__LINE__);
 	//	AQLString fxName = pFwd->getName();
@@ -525,7 +525,7 @@ LADataInstanceConfigurationPV::loadEntities(AQLDataInstance &dataInstance) const
 	//	}
 
  //       if(calc=="VANILLA"){
- //           LAMathPlainVanillaEntity* vanilla = &dynamic_cast<LAMathPlainVanillaEntity&>(objPool.getObject(MARKETPARAM, ENCHKTYPE_ISDEFINED).get());
+ //           AQLMathPlainVanillaEntity* vanilla = &dynamic_cast<AQLMathPlainVanillaEntity&>(objPool.getObject(MARKETPARAM, ENCHKTYPE_ISDEFINED).get());
  //           vanilla->getFXEntity().convertFromString(FORWARDFX);
  //       }
 	//}
@@ -857,8 +857,8 @@ LADataInstanceConfigurationPV::loadCSV(AQLDataInstance &dataInstance) const
 			if (row>=tradeMatrix.size()) break;
 		}
 	}
-	LAMathFXEntity* pFxsde = NULL;
-	pFxsde = new LAMathFXEntity(&dataInstance);
+	AQLMathFXEntity* pFxsde = NULL;
+	pFxsde = new AQLMathFXEntity(&dataInstance);
 	objPool.set(FXSDE,pFxsde);
 
     dataInstance.getReferencePool().completeDependency();
@@ -990,7 +990,7 @@ void LADataInstanceConfigurationPV::shiftPaymentDate(AQLObject& trade, const AQL
 		if (paydate > asof1 && paydate <= asof2)
 		{
 			AQLPriceDataCalendar cal;
-			const AQLDate shiftDate = LAMathDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
+			const AQLDate shiftDate = AQLMathDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
 			data_paydate.set(shiftDate);
 		}
 	}
@@ -1003,7 +1003,7 @@ void LADataInstanceConfigurationPV::shiftPaymentDate(AQLObject& trade, const AQL
 		if (paydate > asof1 && paydate <= asof2)
 		{
 			AQLPriceDataCalendar cal;
-			const AQLDate shiftDate = LAMathDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
+			const AQLDate shiftDate = AQLMathDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
 			data_paydate.set(shiftDate);
 		}
 	}
@@ -1041,7 +1041,7 @@ void LADataInstanceConfigurationPV::shiftPaymentDate(AQLObject& trade, const AQL
                             else if((dh = &eleg.getData(CALIBRATION_DATA_CALENDAR))->isDefined() && !dh->isNull()){
                                 cal = dynamic_cast<const AQLPriceDataCalendar&>(dh->get());
                             }
-                            const AQLDate shiftDate = LAMathDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
+                            const AQLDate shiftDate = AQLMathDateCalculations::getDate(asof2, "1D", SLIDING_RULE_FOLLOWING, &cal, true);
                             data_paydate.set(shiftDate);
                         }
                     }
@@ -1054,15 +1054,15 @@ void LADataInstanceConfigurationPV::shiftPaymentDate(AQLObject& trade, const AQL
 AQLDate LADataInstanceConfigurationPV::getAsOfDate(AQLDataInstance& dataInstance) const
 {
     AQLObjectPool& objPool = dataInstance.getObjectPool();
-    LAMathPathEntity* path = LAMarketData::getPathEnitty(objPool);
+    AQLMathPathEntity* path = LAMarketData::getPathEnitty(objPool);
     if (path != NULL){
         return path->getAsOfDate();
     }
     else{
-        LAMathPlainVanillaEntity* pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
+        AQLMathPlainVanillaEntity* pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
         if (!pvanilla)
         {
-            throw AQLCoreInvalidData("Neither LAMathPathEntity nor LAMathPlainVanillaEntity exists.", __FILE__, __LINE__);
+            throw AQLCoreInvalidData("Neither AQLMathPathEntity nor AQLMathPlainVanillaEntity exists.", __FILE__, __LINE__);
         }
         return pvanilla->getAsOfDate();
     }

@@ -1,0 +1,105 @@
+////X///////////////////X///////////////////////////////X///////////////////
+//  NAME        :       AQLDigitalMethod.cpp
+//
+//  SYNOPSIS    :       AQLDigitalMethod
+//  DESCRIPTION :       Source code of class to represent digital function
+//                      
+//  SEE ALSO    :       
+//  TYME        :       CLASS
+//  STATUS      :       
+////X///////////////////X///////////////////////////////X///////////////////
+#ifdef __GNUG__
+#pragma implementation
+#else
+#pragma warning(disable:4786)
+#endif
+
+
+#include "AQLDigitalFunc.h"
+#include <algorithm>
+
+using namespace std;
+//================ AQLDigitalMethod ===================================
+/*!
+	@brief default constructor
+*/
+AQLDigitalMethod::AQLDigitalMethod() 
+: AQLFunctionBase()
+{
+
+}
+
+/*!
+	@brief destructor
+*/
+AQLDigitalMethod::~AQLDigitalMethod() 
+{
+}
+
+/*!
+    @brief Make copy(clone) of this class
+    @return Deep copy of this class
+*/
+AQLCoreFunctionBase*	
+AQLDigitalMethod::clone() const
+{
+    try 
+	{
+		return new AQLDigitalMethod(*this);
+    }
+    catch (bad_alloc & e)
+	{
+        throw AQLCoreSystemError(e.what(), __FILE__, __LINE__);
+    }
+}
+
+/*!
+    @brief Check function for this class ID
+    @param[in] id ID to check
+    @return True or False
+*/
+bool
+AQLDigitalMethod::isTypeOf(function_t id) const
+{
+	return (id == FN_DIGITAL ? true : AQLFunctionBase::isTypeOf(id));
+}
+
+/*!
+    @brief Return this function type
+    @return function type
+*/
+function_t
+AQLDigitalMethod::getType() const
+{
+	return FN_DIGITAL;
+}
+
+/*!
+    @brief Return function value
+	@param[in] x index
+    @return x[i] * mParam[i] + mParam[i + x.size() - 1] if mParam[i + 2 * x.size() - 3] < mParam[0] * x[0] <= mParam[i + 2 * x.size() - 2]
+*/
+double
+AQLDigitalMethod::operator()(const DoubleArray& x) const
+{
+	if(mParam.size() != 3 * x.size() - 3)
+		throw AQLCoreInvalidData("parameter size should be equal to 3 * index size - 3.",__FILE__,__LINE__);
+
+	// check input if mParam[x.size()] < mParam[x.size() + 1] < ... or not
+	for(size_t i = 2 * x.size() + 1; i < mParam.size(); ++i)
+	{
+		if(mParam[i - 1] > mParam[i])
+			throw AQLCoreInvalidData("trigger strike should be in order",__FILE__,__LINE__);
+	}
+
+	double referenceValue = mParam[0] * x[0];
+	for(size_t i = 1; i < x.size() - 1; ++i)
+	{
+		if( referenceValue < mParam[i + 2 * x.size() - 2] )
+		{
+			return x[i] * mParam[i] + mParam[i + x.size() - 1];
+		}
+	}
+
+	return x[x.size() - 1] * mParam[x.size() - 1] + mParam[2 * x.size() - 2];
+}

@@ -52,11 +52,11 @@
 #include "AQLMathDefine.h"
 #include "AQLPriceDataFunction.h"
 #include "AQLPriceDataFunctions.h"
-#include "LAMathPathEntity.h"
-#include "LAMathIndexEntity.h"
-#include "LAMathFXEntity.h"
-#include <LAPriceArbFreeGenerator.h>
-#include "LAMathCentralBank.h"
+#include "AQLMathPathEntity.h"
+#include "AQLMathIndexEntity.h"
+#include "AQLMathFXEntity.h"
+#include <AQLPriceArbFreeGenerator.h>
+#include "AQLMathCentralBank.h"
 #include "ExceptionMacros.h"
 
 #include "AQLBasic.h"
@@ -76,9 +76,9 @@
 #include "AQLLinearFunc.h"
 #include "AQLMaxFunc.h"
 #include "AQLMinFunc.h"
-#include "LAPriceCashFlowGenerator.h"
-#include "LAPricePayOff.h"
-#include "LAPriceCouponRainbow.h"
+#include "AQLPriceCashFlowGenerator.h"
+#include "AQLPricePayOff.h"
+#include "AQLPriceCouponRainbow.h"
 #include "AQLDataCSVFileLoader.h"
 #include "LACurvePricingObject.h"
 #include "AQLString.h"
@@ -90,18 +90,18 @@
 #include <cassert>
 #include "ConstantDeclarations.h"
 
-#include "LAMathPlainVanillaEntity.h"
-#include "LALinearRatesSwapTradeValue.h"
-#include "LAPriceConvergenceValue.h"
-#include "LACompoundingFunc.h"
+#include "AQLMathPlainVanillaEntity.h"
+#include "AQLLinearRatesSwapTradeValue.h"
+#include "AQLPriceConvergenceValue.h"
+#include "AQLCompoundingFunc.h"
 
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "AQLCoreComponentManager.h"
 
 // fukui
-#include "LAPriceAccruedInterest.h"
-#include "LAPriceTradeValue.h"
+#include "AQLPriceAccruedInterest.h"
+#include "AQLPriceTradeValue.h"
 #include "LAStaticDataImport.h"
 
 #include "CurveCalibrationData.h"
@@ -183,7 +183,7 @@ namespace
 		dm.setData(PRICING_DATA_FREQUENCY,			DATA_STRING);
 		dm.setData(PRICING_DATA_PRICE,				DATA_DOUBLE);
 
-		dataInstance->getObjectMaster().setEntity(new LAMathYieldCurve(dataInstance));
+		dataInstance->getObjectMaster().setEntity(new AQLMathYieldCurve(dataInstance));
 		dataInstance->getObjectMaster().setEntity(new CurveCalibrationData(dataInstance));
 
 		//set Function
@@ -192,7 +192,7 @@ namespace
 		CurveCalibration* pCalibrationEngine = new CurveCalibration();
 		fm.setFunction(pCalibrationEngine,FN_IRYIELDGENERATOR_STR);
 		//Arbitrage Free Curve Generator
-		LAPriceArbFreeGenerator* afyld = new LAPriceArbFreeGenerator();
+		AQLPriceArbFreeGenerator* afyld = new AQLPriceArbFreeGenerator();
 		fm.setFunction(afyld,FN_IRARBFREEGENERATOR_STR);
 
 		// *** Interpolation Factory ***
@@ -233,26 +233,26 @@ namespace
 		fm.setFunction(new AQLConstant(), FN_CONSTANT_STR);
 		fm.setFunction(new AQLMaxMethod(), FN_MAX_STR);
 		fm.setFunction(new AQLMinMethod(), FN_MIN_STR);
-		fm.setFunction(new LAMathBasisFunction(), FN_BASISFUNC1_STR);
-		fm.setFunction(new LAMathBasisFunction2(), FN_BASISFUNC2_STR);
+		fm.setFunction(new AQLMathBasisFunction(), FN_BASISFUNC1_STR);
+		fm.setFunction(new AQLMathBasisFunction2(), FN_BASISFUNC2_STR);
 
-		dataInstance->getObjectMaster().setEntity(new LAMathPlainVanillaEntity(dataInstance));
-		LALinearRatesSwapTradeValue* psval = new LALinearRatesSwapTradeValue(new LAPriceAccruedInterest());
+		dataInstance->getObjectMaster().setEntity(new AQLMathPlainVanillaEntity(dataInstance));
+		AQLLinearRatesSwapTradeValue* psval = new AQLLinearRatesSwapTradeValue(new AQLPriceAccruedInterest());
 
 		psval->registerData(dm);
 		fm.setFunction(psval, FN_IR_PLAINVANILLASWAPTRADEVALUE_STR);
 
-		LAPriceCashFlowGenerator* pcf = new LAPriceCashFlowGenerator();
+		AQLPriceCashFlowGenerator* pcf = new AQLPriceCashFlowGenerator();
 		pcf->registerData(dm);
 		fm.setFunction(pcf, FN_IR_CASHFLOWGENERATOR_STR);
 
-		LAPriceConvergenceValue* pconv = new LAPriceConvergenceValue();
+		AQLPriceConvergenceValue* pconv = new AQLPriceConvergenceValue();
 		pconv->registerData(dm);
 		fm.setFunction(pconv, FN_IR_CONVERGENCEVALUE_STR);
 
-		fm.setFunction(new LACompoundMethod1, FN_COMPOUNDING1_STR);
-		fm.setFunction(new LACompoundMethod8, FN_COMPOUNDING8_STR);
-		fm.setFunction(new LACompoundMethod10, FN_COMPOUNDING10_STR);
+		fm.setFunction(new AQLCompoundMethod1, FN_COMPOUNDING1_STR);
+		fm.setFunction(new AQLCompoundMethod8, FN_COMPOUNDING8_STR);
+		fm.setFunction(new AQLCompoundMethod10, FN_COMPOUNDING10_STR);
 
 		//add for MSUSA
 		//this setting is for outputfunction in Excel
@@ -362,7 +362,7 @@ namespace
 
 		assert(namevec.size() == dvec.size());
 
-		LAMathCentralBank::Schedules& scheds = LAMathCentralBank::schedules();
+		AQLMathCentralBank::Schedules& scheds = AQLMathCentralBank::schedules();
 		scheds.clear();
 		for (size_t j = 0; j != namevec.size(); ++j)
         {

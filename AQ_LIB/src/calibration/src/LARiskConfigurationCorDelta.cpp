@@ -5,9 +5,9 @@
 #include "AQLDataMatrix.h"
 #include "AQLObjectPool.h"
 
-#include "LAMathPathEntity.h"
-#include "LAMathVolatility.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLMathPathEntity.h"
+#include "AQLMathVolatility.h"
+#include "AQLPricePortfolioValue.h"
 
 #include "LACalibrationParameters.h"
 #include "LACalibrationParametersManager.h"
@@ -422,7 +422,7 @@ LARiskConfigurationCorDelta::createExtraScenario1Entity(const AQLString &key, AQ
 	const AQLString replacer = "_FX_" + AQLString(key).toUpper() + "_";
 	for (std::size_t i = 0, iend = entities.size(); i != iend; ++i)
 	{
-		LAMathVolatility &e = *dynamic_cast<LAMathVolatility*>(entities[i]);
+		AQLMathVolatility &e = *dynamic_cast<AQLMathVolatility*>(entities[i]);
 		const AQLString n = e.getName().get();
 		const int idx = n.findString(replacee);
 		const AQLString prefix  = n.subString(0                    , idx - 1 );
@@ -524,7 +524,7 @@ LARiskConfigurationCorDelta::putBumpedCor(const AQLString &key, AQLObjectPool &o
 	const AQLStringVector ccys = AQLString(key).toUpper().toToken('-');
 
 	// Get the intact path object and the correlation matrix
-	const LAMathPathEntity& pathEntity = *LAMarketData::getPathEnitty(objPool);
+	const AQLMathPathEntity& pathEntity = *LAMarketData::getPathEnitty(objPool);
 	DoubleMatrix corMtxForPathEntity = pathEntity.getCorrelationMatrix().get();	// makes a copy
 
 	// Locate factor1 and factor2 in the matrix

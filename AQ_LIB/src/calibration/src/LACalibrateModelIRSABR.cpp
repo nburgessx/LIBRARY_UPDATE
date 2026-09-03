@@ -9,20 +9,20 @@
 #include "AQLFunctionManager.h"
 #include "AQLPriceDataManager.h"
 #include "AQLDataReference.h"
-#include "LAMathCorrelation.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
-#include "LARatesTermStructureSDE.h"
-#include "LARatesLJTermStructureSDE.h"
-#include "LARatesCurveLinearInterpolation.h"
+#include "AQLMathCorrelation.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
+#include "AQLRatesTermStructureSDE.h"
+#include "AQLRatesLJTermStructureSDE.h"
+#include "AQLRatesCurveLinearInterpolation.h"
 #include "LACoreDataService.h"
 #include "LAStaticData.h"
 #include "LADealUtils.h"
 #include "LACalibrateModelIRSABR.h"
 #include "AQLDataVector.h"
 #include "AQLDataProcedure.h"
-#include "LAMathYieldCurve.h"
-#include "LAPriceYieldGenerator.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLPriceYieldGenerator.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLSplineInterpolation.h"
 #include "AQLPriceDataInterpolation.h"
@@ -30,10 +30,10 @@
 #include "AQLPriceDataDayCount.h"
 #include "AQLPriceDataFunction.h"
 #include "LAMarketData.h"
-#include "LAMathVolFuncBase.h"
+#include "AQLMathVolFuncBase.h"
 #include "LACalibrateVolatilityIRSABR.h"
 #include "LACalibrationParametersIRSABR.h"
-#include "LAMathVolatility.h"
+#include "AQLMathVolatility.h"
 #include "LAScenarioConfiguration.h"
 #include "LADefinitionsIRSABR.h"
 #include "AQLDataMatrix.h"
@@ -64,7 +64,7 @@ LACalibrateModelIRSABR::~LACalibrateModelIRSABR(void)
 	@param[out] sde
 */
 void
-LACalibrateModelIRSABR::setVolatility(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelIRSABR::setVolatility(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	return ;
 }
@@ -90,7 +90,7 @@ LACalibrateModelIRSABR::getVolType(const AQLString &key) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelIRSABR::setUpVolFunc(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelIRSABR::setUpVolFunc(const AQLString &currency, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	AQLString key_ccy = currency;
 	key_ccy.toLower();

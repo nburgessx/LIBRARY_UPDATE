@@ -8,27 +8,27 @@
 
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
 #include "LAMultiSwapPricer.h"
 #include "LACalibrateModelIRVanilla.h"
 #include "LADefinitions.h"
 #include "LAStaticData.h"
 #include "AQLFunctionUtilities.h"
-#include "LAMathDateUtilities.h"
+#include "AQLMathDateUtilities.h"
 #include <cmath>
 #include <map>
 
 #define CALIBRATION_DATA_CURVEID					"CurveID"
 
 #include "AQLMathValuableEntity.h"
-#include "LAMathPlainVanillaEntity.h"
-#include "LAPriceCashFlowGenerator.h"
+#include "AQLMathPlainVanillaEntity.h"
+#include "AQLPriceCashFlowGenerator.h"
 #include "AQLLinearFunc.h"
-#include "LAPricePayOff.h"
-#include "LALinearRatesSwapTradeValue.h"
+#include "AQLPricePayOff.h"
+#include "AQLLinearRatesSwapTradeValue.h"
 #include "AQLPriceDataFunction.h"
-#include "LAMathIndexEntity.h"
+#include "AQLMathIndexEntity.h"
 #include <algorithm>
 #include "AQLObject.h"
 #include "AQLPriceDataInterpolation.h"
@@ -42,12 +42,12 @@
 #include "AQLString.h"
 #include "AQLDataMatrix.h"
 #include "AQLPriceDataManager.h"
-#include "LAPriceConvergenceValue.h"
+#include "AQLPriceConvergenceValue.h"
 
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACalibrationUtilities.h"
 #include "LACurveSetup.h"
-#include "LACompoundingFunc.h"
+#include "AQLCompoundingFunc.h"
 
 #include "LAMarketData.h"
 
@@ -179,7 +179,7 @@ LAMultiSwapPricer::convergentPlainVanillaTrade(AQLDataInstance* dataInstance, st
 		//in case of convergent at first we must expand cashflows.
 		dh = &eval.getData(PRICING_DATA_CFGENERATOR, ISNOTNULL);
 		AQLDataProcedure& modelDataObj = dynamic_cast<AQLDataProcedure&>(dh->get());
-		const LAPriceCashFlowGenerator& cfgen = dynamic_cast<const LAPriceCashFlowGenerator &>(modelDataObj.getMethod());
+		const AQLPriceCashFlowGenerator& cfgen = dynamic_cast<const AQLPriceCashFlowGenerator &>(modelDataObj.getMethod());
 		
 		//delete cashlet coupon index
 		//set Detail into Manual not to cashflow expand
@@ -494,7 +494,7 @@ LAMultiSwapPricer::calcRiskAndPV(AQLDataInstance* dataInstance, const AQLStringV
 			{
 				pos = static_cast<unsigned int>(itpos - tradenames.begin());
 				AQLDataReference& refvnl = dynamic_cast<AQLDataReference &>(vtrade->getData(PRICING_DATA_PATHENTITY, ISNOTNULL).get());
-				LAMathPlainVanillaEntity& pvanilla = dynamic_cast<LAMathPlainVanillaEntity &>(refvnl.get().get());
+				AQLMathPlainVanillaEntity& pvanilla = dynamic_cast<AQLMathPlainVanillaEntity &>(refvnl.get().get());
 				if (pvanilla.getName().get() != paranames[pos])
 					continue;
 
@@ -515,7 +515,7 @@ LAMultiSwapPricer::calcRiskAndPV(AQLDataInstance* dataInstance, const AQLStringV
 		{
 		
 			AQLDataReference& refvnl = dynamic_cast<AQLDataReference &>(vtrade->getData(PRICING_DATA_PATHENTITY, ISNOTNULL).get());
-			LAMathPlainVanillaEntity& pvanilla = dynamic_cast<LAMathPlainVanillaEntity &>(refvnl.get().get());
+			AQLMathPlainVanillaEntity& pvanilla = dynamic_cast<AQLMathPlainVanillaEntity &>(refvnl.get().get());
 			if (pvanilla.getName().get() != paranames[pos])
 				continue;
 
@@ -539,7 +539,7 @@ LAMultiSwapPricer::calcRiskAndPV(AQLDataInstance* dataInstance, const AQLStringV
 		
 		//orgentityname is curveID
 		paraentityname = paraEntityName[h];
-		LAMathPlainVanillaEntity& pvanilla = dynamic_cast<LAMathPlainVanillaEntity &>(objPool.getObject(paraentityname,ENCHKTYPE_ISDEFINED).get());
+		AQLMathPlainVanillaEntity& pvanilla = dynamic_cast<AQLMathPlainVanillaEntity &>(objPool.getObject(paraentityname,ENCHKTYPE_ISDEFINED).get());
 		pvanilla.getIRCurve(ccyInput).getData(IR_CALIBRATION_DATA_YIELDDATA, ISNOTNULL).convertFromString(chgentityname);
 	
 		for (unsigned int i = 0; i < tradeVec.size(); i++)
@@ -881,10 +881,10 @@ LAMultiSwapPricer::createSourceDeltaRiskEntity(AQLDataInstance* dataInstance, AQ
 	while (itpara != paramVec.end())
 	{
 		//set up market bump rate
-		LAMathPlainVanillaEntity& pvanilla = dynamic_cast<LAMathPlainVanillaEntity &>(objPool.getObject(*itpara,ENCHKTYPE_ISDEFINED).get());
+		AQLMathPlainVanillaEntity& pvanilla = dynamic_cast<AQLMathPlainVanillaEntity &>(objPool.getObject(*itpara,ENCHKTYPE_ISDEFINED).get());
 		AQLString curveID = pvanilla.getIRCurve(ccyInput).getYieldData().get().getName();
 
-		LAMathYieldCurvePro& ypro = dynamic_cast<LAMathYieldCurvePro&>(objPool.getObject(AQLString("PRO_") + PREFIX_YIELD + curveID, ENCHKTYPE_ISDEFINED).get());
+		AQLMathYieldCurvePro& ypro = dynamic_cast<AQLMathYieldCurvePro&>(objPool.getObject(AQLString("PRO_") + PREFIX_YIELD + curveID, ENCHKTYPE_ISDEFINED).get());
 
 		AQLStringVector changed2Vec;
 		if (isbumpgridauto)
@@ -1073,12 +1073,12 @@ LAMultiSwapPricer::createZeroDeltaRiskEntity(AQLDataInstance* dataInstance, AQLS
 	while (itpara != paramVec.end())
 	{
 		//set up market bump rate
-		LAMathPlainVanillaEntity& pvanilla = dynamic_cast<LAMathPlainVanillaEntity &>(objPool.getObject(*itpara,ENCHKTYPE_ISDEFINED).get());
+		AQLMathPlainVanillaEntity& pvanilla = dynamic_cast<AQLMathPlainVanillaEntity &>(objPool.getObject(*itpara,ENCHKTYPE_ISDEFINED).get());
 		AQLString curveID = pvanilla.getIRCurve(ccyInput).getYieldData().get().getName();
 		
 		AQLObject* porgyield = &(objPool.getObject(curveID, ENCHKTYPE_ISDEFINED).get());
 		AQLString yieldProName = "PRO_YIELD_" + curveID;
-		LAMathYieldCurvePro* porgpro = &(dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(yieldProName, ENCHKTYPE_ISDEFINED).get()));
+		AQLMathYieldCurvePro* porgpro = &(dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(yieldProName, ENCHKTYPE_ISDEFINED).get()));
 		AQLString orgcurvetype = porgpro->getCurveType();
 
 
@@ -1677,7 +1677,7 @@ LAMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQL
 		//cf generate
 		dh = &(ret->getData(PRICING_DATA_CFGENERATOR,ISDEFINED));
 		AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &>(dh->get());
-		const LAPriceCashFlowGenerator& cfgen = dynamic_cast<const LAPriceCashFlowGenerator &>(modelDataObj.getMethod());
+		const AQLPriceCashFlowGenerator& cfgen = dynamic_cast<const AQLPriceCashFlowGenerator &>(modelDataObj.getMethod());
 		cfgen.clearCashlets(*pleg1);
 		pleg1->clear();
 	}
@@ -1726,7 +1726,7 @@ LAMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQL
 	if (leg1startdateInput.findString('Y') != -1 || leg1startdateInput.findString('M') != -1 || 
 		leg1startdateInput.findString('W') != -1 || leg1startdateInput.findString('D') != -1)
 	{
-		AQLDate tmpstartdate = LAMathDateUtilities::getDate(basedate,leg1startdateInput,leg1conventionInput,leg1calendarInput);
+		AQLDate tmpstartdate = AQLMathDateUtilities::getDate(basedate,leg1startdateInput,leg1conventionInput,leg1calendarInput);
 		pleg1->AQLObject::add(PRICING_DATA_STARTDATE, new AQLDataDate(tmpstartdate));
 	}
 	else if (leg1startdateInput.size() == 8)
@@ -1743,7 +1743,7 @@ LAMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQL
 		leg1enddateInput.findString('W') != -1 || leg1enddateInput.findString('D') != -1)
 	{
 		AQLDate startdate = dynamic_cast<AQLDataDate &>(pleg1->getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
-		AQLDate tmpenddate = LAMathDateUtilities::getDate(startdate,leg1enddateInput,leg1conventionInput,leg1calendarInput);
+		AQLDate tmpenddate = AQLMathDateUtilities::getDate(startdate,leg1enddateInput,leg1conventionInput,leg1calendarInput);
 		pleg1->AQLObject::add(PRICING_DATA_ENDDATE, new AQLDataDate(tmpenddate));
 	}
 	else if (leg1enddateInput.size() == 8)
@@ -1840,7 +1840,7 @@ LAMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQL
 		//cf generate
 		dh = &(ret->getData(PRICING_DATA_CFGENERATOR,ISDEFINED));
 		AQLDataProcedure &modelDataObj = dynamic_cast<AQLDataProcedure &>(dh->get());
-		const LAPriceCashFlowGenerator& cfgen = dynamic_cast<const LAPriceCashFlowGenerator &>(modelDataObj.getMethod());
+		const AQLPriceCashFlowGenerator& cfgen = dynamic_cast<const AQLPriceCashFlowGenerator &>(modelDataObj.getMethod());
 		cfgen.clearCashlets(*pleg2);
 		pleg2->clear();
 	}
@@ -1891,7 +1891,7 @@ LAMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQL
 	if (leg2startdateInput.findString('Y') != -1 || leg2startdateInput.findString('M') != -1 || 
 		leg2startdateInput.findString('W') != -1 || leg2startdateInput.findString('D') != -1)
 	{
-		AQLDate tmpstartdate = LAMathDateUtilities::getDate(basedate,leg2startdateInput,leg2conventionInput,leg2calendarInput);
+		AQLDate tmpstartdate = AQLMathDateUtilities::getDate(basedate,leg2startdateInput,leg2conventionInput,leg2calendarInput);
 		pleg2->AQLObject::add(PRICING_DATA_STARTDATE, new AQLDataDate(tmpstartdate));
 	}
 	else if (leg2startdateInput.size() == 8)
@@ -1908,7 +1908,7 @@ LAMultiSwapPricer::createSingleTrade(AQLDataInstance* dataInstance, std::map<AQL
 		leg2enddateInput.findString('W') != -1 || leg2enddateInput.findString('D') != -1)
 	{
 		AQLDate startdate = dynamic_cast<AQLDataDate &>(pleg2->getData(PRICING_DATA_STARTDATE, ISNOTNULL).get()).get();
-		AQLDate tmpenddate = LAMathDateUtilities::getDate(startdate,leg2enddateInput,leg2conventionInput,leg2calendarInput);
+		AQLDate tmpenddate = AQLMathDateUtilities::getDate(startdate,leg2enddateInput,leg2conventionInput,leg2calendarInput);
 		pleg2->AQLObject::add(PRICING_DATA_ENDDATE, new AQLDataDate(tmpenddate));
 	}
 	else if (leg2enddateInput.size() == 8)
@@ -3198,7 +3198,7 @@ LAMultiSwapPricer::storePastRates(AQLDataInstance* dataInstance, const AQLString
 	map<AQLDate, double> map_date_rate;
 	for (unsigned int i = 0; i < pastSize; i++)
 	{
-		pastdates[i] = LAMathDateUtilities::getLADate(PastRates[i][0]);
+		pastdates[i] = AQLMathDateUtilities::getLADate(PastRates[i][0]);
 		map_date_rate[pastdates[i]] = PastRates[i][1].getDoubleValue();
 		//ratesvec[i] = PastRates[i][1].getDoubleValue();
 	}
@@ -3503,19 +3503,19 @@ LAMultiSwapPricer::setUpMarketParamsAndGlobalShift(AQLDataInstance* dataInstance
 	map<AQLString, AQLString>::iterator itcalcmap = mapcalcinfo.begin();
 
 	AQLString marketparamInput = "marketparam1_" + curveID;
-	LAMathPlainVanillaEntity* pvanilla = NULL;
+	AQLMathPlainVanillaEntity* pvanilla = NULL;
 	objHolder = objPool.getObject(marketparamInput);
 	if (objHolder.isDefined())
 	{
 		if (!objHolder.isTypeOf(ENTITY_PLAINVANILLA))
 			throw AQLCoreInvalidData("Vanilla Setup Error",__FILE__,__LINE__);
 
-		pvanilla = dynamic_cast<LAMathPlainVanillaEntity *>(&objHolder.get());
+		pvanilla = dynamic_cast<AQLMathPlainVanillaEntity *>(&objHolder.get());
 		pvanilla->reset();
 	}
 	else
 	{
-		pvanilla = new LAMathPlainVanillaEntity(dataInstance);
+		pvanilla = new AQLMathPlainVanillaEntity(dataInstance);
 		objPool.set(marketparamInput, pvanilla);
 	}
 
@@ -3555,7 +3555,7 @@ LAMultiSwapPricer::setUpMarketParamsAndGlobalShift(AQLDataInstance* dataInstance
 		objHolder = objPool.getObject(yieldName, ENCHKTYPE_NOCHECK);
 		if (!objHolder.isDefined())
 		{
-			LAMathYieldCurve* pYield = new LAMathYieldCurve(dataInstance);
+			AQLMathYieldCurve* pYield = new AQLMathYieldCurve(dataInstance);
 			pYield->getName().convertFromString(yieldName);
 			pYield->getYieldData().convertFromString(curveID);
 			pYield->getInterpolation().convertFromString(FN_SPLINEINTERPOLATION_STR);
@@ -3579,7 +3579,7 @@ LAMultiSwapPricer::setUpMarketParamsAndGlobalShift(AQLDataInstance* dataInstance
 		objHolder = objPool.getObject(yieldProName, ENCHKTYPE_NOCHECK);
 		if (!objHolder.isDefined())
 		{
-			LAMathYieldCurvePro* pYieldPro = new LAMathYieldCurvePro(dataInstance);
+			AQLMathYieldCurvePro* pYieldPro = new AQLMathYieldCurvePro(dataInstance);
 			pYieldPro->getName().convertFromString(yieldProName);
 			pYieldPro->getYieldData().convertFromString(curveID);
 			pYieldPro->getInterpolation().convertFromString(FN_SPLINEINTERPOLATION_STR);
@@ -3684,7 +3684,7 @@ LAMultiSwapPricer::getDiscountCurveName(AQLDataInstance* dataInstance, AQLString
     const AQLString& ccy = dynamic_cast<const AQLDataString&>(pyldEntity->getData(IR_CALIBRATION_DATA_CURRENCY, ISNOTNULL).get()).get();
     //const AQLString& ypro_name = "PRO_" + LAMarketData::getBaseYieldName(ccy);
     const AQLString& ypro_name = AQLString("PRO_") + PREFIX_YIELD + curveID;
-    const LAMathYieldCurvePro& ypro = dynamic_cast<const LAMathYieldCurvePro&>(objPool.getObject(ypro_name, ENCHKTYPE_ISDEFINED).get());
+    const AQLMathYieldCurvePro& ypro = dynamic_cast<const AQLMathYieldCurvePro&>(objPool.getObject(ypro_name, ENCHKTYPE_ISDEFINED).get());
     const AQLString& ois_mkt_name = ypro.getMarketForCurve(ois_fcurve_name);
 
 
@@ -3730,7 +3730,7 @@ LAMultiSwapPricer::getCurveIDfromTradeReference(AQLDataInstance* dataInstance, A
 
 	dh = &(val.getData(PRICING_DATA_PATHENTITY, ISNOTNULL));
 	AQLDataReference& ref = dynamic_cast<AQLDataReference& >(dh->get());
-	LAMathPlainVanillaEntity& vanilla = dynamic_cast<LAMathPlainVanillaEntity &>(ref.get().get());
+	AQLMathPlainVanillaEntity& vanilla = dynamic_cast<AQLMathPlainVanillaEntity &>(ref.get().get());
 	
 	AQLDataReference& yielddata = dynamic_cast<AQLDataReference& >(vanilla.getIRCurve(ccyInput).getData(IR_CALIBRATION_DATA_YIELDDATA, ISNOTNULL).get());
 	return yielddata.get().getName();

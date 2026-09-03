@@ -25,10 +25,10 @@
 
 
 class AQLDataInstance;
-class LARatesCurveLogLinearInterpolation;
-class LAMathCorrelation;
-class LAMathVolatility;
-class LAPriceDriftHWQuantAdjustment;
+class AQLRatesCurveLogLinearInterpolation;
+class AQLMathCorrelation;
+class AQLMathVolatility;
+class AQLPriceDriftHWQuantAdjustment;
 
 
 //===================== Class Declare LACalibrateModelHW3F==================================
@@ -51,10 +51,10 @@ public:
 protected:
 	//==============================================
 	// create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const;
+	virtual AQLRatesSDEBase *createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// set integralfunction 
-	virtual  void setIntegralFunction(const AQLString &currency, LARatesSDEBase &sde)  const;
+	virtual  void setIntegralFunction(const AQLString &currency, AQLRatesSDEBase &sde)  const;
 	//==============================================
 	// create forein drift
 	virtual AQLFunctionBase *createForeinDrift(const AQLString &fx, const AQLString &sdeBase, const AQLString &sdeName, const AQLString &fx_sdeName) const;

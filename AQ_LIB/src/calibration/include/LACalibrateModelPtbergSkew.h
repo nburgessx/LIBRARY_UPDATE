@@ -43,13 +43,13 @@ protected:
 	friend class MAPtbergUtils;
 	//==============================================
 	// set drift 
-	virtual  void setDrift(const AQLString &fx, LARatesSDEBase &sde)  const;
+	virtual  void setDrift(const AQLString &fx, AQLRatesSDEBase &sde)  const;
 	//==============================================
 	// set integralfunction 
-	virtual  void setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde)  const;
+	virtual  void setIntegralFunction(const AQLString &fx, AQLRatesSDEBase &sde)  const;
 	//==============================================
 	// setup vol method
-	virtual void setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const;
+	virtual void setUpVolFunc(const AQLString &fx, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const;
 
 };
 #endif

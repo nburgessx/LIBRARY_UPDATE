@@ -21,29 +21,29 @@
 #include "LACalibrateModelFXStrangleSolver.h"
 #include "AQLFunctionBase.h"
 #include "AQLFunctionManager.h"
-#include "LAMathVolFuncBase.h"
+#include "AQLMathVolFuncBase.h"
 #include "AQLPriceDataInterpolation.h"
-#include "LAPriceDriftLMMSpot.h"
-#include "LAPriceDriftFX.h"
-#include "LARatesSpotSDE.h"
-#include "LARatesLJSpotSDE.h"
-#include "LARatesEulerMaruyama.h"
+#include "AQLPriceDriftLMMSpot.h"
+#include "AQLPriceDriftFX.h"
+#include "AQLRatesSpotSDE.h"
+#include "AQLRatesLJSpotSDE.h"
+#include "AQLRatesEulerMaruyama.h"
 #include "LACalibrateModelFX.h"
 #include "LADefinitionsPtberg.h"
 #include "LAMarketData.h"
-#include "LAMathVolFuncFX.h"
-#include "LAMathFXAdjuster.h"
-#include "LAMathVolatility.h"
+#include "AQLMathVolFuncFX.h"
+#include "AQLMathFXAdjuster.h"
+#include "AQLMathVolatility.h"
 #include "LAScenarioConfiguration.h"
 #include "LACalibrateVolatilityFXStrangleSolver.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
 #include "AQLConstant.h"
-#include "LAPriceFXVolatility.h"
-#include "LAPriceFXDDIntegral.h"
-#include "LAPriceFXDDIntegralMelstein.h"
+#include "AQLPriceFXVolatility.h"
+#include "AQLPriceFXDDIntegral.h"
+#include "AQLPriceFXDDIntegralMelstein.h"
 #include "LACalibrationParametersFXStrangleSolver.h"
-#include "LAMathVolFuncFXStrangleSolver.h"
+#include "AQLMathVolFuncFXStrangleSolver.h"
 #include "LACalibrateFXStrangleSolver.h"
 #include "LACalibrationFunc.h"
 #include "AQLDataMatrix.h"
@@ -75,7 +75,7 @@ LACalibrateModelFXStrangleSolver::~LACalibrateModelFXStrangleSolver(void)
 	@param[in] fx
 	@param[in] dataInstance
 */
-LARatesSDEBase *
+AQLRatesSDEBase *
 LACalibrateModelFXStrangleSolver::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	return 0;
@@ -114,7 +114,7 @@ LACalibrateModelFXStrangleSolver::isLJ(const AQLString &fx) const
 	@param[out] sde
 */
 void
-LACalibrateModelFXStrangleSolver::setVolatility(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXStrangleSolver::setVolatility(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -130,7 +130,7 @@ LACalibrateModelFXStrangleSolver::setVolatility(const AQLString &fx, LARatesSDEB
 
 */
 void
-LACalibrateModelFXStrangleSolver::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXStrangleSolver::setDrift(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -146,7 +146,7 @@ LACalibrateModelFXStrangleSolver::setDrift(const AQLString &fx, LARatesSDEBase &
 
 */
 void
-LACalibrateModelFXStrangleSolver::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXStrangleSolver::setIntegralFunction(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -160,7 +160,7 @@ LACalibrateModelFXStrangleSolver::setIntegralFunction(const AQLString &fx, LARat
 	@param[out] sde
 */
 void
-LACalibrateModelFXStrangleSolver::setOutputTemplate(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXStrangleSolver::setOutputTemplate(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -174,7 +174,7 @@ LACalibrateModelFXStrangleSolver::setOutputTemplate(const AQLString &fx, LARates
 	@param[out] sde
 */
 void
-LACalibrateModelFXStrangleSolver::setInterpolationMethod(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXStrangleSolver::setInterpolationMethod(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -216,7 +216,7 @@ LACalibrateModelFXStrangleSolver::getVolType(const AQLString &fx) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelFXStrangleSolver::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelFXStrangleSolver::setUpVolFunc(const AQLString &fx, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	setUpVolEntity(fx,vol);
 	AQLStringVector ccys;
@@ -266,7 +266,7 @@ LACalibrateModelFXStrangleSolver::setUpVolFunc(const AQLString &fx, LAMathVolati
 	vol.setVolatility(method);
 	
 	//// add strangle solver data to dataValues
-	LAMathVolFuncFXStrangleSolver* func_fx = dynamic_cast<LAMathVolFuncFXStrangleSolver*>(method);
+	AQLMathVolFuncFXStrangleSolver* func_fx = dynamic_cast<AQLMathVolFuncFXStrangleSolver*>(method);
 	vol.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONMETHOD, new AQLDataInt(func_fx->getInterpolationMethod()));
 	vol.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONTARGET, new AQLDataInt(func_fx->getInterpolationTarget()));
 	vol.AQLObject::add(IR_CALIBRATION_DATA_INTERPOLATIONVARIABLE, new AQLDataInt(func_fx->getInterpolationVariable()));
@@ -321,7 +321,7 @@ LACalibrateModelFXStrangleSolver::setUpVolFunc(const AQLString &fx, LAMathVolati
 	@param[out] dataInstance
 */
 void
-LACalibrateModelFXStrangleSolver::setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelFXStrangleSolver::setUpVolData(const AQLString &fx, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	fx;
 	vol;
@@ -337,7 +337,7 @@ LACalibrateModelFXStrangleSolver::setUpVolData(const AQLString &fx, LAMathVolati
 
 */
 void
-LACalibrateModelFXStrangleSolver::setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const
+LACalibrateModelFXStrangleSolver::setUpVolEntity(const AQLString &fx, AQLMathVolatility &vol) const
 {
 	// set interpolation
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);

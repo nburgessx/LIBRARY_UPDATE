@@ -24,7 +24,7 @@
 #include "AQLPriceDataType.h"
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
-#include "LAMathHWFuncMR.h"
+#include "AQLMathHWFuncMR.h"
 #include "AQLMathDefine.h"
 #include "LADealUtils.h"
 #include "LACalibrationParametersIRSABR.h"
@@ -35,16 +35,16 @@
 #include "LADefinitionsIRSABR.h"
 #include "LAMarketDataHW.h"
 #include "LAMarketData.h"
-#include "LAMathJamshidianSwaption.h"
-#include "LAMathJamshidianSwaptionByImplyVol.h"
-#include "LAMathAntonovFXOption.h"
-#include "LAPriceFXDisplacedDiffusionCalibration.h"
+#include "AQLMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaptionByImplyVol.h"
+#include "AQLMathAntonovFXOption.h"
+#include "AQLPriceFXDisplacedDiffusionCalibration.h"
 #include "AQLDataMatrix.h"
 #include "AQLDataReference.h"
-#include "LAMathSwaptionVolUtility.h"
+#include "AQLMathSwaptionVolUtility.h"
 
 
-#include "LAMathDateUtilities.h"
+#include "AQLMathDateUtilities.h"
 using namespace std;
 
 // constructor

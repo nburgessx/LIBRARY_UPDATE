@@ -18,10 +18,10 @@
 #include "LACurvePricingObject.h"
 
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
-#include "LAMathCorrelation.h"
-#include "LARatesTermStructureSDE.h"
-#include "LARatesLJTermStructureSDE.h"
-#include "LARatesCurveLinearInterpolation.h"
+#include "AQLMathCorrelation.h"
+#include "AQLRatesTermStructureSDE.h"
+#include "AQLRatesLJTermStructureSDE.h"
+#include "AQLRatesCurveLinearInterpolation.h"
 #include "LADealUtils.h"
 #endif
 

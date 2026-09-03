@@ -28,14 +28,14 @@
 #include "AQLDataVector.h"
 #include "AQLDataMultiReference.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LADealUtils.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
 #include "AQLLinearFunc.h"
-#include "LALinearRatesOptionValue.h"
+#include "AQLLinearRatesOptionValue.h"
 
 
 using namespace std;

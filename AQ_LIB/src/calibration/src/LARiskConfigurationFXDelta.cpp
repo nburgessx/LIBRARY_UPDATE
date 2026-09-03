@@ -215,7 +215,7 @@ LARiskConfigurationFXDelta::getCoefficientRatio1(const AQLString &fx, AQLObject&
 	if (isadj)
 	{
 		// set target name
-		LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+		AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 		
 		// search shift target currency(foreign currency)
 		AQLStringVector ccys;
@@ -285,7 +285,7 @@ LARiskConfigurationFXDelta::getCoefficientRatio2(const AQLString &fx, AQLObject&
 		else
 		{
 			// set target name
-			LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+			AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 			
 			// search shift target currency(foreign currency)
 			AQLStringVector ccys;

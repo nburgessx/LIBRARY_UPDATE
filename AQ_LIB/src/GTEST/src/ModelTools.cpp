@@ -5,9 +5,9 @@
 #include "LADateScheduleHelpers.h"
 #include "AQLMathDefine.h"
 #include "AQLDataBasics.h"
-#include "LAPriceCMSTools.h"
-#include "LAMathSwaptionVolUtility.h"
-#include "LAMathParameterUtility.h"
+#include "AQLPriceCMSTools.h"
+#include "AQLMathSwaptionVolUtility.h"
+#include "AQLMathParameterUtility.h"
 
 #include "InitializeAQETrading.h"
 #include "Dependency.h"
@@ -68,7 +68,7 @@ void ModelUtility::SetParameters(const AQLString& directory, const AQLString& pa
     // Create conventions
     AQLString convID = inputFileObj["ConventionID"]();
     AQLStringMatrix convMatrix = inputFileObj["Conventions"];
-    LAMathSwaptionVolUtility::setUpConvention(dataInstance, convID, convMatrix);
+    AQLMathSwaptionVolUtility::setUpConvention(dataInstance, convID, convMatrix);
 
     // Set-up parameter matrices
     size_t paramSize = paramNames.size();
@@ -77,8 +77,8 @@ void ModelUtility::SetParameters(const AQLString& directory, const AQLString& pa
     {
         AQLString paramName = paramNames[i];
         AQLStringMatrix paramMatrix = inputFileObj[paramName];
-        AQLString paramID = LAPriceCMSObject::MatrixID("_" + paramName + "_", currency);
-        LAMathSwaptionVolUtility::setUpSABRGrid(dataInstance, paramID, convID, paramMatrix);
+        AQLString paramID = AQLPriceCMSObject::MatrixID("_" + paramName + "_", currency);
+        AQLMathSwaptionVolUtility::setUpSABRGrid(dataInstance, paramID, convID, paramMatrix);
         paramIDs[i] = paramID;
     }
 
@@ -101,7 +101,7 @@ void ModelUtility::SetNonInterpolatedParameters(const AQLString& directory, cons
     // Create conventions
     AQLString convID = inputFileObj["ConventionID"]();
     AQLStringMatrix convMatrix = inputFileObj["Conventions"];
-    LAMathSwaptionVolUtility::setUpConvention(dataInstance, convID, convMatrix);
+    AQLMathSwaptionVolUtility::setUpConvention(dataInstance, convID, convMatrix);
 
     // Set-up parameter matrices
     size_t paramSize = paramNames.size();
@@ -110,8 +110,8 @@ void ModelUtility::SetNonInterpolatedParameters(const AQLString& directory, cons
     {
         AQLString paramName = paramNames[i];
         AQLStringMatrix paramMatrix = inputFileObj[paramName];
-        AQLString paramID = LAPriceCMSObject::MatrixID("_" + paramName + "_", currency);
-        LAMathParameterObject::SetParameterMatrix(dataInstance, paramID, convID, paramMatrix);
+        AQLString paramID = AQLPriceCMSObject::MatrixID("_" + paramName + "_", currency);
+        AQLMathParameterObject::SetParameterMatrix(dataInstance, paramID, convID, paramMatrix);
         paramIDs[i] = paramID;
     }
 

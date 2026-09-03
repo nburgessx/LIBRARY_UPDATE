@@ -1,6 +1,6 @@
 //
 // BasisCurveCalibration.h
-// This file was previously called YieldCurvePro.h and before that LAMathYieldCurvePro.h
+// This file was previously called YieldCurvePro.h and before that AQLMathYieldCurvePro.h
 //
 #include "BasisCurveCalibration.h"
 
@@ -29,7 +29,7 @@
 #include "AQLOptimumBrent.h"
 #include "AQLAlgorithm.h"
 #include "AQLMatrix.h"
-#include "LAMathFXEntity.h"
+#include "AQLMathFXEntity.h"
 
 #include "InitializeAQETrading.h"
 #include "LADateHelpers.h"
@@ -149,7 +149,7 @@ namespace
 
 */
 BasisCurveCalibration::BasisCurveCalibration(AQLDataInstance* dataInstance) : 
-				LAMathYieldCurve(dataInstance)//,mCurveVersion(0)
+				AQLMathYieldCurve(dataInstance)//,mCurveVersion(0)
 {
 	setDataInstance(dataInstance);
 	AQLPriceDataManager& dm = dataInstance->getDataMaster();
@@ -209,7 +209,7 @@ BasisCurveCalibration::BasisCurveCalibration(AQLDataInstance* dataInstance) :
 */
 BasisCurveCalibration::BasisCurveCalibration(
 	const BasisCurveCalibration& curve) : 
-	LAMathYieldCurve(curve)//,mCurveVersion(0)
+	AQLMathYieldCurve(curve)//,mCurveVersion(0)
 {
 	mpAsOfDate			= &getData(CALIBRATION_DATA_ASOFDATE);
 	mpProcedure			= &getData(CALIBRATION_DATA_CURVEGENERATOR);
@@ -258,7 +258,7 @@ BasisCurveCalibration::getType(void) const
 bool
 BasisCurveCalibration::isTypeOf(object_t id) const
 {
-	return (id == ENTITY_IRYCPRO ? true : LAMathYieldCurve::isTypeOf(id));
+	return (id == ENTITY_IRYCPRO ? true : AQLMathYieldCurve::isTypeOf(id));
 }
 
 /*!
@@ -655,13 +655,13 @@ BasisCurveCalibration::remove(
 	{
 		return; 
 	}
-	LAMathYieldCurve::remove(dataName);
+	AQLMathYieldCurve::remove(dataName);
 }
 
 void               
 BasisCurveCalibration::reset(void)
 {
-	LAMathYieldCurve::reset();
+	AQLMathYieldCurve::reset();
 	mpAsOfDate			= &add(CALIBRATION_DATA_ASOFDATE);
 	mpProcedure			= &add(CALIBRATION_DATA_CURVEGENERATOR);
 	mpMarketData		= &add(CALIBRATION_DATA_MARKETDATA);
@@ -700,7 +700,7 @@ BasisCurveCalibration::copy(
 		return *this;
 	}
 
-	LAMathYieldCurve::copy(e);
+	AQLMathYieldCurve::copy(e);
 	if (!e.isTypeOf(ENTITY_IRYCPRO))
 	{
 		AQLString err = "Assignement error for BasisCurveCalibration : from ";
@@ -1611,7 +1611,7 @@ BasisCurveCalibration::setBasisRates(const AQLString &curveType)
 	}
 
 	// get base yield curve and asofdate
-	const LAMathYieldCurve &baseYieldCurve = dynamic_cast<const LAMathYieldCurve &>(getBaseYieldCurve().get().get());
+	const AQLMathYieldCurve &baseYieldCurve = dynamic_cast<const AQLMathYieldCurve &>(getBaseYieldCurve().get().get());
 	const AQLDate &asof = dynamic_cast<const AQLDataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());	
 
 	// is renotional adjust or not
@@ -2050,7 +2050,7 @@ BasisCurveCalibration::setBasisRates(const AQLString &curveType)
 		{
 			const bool fwd_ispriceccy = dynamic_cast<const AQLDataBool &>(data_fwd[0]->getData(IR_CALIBRATION_DATA_ISPRICECCY, ISNOTNULL).get()).get();
 			//get spot fx
-			const LAMathFXEntity& fx = dynamic_cast<const LAMathFXEntity&>(getFXEntity().get().get());
+			const AQLMathFXEntity& fx = dynamic_cast<const AQLMathFXEntity&>(getFXEntity().get().get());
 			const AQLStringVector spotccys = fx.getCurrencys().get();
 			const DoubleArray spotfxs = fx.getSpotRates().get();
 
@@ -2403,7 +2403,7 @@ BasisCurveCalibration::setBasisRates(const AQLString &curveType)
 			AQLDate endDate = etrading::LADateHelpers::getDate(c_spotdate, term, sld, &cal, true, &roll_conv);
 
 			// Interest Rate Convention - Stores instrument daycount and compounding conventions e.g. Simple Interest Act/Act.
-			RateConvention rc = LAMathYieldCurve::setRC(CONTINUOUS);
+			RateConvention rc = AQLMathYieldCurve::setRC(CONTINUOUS);
 			AQLPriceDataDayCount dc_act365(ACT_365);
 			AQLPriceDataConvention conv(dc_act365.getDayCount(), rc);
 
@@ -2633,7 +2633,7 @@ BasisCurveCalibration::setBasisRates(const AQLString &curveType)
 				{
 					AQLString fYieldDataName = dynamic_cast<const AQLDataString &>(getForeignYieldData().get().get().getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 					AQLDataInstance* dataInstance = getDataInstance();
-					LAMathYieldCurve fYC(dataInstance);
+					AQLMathYieldCurve fYC(dataInstance);
 					fYC.getYieldData().convertFromString(fYieldDataName);
 					fYC.getCurveConvention(freq, cal, sld, dc, accessory, a_fCurve);
 					fYC.getDayCount(a_fCurve) = dc;
@@ -3879,7 +3879,7 @@ void BasisCurveCalibration::calcCheapestToDeliverCurve(const AQLString& curveNam
 	DoubleArray terms;
 	terms.push_back(0.0);
 
-	// Get LAMathYieldCurve objecct and initialise it
+	// Get AQLMathYieldCurve objecct and initialise it
 	AQLString yieldDataName = dynamic_cast<const AQLDataString &>(getYieldData().get().get().getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 	AQLDataInstance* dataInstance = getDataInstance();
 	etrading::LACurvePricingObject yc(dataInstance);
@@ -3929,7 +3929,7 @@ void BasisCurveCalibration::calcCheapestToDeliverCurve(const AQLString& curveNam
 		AQLDate endDate   = endDates[k];
 
 		// Calculate discount factor using the highest overnight forward rate
-		RateConvention rc = LAMathYieldCurve::setRC(SIMPLE);
+		RateConvention rc = AQLMathYieldCurve::setRC(SIMPLE);
 		AQLPriceDataConvention conv(dc.getDayCount(), rc);
 		df *=  conv.getDF(highestRates[k], startDate, endDate);
 		dfs.push_back(df);
@@ -5108,7 +5108,7 @@ BasisCurveCalibration::setBasisRates_old(void)
 	// get spotdate
 	const AQLDate &spotdate = dynamic_cast<const AQLDataDate &> ((data_basis[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 	// get base yield curve and asofdate
-	const LAMathYieldCurve &baseYieldCurve = dynamic_cast<const LAMathYieldCurve &>(getBaseYieldCurve().get().get());
+	const AQLMathYieldCurve &baseYieldCurve = dynamic_cast<const AQLMathYieldCurve &>(getBaseYieldCurve().get().get());
 	const AQLDate &asof = dynamic_cast<const AQLDataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());
 	// asof and spot check
 	if (asof > spotdate)
@@ -5346,7 +5346,7 @@ BasisCurveCalibration::setBasisRates2(const AQLString& basisCurveID)
 	// get spotdate
 	const AQLDate &spotdate = dynamic_cast<const AQLDataDate &> ((data_basis[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 	// get base yield curve and asofdate
-	const LAMathYieldCurve &baseYieldCurve = dynamic_cast<const LAMathYieldCurve &>(getBaseYieldCurve().get().get());
+	const AQLMathYieldCurve &baseYieldCurve = dynamic_cast<const AQLMathYieldCurve &>(getBaseYieldCurve().get().get());
 	const AQLDate &asof = dynamic_cast<const AQLDataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());
 	// asof and spot check
 	if (asof > spotdate)
@@ -6537,7 +6537,7 @@ BasisCurveCalibration::setFloater(const AQLString& curveName)
 	// maxterm for calc
 	const double tmax = terms_std.back();
 	// get base yield curve and asofdate
-	const LAMathYieldCurve &baseYieldCurve = dynamic_cast<const LAMathYieldCurve &>(getBaseYieldCurve().get().get());
+	const AQLMathYieldCurve &baseYieldCurve = dynamic_cast<const AQLMathYieldCurve &>(getBaseYieldCurve().get().get());
 	const AQLDate &asof = dynamic_cast<const AQLDataDate &> (baseYieldCurve.getYieldData().get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get());	
 
 	DoubleArray dfs; dfs.push_back(1.);

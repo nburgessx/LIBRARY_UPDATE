@@ -35,7 +35,7 @@ public:
 	//==============================================================================
 	//// setup volatility function
 	//static void setUpVolFunc(const AQLString &calibFileName, const AQLString &adjFileName, const AQLString &maxFileName, 
-	//	const DoubleArray &tenor_30_360, const DoubleArray &tenor, double skew, AQLDataInstance &dataInstance, LAMathVolatility &vol); 
+	//	const DoubleArray &tenor_30_360, const DoubleArray &tenor, double skew, AQLDataInstance &dataInstance, AQLMathVolatility &vol); 
 	////==============================================================================
 	//// create volatility function
 	//static std::vector<AQLFunctionBase *> createVolFunc(const AQLString &calibFileName, const AQLString &adjFileName, const AQLString &maxFileName, 

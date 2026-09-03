@@ -7,32 +7,32 @@
 #include "LACalibrateModelSZ.h"
 #include "AQLFunctionBase.h"
 #include "AQLFunctionManager.h"
-#include "LAMathVolFuncBase.h"
+#include "AQLMathVolFuncBase.h"
 #include "AQLPriceDataInterpolation.h"
-#include "LAPriceDriftLMMSpot.h"
-#include "LAPriceDriftFX.h"
-#include "LARatesSpotSDE.h"
-#include "LARatesLJSpotSDE.h"
-#include "LARatesEulerMaruyama.h"
+#include "AQLPriceDriftLMMSpot.h"
+#include "AQLPriceDriftFX.h"
+#include "AQLRatesSpotSDE.h"
+#include "AQLRatesLJSpotSDE.h"
+#include "AQLRatesEulerMaruyama.h"
 #include "LACalibrateModelFX.h"
 #include "LADefinitionsSZ.h"
 #include "LAMarketData.h"
-#include "LAMathVolFuncFX.h"
-#include "LAMathFXAdjuster.h"
-#include "LAMathVolatility.h"
+#include "AQLMathVolFuncFX.h"
+#include "AQLMathFXAdjuster.h"
+#include "AQLMathVolatility.h"
 #include "LAScenarioConfiguration.h"
 #include "LACalibrateVolatilitySZ.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
 #include "AQLConstant.h"
-#include "LAPriceFXVolatility.h"
-#include "LAPriceSZDDIntegralMelstein.h"
-#include "LAPriceDriftSZDDVolFactor.h"
-#include "LARatesScalarLinearInterpolation.h"
-#include "LAMathVolFuncSZDD.h"
-#include "LAMathVolFuncSZDDVolFactor.h"
+#include "AQLPriceFXVolatility.h"
+#include "AQLPriceSZDDIntegralMelstein.h"
+#include "AQLPriceDriftSZDDVolFactor.h"
+#include "AQLRatesScalarLinearInterpolation.h"
+#include "AQLMathVolFuncSZDD.h"
+#include "AQLMathVolFuncSZDDVolFactor.h"
 #include "AQLStepInterpolation.h"
-#include "LARatesHWIntegral.h"
+#include "AQLRatesHWIntegral.h"
 #include "LACalibrationParametersSZ.h"
 #include "LACalibrationFunc.h"
 
@@ -63,12 +63,12 @@ LACalibrateModelSZ::~LACalibrateModelSZ(void)
 	@param[in] fx
 	@param[in] dataInstance
 */
-LARatesSDEBase *
+AQLRatesSDEBase *
 LACalibrateModelSZ::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	dataInstance;
 	SDE_TYPE type = getSDEType(fx);
-		return new LARatesSpotSDE(type);
+		return new AQLRatesSpotSDE(type);
 }
 
 
@@ -131,14 +131,14 @@ LACalibrateModelSZ::isLJ(const AQLString &fx) const
 	@param[out] sde
 */
 void
-LACalibrateModelSZ::setVolatility(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelSZ::setVolatility(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
 	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
 	AQLString sdeName = mpStaticData->getStaticData(key_fx + STATIC_DATA_FX_KEY_SDE_NAME);
 
 	vector<vector<AQLFunctionBase *> > volMtx(1);
-	volMtx[0].push_back(new LAMathVolFuncBase(sdeName, 0, 0, true));
+	volMtx[0].push_back(new AQLMathVolFuncBase(sdeName, 0, 0, true));
 	sde.setVolatility(volMtx);
 }
 
@@ -152,7 +152,7 @@ LACalibrateModelSZ::setVolatility(const AQLString &fx, LARatesSDEBase &sde) cons
 
 */
 void
-LACalibrateModelSZ::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelSZ::setDrift(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	AQLStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
@@ -160,7 +160,7 @@ LACalibrateModelSZ::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
 	AQLString sdeName_d = mpStaticData->getStaticData(ccys[0].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 	AQLString sdeName_f = mpStaticData->getStaticData(ccys[1].toLower() + STATIC_DATA_FX_KEY_SDE_NAME);
 	
-	vector<AQLFunctionBase*> drift(1,  new LAPriceDriftFX(sdeName_d, sdeName_f));
+	vector<AQLFunctionBase*> drift(1,  new AQLPriceDriftFX(sdeName_d, sdeName_f));
 	sde.setDrift(drift);
 }
 
@@ -174,7 +174,7 @@ LACalibrateModelSZ::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
 
 */
 void
-LACalibrateModelSZ::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelSZ::setIntegralFunction(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	AQLString sdeName = getSDEAttrName(fx);
 
@@ -186,7 +186,7 @@ LACalibrateModelSZ::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde
 	integralType.toUpper();
 	if (integralType == "MELSTEIN")
 	{
-		sde.setIntegralFunction(new LAPriceSZDDIntegralMelstein(sdeName, volsdeName));
+		sde.setIntegralFunction(new AQLPriceSZDDIntegralMelstein(sdeName, volsdeName));
 	}
 	else
 	{
@@ -230,7 +230,7 @@ LACalibrateModelSZ::getVolType(const AQLString &fx) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelSZ::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelSZ::setUpVolFunc(const AQLString &fx, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	setUpVolEntity(fx,vol);
 	AQLStringVector ccys;
@@ -283,7 +283,7 @@ LACalibrateModelSZ::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQL
 	
 	if (isLJ(fx))
 	{
-		LAPriceFXVolatility *fxVolatility = new LAPriceFXVolatility(method, new AQLConstant(1.0), dynamic_cast<LAMathVolFuncFX *>(method)->getTimeGrid());
+		AQLPriceFXVolatility *fxVolatility = new AQLPriceFXVolatility(method, new AQLConstant(1.0), dynamic_cast<AQLMathVolFuncFX *>(method)->getTimeGrid());
 		vol.setVolatility(fxVolatility);
 	}
 	else
@@ -292,18 +292,18 @@ LACalibrateModelSZ::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQL
 	}
 
 	// set initialvalue of stochastic factor in spot volatility.
-	// In the case of LAMathVolFuncSZDD, the parameter "Sigma" denotes the initial value.
+	// In the case of AQLMathVolFuncSZDD, the parameter "Sigma" denotes the initial value.
 	double initvalue;
 	if (param.isCalib)
 	{
 		MACalibrationFunc *func_calb = dynamic_cast<MACalibrationFunc*>(method);
-		LAMathVolFuncFX *func_fx = dynamic_cast<LAMathVolFuncFX*>(func_calb->clone());
+		AQLMathVolFuncFX *func_fx = dynamic_cast<AQLMathVolFuncFX*>(func_calb->clone());
 		initvalue = func_fx->getSigma()[0];
 		delete func_fx;
 	}
 	else
 	{
-		initvalue = dynamic_cast<LAMathVolFuncSZDD*>(method)->getSigma()[0];
+		initvalue = dynamic_cast<AQLMathVolFuncSZDD*>(method)->getSigma()[0];
 	}
 	vol.setInitialValue(initvalue);
 }
@@ -318,7 +318,7 @@ LACalibrateModelSZ::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQL
 	@param[out] dataInstance
 */
 void
-LACalibrateModelSZ::setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelSZ::setUpVolData(const AQLString &fx, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	fx;
 	vol;
@@ -334,7 +334,7 @@ LACalibrateModelSZ::setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQL
 
 */
 void
-LACalibrateModelSZ::setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const
+LACalibrateModelSZ::setUpVolEntity(const AQLString &fx, AQLMathVolatility &vol) const
 {
 	// set interpolation
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
@@ -423,12 +423,12 @@ LACalibrateModelSZ::VF::isLJ(const AQLString &currency) const
 	@param[out] sde
 */
 void
-LACalibrateModelSZ::VF::setVolatility(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelSZ::VF::setVolatility(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString sdeName = getSDEAttrName(currency);
 
 	vector<vector<AQLFunctionBase *> > volMtx(1);
-	volMtx[0] = vector<AQLFunctionBase *>(1, new LAMathVolFuncBase(sdeName, 0, 0, true));
+	volMtx[0] = vector<AQLFunctionBase *>(1, new AQLMathVolFuncBase(sdeName, 0, 0, true));
 	sde.setVolatility(volMtx);
 }
 
@@ -440,12 +440,12 @@ LACalibrateModelSZ::VF::setVolatility(const AQLString &currency, LARatesSDEBase 
 
 */
 void
-LACalibrateModelSZ::VF::setDrift(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelSZ::VF::setDrift(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString sdeName = getSDEAttrName(currency);
 
 	vector<AQLFunctionBase *> driftVec(1);
-	driftVec[0] = new LAPriceDriftSZDDVolFactor(sdeName);
+	driftVec[0] = new AQLPriceDriftSZDDVolFactor(sdeName);
 	sde.setDrift(driftVec);
 }
 
@@ -457,10 +457,10 @@ LACalibrateModelSZ::VF::setDrift(const AQLString &currency, LARatesSDEBase &sde)
 
 */
 void
-LACalibrateModelSZ::VF::setIntegralFunction(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelSZ::VF::setIntegralFunction(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	AQLString sdeName = getSDEAttrName(currency);
-	sde.setIntegralFunction(new LARatesHWIntegral(LOG_INTEGRAL, sdeName));
+	sde.setIntegralFunction(new AQLRatesHWIntegral(LOG_INTEGRAL, sdeName));
 }
 
 /*!
@@ -497,7 +497,7 @@ LACalibrateModelSZ::VF::getVolType(const AQLString &currency) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelSZ::VF::setUpVolFunc(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelSZ::VF::setUpVolFunc(const AQLString &currency, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	// get spot volatility function
 	AQLString fxkey(getSpotIndex(currency));
@@ -506,16 +506,16 @@ LACalibrateModelSZ::VF::setUpVolFunc(const AQLString &currency, LAMathVolatility
 	AQLString sdeSpotName = pSpotGenerator->getSDEAttrName(fxkey);
 	delete pSpotGenerator;
 	AQLString volSpotName = PREFIX_VOL + sdeSpotName;
-	const LAMathVolatility *volSpotEntity = &dynamic_cast<const LAMathVolatility &>(dataInstance.getObjectPool().getObject(volSpotName, ENCHKTYPE_ISDEFINED).get());
-	const LAMathVolFuncSZDD *volFunc;
+	const AQLMathVolatility *volSpotEntity = &dynamic_cast<const AQLMathVolatility &>(dataInstance.getObjectPool().getObject(volSpotName, ENCHKTYPE_ISDEFINED).get());
+	const AQLMathVolFuncSZDD *volFunc;
 	if (isCalibTarget(fxkey))
 	{
 		const MACalibrationFunc *volFunc_fx = dynamic_cast<const MACalibrationFunc*>(volSpotEntity->getVolatilityFunc());
-		volFunc = dynamic_cast<const LAMathVolFuncSZDD*>(volFunc_fx->clone());
+		volFunc = dynamic_cast<const AQLMathVolFuncSZDD*>(volFunc_fx->clone());
 	}
 	else
 	{
-		volFunc = dynamic_cast<const LAMathVolFuncSZDD*>(volSpotEntity->getVolatilityFunc());
+		volFunc = dynamic_cast<const AQLMathVolFuncSZDD*>(volSpotEntity->getVolatilityFunc());
 	}
 	if (volSpotEntity == 0)
 	{
@@ -531,9 +531,9 @@ LACalibrateModelSZ::VF::setUpVolFunc(const AQLString &currency, LAMathVolatility
 	if(kappa.empty())
 		throw AQLCoreInvalidData("Error Mean Reversion is empty",__FILE__,__LINE__);
 	
-	LAMathHWFuncMRTMDPT* pafunc = new LAMathHWFuncMRTMDPT(volterm,kappa,*(new AQLStepInterpolation()));
+	AQLMathHWFuncMRTMDPT* pafunc = new AQLMathHWFuncMRTMDPT(volterm,kappa,*(new AQLStepInterpolation()));
 	
-	LAMathHWFuncSigmaTMDPT* psfunc = new LAMathHWFuncSigmaTMDPT(volterm,epsilon,*(new AQLStepInterpolation()));
+	AQLMathHWFuncSigmaTMDPT* psfunc = new AQLMathHWFuncSigmaTMDPT(volterm,epsilon,*(new AQLStepInterpolation()));
 
 	AQL1DDataSet* pthetafunc = new AQL1DDataSet();
 	AQLStepInterpolation inter;
@@ -541,7 +541,7 @@ LACalibrateModelSZ::VF::setUpVolFunc(const AQLString &currency, LAMathVolatility
 	pthetafunc->set(volterm,theta);
 
 	vector<AQLFunctionBase *> funcVec(1);
-	funcVec[0] = new LAMathVolFuncSZDDVolFactor(*pafunc,*psfunc,*pthetafunc);	
+	funcVec[0] = new AQLMathVolFuncSZDDVolFactor(*pafunc,*psfunc,*pthetafunc);	
 	vol.setVolatility(funcVec);
 
 }
@@ -555,7 +555,7 @@ LACalibrateModelSZ::VF::setUpVolFunc(const AQLString &currency, LAMathVolatility
 	@param[out] dataInstance
 */
 void
-LACalibrateModelSZ::VF::setUpVolData(const AQLString &currency, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelSZ::VF::setUpVolData(const AQLString &currency, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	(void)currency;
 	(void)vol;

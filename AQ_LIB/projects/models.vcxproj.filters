@@ -198,1668 +198,1668 @@
     <ClInclude Include="..\src\models\include\ConstantDeclarations.h">
       <Filter>include\Definitons</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathFXVolatilitySurfaceGenerate.h">
+    <ClInclude Include="..\src\models\include\AQLMathFXVolatilitySurfaceGenerate.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathFXVolSurfUtility.h">
+    <ClInclude Include="..\src\models\include\AQLMathFXVolSurfUtility.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathBoundaryConstraintVolLMM.h">
+    <ClInclude Include="..\src\models\include\AQLMathBoundaryConstraintVolLMM.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathBoundaryConstraintVolLMMQlib.h">
+    <ClInclude Include="..\src\models\include\AQLMathBoundaryConstraintVolLMMQlib.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCorrelationFuncLMM.h">
+    <ClInclude Include="..\src\models\include\AQLMathCorrelationFuncLMM.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCorrelationFuncLMMFnB.h">
+    <ClInclude Include="..\src\models\include\AQLMathCorrelationFuncLMMFnB.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCorrelationFuncLMMFnC.h">
+    <ClInclude Include="..\src\models\include\AQLMathCorrelationFuncLMMFnC.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCorrelationLMM.h">
+    <ClInclude Include="..\src\models\include\AQLMathCorrelationLMM.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCorrelationLMMDisc.h">
+    <ClInclude Include="..\src\models\include\AQLMathCorrelationLMMDisc.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCorrelationLMMDiscAngle.h">
+    <ClInclude Include="..\src\models\include\AQLMathCorrelationLMMDiscAngle.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCorFuncLMM.h">
+    <ClInclude Include="..\src\models\include\AQLMathCorFuncLMM.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathAntonovFXOption.h">
+    <ClInclude Include="..\src\models\include\AQLMathAntonovFXOption.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathAntonovFXOptionBetaFixed.h">
+    <ClInclude Include="..\src\models\include\AQLMathAntonovFXOptionBetaFixed.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathAntonovFXOptionVolatilityFixed.h">
+    <ClInclude Include="..\src\models\include\AQLMathAntonovFXOptionVolatilityFixed.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareBlackDD.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareBlackDD.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareBlackDDQlib.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareBlackDDQlib.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareCapFloor.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareCapFloor.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareCapFloorQlib.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareCapFloorQlib.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareCorrelationLMM.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareCorrelationLMM.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareCorrelationLMMQlib.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareCorrelationLMMQlib.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareHybridHWLVProcess.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareHybridHWLVProcess.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareHybridHWLVProcessQlib.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareHybridHWLVProcessQlib.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareSABR.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareSABR.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareSABRQlib.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareSABRQlib.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareSwaptionCapFloor.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareSwaptionCapFloor.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareSwaptionCapFloorQlib.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareSwaptionCapFloorQlib.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareSwaptionVol.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareSwaptionVol.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareSwaptionVolQlib.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareSwaptionVolQlib.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathLeastSquareSZ.h">
+    <ClInclude Include="..\src\models\include\AQLMathLeastSquareSZ.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolatility.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolatility.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolatilityLMM.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolatilityLMM.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolatilityLMMContModel.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolatilityLMMContModel.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolatilityLMMDiscModel.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolatilityLMMDiscModel.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncBase.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncBase.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncFX.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncFX.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncFXDD.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncFXDD.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncFXStrangleSolver.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncFXStrangleSolver.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncFXVannaVolga.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncFXVannaVolga.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncHW.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncHW.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncIRSABR.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncIRSABR.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncLMM.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncLMM.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncStructureBase.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncStructureBase.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncSZDD.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncSZDD.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncSZDDVolFactor.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncSZDDVolFactor.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathVolFuncWave.h">
+    <ClInclude Include="..\src\models\include\AQLMathVolFuncWave.h">
       <Filter>include\Volatility</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesBaseFunc.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesBaseFunc.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesCalc.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesCalc.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesCapletOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesCapletOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesCapletSpreadOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesCapletSpreadOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesCollarOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesCollarOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesDelayedCapletOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesDelayedCapletOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesDelayedFloorletOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesDelayedFloorletOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesDigitalCapletOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesDigitalCapletOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesDigitalFloorletOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesDigitalFloorletOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesFloorletOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesFloorletOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesFloorletSpreadOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesFloorletSpreadOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesStraddleOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesStraddleOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LABlackScholesStrangleOptionPayOff.h">
+    <ClInclude Include="..\src\models\include\AQLBlackScholesStrangleOptionPayoff.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathHWFuncMR.h">
+    <ClInclude Include="..\src\models\include\AQLMathHWFuncMR.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathHWFuncSigma.h">
+    <ClInclude Include="..\src\models\include\AQLMathHWFuncSigma.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathHWFuncTool.h">
+    <ClInclude Include="..\src\models\include\AQLMathHWFuncTool.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCapFloor.h">
+    <ClInclude Include="..\src\models\include\AQLMathCapFloor.h">
       <Filter>include\CapFloors</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCapFloorSABR.h">
+    <ClInclude Include="..\src\models\include\AQLMathCapFloorSABR.h">
       <Filter>include\CapFloors</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCapFloorVolUtility.h">
+    <ClInclude Include="..\src\models\include\AQLMathCapFloorVolUtility.h">
       <Filter>include\CapFloors</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathSwaptionFormulaSZ.h">
+    <ClInclude Include="..\src\models\include\AQLMathSwaptionFormulaSZ.h">
       <Filter>include\Swaptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathSwaptionSABR.h">
+    <ClInclude Include="..\src\models\include\AQLMathSwaptionSABR.h">
       <Filter>include\Swaptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathSwaptionVolLMM.h">
+    <ClInclude Include="..\src\models\include\AQLMathSwaptionVolLMM.h">
       <Filter>include\Swaptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathSwaptionVolUtility.h">
+    <ClInclude Include="..\src\models\include\AQLMathSwaptionVolUtility.h">
       <Filter>include\Swaptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathJamshidianRStarFinder.h">
+    <ClInclude Include="..\src\models\include\AQLMathJamshidianRStarFinder.h">
       <Filter>include\Jamshidian</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathJamshidianSwaption.h">
+    <ClInclude Include="..\src\models\include\AQLMathJamshidianSwaption.h">
       <Filter>include\Jamshidian</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathJamshidianSwaptionByImplyVol.h">
+    <ClInclude Include="..\src\models\include\AQLMathJamshidianSwaptionByImplyVol.h">
       <Filter>include\Jamshidian</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathConstraintSZ.h">
+    <ClInclude Include="..\src\models\include\AQLMathConstraintSZ.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCostFuncSZ.h">
+    <ClInclude Include="..\src\models\include\AQLMathCostFuncSZ.h">
       <Filter>include\Optimization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathAnalyticalBlack2.h">
+    <ClInclude Include="..\src\models\include\AQLMathAnalyticalBlack2.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathAnalyticalFormula.h">
+    <ClInclude Include="..\src\models\include\AQLMathAnalyticalFormula.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathAnalyticalFormula2.h">
+    <ClInclude Include="..\src\models\include\AQLMathAnalyticalFormula2.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathFXAdjuster.h">
+    <ClInclude Include="..\src\models\include\AQLMathFXAdjuster.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathFXEntity.h">
+    <ClInclude Include="..\src\models\include\AQLMathFXEntity.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathFXUtility.h">
+    <ClInclude Include="..\src\models\include\AQLMathFXUtility.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathFXVanillaFuncUtility.h">
+    <ClInclude Include="..\src\models\include\AQLMathFXVanillaFuncUtility.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathBlackCmsOption.h">
+    <ClInclude Include="..\src\models\include\AQLMathBlackCmsOption.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibArray.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibArray.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibBoundaryConstraint.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibBoundaryConstraint.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibConjugateGradient.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibConjugateGradient.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibConstraint.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibConstraint.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibCostFunction.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibCostFunction.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibDisposable.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibDisposable.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibEndCriteria.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibEndCriteria.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibLevenbergMarquardt.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibLevenbergMarquardt.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibOptimizationMethod.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibOptimizationMethod.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibProblem.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibProblem.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibSimplex.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibSimplex.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAQuantLibSteepestDescent.h">
+    <ClInclude Include="..\src\models\include\AQLQuantLibSteepestDescent.h">
       <Filter>include\QuantLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathSABR.h">
+    <ClInclude Include="..\src\models\include\AQLMathSABR.h">
       <Filter>include\SABR</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesCurveHWInterpolation.h">
+    <ClInclude Include="..\src\models\include\AQLRatesCurveHWInterpolation.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesCurveLinearInterpolation.h">
+    <ClInclude Include="..\src\models\include\AQLRatesCurveLinearInterpolation.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesCurveLogLinearInterpolation.h">
+    <ClInclude Include="..\src\models\include\AQLRatesCurveLogLinearInterpolation.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesCurveLogLinearInterpolationDmy.h">
+    <ClInclude Include="..\src\models\include\AQLRatesCurveLogLinearInterpolationDmy.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesCurveStepLinearInterpolation.h">
+    <ClInclude Include="..\src\models\include\AQLRatesCurveStepLinearInterpolation.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathYieldCurve.h">
+    <ClInclude Include="..\src\models\include\AQLMathYieldCurve.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathYieldCurvePro.h">
+    <ClInclude Include="..\src\models\include\AQLMathYieldCurvePro.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsAFFCurve.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsAFFCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsBase.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsBase.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsCurve.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsDDLMMCurve.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsDDLMMCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsHJMCurve.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsHJMCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsHW1FCurve.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsHW1FCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsLMMCurve.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsLMMCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsLogDDLMMCurve.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsLogDDLMMCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsLogLMMCurve.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsLogLMMCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsScalar.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsScalar.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsSMMCurve.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsSMMCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelDynamicsSRCurve.h">
+    <ClInclude Include="..\src\models\include\AQLModelDynamicsSRCurve.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCentralBank.h">
+    <ClInclude Include="..\src\models\include\AQLMathCentralBank.h">
       <Filter>include\Dates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathPathEntity.h">
+    <ClInclude Include="..\src\models\include\AQLMathPathEntity.h">
       <Filter>include\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesNumeraireAnnuity.h">
+    <ClInclude Include="..\src\models\include\AQLRatesNumeraireAnnuity.h">
       <Filter>include\SDE\Numeraires</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesNumeraireBankAccount.h">
+    <ClInclude Include="..\src\models\include\AQLRatesNumeraireBankAccount.h">
       <Filter>include\SDE\Numeraires</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesNumeraireBankAccountHJM.h">
+    <ClInclude Include="..\src\models\include\AQLRatesNumeraireBankAccountHJM.h">
       <Filter>include\SDE\Numeraires</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesNumeraireBankAccountHW.h">
+    <ClInclude Include="..\src\models\include\AQLRatesNumeraireBankAccountHW.h">
       <Filter>include\SDE\Numeraires</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesNumeraireBase.h">
+    <ClInclude Include="..\src\models\include\AQLRatesNumeraireBase.h">
       <Filter>include\SDE\Numeraires</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesNumeraireDiscountBond.h">
+    <ClInclude Include="..\src\models\include\AQLRatesNumeraireDiscountBond.h">
       <Filter>include\SDE\Numeraires</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesCpnCapFloorFuncForTARN.h">
+    <ClInclude Include="..\src\models\include\AQLRatesCpnCapFloorFuncForTARN.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesCpnCapFunc.h">
+    <ClInclude Include="..\src\models\include\AQLRatesCpnCapFunc.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesCpnCapFuncForTARN.h">
+    <ClInclude Include="..\src\models\include\AQLRatesCpnCapFuncForTARN.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCouponTool.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCouponTool.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCouponBase.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCouponBase.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCouponForDigital.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCouponForDigital.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCouponForDigital2.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCouponForDigital2.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCouponMax.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCouponMax.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCouponMin.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCouponMin.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCouponRainbow.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCouponRainbow.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCouponRainbowMin.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCouponRainbowMin.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCurveFuncUtility.h">
+    <ClInclude Include="..\src\models\include\AQLMathCurveFuncUtility.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCurveGenerateFuncUtility.h">
+    <ClInclude Include="..\src\models\include\AQLMathCurveGenerateFuncUtility.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LACoreUtility.h">
+    <ClInclude Include="..\src\models\include\AQLCoreUtility.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXDDIntegral.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXDDIntegral.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXDDIntegral3.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXDDIntegral3.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXDDIntegralMelstein.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXDDIntegralMelstein.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXDigitalCallSpreadOptionValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXDigitalCallSpreadOptionValue.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXDigitalCallSpreadSingleBarrierOptionValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXDigitalCallSpreadSingleBarrierOptionValue.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXDigitalOptionValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXDigitalOptionValue.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXDisplacedDiffusionCalibration.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXDisplacedDiffusionCalibration.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXDisplacedDiffusionCalibration3F.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXDisplacedDiffusionCalibration3F.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXKnockoutRebateValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXKnockoutRebateValue.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXOptionValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXOptionValue.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXSingleBarrierOptionValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXSingleBarrierOptionValue.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFXVolatility.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFXVolatility.h">
       <Filter>include\FX</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftHW.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftHW.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftHWQuantAdjustment.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftHWQuantAdjustment.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftHWQuantAdjustment3F.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftHWQuantAdjustment3F.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftLMMBase.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftLMMBase.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftLMMForward.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftLMMForward.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftLMMSpot.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftLMMSpot.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftLMMTerminal.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftLMMTerminal.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCMSCalibration.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCMSCalibration.h">
       <Filter>include\CMS</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCMSSpreadCalibration.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCMSSpreadCalibration.h">
       <Filter>include\CMS</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCMSSpreadFormula.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCMSSpreadFormula.h">
       <Filter>include\CMS</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCMSSpreadStrip.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCMSSpreadStrip.h">
       <Filter>include\CMS</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCMSSpreadTools.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCMSSpreadTools.h">
       <Filter>include\CMS</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCMSTools.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCMSTools.h">
       <Filter>include\CMS</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathDisplacedHeston.h">
+    <ClInclude Include="..\src\models\include\AQLMathDisplacedHeston.h">
       <Filter>include\Heston</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathDisplacedHestonTDP.h">
+    <ClInclude Include="..\src\models\include\AQLMathDisplacedHestonTDP.h">
       <Filter>include\Heston</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftFX.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftFX.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftFXLogNumeraire.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftFXLogNumeraire.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftHJM.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftHJM.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftLogLMMForward.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftLogLMMForward.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftLogLMMSpot.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftLogLMMSpot.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftLogLMMTerminal.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftLogLMMTerminal.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftQuantAdjustment.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftQuantAdjustment.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftSMMAnnuity.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftSMMAnnuity.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftSMMBase.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftSMMBase.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceDriftSZDDVolFactor.h">
+    <ClInclude Include="..\src\models\include\AQLPriceDriftSZDDVolFactor.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceEventBase.h">
+    <ClInclude Include="..\src\models\include\AQLPriceEventBase.h">
       <Filter>include\SDE\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceEventCpnChange.h">
+    <ClInclude Include="..\src\models\include\AQLPriceEventCpnChange.h">
       <Filter>include\SDE\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceEventExtraCF.h">
+    <ClInclude Include="..\src\models\include\AQLPriceEventExtraCF.h">
       <Filter>include\SDE\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceEventNotExCurChange.h">
+    <ClInclude Include="..\src\models\include\AQLPriceEventNotExCurChange.h">
       <Filter>include\SDE\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceEventNotionalChange.h">
+    <ClInclude Include="..\src\models\include\AQLPriceEventNotionalChange.h">
       <Filter>include\SDE\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceEventOption.h">
+    <ClInclude Include="..\src\models\include\AQLPriceEventOption.h">
       <Filter>include\SDE\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceEventTerminate.h">
+    <ClInclude Include="..\src\models\include\AQLPriceEventTerminate.h">
       <Filter>include\SDE\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceEventTool.h">
+    <ClInclude Include="..\src\models\include\AQLPriceEventTool.h">
       <Filter>include\SDE\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesSDEBase.h">
+    <ClInclude Include="..\src\models\include\AQLRatesSDEBase.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesSDEIntegralBase.h">
+    <ClInclude Include="..\src\models\include\AQLRatesSDEIntegralBase.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathHybridHWLVUtil.h">
+    <ClInclude Include="..\src\models\include\AQLMathHybridHWLVUtil.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathDriftFuncBase.h">
+    <ClInclude Include="..\src\models\include\AQLMathDriftFuncBase.h">
       <Filter>include\SDE\DriftTerms</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathAttrSDE.h">
+    <ClInclude Include="..\src\models\include\AQLMathAttrSDE.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesSpotSDE.h">
+    <ClInclude Include="..\src\models\include\AQLRatesSpotSDE.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesSpotSDEQuantAdjustment.h">
+    <ClInclude Include="..\src\models\include\AQLRatesSpotSDEQuantAdjustment.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesLJSpotSDE.h">
+    <ClInclude Include="..\src\models\include\AQLRatesLJSpotSDE.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesLJTermStructureSDE.h">
+    <ClInclude Include="..\src\models\include\AQLRatesLJTermStructureSDE.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesDmySDE.h">
+    <ClInclude Include="..\src\models\include\AQLRatesDmySDE.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCashFlowGenerator.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCashFlowGenerator.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCashValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCashValue.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LALinearRatesModel.h">
+    <ClInclude Include="..\src\models\include\AQLLinearRatesModel.h">
       <Filter>include\LinearRates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LALinearRatesOptionValue.h">
+    <ClInclude Include="..\src\models\include\AQLLinearRatesOptionValue.h">
       <Filter>include\LinearRates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LALinearRatesSwapTradeValue.h">
+    <ClInclude Include="..\src\models\include\AQLLinearRatesSwapTradeValue.h">
       <Filter>include\LinearRates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LALinearRatesSwapTradeValueForExo.h">
+    <ClInclude Include="..\src\models\include\AQLLinearRatesSwapTradeValueForExo.h">
       <Filter>include\LinearRates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LALinearRatesVolatility.h">
+    <ClInclude Include="..\src\models\include\AQLLinearRatesVolatility.h">
       <Filter>include\LinearRates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LALinearRatesVolatilityManager.h">
+    <ClInclude Include="..\src\models\include\AQLLinearRatesVolatilityManager.h">
       <Filter>include\LinearRates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPricePayOff.h">
+    <ClInclude Include="..\src\models\include\AQLPricePayOff.h">
       <Filter>include\Payoffs</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPricePayOffTool.h">
+    <ClInclude Include="..\src\models\include\AQLPricePayOffTool.h">
       <Filter>include\Payoffs</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPricePayOffToolRangeAccrue.h">
+    <ClInclude Include="..\src\models\include\AQLPricePayOffToolRangeAccrue.h">
       <Filter>include\Payoffs</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesHWIntegral.h">
+    <ClInclude Include="..\src\models\include\AQLRatesHWIntegral.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesHWIntegral3F.h">
+    <ClInclude Include="..\src\models\include\AQLRatesHWIntegral3F.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathPlainVanillaEntity.h">
+    <ClInclude Include="..\src\models\include\AQLMathPlainVanillaEntity.h">
       <Filter>include\LinearRates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathIRVanillaFuncUtility.h">
+    <ClInclude Include="..\src\models\include\AQLMathIRVanillaFuncUtility.h">
       <Filter>include\LinearRates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathArbFreeCurve.h">
+    <ClInclude Include="..\src\models\include\AQLMathArbFreeCurve.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCashFlowSchedules.h">
+    <ClInclude Include="..\src\models\include\AQLMathCashFlowSchedules.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAAnalyticFormula.h">
+    <ClInclude Include="..\src\models\include\AQLAnalyticFormula.h">
       <Filter>include\BlackScholes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceIRSwaptionValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceIRSwaptionValue.h">
       <Filter>include\Swaptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceIRSwaptionValueFromCashFlow.h">
+    <ClInclude Include="..\src\models\include\AQLPriceIRSwaptionValueFromCashFlow.h">
       <Filter>include\Swaptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceBenaimSABRSwaptionCalculator.h">
+    <ClInclude Include="..\src\models\include\AQLPriceBenaimSABRSwaptionCalculator.h">
       <Filter>include\SABR</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesUnionFunc.h">
+    <ClInclude Include="..\src\models\include\AQLRatesUnionFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesUnionLinearFunc.h">
+    <ClInclude Include="..\src\models\include\AQLRatesUnionLinearFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPolyFitBase.h">
+    <ClInclude Include="..\src\models\include\AQLPolyFitBase.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPolyFitLS.h">
+    <ClInclude Include="..\src\models\include\AQLPolyFitLS.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPolynomialBase.h">
+    <ClInclude Include="..\src\models\include\AQLPolynomialBase.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPolynomialPS.h">
+    <ClInclude Include="..\src\models\include\AQLPolynomialPS.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAProdFunc.h">
+    <ClInclude Include="..\src\models\include\AQLProdFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LASumFunc.h">
+    <ClInclude Include="..\src\models\include\AQLSumFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LASumFunc2.h">
+    <ClInclude Include="..\src\models\include\AQLSumFunc2.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAAverageFunc.h">
+    <ClInclude Include="..\src\models\include\AQLAverageFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LACompoundingFunc.h">
+    <ClInclude Include="..\src\models\include\AQLCompoundingFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAContainerFunc.h">
+    <ClInclude Include="..\src\models\include\AQLContainerFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LADigitalFunc.h">
+    <ClInclude Include="..\src\models\include\AQLDigitalFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAFractionFunc.h">
+    <ClInclude Include="..\src\models\include\AQLFractionFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceSABRSwaptionCalculator.h">
+    <ClInclude Include="..\src\models\include\AQLPriceSABRSwaptionCalculator.h">
       <Filter>include\SABR</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceSwaptionCalculator.h">
+    <ClInclude Include="..\src\models\include\AQLPriceSwaptionCalculator.h">
       <Filter>include\Swaptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceSwapRateCalculator.h">
+    <ClInclude Include="..\src\models\include\AQLPriceSwapRateCalculator.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceHWCalibration.h">
+    <ClInclude Include="..\src\models\include\AQLPriceHWCalibration.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesEulerMaruyama.h">
+    <ClInclude Include="..\src\models\include\AQLRatesEulerMaruyama.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesTermStructureSDE.h">
+    <ClInclude Include="..\src\models\include\AQLRatesTermStructureSDE.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceIMMFwdRiskConversionMatrix.h">
+    <ClInclude Include="..\src\models\include\AQLPriceIMMFwdRiskConversionMatrix.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LALinearRegression.h">
+    <ClInclude Include="..\src\models\include\AQLLinearRegression.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceYieldGenerator.h">
+    <ClInclude Include="..\src\models\include\AQLPriceYieldGenerator.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesBM.h">
+    <ClInclude Include="..\src\models\include\AQLRatesBM.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesBM_BB.h">
+    <ClInclude Include="..\src\models\include\AQLRatesBM_BB.h">
       <Filter>include\SDE</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceArbFreeGenerator.h">
+    <ClInclude Include="..\src\models\include\AQLPriceArbFreeGenerator.h">
       <Filter>include\YieldCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceQuantAdjustmentFuncBase.h">
+    <ClInclude Include="..\src\models\include\AQLPriceQuantAdjustmentFuncBase.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceQuantAdjustmentHWFXDD.h">
+    <ClInclude Include="..\src\models\include\AQLPriceQuantAdjustmentHWFXDD.h">
       <Filter>include\HullWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceThresholdSABRSwaptionCalculator.h">
+    <ClInclude Include="..\src\models\include\AQLPriceThresholdSABRSwaptionCalculator.h">
       <Filter>include\SABR</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceFlatSABRSwaptionCalculator.h">
+    <ClInclude Include="..\src\models\include\AQLPriceFlatSABRSwaptionCalculator.h">
       <Filter>include\SABR</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesScalarLinearInterpolation.h">
+    <ClInclude Include="..\src\models\include\AQLRatesScalarLinearInterpolation.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceLMMCalibration.h">
+    <ClInclude Include="..\src\models\include\AQLPriceLMMCalibration.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathParameterUtility.h">
+    <ClInclude Include="..\src\models\include\AQLMathParameterUtility.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceSZCalibration.h">
+    <ClInclude Include="..\src\models\include\AQLPriceSZCalibration.h">
       <Filter>include\SZModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceSZDDIntegralMelstein.h">
+    <ClInclude Include="..\src\models\include\AQLPriceSZDDIntegralMelstein.h">
       <Filter>include\SZModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesAccruedCouponFuncBase.h">
+    <ClInclude Include="..\src\models\include\AQLRatesAccruedCouponFuncBase.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesAggregateCouponCap.h">
+    <ClInclude Include="..\src\models\include\AQLRatesAggregateCouponCap.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesAggregateCouponCapFloor.h">
+    <ClInclude Include="..\src\models\include\AQLRatesAggregateCouponCapFloor.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCFGenUtility.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCFGenUtility.h">
       <Filter>include\Dates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathIntegralMulti.h">
+    <ClInclude Include="..\src\models\include\AQLMathIntegralMulti.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesPCIntegral.h">
+    <ClInclude Include="..\src\models\include\AQLRatesPCIntegral.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceVolLMMDisplacedDiffusion.h">
+    <ClInclude Include="..\src\models\include\AQLPriceVolLMMDisplacedDiffusion.h">
       <Filter>include\LiborMarketModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceReplication.h">
+    <ClInclude Include="..\src\models\include\AQLPriceReplication.h">
       <Filter>include\Swaptions</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceIRVegaUnderlyingAsset.h">
+    <ClInclude Include="..\src\models\include\AQLPriceIRVegaUnderlyingAsset.h">
       <Filter>include\SABR</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceIRCapFloorOptionValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceIRCapFloorOptionValue.h">
       <Filter>include\CapFloors</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathBaseFuncUtility.h">
+    <ClInclude Include="..\src\models\include\AQLMathBaseFuncUtility.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesInterSectionFunc.h">
+    <ClInclude Include="..\src\models\include\AQLRatesInterSectionFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathIndexEntity.h">
+    <ClInclude Include="..\src\models\include\AQLMathIndexEntity.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathIndexEntityInterpolation.h">
+    <ClInclude Include="..\src\models\include\AQLMathIndexEntityInterpolation.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceIndexTool.h">
+    <ClInclude Include="..\src\models\include\AQLPriceIndexTool.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathCorrelation.h">
+    <ClInclude Include="..\src\models\include\AQLMathCorrelation.h">
       <Filter>include\Correlation</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesCovariance.h">
+    <ClInclude Include="..\src\models\include\AQLRatesCovariance.h">
       <Filter>include\Correlation</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceLSMCTradeValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceLSMCTradeValue.h">
       <Filter>include\MonteCarlo</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceCopulaCMSSpread.h">
+    <ClInclude Include="..\src\models\include\AQLPriceCopulaCMSSpread.h">
       <Filter>include\CMS</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathOptionTools.h">
+    <ClInclude Include="..\src\models\include\AQLMathOptionTools.h">
       <Filter>include\Options</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceOptionGenerator.h">
+    <ClInclude Include="..\src\models\include\AQLPriceOptionGenerator.h">
       <Filter>include\Options</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPricePortfolioValue.h">
+    <ClInclude Include="..\src\models\include\AQLPricePortfolioValue.h">
       <Filter>include\Portfolio</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceTradeValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceTradeValue.h">
       <Filter>include\Portfolio</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceAccruedInterest.h">
+    <ClInclude Include="..\src\models\include\AQLPriceAccruedInterest.h">
       <Filter>include\Cashflows</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesPEInterpolationBase.h">
+    <ClInclude Include="..\src\models\include\AQLRatesPEInterpolationBase.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LARatesRangeCountFunc.h">
+    <ClInclude Include="..\src\models\include\AQLRatesRangeCountFunc.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAPriceConvergenceValue.h">
+    <ClInclude Include="..\src\models\include\AQLPriceConvergenceValue.h">
       <Filter>include\Portfolio</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathJumpDiffusion.h">
+    <ClInclude Include="..\src\models\include\AQLMathJumpDiffusion.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathDateCalculations.h">
+    <ClInclude Include="..\src\models\include\AQLMathDateCalculations.h">
       <Filter>include\Dates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathDateUtilities.h">
+    <ClInclude Include="..\src\models\include\AQLMathDateUtilities.h">
       <Filter>include\Dates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAModelUtilities.h">
+    <ClInclude Include="..\src\models\include\AQLModelUtilities.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAEigenSystems.h">
+    <ClInclude Include="..\src\models\include\AQLEigenSystems.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LATime.h">
+    <ClInclude Include="..\src\models\include\AQLTime.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
     <ClInclude Include="..\src\models\include\AQLCoreComponentManager.h">
       <Filter>include\Infrastructure</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LALinearRatesOptionValueDataProvider.h">
+    <ClInclude Include="..\src\models\include\AQLLinearRatesOptionValueDataProvider.h">
       <Filter>include\LinearRates</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\models\include\LAMathInterpolationUtilities.h">
+    <ClInclude Include="..\src\models\include\AQLMathInterpolationUtilities.h">
       <Filter>include\MathMethods</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\models\src\LAMathAntonovFXOption.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathAntonovFXOption.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathAntonovFXOptionBetaFixed.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathAntonovFXOptionBetaFixed.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathAntonovFXOptionVolatilityFixed.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathAntonovFXOptionVolatilityFixed.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathFXVolatilitySurfaceGenerate.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathFXVolatilitySurfaceGenerate.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathFXVolSurfUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathFXVolSurfUtility.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesBaseFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesBaseFunc.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesCapletOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesCapletOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesCapletSpreadOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesCapletSpreadOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesCollarOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesCollarOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesDelayedCapletOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesDelayedCapletOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesDelayedFloorletOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesDelayedFloorletOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesDigitalCapletOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesDigitalCapletOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesDigitalFloorletOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesDigitalFloorletOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesFloorletOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesFloorletOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesFloorletSpreadOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesFloorletSpreadOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesStraddleOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesStraddleOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LABlackScholesStrangleOptionPayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLBlackScholesStrangleOptionPayoff.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathBlackCmsOption.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathBlackCmsOption.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCorrelation.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCorrelation.cpp">
       <Filter>src\Correlation</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCorrelationFuncLMM.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCorrelationFuncLMM.cpp">
       <Filter>src\LiborMarketModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCorrelationFuncLMMFnB.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCorrelationFuncLMMFnB.cpp">
       <Filter>src\LiborMarketModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCorrelationFuncLMMFnC.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCorrelationFuncLMMFnC.cpp">
       <Filter>src\LiborMarketModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCorrelationLMM.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCorrelationLMM.cpp">
       <Filter>src\LiborMarketModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCorrelationLMMDisc.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCorrelationLMMDisc.cpp">
       <Filter>src\LiborMarketModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCorrelationLMMDiscAngle.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCorrelationLMMDiscAngle.cpp">
       <Filter>src\LiborMarketModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathJamshidianRStarFinder.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathJamshidianRStarFinder.cpp">
       <Filter>src\Jamshidian</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathJamshidianSwaption.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathJamshidianSwaption.cpp">
       <Filter>src\Jamshidian</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathJamshidianSwaptionByImplyVol.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathJamshidianSwaptionByImplyVol.cpp">
       <Filter>src\Jamshidian</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesNumeraireAnnuity.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesNumeraireAnnuity.cpp">
       <Filter>src\SDE\Numeraires</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesNumeraireBankAccount.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesNumeraireBankAccount.cpp">
       <Filter>src\SDE\Numeraires</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesNumeraireBankAccountHJM.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesNumeraireBankAccountHJM.cpp">
       <Filter>src\SDE\Numeraires</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesNumeraireBankAccountHW.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesNumeraireBankAccountHW.cpp">
       <Filter>src\SDE\Numeraires</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesNumeraireBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesNumeraireBase.cpp">
       <Filter>src\SDE\Numeraires</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesNumeraireDiscountBond.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesNumeraireDiscountBond.cpp">
       <Filter>src\SDE\Numeraires</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCapFloor.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCapFloor.cpp">
       <Filter>src\CapFloors</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCapFloorSABR.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCapFloorSABR.cpp">
       <Filter>src\CapFloors</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCapFloorVolUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCapFloorVolUtility.cpp">
       <Filter>src\CapFloors</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCashFlowSchedules.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCashFlowSchedules.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCentralBank.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCentralBank.cpp">
       <Filter>src\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathArbFreeCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathArbFreeCurve.cpp">
       <Filter>src\YieldCurve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathDisplacedHeston.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathDisplacedHeston.cpp">
       <Filter>src\Heston</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathDisplacedHestonTDP.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathDisplacedHestonTDP.cpp">
       <Filter>src\Heston</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathHWFuncMR.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathHWFuncMR.cpp">
       <Filter>src\HullWhite</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathHWFuncSigma.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathHWFuncSigma.cpp">
       <Filter>src\HullWhite</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathHWFuncTool.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathHWFuncTool.cpp">
       <Filter>src\HullWhite</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathFXAdjuster.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathFXAdjuster.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathFXEntity.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathFXEntity.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathFXUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathFXUtility.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathFXVanillaFuncUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathFXVanillaFuncUtility.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareBlackDD.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareBlackDD.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareBlackDDQlib.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareBlackDDQlib.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareCapFloor.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareCapFloor.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareCapFloorQlib.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareCapFloorQlib.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareCorrelationLMM.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareCorrelationLMM.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareCorrelationLMMQlib.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareCorrelationLMMQlib.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareHybridHWLVProcess.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareHybridHWLVProcess.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareHybridHWLVProcessQlib.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareHybridHWLVProcessQlib.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareSABR.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareSABR.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareSABRQlib.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareSABRQlib.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareSwaptionCapFloor.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareSwaptionCapFloor.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareSwaptionCapFloorQlib.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareSwaptionCapFloorQlib.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareSwaptionVol.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareSwaptionVol.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareSwaptionVolQlib.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareSwaptionVolQlib.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathLeastSquareSZ.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathLeastSquareSZ.cpp">
       <Filter>src\Optimization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXDDIntegral.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXDDIntegral.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXDDIntegral3.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXDDIntegral3.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXDDIntegralMelstein.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXDDIntegralMelstein.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXDigitalCallSpreadOptionValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXDigitalCallSpreadOptionValue.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXDigitalCallSpreadSingleBarrierOptionValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXDigitalCallSpreadSingleBarrierOptionValue.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXDigitalOptionValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXDigitalOptionValue.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXDisplacedDiffusionCalibration.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXDisplacedDiffusionCalibration.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXDisplacedDiffusionCalibration3F.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXDisplacedDiffusionCalibration3F.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXKnockoutRebateValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXKnockoutRebateValue.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXOptionValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXOptionValue.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXSingleBarrierOptionValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXSingleBarrierOptionValue.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFXVolatility.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFXVolatility.cpp">
       <Filter>src\FX</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolatility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolatility.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolatilityLMM.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolatilityLMM.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolatilityLMMContModel.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolatilityLMMContModel.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolatilityLMMDiscModel.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolatilityLMMDiscModel.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncBase.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncFX.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncFX.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncFXDD.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncFXDD.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncFXStrangleSolver.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncFXStrangleSolver.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncFXVannaVolga.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncFXVannaVolga.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncHW.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncHW.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncIRSABR.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncIRSABR.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncLMM.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncLMM.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncStructureBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncStructureBase.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncSZDD.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncSZDD.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncSZDDVolFactor.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncSZDDVolFactor.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathVolFuncWave.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathVolFuncWave.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibArray.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibArray.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibBoundaryConstraint.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibBoundaryConstraint.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibConjugateGradient.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibConjugateGradient.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibConstraint.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibConstraint.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibCostFunction.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibCostFunction.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibEndCriteria.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibEndCriteria.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibLevenbergMarquardt.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibLevenbergMarquardt.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibOptimizationMethod.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibOptimizationMethod.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibProblem.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibProblem.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibSimplex.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibSimplex.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAQuantLibSteepestDescent.cpp">
+    <ClCompile Include="..\src\models\src\AQLQuantLibSteepestDescent.cpp">
       <Filter>src\QuantLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathSwaptionFormulaSZ.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathSwaptionFormulaSZ.cpp">
       <Filter>src\Swaptions</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathSwaptionSABR.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathSwaptionSABR.cpp">
       <Filter>src\Swaptions</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathSwaptionVolLMM.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathSwaptionVolLMM.cpp">
       <Filter>src\Swaptions</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathSwaptionVolUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathSwaptionVolUtility.cpp">
       <Filter>src\Swaptions</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathSABR.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathSABR.cpp">
       <Filter>src\SABR</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesCpnCapFloorFuncForTARN.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesCpnCapFloorFuncForTARN.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesCpnCapFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesCpnCapFunc.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesCpnCapFuncForTARN.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesCpnCapFuncForTARN.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesCurveHWInterpolation.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesCurveHWInterpolation.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesCurveLinearInterpolation.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesCurveLinearInterpolation.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesCurveLogLinearInterpolation.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesCurveLogLinearInterpolation.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesCurveLogLinearInterpolationDmy.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesCurveLogLinearInterpolationDmy.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesCurveStepLinearInterpolation.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesCurveStepLinearInterpolation.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsAFFCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsAFFCurve.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsBase.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsCurve.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsDDLMMCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsDDLMMCurve.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsHJMCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsHJMCurve.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsHW1FCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsHW1FCurve.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsLMMCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsLMMCurve.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsLogDDLMMCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsLogDDLMMCurve.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsLogLMMCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsLogLMMCurve.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsScalar.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsScalar.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsSMMCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsSMMCurve.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAModelDynamicsSRCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLModelDynamicsSRCurve.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCMSCalibration.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCMSCalibration.cpp">
       <Filter>src\CMS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCMSSpreadCalibration.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCMSSpreadCalibration.cpp">
       <Filter>src\CMS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCMSSpreadFormula.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCMSSpreadFormula.cpp">
       <Filter>src\CMS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCMSSpreadStrip.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCMSSpreadStrip.cpp">
       <Filter>src\CMS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCMSSpreadTools.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCMSSpreadTools.cpp">
       <Filter>src\CMS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCMSTools.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCMSTools.cpp">
       <Filter>src\CMS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesAccruedCouponFuncBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesAccruedCouponFuncBase.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesAggregateCouponCap.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesAggregateCouponCap.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesAggregateCouponCapFloor.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesAggregateCouponCapFloor.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesHWIntegral.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesHWIntegral.cpp">
       <Filter>src\HullWhite</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesHWIntegral3F.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesHWIntegral3F.cpp">
       <Filter>src\HullWhite</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAAnalyticFormula.cpp">
+    <ClCompile Include="..\src\models\src\AQLAnalyticFormula.cpp">
       <Filter>src\BlackScholes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftFX.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftFX.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftFXLogNumeraire.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftFXLogNumeraire.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftHJM.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftHJM.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftHW.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftHW.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftHWQuantAdjustment.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftHWQuantAdjustment.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftHWQuantAdjustment3F.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftHWQuantAdjustment3F.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftLMMBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftLMMBase.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftLMMForward.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftLMMForward.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftLMMSpot.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftLMMSpot.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftLMMTerminal.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftLMMTerminal.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftLogLMMForward.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftLogLMMForward.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftLogLMMSpot.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftLogLMMSpot.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftLogLMMTerminal.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftLogLMMTerminal.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftQuantAdjustment.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftQuantAdjustment.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftSMMAnnuity.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftSMMAnnuity.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftSMMBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftSMMBase.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceDriftSZDDVolFactor.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceDriftSZDDVolFactor.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesBM.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesBM.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesBM_BB.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesBM_BB.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathYieldCurve.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathYieldCurve.cpp">
       <Filter>src\YieldCurve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathYieldCurvePro.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathYieldCurvePro.cpp">
       <Filter>src\YieldCurve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathPathEntity.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathPathEntity.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathHybridHWLVUtil.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathHybridHWLVUtil.cpp">
       <Filter>src\HullWhite</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathAttrSDE.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathAttrSDE.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesDmySDE.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesDmySDE.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesLJSpotSDE.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesLJSpotSDE.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesLJTermStructureSDE.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesLJTermStructureSDE.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesEulerMaruyama.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesEulerMaruyama.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LADigitalFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLDigitalFunc.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAFractionFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLFractionFunc.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAAverageFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLAverageFunc.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathOptionTools.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathOptionTools.cpp">
       <Filter>src\Options</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesSDEIntegralBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesSDEIntegralBase.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesSDEBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesSDEBase.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesSpotSDE.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesSpotSDE.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesSpotSDEQuantAdjustment.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesSpotSDEQuantAdjustment.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesUnionFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesUnionFunc.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesUnionLinearFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesUnionLinearFunc.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LALinearRegression.cpp">
+    <ClCompile Include="..\src\models\src\AQLLinearRegression.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPolyFitBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLPolyFitBase.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPolyFitLS.cpp">
+    <ClCompile Include="..\src\models\src\AQLPolyFitLS.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPolynomialBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLPolynomialBase.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPolynomialPS.cpp">
+    <ClCompile Include="..\src\models\src\AQLPolynomialPS.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAProdFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLProdFunc.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LASumFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLSumFunc.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LASumFunc2.cpp">
+    <ClCompile Include="..\src\models\src\AQLSumFunc2.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCurveFuncUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCurveFuncUtility.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCouponTool.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCouponTool.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCouponBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCouponBase.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCouponForDigital.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCouponForDigital.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCouponForDigital2.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCouponForDigital2.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCouponMax.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCouponMax.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCouponMin.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCouponMin.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCouponRainbow.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCouponRainbow.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCouponRainbowMin.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCouponRainbowMin.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCashValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCashValue.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCashFlowGenerator.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCashFlowGenerator.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceAccruedInterest.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceAccruedInterest.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPricePayOff.cpp">
+    <ClCompile Include="..\src\models\src\AQLPricePayOff.cpp">
       <Filter>src\Payoffs</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPricePayOffTool.cpp">
+    <ClCompile Include="..\src\models\src\AQLPricePayOffTool.cpp">
       <Filter>src\Payoffs</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPricePayOffToolRangeAccrue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPricePayOffToolRangeAccrue.cpp">
       <Filter>src\Payoffs</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LALinearRatesModel.cpp">
+    <ClCompile Include="..\src\models\src\AQLLinearRatesModel.cpp">
       <Filter>src\LinearRates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LALinearRatesOptionValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLLinearRatesOptionValue.cpp">
       <Filter>src\LinearRates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LALinearRatesSwapTradeValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLLinearRatesSwapTradeValue.cpp">
       <Filter>src\LinearRates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LALinearRatesSwapTradeValueForExo.cpp">
+    <ClCompile Include="..\src\models\src\AQLLinearRatesSwapTradeValueForExo.cpp">
       <Filter>src\LinearRates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LALinearRatesVolatility.cpp">
+    <ClCompile Include="..\src\models\src\AQLLinearRatesVolatility.cpp">
       <Filter>src\LinearRates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LALinearRatesVolatilityManager.cpp">
+    <ClCompile Include="..\src\models\src\AQLLinearRatesVolatilityManager.cpp">
       <Filter>src\LinearRates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceIMMFwdRiskConversionMatrix.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceIMMFwdRiskConversionMatrix.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceSZCalibration.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceSZCalibration.cpp">
       <Filter>src\SZModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceSZDDIntegralMelstein.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceSZDDIntegralMelstein.cpp">
       <Filter>src\SZModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesCovariance.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesCovariance.cpp">
       <Filter>src\Correlation</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCopulaCMSSpread.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCopulaCMSSpread.cpp">
       <Filter>src\CMS</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathPlainVanillaEntity.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathPlainVanillaEntity.cpp">
       <Filter>src\LinearRates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathDriftFuncBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathDriftFuncBase.cpp">
       <Filter>src\SDE\DriftTerms</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceEventBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceEventBase.cpp">
       <Filter>src\SDE\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceEventCpnChange.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceEventCpnChange.cpp">
       <Filter>src\SDE\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceEventExtraCF.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceEventExtraCF.cpp">
       <Filter>src\SDE\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceEventNotExCurChange.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceEventNotExCurChange.cpp">
       <Filter>src\SDE\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceEventNotionalChange.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceEventNotionalChange.cpp">
       <Filter>src\SDE\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceEventOption.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceEventOption.cpp">
       <Filter>src\SDE\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceEventTerminate.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceEventTerminate.cpp">
       <Filter>src\SDE\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceEventTool.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceEventTool.cpp">
       <Filter>src\SDE\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceIRSwaptionValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceIRSwaptionValue.cpp">
       <Filter>src\Swaptions</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceIRSwaptionValueFromCashFlow.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceIRSwaptionValueFromCashFlow.cpp">
       <Filter>src\Swaptions</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceOptionGenerator.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceOptionGenerator.cpp">
       <Filter>src\Options</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesTermStructureSDE.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesTermStructureSDE.cpp">
       <Filter>src\SDE</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceYieldGenerator.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceYieldGenerator.cpp">
       <Filter>src\YieldCurve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceLMMCalibration.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceLMMCalibration.cpp">
       <Filter>src\LiborMarketModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceHWCalibration.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceHWCalibration.cpp">
       <Filter>src\HullWhite</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceQuantAdjustmentFuncBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceQuantAdjustmentFuncBase.cpp">
       <Filter>src\HullWhite</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceQuantAdjustmentHWFXDD.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceQuantAdjustmentHWFXDD.cpp">
       <Filter>src\HullWhite</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceBenaimSABRSwaptionCalculator.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceBenaimSABRSwaptionCalculator.cpp">
       <Filter>src\SABR</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceFlatSABRSwaptionCalculator.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceFlatSABRSwaptionCalculator.cpp">
       <Filter>src\SABR</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceThresholdSABRSwaptionCalculator.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceThresholdSABRSwaptionCalculator.cpp">
       <Filter>src\SABR</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceIRVegaUnderlyingAsset.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceIRVegaUnderlyingAsset.cpp">
       <Filter>src\SABR</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceSABRSwaptionCalculator.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceSABRSwaptionCalculator.cpp">
       <Filter>src\SABR</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceConvergenceValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceConvergenceValue.cpp">
       <Filter>src\Portfolio</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPricePortfolioValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPricePortfolioValue.cpp">
       <Filter>src\Portfolio</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceTradeValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceTradeValue.cpp">
       <Filter>src\Portfolio</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceSwapRateCalculator.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceSwapRateCalculator.cpp">
       <Filter>src\Cashflows</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceSwaptionCalculator.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceSwaptionCalculator.cpp">
       <Filter>src\Swaptions</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceVolLMMDisplacedDiffusion.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceVolLMMDisplacedDiffusion.cpp">
       <Filter>src\Volatility</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LACoreUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLCoreUtility.cpp">
       <Filter>src\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathIndexEntity.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathIndexEntity.cpp">
       <Filter>src\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathIndexEntityInterpolation.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathIndexEntityInterpolation.cpp">
       <Filter>src\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathParameterUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathParameterUtility.cpp">
       <Filter>src\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceIndexTool.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceIndexTool.cpp">
       <Filter>src\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceLSMCTradeValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceLSMCTradeValue.cpp">
       <Filter>src\MonteCarlo</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceArbFreeGenerator.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceArbFreeGenerator.cpp">
       <Filter>src\YieldCurve</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceIRCapFloorOptionValue.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceIRCapFloorOptionValue.cpp">
       <Filter>src\CapFloors</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathBaseFuncUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathBaseFuncUtility.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCurveGenerateFuncUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCurveGenerateFuncUtility.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LACompoundingFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLCompoundingFunc.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathIRVanillaFuncUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathIRVanillaFuncUtility.cpp">
       <Filter>src\LinearRates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesPEInterpolationBase.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesPEInterpolationBase.cpp">
       <Filter>src\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesScalarLinearInterpolation.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesScalarLinearInterpolation.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesInterSectionFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesInterSectionFunc.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathJumpDiffusion.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathJumpDiffusion.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesPCIntegral.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesPCIntegral.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LARatesRangeCountFunc.cpp">
+    <ClCompile Include="..\src\models\src\AQLRatesRangeCountFunc.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathIntegralMulti.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathIntegralMulti.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathConstraintSZ.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathConstraintSZ.cpp">
       <Filter>src\SZModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCorFuncLMM.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCorFuncLMM.cpp">
       <Filter>src\LiborMarketModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathCostFuncSZ.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathCostFuncSZ.cpp">
       <Filter>src\SZModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceReplication.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceReplication.cpp">
       <Filter>src\Swaptions</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAPriceCFGenUtility.cpp">
+    <ClCompile Include="..\src\models\src\AQLPriceCFGenUtility.cpp">
       <Filter>src\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathDateCalculations.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathDateCalculations.cpp">
       <Filter>src\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathDateUtilities.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathDateUtilities.cpp">
       <Filter>src\Dates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAEigenSystems.cpp">
+    <ClCompile Include="..\src\models\src\AQLEigenSystems.cpp">
       <Filter>src\Infrastructure</Filter>
     </ClCompile>
     <ClCompile Include="..\src\models\src\AQLCoreComponentManager.cpp">
       <Filter>src\Infrastructure</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LALinearRatesOptionValueDataProvider.cpp">
+    <ClCompile Include="..\src\models\src\AQLLinearRatesOptionValueDataProvider.cpp">
       <Filter>src\LinearRates</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\models\src\LAMathInterpolationUtilities.cpp">
+    <ClCompile Include="..\src\models\src\AQLMathInterpolationUtilities.cpp">
       <Filter>src\MathMethods</Filter>
     </ClCompile>
   </ItemGroup>

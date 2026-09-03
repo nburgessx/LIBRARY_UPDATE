@@ -37,16 +37,16 @@
 #include "LACoreDataService.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
-#include "LAMathHWFuncMR.h"
-#include "LAMathHWFuncSigma.h"
-#include "LAMathVolFuncHW.h"
-#include "LAMathJamshidianSwaption.h"
-#include "LAMathJamshidianSwaptionByImplyVol.h"
-#include "LAMathDateUtilities.h"
-#include "LAMathCurveFuncUtility.h"
-#include "LAMathIRVanillaFuncUtility.h"
+#include "AQLMathHWFuncMR.h"
+#include "AQLMathHWFuncSigma.h"
+#include "AQLMathVolFuncHW.h"
+#include "AQLMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaptionByImplyVol.h"
+#include "AQLMathDateUtilities.h"
+#include "AQLMathCurveFuncUtility.h"
+#include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
-#include "LAPriceHWCalibration.h"
+#include "AQLPriceHWCalibration.h"
 #include "LACoreDataService.h"
 #include <sstream>
 
@@ -108,7 +108,7 @@ LACalibrateHW::setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACa
 		AQLString msg = curveName + " is not registered in EntityPool";
 		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
-	const AQLString &curveIDName = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(curveName, ENCHKTYPE_ISDEFINED).get()).getYieldData().get().getName();
+	const AQLString &curveIDName = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(curveName, ENCHKTYPE_ISDEFINED).get()).getYieldData().get().getName();
 
 	// set calcType
 	mCalcType = param.calcType;
@@ -401,15 +401,15 @@ LACalibrateHW::setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACa
 		AQLString strWeight = weightVec[i];
 
 		// calc date
-		AQLDate expDate = LAMathDateUtilities::getDate(asofDate, strOpMat, strSliding, strFCal);
-		//AQLDate valueDate = LAMathDateUtilities::getDate(asofDate, strNotice, strSliding, strFCal);
-		AQLDate startDate = LAMathDateUtilities::getDate(expDate, strNotice, strSliding, strPCal);
+		AQLDate expDate = AQLMathDateUtilities::getDate(asofDate, strOpMat, strSliding, strFCal);
+		//AQLDate valueDate = AQLMathDateUtilities::getDate(asofDate, strNotice, strSliding, strFCal);
+		AQLDate startDate = AQLMathDateUtilities::getDate(expDate, strNotice, strSliding, strPCal);
 
 		// calc strike rate
 		double strike = 0.0;
 		if (strStrike == CALIB_STRIKE_ATM)
 		{
-			strike = LAMathCurveFuncUtility::getRate(startDate, strSTenor, calibID->getDataInstance(),
+			strike = AQLMathCurveFuncUtility::getRate(startDate, strSTenor, calibID->getDataInstance(),
 													curveIDName, ratePer, strFreq, strDayCount,
 													strSliding, strFCal, interSprine);
 
@@ -423,7 +423,7 @@ LACalibrateHW::setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACa
 		double premium(0.);
 		if (voltype == VOLATITY_BLACK)
 		{
-			premium = LAMathIRVanillaFuncUtility::swaption(calibID->getDataInstance(), curveIDName, optBuy, 
+			premium = AQLMathIRVanillaFuncUtility::swaption(calibID->getDataInstance(), curveIDName, optBuy, 
 														 strOpType, 1.0, strike + swaptionMarketForwardShift, blackVolVec[i],
 														 asofDate, expDate, asofDate, strNotice, strSTenor,
 														 strFreq, strSliding, strDayCount, strPCal, 
@@ -431,7 +431,7 @@ LACalibrateHW::setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MACa
 		}
 		else if (voltype == VOLATITY_NORMAL)
 		{
-			premium = LAMathIRVanillaFuncUtility::swaption_NormalDist(calibID->getDataInstance(), curveIDName, optBuy, 
+			premium = AQLMathIRVanillaFuncUtility::swaption_NormalDist(calibID->getDataInstance(), curveIDName, optBuy, 
 														            strOpType, 1.0, strike + swaptionMarketForwardShift, blackVolVec[i],
 														            asofDate, expDate, asofDate, strNotice, strSTenor,
 														            strFreq, strSliding, strDayCount, strPCal, 
@@ -620,18 +620,18 @@ clock_t cstart = clock();
 	}
 	// mean reversion method
 	bool isTMRV = dynamic_cast<const AQLDataBool &>(calibID.getData(PRICING_DATA_ISTIMEDEPENDMEANREV, ISNOTNULL).get()).get();
-	LAMathHWFuncMR *funcMR = 0;
+	AQLMathHWFuncMR *funcMR = 0;
 	if (isTMRV)
 	{
-		funcMR = new LAMathHWFuncMRTMDPT(tenor, meanVec, *(new AQLStepInterpolation()));
+		funcMR = new AQLMathHWFuncMRTMDPT(tenor, meanVec, *(new AQLStepInterpolation()));
 	}
 	else
 	{
-		funcMR = new LAMathHWFuncMR(meanVec[0]);
+		funcMR = new AQLMathHWFuncMR(meanVec[0]);
 	}
 	// hull-white volatility parameter
-	LAMathHWFuncSigma *funcSigma = new LAMathHWFuncSigmaTMDPT(tenor, volVec, *(new AQLStepInterpolation()));
-	LAMathVolFuncHW *funcHW = new LAMathVolFuncHW(*funcMR, *funcSigma);
+	AQLMathHWFuncSigma *funcSigma = new AQLMathHWFuncSigmaTMDPT(tenor, volVec, *(new AQLStepInterpolation()));
+	AQLMathVolFuncHW *funcHW = new AQLMathVolFuncHW(*funcMR, *funcSigma);
 
 	mpFunc->setRealFunction(*funcHW);
 	mpFunc->setOn();
@@ -736,18 +736,18 @@ clock_t cstart = clock();
 					dynamic_cast<AQLDataDoubles &>(objHolder.getData(PRICING_DATA_CALIBMEANREV_T, ISNOTNULL).get()).set(t_menVec);
 					dynamic_cast<AQLDataDoubles &>(objHolder.getData(PRICING_DATA_CALIBVOL_T, ISNOTNULL).get()).set(t_volVec);
 					// mean reversion method
-					LAMathHWFuncMR *t_funcMR = 0;
+					AQLMathHWFuncMR *t_funcMR = 0;
 					if (isTMRV)
 					{
-						t_funcMR = new LAMathHWFuncMRTMDPT(t_tenor, t_menVec, *(new AQLStepInterpolation()));
+						t_funcMR = new AQLMathHWFuncMRTMDPT(t_tenor, t_menVec, *(new AQLStepInterpolation()));
 					}
 					else
 					{
-						t_funcMR = new LAMathHWFuncMR(t_menVec[0]);
+						t_funcMR = new AQLMathHWFuncMR(t_menVec[0]);
 					}
 					// hull-white volatility parameter
-					LAMathHWFuncSigma *t_funcSigma = new LAMathHWFuncSigmaTMDPT(t_tenor, t_volVec, *(new AQLStepInterpolation()));
-					LAMathVolFuncHW *t_funcHW = new LAMathVolFuncHW(*t_funcMR, *t_funcSigma);
+					AQLMathHWFuncSigma *t_funcSigma = new AQLMathHWFuncSigmaTMDPT(t_tenor, t_volVec, *(new AQLStepInterpolation()));
+					AQLMathVolFuncHW *t_funcHW = new AQLMathVolFuncHW(*t_funcMR, *t_funcSigma);
 
 					mpFunc->setRealFunction(*t_funcHW);
 					mpFunc->setOn();

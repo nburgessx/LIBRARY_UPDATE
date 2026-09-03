@@ -1,0 +1,55 @@
+#pragma once
+
+#ifdef __GNUG__
+#pragma interface
+#endif
+
+#include "AQLFunctionBase.h"
+#include "AQLCoreAppError.h"
+#include "AQLCoreTemplateType.h"
+
+
+// Funciton ID of AQLMathVolFuncStructureBase
+#define FN_VOLFUNCSTRUCTUREBASE	10010
+// Function Name of AQLMathVolFuncStructureBase
+#define FN_VOLFUNCSTRUCTUREBASE_STR	"fn_volfuncstructurebase"
+
+
+class AQLMathVolFuncStructureBase : public AQLFunctionBase
+{
+public:
+//  LIFECYCLE
+	// constructor
+	explicit AQLMathVolFuncStructureBase(double a, double b, double c, double d);
+	// destructor
+	virtual ~AQLMathVolFuncStructureBase(void);
+	// copy constructor
+	AQLMathVolFuncStructureBase(const AQLMathVolFuncStructureBase &rhs);
+
+								//======================================
+								// check function for this class ID
+    virtual bool                isTypeOf(function_t id) const;
+								//======================================
+								// make copy(clone) of this class
+    virtual AQLCoreFunctionBase*     clone() const;
+								//======================================
+								// return this class type
+    virtual function_t          getType() const;
+
+	                            //==========================================
+	                            // return function value
+	virtual double				operator()(const DoubleArray& x) const;	
+
+		                        //==========================================
+	                            // return function value
+	virtual double				operator()(double t) const;	
+
+	
+private:
+	double ma;                 // calib param a
+	double mb;                 // calib param b
+	double mc;                 // calib param c
+	double md;                 // calib param d
+
+};
+

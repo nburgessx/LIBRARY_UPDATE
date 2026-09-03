@@ -28,16 +28,16 @@
 #include "AQLLinearInterpolation.h"
 #include "AQLStepInterpolation.h"
 #include "AQLPriceDataDayCount.h"
-#include "LAMathHWFuncMR.h"
-#include "LAMathHWFuncSigma.h"
-#include "LAMathVolFuncHW.h"
+#include "AQLMathHWFuncMR.h"
+#include "AQLMathHWFuncSigma.h"
+#include "AQLMathVolFuncHW.h"
 #include "LAMarketDataHW.h"
 #include "LACalibratePool.h"
 #include "LACalibrateHW.h"
 #include "LACalibrationFunc.h"
 #include "LACalibrationParametersHW.h"
 #include "LADefinitionsCalibration.h"
-#include "LAMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaption.h"
 
 using namespace std;
 
@@ -198,7 +198,7 @@ LACalibrateVolatilityHW::createVolatility(vector<AQLFunctionBase *> &vol, const 
 		LAMarketDataHW::getHullWhiteParam(filePath[0], tenor, hw_a, hw_s);
 
 		// mean reversion parameter
-		LAMathHWFuncMR * func_a =  new LAMathHWFuncMR(hw_a[0]);
+		AQLMathHWFuncMR * func_a =  new AQLMathHWFuncMR(hw_a[0]);
 		if (hw_s.size() == 1)
 		{
 			hw_s.resize(tenor.size(), hw_s[0]);
@@ -206,8 +206,8 @@ LACalibrateVolatilityHW::createVolatility(vector<AQLFunctionBase *> &vol, const 
 		hw_s_zero.resize(tenor.size(), 1.E-12);
 
 		// hull-white volatility parameter
-		LAMathHWFuncSigma* func_s = new LAMathHWFuncSigmaTMDPT(tenor, (param->isZeroVol ? hw_s_zero : hw_s), *(new AQLStepInterpolation()));
-		vol.resize(1, new LAMathVolFuncHW(*func_a, *func_s));
+		AQLMathHWFuncSigma* func_s = new AQLMathHWFuncSigmaTMDPT(tenor, (param->isZeroVol ? hw_s_zero : hw_s), *(new AQLStepInterpolation()));
+		vol.resize(1, new AQLMathVolFuncHW(*func_a, *func_s));
 
 		unsigned int index = 0;
 		if (param->isGrid)
@@ -231,7 +231,7 @@ LACalibrateVolatilityHW::createVolatility(vector<AQLFunctionBase *> &vol, const 
 		}
 
 		// set object pool as calib data
-		const LAMathYieldCurve &yc = dynamic_cast<LAMathYieldCurve &>(objPool->getObject(param->refName[index], ENCHKTYPE_ISDEFINED).get());
+		const AQLMathYieldCurve &yc = dynamic_cast<AQLMathYieldCurve &>(objPool->getObject(param->refName[index], ENCHKTYPE_ISDEFINED).get());
 		AQLString calibDataName = LAMarketData::getCalibDataName(param->calcType, yc.getYieldData().get().getName(), gridPos);
 		AQLObject *calibData = new AQLObject();
 		calibData->add(CALIBRATION_DATA_NAME, new AQLDataString(calibDataName));

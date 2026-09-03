@@ -1,6 +1,6 @@
 ﻿//
 //  CurveCalibration.cpp
-//  This file used to be called YieldGenerator.cpp and before that LAPriceYieldGenerator.cpp
+//  This file used to be called YieldGenerator.cpp and before that AQLPriceYieldGenerator.cpp
 //
 #ifdef __GNUG__
 #pragma implementation
@@ -3501,7 +3501,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 	const AQLPriceDataCalendar& cal = dynamic_cast<const AQLPriceDataCalendar&> ((data_swap[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 	const AQLPriceDataSlidingRule& sld = dynamic_cast<const AQLPriceDataSlidingRule&> ((data_swap[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
+	RateConvention rc = AQLMathYieldCurve::setRC(AQ_SIMPLE);
 	AQLPriceDataConvention conv(dc.getDayCount(), rc);
 
 	// Get shortterm_date
@@ -4143,7 +4143,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 				// O/N Instrument: from asOfDate to tomorrow
 				rate_on = dynamic_cast<const AQLDataDouble&> ((data_on[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 				const AQLPriceDataDayCount& dc_on = dynamic_cast<const AQLPriceDataDayCount&> ((data_on[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-				RateConvention rc_on = LAMathYieldCurve::setRC(AQ_SIMPLE);
+				RateConvention rc_on = AQLMathYieldCurve::setRC(AQ_SIMPLE);
 				AQLPriceDataConvention conv_on(dc_on.getDayCount(), rc_on);
 
 				thisEndDate = cal.getBusinessDay(resultsObj.asOfDate_, 1);
@@ -4160,7 +4160,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 				// T/N Instrument: from tomorrow to a day after
 				rate_tn = dynamic_cast<const AQLDataDouble&> ((data_tn[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 				const AQLPriceDataDayCount& dc_tn = dynamic_cast<const AQLPriceDataDayCount&> ((data_tn[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-				RateConvention rc_tn = LAMathYieldCurve::setRC(AQ_SIMPLE);
+				RateConvention rc_tn = AQLMathYieldCurve::setRC(AQ_SIMPLE);
 				AQLPriceDataConvention conv_tn(dc_tn.getDayCount(), rc_tn);
 
 				AQLDate on_EndDate;
@@ -4323,7 +4323,7 @@ double CurveCalibration::solveOISRateS(const AQLDate& startdate,
 		return solveOISRate(startdate, enddate, dc, cal, market_rate);
 	}
 	// calc target market rate
-	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
+	RateConvention rc = AQLMathYieldCurve::setRC(AQ_SIMPLE);
 	AQLPriceDataConvention conv(dc.getDayCount(), rc);
 	double val = 1.0;
 	std::map<AQLDate, double>::const_iterator it = onforward_map.begin();
@@ -4423,7 +4423,7 @@ double CurveCalibration::calcSettleRate(const AQLDate& startdate,
 									    const AQLPriceDataCalendar& cal,
 									    double onforward_rate)
 {
-	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
+	RateConvention rc = AQLMathYieldCurve::setRC(AQ_SIMPLE);
 	AQLPriceDataConvention conv(dc.getDayCount(), rc);
 	AQLDate thisFwdDate = startdate;
 	AQLPriceDataSlidingRule sld(SLIDING_RULE_FOLLOWING);
@@ -4465,7 +4465,7 @@ double CurveCalibration::calcSettleRates(const DateVector& startdates,
 	}
 	AQ_THROW_IF(size != enddates.size() || size != onforward_rates.size(), "Unable to calculate settle rates. Inconsistent number of dates and rates specified")
 
-	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
+	RateConvention rc = AQLMathYieldCurve::setRC(AQ_SIMPLE);
 	AQLPriceDataConvention conv(dc.getDayCount(), rc);
 	double val = 1.0;
 	for (unsigned int i = 0; i < size; ++i)
@@ -4691,7 +4691,7 @@ double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 		//
 
 		// Daily Geometric Compounding, which is the default behaviour
-		RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
+		RateConvention rc = AQLMathYieldCurve::setRC(AQ_SIMPLE);
 		AQLPriceDataConvention conv(dc->getDayCount(), rc);
 
 		/* We make use of the geometric effective-rate shortcut:

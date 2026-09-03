@@ -25,9 +25,9 @@
 #include "LACoreDataService.h"
 #include "LAStaticDataManager.h"
 #include "AQLFunctionUtilities.h"
-#include "LAMathCorrelation.h"
-#include "LACompoundingFunc.h"
-#include "LAMathFXEntity.h"
+#include "AQLMathCorrelation.h"
+#include "AQLCompoundingFunc.h"
+#include "AQLMathFXEntity.h"
 #include "LAStaticDataImport.h"
 #include "LAMarketData.h"
 
@@ -564,7 +564,7 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    laCurveObject = &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	    laCurveObject->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	    laCurveObject->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
     };
 
@@ -769,7 +769,7 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    mae	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	    mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	    mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
     }
 
@@ -1248,7 +1248,7 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    laCurveObject = &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",			      new AQLDataString() ).convertFromString(AQLString(LATime::now()));
+	    laCurveObject->add("Time",			      new AQLDataString() ).convertFromString(AQLString(AQLTime::now()));
 	    laCurveObject->add(CALIBRATION_DATA_NAME, new AQLDataString() ).convertFromString(CurveIDManager);
 
 	}
@@ -1873,7 +1873,7 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    laCurveObject	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",					new AQLDataString()	).convertFromString(AQLString(LATime::now()));
+	    laCurveObject->add("Time",					new AQLDataString()	).convertFromString(AQLString(AQLTime::now()));
 	    laCurveObject->add(CALIBRATION_DATA_NAME,	new AQLDataString()	).convertFromString(CurveIDManager);	
 	}
 
@@ -2354,17 +2354,17 @@ namespace etrading
 	    }
 
 	    //set fxentity
-	    LAMathFXEntity* pFwd = NULL;
+	    AQLMathFXEntity* pFwd = NULL;
 	    AQLObjectHolder ehfx = objPool.getObject(FORWARDFX, ENCHKTYPE_NOCHECK);
 	    if (!ehfx.isDefined())
 	    {
-		    pFwd = new LAMathFXEntity(dataInstance);
+		    pFwd = new AQLMathFXEntity(dataInstance);
 		    objPool.set(FORWARDFX,pFwd);
 	    }
 	    else
 	    {
-		    dynamic_cast<LAMathFXEntity &>(objPool.getObject(FORWARDFX).get()).reset();
-		    pFwd = &dynamic_cast<LAMathFXEntity &>(objPool.getObject(FORWARDFX).get());
+		    dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FORWARDFX).get()).reset();
+		    pFwd = &dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FORWARDFX).get());
 	    }
 	    pFwd->getName().convertFromString(FORWARDFX);
 	    pFwd->getFXType().convertFromString("FORWARDRATE");
@@ -2436,7 +2436,7 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    laCurveObject = &objPool.getObject(CurveIDManager).get();
 	    }
-	    laCurveObject->add("Time",					new AQLDataString()	).convertFromString(AQLString(LATime::now()));
+	    laCurveObject->add("Time",					new AQLDataString()	).convertFromString(AQLString(AQLTime::now()));
 	    laCurveObject->add(CALIBRATION_DATA_NAME,	new AQLDataString()	).convertFromString(CurveIDManager);
 
 	}
@@ -2627,7 +2627,7 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    mae	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    mae->add("Time",				new AQLDataString()	).convertFromString(AQLString(LATime::now()));
+	    mae->add("Time",				new AQLDataString()	).convertFromString(AQLString(AQLTime::now()));
 	    mae->add(CALIBRATION_DATA_NAME,	new AQLDataString()	).convertFromString(CurveIDManager);
 	}
 
@@ -5409,16 +5409,16 @@ namespace etrading
     {
 
 	    AQLObjectPool& objPool = dataInstance->getObjectPool();
-	    LAMathCorrelation* cor_obj = NULL;
+	    AQLMathCorrelation* cor_obj = NULL;
 	    AQLString name = PREFIX_COR + id;
 	    if(!objPool.getObject(name).isDefined())
 	    {
-		    cor_obj = new LAMathCorrelation(dataInstance);
+		    cor_obj = new AQLMathCorrelation(dataInstance);
 		    objPool.set(name, cor_obj);
 	    }
 	    else
 	    {
-		    cor_obj = &dynamic_cast<LAMathCorrelation &>(objPool.getObject(name).get());
+		    cor_obj = &dynamic_cast<AQLMathCorrelation &>(objPool.getObject(name).get());
 		    cor_obj->reset();
 	    }
 
@@ -5446,7 +5446,7 @@ namespace etrading
     {
 	    AQLObjectPool& objPool = dataInstance->getObjectPool();
 	    AQLString name = PREFIX_COR + id;
-	    LAMathCorrelation cor_obj = dynamic_cast<LAMathCorrelation& >(objPool.getObject(name, ENCHKTYPE_ISDEFINED).get());
+	    AQLMathCorrelation cor_obj = dynamic_cast<AQLMathCorrelation& >(objPool.getObject(name, ENCHKTYPE_ISDEFINED).get());
 
 	    DoubleMatrix ret;
 	    if(type == AQLString("EIGEN_VECTORS"))
@@ -5612,7 +5612,7 @@ namespace etrading
 		    objPool.getObject(CurveIDManager).get().clear();
 		    mae	= &objPool.getObject(CurveIDManager).get();
 	    }
-	    mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	    mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	    mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
     }
 

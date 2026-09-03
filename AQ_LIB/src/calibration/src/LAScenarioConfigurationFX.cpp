@@ -70,18 +70,18 @@ LAScenarioConfigurationFX::createScenario(AQLDataInstance &dataInstance, const M
 	AQLString tFXName = param.targetName;
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	AQLString name = tFXName + "_" + param.calcType;
-	LAMathFXEntity *fx = 0;
-	const LAMathFXEntity &t_fx = dynamic_cast<const LAMathFXEntity &>(objPool.getObject(tFXName, ENCHKTYPE_ISDEFINED).get());
+	AQLMathFXEntity *fx = 0;
+	const AQLMathFXEntity &t_fx = dynamic_cast<const AQLMathFXEntity &>(objPool.getObject(tFXName, ENCHKTYPE_ISDEFINED).get());
 	AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
 		// create fx
-		fx = dynamic_cast<LAMathFXEntity *>(t_fx.clone());
+		fx = dynamic_cast<AQLMathFXEntity *>(t_fx.clone());
 		fx->getName().convertFromString(name);
 	}
 	else
 	{
-		fx = &dynamic_cast<LAMathFXEntity &>(objHolder.get());
+		fx = &dynamic_cast<AQLMathFXEntity &>(objHolder.get());
 	}
 	//////////////
 	// set rate

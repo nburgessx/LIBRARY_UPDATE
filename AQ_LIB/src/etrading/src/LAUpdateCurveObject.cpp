@@ -16,8 +16,8 @@
 #include "AQLPriceDataManager.h"
 #include "AQLDataReference.h"
 #include "AQLDataMatrix.h"
-#include "LAMathYieldCurve.h"
-#include "LARatesCurveLinearInterpolation.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLRatesCurveLinearInterpolation.h"
 #include "LAStaticData.h"
 #include "LADealUtils.h"
 #include "AQLDataVector.h"
@@ -30,7 +30,7 @@
 #include "AQLPriceDataDayCount.h"
 #include "AQLPriceDataFunction.h"
 #include "LAMarketData.h"
-#include "LAPriceArbFreeGenerator.h"
+#include "AQLPriceArbFreeGenerator.h"
 #include "AQLFunctionUtilities.h"
 #include "LADateHelpers.h"
 #include "LADateScheduleHelpers.h"
@@ -38,9 +38,9 @@
 #include "ParameterValidation.h"
 #include "CoreEnumerations.h"
 
-#include "LARatesTermStructureSDE.h"
-#include "LARatesLJTermStructureSDE.h"
-#include "LAMathCorrelation.h"
+#include "AQLRatesTermStructureSDE.h"
+#include "AQLRatesLJTermStructureSDE.h"
+#include "AQLMathCorrelation.h"
 #include <time.h>
 
 #include "CurveCalibrationData.h"
@@ -93,10 +93,10 @@ LAUpdateCurveObject::~LAUpdateCurveObject(void)
 	@param[out] sde
 */
 void
-LAUpdateCurveObject::setInterpolationMethod(const AQLString &currency, LARatesSDEBase &sde) const
+LAUpdateCurveObject::setInterpolationMethod(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	(void)currency;
-	sde.setInterpolationMethod(new LARatesCurveLinearInterpolation());
+	sde.setInterpolationMethod(new AQLRatesCurveLinearInterpolation());
 }
 
 // 
@@ -208,7 +208,7 @@ LAUpdateCurveObject::loadFwdFXConstCurveDataAndCalibrate(const AQLString &curren
 		curveCalibrationData.setColAffectedCcy(ccy_a_fCurve.toUpper());
 	}
 	const AQLString &fYCName = LAMarketData::getBaseYieldName(ccy_a_fCurve);
-	LAMathYieldCurve& fYC = dynamic_cast<LAMathYieldCurve &>(objPool.getObject(fYCName).get());
+	AQLMathYieldCurve& fYC = dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(fYCName).get());
 	const AQLString &fYDName = fYC.getYieldData().get().getName();
 	curveCalibrationData.getColYieldData().convertFromString(fYDName);
 
@@ -593,17 +593,17 @@ LAUpdateCurveObject::loadDualBootstrapCurveDataAndCalibrate(const AQLString &cur
 
 	AQLString yieldName = LAMarketData::getBaseYieldName(currency);
 
-	LAMathYieldCurve *yc = NULL;
+	AQLMathYieldCurve *yc = NULL;
 	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
-		yc = new LAMathYieldCurve(&dataInstance);
+		yc = new AQLMathYieldCurve(&dataInstance);
 		objPool.set(yieldName, yc);
 	}
 	else
 	{
-		dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
-		yc = &dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get());
+		dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
+		yc = &dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get());
 	}
 	yc->getName().convertFromString(yieldName);
 
@@ -879,17 +879,17 @@ void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const AQLString &curre
 
 	AQLString yieldName = LAMarketData::getBaseYieldName(currency);
 
-	LAMathYieldCurve *yc = NULL;
+	AQLMathYieldCurve *yc = NULL;
 	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
-		yc = new LAMathYieldCurve(&dataInstance);
+		yc = new AQLMathYieldCurve(&dataInstance);
 		objPool.set(yieldName, yc);
 	}
 	else
 	{
-		dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
-		yc = &dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get());
+		dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
+		yc = &dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get());
 	}
 	yc->getName().convertFromString(yieldName);
 
@@ -1105,7 +1105,7 @@ void LAUpdateCurveObject::loadGlobalCurveDataAndCalibrate(const AQLString &curre
 */
 void LAUpdateCurveObject::configureCurve(LAStaticData *mpStaticData,
 	CurveCalibrationData *curveCalibrationData,
-	LAMathYieldCurve *yc,
+	AQLMathYieldCurve *yc,
 	AQLDataInstance &dataInstance,
 	const AQLDate& asOfDate,
 	const AQLString& currency,
@@ -1633,13 +1633,13 @@ void LAUpdateCurveObject::initializeCurveObject( CurveObject & curveObj ) const
 	const AQLObjectHolder yieldCurveObjHolder = objPool.getObject(yieldName);
 	if (!yieldCurveObjHolder.isDefined())
 	{
-		curveObj.mathObj_ = new LAMathYieldCurve(&curveObj.dataInstance_);
+		curveObj.mathObj_ = new AQLMathYieldCurve(&curveObj.dataInstance_);
 		objPool.set(yieldName, curveObj.mathObj_);
 	}
 	else
 	{
-		dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
-		curveObj.mathObj_ = &dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get());
+		dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
+		curveObj.mathObj_ = &dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get());
 	}
 	curveObj.mathObj_->getName().convertFromString(yieldName);
 
@@ -2589,7 +2589,7 @@ void LAUpdateCurveObject::loadYieldCurveDataAndCalibrate( const AQLString &curre
 	@param[out] yc
 */
 void
-LAUpdateCurveObject::setUpCurveTypeDayCount(CurveCalibrationData &curveCalibrationData, LAMathYieldCurve &yc) const
+LAUpdateCurveObject::setUpCurveTypeDayCount(CurveCalibrationData &curveCalibrationData, AQLMathYieldCurve &yc) const
 {
 	// set daycount
 	const map<AQLString, AQLString> &assignedCurveMktMap = curveCalibrationData.getAssignedCurveMktMap();
@@ -2629,18 +2629,18 @@ LAUpdateCurveObject::generateInitialValueArbfree(const AQLString &currency, AQLD
 	//AQLString yieldName = PREFIX_YIELD + getSDEAttrName(currency);	
 	AQLString yieldName = LAMarketData::getBaseYieldName(currency);
 
-	LAMathYieldCurve *yc = NULL;
+	AQLMathYieldCurve *yc = NULL;
 	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
-		yc = new LAMathYieldCurve(&dataInstance);
+		yc = new AQLMathYieldCurve(&dataInstance);
 		objPool.set(yieldName, yc);
 
 	}
 	else
 	{
-		dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
-		yc = &dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get());
+		dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
+		yc = &dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get());
 	}
 	yc->getName().convertFromString(yieldName);
 
@@ -3185,7 +3185,7 @@ LAUpdateCurveObject::loadCorrelationDataAndCalibrate(const AQLString &currency, 
 	AQLString type = getCorTye(currency);
 	type.toUpper();
 
-	LAMathCorrelation *corEntity = new LAMathCorrelation(&dataInstance);
+	AQLMathCorrelation *corEntity = new AQLMathCorrelation(&dataInstance);
 	AQLDataString &corAttrName = corEntity->getName();
 	AQLString corName = PREFIX_COR + sdeName;
 	corAttrName.set(corName);
@@ -3251,7 +3251,7 @@ LAUpdateCurveObject::getGridStaticData(const AQLString &key, const AQLString &cu
 */
 void
 LAUpdateCurveObject::setUpGenerateConfig
-(AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, LAMathYieldCurve &yc, CurveCalibrationData &curveCalibrationData,
+(AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, AQLMathYieldCurve &yc, CurveCalibrationData &curveCalibrationData,
 	AQLObject &ycData, bool &useTenorBasis, bool &useTenorBasisInstruments, bool &isSpotStarting, bool isArbFree, const AQLString& suffixLowerCase, const AQLString& epSuffix) const
 {
 	AQLString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
@@ -6948,18 +6948,18 @@ LAUpdateCurveObject::generateInitialValueForPricer(const AQLString &currency, AQ
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
 	AQLString yieldName = PREFIX_YIELD + getSDEAttrName(currency);
-	LAMathYieldCurve *yc = NULL;
+	AQLMathYieldCurve *yc = NULL;
 	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
-		yc = new LAMathYieldCurve(&dataInstance);
+		yc = new AQLMathYieldCurve(&dataInstance);
 		objPool.set(yieldName, yc);
 
 	}
 	else
 	{
-		dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
-		yc = &dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get());
+		dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
+		yc = &dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get());
 	}
 	yc->getName().convertFromString(yieldName);
 

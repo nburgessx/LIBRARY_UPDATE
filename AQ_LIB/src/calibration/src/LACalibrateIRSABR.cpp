@@ -37,19 +37,19 @@
 #include "LAScenarioConfiguration.h"
 #include "LACoreDataService.h"
 #include "AQLPriceDataCalendar.h"
-#include "LAMathVolFuncIRSABR.h"
-#include "LAMathDateUtilities.h"
-#include "LAMathCurveFuncUtility.h"
-#include "LAMathIRVanillaFuncUtility.h"
+#include "AQLMathVolFuncIRSABR.h"
+#include "AQLMathDateUtilities.h"
+#include "AQLMathCurveFuncUtility.h"
+#include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
 #include "LACoreDataService.h"
-#include "LAMathSwaptionVolUtility.h"
+#include "AQLMathSwaptionVolUtility.h"
 #include "AQLDataMatrix.h"
 #include <sstream>
 #include "AQLBasic.h"
-#include "LAPriceCashFlowGenerator.h"
+#include "AQLPriceCashFlowGenerator.h"
 #include "LADefinitionsIRSABR.h"
-#include "LAMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaption.h"
 #include "LADealUtils.h"
 
 using namespace std;
@@ -105,7 +105,7 @@ LACalibrateIRSABR::setUp(AQLObjectPool &objPool, const MAScenarioParam &param, M
 		AQLString msg = curveName + " is not registered in EntityPool";
 		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
-	const AQLString &curveIDName = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(curveName, ENCHKTYPE_ISDEFINED).get()).getYieldData().get().getName();
+	const AQLString &curveIDName = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(curveName, ENCHKTYPE_ISDEFINED).get()).getYieldData().get().getName();
 	
 	const AQLString calibInfoName = param.refName[0];
 	AQLStringVector calibInfoNames = calibInfoName.toToken(':');
@@ -208,7 +208,7 @@ LACalibrateIRSABR::setUp(AQLObjectPool &objPool, const MAScenarioParam &param, M
 		
 		for (unsigned int i = 0; i < expiryvec.size(); i++)
 		{
-			AQLDate toDate = LAMathDateCalculations::getDate(asofDate,strexpiryvec[i],sr,&cal,true);
+			AQLDate toDate = AQLMathDateCalculations::getDate(asofDate,strexpiryvec[i],sr,&cal,true);
 			expirydatevec[i] = toDate;
 			expiryvec[i] = dc_act.getTerm(asofDate,toDate,true);
 		}
@@ -219,7 +219,7 @@ LACalibrateIRSABR::setUp(AQLObjectPool &objPool, const MAScenarioParam &param, M
 		for (unsigned int i = 0; i < tenorvec.size(); i++)
 		{
 			int y,m,d,w;
-			LAMathDateCalculations::termStrtoYMDW(strtenorvec[i], y, m, d, w);
+			AQLMathDateCalculations::termStrtoYMDW(strtenorvec[i], y, m, d, w);
 			tenorvec[i] = static_cast<double > (y) + static_cast<double > (m) / 12;
 		}
 
@@ -241,7 +241,7 @@ LACalibrateIRSABR::setUp(AQLObjectPool &objPool, const MAScenarioParam &param, M
 			mcurvesetmat[underlying][i][0] = curvetypekeys[i-1];
 			mcurvesetmat[underlying][i][1] = curvetypes[i-1];
 		}
-		LAMathSwaptionVolUtility::setCurveID2(mpDataInstance,mcurvesetid[underlying],strtenorvec,mcurvesetmat[underlying]);
+		AQLMathSwaptionVolUtility::setCurveID2(mpDataInstance,mcurvesetid[underlying],strtenorvec,mcurvesetmat[underlying]);
 		// approximation method
 		dh = &(calibInfo.getData(PRICING_DATA_APPROXMETHOD, ISNOTNULL));
 		mapproxmethod[underlying] = dynamic_cast<const AQLDataString &>(dh->get()).get();
@@ -604,7 +604,7 @@ LACalibrateIRSABR::setUp(AQLObjectPool &objPool, const MAScenarioParam &param, M
 						forName =  &(dynamic_cast<const AQLDataString& >(curveEntity.getData(CALIBRATION_DATA_SWAPRATELCURVENAME, ISDEFINED).get()).get());
 						convID = &mswapconvid[underlying];
 					}
-					strikemat[j][k] = AQLMath::max(LAMathSwaptionVolUtility::getForward(mpDataInstance, expirydatevec[j], strtenorvec[k], curveID, *convID, *forName, dfName), eps_SABR);
+					strikemat[j][k] = AQLMath::max(AQLMathSwaptionVolUtility::getForward(mpDataInstance, expirydatevec[j], strtenorvec[k], curveID, *convID, *forName, dfName), eps_SABR);
 				}
 			}
 			vole.remove(PRICING_DATA_SWAPTIONSTRIKEMATRIX);
@@ -690,7 +690,7 @@ LACalibrateIRSABR::setUp(AQLObjectPool &objPool, const MAScenarioParam &param, M
 							// fixing  calendar
 							AQLString fixCal = convEntity.getData(PRICING_DATA_FIXINGCALENDAR, ISDEFINED).convertToString().exchange("\"","");
 
-							premiummat[j][k] = LAMathIRVanillaFuncUtility::swaption(mpDataInstance, curveID, optBuy, 
+							premiummat[j][k] = AQLMathIRVanillaFuncUtility::swaption(mpDataInstance, curveID, optBuy, 
 																				optionType, 1.0, strikemat[j][k], volmat[j][k],
 																				asofDate, expirydatevec[j], asofDate, spotLag, strtenorvec[k],
 																				freq, sldrule, daycount, payCal, fixCal, -10.0, forwardShift, *forName, dfName);
@@ -724,7 +724,7 @@ LACalibrateIRSABR::doCalibrate()
 
 	AQLObjectPool &objPool = mpDataInstance->getObjectPool();
 
-	LAMathVolFuncIRSABR* method = new LAMathVolFuncIRSABR(mpDataInstance);
+	AQLMathVolFuncIRSABR* method = new AQLMathVolFuncIRSABR(mpDataInstance);
 
 	for (unsigned int i_under = 0; i_under < mUnderlyings.size(); ++i_under)
 	{
@@ -755,7 +755,7 @@ LACalibrateIRSABR::doCalibrate()
 					pCalibMat = &mcalibflgmat[mUnderlyings[i_under]];
 				}
 				AQLString msg;
-				LAMathSwaptionVolUtility::calibrateSABRMatrix(mpDataInstance,
+				AQLMathSwaptionVolUtility::calibrateSABRMatrix(mpDataInstance,
 															mapproxmethod[mUnderlyings[i_under]],
 															mcalibflag[mUnderlyings[i_under]],
 															mcalibmethod[mUnderlyings[i_under]],
@@ -781,7 +781,7 @@ LACalibrateIRSABR::doCalibrate()
 			{
 				mswapvolid[mUnderlyings[i_under]].clear();
 				mweight[mUnderlyings[i_under]].clear();
-				LAMathSwaptionVolUtility::calibrateSABRATMFix(mpDataInstance,
+				AQLMathSwaptionVolUtility::calibrateSABRATMFix(mpDataInstance,
 															mcurvesetid[mUnderlyings[i_under]],
 															malphaid[mUnderlyings[i_under]],
 															mbetaid[mUnderlyings[i_under]],

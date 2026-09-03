@@ -22,8 +22,8 @@
 #include <AQLDataVector.h>
 #include <AQLDataMatrix.h>
 #include <AQLDataReference.h>
-#include <LAMathYieldCurve.h>
-#include <LAMathYieldCurvePro.h>
+#include <AQLMathYieldCurve.h>
+#include <AQLMathYieldCurvePro.h>
 #include "AQLPriceDataManager.h"
 #include "AQLFunctionManager.h"
 #include "LACurveSetup.h"
@@ -36,22 +36,22 @@
 #include "LAMarketData.h"
 #include "LAStaticDataManager.h"
 #include <AQLFunctionUtilities.h>
-#include "LAMathDateUtilities.h"
-#include "LAMathCurveFuncUtility.h"
-#include "LAMathCorrelation.h"
-#include "LACompoundingFunc.h"
+#include "AQLMathDateUtilities.h"
+#include "AQLMathCurveFuncUtility.h"
+#include "AQLMathCorrelation.h"
+#include "AQLCompoundingFunc.h"
 #include "LACurveProperties.h"
-#include "LAMathFXEntity.h"
-#include "LAMathYieldCurve.h"
+#include "AQLMathFXEntity.h"
+#include "AQLMathYieldCurve.h"
 #include "AQLPriceDataFunction.h"
 #include "AQL1DIntegral.h"
 #include "AQLCombinationFunc.h"
 #include "AQLFunction.h"
 #include "AQLShiftFunc.h"
 #include "AQLPriceDataInterpolation.h"
-#include "LAPriceCashFlowGenerator.h"
-#include "LAPriceCFGenUtility.h"
-#include "LAPriceTradeValue.h"
+#include "AQLPriceCashFlowGenerator.h"
+#include "AQLPriceCFGenUtility.h"
+#include "AQLPriceTradeValue.h"
 
 //#include "LADefinitionsHazardRate.h"
 //#include "LAHazardRateCreator.h"
@@ -113,7 +113,7 @@ setUpBasisCurve
 
 	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	AQLDate asofdate = LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate = AQLMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
     LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	AQLString currency;
 	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
@@ -286,17 +286,17 @@ setUpBasisCurve
 	}
 
 	//set fxentity
-	LAMathFXEntity* pFwd = NULL;
+	AQLMathFXEntity* pFwd = NULL;
 	AQLObjectHolder ehfx = objPool.getObject(FORWARDFX, ENCHKTYPE_NOCHECK);
 	if (!ehfx.isDefined())
 	{
-		pFwd = new LAMathFXEntity(dataInstance);
+		pFwd = new AQLMathFXEntity(dataInstance);
 		objPool.set(FORWARDFX,pFwd);
 	}
 	else
 	{
-		dynamic_cast<LAMathFXEntity &>(objPool.getObject(FORWARDFX).get()).reset();
-		pFwd = &dynamic_cast<LAMathFXEntity &>(objPool.getObject(FORWARDFX).get());
+		dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FORWARDFX).get()).reset();
+		pFwd = &dynamic_cast<AQLMathFXEntity &>(objPool.getObject(FORWARDFX).get());
 	}
 	pFwd->getName().convertFromString(FORWARDFX);
 	pFwd->getFXType().convertFromString("FORWARDRATE");
@@ -346,7 +346,7 @@ setUpBasisCurve
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 }
 
@@ -366,7 +366,7 @@ setUpFwdFXConstantCurve
 
 	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	AQLDate asofdate = LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate = AQLMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
     LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	AQLString currency;
 	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
@@ -470,7 +470,7 @@ setUpFwdFXConstantCurve
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 
 	irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDFXCONST, isFwdFxCon);
@@ -505,7 +505,7 @@ setUpSwapCurve
 
 	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	AQLDate asofdate	= LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate	= AQLMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	AQLString currency;
 	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
@@ -933,7 +933,7 @@ setUpSwapCurve
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 
 	return;
@@ -972,7 +972,7 @@ SetUpArbFreeCurve
 	
 	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	AQLDate asofdate	= LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate	= AQLMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	AQLString currency;
 	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
@@ -1427,7 +1427,7 @@ SetUpArbFreeCurve
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 
 	return;
@@ -1457,7 +1457,7 @@ const AQLStringMatrix& swapConv
 	
 	AQLStringMatrix tmpInfo = generateProp;
 	upper(tmpInfo);
-	AQLDate asofdate	= LAMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
+	AQLDate asofdate	= AQLMathDateUtilities::getLADate(chgrow(tmpInfo,CURVEINPUT_ASOFDATE,1));
 	LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, asofdate.stringWithFormat());
 	AQLString currency;
 	AQLObjectHolder objHolder = objPool.getObject(curveID, ENCHKTYPE_NOCHECK);
@@ -1583,10 +1583,10 @@ const AQLStringMatrix& swapConv
 
 			if (oisRates[i].size() == 5)
 			{
-				const AQLDate& startdate = LAMathDateUtilities::getLADate(oisRates[i][2]);
+				const AQLDate& startdate = AQLMathDateUtilities::getLADate(oisRates[i][2]);
 				AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				fedFundFutureStream += "," + startdate_str;
-				const AQLDate& enddate = LAMathDateUtilities::getLADate(oisRates[i][3]);
+				const AQLDate& enddate = AQLMathDateUtilities::getLADate(oisRates[i][3]);
 				AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				fedFundFutureStream += "," + enddate_str;
 			}
@@ -1617,10 +1617,10 @@ const AQLStringMatrix& swapConv
 				double oisRate = oisRates[i][1].getDoubleValue() * 100.0;
 				oisStream += "," + AQLString(oisRate);
 
-				const AQLDate& startdate = LAMathDateUtilities::getLADate(oisRates[i][2]);
+				const AQLDate& startdate = AQLMathDateUtilities::getLADate(oisRates[i][2]);
 				AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
 				oisStream += "," + startdate_str;
-				const AQLDate& enddate = LAMathDateUtilities::getLADate(oisRates[i][3]);
+				const AQLDate& enddate = AQLMathDateUtilities::getLADate(oisRates[i][3]);
 				AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
 				oisStream += "," + enddate_str;
 			}
@@ -1675,7 +1675,7 @@ const AQLStringMatrix& swapConv
 	AQLString histStream;
 	for(size_t i=0; i<histRates.size(); i++)
 	{
-		const AQLDate& histdate = LAMathDateUtilities::getLADate(histRates[i][0]);
+		const AQLDate& histdate = AQLMathDateUtilities::getLADate(histRates[i][0]);
 		AQLString histdate_str = histdate.stringWithFormat("YYYYMMDD");
 		histStream += histdate_str;
 		double histRate = histRates[i][1].getDoubleValue() * 100.0;
@@ -1767,7 +1767,7 @@ const AQLStringMatrix& swapConv
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 
 	return;
@@ -1959,7 +1959,7 @@ setUpFloater
 		objPool.getObject(CurveIDManager).get().clear();
 		mae	= &objPool.getObject(CurveIDManager).get();
 	}
-	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(LATime::now()));
+	mae->add("Time",			new AQLDataString()			).convertFromString(AQLString(AQLTime::now()));
 	mae->add(CALIBRATION_DATA_NAME,		new AQLDataString()			).convertFromString(CurveIDManager);
 
 }
@@ -2195,10 +2195,10 @@ LACurveSetup::createFutureStream(const AQLStringMatrix& future_rates, AQLString&
         else if (future_rates[i].size() <= 6)
         {
             futureStream += future_rates[i][0];
-            const AQLDate& startdate = LAMathDateUtilities::getLADate(future_rates[i][1]);
+            const AQLDate& startdate = AQLMathDateUtilities::getLADate(future_rates[i][1]);
             AQLString startdate_str = startdate.stringWithFormat("YYYYMMDD");
             futureStream += "," + startdate_str;
-            const AQLDate& enddate = LAMathDateUtilities::getLADate(future_rates[i][2]);
+            const AQLDate& enddate = AQLMathDateUtilities::getLADate(future_rates[i][2]);
             AQLString enddate_str = enddate.stringWithFormat("YYYYMMDD");
             futureStream += "," + enddate_str;
             double futureRate = future_rates[i][3].getDoubleValue();
@@ -2263,7 +2263,7 @@ LACurveSetup::compound(AQLDataInstance* dataInstance,
 
 
     DateVector payment_dates;
-    LAMathDateCalculations::generateSchedule(
+    AQLMathDateCalculations::generateSchedule(
         start_date,
         end_date,
         frequency,
@@ -2292,7 +2292,7 @@ LACurveSetup::compound(AQLDataInstance* dataInstance,
 
     const AQLString freq = SIMPLE;
 
-	const LAMathYieldCurve& yc = LAMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveID);
+	const AQLMathYieldCurve& yc = AQLMathCurveFuncUtility::getYieldCurveForCurveID(dataInstance,curveID);
 	const AQLObject& yieldData = yc.getYieldData().get().get();
 	AQLString suffix;
 	if (forecastCurveName != STD)
@@ -2302,7 +2302,7 @@ LACurveSetup::compound(AQLDataInstance* dataInstance,
 	const AQLDataHolder* dh = &(yieldData.getData(CALIBRATION_DATA_FWDTERMSMATRIX + suffix, NOCHECK));
 	const bool is_fwd_inter = dh->isDefined() && !dh->isNull();
 
-    DoubleArray rates = LAMathCurveFuncUtility::getMultiForwardRate(start_dates,
+    DoubleArray rates = AQLMathCurveFuncUtility::getMultiForwardRate(start_dates,
                                                                   end_dates,
                                                                   dataInstance,
                                                                   curveID,
@@ -2322,29 +2322,29 @@ LACurveSetup::compound(AQLDataInstance* dataInstance,
         x[n+i]     = dc.getTerm(start_dates[i], end_dates[i]);
         x[n*2 + i] = spread;
     }
-	std::shared_ptr<LACompoundMethod> method;
+	std::shared_ptr<AQLCompoundMethod> method;
 	// if compound type is simple or average, we need to add whole term to final element
-	// this operation is al so implemented in LAPricePayOffToolCompound::calculateCouponCashflow().
+	// this operation is al so implemented in AQLPricePayOffToolCompound::calculateCouponCashflow().
     switch(compound_type){
         case COMPOUND_NORMAL:
             {
-                method.reset(new LACompoundMethod7());
+                method.reset(new AQLCompoundMethod7());
                 break;
             }
         case COMPOUND_FLAT:
             {
-                method.reset(new LACompoundMethod8());
+                method.reset(new AQLCompoundMethod8());
                 break;
             }
         case COMPOUND_SIMPLE:
             {
-                method.reset(new LACompoundMethod9());
+                method.reset(new AQLCompoundMethod9());
                 x.push_back(dc.getTerm(start_date, end_date));
                 break;
             }
         case AVERAGE:
             {
-                method.reset(new LACompoundMethod10());
+                method.reset(new AQLCompoundMethod10());
 				x.push_back(dc.getTerm(start_date, end_date));
 				break;
             }
@@ -2438,16 +2438,16 @@ LACurveSetup::SetUpPCA(AQLDataInstance* dataInstance, const DoubleMatrix& corr, 
 {
 
 	AQLObjectPool& objPool = dataInstance->getObjectPool();
-	LAMathCorrelation* cor_obj = NULL;
+	AQLMathCorrelation* cor_obj = NULL;
 	AQLString name = PREFIX_COR + id;
 	if(!objPool.getObject(name).isDefined())
 	{
-		cor_obj = new LAMathCorrelation(dataInstance);
+		cor_obj = new AQLMathCorrelation(dataInstance);
 		objPool.set(name, cor_obj);
 	}
 	else
 	{
-		cor_obj = &dynamic_cast<LAMathCorrelation &>(objPool.getObject(name).get());
+		cor_obj = &dynamic_cast<AQLMathCorrelation &>(objPool.getObject(name).get());
 		cor_obj->reset();
 	}
 
@@ -2475,7 +2475,7 @@ LACurveSetup::GetPCAResult(AQLDataInstance* dataInstance, const AQLString& type,
 {
 	AQLObjectPool& objPool = dataInstance->getObjectPool();
 	AQLString name = PREFIX_COR + id;
-	LAMathCorrelation cor_obj = dynamic_cast<LAMathCorrelation& >(objPool.getObject(name, ENCHKTYPE_ISDEFINED).get());
+	AQLMathCorrelation cor_obj = dynamic_cast<AQLMathCorrelation& >(objPool.getObject(name, ENCHKTYPE_ISDEFINED).get());
 
 	DoubleMatrix ret;
 	if(type == AQLString("EIGEN_VECTORS"))

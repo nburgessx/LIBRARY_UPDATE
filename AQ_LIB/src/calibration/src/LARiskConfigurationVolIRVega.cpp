@@ -31,8 +31,8 @@
 #include "AQLDataMultiReference.h"
 #include "AQLDataReference.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPriceIRVegaUnderlyingAsset.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPriceIRVegaUnderlyingAsset.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LADealUtils.h"
@@ -47,7 +47,7 @@
 #include "AQLDataMatrix.h"
 #include "AQLFunctionUtilities.h"
 #include "LADefinitionsIRSABR.h"
-#include "LAMathCurveFuncUtility.h"
+#include "AQLMathCurveFuncUtility.h"
 
 using namespace std;
 
@@ -935,7 +935,7 @@ LARiskConfigurationVolIRVega::getCoordinatesMatrix(const AQLString &ccy) const
 		ret[i].resize(COORDINATESNUM);
 		for (unsigned  int j = 0; j < COORDINATESNUM; ++j)
 		{
-			ret[i][j] = dayCount.getTerm(asOfDate, LAMathDateCalculations::getDate(asOfDate, cdns[j], true));
+			ret[i][j] = dayCount.getTerm(asOfDate, AQLMathDateCalculations::getDate(asOfDate, cdns[j], true));
 		}
 	}
 
@@ -1167,9 +1167,9 @@ LARiskConfigurationVolIRVega::reduceTargetGrids(const AQLString &ccy, const AQLS
 				throw AQLCoreInvalidData("Format of market grid is wrong!",	__FILE__,__LINE__);
 			if (map_calib_target[termVec[1] + "_" + termVec[2]]){
 				int y, m, d, w;
-				LAMathDateCalculations::termStrtoYMDW(termVec[1], y, m, d, w);
+				AQLMathDateCalculations::termStrtoYMDW(termVec[1], y, m, d, w);
 				const int expiryMonth = y * 12 + m;
-				LAMathDateCalculations::termStrtoYMDW(termVec[2], y, m, d, w);
+				AQLMathDateCalculations::termStrtoYMDW(termVec[2], y, m, d, w);
 				const int tenorMonth = y * 12 + m;
 				targetGrids[std::make_pair(-expiryMonth, tenorMonth)] = mktGrids[i];
 			}
@@ -1424,7 +1424,7 @@ LARiskConfigurationVolIRVega::getCalibTargetFX(const AQLString &ccy, AQLDataInst
 	/*if (ccy.findString(FX_DELIMITER) < 0 )
 	{
 		AQLObjectPool &objPool = dataInstance.getObjectPool();
-		LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
+		AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 		fCurveCcys = ycPro.getAffectingCcy();
 	}*/
@@ -1544,9 +1544,9 @@ LARiskConfigurationVolIRVega::storeIRAdditionalInfo(AQLDataInstance &dataInstanc
 		//calc swap rate
 		AQLPriceDataSlidingRule slr_Fol; slr_Fol.convertFromString(FOL);
 
-		AQLDate optionMaturityDate = LAMathDateCalculations::getDate(asOfDate, optionMaturity, swapConvention.slidingRule, &swapConvention.fixingCalendar, true);
-		AQLDate optionMaturityDateIncludingSpotLag = LAMathDateCalculations::getDate(optionMaturityDate, swapConvention.spotLag, slr_Fol, &swapConvention.fixingCalendar, true);
-		AQLDate endDate = LAMathDateCalculations::getDate(optionMaturityDateIncludingSpotLag, tenor, swapConvention.slidingRule, &swapConvention.paymentCalendar, true);
+		AQLDate optionMaturityDate = AQLMathDateCalculations::getDate(asOfDate, optionMaturity, swapConvention.slidingRule, &swapConvention.fixingCalendar, true);
+		AQLDate optionMaturityDateIncludingSpotLag = AQLMathDateCalculations::getDate(optionMaturityDate, swapConvention.spotLag, slr_Fol, &swapConvention.fixingCalendar, true);
+		AQLDate endDate = AQLMathDateCalculations::getDate(optionMaturityDateIncludingSpotLag, tenor, swapConvention.slidingRule, &swapConvention.paymentCalendar, true);
 
 		DateVector dates;
 		double rate;
@@ -1554,11 +1554,11 @@ LARiskConfigurationVolIRVega::storeIRAdditionalInfo(AQLDataInstance &dataInstanc
 		{
 			dates.push_back(optionMaturityDateIncludingSpotLag);
 			dates.push_back(endDate);
-			rate = LAMathCurveFuncUtility::getParRate(dates, &dataInstance, swapConvention.curveID, swapConvention.daycount.convertToString(), AQLString("SPLINE"), swapConvention.forecastCurveName, swapConvention.discountCurveName, true);
+			rate = AQLMathCurveFuncUtility::getParRate(dates, &dataInstance, swapConvention.curveID, swapConvention.daycount.convertToString(), AQLString("SPLINE"), swapConvention.forecastCurveName, swapConvention.discountCurveName, true);
 		}
 		else
 		{
-			rate = LAMathCurveFuncUtility::getParRate(&dataInstance, swapConvention.curveID, optionMaturityDateIncludingSpotLag, endDate, NULL, NULL, NULL, swapConvention.frequency, swapConvention.daycount.convertToString(),
+			rate = AQLMathCurveFuncUtility::getParRate(&dataInstance, swapConvention.curveID, optionMaturityDateIncludingSpotLag, endDate, NULL, NULL, NULL, swapConvention.frequency, swapConvention.daycount.convertToString(),
 				swapConvention.slidingRule.convertToString(), swapConvention.paymentCalendar.convertToString(), AQLString("SPLINE"), swapConvention.forecastCurveName, swapConvention.discountCurveName, true);
 		}
 		resForwards[i] = rate;

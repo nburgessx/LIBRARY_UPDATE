@@ -8,10 +8,10 @@
 #include "AQLDataInstance.h"
 #include "AQLObjectPool.h"
 #include "AQLDataReference.h"
-#include "LAPricePortfolioValue.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
-#include "LAMathDateCalculations.h"
+#include "AQLPricePortfolioValue.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
+#include "AQLMathDateCalculations.h"
 #include "LADefinitionsRisk.h"
 #include "LAScenarioConfiguration.h"
 #include "LAScenarioConfigurationManager.h"
@@ -22,14 +22,14 @@
 #include "LACalibrationParameters.h"
 #include "LACalibrationParametersManager.h"
 #include "LADefinitionsCalibration.h"
-#include "LAPricePayOff.h"
-#include "LAPriceTradeValue.h"
+#include "AQLPricePayOff.h"
+#include "AQLPriceTradeValue.h"
 #include "LADealUtils.h"
 #include "LAObjectConfiguration.h"
 #include "LAObjectConfigurationManager.h"
 #include "AQLMathValuableEntity.h"
-#include "LALinearRatesSwapTradeValue.h"
-#include "LAPriceLSMCTradeValue.h"
+#include "AQLLinearRatesSwapTradeValue.h"
+#include "AQLPriceLSMCTradeValue.h"
 
 using namespace std;
 
@@ -145,7 +145,7 @@ LARiskConfigurationTheta::setUpTargetNames(const AQLString &ccy, AQLObject &e, A
 
 	AQLString ref;
 
-	LAMathPathEntity* pPath = LAMarketData::getPathEnitty(objPool);
+	AQLMathPathEntity* pPath = LAMarketData::getPathEnitty(objPool);
 	if (pPath)
 	{
 		ref += pPath->getName().get() + ":";
@@ -162,7 +162,7 @@ LARiskConfigurationTheta::setUpTargetNames(const AQLString &ccy, AQLObject &e, A
 		// fx object (usemodel)
 		if (MADealUtils::getSDECurrencys().size() > 1)
 		{
-			LAMathFXEntity *pFX = LAMarketData::getFXEntity(objPool, "USEMODEL");
+			AQLMathFXEntity *pFX = LAMarketData::getFXEntity(objPool, "USEMODEL");
 			if (!pFX)
 			{
 				throw AQLCoreInvalidData("USE Model FX Object is not set", __FILE__, __LINE__);
@@ -172,7 +172,7 @@ LARiskConfigurationTheta::setUpTargetNames(const AQLString &ccy, AQLObject &e, A
 	}
 	else
 	{
-		LAMathPlainVanillaEntity* pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
+		AQLMathPlainVanillaEntity* pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
 		if (pvanilla == NULL)
 			return;
 
@@ -192,7 +192,7 @@ LARiskConfigurationTheta::setUpTargetNames(const AQLString &ccy, AQLObject &e, A
 		AQLDataMultiReference& curverefs = pvanilla->getIRCurves();
 		for (unsigned int i = 0; i < curverefs.getSize(); i++)
 		{
-			LAMathYieldCurve& curve = dynamic_cast<LAMathYieldCurve &>(curverefs.get(i).get());
+			AQLMathYieldCurve& curve = dynamic_cast<AQLMathYieldCurve &>(curverefs.get(i).get());
 			AQLObject& ylddata = curve.getYieldData().get().get();
 
 			dh = &(ylddata.getData(CALIBRATION_DATA_NAME, ISNOTNULL));
@@ -211,10 +211,10 @@ LARiskConfigurationTheta::setUpTargetNames(const AQLString &ccy, AQLObject &e, A
 		}
 		else
 		{
-			LAMathPlainVanillaEntity* pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
+			AQLMathPlainVanillaEntity* pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
 			if (!pvanilla)
 			{
-				throw AQLCoreInvalidData("Neither LAMathPathEntity nor LAMathPlainVanillaEntity exists.", __FILE__, __LINE__);
+				throw AQLCoreInvalidData("Neither AQLMathPathEntity nor AQLMathPlainVanillaEntity exists.", __FILE__, __LINE__);
 			}
 			bfasOf = pvanilla->getAsOfDate();
 
@@ -229,11 +229,11 @@ LARiskConfigurationTheta::setUpTargetNames(const AQLString &ccy, AQLObject &e, A
 		
 		AQLPriceDataSlidingRule fol(SLIDING_RULE_FOLLOWING);
 		//fol.convertFromString(SLIDING_RULE_FOLLOWING);
-		AQLDate afasOf = LAMathDateCalculations::getDate(bfasOf,days,fol,&cal,true);
+		AQLDate afasOf = AQLMathDateCalculations::getDate(bfasOf,days,fol,&cal,true);
 
 
 
-		//AQLDate afasOf = LAMathDateCalculations::getDate(bfasOf,days,true);
+		//AQLDate afasOf = AQLMathDateCalculations::getDate(bfasOf,days,true);
 
 		AQLString mainTradeName = LACoreDataService::getContext(ARG_KEY_MAINTRADE);
 		AQLObjectHolder objHolder = objPool.getObject(mainTradeName, ENCHKTYPE_ISDEFINED);
@@ -546,14 +546,14 @@ LARiskConfigurationTheta::createThetaEntity(const AQLString &ccy, AQLDataInstanc
 	AQLDataHolder* dh = &(basee.getData(PRICING_DATA_TARGETNAMES, ISNOTNULL));
 
 	AQLDate asOfDate;
-	LAMathPathEntity* pPath = LAMarketData::getPathEnitty(objPool);
+	AQLMathPathEntity* pPath = LAMarketData::getPathEnitty(objPool);
 	if (pPath)
 	{
 		asOfDate = pPath->getAsOfDate();
 	}
 	else
 	{
-	LAMathPlainVanillaEntity* pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
+	AQLMathPlainVanillaEntity* pvanilla = LAMarketData::getPlainVanillaEntity(objPool);
 	if (pvanilla == NULL)
 	{
 		return vector<AQLObject *>(0);
@@ -569,13 +569,13 @@ LARiskConfigurationTheta::createThetaEntity(const AQLString &ccy, AQLDataInstanc
 		cal.convertFromString(calStr);
 	AQLPriceDataSlidingRule fol(SLIDING_RULE_FOLLOWING);
 	AQLString days = AQLString(changeinterval) + "D";
-	asOfDate = LAMathDateCalculations::getDate(asOfDate,days,fol,&cal,true);
+	asOfDate = AQLMathDateCalculations::getDate(asOfDate,days,fol,&cal,true);
 
 	AQLDate cashadjDate;
 	if (isPLChangeMode(ccy))
 	{
 		AQLString days = "1D";
-		cashadjDate = LAMathDateCalculations::getDate(asOfDate,days,fol,&cal,true);
+		cashadjDate = AQLMathDateCalculations::getDate(asOfDate,days,fol,&cal,true);
 	}
 
 

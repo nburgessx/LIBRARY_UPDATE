@@ -17,8 +17,8 @@
 #include "AQLDataReference.h"
 #include "AQLDataProcedure.h"
 #include "AQLDataMultiReference.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
 #include "LAScenarioConfigurationYieldCurveZero.h"
 #include "LAMarketData.h"
 #include "LACalibrationUtilities.h"
@@ -68,7 +68,7 @@ LAScenarioConfigurationYieldCurveZero::createScenario(AQLDataInstance &dataInsta
 	// get yield
 	AQLString bYieldName = param.targetName;
 	
-	const LAMathYieldCurve &bYield = dynamic_cast<const LAMathYieldCurve &>
+	const AQLMathYieldCurve &bYield = dynamic_cast<const AQLMathYieldCurve &>
 					(objPool.getObject(bYieldName, ENCHKTYPE_ISDEFINED).get());
 
 	// get yield data
@@ -77,7 +77,7 @@ LAScenarioConfigurationYieldCurveZero::createScenario(AQLDataInstance &dataInsta
 						(bYieldData.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 
 	// get yield data pro
-	LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &bYieldPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get());
 	
 	// set curvetype
@@ -178,18 +178,18 @@ LAScenarioConfigurationYieldCurveZero::createScenario(AQLDataInstance &dataInsta
 			}
 		}
 
-		LAMathYieldCurve *cYield = 0;
+		AQLMathYieldCurve *cYield = 0;
 		const AQLString cYieldName = bYieldName + suffix; 
 		objHolder = objPool.getObject(cYieldName, ENCHKTYPE_NOCHECK);
 		if (!objHolder.isDefined())
 		{
-			cYield = dynamic_cast<LAMathYieldCurve *>(bYield.clone());
+			cYield = dynamic_cast<AQLMathYieldCurve *>(bYield.clone());
 			cYield->AQLObject::remove(CALIBRATION_DATA_NAME);
 			cYield->AQLObject::add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(cYieldName);
 		}
 		else
 		{
-			cYield = &dynamic_cast<LAMathYieldCurve &>(objHolder.get());
+			cYield = &dynamic_cast<AQLMathYieldCurve &>(objHolder.get());
 		}
 		// set yield data yield curve pro and yield curve
 		cYield->getYieldData().convertFromString(cYieldDataName);
@@ -331,14 +331,14 @@ LAScenarioConfigurationYieldCurveZero::createScenario(AQLDataInstance &dataInsta
 				}
 				else
 				{
-					AQLDate date = LAMathDateCalculations::getDate(asOfDate, strTerm, true);
+					AQLDate date = AQLMathDateCalculations::getDate(asOfDate, strTerm, true);
 					double term = dayCount.getTerm(asOfDate, date);
 					LACalibrationUtilities<double>::searchNearestPos(terms, term, gridPos[j]);
 				}	
 			}
 		}
 
-		const LAMathYieldCurve* pbYield = &bYield;
+		const AQLMathYieldCurve* pbYield = &bYield;
 		const AQLObject* pbYieldData = &bYieldData;
 		for (unsigned int i = 0; i < gridSize; ++i)
 		{
@@ -376,18 +376,18 @@ LAScenarioConfigurationYieldCurveZero::createScenario(AQLDataInstance &dataInsta
 				}
 			}
 
-			LAMathYieldCurve *cYield = 0;
+			AQLMathYieldCurve *cYield = 0;
 			const AQLString cYieldName = bYieldName + suffix; 
 			objHolder = objPool.getObject(cYieldName, ENCHKTYPE_NOCHECK);
 			if (!objHolder.isDefined())
 			{
-				cYield = dynamic_cast<LAMathYieldCurve *>(pbYield->clone());
+				cYield = dynamic_cast<AQLMathYieldCurve *>(pbYield->clone());
 				cYield->AQLObject::remove(CALIBRATION_DATA_NAME);
 				cYield->AQLObject::add(CALIBRATION_DATA_NAME, new AQLDataString()).convertFromString(cYieldName);
 			}
 			else
 			{
-				cYield = &dynamic_cast<LAMathYieldCurve &>(objHolder.get());
+				cYield = &dynamic_cast<AQLMathYieldCurve &>(objHolder.get());
 			}
 		
 			// set yield data yield curve pro and yield curve
@@ -470,7 +470,7 @@ LAScenarioConfigurationYieldCurveZero::createScenario(AQLDataInstance &dataInsta
 		ofstream fout;
 		for (unsigned int i = 0; i < yieldSize; ++i)
 		{
-			const AQLDataReference &yd = dynamic_cast<const LAMathYieldCurve *>(ret[i])->getYieldData();
+			const AQLDataReference &yd = dynamic_cast<const AQLMathYieldCurve *>(ret[i])->getYieldData();
 			AQLString ydName = yd.convertToString();
 			ydName.exchange("\"","");
 			const AQLObjectHolder ydHolder = objPool.getObject(ydName, ENCHKTYPE_ISDEFINED);

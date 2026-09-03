@@ -29,7 +29,7 @@
 #include "AQLDataVector.h"
 #include "AQLDataMultiReference.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LADealUtils.h"
@@ -561,7 +561,7 @@ LARiskConfigurationFXShiftVolFXVega::createBaseExtraScenarioEntity(const AQLStri
 	//param.isParallel = true;
 	//param.isGrid = false;
 	//// set target name
-	//LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+	//AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	//param.targetName = targetFX->getName();
 
 	//// search shift target currency(foreign currency)
@@ -746,7 +746,7 @@ LARiskConfigurationFXShiftVolFXVega::createBaseScenarioEntity(const AQLString &c
 	//const AQLString model = LAMarketData::getModelName(ccy);
 	//const AQLString riskName = getRiskName();
 	//// set target name
-	//LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+	//AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	//// search shift target currency(foreign currency)
 	//AQLStringVector ccys;
 	//LAMarketData::convertToCurrency(ccy, ccys);

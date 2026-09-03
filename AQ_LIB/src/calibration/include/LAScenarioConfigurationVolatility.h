@@ -21,7 +21,7 @@
 
 
 class AQLObject;
-class LAMathVolatility;
+class AQLMathVolatility;
 class AQLObjectPool;
 
 //===================== Class Declare LAScenarioConfigurationVolatility==================================
@@ -48,10 +48,10 @@ public:
 private:
 	//==============================================
 	// create parallel shift vol
-	std::vector<AQLObject *> createParallelShiftVol(AQLDataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const;
+	std::vector<AQLObject *> createParallelShiftVol(AQLDataInstance &dataInstance, AQLMathVolatility &baseVol, const MAScenarioParam &param) const;
 	//==============================================
 	// create grid shift vol
-	std::vector<AQLObject *> createGridShiftVol(AQLDataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const;
+	std::vector<AQLObject *> createGridShiftVol(AQLDataInstance &dataInstance, AQLMathVolatility &baseVol, const MAScenarioParam &param) const;
 	//==============================================
 	// seartch coordinates matrix
 	void searchCoordinatesMatrix(const DoubleArray &grid_t, const DoubleArray &grid_T, const DoubleArray &area,

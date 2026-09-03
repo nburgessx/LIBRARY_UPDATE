@@ -38,33 +38,33 @@
 #include "LACoreDataService.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
-#include "LAMathJamshidianSwaption.h"
-#include "LAMathJamshidianSwaptionByImplyVol.h"
-#include "LAMathAntonovFXOption.h"
-#include "LAPriceSZCalibration.h"
-#include "LAMathAntonovFXOptionBetaFixed.h"
-#include "LAMathAntonovFXOptionVolatilityFixed.h"
-#include "LAMathDateUtilities.h"
-#include "LAMathCurveFuncUtility.h"
-#include "LAMathIRVanillaFuncUtility.h"
+#include "AQLMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaptionByImplyVol.h"
+#include "AQLMathAntonovFXOption.h"
+#include "AQLPriceSZCalibration.h"
+#include "AQLMathAntonovFXOptionBetaFixed.h"
+#include "AQLMathAntonovFXOptionVolatilityFixed.h"
+#include "AQLMathDateUtilities.h"
+#include "AQLMathCurveFuncUtility.h"
+#include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
-#include "LAPriceHWCalibration.h"
-#include "LAMathAntonovFXOption.h"
-#include "LAMathVolFuncFX.h"
-#include "LAMathVolFuncFXDD.h"
-#include "LAPriceFXVolatility.h"
-#include "LAMathDateCalculations.h"
-#include "LAMathFXVanillaFuncUtility.h"
+#include "AQLPriceHWCalibration.h"
+#include "AQLMathAntonovFXOption.h"
+#include "AQLMathVolFuncFX.h"
+#include "AQLMathVolFuncFXDD.h"
+#include "AQLPriceFXVolatility.h"
+#include "AQLMathDateCalculations.h"
+#include "AQLMathFXVanillaFuncUtility.h"
 #include "LACoreDataService.h"
 #include <sstream>
 #include "LACalibratePool.h"
-#include "LAMathAnalyticalFormula.h"
-#include "LAMathAntonovFXOption.h"
+#include "AQLMathAnalyticalFormula.h"
+#include "AQLMathAntonovFXOption.h"
 #include "LACalibrateVolatilitySZ.h"
 #include "LACalibrateSZ.h"
 #include "LALogManager.h"
 #include "LALogger.h"
-#include "LAMathVolFuncSZDD.h"
+#include "AQLMathVolFuncSZDD.h"
 
 using namespace std;
 // constructor
@@ -260,15 +260,15 @@ LACalibrateSZ::setUp(AQLObjectPool &objPool, const MAScenarioParam &param, MACal
 		DoubleArray premVec(MARKETNUM);
 
 		// ATM
-		premVec[0] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[0] * AQLMath::sqrt(term), strikeVec[0], isCallVec[0] ? 1 : -1) * dDF;
+		premVec[0] = AQLMathAnalyticalFormula::BlackFormula(fwdFX, volVec[0] * AQLMath::sqrt(term), strikeVec[0], isCallVec[0] ? 1 : -1) * dDF;
 		// 25Delta High
-		premVec[1] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[1] * AQLMath::sqrt(term), strikeVec[1], isCallVec[1] ? 1 : -1) * dDF;
+		premVec[1] = AQLMathAnalyticalFormula::BlackFormula(fwdFX, volVec[1] * AQLMath::sqrt(term), strikeVec[1], isCallVec[1] ? 1 : -1) * dDF;
 		// 10Delta High
-		premVec[2] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[2] * AQLMath::sqrt(term), strikeVec[2], isCallVec[2] ? 1 : -1) * dDF;
+		premVec[2] = AQLMathAnalyticalFormula::BlackFormula(fwdFX, volVec[2] * AQLMath::sqrt(term), strikeVec[2], isCallVec[2] ? 1 : -1) * dDF;
 		// 25Delta Low
-		premVec[3] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[3] * AQLMath::sqrt(term), strikeVec[3], isCallVec[3] ? 1 : -1) * dDF;
+		premVec[3] = AQLMathAnalyticalFormula::BlackFormula(fwdFX, volVec[3] * AQLMath::sqrt(term), strikeVec[3], isCallVec[3] ? 1 : -1) * dDF;
 		// 10Delta Low 
-		premVec[4] = LAMathAnalyticalFormula::BlackFormula(fwdFX, volVec[4] * AQLMath::sqrt(term), strikeVec[4], isCallVec[4] ? 1 : -1) * dDF;
+		premVec[4] = AQLMathAnalyticalFormula::BlackFormula(fwdFX, volVec[4] * AQLMath::sqrt(term), strikeVec[4], isCallVec[4] ? 1 : -1) * dDF;
 		//set data 
 		DoubleArray premVec_(MARKETNUM);
 		DoubleArray strikeVec_(MARKETNUM);
@@ -364,7 +364,7 @@ LACalibrateSZ::setUp2(AQLObjectPool &objPool, const MAScenarioParam &param, MACa
 		AQLString msg = dYieldName + " is not registered in EntityPool";
 		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
-	const LAMathYieldCurve &dYield = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(dYieldName, ENCHKTYPE_ISDEFINED).get());
+	const AQLMathYieldCurve &dYield = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(dYieldName, ENCHKTYPE_ISDEFINED).get());
 	const AQLString &dYieldDataName = dYield.getYieldData().get().getName();
 
 	// get foreign curve
@@ -374,7 +374,7 @@ LACalibrateSZ::setUp2(AQLObjectPool &objPool, const MAScenarioParam &param, MACa
 		AQLString msg = fYieldName + " is not registered in EntityPool";
 		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
-	const LAMathYieldCurve &fYield = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(fYieldName, ENCHKTYPE_ISDEFINED).get());
+	const AQLMathYieldCurve &fYield = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(fYieldName, ENCHKTYPE_ISDEFINED).get());
 	const AQLString &fYieldDataName = fYield.getYieldData().get().getName();
 
 	// calc df ratio
@@ -870,7 +870,7 @@ LACalibrateSZ::setUp2(AQLObjectPool &objPool, const MAScenarioParam &param, MACa
 	const bool isIncludeLast = dynamic_cast<const AQLDataBool &>(calibInfo.getData(PRICING_DATA_TERMISINCLUDELAST, ISNOTNULL).get()).get();
 	// spotdate for calc term
 	int spotlag = dynamic_cast<const AQLDataInt &>(calibInfo.getData(PRICING_DATA_TERMSPOTLAG, ISNOTNULL).get());
-	AQLDate optionSpotDate = LAMathDateCalculations::getFXSpotDate(param.ccy, asofDate, strTermCal, spotlag, true);
+	AQLDate optionSpotDate = AQLMathDateCalculations::getFXSpotDate(param.ccy, asofDate, strTermCal, spotlag, true);
 	// need to calc strike and prem
 	AQLString strLow("low");
 	AQLString strHigh("high");
@@ -954,8 +954,8 @@ LACalibrateSZ::setUp2(AQLObjectPool &objPool, const MAScenarioParam &param, MACa
 		else
 		{
 			// calc strike and optiontype
-			AQLDate settledate = LAMathDateCalculations::getDate(optionSpotDate, optionMatVec[i], termSliding, &termCal, true);
-			AQLDate date = LAMathDateCalculations::getFXSpotDate(param.ccy, settledate, strTermCal, -spotlag, true);
+			AQLDate settledate = AQLMathDateCalculations::getDate(optionSpotDate, optionMatVec[i], termSliding, &termCal, true);
+			AQLDate date = AQLMathDateCalculations::getFXSpotDate(param.ccy, settledate, strTermCal, -spotlag, true);
 			const double term = termDC.getTerm(asofDate, date, isIncludeLast);
 			const double dDF = dYield.getBasisDF(term);
 			const double fDF = fYield.getBasisDF(term);
@@ -986,7 +986,7 @@ LACalibrateSZ::setUp2(AQLObjectPool &objPool, const MAScenarioParam &param, MACa
 			// 25Delta High
 			try
 			{
-				strikeVec[1] = LAMathFXVanillaFuncUtility::calcstrikefromdelta
+				strikeVec[1] = AQLMathFXVanillaFuncUtility::calcstrikefromdelta
 					(strikeVal25DHVec[i], spotOrFwd, strHigh, mSpotRate, fwdFX, vol25DHVec[i], reversal, strangle, fDF, term);
 			}
 			catch (AQLCoreError &err)
@@ -995,13 +995,13 @@ LACalibrateSZ::setUp2(AQLObjectPool &objPool, const MAScenarioParam &param, MACa
 				if (msg.findString("Not Convergence from rtsafe") == -1)
 					throw AQLCoreNumericalError("Fx Option convergence does not work", __FILE__, __LINE__);
 
-				strikeVec[1] = LAMathFXVanillaFuncUtility::calcmaxstrike
+				strikeVec[1] = AQLMathFXVanillaFuncUtility::calcmaxstrike
 					(spotOrFwd, mSpotRate, fwdFX, vol25DHVec[i], reversal, strangle, fDF, term);
 			}
 			// 10Delta High
 			try
 			{
-				strikeVec[2] = LAMathFXVanillaFuncUtility::calcstrikefromdelta
+				strikeVec[2] = AQLMathFXVanillaFuncUtility::calcstrikefromdelta
 					(strikeVal10DHVec[i], spotOrFwd, strHigh, mSpotRate, fwdFX, vol10DHVec[i], reversal, strangle, fDF, term);
 			}
 			catch (AQLCoreError &err)
@@ -1010,14 +1010,14 @@ LACalibrateSZ::setUp2(AQLObjectPool &objPool, const MAScenarioParam &param, MACa
 				if (msg.findString("Not Convergence from rtsafe") == -1)
 					throw AQLCoreNumericalError("Fx Option convergence does not work", __FILE__, __LINE__);
 
-				strikeVec[2] = LAMathFXVanillaFuncUtility::calcmaxstrike
+				strikeVec[2] = AQLMathFXVanillaFuncUtility::calcmaxstrike
 					(spotOrFwd, mSpotRate, fwdFX, vol10DHVec[i], reversal, strangle, fDF, term);
 			}
 			// 25Delta Low
-			strikeVec[3] = LAMathFXVanillaFuncUtility::calcstrikefromdelta
+			strikeVec[3] = AQLMathFXVanillaFuncUtility::calcstrikefromdelta
 				(strikeVal25DLVec[i], spotOrFwd, strLow, mSpotRate, fwdFX, vol25DLVec[i], reversal, strangle, fDF, term);
 			// 10Delta Low
-			strikeVec[4] = LAMathFXVanillaFuncUtility::calcstrikefromdelta
+			strikeVec[4] = AQLMathFXVanillaFuncUtility::calcstrikefromdelta
 				(strikeVal10DLVec[i], spotOrFwd, strLow, mSpotRate, fwdFX, vol10DLVec[i], reversal, strangle, fDF, term);
 			//set as data
 			mGen->AQLObject::add(PRICING_DATA_STRIKES, new AQLDataDoubles(strikeVec));
@@ -1026,19 +1026,19 @@ LACalibrateSZ::setUp2(AQLObjectPool &objPool, const MAScenarioParam &param, MACa
 			DoubleArray premVec(MARKETNUM);
 			// ATM
 			AQLString tmpOpType = opTypeATMVec[i];
-			premVec[0] = LAMathIRVanillaFuncUtility::bkOption(strPrem, strBuy, tmpOpType, fwdFX, strikeVec[0], volATMVec[i], dDF, asofDate, date);
+			premVec[0] = AQLMathIRVanillaFuncUtility::bkOption(strPrem, strBuy, tmpOpType, fwdFX, strikeVec[0], volATMVec[i], dDF, asofDate, date);
 			// 25Delta High
 			tmpOpType = opType25DHVec[i];
-			premVec[1] = LAMathIRVanillaFuncUtility::bkOption(strPrem, strBuy, tmpOpType, fwdFX, strikeVec[1], vol25DHVec[i], dDF, asofDate, date);
+			premVec[1] = AQLMathIRVanillaFuncUtility::bkOption(strPrem, strBuy, tmpOpType, fwdFX, strikeVec[1], vol25DHVec[i], dDF, asofDate, date);
 			// 10Delta High
 			tmpOpType = opType10DHVec[i];
-			premVec[2] = LAMathIRVanillaFuncUtility::bkOption(strPrem, strBuy, tmpOpType, fwdFX, strikeVec[2], vol10DHVec[i], dDF, asofDate, date);
+			premVec[2] = AQLMathIRVanillaFuncUtility::bkOption(strPrem, strBuy, tmpOpType, fwdFX, strikeVec[2], vol10DHVec[i], dDF, asofDate, date);
 			// 25Delta Low
 			tmpOpType = opType25DLVec[i];
-			premVec[3] = LAMathIRVanillaFuncUtility::bkOption(strPrem, strBuy, tmpOpType, fwdFX, strikeVec[3], vol25DLVec[i], dDF, asofDate, date);
+			premVec[3] = AQLMathIRVanillaFuncUtility::bkOption(strPrem, strBuy, tmpOpType, fwdFX, strikeVec[3], vol25DLVec[i], dDF, asofDate, date);
 			// 10Delta Low
 			tmpOpType = opType10DLVec[i];
-			premVec[4] = LAMathIRVanillaFuncUtility::bkOption(strPrem, strBuy, tmpOpType, fwdFX, strikeVec[4], vol10DLVec[i], dDF, asofDate, date);
+			premVec[4] = AQLMathIRVanillaFuncUtility::bkOption(strPrem, strBuy, tmpOpType, fwdFX, strikeVec[4], vol10DLVec[i], dDF, asofDate, date);
 			//set as data
 			mGen->AQLObject::add(PRICING_DATA_OPTIONPREMIUMS, new AQLDataDoubles(premVec));
 
@@ -1265,7 +1265,7 @@ LACalibrateSZ::doCalibrate()
 		fwdVec[i] = mSpotRate * mDFRatios[i];
 	}
 	
-	AQLFunctionBase *method = new LAMathVolFuncSZDD(mTimeGrid, fwdVec, betaVec, thetaVec, kappaVec, epsilonVec, fxccy, v0Vec);
+	AQLFunctionBase *method = new AQLMathVolFuncSZDD(mTimeGrid, fwdVec, betaVec, thetaVec, kappaVec, epsilonVec, fxccy, v0Vec);
 
 	mpFunc->setRealFunction(*method);
 	mpFunc->setOn();
@@ -1352,8 +1352,8 @@ LACalibrateSZ::doCalibrate()
 						t_fwdVec.push_back(lineVec[6].trimLeft().trimRight().getDoubleValue());
 					}
 					// check DDL
-					LAMathVolFuncFX *t_funcFX = 0;
-					t_funcFX = new LAMathVolFuncSZDD(t_timeGrid, t_fwdVec, t_betaVec, t_thetaVec, t_kappaVec, t_epsilonVec, fxccy, t_volVec);
+					AQLMathVolFuncFX *t_funcFX = 0;
+					t_funcFX = new AQLMathVolFuncSZDD(t_timeGrid, t_fwdVec, t_betaVec, t_thetaVec, t_kappaVec, t_epsilonVec, fxccy, t_volVec);
 					mpFunc->setRealFunction(*t_funcFX);
 					delete t_funcFX;
 				}

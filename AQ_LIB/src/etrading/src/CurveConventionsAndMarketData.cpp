@@ -11,7 +11,7 @@
 #include "CurveConventionsAndMarketData.h"
 #include "ExceptionMacros.h"
 #include "CurveValidation.h"			        // Convert Dates to Terms and vice versa
-#include "LAMathInterpolationUtilities.h"		// Get Interpolation Values
+#include "AQLMathInterpolationUtilities.h"		// Get Interpolation Values
 #include "CurveUtilities.h"				        // DateFromTenor methods
 #include "LACurvePricingObject.h"	            // Methods to get the curve daycount conventions
 #include "AQLEnumConversion.h"		            // Methods to convert enum values to legacy enums

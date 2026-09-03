@@ -20,16 +20,16 @@
 #include "AQLBasic.h"
 #include "AQLAlgorithm.h"
 #include "AQLPriceDataDayCount.h"
-#include "LAPriceCFGenUtility.h"
+#include "AQLPriceCFGenUtility.h"
 #include "LADateHelpers.h"
 #include "AQLDataReference.h"
-#include "LAAnalyticFormula.h"
-#include "LABlackScholesCalc.h"
+#include "AQLAnalyticFormula.h"
+#include "AQLBlackScholesCalc.h"
 #include "AQLDataProcedure.h"
 #include "AQLCoreComponentManager.h"
 #include "AQLPriceDataConvention.h"
 #include "AQLDataMultiReference.h"
-#include "LAMathDateUtilities.h"	// for getStubDateAndType
+#include "AQLMathDateUtilities.h"	// for getStubDateAndType
 #include "ExceptionMacros.h"		// AQ_REQUIRE, AQ_THROW
 
 #include <cmath>
@@ -201,8 +201,8 @@ namespace etrading
     }
 
     // Generate a Date Schedule with appropriate use of stubs
-	// Note that there is a duplicate method LAMathDateUtilities::generateSchedule
-	// Default Short/Long Start is determined by LAMathDateUtilities::getStubDateAndType
+	// Note that there is a duplicate method AQLMathDateUtilities::generateSchedule
+	// Default Short/Long Start is determined by AQLMathDateUtilities::getStubDateAndType
     DateVector LADateScheduleHelpers::generateSchedule(const AQLDate& unadjustedStart,
 													   const AQLDate& unadjustedEnd,
 													   AQLString& data_frequency,
@@ -280,7 +280,7 @@ namespace etrading
 		if (stubType == NULL && firstStubDate == NULL && lastStubDate == NULL)
 		{
 			// Market Default to Short Start Stub, however if Stub Days is < 7 Days the Default becomes Long Start Stub
-			stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::NONE_STUBTYPE );
+			stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::NONE_STUBTYPE );
 
 			isStartRoll		= stubInfo.isStartRoll_;
 			pFirstStubDate	= &stubInfo.stubDate_;
@@ -298,7 +298,7 @@ namespace etrading
 				if ( firstStubDate == NULL || lastStubDate == NULL )
 				{ 
 					// Market Default to Short Start Stub, however if Stub Days is < 7 Days the Default becomes Long Start Stub
-					stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::NONE_STUBTYPE );
+					stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::NONE_STUBTYPE );
 				
 					isStartRoll		= stubInfo.isStartRoll_;
 					pFirstStubDate	= &stubInfo.stubDate_;
@@ -309,7 +309,7 @@ namespace etrading
             {
 				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
                 
-				stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_START_STUBTYPE );
+				stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_START_STUBTYPE );
                 
 				isStartRoll		= stubInfo.isStartRoll_;
                 pFirstStubDate	= &stubInfo.stubDate_;
@@ -319,7 +319,7 @@ namespace etrading
             {
 				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
-                stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_START_STUBTYPE );
+                stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_START_STUBTYPE );
                 
 				isStartRoll		= stubInfo.isStartRoll_;
                 pFirstStubDate	= &stubInfo.stubDate_;
@@ -329,7 +329,7 @@ namespace etrading
             {
 				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
-                stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_END_STUBTYPE );
+                stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_END_STUBTYPE );
 
                 isStartRoll		= stubInfo.isStartRoll_;
                 pFirstStubDate	= NULL;
@@ -339,7 +339,7 @@ namespace etrading
             {
 				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
-                stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_END_STUBTYPE );
+                stubInfo = AQLMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_END_STUBTYPE );
 
                 isStartRoll		= stubInfo.isStartRoll_;
                 pFirstStubDate	= NULL;
@@ -420,7 +420,7 @@ namespace etrading
         AQLPriceDataConvention convention(daycount.getDayCount(), CONT); // Continous compounding rate convention
 
         AQLDate ret = fromdate;
-        double fullDay = LAPriceCFGenUtility::round(convention.getDayTerm(ret, termy), RoundFunction::ROUND, 0);
+        double fullDay = AQLPriceCFGenUtility::round(convention.getDayTerm(ret, termy), RoundFunction::ROUND, 0);
         ret.addDays(fullDay);
 
         return ret;

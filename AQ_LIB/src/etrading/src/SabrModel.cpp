@@ -6,9 +6,9 @@
 #include "ObjectUtilities.h"
 #include "DataUtilities.h"
 #include "LADateScheduleHelpers.h"
-#include "LAMathSwaptionVolUtility.h"
-#include "LAMathDateCalculations.h"
-#include "LAMathDateUtilities.h"
+#include "AQLMathSwaptionVolUtility.h"
+#include "AQLMathDateCalculations.h"
+#include "AQLMathDateUtilities.h"
 
 namespace etrading
 {
@@ -142,20 +142,20 @@ namespace etrading
 		{
 			const AQLDate expiryDate = etrading::getDateFromTenor(boost::assign::list_of(asOfDate_), expiryStrVector[i], businessDayAdjustment_, calendar_, "")[0];
 
-			//TODO: the core function use LAMathDateUtilities::getTerm() which has different result from etrading::getYearFraction().
-			// We use the same code for now, as it is also used in LAMathSwaptionVolUtility::getExpiryPoint()
-			expiryTermVector_.push_back(LAMathDateUtilities::getTerm(asOfDate_, expiryDate, dayCountToUse, true));
+			//TODO: the core function use AQLMathDateUtilities::getTerm() which has different result from etrading::getYearFraction().
+			// We use the same code for now, as it is also used in AQLMathSwaptionVolUtility::getExpiryPoint()
+			expiryTermVector_.push_back(AQLMathDateUtilities::getTerm(asOfDate_, expiryDate, dayCountToUse, true));
 			//expiryTermVector_.push_back(etrading::getYearFraction(asOfDate_, expiryDate, dayCount_));
 		}
 
 		
 		//TODO: the core function use the following code to get year fractions of swap tenors, which has different result from etrading::getYearFraction().
-		// We use the same code for now, as it is also used in LAMathSwaptionVolUtility::getTenorPoint()
+		// We use the same code for now, as it is also used in AQLMathSwaptionVolUtility::getTenorPoint()
 		int y, m, d, w;
 		for (size_t i = 0; i < tenorSize; i++)
 		{
 			//This is the calc from core function, leave it for reference
-			LAMathDateCalculations::termStrtoYMDW(tenorStrVector[i], y, m, d, w);
+			AQLMathDateCalculations::termStrtoYMDW(tenorStrVector[i], y, m, d, w);
 			tenorTermVector_.push_back(static_cast<double> (y) + static_cast<double> (m) / 12.0);
 
 			//const AQLDate tenorDate = etrading::getDateFromTenor(boost::assign::list_of(asOfDate_), tenorStrVector[i], businessDayAdjustment_, calendar_, "")[0];
@@ -464,7 +464,7 @@ namespace etrading
 		if (calibrateSabr)
 		{
 			AQLString erroMsg;
-			LAMathSwaptionVolUtility::calibrateSABRMatrix(alphaMat,
+			AQLMathSwaptionVolUtility::calibrateSABRMatrix(alphaMat,
 				betaMat,
 				nuMat,
 				rhoMat,
@@ -604,15 +604,15 @@ namespace etrading
 		AQLPriceDataCalendar fixCal;
 		fixCal.convertFromString(calendar_);
 
-		double expiryTerm = LAMathSwaptionVolUtility::getExpiryPoint(expiry, asOfDate_, paySlr, fixCal);
-		double tenorTerm = LAMathSwaptionVolUtility::getTenorPoint(tenor);
+		double expiryTerm = AQLMathSwaptionVolUtility::getExpiryPoint(expiry, asOfDate_, paySlr, fixCal);
+		double tenorTerm = AQLMathSwaptionVolUtility::getTenorPoint(tenor);
 
 		double alpha = getParam(expiryTerm, tenorTerm, ALPHA_SABR);
 		double beta = getParam(expiryTerm, tenorTerm, BETA_SABR);
 		double rho = getParam(expiryTerm, tenorTerm, RHO_SABR); 
 		double nu = getParam(expiryTerm, tenorTerm, NU_SABR);
 
-		double vol = LAMathSwaptionVolUtility::calcSABRVol(alpha, beta, nu, rho, expiryTerm, strike, forward, forwardShift_, toString(approxMethod_), isLognormal_);
+		double vol = AQLMathSwaptionVolUtility::calcSABRVol(alpha, beta, nu, rho, expiryTerm, strike, forward, forwardShift_, toString(approxMethod_), isLognormal_);
 
 		return vol;
 
@@ -623,13 +623,13 @@ namespace etrading
 		switch (paramName)
 		{
 		case ALPHA_SABR:
-			return LAMathSwaptionVolUtility::calcSABRParam(alphaMatrix_, expiryTerm, tenorTerm, expiryTermVector_, tenorTermVector_);
+			return AQLMathSwaptionVolUtility::calcSABRParam(alphaMatrix_, expiryTerm, tenorTerm, expiryTermVector_, tenorTermVector_);
 		case BETA_SABR:
-			return LAMathSwaptionVolUtility::calcSABRParam(betaMatrix_, expiryTerm, tenorTerm, expiryTermVector_, tenorTermVector_);
+			return AQLMathSwaptionVolUtility::calcSABRParam(betaMatrix_, expiryTerm, tenorTerm, expiryTermVector_, tenorTermVector_);
 		case RHO_SABR:
-			return LAMathSwaptionVolUtility::calcSABRParam(rhoMatrix_, expiryTerm, tenorTerm, expiryTermVector_, tenorTermVector_);
+			return AQLMathSwaptionVolUtility::calcSABRParam(rhoMatrix_, expiryTerm, tenorTerm, expiryTermVector_, tenorTermVector_);
 		case NU_SABR:
-			return LAMathSwaptionVolUtility::calcSABRParam(nuMatrix_, expiryTerm, tenorTerm, expiryTermVector_, tenorTermVector_);
+			return AQLMathSwaptionVolUtility::calcSABRParam(nuMatrix_, expiryTerm, tenorTerm, expiryTermVector_, tenorTermVector_);
 		default:
 			AQ_THROW("Only suport parameters: ALPHA, BETA, RHO, NU.");
 		}
@@ -645,8 +645,8 @@ namespace etrading
 		AQLPriceDataCalendar fixCal;
 		fixCal.convertFromString(calendar_);
 
-		double expiryTerm = LAMathSwaptionVolUtility::getExpiryPoint(expiry, asOfDate_, paySlr, fixCal);
-		double tenorTerm = LAMathSwaptionVolUtility::getTenorPoint(tenor);
+		double expiryTerm = AQLMathSwaptionVolUtility::getExpiryPoint(expiry, asOfDate_, paySlr, fixCal);
+		double tenorTerm = AQLMathSwaptionVolUtility::getTenorPoint(tenor);
 
 		return getParam(expiryTerm, tenorTerm, paramName);
 	}

@@ -250,7 +250,7 @@ LARiskConfigurationFXDeltaEx1::getCoefficientRatio1(const AQLString &fx, AQLObje
 	if ((shiftType == RISK_SHIFTTYPE_RATIO) && isAdjust)
 	{
 		// set target name
-		LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+		AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 		
 		// search shift target currency(foreign currency)
 		AQLStringVector ccys;

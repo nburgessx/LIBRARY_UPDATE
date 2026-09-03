@@ -21,21 +21,21 @@
 #include "LACalibrateModelFXVannaVolga.h"
 #include "AQLFunctionBase.h"
 #include "AQLFunctionManager.h"
-#include "LAMathVolFuncBase.h"
+#include "AQLMathVolFuncBase.h"
 #include "AQLPriceDataInterpolation.h"
-#include "LAPriceDriftFX.h"
-#include "LARatesSpotSDE.h"
+#include "AQLPriceDriftFX.h"
+#include "AQLRatesSpotSDE.h"
 #include "LACalibrateModelFX.h"
 #include "LADefinitionsPtberg.h"
 #include "LAMarketData.h"
-#include "LAMathVolFuncFX.h"
-#include "LAMathVolatility.h"
+#include "AQLMathVolFuncFX.h"
+#include "AQLMathVolatility.h"
 #include "LAScenarioConfiguration.h"
 #include "LACalibrateVolatilityFXVannaVolga.h"
 #include "LADealUtils.h"
 #include "LAStaticData.h"
 #include "AQLConstant.h"
-#include "LAPriceFXVolatility.h"
+#include "AQLPriceFXVolatility.h"
 #include "LACalibrationParametersFXVannaVolga.h"
 #include "LACalibrateFXVannaVolga.h"
 #include "LACalibrationFunc.h"
@@ -67,7 +67,7 @@ LACalibrateModelFXVannaVolga::~LACalibrateModelFXVannaVolga(void)
 	@param[in] fx
 	@param[in] dataInstance
 */
-LARatesSDEBase *
+AQLRatesSDEBase *
 LACalibrateModelFXVannaVolga::createSDEInstance(const AQLString &fx, AQLDataInstance &dataInstance) const
 {
 	return 0;
@@ -106,7 +106,7 @@ LACalibrateModelFXVannaVolga::isLJ(const AQLString &fx) const
 	@param[out] sde
 */
 void
-LACalibrateModelFXVannaVolga::setVolatility(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVannaVolga::setVolatility(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -122,7 +122,7 @@ LACalibrateModelFXVannaVolga::setVolatility(const AQLString &fx, LARatesSDEBase 
 
 */
 void
-LACalibrateModelFXVannaVolga::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVannaVolga::setDrift(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -138,7 +138,7 @@ LACalibrateModelFXVannaVolga::setDrift(const AQLString &fx, LARatesSDEBase &sde)
 
 */
 void
-LACalibrateModelFXVannaVolga::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVannaVolga::setIntegralFunction(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -152,7 +152,7 @@ LACalibrateModelFXVannaVolga::setIntegralFunction(const AQLString &fx, LARatesSD
 	@param[out] sde
 */
 void
-LACalibrateModelFXVannaVolga::setOutputTemplate(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVannaVolga::setOutputTemplate(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -166,7 +166,7 @@ LACalibrateModelFXVannaVolga::setOutputTemplate(const AQLString &fx, LARatesSDEB
 	@param[out] sde
 */
 void
-LACalibrateModelFXVannaVolga::setInterpolationMethod(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelFXVannaVolga::setInterpolationMethod(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	fx;sde;
 	return;
@@ -208,7 +208,7 @@ LACalibrateModelFXVannaVolga::getVolType(const AQLString &fx) const
 	@param[out] dataInstance
 */
 void
-LACalibrateModelFXVannaVolga::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelFXVannaVolga::setUpVolFunc(const AQLString &fx, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	setUpVolEntity(fx,vol);
 	AQLStringVector ccys;
@@ -268,7 +268,7 @@ LACalibrateModelFXVannaVolga::setUpVolFunc(const AQLString &fx, LAMathVolatility
 	@param[out] dataInstance
 */
 void
-LACalibrateModelFXVannaVolga::setUpVolData(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelFXVannaVolga::setUpVolData(const AQLString &fx, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	fx;
 	vol;
@@ -284,7 +284,7 @@ LACalibrateModelFXVannaVolga::setUpVolData(const AQLString &fx, LAMathVolatility
 
 */
 void
-LACalibrateModelFXVannaVolga::setUpVolEntity(const AQLString &fx, LAMathVolatility &vol) const
+LACalibrateModelFXVannaVolga::setUpVolEntity(const AQLString &fx, AQLMathVolatility &vol) const
 {
 	// set interpolation
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);

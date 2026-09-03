@@ -16,7 +16,7 @@
 #include "ResultsProcessor.h"
 
 // etrading
-#include "LAMathDateUtilities.h"
+#include "AQLMathDateUtilities.h"
 #include "LADateScheduleHelpers.h"
 #include "LWOUtilities.h"
 #include "InflationCurve.h"
@@ -342,7 +342,7 @@ namespace google_test
 		{
 			const double calibrationValue	= boost::get<double>( calibrationResults[i][1] );
 			const int calibrationExcelDate	= boost::get<int>( calibrationResults[i][0] );
-			const AQLDate laggedDate = LAMathDateUtilities::getLADate( calibrationExcelDate );
+			const AQLDate laggedDate = AQLMathDateUtilities::getLADate( calibrationExcelDate );
 
 			const double interpolatedValue = inflationCurve->getMonthlyInflationIndexForLaggedDate( laggedDate );
 

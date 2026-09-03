@@ -52,16 +52,16 @@ public:
 
 protected:
 	// set path 
-	virtual  void setOutputTemplate(const AQLString &vola, LARatesSDEBase &sde)  const;
+	virtual  void setOutputTemplate(const AQLString &vola, AQLRatesSDEBase &sde)  const;
 	//==============================================
 	// set interpolation method 
-	virtual  void setInterpolationMethod(const AQLString &vola, LARatesSDEBase &sde) const;
+	virtual  void setInterpolationMethod(const AQLString &vola, AQLRatesSDEBase &sde) const;
 	//==============================================
 	// set numeraire 
-	virtual  void setNumeraire(const AQLString &vola, LARatesSDEBase &sde) const;
+	virtual  void setNumeraire(const AQLString &vola, AQLRatesSDEBase &sde) const;
 	//==============================================
 	// create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const AQLString &vola, AQLDataInstance &dataInstance) const;
+	virtual AQLRatesSDEBase *createSDEInstance(const AQLString &vola, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// get SDE data name
 	virtual AQLString getSDEAttrName(const AQLString &vola) const;

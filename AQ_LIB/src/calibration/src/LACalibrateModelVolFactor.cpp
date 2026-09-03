@@ -22,9 +22,9 @@
 #include "LACalibrateModelVolFactor.h"
 #include "AQLDataInstance.h"
 #include "AQLFunctionManager.h"
-#include "LARatesSpotSDE.h"
-#include "LARatesLJSpotSDE.h"
-#include "LARatesScalarLinearInterpolation.h"
+#include "AQLRatesSpotSDE.h"
+#include "AQLRatesLJSpotSDE.h"
+#include "AQLRatesScalarLinearInterpolation.h"
 #include "LACoreDataService.h"
 #include "LAMarketData.h"
 #include "LAStaticData.h"
@@ -57,7 +57,7 @@ LACalibrateModelVolFactor::~LACalibrateModelVolFactor(void)
 	@param[in] vola
 	@param[in] dataInstance
 */
-LARatesSDEBase *
+AQLRatesSDEBase *
 LACalibrateModelVolFactor::createSDEInstance(const AQLString &vola, AQLDataInstance &dataInstance) const
 {
 	(void)dataInstance;
@@ -65,11 +65,11 @@ LACalibrateModelVolFactor::createSDEInstance(const AQLString &vola, AQLDataInsta
 	// check LJ
 	if (isLJ(vola))
 	{
-		return new LARatesLJSpotSDE(type);
+		return new AQLRatesLJSpotSDE(type);
 	}
 	else
 	{
-		return new LARatesSpotSDE(type);
+		return new AQLRatesSpotSDE(type);
 	}
 }
 
@@ -83,7 +83,7 @@ LACalibrateModelVolFactor::createSDEInstance(const AQLString &vola, AQLDataInsta
 
 */
 void
-LACalibrateModelVolFactor::setNumeraire(const AQLString &vola, LARatesSDEBase &sde) const
+LACalibrateModelVolFactor::setNumeraire(const AQLString &vola, AQLRatesSDEBase &sde) const
 {
 	(void)vola;
 	(void)sde;
@@ -97,10 +97,10 @@ LACalibrateModelVolFactor::setNumeraire(const AQLString &vola, LARatesSDEBase &s
 	@param[out] sde
 */
 void
-LACalibrateModelVolFactor::setOutputTemplate(const AQLString &vola, LARatesSDEBase &sde) const
+LACalibrateModelVolFactor::setOutputTemplate(const AQLString &vola, AQLRatesSDEBase &sde) const
 {
 	(void)vola;
-	sde.setOutputTemplate(new LARatesPathElementScalar());
+	sde.setOutputTemplate(new AQLRatesPathElementScalar());
 }
 
 // 
@@ -111,10 +111,10 @@ LACalibrateModelVolFactor::setOutputTemplate(const AQLString &vola, LARatesSDEBa
 	@param[out] sde
 */
 void
-LACalibrateModelVolFactor::setInterpolationMethod(const AQLString &vola, LARatesSDEBase &sde) const
+LACalibrateModelVolFactor::setInterpolationMethod(const AQLString &vola, AQLRatesSDEBase &sde) const
 {
 	(void)vola;
-	sde.setInterpolationMethod(new LARatesScalarLinearInterpolation());
+	sde.setInterpolationMethod(new AQLRatesScalarLinearInterpolation());
 }
 
 // 

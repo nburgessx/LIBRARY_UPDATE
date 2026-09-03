@@ -166,7 +166,7 @@ void OISComponentCurve::initialise()
 	const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 	const AQLPriceDataCalendar& cal  = dynamic_cast<const AQLPriceDataCalendar&> ((data_swap[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 	const AQLPriceDataSlidingRule& sld  = dynamic_cast<const AQLPriceDataSlidingRule&> ((data_swap[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-	RateConvention rc = LAMathYieldCurve::setRC(SIMPLE);
+	RateConvention rc = AQLMathYieldCurve::setRC(SIMPLE);
 	AQLPriceDataConvention conv(dc.getDayCount(), rc);
 		
 	// Get shortterm_date
@@ -1407,7 +1407,7 @@ void OISComponentCurve::postProcessing(AQLObject& yieldCurveProEntity)
 
 		const AQLPriceDataDayCount& dc = dynamic_cast<const AQLPriceDataDayCount&> ((data_[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 		const AQLPriceDataCalendar& cal  = dynamic_cast<const AQLPriceDataCalendar&> ((data_[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
-		RateConvention rc = LAMathYieldCurve::setRC(SIMPLE);
+		RateConvention rc = AQLMathYieldCurve::setRC(SIMPLE);
 		AQLPriceDataConvention conv(dc.getDayCount(), rc);
 
 		if (size_on > 0 || size_tn > 0)
@@ -1419,7 +1419,7 @@ void OISComponentCurve::postProcessing(AQLObject& yieldCurveProEntity)
 				// from base date to tomorrow
 				rate_on = dynamic_cast<const AQLDataDouble&> ((data_on_[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 				const AQLPriceDataDayCount& dc_on = dynamic_cast<const AQLPriceDataDayCount&> ((data_on_[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-				RateConvention rc_on = LAMathYieldCurve::setRC(SIMPLE);
+				RateConvention rc_on = AQLMathYieldCurve::setRC(SIMPLE);
 				AQLPriceDataConvention conv_on(dc_on.getDayCount(), rc_on);
 			
 				date = cal.getBusinessDay(baseDate_, 1);
@@ -1435,7 +1435,7 @@ void OISComponentCurve::postProcessing(AQLObject& yieldCurveProEntity)
 				// from tomorrow to a day after
 				rate_tn = dynamic_cast<const AQLDataDouble&> ((data_tn_[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 				const AQLPriceDataDayCount& dc_tn = dynamic_cast<const AQLPriceDataDayCount&> ((data_tn_[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-				RateConvention rc_tn = LAMathYieldCurve::setRC(SIMPLE);
+				RateConvention rc_tn = AQLMathYieldCurve::setRC(SIMPLE);
 				AQLPriceDataConvention conv_tn(dc_tn.getDayCount(), rc_tn);
 			
 				AQLDate tempDate;

@@ -20,8 +20,8 @@
 #include "AQLDataReference.h"
 #include "AQLDataProcedure.h"
 #include "AQLDataMultiReference.h"
-#include "LAMathVolatility.h"
-#include "LAMathDateCalculations.h"
+#include "AQLMathVolatility.h"
+#include "AQLMathDateCalculations.h"
 #include "LAScenarioConfigurationVolatility.h"
 #include "LAMarketData.h"
 #include "LACalibrateVolatility.h"
@@ -60,7 +60,7 @@ vector<AQLObject *>
 LAScenarioConfigurationVolatility::createScenario(AQLDataInstance &dataInstance, const MAScenarioParam &param) const
 {
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
-	LAMathVolatility &b_vol = dynamic_cast<LAMathVolatility &>
+	AQLMathVolatility &b_vol = dynamic_cast<AQLMathVolatility &>
 		(objPool.getObject(param.targetName, ENCHKTYPE_ISDEFINED).get());
 
 	vector<AQLObject *> ret(0);
@@ -89,7 +89,7 @@ LAScenarioConfigurationVolatility::createScenario(AQLDataInstance &dataInstance,
 	@return vector<AQLObject *>
 */
 vector<AQLObject *>
-LAScenarioConfigurationVolatility::createParallelShiftVol(AQLDataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const
+LAScenarioConfigurationVolatility::createParallelShiftVol(AQLDataInstance &dataInstance, AQLMathVolatility &baseVol, const MAScenarioParam &param) const
 {
 	vector<AQLObject *> ret(0);
 	AQLString inputType = param.inputType;
@@ -99,20 +99,20 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(AQLDataInstance &dataI
 
 	bool is_vol_clone = false;
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
-	LAMathVolatility *vol = 0;
+	AQLMathVolatility *vol = 0;
 	AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 	if (!objHolder.isDefined())
 	{
-		vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
+		vol = dynamic_cast<AQLMathVolatility *>(baseVol.clone());
 		vol->getName() = name;
 		is_vol_clone = true;
 	}
 	else
 	{
-		vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
+		vol = &dynamic_cast<AQLMathVolatility &>(objHolder.get());
 	}
 
-	// vol push back, only one LAMathVolatility is created
+	// vol push back, only one AQLMathVolatility is created
 	ret.push_back(vol);
 	//get volatility creator
 	LACalibrateVolatility *volCreator = LACalibrateVolatilityManager::getInstance()->createVolCreator(param.model);
@@ -450,7 +450,7 @@ LAScenarioConfigurationVolatility::createParallelShiftVol(AQLDataInstance &dataI
 	@return vector<AQLObject *>
 */
 vector<AQLObject *>
-LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInstance, LAMathVolatility &baseVol, const MAScenarioParam &param) const
+LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInstance, AQLMathVolatility &baseVol, const MAScenarioParam &param) const
 {
 	vector<AQLObject *> ret(0);
 	AQLString inputType = param.inputType;
@@ -506,16 +506,16 @@ LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInsta
 				}
 
 				AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
-				LAMathVolatility *vol = 0;
+				AQLMathVolatility *vol = 0;
 				AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 				if (!objHolder.isDefined())
 				{
-					vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
+					vol = dynamic_cast<AQLMathVolatility *>(baseVol.clone());
 					vol->getName() = name;
 				}
 				else
 				{
-					vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
+					vol = &dynamic_cast<AQLMathVolatility &>(objHolder.get());
 				}
 				
 				vol->setVolatility(grid_t, volMtx);
@@ -557,17 +557,17 @@ LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInsta
 
 					bool is_vol_clone = false;
 					AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
-					LAMathVolatility *vol = 0;
+					AQLMathVolatility *vol = 0;
 					AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 					if (!objHolder.isDefined())
 					{
-						vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
+						vol = dynamic_cast<AQLMathVolatility *>(baseVol.clone());
 						vol->getName() = name;
 						is_vol_clone = true;
 					}
 					else
 					{
-						vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
+						vol = &dynamic_cast<AQLMathVolatility &>(objHolder.get());
 					}
 
 					DoubleMatrix volMtx;
@@ -628,16 +628,16 @@ LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInsta
 				for (unsigned int i = 0; i < size_g; ++i)
 				{
 					AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
-					LAMathVolatility *vol = 0;
+					AQLMathVolatility *vol = 0;
 					AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 					if (!objHolder.isDefined())
 					{
-						vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
+						vol = dynamic_cast<AQLMathVolatility *>(baseVol.clone());
 						vol->getName() = name;
 					}
 					else
 					{
-						vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
+						vol = &dynamic_cast<AQLMathVolatility &>(objHolder.get());
 					}
 					vector<AQLFunctionBase *> volFuncVec;
 					volCreator->createVolatility(volFuncVec, param.gridFile[i], &param, &objPool, i);
@@ -677,16 +677,16 @@ LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInsta
 			for (unsigned int i = 0; i < size_g; ++i)
 			{
 				AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
-				LAMathVolatility *vol = 0;
+				AQLMathVolatility *vol = 0;
 				AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 				if (!objHolder.isDefined())
 				{
-					vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
+					vol = dynamic_cast<AQLMathVolatility *>(baseVol.clone());
 					vol->getName() = name;
 				}
 				else
 				{
-					vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
+					vol = &dynamic_cast<AQLMathVolatility &>(objHolder.get());
 				}
 				AQLFunctionBase *volFunc;
 				if (isBucket)
@@ -760,16 +760,16 @@ LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInsta
 				}
 
 				AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
-				LAMathVolatility *vol = 0;
+				AQLMathVolatility *vol = 0;
 				AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 				if (!objHolder.isDefined())
 				{
-					vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
+					vol = dynamic_cast<AQLMathVolatility *>(baseVol.clone());
 					vol->getName() = name;
 				}
 				else
 				{
-					vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
+					vol = &dynamic_cast<AQLMathVolatility &>(objHolder.get());
 				}
 				
 				vol->setVolatility(grid_t, volMtx);
@@ -802,17 +802,17 @@ LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInsta
 
 					bool is_vol_clone = false;
 					AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
-					LAMathVolatility *vol = 0;
+					AQLMathVolatility *vol = 0;
 					AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 					if (!objHolder.isDefined())
 					{
-						vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
+						vol = dynamic_cast<AQLMathVolatility *>(baseVol.clone());
 						vol->getName() = name;
 						is_vol_clone = true;
 					}
 					else
 					{
-						vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
+						vol = &dynamic_cast<AQLMathVolatility &>(objHolder.get());
 					}
 
 					DoubleMatrix volMtx;
@@ -896,16 +896,16 @@ LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInsta
 			for (unsigned int i = 0; i < size_g; ++i)
 			{
 				AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
-				LAMathVolatility *vol = 0;
+				AQLMathVolatility *vol = 0;
 				AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 				if (!objHolder.isDefined())
 				{
-					vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
+					vol = dynamic_cast<AQLMathVolatility *>(baseVol.clone());
 					vol->getName() = name;
 				}
 				else
 				{
-					vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
+					vol = &dynamic_cast<AQLMathVolatility &>(objHolder.get());
 				}
 				vector<AQLFunctionBase *> volFuncVec;
 				volCreator->createVolatility(volFuncVec, param.gridFile[i], &param, &objPool, i);
@@ -920,16 +920,16 @@ LAScenarioConfigurationVolatility::createGridShiftVol(AQLDataInstance &dataInsta
 			for (unsigned int i = 0; i < size_g; ++i)
 			{
 				AQLString name = param.targetName + "_" + param.calcType + "_" + param.targetCurveType + "_Grid_" + AQLString(static_cast<int>(i));
-				LAMathVolatility *vol = 0;
+				AQLMathVolatility *vol = 0;
 				AQLObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
 				if (!objHolder.isDefined())
 				{
-					vol = dynamic_cast<LAMathVolatility *>(baseVol.clone());
+					vol = dynamic_cast<AQLMathVolatility *>(baseVol.clone());
 					vol->getName() = name;
 				}
 				else
 				{
-					vol = &dynamic_cast<LAMathVolatility &>(objHolder.get());
+					vol = &dynamic_cast<AQLMathVolatility &>(objHolder.get());
 				}
 				AQLFunctionBase *volFunc = volCreator->createVolatility(param.gridFile[i], &param, &objPool, i);
 				vol->setVolatility(volFunc);
@@ -1008,7 +1008,7 @@ LAScenarioConfigurationVolatility::getCoordinatesMatrix(const AQLStringVector &t
 		matrix[i].resize(COORDINATESNUM);
 		for (unsigned int j = 0; j < COORDINATESNUM; ++j)
 		{
-			matrix[i][j] = dayCount.getTerm(asOfDate, LAMathDateCalculations::getDate(asOfDate, cdns[j], true));
+			matrix[i][j] = dayCount.getTerm(asOfDate, AQLMathDateCalculations::getDate(asOfDate, cdns[j], true));
 		}
 	}
 

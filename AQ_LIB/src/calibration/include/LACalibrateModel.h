@@ -18,15 +18,15 @@
 #endif
 
 //#include "AQLString.h"
-#include "LARatesSDEBase.h"
+#include "AQLRatesSDEBase.h"
 
 
 class AQLString;
-class LARatesSDEBase;
+class AQLRatesSDEBase;
 class AQLDataInstance;
-class LARatesCurveLogLinearInterpolation;
-class LAMathCorrelation;
-class LAMathVolatility;
+class AQLRatesCurveLogLinearInterpolation;
+class AQLMathCorrelation;
+class AQLMathVolatility;
 class LAStaticData;
 
 //===================== Class Declare LACalibrateModel==================================
@@ -78,37 +78,37 @@ protected:
 	virtual bool isLJ(const AQLString &key) const = 0;
 	//==============================================
 	// set volatility 
-	virtual  void setVolatility(const AQLString &key, LARatesSDEBase &sde)  const = 0;	
+	virtual  void setVolatility(const AQLString &key, AQLRatesSDEBase &sde)  const = 0;	
 	//==============================================
 	// set drift 
-	virtual  void setDrift(const AQLString &key, LARatesSDEBase &sde)  const = 0;
+	virtual  void setDrift(const AQLString &key, AQLRatesSDEBase &sde)  const = 0;
 	//==============================================
 	// set numeraire 
-	virtual  void setNumeraire(const AQLString &key, LARatesSDEBase &sde)  const = 0;
+	virtual  void setNumeraire(const AQLString &key, AQLRatesSDEBase &sde)  const = 0;
 	//==============================================
 	// set path 
-	virtual  void setOutputTemplate(const AQLString &key, LARatesSDEBase &sde)  const  = 0;
+	virtual  void setOutputTemplate(const AQLString &key, AQLRatesSDEBase &sde)  const  = 0;
 	//==============================================
 	// set integralfunction 
-	virtual  void setIntegralFunction(const AQLString &key, LARatesSDEBase &sde)  const = 0;
+	virtual  void setIntegralFunction(const AQLString &key, AQLRatesSDEBase &sde)  const = 0;
 	//==============================================
 	// set interpolation method 
-	virtual  void setInterpolationMethod(const AQLString &key, LARatesSDEBase &sde) const = 0;
+	virtual  void setInterpolationMethod(const AQLString &key, AQLRatesSDEBase &sde) const = 0;
 	//==============================================
 	// get function master regist name 
 	virtual AQLString getFunctionMasterResistName(const AQLString &key) const = 0;
 	//==============================================
 	// get create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const AQLString &key, AQLDataInstance &dataInstance) const = 0;
+	virtual AQLRatesSDEBase *createSDEInstance(const AQLString &key, AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// setup vol type
 	virtual AQLString getVolType(const AQLString &key) const = 0;
 	//==============================================
 	// setup vol data
-	virtual void setUpVolData(const AQLString &key, LAMathVolatility &vol, AQLDataInstance &dataInstance) const = 0;
+	virtual void setUpVolData(const AQLString &key, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// setup vol method
-	virtual void setUpVolFunc(const AQLString &key,LAMathVolatility &vol, AQLDataInstance &dataInstance) const = 0;
+	virtual void setUpVolFunc(const AQLString &key,AQLMathVolatility &vol, AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	// get sde function name
 	virtual AQLString getSDEAttrName(const AQLString &key) const = 0;

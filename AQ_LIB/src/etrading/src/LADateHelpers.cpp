@@ -22,7 +22,7 @@
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
 #include "AQLPriceDataDayCount.h"
-#include "LAMathFXUtility.h"
+#include "AQLMathFXUtility.h"
 #include "AQLBasic.h"
 #include "AQLAlgorithm.h"
 #include "ExceptionMacros.h"
@@ -1150,12 +1150,12 @@ namespace etrading
 		    AQLStringVector curs(tempStr2.toToken('/'));
 
 		    if(curs[0] == "USD")
-			    ret = LAMathFXUtility::getSpotDate_IncludedUSD(curs[0],basedate,tempStr,"NyB",spotlag);
+			    ret = AQLMathFXUtility::getSpotDate_IncludedUSD(curs[0],basedate,tempStr,"NyB",spotlag);
 		    else if(curs[1] == "USD")
-			    ret = LAMathFXUtility::getSpotDate_IncludedUSD(curs[1],basedate,tempStr,"NyB",spotlag);
+			    ret = AQLMathFXUtility::getSpotDate_IncludedUSD(curs[1],basedate,tempStr,"NyB",spotlag);
 		    else
 			    // cross USD FX
-			    ret = LAMathFXUtility::getSpotDate_IncludedUSD(tempStr2,basedate,tempStr,"NyB",spotlag);
+			    ret = AQLMathFXUtility::getSpotDate_IncludedUSD(tempStr2,basedate,tempStr,"NyB",spotlag);
 	    }
 	    return ret;
     }
@@ -1194,7 +1194,7 @@ namespace etrading
 	    typedef vector<AQLDate> Schedule;
 	    typedef Schedule::const_iterator cIter;
 
-	    const Schedule& cbDates = LAMathCentralBank::meetingSchedule(cb);
+	    const Schedule& cbDates = AQLMathCentralBank::meetingSchedule(cb);
 
 	    cIter it = std::lower_bound(cbDates.begin(), cbDates.end(), baseDate);
 
@@ -1314,7 +1314,7 @@ namespace etrading
     }
 
     // Return the frequency in months for comparing two frequencies, not for accurate calculations
-	// *** Duplicate method in LAMathDateCalculations.cpp ***
+	// *** Duplicate method in AQLMathDateCalculations.cpp ***
     double LADateHelpers::getPeriodFrequencyInMonths(const AQLString& freq)
     {
 	    double frequencyInMonths;

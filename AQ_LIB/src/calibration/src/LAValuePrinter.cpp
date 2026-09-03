@@ -32,13 +32,13 @@
 #include "AQLDataVector.h"
 #include "AQLDataMultiReference.h"
 #include "AQLDataReference.h"
-#include "LAMathDateCalculations.h"
-#include "LAPricePortfolioValue.h"
-#include "LAPriceTradeValue.h"
-#include "LAMathPathEntity.h"
+#include "AQLMathDateCalculations.h"
+#include "AQLPricePortfolioValue.h"
+#include "AQLPriceTradeValue.h"
+#include "AQLMathPathEntity.h"
 #include "AQLPriceDataDayCount.h"
 #include "AQLMathValuableEntity.h"
-#include "LAPriceAccruedInterest.h"
+#include "AQLPriceAccruedInterest.h"
 #include "LAObjectConfiguration.h"
 #include "LADefinitions.h"
 #include "LADefinitionsRisk.h"
@@ -46,11 +46,11 @@
 #include "LAStaticData.h"
 #include "LAStaticDataManager.h"
 #include "LAMarketData.h"
-#include "LAPriceLSMCTradeValue.h"
+#include "AQLPriceLSMCTradeValue.h"
 #include "LALogManager.h"
 #include "LALogger.h"
-#include "LALinearRatesOptionValue.h"
-#include "LAPriceConvergenceValue.h"
+#include "AQLLinearRatesOptionValue.h"
+#include "AQLPriceConvergenceValue.h"
 #include "LAFileAccessor.h"
 #include "AQLDataMatrix.h"
 
@@ -2969,7 +2969,7 @@ MAValuePrinter::changeSemiAnalyticResult(AQLDataInstance& dataInstance,const AQL
 		AQLString keyccy = keyvec[4];
 		keyccy.toUpper();
 		AQLString proName = LAMarketData::getBaseYieldProName(keyccy);
-		LAMathYieldCurvePro& yldpro = dynamic_cast<LAMathYieldCurvePro &>(dataInstance.getObjectPool().getObject(proName, ENCHKTYPE_ISDEFINED).get());
+		AQLMathYieldCurvePro& yldpro = dynamic_cast<AQLMathYieldCurvePro &>(dataInstance.getObjectPool().getObject(proName, ENCHKTYPE_ISDEFINED).get());
 
 		AQLString curveType = keyvec[3];
 		AQLStringVector marketterms;

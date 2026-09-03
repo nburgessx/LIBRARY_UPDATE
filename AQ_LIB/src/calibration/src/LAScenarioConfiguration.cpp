@@ -30,9 +30,9 @@
 #include "AQLDataReference.h"
 #include "AQLDataProcedure.h"
 #include "AQLDataMultiReference.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
-#include "LAPriceArbFreeGenerator.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
+#include "AQLPriceArbFreeGenerator.h"
 #include "LAScenarioConfigurationYieldCurve.h"
 #include "LAMarketData.h"
 #include "AQLBasic.h"
@@ -58,7 +58,7 @@ LAScenarioConfiguration::createScenarioForeignYield(AQLDataInstance &dataInstanc
 	// get yield
 	AQLString bYieldName = param.targetName;
 	
-	const LAMathYieldCurve &bYield = dynamic_cast<const LAMathYieldCurve &>
+	const AQLMathYieldCurve &bYield = dynamic_cast<const AQLMathYieldCurve &>
 					(objPool.getObject(bYieldName, ENCHKTYPE_ISDEFINED).get());
 
 	// get yield data
@@ -67,7 +67,7 @@ LAScenarioConfiguration::createScenarioForeignYield(AQLDataInstance &dataInstanc
 						(bYieldData.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 
 	// get yield data pro
-	LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &bYieldPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get());
 	const AQLString& bFYieldDataName = bYieldPro.getForeignYieldData().convertToString();
 
@@ -129,17 +129,17 @@ LAScenarioConfiguration::createScenarioForeignYield(AQLDataInstance &dataInstanc
 			cYieldData = &objHolder.get();
 		}
 
-		LAMathYieldCurve *cYield = 0;
+		AQLMathYieldCurve *cYield = 0;
 		const AQLString cYieldName = bYieldName + suffix; 
 		objHolder = objPool.getObject(cYieldName, ENCHKTYPE_NOCHECK);
 		if (!objHolder.isDefined())
 		{
-			cYield = dynamic_cast<LAMathYieldCurve *>(bYield.clone());
+			cYield = dynamic_cast<AQLMathYieldCurve *>(bYield.clone());
 			cYield->getName().set(cYieldName);
 		}
 		else
 		{
-			cYield = &dynamic_cast<LAMathYieldCurve &>(objHolder.get());
+			cYield = &dynamic_cast<AQLMathYieldCurve &>(objHolder.get());
 		}
 	
 		// set yield data yield curve pro and yield curve
@@ -223,7 +223,7 @@ LAScenarioConfiguration::createScenarioCollateralYield(AQLDataInstance &dataInst
 	// get yield
 	AQLString bYieldName = param.targetName;
 	
-	const LAMathYieldCurve &bYield = dynamic_cast<const LAMathYieldCurve &>
+	const AQLMathYieldCurve &bYield = dynamic_cast<const AQLMathYieldCurve &>
 					(objPool.getObject(bYieldName, ENCHKTYPE_ISDEFINED).get());
 
 	// get yield data
@@ -232,7 +232,7 @@ LAScenarioConfiguration::createScenarioCollateralYield(AQLDataInstance &dataInst
 						(bYieldData.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 
 	// get yield data pro
-	LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &bYieldPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get());
     const AQLString& bCYieldDataName = bYieldPro.getColYieldData().convertToString();
 
@@ -273,18 +273,18 @@ LAScenarioConfiguration::createScenarioCollateralYield(AQLDataInstance &dataInst
 		}
 
 		bool isExist = false;
-		LAMathYieldCurve *cYield = 0;
+		AQLMathYieldCurve *cYield = 0;
 		const AQLString cYieldName = bYieldName + suffix; 
 		objHolder = objPool.getObject(cYieldName, ENCHKTYPE_NOCHECK);
 		if (!objHolder.isDefined())
 		{
-			cYield = dynamic_cast<LAMathYieldCurve *>(bYield.clone());
+			cYield = dynamic_cast<AQLMathYieldCurve *>(bYield.clone());
 			cYield->getName().set(cYieldName);
 		}
 		else
 		{
 			isExist = true;
-			cYield = &dynamic_cast<LAMathYieldCurve &>(objHolder.get());
+			cYield = &dynamic_cast<AQLMathYieldCurve &>(objHolder.get());
 		}
 	
 		// set yield data yield curve pro and yield curve
@@ -314,7 +314,7 @@ LAScenarioConfiguration::createScenarioCollateralYield(AQLDataInstance &dataInst
 }
 
 void
-LAScenarioConfiguration::dataoutCurve(AQLDataInstance &dataInstance, const LAMathYieldCurvePro& yieldCurvePro, const vector<AQLObject *>& ret) const
+LAScenarioConfiguration::dataoutCurve(AQLDataInstance &dataInstance, const AQLMathYieldCurvePro& yieldCurvePro, const vector<AQLObject *>& ret) const
 {
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	dataInstance.getReferencePool().completeDependency();
@@ -325,7 +325,7 @@ LAScenarioConfiguration::dataoutCurve(AQLDataInstance &dataInstance, const LAMat
 	ofstream fout;
 	for (unsigned int i = 0; i < yieldSize; ++i)
 	{
-		const AQLDataReference &yd = dynamic_cast<const LAMathYieldCurve *>(ret[i])->getYieldData();
+		const AQLDataReference &yd = dynamic_cast<const AQLMathYieldCurve *>(ret[i])->getYieldData();
 		AQLString ydName = yd.convertToString();
 		ydName.exchange("\"","");
 		AQLObjectHolder ydHolder = objPool.getObject(ydName, ENCHKTYPE_ISDEFINED);
@@ -427,7 +427,7 @@ LAScenarioConfiguration::createScenarioExtraFwdFXConstCurveForFXDelta(AQLDataIns
 	//////////////////////////////////////////////////
 	// get yield
 	AQLString bYieldName = param.targetName;
-	const LAMathYieldCurve &bYield = dynamic_cast<const LAMathYieldCurve &>
+	const AQLMathYieldCurve &bYield = dynamic_cast<const AQLMathYieldCurve &>
 					(objPool.getObject(bYieldName, ENCHKTYPE_ISDEFINED).get());
 
 	// get yield data
@@ -436,7 +436,7 @@ LAScenarioConfiguration::createScenarioExtraFwdFXConstCurveForFXDelta(AQLDataIns
 						(bYieldData.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 
 	// get yield data pro
-	LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &bYieldPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get());
     const AQLString& bCYieldDataName = bYieldPro.getColYieldData().convertToString();
 
@@ -470,18 +470,18 @@ LAScenarioConfiguration::createScenarioExtraFwdFXConstCurveForFXDelta(AQLDataIns
 		}
 
 		bool isExist = false;
-		LAMathYieldCurve *cYield = 0;
+		AQLMathYieldCurve *cYield = 0;
 		const AQLString cYieldName = bYieldName + suffix; 
 		objHolder = objPool.getObject(cYieldName, ENCHKTYPE_NOCHECK);
 		if (!objHolder.isDefined())
 		{
-			cYield = dynamic_cast<LAMathYieldCurve *>(bYield.clone());
+			cYield = dynamic_cast<AQLMathYieldCurve *>(bYield.clone());
 			cYield->getName().set(cYieldName);
 		}
 		else
 		{
 			isExist = true;
-			cYield = &dynamic_cast<LAMathYieldCurve &>(objHolder.get());
+			cYield = &dynamic_cast<AQLMathYieldCurve &>(objHolder.get());
 		}
 	
 		// set yield data yield curve pro and yield curve
@@ -518,7 +518,7 @@ LAScenarioConfiguration::createScenarioExtraXccyCurveForFXDelta(AQLDataInstance 
 
 	// get yield
 	AQLString bYieldName = param.targetName;
-	const LAMathYieldCurve &bYield = dynamic_cast<const LAMathYieldCurve &>
+	const AQLMathYieldCurve &bYield = dynamic_cast<const AQLMathYieldCurve &>
 		(objPool.getObject(bYieldName, ENCHKTYPE_ISDEFINED).get());
 
 	// get yield data
@@ -527,7 +527,7 @@ LAScenarioConfiguration::createScenarioExtraXccyCurveForFXDelta(AQLDataInstance 
 		(bYieldData.getData(CALIBRATION_DATA_NAME, ISNOTNULL).get()).get();
 
 	// get yield data pro
-	LAMathYieldCurvePro &bYieldPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &bYieldPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(param.ccy), ENCHKTYPE_ISDEFINED).get());
 	const AQLString& bFYieldDataName = bYieldPro.getForeignYieldData().convertToString();
 
@@ -563,17 +563,17 @@ LAScenarioConfiguration::createScenarioExtraXccyCurveForFXDelta(AQLDataInstance 
 			cYieldData = &objHolder.get();
 		}
 
-		LAMathYieldCurve *cYield = 0;
+		AQLMathYieldCurve *cYield = 0;
 		const AQLString cYieldName = bYieldName + suffix;
 		objHolder = objPool.getObject(cYieldName, ENCHKTYPE_NOCHECK);
 		if(!objHolder.isDefined())
 		{
-			cYield = dynamic_cast<LAMathYieldCurve *>(bYield.clone());
+			cYield = dynamic_cast<AQLMathYieldCurve *>(bYield.clone());
 			cYield->getName().set(cYieldName);
 		}
 		else
 		{
-			cYield = &dynamic_cast<LAMathYieldCurve &>(objHolder.get());
+			cYield = &dynamic_cast<AQLMathYieldCurve &>(objHolder.get());
 		}
 
 		// set yield data yield curve pro and yield curve

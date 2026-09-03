@@ -29,7 +29,7 @@
 #include "AQLDataVector.h"
 #include "AQLDataMultiReference.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LADealUtils.h"
@@ -399,7 +399,7 @@ LARiskConfigurationYieldIRShiftVolFXVega::createVolatilityEntity(const AQLString
 	const AQLString ircur = getCrossBaseCurrency(fx);
 	const AQLString model = LAMarketData::getModelName(fx);
  	const AQLString riskName = getRiskName();
-	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>
 					(objPool.getObject(LAMarketData::getBaseYieldProName(ircur), ENCHKTYPE_ISDEFINED).get());
 	const AQLStringVector& fCurveCcys = ycPro.getAffectingCcy();
 

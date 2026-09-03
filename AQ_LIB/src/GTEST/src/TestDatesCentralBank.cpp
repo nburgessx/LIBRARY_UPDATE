@@ -1,7 +1,7 @@
 // TestDatesCentralBank.cpp
 
 // Includes: This Library
-#include "LAMathCentralBank.h"
+#include "AQLMathCentralBank.h"
 #include "AQLCoreAppError.h"
 
 // Include: Google Test Library
@@ -12,12 +12,12 @@ namespace google_test
 
     TEST( TestDatesCentralBank, UNIT_ErrorHandling )
     {
-        EXPECT_THROW( LAMathCentralBank::meetingSchedule( "XXX" ), AQLCoreAppError );
+        EXPECT_THROW( AQLMathCentralBank::meetingSchedule( "XXX" ), AQLCoreAppError );
     }
 
     TEST( TestDatesCentralBank, UNIT_AccessECBSchedule )
     {
-        const DateVector& ecbDates = LAMathCentralBank::meetingSchedule( "eCb" );
+        const DateVector& ecbDates = AQLMathCentralBank::meetingSchedule( "eCb" );
 
         EXPECT_EQ( ecbDates[0], AQLDate( "20150122" ) );
         EXPECT_EQ( ecbDates[1], AQLDate( "20150305" ) );
@@ -29,21 +29,21 @@ namespace google_test
 
     TEST( TestDatesCentralBank, UNIT_AccessBoeSchedule )
     {
-        const DateVector& boeDates = LAMathCentralBank::meetingSchedule( "BoE" );
+        const DateVector& boeDates = AQLMathCentralBank::meetingSchedule( "BoE" );
 
         EXPECT_EQ( boeDates.size(), 0 );
     }
 
     TEST( TestDatesCentralBank, UNIT_AccessFedSchedule )
     {
-        const DateVector& fedDates = LAMathCentralBank::meetingSchedule( "FED" );
+        const DateVector& fedDates = AQLMathCentralBank::meetingSchedule( "FED" );
 
         EXPECT_EQ( fedDates.size(), 0 );
     }
 
     TEST( TestDatesCentralBank, UNIT_AreThereEnoughDates )
     {
-        const DateVector& ecbDates = LAMathCentralBank::meetingSchedule( "ECB" );
+        const DateVector& ecbDates = AQLMathCentralBank::meetingSchedule( "ECB" );
 
         AQLDate today;
         today.setSystemDate();

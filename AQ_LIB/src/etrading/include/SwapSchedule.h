@@ -7,7 +7,7 @@
 #include "AQLDataInstance.h"
 #include "AQLString.h"
 #include "ConstantDeclarations.h"
-#include "LATime.h"
+#include "AQLTime.h"
 
 // Forward Declarations
 class AQLPriceDataSlidingRule;

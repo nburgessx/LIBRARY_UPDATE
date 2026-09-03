@@ -4,7 +4,7 @@
 #include "LACoreDataService.h"
 #include "LAUpdateStaticDataManager.h"
 #include "LADefinitions.h"
-#include "LALinearRatesVolatilityManager.h"
+#include "AQLLinearRatesVolatilityManager.h"
 #include "EnvironmentUtilities.h"
 #include "tryMeUtilitySetup.h"
 #include "AQLCoreLockControl.h"
@@ -94,7 +94,7 @@ namespace google_test
         
         // Clean-Up Object Pool
 		LACoreDataService::finalize();
-		LALinearRatesVolatilityManager::finalize();
+		AQLLinearRatesVolatilityManager::finalize();
 		etrading::InitializeAQETrading::destroyInstance();
 
         dataInstance_ = nullptr;

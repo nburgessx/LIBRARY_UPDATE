@@ -22,7 +22,7 @@
 
 class AQLDataInstance;
 class AQLString;
-class LARatesCurveLogLinearInterpolation;
+class AQLRatesCurveLogLinearInterpolation;
 
 //===================== Class Declare LACalibrateModelLMMDmy ==================================
 /*! 
@@ -44,10 +44,10 @@ public:
 protected:
 	//==============================================
 	// create sde instance 
-	virtual LARatesSDEBase *createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const;
+	virtual AQLRatesSDEBase *createSDEInstance(const AQLString &currency, AQLDataInstance &dataInstance) const;
 	//==============================================
 	// create log linear interpolation
-	virtual  LARatesCurveLogLinearInterpolation *createCurveLogLinearInterpolation() const;
+	virtual  AQLRatesCurveLogLinearInterpolation *createCurveLogLinearInterpolation() const;
 
 
 private:

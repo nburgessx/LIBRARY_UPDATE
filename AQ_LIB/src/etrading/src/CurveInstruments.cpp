@@ -4542,7 +4542,7 @@ namespace etrading
 
 		std::unique_ptr<AQLInterpolationBase> futureDFInterp(dynamic_cast<AQLInterpolationBase *>(pInter_fw.clone()));
 
-		RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
+		RateConvention rc = AQLMathYieldCurve::setRC(AQ_SIMPLE);
 		AQLPriceDataConvention conv(dc.getDayCount(), rc);
 		DayCountEnum accrualDaycount = dc.dayCountEnum();
 
@@ -4691,7 +4691,7 @@ namespace etrading
 		std::unique_ptr<AQLInterpolationBase> logDF_FuturesInterpolation(dynamic_cast<AQLInterpolationBase *>(pInter_fw.clone()));
 		logDF_FuturesInterpolation->setJoinDateAsDouble(interpolationJoinDateAsDouble);
 
-		RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
+		RateConvention rc = AQLMathYieldCurve::setRC(AQ_SIMPLE);
 		AQLPriceDataConvention conv(dc.getDayCount(), rc);
 		DayCountEnum accrualDayCount = dc.dayCountEnum();
 

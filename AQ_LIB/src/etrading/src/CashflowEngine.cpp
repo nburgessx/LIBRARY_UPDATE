@@ -9,7 +9,7 @@
 
 #include "LADefinitions.h"							// AQLStringMatrix
 #include "LADateScheduleHelpers.h"					// validateDate()
-#include "LAMathDateUtilities.h"					// getLADate( int excelDate )
+#include "AQLMathDateUtilities.h"					// getLADate( int excelDate )
 #include "LACurveForwardRateHelpers.h"				// getMultiSpotDiscountFactors
 
 #include <boost/algorithm/string/predicate.hpp>		// boost::iequals
@@ -117,7 +117,7 @@ namespace etrading
 			{
 				auto anyTypeValue = resultMatrix[ row ][ 0 ];
 				int dateAsExcelDouble = boost::get<double>( anyTypeValue );
-				AQLDate date = LAMathDateUtilities::getLADate( dateAsExcelDouble );
+				AQLDate date = AQLMathDateUtilities::getLADate( dateAsExcelDouble );
 				dateVector[ row ] = date;
 			}
 			return dateVector;

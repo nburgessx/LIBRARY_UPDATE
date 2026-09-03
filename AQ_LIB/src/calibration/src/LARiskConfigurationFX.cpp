@@ -24,9 +24,9 @@
 #include "LADealUtils.h"
 #include "AQLDataReference.h"
 #include "AQLDataMultiReference.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
-#include "LAMathFXEntity.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
+#include "AQLMathFXEntity.h"
 #include "LAScenarioConfiguration.h"
 #include "LAScenarioConfigurationManager.h"
 #include "LAMarketData.h"
@@ -34,7 +34,7 @@
 #include "LADefinitionsCalibration.h"
 #include "LACalibrationParameters.h"
 #include "LACalibrationParametersManager.h"
-#include "LAMathFXUtility.h"
+#include "AQLMathFXUtility.h"
 
 using namespace std;
 
@@ -260,12 +260,12 @@ LARiskConfigurationFX::createExtraScenarioEntity(const AQLString &fx, AQLDataIns
 	vector<AQLObject *> sce;
 
 	// get currencies (and FX pairs) whose SDE models should be recalibrated  
-    AQLStringVector curs = LAMathFXUtility::getCurrencyPair(fx);
+    AQLStringVector curs = AQLMathFXUtility::getCurrencyPair(fx);
 	AQLStringVector fxcurs = curs;
 	for(int unsigned i = 0; i < fxcurs.size(); ++i)
 	{
 		AQLString ccy_tmp = fxcurs[i];
-		LAMathYieldCurvePro &ycPro_fCcy = dynamic_cast<LAMathYieldCurvePro &>
+		AQLMathYieldCurvePro &ycPro_fCcy = dynamic_cast<AQLMathYieldCurvePro &>
 			(objPool.getObject(LAMarketData::getBaseYieldProName(ccy_tmp), ENCHKTYPE_ISDEFINED).get());
 		for(int unsigned j = 0; j < ycPro_fCcy.getAffectingCcy().size(); ++j)
 		{
@@ -288,7 +288,7 @@ LARiskConfigurationFX::createExtraScenarioEntity(const AQLString &fx, AQLDataIns
 	{
 		AQLString ccy_tmp = curs[i];
 
-		LAMathYieldCurvePro &ycPro_fCcy = dynamic_cast<LAMathYieldCurvePro &>
+		AQLMathYieldCurvePro &ycPro_fCcy = dynamic_cast<AQLMathYieldCurvePro &>
 			(objPool.getObject(LAMarketData::getBaseYieldProName(ccy_tmp), ENCHKTYPE_ISDEFINED).get());
 		AffectedCcy[curs[i]] = ycPro_fCcy.getAffectedCcy();
 		ColAffectedCcy[curs[i]] = ycPro_fCcy.getColAffectedCcy();
@@ -386,7 +386,7 @@ LARiskConfigurationFX::createExtraYieldEntity(const AQLString &fx, const AQLStri
 	MAScenarioParam param;
 
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
-	LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+	AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	AQLString calcType = getCalcType(fx, scenarioNum, index);
 	AQLString refFX = targetFX->getName();
 	refFX += "_" + calcType;
@@ -417,12 +417,12 @@ LARiskConfigurationFX::getExtraTargetNames1(const AQLString &fx, AQLDataInstance
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
 	// get currencies (and FX pairs) whose SDE models should be recalibrated  
-	AQLStringVector curs = LAMathFXUtility::getCurrencyPair(fx);
+	AQLStringVector curs = AQLMathFXUtility::getCurrencyPair(fx);
 	AQLStringVector fxcurs = curs;
 	for(int unsigned i = 0; i < fxcurs.size(); ++i)
 	{
 		AQLString ccy_tmp = fxcurs[i];
-		LAMathYieldCurvePro &ycPro_fCcy = dynamic_cast<LAMathYieldCurvePro &>
+		AQLMathYieldCurvePro &ycPro_fCcy = dynamic_cast<AQLMathYieldCurvePro &>
 			(objPool.getObject(LAMarketData::getBaseYieldProName(ccy_tmp), ENCHKTYPE_ISDEFINED).get());
 		for(int unsigned j = 0; j < ycPro_fCcy.getAffectingCcy().size(); ++j)
 		{
@@ -603,7 +603,7 @@ LARiskConfigurationFX::createCollateralYieldEntity(const AQLString &fx, const AQ
 
 	AQLStringVector ccys = fx.toToken(FX_DELIMITER);
 	AQLString key_fx = LAMarketData::getFXKey(ccys[0], ccys[1]);
-	LAMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
+	AQLMathFXEntity *targetFX = LAMarketData::getFXEntity(dataInstance.getObjectPool(), "FORWARDRATE");
 	AQLString calcType = getCalcType(fx, scenarioNum, index);
 	AQLString refFX = targetFX->getName();
 	refFX += "_" + calcType;
@@ -622,7 +622,7 @@ LARiskConfigurationFX::createCollateralYieldEntity(const AQLString &fx, const AQ
 	param.isParallel = true;
 
 	//get domestic yield data name and calcType
-	LAMathYieldCurvePro &ycPro_ccy = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro_ccy = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 	const AQLString& affectedCcy = ycPro_ccy.getColAffectedCcy();
 	const AQLString& baseYieldDataName_baseccy = LAMarketData::getYieldDataName(objPool, LAMarketData::getBaseYieldName(affectedCcy));

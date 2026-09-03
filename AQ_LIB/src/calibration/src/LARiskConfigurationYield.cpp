@@ -8,10 +8,10 @@
 #include "AQLDataInstance.h"
 #include "AQLObjectPool.h"
 #include "AQLDataReference.h"
-#include "LAPricePortfolioValue.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
-#include "LAMathDateCalculations.h"
+#include "AQLPricePortfolioValue.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
+#include "AQLMathDateCalculations.h"
 #include "LADefinitionsRisk.h"
 #include "LAScenarioConfiguration.h"
 #include "LAScenarioConfigurationManager.h"
@@ -142,7 +142,7 @@ LARiskConfigurationYield::getMaxGridIndex(const AQLString &ccy) const
 		}
 		if (grids[i].findString("ED") != -1) 
 		{
-			AQLDate date = LAMathDateCalculations::getIMMDateFromTerm(asOfDate, grids[i]);
+			AQLDate date = AQLMathDateCalculations::getIMMDateFromTerm(asOfDate, grids[i]);
 			date.addMonths(3);
 			
 			int term = asOfDate.intervalYears(date);
@@ -161,7 +161,7 @@ LARiskConfigurationYield::getMaxGridIndex(const AQLString &ccy) const
 			grids[i].findString("M") > 0  || 
 			grids[i].findString("Y") > 0)
 		{
-			AQLDate date = LAMathDateCalculations::getDate(asOfDate, grids[i], true);
+			AQLDate date = AQLMathDateCalculations::getDate(asOfDate, grids[i], true);
 			int term = asOfDate.intervalYears(date);
 
 			if (term > dealMax)
@@ -200,7 +200,7 @@ LARiskConfigurationYield::getExtraTargetNames1(const AQLString &ccy, AQLDataInst
 	unsigned int size = targetNames.size();
 
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
-	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 
 	// get affecting ccys
@@ -211,7 +211,7 @@ LARiskConfigurationYield::getExtraTargetNames1(const AQLString &ccy, AQLDataInst
 	cCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
 	for (int i = 0; i < fCurveCcys.size(); ++i)
 	{
-		const LAMathYieldCurvePro &fYcPro = dynamic_cast<LAMathYieldCurvePro &>
+		const AQLMathYieldCurvePro &fYcPro = dynamic_cast<AQLMathYieldCurvePro &>
 							(objPool.getObject(LAMarketData::getBaseYieldProName(fCurveCcys[i]), ENCHKTYPE_ISDEFINED).get());
 		tmpCcys = fYcPro.getColAffectingCcy();
 		cCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
@@ -220,7 +220,7 @@ LARiskConfigurationYield::getExtraTargetNames1(const AQLString &ccy, AQLDataInst
 	StringSet cfCurveCcys;
 	for (StringSet::const_iterator it = cCurveCcys.begin(); it != cCurveCcys.end(); ++it)
 	{
-		const LAMathYieldCurvePro &cYcPro = dynamic_cast<LAMathYieldCurvePro &>
+		const AQLMathYieldCurvePro &cYcPro = dynamic_cast<AQLMathYieldCurvePro &>
 									(objPool.getObject(LAMarketData::getBaseYieldProName(*it), ENCHKTYPE_ISDEFINED).get());
 		tmpCcys = cYcPro.getAffectingCcy();
 		cfCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
@@ -399,7 +399,7 @@ LARiskConfigurationYield::createExtraScenarioEntity(const AQLString &ccy, AQLDat
 
 	vector<vector<AQLObject *> > ret(0);
 
-	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 
 	map<AQLString, vector<AQLObject *> > scemap;
@@ -421,7 +421,7 @@ LARiskConfigurationYield::createExtraScenarioEntity(const AQLString &ccy, AQLDat
 		else
 			cfCurveCcys.insert(fCurveCcys[i]);
 		// get col affecting ccys
-		const LAMathYieldCurvePro &fYcPro = dynamic_cast<LAMathYieldCurvePro &>
+		const AQLMathYieldCurvePro &fYcPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(fCurveCcys[i]), ENCHKTYPE_ISDEFINED).get());
 		tmpCcys = fYcPro.getColAffectingCcy();
 		cCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
@@ -433,7 +433,7 @@ LARiskConfigurationYield::createExtraScenarioEntity(const AQLString &ccy, AQLDat
 		if (sce.size() > 0)
 			scemap[*it] = sce;
 		// get affecting ccys of col affecting ccys
-		const LAMathYieldCurvePro &cYcPro = dynamic_cast<LAMathYieldCurvePro &>
+		const AQLMathYieldCurvePro &cYcPro = dynamic_cast<AQLMathYieldCurvePro &>
 									(objPool.getObject(LAMarketData::getBaseYieldProName(*it), ENCHKTYPE_ISDEFINED).get());
 		tmpCcys = cYcPro.getAffectingCcy();
 		cfCurveCcys.insert(tmpCcys.begin(), tmpCcys.end());
@@ -960,7 +960,7 @@ LARiskConfigurationYield::createForeignYieldEntity(const AQLString &ccy, const A
 	param.isFirst = isFirst;
 
 	//get domestic yield data name and calcType
-	LAMathYieldCurvePro &ycPro_fCcy = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro_fCcy = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(fCcy), ENCHKTYPE_ISDEFINED).get());
 	const AQLString& affectedCcy = ycPro_fCcy.getAffectedCcy();
 	const AQLString& baseYieldDataName_baseccy = LAMarketData::getYieldDataName(objPool, LAMarketData::getBaseYieldName(affectedCcy));
@@ -1057,7 +1057,7 @@ LARiskConfigurationYield::createCollateralYieldEntity(const AQLString &ccy, cons
 	param.isCollateralCcy = true;
 
 	//get domestic yield data name and calcType
-	LAMathYieldCurvePro &ycPro_colCcy = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro_colCcy = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(colCcy), ENCHKTYPE_ISDEFINED).get());
 	const AQLString& affectedCcy = ycPro_colCcy.getColAffectedCcy();
 	const AQLString& baseYieldDataName_baseccy = LAMarketData::getYieldDataName(objPool, LAMarketData::getBaseYieldName(affectedCcy));
@@ -1136,7 +1136,7 @@ LARiskConfigurationYield::createFXVolEntity(const AQLString& ccy, const AQLStrin
 
 	//get affecting ccys
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
-	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
+	AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 
 	const AQLStringVector affectingCcy = ycPro.getAffectingCcy();

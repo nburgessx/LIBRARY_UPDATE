@@ -12,24 +12,24 @@
 #include "AQLDataInstance.h"
 #include "AQLObjectPool.h"
 #include "AQLObjectHolder.h"
-#include "LARatesSDEBase.h"
+#include "AQLRatesSDEBase.h"
 #include "AQLDataReference.h"
 #include "AQLDataMultiReference.h"
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
 #include "AQLDataMatrix.h"
 #include "AQLDataProcedure.h"
-#include "LAPriceTradeValue.h"
-#include "LAPriceLSMCTradeValue.h"
-#include "LAPriceCashFlowGenerator.h"
-#include "LAMathPathEntity.h"
-#include "LAMathFXEntity.h"
-#include "LAMathAttrSDE.h"
-#include "LAMathIndexEntity.h"
+#include "AQLPriceTradeValue.h"
+#include "AQLPriceLSMCTradeValue.h"
+#include "AQLPriceCashFlowGenerator.h"
+#include "AQLMathPathEntity.h"
+#include "AQLMathFXEntity.h"
+#include "AQLMathAttrSDE.h"
+#include "AQLMathIndexEntity.h"
 #include "AQLPriceDataInterpolation.h"
 #include "AQLMathValuableEntity.h"
 #include "AQLPriceDataRand.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LADefinitions.h"
 #include "LACoreDataService.h"
 #include "LAStaticData.h"
@@ -37,10 +37,10 @@
 #include "LADealUtils.h"
 #include "AQLSobol.h"
 #include "AQLPriceDataManager.h"
-#include "LALinearRatesOptionValue.h"
-#include "LALinearRatesOptionValueDataProvider.h"
+#include "AQLLinearRatesOptionValue.h"
+#include "AQLLinearRatesOptionValueDataProvider.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPriceCouponForDigital2.h"
+#include "AQLPriceCouponForDigital2.h"
 #include "LACalibrateModel.h"
 #include "LAModelConfiguration.h"
 
@@ -315,10 +315,10 @@ void
 LAObjectConfiguration::setUpPathEntity(AQLObjectPool &objPool, const AQLString *pPathName) const
 {
 
-	LAMathPathEntity *path = 0;
+	AQLMathPathEntity *path = 0;
 	if (pPathName)
 	{
-		path = &dynamic_cast<LAMathPathEntity &>(objPool.getObject(*pPathName, ENCHKTYPE_ISDEFINED).get());
+		path = &dynamic_cast<AQLMathPathEntity &>(objPool.getObject(*pPathName, ENCHKTYPE_ISDEFINED).get());
 	}
 	else
 	{
@@ -515,7 +515,7 @@ LAObjectConfiguration::setUpPathEntity(AQLObjectPool &objPool, const AQLString *
 		}
 
 		AQLString sdeAttrValue = type + ":" + ccys[i].toUpper() + ":" + sdeFuncName;
-		LAMathAttrSDE *sde = new LAMathAttrSDE();
+		AQLMathAttrSDE *sde = new AQLMathAttrSDE();
 		sde->convertFromString(sdeAttrValue);
 		path->AQLObject::remove(sdeName);
 		path->AQLObject::add(sdeName ,sde);
@@ -557,13 +557,13 @@ LAObjectConfiguration::setUpFXEntity(AQLObjectPool &objPool) const
 		return ;
 	}
 
-	vector<LAMathFXEntity *> fxs;
+	vector<AQLMathFXEntity *> fxs;
 	EntityIter it = objPool.begin();
 	while (it != objPool.end())
 	{
 		if (it->second.isTypeOf(ENTITY_FX))
 		{
-			fxs.push_back(&dynamic_cast<LAMathFXEntity &>(it->second.get()));
+			fxs.push_back(&dynamic_cast<AQLMathFXEntity &>(it->second.get()));
 		}
 		++it;
 	}
@@ -809,10 +809,10 @@ LAObjectConfiguration::setUpExtraLibor(AQLObjectPool &objPool,  AQLMathObjectVal
 											sliding.convertFromString(SLIDING_FOLLOWING);
 											AQLPriceDataCalendar cal;  // calendar
 											cal.convertFromString(CITY_TkB);
-											const AQLDate startDate = LAMathDateCalculations::getDate(asOfDate, "3D", sliding, &cal, true);
+											const AQLDate startDate = AQLMathDateCalculations::getDate(asOfDate, "3D", sliding, &cal, true);
 											// get yield object
 											const AQLString yieldName = LAMarketData::getBaseYieldName(ccy);
-											const LAMathYieldCurve &curve = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(yieldName, ENCHKTYPE_ISDEFINED).get());
+											const AQLMathYieldCurve &curve = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(yieldName, ENCHKTYPE_ISDEFINED).get());
 
 											//modify get cfstartdate and paymentdate
 											const AQLDate &cfstartDate = dynamic_cast<const AQLDataDate &>(cashlets.get(j).getData(PRICING_DATA_CFCALCSTARTDATE, ISNOTNULL).get()).get();
@@ -1672,7 +1672,7 @@ LAObjectConfiguration::setUpDigitalCallSpreadCoupon(AQLObjectPool &objPool,  AQL
 				throw AQLCoreInvalidData("DigitalCoupon CallSpread error",__FILE__,__LINE__);
 
 			//set coupon digitalmode
-			LAPriceCouponForDigital2& digitalcoupon = dynamic_cast<LAPriceCouponForDigital2&>(couponfunc);
+			AQLPriceCouponForDigital2& digitalcoupon = dynamic_cast<AQLPriceCouponForDigital2&>(couponfunc);
 			digitalcoupon.setCallSpread(true);
 			digitalcoupon.setCallSpreadValue(spreadvalstr.getDoubleValue());
 		}
@@ -1713,7 +1713,7 @@ LAObjectConfiguration::setUpFwdInterpolation(AQLObjectPool &objPool) const
 		{
 			mIsFwdInterMap[ccys[i].toUpper()] = false;
 		}
-		const LAMathYieldCurvePro &yp = dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(LAMarketData::getBaseYieldProName(ccys[i]), ENCHKTYPE_ISDEFINED).get());
+		const AQLMathYieldCurvePro &yp = dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(LAMarketData::getBaseYieldProName(ccys[i]), ENCHKTYPE_ISDEFINED).get());
 		const map<AQLString, AQLString>& mktMap = yp.getAssignedCurveMktMap();
 		map<AQLString, AQLString>::const_iterator it = mktMap.begin();
 

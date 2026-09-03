@@ -123,7 +123,7 @@ protected:
 	// create risk scenario for foregin currency
 	virtual std::vector<AQLObject *> createScenarioCollateralYield(AQLDataInstance &dataInstance, const MAScenarioParam &param) const;
 	// dataout curves
-	virtual void dataoutCurve(AQLDataInstance &dataInstance, const LAMathYieldCurvePro& yieldCurvePro, const std::vector<AQLObject *>& ret) const;
+	virtual void dataoutCurve(AQLDataInstance &dataInstance, const AQLMathYieldCurvePro& yieldCurvePro, const std::vector<AQLObject *>& ret) const;
 	// create scenario of extra Xccy basis curve for fxdelta
 	virtual std::vector<AQLObject *> createScenarioExtraXccyCurveForFXDelta(AQLDataInstance &dataInstance, const MAScenarioParam &param) const;
 	// create scenario of extra FwdFX constant curve for fxdelta

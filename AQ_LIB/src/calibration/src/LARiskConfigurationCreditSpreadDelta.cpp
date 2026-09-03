@@ -8,10 +8,10 @@
 #include "AQLDataInstance.h"
 #include "AQLObjectPool.h"
 #include "AQLDataReference.h"
-#include "LAPricePortfolioValue.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
-#include "LAMathDateCalculations.h"
+#include "AQLPricePortfolioValue.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
+#include "AQLMathDateCalculations.h"
 #include "LADefinitionsRisk.h"
 #include "LAScenarioConfiguration.h"
 #include "LAScenarioConfigurationManager.h"
@@ -22,8 +22,8 @@
 #include "LACalibrationParameters.h"
 #include "LACalibrationParametersManager.h"
 #include "LADefinitionsCalibration.h"
-#include "LAPricePayOff.h"
-#include "LAPriceTradeValue.h"
+#include "AQLPricePayOff.h"
+#include "AQLPriceTradeValue.h"
 
 using namespace std;
 

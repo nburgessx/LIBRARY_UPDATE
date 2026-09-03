@@ -26,16 +26,16 @@
 #include "AQLDate.h"
 #include "AQLBasic.h"
 #include "AQLPriceDataDayCount.h"
-#include "LAMathInterpolationUtilities.h"
-#include "LAMathVolFuncStructureBase.h"
-#include "LAMathVolFuncWave.h"
-#include "LAMathVolFuncLMM.h"
+#include "AQLMathInterpolationUtilities.h"
+#include "AQLMathVolFuncStructureBase.h"
+#include "AQLMathVolFuncWave.h"
+#include "AQLMathVolFuncLMM.h"
 #include "LACalibratePool.h"
 #include "LACalibrateLMM.h"
 #include "LACalibrationFunc.h"
 #include "LACalibrationParametersLMM.h"
 #include "LADefinitionsCalibration.h"
-#include "LAPriceLMMCalibration.h"
+#include "AQLPriceLMMCalibration.h"
 
 
 using namespace std;
@@ -501,9 +501,9 @@ LACalibrateVolatilityLMM::createVolFunc(const AQLString &calibFileName, const AQ
 
 	vector<AQLFunctionBase *> volVec(size);
 	// set vol
-	AQLFunctionBase *funcTerm = new LAMathVolFuncWave(tmax, decay, amp1, phase1, 
+	AQLFunctionBase *funcTerm = new AQLMathVolFuncWave(tmax, decay, amp1, phase1, 
 														amp2, phase2, amp3, phase3, shift);
-	AQLFunctionBase *funcTenor = new LAMathVolFuncStructureBase(a, b, c, d);
+	AQLFunctionBase *funcTenor = new AQLMathVolFuncStructureBase(a, b, c, d);
 
 	const double qval = 1.0 / (1.0 - AQLMath::log(skew) / AQLMath::log(2.0));
 
@@ -529,7 +529,7 @@ LACalibrateVolatilityLMM::createVolFunc(const AQLString &calibFileName, const AQ
 	}
 	else
 	{
-		std::shared_ptr<AQLInterpolationBase> inter_adjParam = LAMathInterpolationUtilities::createInterpolation(mAdjParamInterpolationStr);
+		std::shared_ptr<AQLInterpolationBase> inter_adjParam = AQLMathInterpolationUtilities::createInterpolation(mAdjParamInterpolationStr);
 		inter_adjParam->set(adjParamMat[0], adjParamMat[1]);
 
 		const size_t extG_size = tenor.size() - 1;
@@ -547,11 +547,11 @@ LACalibrateVolatilityLMM::createVolFunc(const AQLString &calibFileName, const AQ
 
 		if (i != 0)
 		{	
-			volVec[i] = new LAMathVolFuncLMM(funcTenor, funcTerm, tenor, tenor_30_360, i + 1, adjParam);
+			volVec[i] = new AQLMathVolFuncLMM(funcTenor, funcTerm, tenor, tenor_30_360, i + 1, adjParam);
 		}
 		else
 		{
-			volVec[i] = new LAMathVolFuncLMM(funcTenor, funcTerm, tenor, tenor_30_360, i + 1, adjParam, true);
+			volVec[i] = new AQLMathVolFuncLMM(funcTenor, funcTerm, tenor, tenor_30_360, i + 1, adjParam, true);
 		}
 	}
 

@@ -50,7 +50,7 @@ LACalibrateModelPtbergSkew::~LACalibrateModelPtbergSkew(void)
 
 */
 void
-LACalibrateModelPtbergSkew::setDrift(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelPtbergSkew::setDrift(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	// TO DO
 	LACalibrateModelPtberg::setDrift(fx, sde);
@@ -66,7 +66,7 @@ LACalibrateModelPtbergSkew::setDrift(const AQLString &fx, LARatesSDEBase &sde) c
 
 */
 void
-LACalibrateModelPtbergSkew::setIntegralFunction(const AQLString &fx, LARatesSDEBase &sde) const
+LACalibrateModelPtbergSkew::setIntegralFunction(const AQLString &fx, AQLRatesSDEBase &sde) const
 {
 	// TO DO
 	LACalibrateModelPtberg::setIntegralFunction(fx, sde);
@@ -82,7 +82,7 @@ LACalibrateModelPtbergSkew::setIntegralFunction(const AQLString &fx, LARatesSDEB
 	@param[out] dataInstance
 */
 void
-LACalibrateModelPtbergSkew::setUpVolFunc(const AQLString &fx, LAMathVolatility &vol, AQLDataInstance &dataInstance) const
+LACalibrateModelPtbergSkew::setUpVolFunc(const AQLString &fx, AQLMathVolatility &vol, AQLDataInstance &dataInstance) const
 {
 	// TO DO
 	LACalibrateModelPtberg::setUpVolFunc(fx, vol, dataInstance);

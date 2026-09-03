@@ -341,7 +341,7 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const AQLString 
 
 	// set targetCurveType for col-xccybasis delta
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
-	const LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>
+	const AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(ccy), ENCHKTYPE_ISDEFINED).get());
 	AQLStringVector fCurveCcys = ycPro.getAffectingCcy();
 	for (int unsigned i = 0; i < fCurveCcys.size(); ++i)
@@ -475,7 +475,7 @@ LARiskConfigurationYieldBasisDelta::getIMMTerm(const AQLString &ccy) const
             a vector with one risk curve name if all risk curves are the same,
             a vector with risk curve names whose number is the same as the risk grids,
             where a risk curve name is the curve type which is suitable to be passed to
-            LAMathYieldCurvePro::setCurveType (for example, "JPYOIS") to deduce the forward rate changes
+            AQLMathYieldCurvePro::setCurveType (for example, "JPYOIS") to deduce the forward rate changes
             against the market rate bumps
 */
 AQLStringVector
@@ -580,7 +580,7 @@ LARiskConfigurationYieldBasisDelta::getIMMRiskFloorTerm(const AQLString &ccy, AQ
 	if (getIMMFwdRiskMode(ccy))
 	{
 		AQLString proName = LAMarketData::getBaseYieldProName(ccy);
-		const LAMathYieldCurvePro &pro = dynamic_cast<const LAMathYieldCurvePro&>(objPool.getObject(proName).get());
+		const AQLMathYieldCurvePro &pro = dynamic_cast<const AQLMathYieldCurvePro&>(objPool.getObject(proName).get());
 
 		// For example, "USDOIS" -> "OISCURVE"
 		AQLString originalCurveName = pro.getMarketForCurve(getIMMRiskYieldCurveName(ccy).front()).toUpper();

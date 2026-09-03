@@ -25,10 +25,10 @@
 #include "LAScenarioConfiguration.h"
 #include "AQLDate.h"
 #include "AQLPriceDataDayCount.h"
-#include "LAMathFXUtility.h"
-#include "LAMathVolFuncFX.h"
-#include "LAMathVolFuncFXDD.h"
-#include "LAPriceFXVolatility.h"
+#include "AQLMathFXUtility.h"
+#include "AQLMathVolFuncFX.h"
+#include "AQLMathVolFuncFXDD.h"
+#include "AQLPriceFXVolatility.h"
 #include "AQLConstant.h"
 #include "AQLBasic.h"
 #include "LACalibrationFunc.h"
@@ -311,20 +311,20 @@ LACalibrateVolatilityPtberg::createVolatility(const AQLStringVector &filePath, c
 			}
 
 			// ceck DDL
-			LAMathVolFuncFX *funcFX = 0;
+			AQLMathVolFuncFX *funcFX = 0;
 			if (param->isDDL)
 			{
-				funcFX = new LAMathVolFuncFXDD(timeGrid, sigma, fFx, beta, param->ccy);
+				funcFX = new AQLMathVolFuncFXDD(timeGrid, sigma, fFx, beta, param->ccy);
 			}
 			else
 			{
-				funcFX = new LAMathVolFuncFX(timeGrid, sigma, fFx, beta, param->ccy);
+				funcFX = new AQLMathVolFuncFX(timeGrid, sigma, fFx, beta, param->ccy);
 			}
 
 			// Long Jump check
 			if (param->isLJ)
 			{
-				return new LAPriceFXVolatility(funcFX, new AQLConstant(1.0), timeGrid);
+				return new AQLPriceFXVolatility(funcFX, new AQLConstant(1.0), timeGrid);
 			}
 			else
 			{
@@ -351,10 +351,10 @@ LACalibrateVolatilityPtberg::createVolatility(const AQLStringVector &filePath, c
 			}
 		}
 
-		const LAMathYieldCurve &dYield = dynamic_cast<const LAMathYieldCurve &>(objPool->getObject(param->refName[0], ENCHKTYPE_ISDEFINED).get());
-		const LAMathYieldCurve &fYield = dynamic_cast<const LAMathYieldCurve &>(objPool->getObject(param->refName[1], ENCHKTYPE_ISDEFINED).get());
+		const AQLMathYieldCurve &dYield = dynamic_cast<const AQLMathYieldCurve &>(objPool->getObject(param->refName[0], ENCHKTYPE_ISDEFINED).get());
+		const AQLMathYieldCurve &fYield = dynamic_cast<const AQLMathYieldCurve &>(objPool->getObject(param->refName[1], ENCHKTYPE_ISDEFINED).get());
 
-		LAMathFXEntity fx_tmp = *LAMarketData::getFXEntity(*objPool, "USEMODEL");
+		AQLMathFXEntity fx_tmp = *LAMarketData::getFXEntity(*objPool, "USEMODEL");
 		fx_tmp.getFXType() = "FIXEDRATE";
 
 		AQLStringVector ccys;
@@ -392,20 +392,20 @@ LACalibrateVolatilityPtberg::createVolatility(const AQLStringVector &filePath, c
 		}
 
 		// ceck DDL
-		LAMathVolFuncFX *funcFX = 0;
+		AQLMathVolFuncFX *funcFX = 0;
 		if (param->isDDL)
 		{
-			funcFX = new LAMathVolFuncFXDD(timeGrid, sigma, fFx, beta, param->ccy);
+			funcFX = new AQLMathVolFuncFXDD(timeGrid, sigma, fFx, beta, param->ccy);
 		}
 		else
 		{
-			funcFX = new LAMathVolFuncFX(timeGrid, sigma, fFx, beta, param->ccy);
+			funcFX = new AQLMathVolFuncFX(timeGrid, sigma, fFx, beta, param->ccy);
 		}
 		
 		// Long Jump check
 		if (param->isLJ)
 		{
-			return new LAPriceFXVolatility(funcFX, new AQLConstant(1.0), timeGrid);
+			return new AQLPriceFXVolatility(funcFX, new AQLConstant(1.0), timeGrid);
 		}
 		else
 		{

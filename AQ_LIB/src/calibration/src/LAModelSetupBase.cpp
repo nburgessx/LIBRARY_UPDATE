@@ -46,26 +46,26 @@
 #include "AQLPriceDataConvention.h"
 #include "AQLPriceDataFunction.h"
 #include "AQLPriceDataFunctions.h"
-#include "LAMathAttrSDE.h"
-#include "LAPriceArbFreeGenerator.h"
+#include "AQLMathAttrSDE.h"
+#include "AQLPriceArbFreeGenerator.h"
 
 #include "AQLMathValuableEntity.h"
 #include "AQLMathDefine.h"
 
-#include "LAPriceCashFlowGenerator.h"
-#include "LAPriceYieldGenerator.h"
-#include "LAPricePayOff.h"
-#include "LAPriceCouponRainbow.h"
-#include "LAPriceTradeValue.h"
-#include "LAPriceAccruedInterest.h"
+#include "AQLPriceCashFlowGenerator.h"
+#include "AQLPriceYieldGenerator.h"
+#include "AQLPricePayOff.h"
+#include "AQLPriceCouponRainbow.h"
+#include "AQLPriceTradeValue.h"
+#include "AQLPriceAccruedInterest.h"
 
-#include "LAMathPathEntity.h"
-#include "LAMathIndexEntity.h"
-#include "LAMathFXEntity.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
-#include "LAMathCorrelation.h"
-#include "LAMathVolatility.h"
+#include "AQLMathPathEntity.h"
+#include "AQLMathIndexEntity.h"
+#include "AQLMathFXEntity.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
+#include "AQLMathCorrelation.h"
+#include "AQLMathVolatility.h"
 
 #include "AQLBasic.h"
 #include "AQLLinearInterpolation.h"
@@ -86,41 +86,41 @@
 #include "AQLDivideFunc.h"
 #include "AQLMaxFunc.h"
 #include "AQLMinFunc.h"
-#include "LASumFunc.h"
-#include "LAAverageFunc.h"
-#include "LADigitalFunc.h"
-#include "LAFractionFunc.h"
-#include "LACompoundingFunc.h"
+#include "AQLSumFunc.h"
+#include "AQLAverageFunc.h"
+#include "AQLDigitalFunc.h"
+#include "AQLFractionFunc.h"
+#include "AQLCompoundingFunc.h"
 #include "AQLMersenneTwister.h"
 #include "AQLFTQuasiRandGS.h"	// for XLL Plus
-#include "LAPriceLSMCTradeValue.h"
-#include "LAPolyFitLS.h"
-#include "LAPolynomialPS.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPriceLSMCTradeValue.h"
+#include "AQLPolyFitLS.h"
+#include "AQLPolynomialPS.h"
+#include "AQLPricePortfolioValue.h"
 
-#include "LARatesAggregateCouponCapFloor.h"
-#include "LAPriceCouponRainbowMin.h"
-#include "LARatesInterSectionFunc.h"
-#include "LARatesUnionFunc.h"
-#include "LARatesCpnCapFloorFuncForTARN.h"
-#include "LAPriceCouponMax.h"
-#include "LAPriceCouponMin.h"
-#include "LASumFunc2.h"
-#include "LAPriceCouponForDigital.h"
-#include "LAPriceCouponForDigital2.h"
+#include "AQLRatesAggregateCouponCapFloor.h"
+#include "AQLPriceCouponRainbowMin.h"
+#include "AQLRatesInterSectionFunc.h"
+#include "AQLRatesUnionFunc.h"
+#include "AQLRatesCpnCapFloorFuncForTARN.h"
+#include "AQLPriceCouponMax.h"
+#include "AQLPriceCouponMin.h"
+#include "AQLSumFunc2.h"
+#include "AQLPriceCouponForDigital.h"
+#include "AQLPriceCouponForDigital2.h"
 
-#include "LAPriceFXDisplacedDiffusionCalibration.h"
-#include "LAPriceFXDisplacedDiffusionCalibration3F.h"
-#include "LAPriceSZCalibration.h"
-#include "LAMathAntonovFXOption.h"
-#include "LAMathAntonovFXOptionBetaFixed.h"
-#include "LAMathAntonovFXOptionVolatilityFixed.h"
-#include "LAPriceHWCalibration.h"
-#include "LAMathJamshidianSwaption.h"
-#include "LAMathJamshidianSwaptionByImplyVol.h"
-#include "LAPriceLMMCalibration.h"
-#include "LALinearRatesSwapTradeValueForExo.h"
-#include "LAPriceCashValue.h"
+#include "AQLPriceFXDisplacedDiffusionCalibration.h"
+#include "AQLPriceFXDisplacedDiffusionCalibration3F.h"
+#include "AQLPriceSZCalibration.h"
+#include "AQLMathAntonovFXOption.h"
+#include "AQLMathAntonovFXOptionBetaFixed.h"
+#include "AQLMathAntonovFXOptionVolatilityFixed.h"
+#include "AQLPriceHWCalibration.h"
+#include "AQLMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaptionByImplyVol.h"
+#include "AQLPriceLMMCalibration.h"
+#include "AQLLinearRatesSwapTradeValueForExo.h"
+#include "AQLPriceCashValue.h"
 
 #include "LADefinitions.h"
 #include "LACoreDataService.h"
@@ -204,7 +204,7 @@ LAModelSetupBase::registAttrMaster(AQLPriceDataManager &dm)
 	dm.setData(new AQLPriceDataRand());
 	dm.setData(new AQLPriceDataFunction());	
 	dm.setData(new AQLPriceDataFunctions());	
-	dm.setData(new LAMathAttrSDE());
+	dm.setData(new AQLMathAttrSDE());
 
 	// calibration result
 	dm.setData("ResultVolatility", DATA_DOUBLES);
@@ -233,12 +233,12 @@ LAModelSetupBase::registEntityMaster(AQLDataInstance &dataInstance)
 {
 	AQLObjectMaster &em = dataInstance.getObjectMaster();
 	em.setEntity(new AQLMathObjectValue(&dataInstance));
-	em.setEntity(new LAMathPathEntity(&dataInstance));
-	em.setEntity(new LAMathIndexEntity(&dataInstance));
-	em.setEntity(new LAMathFXEntity(&dataInstance));
-	em.setEntity(new LAMathYieldCurve(&dataInstance));
-	em.setEntity(new LAMathCorrelation(&dataInstance));
-	em.setEntity(new LAMathVolatility(&dataInstance));
+	em.setEntity(new AQLMathPathEntity(&dataInstance));
+	em.setEntity(new AQLMathIndexEntity(&dataInstance));
+	em.setEntity(new AQLMathFXEntity(&dataInstance));
+	em.setEntity(new AQLMathYieldCurve(&dataInstance));
+	em.setEntity(new AQLMathCorrelation(&dataInstance));
+	em.setEntity(new AQLMathVolatility(&dataInstance));
 }
 
 // 
@@ -260,11 +260,11 @@ LAModelSetupBase::registFunctionMaster(AQLDataInstance &dataInstance)
 	fm.setFunction(new AQLQuadraticMethod(),									FN_QUADRATIC_STR);
 	fm.setFunction(new AQLMaxMethod(),										FN_MAX_STR);
 	fm.setFunction(new AQLMinMethod(),										FN_MIN_STR);
-	fm.setFunction(new LASumMethod(),										FN_SUM_STR);
+	fm.setFunction(new AQLSumMethod(),										FN_SUM_STR);
 	fm.setFunction(new AQLDivideMethod(),									FN_DIVIDE_STR);
-	fm.setFunction(new LAFractionMethod(),									FN_FRACTION_STR);
-	fm.setFunction(new LAAverageMethod(),									FN_AVERAGE_STR);
-	fm.setFunction(new LADigitalMethod(),									FN_DIGITAL_STR);
+	fm.setFunction(new AQLFractionMethod(),									FN_FRACTION_STR);
+	fm.setFunction(new AQLAverageMethod(),									FN_AVERAGE_STR);
+	fm.setFunction(new AQLDigitalMethod(),									FN_DIGITAL_STR);
 
 	// Interpolation
 	fm.setFunction(new AQLLinearInterpolation(LINEAR_EXTRAPOLATION_TYPE),	FN_LINEARINTERPOLATION_STR);
@@ -328,61 +328,61 @@ LAModelSetupBase::registFunctionMaster(AQLDataInstance &dataInstance)
 	}
 	// -------------------------------------------
 
-	fm.setFunction(new LAMathBasisFunction(), FN_BASISFUNC1_STR);
-	fm.setFunction(new LAMathBasisFunction2(), FN_BASISFUNC2_STR);
+	fm.setFunction(new AQLMathBasisFunction(), FN_BASISFUNC1_STR);
+	fm.setFunction(new AQLMathBasisFunction2(), FN_BASISFUNC2_STR);
 
-	fm.setFunction(new LARatesAggregateCouponCapFloor(), FN_AGGREGATECOUPONCAPFLOOR_STR);
-	fm.setFunction(new LAPriceCouponRainbowMin(), FN_CPNSLTOPERATORRAINBOWMIN_STR);
-	fm.setFunction(new LARatesInterSectionFunc(), FN_INTERSECTIONFUNC_STR);
-	fm.setFunction(new LARatesUnionFunc(), FN_UNIONFUNC_STR);
-	fm.setFunction(new LARatesCpnCapFloorFuncForTARN(), FN_CPNCAPFLOORFORTARN_STR);
-	fm.setFunction(new LAPriceCouponMax(), FN_CPNSLTOPERATORMAX_STR);
-	fm.setFunction(new LAPriceCouponMin(), FN_CPNSLTOPERATORMIN_STR);	
-	fm.setFunction(new LASumMethod2(), FN_SUM2_STR);
-	fm.setFunction(new LAPriceCouponForDigital(), FN_CPNSLTOPERATORFORDIGITAL_STR);
-	fm.setFunction(new LAPriceCouponForDigital2(), FN_CPNSLTOPERATORFORDIGITAL2_STR);
-	fm.setFunction(new LACompoundMethod(), FN_COMPOUNDING_STR);
-	fm.setFunction(new LACompoundMethod1(), FN_COMPOUNDING1_STR);
-	fm.setFunction(new LACompoundMethod2(), FN_COMPOUNDING2_STR);
-	fm.setFunction(new LACompoundMethod3(), FN_COMPOUNDING3_STR);
-	fm.setFunction(new LACompoundMethod4(), FN_COMPOUNDING4_STR);
-	fm.setFunction(new LACompoundMethod5(), FN_COMPOUNDING5_STR);
-	fm.setFunction(new LACompoundMethod6(), FN_COMPOUNDING6_STR);
-	fm.setFunction(new LACompoundMethod7(), FN_COMPOUNDING7_STR);
-	fm.setFunction(new LACompoundMethod8(), FN_COMPOUNDING8_STR);
-	fm.setFunction(new LACompoundMethod9(), FN_COMPOUNDING9_STR);
-	fm.setFunction(new LACompoundMethod10(), FN_COMPOUNDING10_STR);
+	fm.setFunction(new AQLRatesAggregateCouponCapFloor(), FN_AGGREGATECOUPONCAPFLOOR_STR);
+	fm.setFunction(new AQLPriceCouponRainbowMin(), FN_CPNSLTOPERATORRAINBOWMIN_STR);
+	fm.setFunction(new AQLRatesInterSectionFunc(), FN_INTERSECTIONFUNC_STR);
+	fm.setFunction(new AQLRatesUnionFunc(), FN_UNIONFUNC_STR);
+	fm.setFunction(new AQLRatesCpnCapFloorFuncForTARN(), FN_CPNCAPFLOORFORTARN_STR);
+	fm.setFunction(new AQLPriceCouponMax(), FN_CPNSLTOPERATORMAX_STR);
+	fm.setFunction(new AQLPriceCouponMin(), FN_CPNSLTOPERATORMIN_STR);	
+	fm.setFunction(new AQLSumMethod2(), FN_SUM2_STR);
+	fm.setFunction(new AQLPriceCouponForDigital(), FN_CPNSLTOPERATORFORDIGITAL_STR);
+	fm.setFunction(new AQLPriceCouponForDigital2(), FN_CPNSLTOPERATORFORDIGITAL2_STR);
+	fm.setFunction(new AQLCompoundMethod(), FN_COMPOUNDING_STR);
+	fm.setFunction(new AQLCompoundMethod1(), FN_COMPOUNDING1_STR);
+	fm.setFunction(new AQLCompoundMethod2(), FN_COMPOUNDING2_STR);
+	fm.setFunction(new AQLCompoundMethod3(), FN_COMPOUNDING3_STR);
+	fm.setFunction(new AQLCompoundMethod4(), FN_COMPOUNDING4_STR);
+	fm.setFunction(new AQLCompoundMethod5(), FN_COMPOUNDING5_STR);
+	fm.setFunction(new AQLCompoundMethod6(), FN_COMPOUNDING6_STR);
+	fm.setFunction(new AQLCompoundMethod7(), FN_COMPOUNDING7_STR);
+	fm.setFunction(new AQLCompoundMethod8(), FN_COMPOUNDING8_STR);
+	fm.setFunction(new AQLCompoundMethod9(), FN_COMPOUNDING9_STR);
+	fm.setFunction(new AQLCompoundMethod10(), FN_COMPOUNDING10_STR);
 
 	//trade value
-	LAPriceTradeValue *tvalue = new LAPriceTradeValue(new LAPriceAccruedInterest());
+	AQLPriceTradeValue *tvalue = new AQLPriceTradeValue(new AQLPriceAccruedInterest());
 	fm.setFunction(tvalue, FN_IR_TRADEVALUE_STR);		
 	tvalue->registerData(dm);
 	//lsmc trade
-	LAPriceLSMCTradeValue* lvalue = new LAPriceLSMCTradeValue(new LAPolyFitLS(), new LAPriceAccruedInterest());
+	AQLPriceLSMCTradeValue* lvalue = new AQLPriceLSMCTradeValue(new AQLPolyFitLS(), new AQLPriceAccruedInterest());
 	fm.setFunction(lvalue, FN_IR_LSMCTRADEVALUE_STR);		
 	lvalue->registerData(dm);
 
 	//cf generator
-	LAPriceCashFlowGenerator *pcf = new LAPriceCashFlowGenerator();
+	AQLPriceCashFlowGenerator *pcf = new AQLPriceCashFlowGenerator();
 	pcf->registerData(dm);
 	fm.setFunction(pcf, FN_IR_CASHFLOWGENERATOR_STR);
 
-	LAPriceYieldGenerator *ylg = new LAPriceYieldGenerator();
+	AQLPriceYieldGenerator *ylg = new AQLPriceYieldGenerator();
 	fm.setFunction(ylg, FN_IRYIELDGENERATOR_STR);
 
-	LAPriceArbFreeGenerator *ylg_arb = new LAPriceArbFreeGenerator();
+	AQLPriceArbFreeGenerator *ylg_arb = new AQLPriceArbFreeGenerator();
 	fm.setFunction(ylg_arb, FN_IRARBFREEGENERATOR_STR);
 	
 	//pay off
-	LAPricePayOff *ppayoff = new LAPricePayOff();
+	AQLPricePayOff *ppayoff = new AQLPricePayOff();
 	ppayoff->registerData(dm);
 	fm.setFunction(ppayoff, FN_IR_PAYOFF_STR);
 	//cpnsltoperatorrainbow
-	LAPriceCouponRainbow *pslt = new LAPriceCouponRainbow();
+	AQLPriceCouponRainbow *pslt = new AQLPriceCouponRainbow();
 	pslt->registerData(dm);
 	fm.setFunction(pslt, FN_CPNSLTOPERATORRAINBOW_STR);
 	// portfolio
-	LAPricePortfolioValue *port = new LAPricePortfolioValue();
+	AQLPricePortfolioValue *port = new AQLPricePortfolioValue();
 	fm.setFunction(port, FN_IR_PORTFOLIOVALUE_STR);		
 	port->registerData(dm);
 	
@@ -408,65 +408,65 @@ LAModelSetupBase::registFunctionMaster(AQLDataInstance &dataInstance)
 
 	AQLString baseDim = staticData.getStaticData(KEY_SIMULATION_LSMC_BASEFUNCDIM);
 	// polynomial function
-	fm.setFunction(new LAPolynomialPS(baseDim.getIntValue()), FN_POLYNOMIALPS_STR); 
+	fm.setFunction(new AQLPolynomialPS(baseDim.getIntValue()), FN_POLYNOMIALPS_STR); 
 
 	/////////////////
 	// calibration
 	/////////////////
 	//HW calibration
-	LAPriceHWCalibration *pcalibHW = new LAPriceHWCalibration();
+	AQLPriceHWCalibration *pcalibHW = new AQLPriceHWCalibration();
 	pcalibHW->registerData(dm);
 	fm.setFunction(pcalibHW,FN_IR_HWCALIBRATION_STR);
 
 	//HW calibration imply vol
-	LAMathJamshidianSwaptionByImplyVol *pcalibJSBIV = new LAMathJamshidianSwaptionByImplyVol();
+	AQLMathJamshidianSwaptionByImplyVol *pcalibJSBIV = new AQLMathJamshidianSwaptionByImplyVol();
 	fm.setFunction(pcalibJSBIV, FN_JAMSHIDIANSWAPTIONBYIMPLYVOL_STR);
 
 	//HW calibration engine
-	LAMathJamshidianSwaption *pcalibJS = new LAMathJamshidianSwaption();
+	AQLMathJamshidianSwaption *pcalibJS = new AQLMathJamshidianSwaption();
 	pcalibJS->registerData(dm);
 	fm.setFunction(pcalibJS, FN_JAMSHIDIANSWAPTION_STR);
 	
 	//calibrationFX
-	LAPriceFXDisplacedDiffusionCalibration *pcalibFXDD = new LAPriceFXDisplacedDiffusionCalibration();
+	AQLPriceFXDisplacedDiffusionCalibration *pcalibFXDD = new AQLPriceFXDisplacedDiffusionCalibration();
 	pcalibFXDD->registerData(dm);
 	fm.setFunction(pcalibFXDD, FN_IR_FXDISPLACEDDIFFUSIONCALIBRATION_STR);
 
 	//calibrationFX3F
-	LAPriceFXDisplacedDiffusionCalibration3F *pcalibFXDD3F = new LAPriceFXDisplacedDiffusionCalibration3F();
+	AQLPriceFXDisplacedDiffusionCalibration3F *pcalibFXDD3F = new AQLPriceFXDisplacedDiffusionCalibration3F();
 	pcalibFXDD3F->registerData(dm);
 	fm.setFunction(pcalibFXDD3F, FN_IR_FXDISPLACEDDIFFUSIONCALIBRATION3F_STR);
 
 	//calibrationFX(BothType)
-	LAMathAntonovFXOption *pcalibFXOpt = new LAMathAntonovFXOption();
+	AQLMathAntonovFXOption *pcalibFXOpt = new AQLMathAntonovFXOption();
 	pcalibFXOpt->registerData(dm);
 	fm.setFunction(pcalibFXOpt, FN_ANTONOVFXOPTIOIN_STR);
 	
 	//calibrationFX(BetaFixed Type)
-	LAMathAntonovFXOptionBetaFixed *pcalibFXOptBeta = new LAMathAntonovFXOptionBetaFixed();
+	AQLMathAntonovFXOptionBetaFixed *pcalibFXOptBeta = new AQLMathAntonovFXOptionBetaFixed();
 	pcalibFXOptBeta->registerData(dm);
 	fm.setFunction(pcalibFXOptBeta, FN_ANTONOVFXOPTIOINBETAFIXED_STR);
 	
 	//calibrationFX(VolatilityFixed Type)
-	LAMathAntonovFXOptionVolatilityFixed* pcalibFXOptVol = new LAMathAntonovFXOptionVolatilityFixed();
+	AQLMathAntonovFXOptionVolatilityFixed* pcalibFXOptVol = new AQLMathAntonovFXOptionVolatilityFixed();
 	pcalibFXOptVol->registerData(dm);
 	fm.setFunction(pcalibFXOptVol, FN_ANTONOVFXOPTIOINVOLATILITYFIXED_STR);
 
 	//calibrationSZ
-	LAPriceSZCalibration *pcalibSZ = new LAPriceSZCalibration();
+	AQLPriceSZCalibration *pcalibSZ = new AQLPriceSZCalibration();
 	pcalibSZ->registerData(dm);
 	fm.setFunction(pcalibSZ, FN_IR_SZCALIBRATION_STR);
 
 	//LMM calibration
-	LAPriceLMMCalibration *pcalibLMM = new LAPriceLMMCalibration();
+	AQLPriceLMMCalibration *pcalibLMM = new AQLPriceLMMCalibration();
 	pcalibLMM->registerData(dm);
 	fm.setFunction(pcalibLMM,FN_IR_LMMCALIBRATION_STR);
 
 	//plainvanilla swap
-	LALinearRatesSwapTradeValueForExo* pvanillatrade = new LALinearRatesSwapTradeValueForExo( new LAPriceAccruedInterest());
+	AQLLinearRatesSwapTradeValueForExo* pvanillatrade = new AQLLinearRatesSwapTradeValueForExo( new AQLPriceAccruedInterest());
 	fm.setFunction(pvanillatrade, FN_IR_PLAINVANILLASWAPTRADEVALUEFOREXO_STR);
 	pvanillatrade->registerData(dm);
-	LAPriceCashValue* pcash = new LAPriceCashValue();
+	AQLPriceCashValue* pcash = new AQLPriceCashValue();
 	fm.setFunction(pcash, FN_IR_CASHVALUE_STR);
 	pcash->registerData(dm);
 }

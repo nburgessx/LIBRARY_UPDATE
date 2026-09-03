@@ -12,7 +12,7 @@
 #include "AQLCoreAutoPtr.h"
 #include "AQLPriceDataConvention.h"
 #include "AQLFunctionBase.h"
-#include "LAModelDynamicsCurve.h"
+#include "AQLModelDynamicsCurve.h"
  
 // TODO: Remove these defines; this is bad practice!!!
 
@@ -191,7 +191,7 @@ namespace etrading
 {
 
     // This sub class is in this file under etrading namespace
-    class LAMathPathYieldCurve;
+    class AQLMathPathYieldCurve;
 
     //=================== YIELD CURVE ==================================
     class LACurvePricingObject : public AQLObject
@@ -570,7 +570,7 @@ namespace etrading
 
         double				getCurve(const double term) const;
         
-        LAMathPathYieldCurve	getCurve(double t, DayCount dc) const;
+        AQLMathPathYieldCurve	getCurve(double t, DayCount dc) const;
 
         //  OPERATION 
 
@@ -801,18 +801,18 @@ namespace etrading
     };
 
 
-    class LAMathPathYieldCurve : public LARatesPathElementCurve
+    class AQLMathPathYieldCurve : public AQLRatesPathElementCurve
     {
     public:
         
         // Default constructor
-        LAMathPathYieldCurve(const LACurvePricingObject* yc, double t, DayCount dc);
+        AQLMathPathYieldCurve(const LACurvePricingObject* yc, double t, DayCount dc);
         
         // Destructor
-        ~LAMathPathYieldCurve();
+        ~AQLMathPathYieldCurve();
 
         // Make copy(clone) of this class
-        virtual LARatesPathElementBase*		clone() const;
+        virtual AQLRatesPathElementBase*		clone() const;
 
         const LACurvePricingObject*			    getYC(void) const { return mpYC; }
         const DayCount					    getDC(void) const { return mDC; }
@@ -829,7 +829,7 @@ namespace etrading
             return ret;
         }
 
-        virtual bool					operator==(const LAMathPathYieldCurve& a) const;
+        virtual bool					operator==(const AQLMathPathYieldCurve& a) const;
 
     private:
         const LACurvePricingObject*	mpYC;		// pointer to LACurvePricingObject class

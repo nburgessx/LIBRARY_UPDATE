@@ -3,9 +3,9 @@
 
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
-#include "LAMathSwaptionVolUtility.h"
+#include "AQLMathSwaptionVolUtility.h"
 #include "InitializeAQETrading.h"
-#include "LACoreUtility.h"
+#include "AQLCoreUtility.h"
 #include "ScheduleValidation.h"
 #include "ParameterValidation.h"
 
@@ -87,14 +87,14 @@ namespace validation
 			{
 				AQLStringMatrix temp(curveMat);
 				curveID = searchbyrow(temp, "CurveID", 1, true);
-				LAMathSwaptionVolUtility::setCurveID2(dataInstance, curveID, temp);
+				AQLMathSwaptionVolUtility::setCurveID2(dataInstance, curveID, temp);
 			}
 		}
 
 		bool isLognormal = (etrading::toVolatilityTypeEnum(volType) != etrading::NORMAL_VOLATILITY);
 
 		AQLString msg;
-		LAMathSwaptionVolUtility::calibrateSABRMatrix(dataInstance,
+		AQLMathSwaptionVolUtility::calibrateSABRMatrix(dataInstance,
 													approxMethod,
 													calibFlag_bool,
 													calibMethod,

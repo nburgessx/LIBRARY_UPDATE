@@ -22,11 +22,11 @@
 #include <fstream>
 #include "LACalibrateLMM.h"
 #include "LACalibrationFunc.h"
-#include "LAPriceLMMCalibration.h"
+#include "AQLPriceLMMCalibration.h"
 #include "LADefinitionsCalibration.h"
-#include "LAMathVolFuncStructureBase.h"
-#include "LAMathVolFuncWave.h"
-#include "LAMathVolFuncLMM.h"
+#include "AQLMathVolFuncStructureBase.h"
+#include "AQLMathVolFuncWave.h"
+#include "AQLMathVolFuncLMM.h"
 #include "LAMarketData.h"
 #include "AQLCoreAppError.h"
 #include "AQLObjectPool.h"
@@ -41,13 +41,13 @@
 #include "LAScenarioConfiguration.h"
 #include "AQLPriceDataCalendar.h"
 #include "AQLPriceDataSlidingRule.h"
-#include "LAMathDateUtilities.h"
-#include "LAMathCurveFuncUtility.h"
-#include "LAMathIRVanillaFuncUtility.h"
+#include "AQLMathDateUtilities.h"
+#include "AQLMathCurveFuncUtility.h"
+#include "AQLMathIRVanillaFuncUtility.h"
 #include "AQLMathValuableEntity.h"
 #include "AQLBasic.h"
 #include "LACoreDataService.h"
-#include "LAMathInterpolationUtilities.h"
+#include "AQLMathInterpolationUtilities.h"
 #include <sstream>
 
 using namespace std;
@@ -108,7 +108,7 @@ LACalibrateLMM::setUp(AQLObjectPool &objPool,  const MAScenarioParam &param, MAC
 		AQLString msg = curveName + " is not registered in EntityPool";
 		throw AQLCoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}
-	const AQLString &curveIDName = dynamic_cast<const LAMathYieldCurve &>(objPool.getObject(curveName, ENCHKTYPE_ISDEFINED).get()).getYieldData().get().getName();
+	const AQLString &curveIDName = dynamic_cast<const AQLMathYieldCurve &>(objPool.getObject(curveName, ENCHKTYPE_ISDEFINED).get()).getYieldData().get().getName();
 
 	// set calcType
 	mCalcType = param.calcType;
@@ -601,7 +601,7 @@ clock_t cstart = clock();
 	}
 	else
 	{
-		std::shared_ptr<AQLInterpolationBase> interG = LAMathInterpolationUtilities::createInterpolation(interGStr);
+		std::shared_ptr<AQLInterpolationBase> interG = AQLMathInterpolationUtilities::createInterpolation(interGStr);
 		interG->set(tenorG, calibParamG);
 
 		for ( size_t i = 0; i < extG_size; ++i )
@@ -614,10 +614,10 @@ clock_t cstart = clock();
 
 	for (unsigned int i = 0; i < tenor.size() - 2; ++i)
 	{
-		LAMathVolFuncLMM *vol = NULL;
-		AQLFunctionBase *funcTerm = new LAMathVolFuncWave(tmax, decay, amp1, phase1, 
+		AQLMathVolFuncLMM *vol = NULL;
+		AQLFunctionBase *funcTerm = new AQLMathVolFuncWave(tmax, decay, amp1, phase1, 
 														amp2, phase2, amp3, phase3, shift);
-		AQLFunctionBase *funcTenor = new LAMathVolFuncStructureBase(a, b, c, d);
+		AQLFunctionBase *funcTenor = new AQLMathVolFuncStructureBase(a, b, c, d);
 
 		double adjParam = 0.0;
 		if (is_extratenor_calib)
@@ -636,7 +636,7 @@ clock_t cstart = clock();
 			}
 		}
 
-		vol = new LAMathVolFuncLMM(funcTenor, funcTerm, tenor, tenor_30_360, i + 1, adjParam, true);
+		vol = new AQLMathVolFuncLMM(funcTenor, funcTerm, tenor, tenor_30_360, i + 1, adjParam, true);
 
 		mpFunc[i].setRealFunction(*vol);
 		mpFunc[i].setOn();

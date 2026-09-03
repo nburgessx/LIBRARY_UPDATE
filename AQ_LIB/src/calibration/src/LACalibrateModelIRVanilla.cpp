@@ -9,14 +9,14 @@
 #include "AQLFunctionManager.h"
 #include "AQLPriceDataManager.h"
 #include "AQLDataReference.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
 
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
-#include "LAMathCorrelation.h"
-#include "LARatesTermStructureSDE.h"
-#include "LARatesLJTermStructureSDE.h"
-#include "LARatesCurveLinearInterpolation.h"
+#include "AQLMathCorrelation.h"
+#include "AQLRatesTermStructureSDE.h"
+#include "AQLRatesLJTermStructureSDE.h"
+#include "AQLRatesCurveLinearInterpolation.h"
 #include "LADealUtils.h"
 #endif
 
@@ -25,8 +25,8 @@
 #include "LACalibrateModelIRVanilla.h"
 #include "AQLDataVector.h"
 #include "AQLDataProcedure.h"
-#include "LAMathYieldCurve.h"
-#include "LAPriceYieldGenerator.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLPriceYieldGenerator.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLSplineInterpolation.h"
 #include "AQLPriceDataInterpolation.h"

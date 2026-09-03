@@ -729,7 +729,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 	std::map<std::pair<AQLDate, AQLDate>, const AQLObject*>::const_iterator it_ = moneyMarketDataMap_.begin();
 	const double rate_on = dynamic_cast<const AQLDataDouble&> ((it_->second->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 	const AQLPriceDataDayCount& dc_on  = dynamic_cast<const AQLPriceDataDayCount&> ((it_->second->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-	RateConvention rc_on = LAMathYieldCurve::setRC(SIMPLE);
+	RateConvention rc_on = AQLMathYieldCurve::setRC(SIMPLE);
 	AQLPriceDataConvention conv_on(dc_on.getDayCount(), rc_on);
 
 	bool is_on_adj = false;
@@ -1040,7 +1040,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			}
 				
 			// Interest Rate Convention - Stores instrument daycount and compounding conventions e.g. Simple Interest Act/Act.
-			RateConvention rc = LAMathYieldCurve::setRC(SIMPLE);
+			RateConvention rc = AQLMathYieldCurve::setRC(SIMPLE);
 			AQLPriceDataConvention conv(dc.getDayCount(), rc);
 
 			// df

@@ -24,7 +24,7 @@
 #include "AQLPriceDataType.h"
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
-#include "LAMathHWFuncMR.h"
+#include "AQLMathHWFuncMR.h"
 #include "AQLMathDefine.h"
 #include "LADealUtils.h"
 #include "LACalibrationParametersFXStrangleSolver.h"
@@ -35,13 +35,13 @@
 #include "LADefinitionsFXStrangleSolver.h"
 #include "LAMarketDataHW.h"
 #include "LAMarketData.h"
-#include "LAMathJamshidianSwaption.h"
-#include "LAMathJamshidianSwaptionByImplyVol.h"
-#include "LAMathAntonovFXOption.h"
-#include "LAPriceFXDisplacedDiffusionCalibration.h"
+#include "AQLMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaptionByImplyVol.h"
+#include "AQLMathAntonovFXOption.h"
+#include "AQLPriceFXDisplacedDiffusionCalibration.h"
 
 
-#include "LAMathDateUtilities.h"
+#include "AQLMathDateUtilities.h"
 using namespace std;
 
 // constructor
@@ -110,7 +110,7 @@ LACalibrationParametersFXStrangleSolver::createCalibrationInfo(AQLObjectPool &ob
 	// terms spotlag
 	AQLString spotlagStr = mpCalibStaticData->getStaticData(keyFX + FX_KEY_CALIB_STRGLSLV_TERM_SPOTLAG);
 	int spotlag = spotlagStr.getIntValue();
-	AQLDate spotdate = LAMathDateCalculations::getFXSpotDate(keyFX,asOfDate,strCal,spotlag,true);
+	AQLDate spotdate = AQLMathDateCalculations::getFXSpotDate(keyFX,asOfDate,strCal,spotlag,true);
 
 
 	//isincludelast
@@ -151,11 +151,11 @@ LACalibrationParametersFXStrangleSolver::createCalibrationInfo(AQLObjectPool &ob
 		//hishida vannavolga warning this must be changed in all of sources
 		//AQLString tmpdate = LAMarketData::convertToMLibTerm(strTerms[i]);
 //		AQLString tmpdate = strTerms[i];
-//		terms[i] = LAMathDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);
-//		deliveryterms[i] = LAMathDateCalculations::getDate(terms[i],spotlagday,sr,&cal,true);
+//		terms[i] = AQLMathDateCalculations::getDate(asOfDate,tmpdate,sr,&cal,true);
+//		deliveryterms[i] = AQLMathDateCalculations::getDate(terms[i],spotlagday,sr,&cal,true);
 
-		deliveryterms[i] = LAMathDateCalculations::getDate(spotdate,strTerms[i],sr,&cal,true);
-		terms[i] = LAMathDateCalculations::getFXSpotDate(keyFX,deliveryterms[i],strCal,-spotlag,true);
+		deliveryterms[i] = AQLMathDateCalculations::getDate(spotdate,strTerms[i],sr,&cal,true);
+		terms[i] = AQLMathDateCalculations::getFXSpotDate(keyFX,deliveryterms[i],strCal,-spotlag,true);
 
 		deltatypes[i] = getCalibStaticDataValue(keyFX + FX_KEY_CALIB_STRGLSLV_DELTATYPE, lterm);
 		deltatypes[i].toUpper();

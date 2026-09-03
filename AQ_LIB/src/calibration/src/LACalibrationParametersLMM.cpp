@@ -35,9 +35,9 @@
 #include "LADefinitionsLMM.h"
 #include "LAMarketDataLMM.h"
 #include "LAMarketData.h"
-#include "LAPriceLMMCalibration.h"
-#include "LAMathDateUtilities.h"
-#include "LAMathDateCalculations.h"
+#include "AQLPriceLMMCalibration.h"
+#include "AQLMathDateUtilities.h"
+#include "AQLMathDateCalculations.h"
 
 //furuya//
 #include <iterator>
@@ -319,7 +319,7 @@ LACalibrationParametersLMM::createCalibrationInfo(AQLObjectPool &objPool, const 
 	//		,__FILE__,__LINE__);
 	//}
 	AQLString frequencyG = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_FREQUENCY_G).toUpper();
-	double gridsizeG = LAMathDateCalculations::getPeriodFrequencyInMonths(frequencyG)/12.0;
+	double gridsizeG = AQLMathDateCalculations::getPeriodFrequencyInMonths(frequencyG)/12.0;
 	const unsigned int paramGSize = (int)((maxTerm/gridsizeG)+0.5);
 	if (paramGSize > initParamGMtx[0].size())
 	{
@@ -462,7 +462,7 @@ LACalibrationParametersLMM::createCalibrationInfo(AQLObjectPool &objPool, const 
 
 	// set up T stream of cap
 	AQLString capSpotLag_mns = "-" + capSpotLag;
-	AQLDate _00_pay = LAMathDateUtilities::getDate(asOfDate, capSpotLag, liborSlidingRule, liborCalendar);
+	AQLDate _00_pay = AQLMathDateUtilities::getDate(asOfDate, capSpotLag, liborSlidingRule, liborCalendar);
 	AQLDate _0_pay, last_pay;
 	vector<AQLDate> date_stream;
 	for (unsigned int i = 0; i < capTermSize; ++i)
@@ -470,10 +470,10 @@ LACalibrationParametersLMM::createCalibrationInfo(AQLObjectPool &objPool, const 
 		// calc date
 		AQLString capTerm = capTermVec[i];
 		AQLString capTenor = capTenorVec[i];
-		_0_pay   = LAMathDateUtilities::getDate(_00_pay, capTenor, liborSlidingRule, liborCalendar); // start date?
-		last_pay = LAMathDateUtilities::getDate(_0_pay, capTerm, liborSlidingRule, liborCalendar); // expiry date?
+		_0_pay   = AQLMathDateUtilities::getDate(_00_pay, capTenor, liborSlidingRule, liborCalendar); // start date?
+		last_pay = AQLMathDateUtilities::getDate(_0_pay, capTerm, liborSlidingRule, liborCalendar); // expiry date?
 
-		date_stream = LAMathDateUtilities::generateSchedule(_0_pay, last_pay, liborFrequency, liborSlidingRule, liborCalendar);
+		date_stream = AQLMathDateUtilities::generateSchedule(_0_pay, last_pay, liborFrequency, liborSlidingRule, liborCalendar);
 
 		DoubleVector T_pay_cap( date_stream.size() - 1 );
 		DoubleVector T_fix_cap( date_stream.size() - 1 );
@@ -483,13 +483,13 @@ LACalibrationParametersLMM::createCalibrationInfo(AQLObjectPool &objPool, const 
 		AQLDate tmp_D;
 		for(size_t j = 0; j < date_stream.size() - 1; ++j)
 		{
-			T_pay_cap[j] = LAMathDateUtilities::getTerm( asOfDate, date_stream[j + 1], dayCountStr, true );
+			T_pay_cap[j] = AQLMathDateUtilities::getTerm( asOfDate, date_stream[j + 1], dayCountStr, true );
 
-			tmp_D = LAMathDateUtilities::getDate(date_stream[j], capSpotLag_mns, liborSlidingRule, liborCalendar);
-			T_fix_cap[j] = LAMathDateUtilities::getTerm( asOfDate, tmp_D, dayCountStr, true );
+			tmp_D = AQLMathDateUtilities::getDate(date_stream[j], capSpotLag_mns, liborSlidingRule, liborCalendar);
+			T_fix_cap[j] = AQLMathDateUtilities::getTerm( asOfDate, tmp_D, dayCountStr, true );
 
-			tau_L_cap[j] = LAMathDateUtilities::getTerm( date_stream[j], date_stream[j + 1], liborDayCount, liborIncludeLast );
-			tau_cap[j] = LAMathDateUtilities::getTerm( date_stream[j], date_stream[j + 1], capDayCount, capIncludeLast );
+			tau_L_cap[j] = AQLMathDateUtilities::getTerm( date_stream[j], date_stream[j + 1], liborDayCount, liborIncludeLast );
+			tau_cap[j] = AQLMathDateUtilities::getTerm( date_stream[j], date_stream[j + 1], capDayCount, capIncludeLast );
 		}
 
 		AQLString prefix = "CAP_";
@@ -507,40 +507,40 @@ LACalibrationParametersLMM::createCalibrationInfo(AQLObjectPool &objPool, const 
 	{
 		// calc date
 		const AQLString optionMat = optionMatVec[i];
-		_00_pay = LAMathDateUtilities::getDate(asOfDate, optionMat, swaptionSlidingRule, swaptionCalendar);
-		_0_pay = LAMathDateUtilities::getDate(_00_pay, swaptionSpotLag, swaptionSlidingRule, swaptionCalendar);
+		_00_pay = AQLMathDateUtilities::getDate(asOfDate, optionMat, swaptionSlidingRule, swaptionCalendar);
+		_0_pay = AQLMathDateUtilities::getDate(_00_pay, swaptionSpotLag, swaptionSlidingRule, swaptionCalendar);
 		if (swaptionForecastCurve == swaptionDiscountCurve && liborFrequency == swaptionFrequency)
 		{
 			// This is a temporary setting now(2016/06/13). Please remove it when EOD setting is changed to dual curve.
-			_00_pay = LAMathDateUtilities::getDate(asOfDate, swaptionSpotLag, swaptionSlidingRule, swaptionCalendar);
-			_0_pay = LAMathDateUtilities::getDate(_00_pay, optionMat, swaptionSlidingRule, swaptionCalendar);
+			_00_pay = AQLMathDateUtilities::getDate(asOfDate, swaptionSpotLag, swaptionSlidingRule, swaptionCalendar);
+			_0_pay = AQLMathDateUtilities::getDate(_00_pay, optionMat, swaptionSlidingRule, swaptionCalendar);
 		}
 		for(unsigned int j = 0; j < swapTenorSize; ++j)
 		{
 			const AQLString swapTenor = swapTenorVec[j];
 
-			last_pay_L    = LAMathDateUtilities::getDate(_0_pay, swapTenor, liborSlidingRule, liborCalendar);
-			date_stream_L = LAMathDateUtilities::generateSchedule(_0_pay, last_pay_L, liborFrequency, liborSlidingRule, liborCalendar);
+			last_pay_L    = AQLMathDateUtilities::getDate(_0_pay, swapTenor, liborSlidingRule, liborCalendar);
+			date_stream_L = AQLMathDateUtilities::generateSchedule(_0_pay, last_pay_L, liborFrequency, liborSlidingRule, liborCalendar);
 
 			DoubleVector T_pay_L_swaption(date_stream_L.size() - 1);
 			DoubleVector T_fix_L_swaption(date_stream_L.size() - 1);
 			DoubleVector tau_L_swaption(date_stream_L.size() - 1);
 			for(unsigned int k = 0; k < date_stream_L.size() - 1; ++k)
 			{
-				T_pay_L_swaption[k] = LAMathDateUtilities::getTerm( asOfDate, date_stream_L[k + 1], dayCountStr, true );
-				T_fix_L_swaption[k] = LAMathDateUtilities::getTerm( asOfDate, date_stream_L[k], dayCountStr, true );
-				tau_L_swaption[k] = LAMathDateUtilities::getTerm( date_stream_L[k], date_stream_L[k + 1], liborDayCount, liborIncludeLast );
+				T_pay_L_swaption[k] = AQLMathDateUtilities::getTerm( asOfDate, date_stream_L[k + 1], dayCountStr, true );
+				T_fix_L_swaption[k] = AQLMathDateUtilities::getTerm( asOfDate, date_stream_L[k], dayCountStr, true );
+				tau_L_swaption[k] = AQLMathDateUtilities::getTerm( date_stream_L[k], date_stream_L[k + 1], liborDayCount, liborIncludeLast );
 			}
 
-			last_pay    = LAMathDateUtilities::getDate(_0_pay, swapTenor, swaptionSlidingRule, swaptionCalendar);
-			date_stream = LAMathDateUtilities::generateSchedule(_0_pay, last_pay, swaptionFrequency, swaptionSlidingRule, swaptionCalendar);
+			last_pay    = AQLMathDateUtilities::getDate(_0_pay, swapTenor, swaptionSlidingRule, swaptionCalendar);
+			date_stream = AQLMathDateUtilities::generateSchedule(_0_pay, last_pay, swaptionFrequency, swaptionSlidingRule, swaptionCalendar);
 
 			DoubleVector T_pay_swaption(date_stream.size() - 1);
 			DoubleVector tau_swaption(date_stream.size() - 1);
 			for(unsigned int k = 0; k < date_stream.size() - 1; ++k)
 			{
-				T_pay_swaption[k] = LAMathDateUtilities::getTerm( asOfDate, date_stream[k + 1], dayCountStr, true );
-				tau_swaption[k] = LAMathDateUtilities::getTerm( date_stream[k], date_stream[k + 1], swaptionDayCount, swaptionIncludeLast );
+				T_pay_swaption[k] = AQLMathDateUtilities::getTerm( asOfDate, date_stream[k + 1], dayCountStr, true );
+				tau_swaption[k] = AQLMathDateUtilities::getTerm( date_stream[k], date_stream[k + 1], swaptionDayCount, swaptionIncludeLast );
 			}
 
 			const AQLString prefix = "SWAPTION_";

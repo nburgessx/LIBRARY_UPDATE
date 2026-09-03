@@ -15,13 +15,13 @@
 #include "AQLDataInstance.h"
 #include "AQLString.h"
 #include "LACurvePricingObject.h"
-#include "LATime.h"
+#include "AQLTime.h"
 #include "AQLPriceDataDayCount.h"
 
 // TODO - Try to remove this file. It contains lots of #defines that clash with external binaries
 #include "ConstantDeclarations.h"
 
-class LAMathYieldCurvePro;
+class AQLMathYieldCurvePro;
 
 // Structure for Discount Factor Payment Dates and Values
 struct DiscountFactorTable
@@ -145,9 +145,9 @@ namespace etrading
         static void setCurveForwardRateTable(AQLDataInstance* dataInstance, const AQLString& curveid, const std::vector<AQLString>& curveNames, const ForwardRateTable& forwardRateTable);
 
         // reset marketdata use libor
-        static void resetMarketDataUseL(LAMathYieldCurvePro &curve, const AQLString &ccy, AQLStringMatrix ldata);
+        static void resetMarketDataUseL(AQLMathYieldCurvePro &curve, const AQLString &ccy, AQLStringMatrix ldata);
         // restor swaprate froml
-        static void restoreSwapRateFromLibor(LAMathYieldCurvePro &curve, const AQLString &ccy, const std::map<AQLString, double> &sRateMap, AQLStringMatrix sdata);
+        static void restoreSwapRateFromLibor(AQLMathYieldCurvePro &curve, const AQLString &ccy, const std::map<AQLString, double> &sRateMap, AQLStringMatrix sdata);
 
     private:
         LACurveCalibrationHelpers(void);

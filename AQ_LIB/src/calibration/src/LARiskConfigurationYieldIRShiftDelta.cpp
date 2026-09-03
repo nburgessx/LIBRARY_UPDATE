@@ -35,7 +35,7 @@
 #include "LACalibrationParameters.h"
 #include "LACalibrationParametersManager.h"
 #include "LADefinitionsCalibration.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 
 
 using namespace std;

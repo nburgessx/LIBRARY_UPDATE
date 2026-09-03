@@ -6,23 +6,23 @@
 
 
 #include <fstream>
-#include "LATime.h"
+#include "AQLTime.h"
 #include "AQLDataInstance.h"
 #include "AQLFunctionManager.h"
 #include "AQLPriceDataManager.h"
 #include "AQLDataReference.h"
 #include "AQLDataMatrix.h"
-#include "LAMathYieldCurve.h"
-#include "LAMathYieldCurvePro.h"
-#include "LARatesCurveLinearInterpolation.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLMathYieldCurvePro.h"
+#include "AQLRatesCurveLinearInterpolation.h"
 #include "LAStaticData.h"
 #include "LADealUtils.h"
 #include "LACalibrateModelIR.h"
 #include "AQLDataVector.h"
 #include "AQLDataProcedure.h"
-#include "LAMathYieldCurve.h"
-#include "LAPriceYieldGenerator.h"
-#include "LACompoundingFunc.h"
+#include "AQLMathYieldCurve.h"
+#include "AQLPriceYieldGenerator.h"
+#include "AQLCompoundingFunc.h"
 #include "AQLLinearInterpolation.h"
 #include "AQLSplineInterpolation.h"
 #include "AQLPriceDataInterpolation.h"
@@ -30,16 +30,16 @@
 #include "AQLPriceDataDayCount.h"
 #include "AQLPriceDataFunction.h"
 #include "LAMarketData.h"
-#include "LAPriceArbFreeGenerator.h"
+#include "AQLPriceArbFreeGenerator.h"
 #include "AQLFunctionUtilities.h"
-#include "LAMathDateCalculations.h"
+#include "AQLMathDateCalculations.h"
 
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 
 #include "LACoreDataService.h"
-#include "LARatesTermStructureSDE.h"
-#include "LARatesLJTermStructureSDE.h"
-#include "LAMathCorrelation.h"
+#include "AQLRatesTermStructureSDE.h"
+#include "AQLRatesLJTermStructureSDE.h"
+#include "AQLMathCorrelation.h"
 #include <time.h>
 
 #endif
@@ -93,10 +93,10 @@ LACalibrateModelIR::~LACalibrateModelIR(void)
 	@param[out] sde
 */
 void
-LACalibrateModelIR::setInterpolationMethod(const AQLString &currency, LARatesSDEBase &sde) const
+LACalibrateModelIR::setInterpolationMethod(const AQLString &currency, AQLRatesSDEBase &sde) const
 {
 	(void)currency;
-	sde.setInterpolationMethod(new LARatesCurveLinearInterpolation());
+	sde.setInterpolationMethod(new AQLRatesCurveLinearInterpolation());
 }
 #endif 
 // 
@@ -224,7 +224,7 @@ LACalibrateModelIR::loadFwdFXConstCurveDataAndCalibrate(const AQLString &currenc
 		throw AQLCoreInvalidData("currency of curve is inconsistent!", __FILE__, __LINE__);
 
 	const AQLString &ycProName = LAMarketData::getBaseYieldProName(ccy);
-	LAMathYieldCurvePro &ycPro = dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(ycProName).get());
+	AQLMathYieldCurvePro &ycPro = dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(ycProName).get());
 
 	AQLObjectHolder& yData = ycPro.getYieldData().get();
 	AQLString ydName = yData.getName();
@@ -238,16 +238,16 @@ LACalibrateModelIR::loadFwdFXConstCurveDataAndCalibrate(const AQLString &currenc
 	}
 
 	// save colateral ccy and curve
-	LAMathYieldCurvePro* colYCPro = NULL;
+	AQLMathYieldCurvePro* colYCPro = NULL;
 	if (!isPricer)
 	{
 		const AQLString &colYCProName = LAMarketData::getBaseYieldProName(ccy_a_fCurve);
-		colYCPro = &(dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(colYCProName).get()));
+		colYCPro = &(dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(colYCProName).get()));
 		colYCPro->setColAffectingCcy(ccy.toUpper());
 		ycPro.setColAffectedCcy(ccy_a_fCurve.toUpper());
 	}
 	const AQLString &fYCName = LAMarketData::getBaseYieldName(ccy_a_fCurve);
-	LAMathYieldCurve& fYC = dynamic_cast<LAMathYieldCurve &>(objPool.getObject(fYCName).get());
+	AQLMathYieldCurve& fYC = dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(fYCName).get());
 	const AQLString &fYDName = fYC.getYieldData().get().getName();
 	ycPro.getColYieldData().convertFromString(fYDName);
 
@@ -399,32 +399,32 @@ LACalibrateModelIR::loadYieldCurveDataAndCalibrate(const AQLString &currency, AQ
 
 	AQLString yieldName = LAMarketData::getBaseYieldName(currency);
 
-	LAMathYieldCurve *yc = NULL;
+	AQLMathYieldCurve *yc = NULL;
 	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
-		yc = new LAMathYieldCurve(&dataInstance);
+		yc = new AQLMathYieldCurve(&dataInstance);
 		objPool.set(yieldName, yc);	
 	}
 	else
 	{
-		dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
-		yc = &dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get());
+		dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
+		yc = &dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get());
 	}
 	yc->getName().convertFromString(yieldName);
 	
 	AQLString yieldProName = "PRO_" + yieldName;
-	LAMathYieldCurvePro *ycPro = NULL;
+	AQLMathYieldCurvePro *ycPro = NULL;
 	const AQLObjectHolder ehycpro = objPool.getObject(yieldProName);
 	if (!ehycpro.isDefined())
 	{
-		ycPro = new LAMathYieldCurvePro(&dataInstance);
+		ycPro = new AQLMathYieldCurvePro(&dataInstance);
 		objPool.set(yieldProName, ycPro);
 	}
 	else
 	{
 		//we must not erase the reset method for only ycpro
-		ycPro = &dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(yieldProName).get());
+		ycPro = &dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(yieldProName).get());
 	}
 	ycPro->getName().convertFromString(yieldProName);
 
@@ -848,7 +848,7 @@ LACalibrateModelIR::loadYieldCurveDataAndCalibrate(const AQLString &currency, AQ
 			AQLStringVector tmpMktNames = markets[i].toToken('_');
 			if (tmpMktNames.size() == 2)
 			{
-				LAMathYieldCurvePro &fYcPro = dynamic_cast<LAMathYieldCurvePro &>
+				AQLMathYieldCurvePro &fYcPro = dynamic_cast<AQLMathYieldCurvePro &>
 						(objPool.getObject(LAMarketData::getBaseYieldProName(tmpMktNames[0]), ENCHKTYPE_ISDEFINED).get());
 				fYcPro.AQLObject::remove(CALIBRATION_DATA_MARKETDATA + AQLString("_") + tmpMktNames[1]);
 				fYcPro.AQLObject::add(CALIBRATION_DATA_MARKETDATA + AQLString("_") + tmpMktNames[1], new AQLDataMultiReference()).convertFromString(refData_);
@@ -1097,7 +1097,7 @@ LACalibrateModelIR::loadYieldCurveDataAndCalibrate(const AQLString &currency, AQ
 	@param[out] yc
 */
 void
-LACalibrateModelIR::setUpCurveTypeDayCount(LAMathYieldCurvePro &ycPro, LAMathYieldCurve &yc) const
+LACalibrateModelIR::setUpCurveTypeDayCount(AQLMathYieldCurvePro &ycPro, AQLMathYieldCurve &yc) const
 {
 	// set daycount
 	const map<AQLString, AQLString> &assignedCurveMktMap = ycPro.getAssignedCurveMktMap();
@@ -1137,33 +1137,33 @@ LACalibrateModelIR::generateInitialValueArbfree(const AQLString &currency, AQLDa
 	//AQLString yieldName = PREFIX_YIELD + getSDEAttrName(currency);	
 	AQLString yieldName = LAMarketData::getBaseYieldName(currency);	
 
-	LAMathYieldCurve *yc = NULL;
+	AQLMathYieldCurve *yc = NULL;
 	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
-		yc = new LAMathYieldCurve(&dataInstance);
+		yc = new AQLMathYieldCurve(&dataInstance);
 		objPool.set(yieldName, yc);
 	
 	}
 	else
 	{
-		dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
-		yc = &dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get());
+		dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
+		yc = &dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get());
 	}
 	yc->getName().convertFromString(yieldName);
 	
 	AQLString yieldProName = "PRO_" + yieldName;
-	LAMathYieldCurvePro *ycPro = NULL;
+	AQLMathYieldCurvePro *ycPro = NULL;
 	const AQLObjectHolder ehycpro = objPool.getObject(yieldProName);
 	if (!ehycpro.isDefined())
 	{
-		ycPro = new LAMathYieldCurvePro(&dataInstance);
+		ycPro = new AQLMathYieldCurvePro(&dataInstance);
 		objPool.set(yieldProName, ycPro);
 	}
 	else
 	{
 		//we must not erase the reset method for only ycpro
-		ycPro = &dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(yieldProName).get());
+		ycPro = &dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(yieldProName).get());
 	}
 	ycPro->getName().convertFromString(yieldProName);
 
@@ -1361,9 +1361,9 @@ LACalibrateModelIR::generateInitialValueArbfree(const AQLString &currency, AQLDa
 			AQLString baseCcy = currency; AQLString domCcy = currency; AQLString forCcy = ccy_floater;
 			for (;;)
 			{
-				LAMathYieldCurvePro &ycPro_dccy = dynamic_cast<LAMathYieldCurvePro &>
+				AQLMathYieldCurvePro &ycPro_dccy = dynamic_cast<AQLMathYieldCurvePro &>
 							(objPool.getObject(LAMarketData::getBaseYieldProName(domCcy.toUpper()), ENCHKTYPE_ISDEFINED).get());
-				LAMathYieldCurvePro &ycPro_fccy = dynamic_cast<LAMathYieldCurvePro &>
+				AQLMathYieldCurvePro &ycPro_fccy = dynamic_cast<AQLMathYieldCurvePro &>
 							(objPool.getObject(LAMarketData::getBaseYieldProName(forCcy.toUpper()), ENCHKTYPE_ISDEFINED).get());
 
 				ycPro_fccy.setAffectingCcy(baseCcy.toUpper());
@@ -1705,18 +1705,18 @@ LACalibrateModelIR::loadCorrelationDataAndCalibrate(const AQLString &currency, A
 	{
 		corName = PREFIX_COR + sdeName;
 	}
-	LAMathCorrelation *corEntity;
+	AQLMathCorrelation *corEntity;
 	bool isCorEntityAlreadyExist(dataInstance.getObjectPool().find(corName));
 	if (isCorEntityAlreadyExist)
 	{
-		corEntity = dynamic_cast<LAMathCorrelation*>(&dataInstance.getObjectPool().getObject(corName).get());
+		corEntity = dynamic_cast<AQLMathCorrelation*>(&dataInstance.getObjectPool().getObject(corName).get());
 		if (corEntity == 0)
 			throw AQLCoreInvalidData("Corrlation object update failed.", __FILE__, __LINE__); 
 		corEntity->reset();
 	}
 	else
 	{
-		corEntity = new LAMathCorrelation(&dataInstance);
+		corEntity = new AQLMathCorrelation(&dataInstance);
 		AQLDataString &corAttrName = corEntity->getName();
 		corAttrName.set(corName);
 	}
@@ -1796,7 +1796,7 @@ LACalibrateModelIR::getGridStaticData(const AQLString &key, const AQLString &gri
 */
 void
 LACalibrateModelIR::setUpGenerateConfig
-(AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, LAMathYieldCurve &yc, LAMathYieldCurvePro &ycPro,
+(AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, AQLMathYieldCurve &yc, AQLMathYieldCurvePro &ycPro,
  AQLObject &ycData, bool &isAudExtra, bool &isSwapTenorAdjust, bool &isSpotUse, bool isArbFree) const
 {
 	AQLString isSetCurveID = LACoreDataService::getContext(CONTEXT_KEY_ISSETCURVEID);
@@ -1964,7 +1964,7 @@ LACalibrateModelIR::setUpGenerateConfig
 */
 void
 LACalibrateModelIR::setUpBasisCurveData(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &curveCurrency, 
-									  const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse, LAMathYieldCurvePro &ycPro, const AQLString* pMktCurrency, bool isCalcFwdBeforeFwdFXConsant) const
+									  const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse, AQLMathYieldCurvePro &ycPro, const AQLString* pMktCurrency, bool isCalcFwdBeforeFwdFXConsant) const
 {
 	AQLString mktCurrency = pMktCurrency ? *pMktCurrency : curveCurrency;
 	AQLString curveMktName = pMktCurrency ? mktCurrency + "_" + marketName : marketName;
@@ -2378,9 +2378,9 @@ LACalibrateModelIR::setUpBasisCurveData(AQLDataInstance &dataInstance, AQLString
 			AQLString baseCcy = curveCurrency; AQLString domCcy = curveCurrency; AQLString forCcy = ccy_a_fCurve;
 			for (;;)
 			{
-				LAMathYieldCurvePro &ycPro_dccy = dynamic_cast<LAMathYieldCurvePro &>
+				AQLMathYieldCurvePro &ycPro_dccy = dynamic_cast<AQLMathYieldCurvePro &>
 							(objPool.getObject(LAMarketData::getBaseYieldProName(domCcy.toUpper()), ENCHKTYPE_ISDEFINED).get());
-				LAMathYieldCurvePro &ycPro_fccy = dynamic_cast<LAMathYieldCurvePro &>
+				AQLMathYieldCurvePro &ycPro_fccy = dynamic_cast<AQLMathYieldCurvePro &>
 							(objPool.getObject(LAMarketData::getBaseYieldProName(forCcy.toUpper()), ENCHKTYPE_ISDEFINED).get());
 
 				ycPro_fccy.setAffectingCcy(baseCcy.toUpper());
@@ -2886,7 +2886,7 @@ LACalibrateModelIR::setUpBasisCurveData(AQLDataInstance &dataInstance, AQLString
 void
 LACalibrateModelIR::setUp36BasisDummyData(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &currency, 
 									    const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse, 
-										LAMathYieldCurvePro &ycPro) const
+										AQLMathYieldCurvePro &ycPro) const
 {
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
@@ -2989,7 +2989,7 @@ LACalibrateModelIR::setUp36BasisDummyData(AQLDataInstance &dataInstance, AQLStri
 void 
 LACalibrateModelIR::setUpGenCurveData(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &currency, 
 									const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse,
-									bool isAudExtra, LAMathYieldCurvePro &ycPro, 
+									bool isAudExtra, AQLMathYieldCurvePro &ycPro, 
 									std::map<AQLString, std::map<AQLString, double> > &aud_origSwapRate) const
 {
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
@@ -3647,12 +3647,12 @@ LACalibrateModelIR::setUpGenCurveData(AQLDataInstance &dataInstance, AQLString &
 			else if (futureDataMtx[i].size() == 3)
 			{
 				term = futureDataMtx[i][0].toUpper();
-				startDate = LAMathDateCalculations::getIMMDateFromTerm(asOfDate, term);
-				startDate = LAMathDateCalculations::getDate(startDate, "0d", slidingF, &calF, true);
-				endDate = LAMathDateCalculations::getDate(startDate, "3M", slidingF, &calF, true);
+				startDate = AQLMathDateCalculations::getIMMDateFromTerm(asOfDate, term);
+				startDate = AQLMathDateCalculations::getDate(startDate, "0d", slidingF, &calF, true);
+				endDate = AQLMathDateCalculations::getDate(startDate, "3M", slidingF, &calF, true);
 				int mm = endDate.monthOfYear();
 				int yy = endDate.yearOfEra();
-				endDate = LAMathDateCalculations::getIMMDate(yy, mm, true);
+				endDate = AQLMathDateCalculations::getIMMDate(yy, mm, true);
 				
 				futurePrice = futureDataMtx[i][1].getDoubleValue();
 				rate = 1.0 - futurePrice * 0.01;
@@ -4078,7 +4078,7 @@ LACalibrateModelIR::setUpGenCurveData(AQLDataInstance &dataInstance, AQLString &
 void 
 LACalibrateModelIR::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &currency, 
 									const AQLString &marketName, const AQLString &yieldDataName, bool isSpotUse,
-									bool isAudExtra, LAMathYieldCurvePro &ycPro, 
+									bool isAudExtra, AQLMathYieldCurvePro &ycPro, 
 									std::map<AQLString, std::map<AQLString, double> > &aud_origSwapRate) const
 {
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
@@ -4179,7 +4179,7 @@ LACalibrateModelIR::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLStrin
 		loBasisName == AQ_NO_DATA ? LOBASIS : loBasisName;
 		ycPro.AQLObject::remove(IR_CALIBRATION_DATA_LOBASISNAME + suffix_data);
 		ycPro.AQLObject::add(IR_CALIBRATION_DATA_LOBASISNAME + suffix_data, new AQLDataString(loBasisName));
-		date_lt = LAMathDateCalculations::getDate(asOfDate, longTerm, true);
+		date_lt = AQLMathDateCalculations::getDate(asOfDate, longTerm, true);
 	}
 
 	unsigned int j2 = 0;
@@ -4279,7 +4279,7 @@ LACalibrateModelIR::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLStrin
 					mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
 				else
 				{
-					bool IsInLongTerm = (LAMathDateCalculations::getDate(asOfDate, term, true) >= date_lt);
+					bool IsInLongTerm = (AQLMathDateCalculations::getDate(asOfDate, term, true) >= date_lt);
 					if (!IsInLongTerm)
 						// In middle term
 						mktData->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new AQLDataBool(true));
@@ -4369,7 +4369,7 @@ LACalibrateModelIR::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLStrin
 		else //FF non startdate type
 		{
 			AQLString term = fedFundFutureDataMtx[i][0].toUpper();
-			DateVector ffdates = LAMathDateCalculations::getFFDatesFromTerm(asOfDate,term);
+			DateVector ffdates = AQLMathDateCalculations::getFFDatesFromTerm(asOfDate,term);
 			if (ffdates.size() != 2)
 				throw AQLCoreInvalidData("FF dates error",__FILE__,__LINE__);
 
@@ -4497,7 +4497,7 @@ LACalibrateModelIR::setUpGenCurveDataOIS(AQLDataInstance &dataInstance, AQLStrin
 }
 
 void 
-LACalibrateModelIR::setUpFloater(const AQLString &currency, LAMathYieldCurvePro &ycPro, const AQLString &genFloaterName) const
+LACalibrateModelIR::setUpFloater(const AQLString &currency, AQLMathYieldCurvePro &ycPro, const AQLString &genFloaterName) const
 {
 	AQLStringVector markets = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_USEMAKETS).toToken(MULTI_STATIC_DATA_DELIMITER);
 	uppervec(markets);
@@ -4541,7 +4541,7 @@ LACalibrateModelIR::setUpFloater(const AQLString &currency, LAMathYieldCurvePro 
 
 void
 LACalibrateModelIR::setUpCurveDataByReadFile( AQLDataInstance &dataInstance, const AQLDate& asOfDate, const AQLString& currency, 
-										    const AQLString& marketName, const AQLString& yieldDataName, LAMathYieldCurvePro &ycPro ) const
+										    const AQLString& marketName, const AQLString& yieldDataName, AQLMathYieldCurvePro &ycPro ) const
 {
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 	AQLObjectHolder objHolder = objPool.getObject(yieldDataName, ENCHKTYPE_NOCHECK );
@@ -4741,10 +4741,10 @@ LACalibrateModelIR::dataoutCurve(const AQLStringVector &curveNames, AQLObject &e
 bool 
 LACalibrateModelIR::checkFrequency(const AQLString& freq, const AQLString& mktRateTerm) const
 {
-	int span = LAMathDateCalculations::getPeriodFrequencyInMonths(freq);
+	int span = AQLMathDateCalculations::getPeriodFrequencyInMonths(freq);
 
 	int y, m, d, w;
-	LAMathDateCalculations::termStrtoYMDW(mktRateTerm, y, m, d, w);
+	AQLMathDateCalculations::termStrtoYMDW(mktRateTerm, y, m, d, w);
 	int moth_mkt_term = 12 * y + m;
 
 	return (moth_mkt_term % span) == 0;
@@ -4762,33 +4762,33 @@ LACalibrateModelIR::generateInitialValueForPricer(const AQLString &currency, AQL
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
     AQLString yieldName = PREFIX_YIELD + getSDEAttrName(currency);
-	LAMathYieldCurve *yc = NULL;
+	AQLMathYieldCurve *yc = NULL;
 	const AQLObjectHolder ehyc = objPool.getObject(yieldName);
 	if (!ehyc.isDefined())
 	{
-		yc = new LAMathYieldCurve(&dataInstance);
+		yc = new AQLMathYieldCurve(&dataInstance);
 		objPool.set(yieldName, yc);
 	
 	}
 	else
 	{
-		dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
-		yc = &dynamic_cast<LAMathYieldCurve &>(objPool.getObject(yieldName).get());
+		dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get()).reset();
+		yc = &dynamic_cast<AQLMathYieldCurve &>(objPool.getObject(yieldName).get());
 	}
 	yc->getName().convertFromString(yieldName);
 	
 	AQLString yieldProName = "PRO_" + yieldName;
-	LAMathYieldCurvePro *ycPro = NULL;
+	AQLMathYieldCurvePro *ycPro = NULL;
 	const AQLObjectHolder ehycpro = objPool.getObject(yieldProName);
 	if (!ehycpro.isDefined())
 	{
-		ycPro = new LAMathYieldCurvePro(&dataInstance);
+		ycPro = new AQLMathYieldCurvePro(&dataInstance);
 		objPool.set(yieldProName, ycPro);
 	}
 	else
 	{
 		//we must not erase the reset method for only ycpro
-		ycPro = &dynamic_cast<LAMathYieldCurvePro &>(objPool.getObject(yieldProName).get());
+		ycPro = &dynamic_cast<AQLMathYieldCurvePro &>(objPool.getObject(yieldProName).get());
 	}
 	ycPro->getName().convertFromString(yieldProName);
 
@@ -4860,7 +4860,7 @@ LACalibrateModelIR::generateInitialValueForPricer(const AQLString &currency, AQL
 }
 
 void 
-LACalibrateModelIR::setUpCurveDataByContext(LAMathYieldCurvePro &ycPro, LAMathYieldCurve &yc, AQLObject *eData, const AQLString& currency, const AQLString& marketName ) const
+LACalibrateModelIR::setUpCurveDataByContext(AQLMathYieldCurvePro &ycPro, AQLMathYieldCurve &yc, AQLObject *eData, const AQLString& currency, const AQLString& marketName ) const
 {
 	AQLString prefix = currency;
 	prefix.toLower();
@@ -5016,7 +5016,7 @@ LACalibrateModelIR::setUpCurveDataByContext(LAMathYieldCurvePro &ycPro, LAMathYi
 
 void
 LACalibrateModelIR::setUpLiborOISBasisCurveData(AQLDataInstance &dataInstance, AQLString &refData, const AQLDate &asOfDate, const AQLString &currency, 
-							                  const AQLString &marketName, const AQLString &marketNameOIS, const AQLString &yieldDataName, bool isSpotUse, LAMathYieldCurvePro &ycPro) const
+							                  const AQLString &marketName, const AQLString &marketNameOIS, const AQLString &yieldDataName, bool isSpotUse, AQLMathYieldCurvePro &ycPro) const
 {
 	AQLObjectPool &objPool = dataInstance.getObjectPool();
 
@@ -5041,7 +5041,7 @@ LACalibrateModelIR::setUpLiborOISBasisCurveData(AQLDataInstance &dataInstance, A
 	}
 
 	suffix_lo = AQLString("." + marketName).toLower();
-	date_lt = LAMathDateCalculations::getDate(asOfDate, longTerm, true);
+	date_lt = AQLMathDateCalculations::getDate(asOfDate, longTerm, true);
 	AQLString lobasisFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + suffix_lo);
 	MAFileAccessor lobasisFile(LAMarketData::getNumFileName(lobasisFileName));
 	lobasisFile.readAllData(MARKET_DATA_DELIMITER, lobasisDataMtx);
@@ -5167,7 +5167,7 @@ LACalibrateModelIR::setUpLiborOISBasisCurveData(AQLDataInstance &dataInstance, A
 	{
 		// get term & check
 		AQLString term = lobasisDataMtx[i][0];
-		const AQLDate date = LAMathDateCalculations::getDate(asOfDate, term, true);
+		const AQLDate date = AQLMathDateCalculations::getDate(asOfDate, term, true);
 		bool isLongTerm = true;
 		if (date < date_lt)
 		{

@@ -26,7 +26,7 @@
 #include <algorithm>
 #include "LACalibrationFunc.h"
 #include "AQLCoreAppError.h"
-#include "LAMathVolFuncFXStrangleSolver.h"
+#include "AQLMathVolFuncFXStrangleSolver.h"
 #ifdef __HAS_MIC__
 
 #endif

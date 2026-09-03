@@ -12,13 +12,13 @@
 
 class AQLDataInstance;
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
-class LARatesCurveLogLinearInterpolation;
-class LAMathCorrelation;
+class AQLRatesCurveLogLinearInterpolation;
+class AQLMathCorrelation;
 #endif 
 
 class BasisCurveCalibration;
 class LAStaticData;
-class LAMathYieldCurve;
+class AQLMathYieldCurve;
 class AQLObject;
 class AQLObjectPool;
 
@@ -70,22 +70,22 @@ protected:
 #ifndef VISUAL_STUDIO_2010_ANALYTICS 
 	//==============================================
 	//! set interpolation method 
-	virtual  void setInterpolationMethod(const AQLString &currency, LARatesSDEBase &sde) const;
+	virtual  void setInterpolationMethod(const AQLString &currency, AQLRatesSDEBase &sde) const;
 	//==============================================
 	//! create sde instance 
-//	virtual LARatesSDEBase *createSDEInstance(const AQLString &currency) const;
+//	virtual AQLRatesSDEBase *createSDEInstance(const AQLString &currency) const;
 	//==============================================
 	//! setup correlation input type
 	virtual AQLString getCorTye(const AQLString &currency) const = 0;
 	//==============================================
 	//! setup correlation factor
-	virtual void setUpCorFactor(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const = 0;
+	virtual void setUpCorFactor(const AQLString &currency, AQLMathCorrelation &cor, AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	//! setup correlation data
-	virtual void setUpCorData(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const = 0;
+	virtual void setUpCorData(const AQLString &currency, AQLMathCorrelation &cor, AQLDataInstance &dataInstance) const = 0;
 	//==============================================
 	//! setup correlation method
-	virtual void setUpCorFunc(const AQLString &currency, LAMathCorrelation &cor, AQLDataInstance &dataInstance) const = 0;
+	virtual void setUpCorFunc(const AQLString &currency, AQLMathCorrelation &cor, AQLDataInstance &dataInstance) const = 0;
 #endif
 
 	//==============================================
@@ -96,7 +96,7 @@ protected:
 	AQLString getGridStaticData(const AQLString &key, const AQLString &curve, const AQLString &grid) const;
 	//==============================================
 	//! set up generate configuration
-	void setUpGenerateConfig(AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, LAMathYieldCurve &yc, BasisCurveCalibration &basisCurveEngine,
+	void setUpGenerateConfig(AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, AQLMathYieldCurve &yc, BasisCurveCalibration &basisCurveEngine,
 							 AQLObject &ycData, bool &isAudExtra, bool &isSwapTenorAdjust, bool &isSpotUse, bool isArbFree, const AQLString& suffix = "", const AQLString& epSuffix = "") const;
 	//==============================================
 	//! set up basis curve data
@@ -124,7 +124,7 @@ protected:
 	void setUpCurveDataByReadFile(AQLDataInstance &dataInstance, const AQLDate &asOfDate, const AQLString &currency, const AQLString &marketName, const AQLString &yieldDataName, BasisCurveCalibration &basisCurveEngine ) const;
 	//==============================================
 	//! set up daycount
-	void setUpCurveTypeDayCount(BasisCurveCalibration &basisCurveEngine, LAMathYieldCurve &yc) const;
+	void setUpCurveTypeDayCount(BasisCurveCalibration &basisCurveEngine, AQLMathYieldCurve &yc) const;
 
 	void dataoutCurve(const AQLStringVector &dataoutCurves, AQLObject &eData, const AQLString &yieldDataName) const;
 
@@ -147,7 +147,7 @@ protected:
 	//! Configure curve by preparing data used for calibration
 	void configureCurve(LAStaticData *mpStaticData,
 							BasisCurveCalibration *basisCurveEngine,
-							LAMathYieldCurve *yc,
+							AQLMathYieldCurve *yc,
 							AQLDataInstance &dataInstance,
 							const AQLDate& asOfDate,
 							const AQLString& currency,

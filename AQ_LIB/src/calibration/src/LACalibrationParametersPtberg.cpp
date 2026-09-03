@@ -24,7 +24,7 @@
 #include "AQLPriceDataType.h"
 #include "AQLDataBasics.h"
 #include "AQLDataVector.h"
-#include "LAMathHWFuncMR.h"
+#include "AQLMathHWFuncMR.h"
 #include "AQLMathDefine.h"
 #include "LADealUtils.h"
 #include "LACalibrationParametersPtberg.h"
@@ -35,10 +35,10 @@
 #include "LADefinitionsPtberg.h"
 #include "LAMarketDataHW.h"
 #include "LAMarketData.h"
-#include "LAMathJamshidianSwaption.h"
-#include "LAMathJamshidianSwaptionByImplyVol.h"
-#include "LAMathAntonovFXOption.h"
-#include "LAPriceFXDisplacedDiffusionCalibration.h"
+#include "AQLMathJamshidianSwaption.h"
+#include "AQLMathJamshidianSwaptionByImplyVol.h"
+#include "AQLMathAntonovFXOption.h"
+#include "AQLPriceFXDisplacedDiffusionCalibration.h"
 
 using namespace std;
 
@@ -169,7 +169,7 @@ LACalibrationParametersPtberg::createCalibrationInfo(AQLObjectPool &objPool, con
 	info->add(PRICING_DATA_FXVOLGRIDS_FIXED, new AQLDataDoubles(DoubleArray(timeGrid.size(), fixedVol)));
 
 	// set spot fx and spotdate
-	LAMathFXEntity fxEntity(info->getDataInstance());
+	AQLMathFXEntity fxEntity(info->getDataInstance());
 	fxEntity.getFXType() = "FIXEDRATE";
 	LAMarketData::setUpMarket2FXEntity(fxEntity);
 	AQLStringVector ccys;

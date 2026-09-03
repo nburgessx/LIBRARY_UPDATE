@@ -789,7 +789,7 @@ void BasisComponentCurve::initialise()
 	//	{
 	//		const bool fwd_ispriceccy = dynamic_cast<const AQLDataBool &>(data_fwd[0]->getData(IR_CALIBRATION_DATA_ISPRICECCY, IR_CALIBRATION_DATA_ISDOMESTICCURRENCY, ISNOTNULL).get()).get(); // Alias Method: First Parameter takes Priortity
 	//		//get spot fx
-	//		const LAMathFXEntity& fx = dynamic_cast<const LAMathFXEntity&>(getFXEntity().get().get());
+	//		const AQLMathFXEntity& fx = dynamic_cast<const AQLMathFXEntity&>(getFXEntity().get().get());
 	//		const AQLStringVector spotccys = fx.getCurrencys().get();
 	//		const DoubleArray spotfxs = fx.getSpotRates().get();
 
@@ -1135,7 +1135,7 @@ void BasisComponentCurve::initialise()
 			AQLDate endDate = etrading::LADateHelpers::getDate(c_spotdate, term, sld, &cal, true, &roll_conv);
 
 			// Interest Rate Convention - Stores instrument daycount and compounding conventions e.g. Simple Interest Act/Act.
-			RateConvention rc = LAMathYieldCurve::setRC(CONTINUOUS);
+			RateConvention rc = AQLMathYieldCurve::setRC(CONTINUOUS);
 			AQLPriceDataDayCount dc_act365(ACT_365);
 			AQLPriceDataConvention conv(dc_act365.getDayCount(), rc);
 

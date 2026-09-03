@@ -29,7 +29,7 @@
 #include "AQLDataMultiReference.h"
 #include "AQLDataReference.h"
 #include "AQLPriceDataFunction.h"
-#include "LAPricePortfolioValue.h"
+#include "AQLPricePortfolioValue.h"
 #include "LACoreDataService.h"
 #include "LADefinitions.h"
 #include "LADealUtils.h"
@@ -92,7 +92,7 @@ LARiskConfigurationYieldIRShiftVolIRVega::getCoordinatesMatrix(const AQLString &
 		ret[i].resize(COORDINATESNUM);
 		for (unsigned  int j = 0; j < COORDINATESNUM; ++j)
 		{
-			ret[i][j] = dayCount.getTerm(asOfDate, LAMathDateCalculations::getDate(asOfDate, cdns[j], true));
+			ret[i][j] = dayCount.getTerm(asOfDate, AQLMathDateCalculations::getDate(asOfDate, cdns[j], true));
 		}
 	}
 
