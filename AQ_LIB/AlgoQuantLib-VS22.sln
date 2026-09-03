@@ -2,9 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.37314.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AQL Classic", "AQL Classic", "{C2ABCDA5-6B9D-4D69-980C-19BE6BA524C0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AQL - Classic", "AQL - Classic", "{C2ABCDA5-6B9D-4D69-980C-19BE6BA524C0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AQ Core", "AQ Core", "{D53E361C-527F-4C70-8EF0-F4CFE78AA13B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AQ - Core", "AQ - Core", "{D53E361C-527F-4C70-8EF0-F4CFE78AA13B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "models", "projects\models.vcxproj", "{A57E6B2D-10CA-4B5A-93B0-72EB28BA2E17}"
 EndProject
