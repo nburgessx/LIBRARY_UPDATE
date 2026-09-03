@@ -424,7 +424,11 @@ against baseline.
   Includes the `config` folder — calendar/holiday files and generator JSON
   (4b.4): strip legacy names and client-specific conventions. Nothing
   legacy-branded survives; broken or client-specific examples are cut, not
-  carried.
+  carried. **Also: regenerate `Calendar.csv` / `Calendar.conf`** — currently
+  `LastCalendarUpdate,20200723` (~6 yrs stale), which makes
+  `Calendars.UNIT_Expiry_Test` fail by design. Refresh from MarketWire /
+  SwapsWire via `CDWCalendarUpdate.bat` (in `resources\utilities\CDWCalendars`),
+  or bump the date as a stopgap.
 - ☐ **6.5** Rewrite `readme.md` (D7) — draft exists; refresh once names are final.
   Add the config-folder / generators / editions sections.
 - ☐ **6.6** Finalise `THIRD_PARTY_LICENSES.md` / `NOTICE` (Boost, QuantLib,
