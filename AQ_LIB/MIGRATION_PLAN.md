@@ -152,11 +152,14 @@ each numbered item.
   - SWIG `.i` files if they reference the path.
   - `Visualizer.natvis` if it names the project.
   - Rebuild every `*Python/*CSharp/*Java/*R` config; regenerate and redeploy.
-- ☐ **1.3 File/folder renames** — drop `Mizuho` / `MLIB` / `me` / `mir` from
-  names. `InitializeMLibETrading.*`, `InitializeMLibGoogleTest.*`,
-  `mlib_ReadMe.txt`, the 206 `tryMe*` files, 78 `me*` files. Fix every `#include`
-  in the same commit. Update `.vcxproj` / `.filters` / natvis / SWIG `.i` in the
-  same commit. One project per sub-batch, build between.
+- ◐ **1.3 File/folder renames** — commit `1377330`. Done: `InitializeMLibETrading.*`
+  → `InitializeAQETrading.*`, `InitializeMLibGoogleTest.*` → `InitializeAQGoogleTest.*`
+  (class + 124 includes + `etrading`/`GOOGLE_TEST` vcxproj), `mlib_ReadMe.txt`
+  deleted, `getMLIBQEnvironmentVariable*` → `getGoogleTestInputPath` /
+  `getConfigFolderPath`, `MLib`/`MLIBQ` product refs in comments/messages →
+  `AlgoQuantLib`. **Deferred:** `tryMe*` (206) and `me*` (78) file renames — folded
+  into Phase 3 (the `me→aq` identifier rename) to avoid churning `#include`s
+  twice; `mir*` files go in 1.4. Awaiting Nicholas's build.
 - ☐ **1.4 Remove `mir*` wholesale** — per the 0.5 call-graph (no inbound `aq`/`me`
   deps). Delete the 58 `AQ_API\mir*` files, ~35 `validation\tryMir*` files, and
   the `mir*` lines in `swig_*.i` / `swig_R_wrap.cpp`. Build clean.
