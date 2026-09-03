@@ -25,7 +25,7 @@ SWIG_STRINGMATRIX meUtilityPCA(const std::string& key,
 
 	SWIG_STRINGMATRIX ret;
 	
-	LAStringMatrix pca = validation_api::tryMeUtilityPCA(tmp_key, data, useCorrelationMatrix, nFactors);
+	LAStringMatrix pca = validation::tryMeUtilityPCA(tmp_key, data, useCorrelationMatrix, nFactors);
 	ret = swig::fromStringMatrixToMatrixOfString(pca);
 	
 	return ret;

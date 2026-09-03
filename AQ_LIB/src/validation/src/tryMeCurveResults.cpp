@@ -24,7 +24,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
     // Function to enable / disable the curve results object
 	std::string tryMeCurveResultsEnable( const bool & enable )
@@ -84,7 +84,7 @@ namespace validation_api
         VALID_EXCEPTION_START
 	
         // Trim Discount Factors
-        const LAStringMatrix trimmedDiscountFactors = validation_api::trimLAStringMatrix( discountFactorLVB );
+        const LAStringMatrix trimmedDiscountFactors = validation::trimLAStringMatrix( discountFactorLVB );
 
 		// Record Inputs
         RECORD_INPUTS( curveLVB, parameterLVB, trimmedDiscountFactors ) // forwardAdjustments // TODO: Fix me! - Record Inputs does not support StandardStringMatrix
@@ -258,7 +258,7 @@ namespace validation_api
         VALID_EXCEPTION_START
 	
         // Trim Jacobian
-        const LAStringMatrix trimmedJacobian = validation_api::trimLAStringMatrix( jacobianMatrix );
+        const LAStringMatrix trimmedJacobian = validation::trimLAStringMatrix( jacobianMatrix );
 
         RECORD_INPUTS( curveLVB, discountFactorParameterLVB, discountFactors, jacobianParameterLVB, marketDataShiftSizeInPercent, trimmedJacobian );
         

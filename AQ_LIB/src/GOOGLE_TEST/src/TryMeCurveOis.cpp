@@ -11,7 +11,7 @@ namespace google_test
         {
             try
             {
-                validation_api::tryMeCurveCalibrateOIS( inputFile_["curveCollection"],
+                validation::tryMeCurveCalibrateOIS( inputFile_["curveCollection"],
                                                         inputFile_["staticDataTable"],
                                                         inputFile_["curveIndex"],
                                                         inputFile_["curveConv"],
@@ -46,7 +46,7 @@ namespace google_test
 
             try
             {
-                validation_api::tryMeCurveCalibrateOIS( inputFileObj["curveCollection"],
+                validation::tryMeCurveCalibrateOIS( inputFileObj["curveCollection"],
                                                         inputFileObj["staticDataTable"],
                                                         inputFileObj["curveIndex"],
                                                         inputFileObj["curveConv"],

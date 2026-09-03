@@ -286,7 +286,7 @@ namespace google_test
 		CheckTestResultsAndRebaseOnRequest(calibratedRho, TEST_DIR, outputFileName_rho, tolerance);
 
 		// Flush the cache in preparation for a new set of curves
-		validation_api::tryMeUtilityClearEntityPool();
+		validation::tryMeUtilityClearEntityPool();
 		
     }
 

@@ -952,7 +952,7 @@ namespace google_test
         const STDStringVector keys =   {"label1","label2","label3"};
         const STDStringVector values = {"value1","value2","value3"};
         
-        STDStringMatrix LVB = validation_api::tryMeUtilityLVBCreate( keys, values );
+        STDStringMatrix LVB = validation::tryMeUtilityLVBCreate( keys, values );
 
         // Validate LVB Dimensions
         ASSERT_EQ( LVB.size(), 3 );     // 3 Rows
@@ -975,7 +975,7 @@ namespace google_test
         const STDStringVector values1 = {"value11","value12","value13"};
         const STDStringVector values2 = {"value21","value22","value23"};
         
-        STDStringMatrix LVB = validation_api::tryMeUtilityLVBCreate( keys, values1, values2 );
+        STDStringMatrix LVB = validation::tryMeUtilityLVBCreate( keys, values1, values2 );
 
         // Validate LVB Dimensions
         ASSERT_EQ( LVB.size(), 3 );     // 3 Rows
@@ -1002,7 +1002,7 @@ namespace google_test
         const STDStringVector keys =   {"label1","label2","label3"};
         const STDStringVector values = {"value1","value2","value3"};
         
-        STDStringMatrix LVB = validation_api::tryMeUtilityLVBCreate( keys, values );
+        STDStringMatrix LVB = validation::tryMeUtilityLVBCreate( keys, values );
 
         // Validate LVB Dimensions
         ASSERT_EQ( LVB.size(), 3 );     // 3 Rows
@@ -1019,9 +1019,9 @@ namespace google_test
         EXPECT_EQ( "value3", LVB[2][1] );
 
         // Add some extra key value pairs
-        validation_api::tryMeUtilityLVBAdd( LVB, "label4", "value4" );
-        validation_api::tryMeUtilityLVBAdd( LVB, "label5", "value5" );
-        validation_api::tryMeUtilityLVBAdd( LVB, "label6", "value6" );
+        validation::tryMeUtilityLVBAdd( LVB, "label4", "value4" );
+        validation::tryMeUtilityLVBAdd( LVB, "label5", "value5" );
+        validation::tryMeUtilityLVBAdd( LVB, "label6", "value6" );
 
         // Validate NEW LVB Dimensions
         ASSERT_EQ( LVB.size(), 6 );     // 3 Rows
@@ -1044,7 +1044,7 @@ namespace google_test
         const STDStringVector values1 = {"value11","value12","value13"};
         const STDStringVector values2 = {"value21","value22","value23"};
         
-        STDStringMatrix LVB = validation_api::tryMeUtilityLVBCreate( keys, values1, values2 );
+        STDStringMatrix LVB = validation::tryMeUtilityLVBCreate( keys, values1, values2 );
 
         // Validate LVB Dimensions
         ASSERT_EQ( LVB.size(), 3 );     // 3 Rows
@@ -1066,9 +1066,9 @@ namespace google_test
         EXPECT_EQ( "value23", LVB[2][2] );
 
         // Add some extra key value pairs
-        validation_api::tryMeUtilityLVBAdd( LVB, "label4", "value14", "value24" );
-        validation_api::tryMeUtilityLVBAdd( LVB, "label5", "value15", "value25" );
-        validation_api::tryMeUtilityLVBAdd( LVB, "label6", "value16", "value26" );
+        validation::tryMeUtilityLVBAdd( LVB, "label4", "value14", "value24" );
+        validation::tryMeUtilityLVBAdd( LVB, "label5", "value15", "value25" );
+        validation::tryMeUtilityLVBAdd( LVB, "label6", "value16", "value26" );
         
         // Validate NEW LVB Dimensions
         ASSERT_EQ( LVB.size(), 6 );     // 3 Rows

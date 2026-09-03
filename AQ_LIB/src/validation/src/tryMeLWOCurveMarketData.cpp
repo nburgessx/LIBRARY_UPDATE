@@ -18,7 +18,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
     /* @brief Creates a LWOCurveMarketData object, containing all of the curve properties.
 	 * @param [in] objectName               The name of the Market Data object

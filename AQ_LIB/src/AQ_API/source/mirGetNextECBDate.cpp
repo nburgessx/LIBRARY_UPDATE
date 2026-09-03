@@ -17,7 +17,7 @@ std::string mirGetNextECBDate(const std::string& baseDate,
 		// Input marshalling
 		LADate baseDt(baseDate.c_str(),"YYYYMMDD");
 
-		LADate date = validation_api::tryMirGetNextECBDate(baseDt, strictlyAfter);
+		LADate date = validation::tryMirGetNextECBDate(baseDt, strictlyAfter);
 		
 		ret = date.stringWithFormat("YYYYMMDD").getCString();
 

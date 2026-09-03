@@ -2,7 +2,7 @@
 
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation interface for the meUtilityVersion function
     *  @param [in]		enable		True to enable the recording of tests

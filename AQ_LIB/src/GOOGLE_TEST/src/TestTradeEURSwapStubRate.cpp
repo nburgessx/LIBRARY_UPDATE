@@ -66,7 +66,7 @@ namespace google_test
 
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getStubRateInputs, i ) );
 
-                const double stubRate = validation_api::tryMirSwapStubRate(
+                const double stubRate = validation::tryMirSwapStubRate(
                                             getDataInstance(),
                                             inputFile["effDt"],
                                             inputFile["mat"],
@@ -122,7 +122,7 @@ namespace google_test
 
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getStubRateInputsUsingTenor, i ) );
 
-                const double stubRate = validation_api::tryMirSwapStubRate( getDataInstance(),
+                const double stubRate = validation::tryMirSwapStubRate( getDataInstance(),
                                                                             inputFile["effDt"],
                                                                             inputFile["mat"],
                                                                             inputFile["freq"],

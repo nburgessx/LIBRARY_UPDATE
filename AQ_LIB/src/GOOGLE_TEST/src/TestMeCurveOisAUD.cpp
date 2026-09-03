@@ -60,7 +60,7 @@ namespace google_test
 
         const DoubleArray yearFractions = inputFile["yearFractions"];
 
-        DoubleArray results = validation_api::tryMeCurveDiscountFactorsFromYearFractions( yearFractions,
+        DoubleArray results = validation::tryMeCurveDiscountFactorsFromYearFractions( yearFractions,
                               inputFile["dayCount"],
                               inputFile["curveCollection"],
                               inputFile["curveIndex"] );
@@ -82,7 +82,7 @@ namespace google_test
 
         const DoubleArray yearFractions = inputFile["yearFractions"];
 
-        DoubleArray results = validation_api::tryMeCurveDiscountFactorsFromYearFractions( yearFractions,
+        DoubleArray results = validation::tryMeCurveDiscountFactorsFromYearFractions( yearFractions,
                               inputFile["dayCount"],
                               inputFile["curveCollection"],
                               inputFile["curveIndex"] );

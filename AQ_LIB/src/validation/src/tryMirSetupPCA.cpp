@@ -11,7 +11,7 @@ namespace
     static std::map<std::string, size_t> num_call_pca;
 }
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			validation interface for the mirSetupPCA method

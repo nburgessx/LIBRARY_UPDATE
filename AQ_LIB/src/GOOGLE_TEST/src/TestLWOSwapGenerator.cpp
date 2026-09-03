@@ -37,7 +37,7 @@ namespace google_test
         bool validateKeys                                   = inputFile["validateKeys"];
         
         // Create Swap
-        std::string swapNameResult = validation_api::tryMeLWOSwapCreateFromGenerator( swapName,
+        std::string swapNameResult = validation::tryMeLWOSwapCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock(expressionLVB),
                                                                                       etrading::LabelValueBlock(swapPropertiesLVB),
@@ -64,14 +64,14 @@ namespace google_test
         bool validateKeys                                   = inputFile["validateKeys"];
         
         // Create Swap
-        std::string swapNameResult = validation_api::tryMeLWOSwapCreateFromGenerator( swapName,
+        std::string swapNameResult = validation::tryMeLWOSwapCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock(expressionLVB),
                                                                                       etrading::LabelValueBlock(swapPropertiesLVB),
                                                                                       isXccySwap,
                                                                                       validateKeys );
 
-        swapNameResult = validation_api::tryMeLWOSwapCreateFromGenerator( swapName,
+        swapNameResult = validation::tryMeLWOSwapCreateFromGenerator( swapName,
                                                                           swapGeneratorName,
                                                                           etrading::LabelValueBlock(expressionLVB),
                                                                           etrading::LabelValueBlock(swapPropertiesLVB),

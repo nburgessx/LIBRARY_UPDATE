@@ -119,10 +119,10 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string swapObj = validation_api::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string swapObj = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // Calculate the par rate
-                double swapParRate = validation_api::tryMeLWOSwapParRate( swapTradeName, etrading::fromStringToLVB("JPYYC") );
+                double swapParRate = validation::tryMeLWOSwapParRate( swapTradeName, etrading::fromStringToLVB("JPYYC") );
                 
                 // Check the Test Results or Rebase
 				#if defined(GTEST32)

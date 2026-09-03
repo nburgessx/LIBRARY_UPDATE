@@ -2,7 +2,7 @@
 
 #include "LADataInstance.h"
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation interface for the mirGetAnnuity1 method
     *  @param [in]		dataInstance			Pointer to the object pool

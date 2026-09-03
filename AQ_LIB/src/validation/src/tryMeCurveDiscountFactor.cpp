@@ -20,7 +20,7 @@ using etrading::CreateDataFile;
 using etrading::decorateCurvename;
 
 
-namespace validation_api
+namespace validation
 {
     /* @brief			return the day count used in the core library
     */

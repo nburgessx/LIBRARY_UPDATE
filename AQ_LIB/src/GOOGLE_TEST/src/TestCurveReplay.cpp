@@ -45,7 +45,7 @@ const char EURFXFwdGbpCurveInputs[]      = TEST_DIR "EURYC_FWDGBP_tryMirSetUpFwd
 namespace google_test
 {
     using etrading::ReadDataFile;
-    using validation_api::tryMirReplay;
+    using validation::tryMirReplay;
 
 	DECLARE_TEST_FIXTURE(TestCurveReplay);
 

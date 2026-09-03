@@ -13,7 +13,7 @@ namespace google_test
         {
             try
             {
-                validation_api::tryMirSetUpOISCurve( getDataInstance(),
+                validation::tryMirSetUpOISCurve( getDataInstance(),
                                                      curveID_,
                                                      marketName_,
                                                      inputFile_["generalProps"],
@@ -52,7 +52,7 @@ namespace google_test
 
 			try
             {
-                validation_api::tryMirSetUpOISCurve( etrading::InitializeAQETrading::instance().dataInstance(),
+                validation::tryMirSetUpOISCurve( etrading::InitializeAQETrading::instance().dataInstance(),
                                                      curveID,
                                                      marketName,
                                                      inputFileObj["generalProps"],

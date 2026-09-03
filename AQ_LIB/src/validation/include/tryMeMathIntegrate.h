@@ -16,7 +16,7 @@
 // Forward Declaration
 class LADate;
 
-namespace validation_api
+namespace validation
 {
     /* @brief			Calculate the Numerical Integral of a Interpolator Target Function
     *  @param [in]		terms			    A vector of terms year fractions, x-axis

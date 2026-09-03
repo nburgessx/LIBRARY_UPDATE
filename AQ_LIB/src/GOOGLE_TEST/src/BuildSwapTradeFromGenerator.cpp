@@ -95,7 +95,7 @@ namespace google_test
                                                            isFwdInter2 );
 
         // Create Swap from Swap Generator
-        std::string swapObjectName = validation_api::tryMeLWOSwapCreateFromGenerator( swapName,
+        std::string swapObjectName = validation::tryMeLWOSwapCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock( swapExpression ),
                                                                                       etrading::LabelValueBlock( LAStringMatrix() ),
@@ -112,7 +112,7 @@ namespace google_test
         LAStringMatrix swapExpression = buildSwapExpression( effectiveDate, maturityDateOrTenor );
 
         // Create Swap from Swap Generator
-        std::string swapObjectName = validation_api::tryMeLWOSwapCreateFromGenerator( swapName,
+        std::string swapObjectName = validation::tryMeLWOSwapCreateFromGenerator( swapName,
                                                                                       swapGeneratorName,
                                                                                       etrading::LabelValueBlock( swapExpression ),
                                                                                       etrading::LabelValueBlock( LAStringMatrix() ),
@@ -133,7 +133,7 @@ namespace google_test
 		bool isXccySwap = swapInputFile["isXccySwap"];
 		bool validateKeys = swapInputFile["validateKeys"];
 
-		validation_api::tryMeLWOSwapCreate(swapName, swapLvb, swapProperties, isXccySwap, validateKeys);
+		validation::tryMeLWOSwapCreate(swapName, swapLvb, swapProperties, isXccySwap, validateKeys);
 	}
 
 }

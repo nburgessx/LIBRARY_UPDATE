@@ -15,7 +15,7 @@
 #include "MBRoot.h"
 
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation interface for the mirSwapDuration method
     *  @param [in]		root			                Pointer to the entity pool

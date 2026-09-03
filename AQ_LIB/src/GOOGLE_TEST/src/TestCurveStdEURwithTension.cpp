@@ -88,7 +88,7 @@ namespace google_test
     TEST_F( TestCurveStdEURwithTension, SNAPSHOT_OutPutDF )
     {
         const DoubleArray results
-            = validation_api::tryMirOutputCurve(
+            = validation::tryMirOutputCurve(
                   getDataInstance(),
                   getCurveID(),
                   getMarketName() );
@@ -105,7 +105,7 @@ namespace google_test
         DateVector toDateVector = inputFile["toDates"];
 
         const DoubleArray results
-            = validation_api::tryMirGetForwardRate2(
+            = validation::tryMirGetForwardRate2(
                   getDataInstance(),
                   fromDateVector,
                   toDateVector,

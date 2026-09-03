@@ -14,7 +14,7 @@
 #include <vector>
 
 
-namespace validation_api
+namespace validation
 {
     // Calculate the Price
     const double tryMeMathEuropeanIRSwaptionPrice( const std::string & payerReceiver,

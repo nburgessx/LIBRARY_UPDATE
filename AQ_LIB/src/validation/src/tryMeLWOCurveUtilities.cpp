@@ -22,7 +22,7 @@ using etrading::CreateDataFile;
 using etrading::decorateCurvename;
 
 
-namespace validation_api
+namespace validation
 {
     const std::vector<std::string> tryMeLWOCurveList()
     {

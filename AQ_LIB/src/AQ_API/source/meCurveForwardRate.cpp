@@ -30,7 +30,7 @@ std::vector<double> meCurveForwardRatesFromYearFraction( const std::vector<std::
 	LAString tmp_curveIndex(curveIndex.c_str());
 	LAString tmp_dayCount(dayCount.c_str());
 
-	results = validation_api::tryMeCurveForwardRatesFromYearFraction( tmp_fromDates, 
+	results = validation::tryMeCurveForwardRatesFromYearFraction( tmp_fromDates, 
 																	    yearFraction,
 																	    tmp_dayCount,
 																	    tmp_curveCollection, 
@@ -60,7 +60,7 @@ std::vector<double> meCurveForwardRates( const std::vector<std::string>& fixingD
 	LAString tmp_curveCollection(curveCollection.c_str());
 	LAString tmp_curveIndex(curveIndex.c_str());
 
-	results = validation_api::tryMeCurveForwardRates( tmp_fixingDates, 
+	results = validation::tryMeCurveForwardRates( tmp_fixingDates, 
 														tmp_curveCollection, 
 														tmp_curveIndex );
 	return results;
@@ -93,7 +93,7 @@ std::vector<double> meCurveForwardRatesFromForwardDates( const std::vector<std::
 	LAString tmp_curveCollection(curveCollection.c_str());
 	LAString tmp_curveIndex(curveIndex.c_str());
 
-	results = validation_api::tryMeCurveForwardRatesFromForwardDates( tmp_fromDates,
+	results = validation::tryMeCurveForwardRatesFromForwardDates( tmp_fromDates,
                                                                         tmp_toDates,
 														                tmp_curveCollection, 
 														                tmp_curveIndex );
@@ -121,7 +121,7 @@ std::vector<double> meCurveForwardRatesFromForwardDates(const std::vector<std::s
 	LAString tmp_curveCollection(curveCollection.c_str());
 	LAString tmp_curveIndex(curveIndex.c_str());
 
-	results = validation_api::tryMeCurveForwardRatesFromForwardDates(tmp_fromDates,
+	results = validation::tryMeCurveForwardRatesFromForwardDates(tmp_fromDates,
 																	 tmp_toDates,
 																	 tmp_curveCollection,
 																	 tmp_curveIndex,

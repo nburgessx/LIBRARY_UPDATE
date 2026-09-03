@@ -31,7 +31,7 @@ namespace
 	}
 }
 
-namespace validation_api
+namespace validation
 {
    /* @brief			Validation interface for the meSwapDeltaLadder method. This method calculates a Delta Ladder for a vector of swaps
 	*  @param [out]		headers						Headers of the delta report
@@ -67,13 +67,13 @@ namespace validation_api
 		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor, xccyFXSpotRates );
 
         // Trim Inputs then Check if they are empty
-        LAStringVector trimmedSwapNames = validation_api::trimLAStringVector( swapNames );
-        LAStringMatrix trimmedCurveCollectionsNames = validation_api::trimLAStringMatrix( curveCollectionNames );
-        LAStringMatrix trimmedFixingTableNames = validation_api::trimLAStringMatrix( fixingTableNames );
+        LAStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
+        LAStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
+        LAStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
         
         // Appears to be already trimmed in the XLLPlusTips.cpp
         // How would we trim double vectors?, blank excel input mostly treated as zero, perhaps in XLOper layer
-        // DoubleVector trimmedXccyFXSpotRates = validation_api::trimDoubleVector( xccyFXSpotRates );
+        // DoubleVector trimmedXccyFXSpotRates = validation::trimDoubleVector( xccyFXSpotRates );
         DoubleVector trimmedXccyFXSpotRates = xccyFXSpotRates; 
 
         const size_t nSwaps           = trimmedSwapNames.size();
@@ -230,13 +230,13 @@ namespace validation_api
 		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, aggregateRisks, reportInLegCCY, riskCutOffTenor, xccyFXSpotRates );
 
         // Trim Inputs then Check if they are empty
-        LAStringVector trimmedSwapNames = validation_api::trimLAStringVector( swapNames );
-        LAStringMatrix trimmedCurveCollectionsNames = validation_api::trimLAStringMatrix( curveCollectionNames );
-        LAStringMatrix trimmedFixingTableNames = validation_api::trimLAStringMatrix( fixingTableNames );
+        LAStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
+        LAStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
+        LAStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
         
         // Appears to be already trimmed in the XLLPlusTips.cpp
         // How would we trim double vectors?, blank excel input mostly treated as zero, perhaps in XLOper layer
-        // DoubleVector trimmedXccyFXSpotRates = validation_api::trimDoubleVector( xccyFXSpotRates );
+        // DoubleVector trimmedXccyFXSpotRates = validation::trimDoubleVector( xccyFXSpotRates );
         DoubleVector trimmedXccyFXSpotRates = xccyFXSpotRates; 
 
         const size_t nSwaps           = trimmedSwapNames.size();
@@ -439,13 +439,13 @@ namespace validation_api
 		RECORD_INPUTS( swapNames, curveCollectionNames, fixingTableNames, bumpSpreadInstruments, bumpSize, bumpMode, groupRiskBy, aggregateRisks, reportInLegCCY, xccyFXSpotRates );
 
 		// Trim Inputs then Check if they are empty
-        LAStringVector trimmedSwapNames = validation_api::trimLAStringVector( swapNames );
-        LAStringMatrix trimmedCurveCollectionsNames = validation_api::trimLAStringMatrix( curveCollectionNames );
-        LAStringMatrix trimmedFixingTableNames = validation_api::trimLAStringMatrix( fixingTableNames );
+        LAStringVector trimmedSwapNames = validation::trimLAStringVector( swapNames );
+        LAStringMatrix trimmedCurveCollectionsNames = validation::trimLAStringMatrix( curveCollectionNames );
+        LAStringMatrix trimmedFixingTableNames = validation::trimLAStringMatrix( fixingTableNames );
         
         // Appears to be already trimmed in the XLLPlusTips.cpp
         // How would we trim double vectors?, blank excel input mostly treated as zero, perhaps in XLOper layer
-        // DoubleVector trimmedXccyFXSpotRates = validation_api::trimDoubleVector( xccyFXSpotRates );
+        // DoubleVector trimmedXccyFXSpotRates = validation::trimDoubleVector( xccyFXSpotRates );
         DoubleVector trimmedXccyFXSpotRates = xccyFXSpotRates; 
 
         const size_t nSwaps           = trimmedSwapNames.size();

@@ -195,7 +195,7 @@ namespace
 			}
 		}
 
-		validation_api::tryMeLWOCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
+		validation::tryMeLWOCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
 	}
 
 	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
@@ -212,7 +212,7 @@ namespace
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation_api::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -236,11 +236,11 @@ namespace
 		propertyNames.push_back( "MODEL_PROPERTIES" );
 		propertyNames.push_back( "CDS_MARKETDATA" );
 
-		std::vector<validation_api::TableInfo> infoBlocks;
+		std::vector<validation::TableInfo> infoBlocks;
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 		infoBlocks.push_back( getTableInfoFromStringMatrix( cdsMarketData ));
 
-		std::string objectName = validation_api::tryMeLWOCreditModelCreate( creditModelName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryMeLWOCreditModelCreate( creditModelName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -250,7 +250,7 @@ namespace
 		const std::string swapGeneratorName		= swapGeneratorFileObj[ "swapGeneratorName" ];
 		const LAStringMatrix swapGeneratorLVB		= swapGeneratorFileObj[ "swapGeneratorLVB" ];
 
-		std::string objectName = validation_api::tryMeLWOSwapGeneratorCreate( swapGeneratorName, swapGeneratorLVB );
+		std::string objectName = validation::tryMeLWOSwapGeneratorCreate( swapGeneratorName, swapGeneratorLVB );
 		return objectName;
 	}
 
@@ -266,14 +266,14 @@ namespace
 		const bool isXccySwap					= constantMaturitySwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= constantMaturitySwapFileObj[ "validateKeys" ];
 		
-		validation_api::tryMeLWOSwapCreateFromGenerator( swapName, lwoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		validation::tryMeLWOSwapCreateFromGenerator( swapName, lwoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 		return swapName;
 	}
 
 	void validateCashflowsForLegName( const std::string& swapName, const std::string& creditModelName, const LAStringMatrix& displayModelNames, const std::string legName )
 	{
 	
-		std::vector<AnyTypeMatrix> cashflowMatrices = validation_api::tryMeLWOSwapDisplayCashflows( swapName, displayModelNames, legName.c_str() );
+		std::vector<AnyTypeMatrix> cashflowMatrices = validation::tryMeLWOSwapDisplayCashflows( swapName, displayModelNames, legName.c_str() );
 
 		const size_t vecSize = cashflowMatrices.size();
 		ASSERT_EQ( vecSize, 1 ); // Expect a single cashflow matrix
@@ -317,7 +317,7 @@ namespace
 		}
 
 		// ---- Calculate the total PV of swap leg ----
-		const double calculatedLegPV = validation_api::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, legName.c_str() );
+		const double calculatedLegPV = validation::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, legName.c_str() );
 		ASSERT_NEAR( calculatedLegPV, totalPV, tolerance );
 	}
 
@@ -351,7 +351,7 @@ namespace google_test
 		const std::string creditModelName	= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
 
-		const double calculatedPV = validation_api::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, legName.c_str() );
+		const double calculatedPV = validation::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		const double pvTolerance = 10.0;  // Notional of 1MM. We can afford a slightly wider tolerance which allows 64bit test to pass.
@@ -362,7 +362,7 @@ namespace google_test
 		etrading::ReadDataFile::Load PVPremiumFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_PREMIUM_PV );
 		std::string premiumLegName			= PVPremiumFileObj[ "legName"];
 
-		const double calculatedPremiumPV = validation_api::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, premiumLegName.c_str() );
+		const double calculatedPremiumPV = validation::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, premiumLegName.c_str() );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedPremiumPV, TEST_DIR, TRS_EXPECTED_PREMIUM_PV, pvTolerance );
@@ -373,7 +373,7 @@ namespace google_test
 		etrading::ReadDataFile::Load PVFloatFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_FLOAT_PV );
 		std::string floatLegName			= PVFloatFileObj[ "legName"];
 
-		const double calculatedFloatPV = validation_api::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, floatLegName.c_str() );
+		const double calculatedFloatPV = validation::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, floatLegName.c_str() );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedFloatPV, TEST_DIR, TRS_EXPECTED_FLOAT_PV, pvTolerance );
@@ -402,7 +402,7 @@ namespace google_test
 		const std::string swapName			= parRateFileObj[ "swapName" ];
 		const std::string creditModelName		= parRateFileObj[ "creditModelName" ];
 
-		const double calculatedParRate = validation_api::tryMeLWOTotalReturnSwapParRate( swapName, creditModelName );
+		const double calculatedParRate = validation::tryMeLWOTotalReturnSwapParRate( swapName, creditModelName );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedParRate, TEST_DIR, TRS_EXPECTED_PAR_RATE, tolerance );
@@ -429,7 +429,7 @@ namespace google_test
 		const std::string swapName			= parRateFileObj[ "swapName" ];
 		const std::string creditModelName	= parRateFileObj[ "creditModelName" ];
 
-		const double calculatedParSpread = validation_api::tryMeLWOTotalReturnSwapParSpread( swapName, creditModelName );
+		const double calculatedParSpread = validation::tryMeLWOTotalReturnSwapParSpread( swapName, creditModelName );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedParSpread, TEST_DIR, TRS_EXPECTED_PAR_SPREAD, tolerance );
@@ -456,7 +456,7 @@ namespace google_test
 		const std::string creditModelName	= PVFileObj[ "creditModelName" ];
 		std::string legName					= PVFileObj[ "legName"];
 
-		const double calculated_PayOnSurvival_ALL_PV = validation_api::tryMeLWOTotalReturnSwapPV( swapName_payOnSurvival, creditModelName, legName.c_str() );
+		const double calculated_PayOnSurvival_ALL_PV = validation::tryMeLWOTotalReturnSwapPV( swapName_payOnSurvival, creditModelName, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		const double pvTolerance = 10.0;  // Notional of 1MM. We can afford a slightly wider tolerance which allows 64bit test to pass.
@@ -467,7 +467,7 @@ namespace google_test
 		etrading::ReadDataFile::Load PVPremiumFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_PREMIUM_PV );
 		std::string premiumLegName			= PVPremiumFileObj[ "legName"];
 
-		const double calculatedPremiumPV = validation_api::tryMeLWOTotalReturnSwapPV( swapName_payOnSurvival, creditModelName, premiumLegName.c_str() );
+		const double calculatedPremiumPV = validation::tryMeLWOTotalReturnSwapPV( swapName_payOnSurvival, creditModelName, premiumLegName.c_str() );
 
 		// The PAYMENTTRIGGER is set on the FLOAT leg. The premium LEG should therefore have the same PV as before.
         CheckTestResultsAndRebaseOnRequest( calculatedPremiumPV, TEST_DIR, TRS_EXPECTED_PREMIUM_PV, pvTolerance );
@@ -478,7 +478,7 @@ namespace google_test
 		etrading::ReadDataFile::Load PVFloatFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_FLOAT_PV );
 		std::string floatLegName			= PVFloatFileObj[ "legName"];
 
-		const double calculatedFloat_PayOnSurvival_PV = validation_api::tryMeLWOTotalReturnSwapPV( swapName_payOnSurvival, creditModelName, floatLegName.c_str() );
+		const double calculatedFloat_PayOnSurvival_PV = validation::tryMeLWOTotalReturnSwapPV( swapName_payOnSurvival, creditModelName, floatLegName.c_str() );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedFloat_PayOnSurvival_PV, TEST_DIR, TRS_EXPECTED_PAY_ON_SURVIVAL_FLOAT_PV, pvTolerance );
@@ -487,7 +487,7 @@ namespace google_test
 		createLWOSwapGeneratorFromFileName( GEN_TOTAL_RETURN_SWAPGENERATOR );
 		const std::string swapName = createLWOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP );
 
-		const double calculatedFloatPV = validation_api::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, floatLegName.c_str() );
+		const double calculatedFloatPV = validation::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, floatLegName.c_str() );
 
 		// ASSERT_LE( calculatedFloat_PayOnSurvival_PV, calculatedFloatPV );
 		ASSERT_LE( fabs( calculatedFloat_PayOnSurvival_PV ), fabs( calculatedFloatPV ) );
@@ -538,7 +538,7 @@ namespace google_test
 		// 1. Calculate Premium Leg annuity
 		etrading::ReadDataFile::Load annuityFileObj = etrading::ReadDataFile::Load( TRS_CALCULATE_PREMIUM_ANNUITY );
 		std::string legName			= annuityFileObj[ "legName"];
-		const double calculatedPremiumAnnuity = validation_api::tryMeLWOTotalReturnSwapAnnuity( swapName, creditModelName, legName );
+		const double calculatedPremiumAnnuity = validation::tryMeLWOTotalReturnSwapAnnuity( swapName, creditModelName, legName );
 
 		// Check the Test Results or Rebase
 		const double annuityTolerance = 1.0e-2;
@@ -546,7 +546,7 @@ namespace google_test
 
 		// 2. Calculate Float Leg annuity
 		legName = "Leg2:FLOAT";
-		const double calculatedFloatAnnuity_payAlways = validation_api::tryMeLWOTotalReturnSwapAnnuity( swapName, creditModelName, legName );
+		const double calculatedFloatAnnuity_payAlways = validation::tryMeLWOTotalReturnSwapAnnuity( swapName, creditModelName, legName );
         CheckTestResultsAndRebaseOnRequest( calculatedFloatAnnuity_payAlways, TEST_DIR, TRS_EXPECTED_FLOAT_PAYALWAYS_ANNUITY, annuityTolerance );
 
 		
@@ -557,7 +557,7 @@ namespace google_test
 		const std::string swapName_payOnSurvival = createLWOTotalReturnSwapFromFileName( GEN_TOTAL_RETURN_SWAP_PAY_ON_SURVIVAL );
 
 		// 3. Calculate Float Leg annuity: PayOnSurvival
-		const double calculatedFloatAnnuity_payOnSurvival = validation_api::tryMeLWOTotalReturnSwapAnnuity( swapName_payOnSurvival, creditModelName, legName );
+		const double calculatedFloatAnnuity_payOnSurvival = validation::tryMeLWOTotalReturnSwapAnnuity( swapName_payOnSurvival, creditModelName, legName );
         CheckTestResultsAndRebaseOnRequest( calculatedFloatAnnuity_payOnSurvival, TEST_DIR, TRS_EXPECTED_FLOAT_PAYONSURVIVAL_ANNUITY, annuityTolerance );
 
 		// Final sanity check: The annuity for "PayOnSurvival" must be strictly less than the annuity for "PayAlways"

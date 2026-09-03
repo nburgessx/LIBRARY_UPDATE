@@ -4,7 +4,7 @@
 
 using etrading::LabelValueBlock;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			return a set of expected keys for bond leg schedule label value block

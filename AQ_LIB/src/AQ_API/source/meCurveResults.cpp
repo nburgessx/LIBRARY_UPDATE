@@ -13,7 +13,7 @@ SWIG_STRINGMATRIX meCurveResultsDisplayDiscountFactors (const std::string& curve
 {
 	AQ_API_START
     
-	etrading::VariantMatrix results = validation_api::tryMeCurveResultsDiscountFactorsDisplayAll(curveCollection, curveIndex);
+	etrading::VariantMatrix results = validation::tryMeCurveResultsDiscountFactorsDisplayAll(curveCollection, curveIndex);
 
     // Marshall Output to Standard String Matrix
 	SWIG_STRINGMATRIX resultsStringMatrix = swig::fromVariantMatrixToMatrixOfString( results );

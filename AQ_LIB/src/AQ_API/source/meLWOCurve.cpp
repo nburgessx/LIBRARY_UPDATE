@@ -22,7 +22,7 @@ SWIG_STRINGMATRIX meLWOCurveDisplay(const std::string& curveHandle)
 	AQ_API_START
     
 	// This returns a ragged matrix
-	etrading::VariantMatrix results = validation_api::tryMeLWOCurveDisplay(curveHandle);
+	etrading::VariantMatrix results = validation::tryMeLWOCurveDisplay(curveHandle);
 
 	// Transpose the result so that we have two columns of curve config, and further columns of market data
 	etrading::VariantMatrix transposedResults = etrading::transpose( results, true /* pad if input is a ragged matrix */ );
@@ -43,7 +43,7 @@ SWIG_STRINGMATRIX meLWOCurveMarketDataDisplay(const std::string& marketDataObjec
 {
 	AQ_API_START
     
-	etrading::VariantMatrix results = validation_api::tryMeLWOCurveMarketDataDisplay( marketDataObjectName, marketDataKey );
+	etrading::VariantMatrix results = validation::tryMeLWOCurveMarketDataDisplay( marketDataObjectName, marketDataKey );
 
     // Marshall Output to Standard String Matrix
 	SWIG_STRINGMATRIX resultsStringMatrix = swig::fromVariantMatrixToMatrixOfString( results );
@@ -62,7 +62,7 @@ SWIG_STRINGMATRIX meLWOCurveMarketDataDisplayFromCurve(const std::string& curveO
 {
 	AQ_API_START
     
-	etrading::VariantMatrix results = validation_api::tryMeLWOCurveMarketDataDisplayFromCurve( curveObjectName, marketDataKey );
+	etrading::VariantMatrix results = validation::tryMeLWOCurveMarketDataDisplayFromCurve( curveObjectName, marketDataKey );
 
     // Marshall Output to Standard String Matrix
 	SWIG_STRINGMATRIX resultsStringMatrix = swig::fromVariantMatrixToMatrixOfString( results );
@@ -88,7 +88,7 @@ std::string meLWOCurveCalibrate( const std::string& objectName,
 {
 	AQ_API_START
 
-	std::string curveIndexAndAliasNames = validation_api::tryMeLWOCurveCalibrate( objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+	std::string curveIndexAndAliasNames = validation::tryMeLWOCurveCalibrate( objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	return curveIndexAndAliasNames;
 
 	AQ_API_END
@@ -186,7 +186,7 @@ std::string meLWOCurveMarketDataCreate( const std::string& objectName,
 		infoBlocks.push_back( getTableInfoFromStringMatrix( matrix4 ));
 	}
 
-	std::string result = validation_api::tryMeLWOCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
+	std::string result = validation::tryMeLWOCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
 
 	return result;
 
@@ -240,7 +240,7 @@ std::string meLWOCurveMarketDataCreateUsingMultipleBlocks( const std::string& ob
 	}
 
 	// Build the curve market data
-	std::string result = validation_api::tryMeLWOCurveMarketDataCreate( objectName, keyVector, infoBlocks );
+	std::string result = validation::tryMeLWOCurveMarketDataCreate( objectName, keyVector, infoBlocks );
 
 	return result;
 
@@ -268,7 +268,7 @@ std::string meLWOFixingTableCreate( const std::string& tableName,
     swig::buildGregorianDateVector( gregorianFixingDates, fixingDates );
 
     // Call Method
-	const std::string result = validation_api::tryMeLWOFixingTableCreate( tableName,
+	const std::string result = validation::tryMeLWOFixingTableCreate( tableName,
                                                                           currency,
                                                                           curveTenor,
                                                                           gregorianFixingDates, 
@@ -288,7 +288,7 @@ SWIG_STRINGMATRIX meLWOFixingTableDisplay( const std::string& tableName )
     AQ_API_START
     
     // Call Method
-	etrading::VariantMatrix results = validation_api::tryMeLWOFixingTableDisplay( tableName );
+	etrading::VariantMatrix results = validation::tryMeLWOFixingTableDisplay( tableName );
 
     // Marshall Output to Standard String Matrix
 	SWIG_STRINGMATRIX resultsStringMatrix = swig::fromVariantMatrixToMatrixOfString( results );
@@ -310,7 +310,7 @@ double meLWOFixingTableValue( const std::string& tableName, const std::string & 
     boost::gregorian::date gregorianFixingDate( etrading::validateAndConvertStringToGregorianDate( fixingDate ) );
     
     // Call Method
-    const double result = validation_api::tryMeLWOFixingTableValue( tableName, gregorianFixingDate );
+    const double result = validation::tryMeLWOFixingTableValue( tableName, gregorianFixingDate );
 	
     // Output
     return result;
@@ -332,7 +332,7 @@ std::vector<double> meLWOFixingTableValues( const std::string& tableName, const 
     swig::buildGregorianDateVector( gregorianFixingDates, fixingDates );
     
     // Call Method
-    const std::vector<double> results = validation_api::tryMeLWOFixingTableValues( tableName, gregorianFixingDates );
+    const std::vector<double> results = validation::tryMeLWOFixingTableValues( tableName, gregorianFixingDates );
 	
     // Output
     return results;
@@ -360,7 +360,7 @@ std::vector<double> meLWOCurveDiscountFactorsWithSpread( const std::vector<std::
     swig::buildDateVector( tempPaymentDates, paymentDates );
     
     // Call Method
-    const std::vector<double> discountFactors = validation_api::tryMeLWOCurveDiscountFactorsWithSpread( tempPaymentDates, curveCollection, curveIndex, spread, fixingTableName );
+    const std::vector<double> discountFactors = validation::tryMeLWOCurveDiscountFactorsWithSpread( tempPaymentDates, curveCollection, curveIndex, spread, fixingTableName );
 	
     // Output
     return discountFactors;

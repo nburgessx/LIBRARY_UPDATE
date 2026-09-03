@@ -30,7 +30,7 @@ std::string mirGetDate(const std::string& BaseDate,
 		LAString calendar(Calendar.c_str());
 		LAString rollConvention(RollConvention.c_str());
 
-		ret = validation_api::tryMirGetDate(baseDate, term, slidingRule, calendar, rollConvention).getCString();
+		ret = validation::tryMirGetDate(baseDate, term, slidingRule, calendar, rollConvention).getCString();
 	} 
 	catch (LACoreError& mesx) 
 	{
@@ -67,7 +67,7 @@ std::vector<std::string> mirGetDate(const std::vector<std::string>& BaseDates,
 		LAString calendar(Calendar.c_str());
 		LAString rollConvention(RollConvention.c_str());
 
-		DateVector dates = validation_api::tryMirGetDate(baseDateVec, term, slidingRule, calendar, rollConvention);
+		DateVector dates = validation::tryMirGetDate(baseDateVec, term, slidingRule, calendar, rollConvention);
 		
 		for(size_t i=0; i<dates.size(); ++i)
 		{

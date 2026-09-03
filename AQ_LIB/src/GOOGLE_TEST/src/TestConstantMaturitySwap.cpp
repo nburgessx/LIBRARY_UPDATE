@@ -84,7 +84,7 @@ namespace
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation_api::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -108,7 +108,7 @@ namespace
 		const bool isXccySwap					= constantMaturitySwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= constantMaturitySwapFileObj[ "validateKeys" ];
 		
-		validation_api::tryMeLWOSwapCreateFromGenerator( swapName, lwoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		validation::tryMeLWOSwapCreateFromGenerator( swapName, lwoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 }
 
@@ -134,7 +134,7 @@ namespace google_test
 		const double convexityAdjustment	= PVFileObj[ "convexityAdjustment" ];
 		std::string legName					= PVFileObj[ "legName"];
 
-		const double calculatedPV = validation_api::tryMeLWOConstantMaturitySwapPVUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment, legName.c_str() );
+		const double calculatedPV = validation::tryMeLWOConstantMaturitySwapPVUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment, legName.c_str() );
 
 		// Check the Test Results or Rebase
 		const double pvTolerance = 10.0;  // Notional of 1MM. We can afford a slightly wider tolerance which allows 64bit test to pass.
@@ -156,7 +156,7 @@ namespace google_test
 		LAStringMatrix curveCollections		= parRateFileObj[ "curveCollections" ];
 		const double convexityAdjustment	= parRateFileObj[ "convexityAdjustment" ];
 
-		const double calculatedParRate = validation_api::tryMeLWOConstantMaturitySwapParRateUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment );
+		const double calculatedParRate = validation::tryMeLWOConstantMaturitySwapParRateUsingConvexityAdjustment( swapName, curveCollections, convexityAdjustment );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedParRate, TEST_DIR, CMS_EXPECTED_PAR_RATE, tolerance );

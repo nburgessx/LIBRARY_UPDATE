@@ -6,7 +6,7 @@
 #include "JSONInfoBlock.h"   // JSON Info Blocks
 
 
-namespace validation_api
+namespace validation
 {
 	/* @brief Fits a Nelson-Siegel parameterized curve to the supplied bond maturities and yields.
 	*  @param[in]		bondMaturities					A vector containing the bond maturities to fit
@@ -72,7 +72,7 @@ namespace validation_api
 	 */
     std::string tryMeBondCurveCreate( const std::string& objectName,
                                       const std::vector<std::string>& dataBlockNames,
-                                      const etrading::JSONInfoBlockTuples& infoBlocks ); // TODO: Move the JSON Info Block below the validation_api - does not belong here
+                                      const etrading::JSONInfoBlockTuples& infoBlocks ); // TODO: Move the JSON Info Block below the validation - does not belong here
 
 	/* @brief Displays the bond curve calibration as a matrix of pillar dates and yield points.
 	*  @param[in]	bondCurveName	The name of the bond curve object to display

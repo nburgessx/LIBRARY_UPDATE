@@ -6,7 +6,7 @@
 
 using etrading::LabelValueBlock;
 
-namespace validation_api
+namespace validation
 {
     /* @brief			Validation interface for the meSwapDeltaLadder method. This method calculates a Delta Ladder for a vector of swaps
 	*  @param [out]		headers						Headers of the delta report

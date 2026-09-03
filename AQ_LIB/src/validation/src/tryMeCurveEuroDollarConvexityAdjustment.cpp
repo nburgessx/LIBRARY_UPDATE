@@ -6,7 +6,7 @@
 
 using etrading::CreateDataFile;
 
-namespace validation_api
+namespace validation
 {
     /* @brief			Calculate the EuroDollar Futures Convexity Adjustment
     * @param [in]		curveAsOfDate       The yield curve as of or valuation date

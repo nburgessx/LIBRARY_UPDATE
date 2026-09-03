@@ -287,7 +287,7 @@ namespace google_test
 						}
 					}
 								
-					const double calcParRate = validation_api::tryMirOISParRate( etrading::InitializeAQETrading::instance().dataInstance(),
+					const double calcParRate = validation::tryMirOISParRate( etrading::InitializeAQETrading::instance().dataInstance(),
 								                                                 effectiveDate.stringWithFormat( "YYYYMMDD" ),
 								                                                 maturityTenor,
 								                                                 curveCollection,
@@ -367,7 +367,7 @@ namespace google_test
 							loBasis *= 10000;	// Basis are passed to AlgoQuantLib in basis points unit
 
 							// Compute Libor-OIS basis swap PV
-							const double PV = validation_api::tryMirOISSwapPV( 
+							const double PV = validation::tryMirOISSwapPV( 
 								etrading::InitializeAQETrading::instance().dataInstance(),
 								1.0,	// notional
 								"PAY",	// payRec
@@ -417,7 +417,7 @@ namespace google_test
 			}
 
 			// Flush the cache in preparation for a new set of curves
-			validation_api::tryMeUtilityClearEntityPool();
+			validation::tryMeUtilityClearEntityPool();
 		}
     }
 

@@ -38,8 +38,8 @@ swig::NelsonSiegelSvenssonCalibrationResults meBondCurveNelsonSiegelCalibrate( c
 {
 	AQ_API_START
 
-    // Call validation_api method and marshall swig inputs
-    etrading::NelsonSiegelSvenssonCalibrationResults nsResult = validation_api::tryMeBondCurveNelsonSiegelCalibrate( bondMaturities,
+    // Call validation method and marshall swig inputs
+    etrading::NelsonSiegelSvenssonCalibrationResults nsResult = validation::tryMeBondCurveNelsonSiegelCalibrate( bondMaturities,
                                                                                                                         bondYields,
                                                                                                                         swig::fromSwigNelsonSiegelSvenssonParameters( initialGuess ),
                                                                                                                         maxIterations,
@@ -72,8 +72,8 @@ swig::NelsonSiegelSvenssonCalibrationResults meBondCurveSvenssonCalibrate( const
 {
 	AQ_API_START
 
-    // Call validation_api method and marshall swig inputs
-    etrading::NelsonSiegelSvenssonCalibrationResults sResult = validation_api::tryMeBondCurveSvenssonCalibrate( bondMaturities,
+    // Call validation method and marshall swig inputs
+    etrading::NelsonSiegelSvenssonCalibrationResults sResult = validation::tryMeBondCurveSvenssonCalibrate( bondMaturities,
                                                                                                                 bondYields,
                                                                                                                 swig::fromSwigNelsonSiegelSvenssonParameters( initialGuess ), 
                                                                                                                 maxIterations,
@@ -107,8 +107,8 @@ swig::PolynomialCalibrationResults meBondCurvePolynomialCalibrate( const unsigne
 {
     AQ_API_START
 
-    /// Call validation_api method
-    etrading::PolynomialCalibrationResults nsResult = validation_api::tryMeBondCurvePolynomialCalibrate( polynomialOrder,
+    /// Call validation method
+    etrading::PolynomialCalibrationResults nsResult = validation::tryMeBondCurvePolynomialCalibrate( polynomialOrder,
                                                                                                          bondMaturities,
                                                                                                          bondYields,
                                                                                                          maxIterations,
@@ -119,7 +119,7 @@ swig::PolynomialCalibrationResults meBondCurvePolynomialCalibrate( const unsigne
     return swig::toSwigPolynomialCalibrationResults( nsResult );
 	    
 
-    // Call validation_api method
+    // Call validation method
     swig::PolynomialCalibrationResults result;
     return result;
     
@@ -142,8 +142,8 @@ std::vector<double> meBondCurveNelsonSiegelYield( const double& beta0,
 {
     AQ_API_START
 
-    // Call validation_api method
-    std::vector<double> result = validation_api::tryMeBondCurveNelsonSiegelYield( beta0, beta1, beta2, lambda, bondMaturities );
+    // Call validation method
+    std::vector<double> result = validation::tryMeBondCurveNelsonSiegelYield( beta0, beta1, beta2, lambda, bondMaturities );
     return result;
     
     AQ_API_END	
@@ -169,8 +169,8 @@ std::vector<double> meBondCurveSvenssonYield( const double& beta0,
 {
     AQ_API_START
 
-    // Call validation_api method
-    std::vector<double> result = validation_api::tryMeBondCurveSvenssonYield( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities );
+    // Call validation method
+    std::vector<double> result = validation::tryMeBondCurveSvenssonYield( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities );
     return result;
     
     AQ_API_END
@@ -185,8 +185,8 @@ std::vector<double> meBondCurvePolynomialYield( const std::vector<double>& coeff
 {
     AQ_API_START
 
-    // Call validation_api method
-    std::vector<double> result = validation_api::tryMeBondCurvePolynomialYield( coefficients, bondMaturities );
+    // Call validation method
+    std::vector<double> result = validation::tryMeBondCurvePolynomialYield( coefficients, bondMaturities );
     return result;
     
     AQ_API_END	
@@ -227,7 +227,7 @@ SWIG_STRINGMATRIX meLWOBondDisplayCashflows( const std::string& bondObjectName, 
     LADate settlementDate_( etrading::stringToDate( settlementDate ) );
     
     // Call the Function
-    AnyTypeMatrix cashflows = validation_api::tryMeLWOBondDisplayCashflows( bondObjectName, settlementDate_, yield, yieldCalculationType, showColumnHeaders, columnList );
+    AnyTypeMatrix cashflows = validation::tryMeLWOBondDisplayCashflows( bondObjectName, settlementDate_, yield, yieldCalculationType, showColumnHeaders, columnList );
             
     // Marshall Output(s)
 	SWIG_STRINGMATRIX result = swig::fromAnyTypeMatrixToMatrixOfString( cashflows );
@@ -266,7 +266,7 @@ SWIG_STRINGMATRIX meLWOBondDisplaySchedule( const std::string& bondObjectName, c
     // Marshall Inputs
 
     // Call the Function
-    AnyTypeMatrix schedule = validation_api::tryMeLWOBondDisplaySchedule( bondObjectName, showColumnHeaders, columnList );
+    AnyTypeMatrix schedule = validation::tryMeLWOBondDisplaySchedule( bondObjectName, showColumnHeaders, columnList );
             
     // Marshall Output(s)
 	SWIG_STRINGMATRIX result = swig::fromAnyTypeMatrixToMatrixOfString( schedule );

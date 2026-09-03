@@ -82,7 +82,7 @@ namespace google_test
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getAssetSwapSpreadInputs, i ) );
 
                 // Call the asset swap spread function
-                const double assetSwapSpread = validation_api::tryMirAssetSwapSpread( getDataInstance(),
+                const double assetSwapSpread = validation::tryMirAssetSwapSpread( getDataInstance(),
                                                inputFile["bondPrice"],
                                                inputFile["effectDt"],
                                                inputFile["maturity"],

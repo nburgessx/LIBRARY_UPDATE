@@ -37,8 +37,8 @@ const std::string meLWOBondCreate( const std::string& bondObjectName,
     LAStringMatrix scheduleLVBAsStringMatrix;
 	swig::buildStringMatrix( scheduleLVBAsStringMatrix, scheduleLVB );
 
-    // Call validation_api method
-    std::string result = validation_api::tryMeLWOBondCreate( bondObjectName, bondLVBAsStringMatrix, scheduleLVBAsStringMatrix, validateKeys );
+    // Call validation method
+    std::string result = validation::tryMeLWOBondCreate( bondObjectName, bondLVBAsStringMatrix, scheduleLVBAsStringMatrix, validateKeys );
     return result;
     
     AQ_API_END
@@ -62,8 +62,8 @@ const std::string meLWOBondCreateFromGenerator( const std::string& bondObjectNam
     LAStringMatrix bondExpressionLVBAsStringMatrix;
 	swig::buildStringMatrix( bondExpressionLVBAsStringMatrix, bondExpressionLVB );
 
-    // Call validation_api method
-    std::string result = validation_api::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVBAsStringMatrix, validateKeys );
+    // Call validation method
+    std::string result = validation::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVBAsStringMatrix, validateKeys );
     return result;
 
     AQ_API_END

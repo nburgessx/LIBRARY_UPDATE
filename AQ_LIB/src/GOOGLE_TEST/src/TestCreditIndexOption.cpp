@@ -77,9 +77,9 @@ namespace
 
 	void buildCurveAndCreditObjects()
 	{
-		auto loadEUROIS = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + EUR_OIS, etrading::JSON);
-		auto loadCDSGenerator = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + GEN_EUR_CDSINDEX, etrading::JSON);
-		auto loadCreditModel = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + EUR_CREDIT_MODEL_FLAT, etrading::JSON);
+		auto loadEUROIS = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + EUR_OIS, etrading::JSON);
+		auto loadCDSGenerator = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + GEN_EUR_CDSINDEX, etrading::JSON);
+		auto loadCreditModel = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + EUR_CREDIT_MODEL_FLAT, etrading::JSON);
 	}
 }
 
@@ -103,7 +103,7 @@ namespace google_test
 		LADate endDate				= forwardSpreadParams["endDate"];
 
 		// Invoke API
-		const double calcForwardSpread = validation_api::tryMeLWOCreditIndexSpread( creditModelName, startDate, endDate );
+		const double calcForwardSpread = validation::tryMeLWOCreditIndexSpread( creditModelName, startDate, endDate );
 
 		google_test::CheckTestResultsAndRebaseOnRequest( calcForwardSpread, TEST_DIR, EXPECTED_CDS_INDEX_CALCULATE_FORWARD_SPREAD, tolerance );
 
@@ -119,7 +119,7 @@ namespace google_test
 		LAStringMatrix optionLVB			= pvParameters["optionLVB"];
 
 		// Invoke API
-		const double calcOptionPV = validation_api::tryMeLWOCreditIndexOptionPV( creditModelName, optionLVB );
+		const double calcOptionPV = validation::tryMeLWOCreditIndexOptionPV( creditModelName, optionLVB );
 
 		google_test::CheckTestResultsAndRebaseOnRequest( calcOptionPV, TEST_DIR, EXPECTED_CDS_INDEX_OPTION_PV, tolerance);
 
@@ -135,7 +135,7 @@ namespace google_test
 		LAStringMatrix optionLVB = impliedVolParameters["optionLVB"];
 
 		// Invoke API
-		const double calcOptionImpliedVol = validation_api::tryMeLWOCreditIndexOptionImpliedVol(creditModelName, optionLVB);
+		const double calcOptionImpliedVol = validation::tryMeLWOCreditIndexOptionImpliedVol(creditModelName, optionLVB);
 
 		google_test::CheckTestResultsAndRebaseOnRequest(calcOptionImpliedVol, TEST_DIR, EXPECTED_CDS_INDEX_OPTION_IMPLIED_VOL, tolerance);
 	}
@@ -152,7 +152,7 @@ namespace google_test
 		double volatilityBump = vegaParameters["volatilityBump"];
 
 		// Invoke API
-		const double calcOptionVega = validation_api::tryMeLWOCreditIndexOptionVega(creditModelName, optionLVB, volatilityBump );
+		const double calcOptionVega = validation::tryMeLWOCreditIndexOptionVega(creditModelName, optionLVB, volatilityBump );
 
 		google_test::CheckTestResultsAndRebaseOnRequest(calcOptionVega, TEST_DIR, EXPECTED_CDS_INDEX_OPTION_VEGA, tolerance);
 
@@ -168,7 +168,7 @@ namespace google_test
 		LAStringMatrix optionLVB = cs01Parameters["optionLVB"];
 
 		// Invoke API
-		const double calcOptionCS01 = validation_api::tryMeLWOCreditIndexOptionCS01(creditModelName, optionLVB);
+		const double calcOptionCS01 = validation::tryMeLWOCreditIndexOptionCS01(creditModelName, optionLVB);
 
 		google_test::CheckTestResultsAndRebaseOnRequest(calcOptionCS01, TEST_DIR, EXPECTED_CDS_INDEX_OPTION_CS01, tolerance);
 
@@ -184,7 +184,7 @@ namespace google_test
 		LAStringMatrix optionLVB = thetaParameters["optionLVB"];
 
 		// Invoke API
-		const double calcOptionTheta = validation_api::tryMeLWOCreditIndexOptionTheta(creditModelName, optionLVB);
+		const double calcOptionTheta = validation::tryMeLWOCreditIndexOptionTheta(creditModelName, optionLVB);
 
 		google_test::CheckTestResultsAndRebaseOnRequest(calcOptionTheta, TEST_DIR, EXPECTED_CDS_INDEX_OPTION_THETA, tolerance);
 

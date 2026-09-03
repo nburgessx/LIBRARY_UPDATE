@@ -114,7 +114,7 @@ namespace google_test
 			}
 		}
 
-		return validation_api::tryMeLWOCurveMarketDataCreate(objectName, marketDataKeys, infoBlocks);
+		return validation::tryMeLWOCurveMarketDataCreate(objectName, marketDataKeys, infoBlocks);
 	}
 
 }

@@ -28,7 +28,7 @@ namespace
 													const DoubleVector& tenorCurveFixings,
 													bool validateKeys )
 	{
-		etrading::validateKeysForLVB( validation_api::tryMeProductSwapStubRateLVBKeys(), swapLVB.getKeys(), validateKeys );
+		etrading::validateKeysForLVB( validation::tryMeProductSwapStubRateLVBKeys(), swapLVB.getKeys(), validateKeys );
         
         const std::string inputLVB              = "SwapLVB";
         LAString curveCollection                = swapLVB.getCompulsoryValueAsLAString( etrading::MARKET_KEY::CURVE_COLLECTION, inputLVB );
@@ -235,7 +235,7 @@ namespace
 	}
 }
 
-namespace validation_api
+namespace validation
 {
     /* @brief			return a set of expected keys for swap stub rate label value block
     *  @return			expected keys

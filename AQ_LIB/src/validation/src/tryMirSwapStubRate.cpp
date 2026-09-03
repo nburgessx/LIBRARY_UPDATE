@@ -203,7 +203,7 @@ namespace
 	}
 }
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			validation method for mirSwapStubRate

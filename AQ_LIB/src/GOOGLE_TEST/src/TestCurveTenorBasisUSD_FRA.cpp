@@ -76,7 +76,7 @@ namespace google_test
         const DoubleArray term = inputFile["terms"];
 
         DoubleArray results
-            = validation_api::tryMirGetDF1(
+            = validation::tryMirGetDF1(
                   getDataInstance(),
                   term,
                   inputFile["curveID"],
@@ -105,7 +105,7 @@ namespace google_test
         const DoubleArray term = inputFile["terms"];
 
         DoubleArray results
-            = validation_api::tryMirGetDF1(
+            = validation::tryMirGetDF1(
                   getDataInstance(),
                   term,
                   inputFile["curveID"],
@@ -134,7 +134,7 @@ namespace google_test
         const DoubleArray term = inputFile["terms"];
 
         DoubleArray results
-            = validation_api::tryMirGetDF1(
+            = validation::tryMirGetDF1(
                   getDataInstance(),
                   term,
                   inputFile["curveID"],
@@ -163,7 +163,7 @@ namespace google_test
         const DoubleArray term = inputFile["terms"];
 
         DoubleArray results
-            = validation_api::tryMirGetDF1(
+            = validation::tryMirGetDF1(
                   getDataInstance(),
                   term,
                   inputFile["curveID"],
@@ -192,7 +192,7 @@ namespace google_test
         const DoubleArray term = inputFile["terms"];
 
         DoubleArray results
-            = validation_api::tryMirGetDF1(
+            = validation::tryMirGetDF1(
                   getDataInstance(),
                   term,
                   inputFile["curveID"],
@@ -221,7 +221,7 @@ namespace google_test
         const DoubleArray term = inputFile["terms"];
 
         DoubleArray results
-            = validation_api::tryMirGetDF1(
+            = validation::tryMirGetDF1(
                   getDataInstance(),
                   term,
                   inputFile["curveID"],
@@ -250,7 +250,7 @@ namespace google_test
         const DoubleArray term = inputFile["terms"];
 
         DoubleArray results
-            = validation_api::tryMirGetDF1(
+            = validation::tryMirGetDF1(
                   getDataInstance(),
                   term,
                   inputFile["curveID"],

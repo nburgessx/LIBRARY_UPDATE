@@ -32,7 +32,7 @@ const std::string meCurveCalibrateFXForwards(const std::string& curveCollection,
 	LAStringMatrix tmp_fxFwdConv;
 	swig::buildStringMatrix(tmp_fxFwdConv, fxFwdConv);
 
-	ret = validation_api::tryMeCurveCalibrateFXForwards(
+	ret = validation::tryMeCurveCalibrateFXForwards(
 										tmp_curveCollection,
                                         tmp_staticDataTable,
                                         tmp_curveIndex,

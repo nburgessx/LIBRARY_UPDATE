@@ -40,13 +40,13 @@ namespace google_test
     TEST_F( TestMeLWOCurveCalibrate, SNAPSHOT_BRL_CalibrateCurve_and_CheckDiscountFactors )
     {
         // Load Curves
-        const std::string loadUSDOIS     = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameBRLUSDOIS,  etrading::JSON );
-        const std::string loadUSD3ML     = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameBRLUSD3ML,  etrading::JSON );
-        const std::string loadBRLXCCY    = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameBRLXCCY,    etrading::JSON );
+        const std::string loadUSDOIS     = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameBRLUSDOIS,  etrading::JSON );
+        const std::string loadUSD3ML     = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameBRLUSD3ML,  etrading::JSON );
+        const std::string loadBRLXCCY    = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameBRLXCCY,    etrading::JSON );
 
         // Calculate Actual Discount Factors
         const ReadDataFile::Load inputFile( inputsBRL );
-        std::vector<double> discountFactorResults = validation_api::tryMeCurveDiscountFactorsFromTenors( inputFile["tenors"],
+        std::vector<double> discountFactorResults = validation::tryMeCurveDiscountFactorsFromTenors( inputFile["tenors"],
                                                                                                          inputFile["businessDayAdj"],
                                                                                                          inputFile["calendar"], 
                                                                                                          inputFile["curveCollection"],
@@ -60,13 +60,13 @@ namespace google_test
     TEST_F( TestMeLWOCurveCalibrate, SNAPSHOT_CNH_CalibrateCurve_and_CheckDiscountFactors )
     {
         // Load Curves
-        const std::string loadUSDOIS     = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCNHUSDOIS,  etrading::JSON );
-        const std::string loadUSD3ML     = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCNHUSD3ML,  etrading::JSON );
-        const std::string loadCNHXCCY    = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCNHXCCY,    etrading::JSON );
+        const std::string loadUSDOIS     = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCNHUSDOIS,  etrading::JSON );
+        const std::string loadUSD3ML     = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCNHUSD3ML,  etrading::JSON );
+        const std::string loadCNHXCCY    = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCNHXCCY,    etrading::JSON );
 
         // Calculate Actual Discount Factors
         const ReadDataFile::Load inputFile( inputsCNH );
-        std::vector<double> discountFactorResults = validation_api::tryMeCurveDiscountFactorsFromTenors( inputFile["tenors"],
+        std::vector<double> discountFactorResults = validation::tryMeCurveDiscountFactorsFromTenors( inputFile["tenors"],
                                                                                                          inputFile["businessDayAdj"],
                                                                                                          inputFile["calendar"], 
                                                                                                          inputFile["curveCollection"],

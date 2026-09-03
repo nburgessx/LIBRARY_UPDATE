@@ -8,7 +8,7 @@ using etrading::LabelValueBlock;
 typedef std::vector<std::string> STDStringVector;
 typedef std::vector<std::vector<std::string > > STDStringMatrix;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			validation interface for meUtilityLVBFromKeysValues method

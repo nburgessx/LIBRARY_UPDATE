@@ -90,12 +90,12 @@ namespace google_test
 			LAStringMatrix legLVB = tradeInputFile["legLVB"];
 			bool validateKeys = tradeInputFile["validateKeys"];
 
-			std::string createSwap = validation_api::tryMeLWOLegCreate(legObjectName, legLVB, validateKeys);
+			std::string createSwap = validation::tryMeLWOLegCreate(legObjectName, legLVB, validateKeys);
 
 			// 4. Get the ParRate Inputs & Calculate the parRate
 			etrading::LabelValueBlock curveCollection = etrading::fromStringToLVB(pvInputFile["curveCollection"]);
 
-			double actualPV = validation_api::tryMeLWOLegPV(legObjectName, curveCollection, "");
+			double actualPV = validation::tryMeLWOLegPV(legObjectName, curveCollection, "");
 
 			// 5. Check the Test Results or Rebase
 			CheckTestResultsAndRebaseOnRequest(actualPV, TEST_DIR, pvOutputsFilename, tolerance);
@@ -135,12 +135,12 @@ namespace google_test
 			LAStringMatrix legLVB = tradeInputFile["legLVB"];
 			bool validateKeys = tradeInputFile["validateKeys"];
 
-			std::string createSwap = validation_api::tryMeLWOLegCreate(legObjectName, legLVB, validateKeys);
+			std::string createSwap = validation::tryMeLWOLegCreate(legObjectName, legLVB, validateKeys);
 
 			// 4. Get the ParRate Inputs & Calculate the parRate
 			etrading::LabelValueBlock curveCollection = etrading::fromStringToLVB(pvInputFile["curveCollection"]);
 
-			double actualPV = validation_api::tryMeLWOLegPV(legObjectName, curveCollection, "");
+			double actualPV = validation::tryMeLWOLegPV(legObjectName, curveCollection, "");
 
 			// 5. Check the Test Results or Rebase
 			CheckTestResultsAndRebaseOnRequest(actualPV, TEST_DIR, pvOutputsFilename, tolerance);

@@ -31,7 +31,7 @@ double meCurveZeroRatesFromYearFractions(double yearFraction,
 	LAString tmp_dayCount(dayCount.c_str());
 	LAString tmp_frequency(frequency.c_str());
 
-	DoubleVector results = validation_api::tryMeCurveZeroRatesFromYearFractions(yearFractions,
+	DoubleVector results = validation::tryMeCurveZeroRatesFromYearFractions(yearFractions,
 																				tmp_curveCollection, 
 																				tmp_curveIndex,
 																				tmp_frequency, 
@@ -65,7 +65,7 @@ std::vector<double> meCurveZeroRatesFromYearFractions(const std::vector<double>&
 	LAString tmp_dayCount(dayCount.c_str());
 	LAString tmp_frequency(frequency.c_str());
 
-	ret = validation_api::tryMeCurveZeroRatesFromYearFractions(yearFractions,
+	ret = validation::tryMeCurveZeroRatesFromYearFractions(yearFractions,
 																tmp_curveCollection, 
 																tmp_curveIndex,
 																tmp_frequency, 
@@ -107,7 +107,7 @@ double meCurveZeroRatesFromTenors(const std::string& tenor,
 	LAString tmp_calendar(calendar.c_str());
 	LAString tmp_businessDayAdj(businessDayAdj.c_str());
 
-	std::vector<double> results = validation_api::tryMeCurveZeroRatesFromTenors(tenors,
+	std::vector<double> results = validation::tryMeCurveZeroRatesFromTenors(tenors,
 																				tmp_curveCollection, 
 																				tmp_curveIndex,
 																				tmp_frequency, 
@@ -152,7 +152,7 @@ std::vector<double> meCurveZeroRatesFromTenors(const std::vector<std::string>& t
 	LAString tmp_calendar(calendar.c_str());
 	LAString tmp_businessDayAdj(businessDayAdj.c_str());
 
-	ret = validation_api::tryMeCurveZeroRatesFromTenors(tmp_tenors,
+	ret = validation::tryMeCurveZeroRatesFromTenors(tmp_tenors,
 														tmp_curveCollection, 
 														tmp_curveIndex,
 														tmp_frequency, 

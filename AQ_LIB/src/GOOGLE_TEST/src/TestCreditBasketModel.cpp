@@ -156,7 +156,7 @@ namespace
 			}
 		}
 
-		validation_api::tryMeLWOCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
+		validation::tryMeLWOCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
 	}
 
 	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
@@ -173,7 +173,7 @@ namespace
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation_api::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -197,11 +197,11 @@ namespace
 		propertyNames.push_back( "MODEL_PROPERTIES" );
 		propertyNames.push_back( "CREDIT_MODELS" );
 
-		std::vector<validation_api::TableInfo> infoBlocks;
+		std::vector<validation::TableInfo> infoBlocks;
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 		infoBlocks.push_back( getTableInfoFromStringMatrix( creditModels ));
 
-		std::string objectName = validation_api::tryMeLWOCreditBasketModelCreate( creditBasketModelName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryMeLWOCreditBasketModelCreate( creditBasketModelName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -252,7 +252,7 @@ namespace
         const etrading::JSONInfoBlockTuples modelData       = { modelInfoBlock, cdsInfoBlock };
 
         // Calibrate and Create the Credit Model
-        const std::string result = validation_api::tryMeLWOCreditModelCreate( creditModelName, modelDataTypes, modelData );
+        const std::string result = validation::tryMeLWOCreditModelCreate( creditModelName, modelDataTypes, modelData );
 		return result;
 	}
 
@@ -295,9 +295,9 @@ namespace google_test
 		{
 			LADate toDate(stoppingDates[i].c_str());
 
-			const double singleSurvivalProbability = validation_api::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
+			const double singleSurvivalProbability = validation::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate, fromDate );
 
-			const double basketSurvivalProbability = validation_api::tryMeLWOCreditBasketModelSurvivalProbability( creditBasketModelName, toDate, fromDate );
+			const double basketSurvivalProbability = validation::tryMeLWOCreditBasketModelSurvivalProbability( creditBasketModelName, toDate, fromDate );
 			
 			ASSERT_NEAR( singleSurvivalProbability, basketSurvivalProbability, tolerance );
 		}

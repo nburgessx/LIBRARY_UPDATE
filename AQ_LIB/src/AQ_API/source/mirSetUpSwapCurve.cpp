@@ -93,7 +93,7 @@ const std::string mirSetUpSwapCurve(const std::string& CurveID,
 		LAStringMatrix adjustSwapRates;
 		swig::buildStringMatrix(adjustSwapRates, AdjGrid);
 
-		ret = validation_api::tryMirSetUpSwapCurve(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirSetUpSwapCurve(etrading::InitializeAQETrading::instance().dataInstance(),
 																curveID,
 																marketName,
 																yldData, 

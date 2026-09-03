@@ -12,7 +12,7 @@
 #pragma once
 #include <string>
 
-namespace validation_api
+namespace validation
 {
     char* versionBuildDate();
     char* versionBuildTime();

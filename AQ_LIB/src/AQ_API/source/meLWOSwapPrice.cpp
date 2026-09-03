@@ -39,7 +39,7 @@ double meLWOSwapPV( const std::string& swapName,
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
-    double result = validation_api::tryMeLWOSwapPV( swapName,
+    double result = validation::tryMeLWOSwapPV( swapName,
                                                     valuationSettingsAsStringMatrix,
                                                     legNameAsLAString,
                                                     fixingTableAsStringMatrix );
@@ -69,7 +69,7 @@ double meLWOSwapPV01( const std::string& swapName,
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
-    double result = validation_api::tryMeLWOSwapPV01( swapName,
+    double result = validation::tryMeLWOSwapPV01( swapName,
                                                         valuationSettingsAsStringMatrix,
                                                         fixingTableAsStringMatrix );
     return result;
@@ -97,7 +97,7 @@ double meLWOSwapParRate( const std::string& swapName,
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
-    double result = validation_api::tryMeLWOSwapParRate( swapName,
+    double result = validation::tryMeLWOSwapParRate( swapName,
                                                             valuationSettingsAsStringMatrix,
                                                             fixingTableAsStringMatrix );
     return result;
@@ -126,7 +126,7 @@ double meLWOSwapParRate( const std::string& swapName,
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
-    double result = validation_api::tryMeLWOSwapParRate( swapName, valuationSettingsAsStringMatrix, fixingTableAsStringMatrix, legName );
+    double result = validation::tryMeLWOSwapParRate( swapName, valuationSettingsAsStringMatrix, fixingTableAsStringMatrix, legName );
 
     return result;
     
@@ -152,7 +152,7 @@ double meLWOSwapAnnuity( const std::string& swapName,
     swig::buildStringMatrix( valuationSettingsAsStringMatrix, valuationSettings );
 
     // Call Function and Return Result
-    double result = validation_api::tryMeLWOSwapAnnuity( swapName,
+    double result = validation::tryMeLWOSwapAnnuity( swapName,
                                                             valuationSettingsAsStringMatrix,
                                                             legNameAsLAString );
     return result;
@@ -183,7 +183,7 @@ double meLWOSwapParSpread( const std::string& swapName,
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
-    double result = validation_api::tryMeLWOSwapParSpread( swapName,
+    double result = validation::tryMeLWOSwapParSpread( swapName,
                                                            valuationSettingsAsStringMatrix,
                                                            fixingTableAsStringMatrix,
                                                            spreadLegNameAsLAString );
@@ -216,7 +216,7 @@ double meLWOSwapSpread( const std::string& swapName,
     swig::buildStringMatrix( fixingTableAsStringMatrix, fixingTableNames );
 
     // Call Function and Return Result
-    double result = validation_api::tryMeLWOSwapSpread( swapName,
+    double result = validation::tryMeLWOSwapSpread( swapName,
                                                        valuationSettingsAsStringMatrix,
                                                        fixingTableAsStringMatrix,
                                                        spreadLegNameAsLAString );
@@ -252,7 +252,7 @@ SWIG_STRINGMATRIX meLWOSwapDisplayCashflows( const std::string& swapName,
 
 	// Call Function and Return Result
 	std::vector<AnyTypeMatrix> result
-		= validation_api::tryMeLWOSwapDisplayCashflows( swapName,
+		= validation::tryMeLWOSwapDisplayCashflows( swapName,
 														valuationSettingsAsStringMatrix,
 														legNameAsLAString,
 														fixingTableAsStringMatrix,

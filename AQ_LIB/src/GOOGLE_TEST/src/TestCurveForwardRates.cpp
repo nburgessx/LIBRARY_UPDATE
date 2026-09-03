@@ -173,7 +173,7 @@ namespace google_test
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation_api::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -254,7 +254,7 @@ namespace google_test
 		const LAString rollConvention    = "NORMAL";
 		const LAString frequency         = "Monthly";
 
-		validation_api::tryMeLWOCurveForwardRatesTable( fixingDates, forwardRates, curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency );
+		validation::tryMeLWOCurveForwardRatesTable( fixingDates, forwardRates, curveCollection, curveIndices, startDate, maturity, businessDayAdjust, calendar, rollConvention, frequency );
 	}
 
 	/* @brief			Check forward rate consistency between ME and Generator curves
@@ -315,7 +315,7 @@ namespace google_test
 			}
 		}
 
-		validation_api::tryMeUtilityClearEntityPool();
+		validation::tryMeUtilityClearEntityPool();
 	}
 
 	TEST_F( TestCurveGeneratorForwardRates, CONSISTENCY_MeVsLWOCurveForwardRatesFor25Y_USD )

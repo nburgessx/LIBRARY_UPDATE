@@ -12,7 +12,7 @@
 #include "VersionNumber.h"
 #include "string.h"
 
-namespace validation_api
+namespace validation
 {
     char* versionBuildDate()
     {

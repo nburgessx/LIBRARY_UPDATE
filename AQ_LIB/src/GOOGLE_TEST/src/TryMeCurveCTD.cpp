@@ -16,7 +16,7 @@ namespace google_test
 
             try
             {
-                validation_api::tryMeCurveCalibrateCTD( inputFileObj["curveCollection"],
+                validation::tryMeCurveCalibrateCTD( inputFileObj["curveCollection"],
                                                         inputFileObj["staticDataTable"],
                                                         inputFileObj["curveIndex"],
                                                         inputFileObj["curveConv"],

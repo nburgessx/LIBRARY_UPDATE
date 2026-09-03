@@ -10,7 +10,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			Returns the curveFrequency i.e. the float index frequency

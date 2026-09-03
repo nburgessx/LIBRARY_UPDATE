@@ -183,7 +183,7 @@ namespace
         LAStringMatrix bondExpressionLVB = createBondInputFile["expressionLVB"];
         bool validateKeys              = createBondInputFile["validateKeys"];
         
-		std::string objectName = validation_api::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
+		std::string objectName = validation::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
 		return objectName;
     };
 
@@ -202,11 +202,11 @@ namespace
 		propertyNames.push_back( "BONDCURVE_PROPERTIES" );
 		propertyNames.push_back( "BONDCURVE_MARKETDATA" );
 
-		std::vector<validation_api::TableInfo> infoBlocks;
+		std::vector<validation::TableInfo> infoBlocks;
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 		infoBlocks.push_back( getTableInfoFromStringMatrix( bondMarketData ));
 
-		std::string objectName = validation_api::tryMeBondCurveCreate( bondCurveName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryMeBondCurveCreate( bondCurveName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -223,10 +223,10 @@ namespace
 		std::vector<std::string> propertyNames;
 		propertyNames.push_back( "BONDSPREADCURVE_PROPERTIES" );
 
-		std::vector<validation_api::TableInfo> infoBlocks;
+		std::vector<validation::TableInfo> infoBlocks;
 		infoBlocks.push_back( getTableInfoFromStringMatrix( modelProperties ));
 
-		std::string objectName = validation_api::tryMeBondCurveCreate( bondspreadCurveName, propertyNames, infoBlocks );
+		std::string objectName = validation::tryMeBondCurveCreate( bondspreadCurveName, propertyNames, infoBlocks );
 		return objectName;
 	}
 
@@ -335,7 +335,7 @@ namespace google_test
 		const std::vector<double> bondMaturities = nsCalibrationInputFile["bondMaturities"];
 		const std::vector<double> bondYields     = nsCalibrationInputFile["bondYields"];
 
-		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation_api::tryMeBondCurveNelsonSiegelCalibrate( bondMaturities, bondYields,
+		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation::tryMeBondCurveNelsonSiegelCalibrate( bondMaturities, bondYields,
 																														 initialGuess,
 																														 maxIterations, maxStationaryStateIterations,
 																														 lowerBounds, upperBounds );
@@ -386,7 +386,7 @@ namespace google_test
 		const std::vector<double> bondMaturities = svenssonCalibrationInputFile["bondMaturities"];
 		const std::vector<double> bondYields     = svenssonCalibrationInputFile["bondYields"];
 
-		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation_api::tryMeBondCurveSvenssonCalibrate( bondMaturities, bondYields,
+		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = validation::tryMeBondCurveSvenssonCalibrate( bondMaturities, bondYields,
 																													 initialGuess,
 																													 maxIterations, maxStationaryStateIterations,
 																													 lowerBounds, upperBounds );
@@ -433,7 +433,7 @@ namespace google_test
 		const std::vector<double> bondMaturities = polynomialCalibrationInputFile["bondMaturities"];
 		const std::vector<double> bondYields     = polynomialCalibrationInputFile["bondYields"];
 
-		etrading::PolynomialCalibrationResults calibrationResult = validation_api::tryMeBondCurvePolynomialCalibrate( polynomialOrder,
+		etrading::PolynomialCalibrationResults calibrationResult = validation::tryMeBondCurvePolynomialCalibrate( polynomialOrder,
 																														bondMaturities,
 																														bondYields,
 																														maxIterations,
@@ -468,7 +468,7 @@ namespace google_test
 		// Bond maturities to calculate
 		const std::vector<double> bondMaturities = nsBondYieldInputFile["maturities"];
 
-		const std::vector<double> calculatedYields = validation_api::tryMeBondCurveNelsonSiegelYield( beta0, beta1, beta2, lambda, bondMaturities );
+		const std::vector<double> calculatedYields = validation::tryMeBondCurveNelsonSiegelYield( beta0, beta1, beta2, lambda, bondMaturities );
 
         // Compare Results
         const double tolerance = 0.000000001;
@@ -493,7 +493,7 @@ namespace google_test
 		// Bond maturities to calculate
 		const std::vector<double> bondMaturities = svenssonBondYieldInputFile["maturities"];
 
-		const std::vector<double> calculatedYields = validation_api::tryMeBondCurveSvenssonYield( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities );
+		const std::vector<double> calculatedYields = validation::tryMeBondCurveSvenssonYield( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities );
 
         // Compare Results
         const double tolerance = 0.000000001;
@@ -513,7 +513,7 @@ namespace google_test
 		// Bond maturities to calculate
 		const std::vector<double> bondMaturities = polynomialBondYieldInputFile["maturities"];
 
-		const std::vector<double> calculatedYields = validation_api::tryMeBondCurvePolynomialYield( coefficients, bondMaturities );
+		const std::vector<double> calculatedYields = validation::tryMeBondCurvePolynomialYield( coefficients, bondMaturities );
 
         // Compare Results
         const double tolerance = 0.000000001;
@@ -531,7 +531,7 @@ namespace google_test
         const ReadDataFile::Load bondCurveDisplayInputFile( bondCurveDisplay_inputs.c_str() );
 		const std::string bondCurveObjectName  = bondCurveDisplayInputFile["bondCurveName"];
 
-		const AnyTypeMatrix calibratedYields = validation_api::tryMeBondCurveDisplay( bondCurveObjectName );
+		const AnyTypeMatrix calibratedYields = validation::tryMeBondCurveDisplay( bondCurveObjectName );
 
 		const double tolerance = 1.0e-9;
 		checkBondCurveCalibration( calibratedYields, bondCurveDisplay_outputs, tolerance );
@@ -558,7 +558,7 @@ namespace google_test
 			const std::string bondObjectName          = priceFromYieldFile[ "bondObjectName" ];
 			const std::vector<LADate> settlementDates = priceFromYieldFile[ "settlementDates" ];
 			const std::vector<double> yields          = priceFromYieldFile[ "yields" ];
-			const DoubleVector priceFromYields = validation_api::tryMeLWOBondPrice( bondObjectName, settlementDates, yields );
+			const DoubleVector priceFromYields = validation::tryMeLWOBondPrice( bondObjectName, settlementDates, yields );
 			const double priceFromYield = priceFromYields[0];
 
 			// Load the corresponding file to price the bond from bond curve
@@ -570,7 +570,7 @@ namespace google_test
 			// Calculate bond price from bond curve
 			const LADate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
 			const std::string bondCurveName = priceFromBondCurveFile[ "bondCurveName" ];
-			const double priceFromBondCurve = validation_api::tryMeLWOBondPriceFromBondCurve( bondObjectName, settlementDate, bondCurveName );
+			const double priceFromBondCurve = validation::tryMeLWOBondPriceFromBondCurve( bondObjectName, settlementDate, bondCurveName );
 
 			// Compare the two prices for consistency
 			EXPECT_NEAR( priceFromYield, priceFromBondCurve, tolerance ) << "Difference in priceFromYield vs priceFromBondCurve: " << bondObjectName;
@@ -613,7 +613,7 @@ namespace google_test
 			const std::string bondCurveName = priceFromBondCurveFile[ "bondCurveName" ];
 
 			// Calculate the YIELD from bond curve
-			const double yieldFromBondCurve = validation_api::tryMeLWOBondYieldFromBondCurve( bondObjectName, settlementDate, bondCurveName );
+			const double yieldFromBondCurve = validation::tryMeLWOBondYieldFromBondCurve( bondObjectName, settlementDate, bondCurveName );
 
 			// Compare the two prices for consistency
 			EXPECT_NEAR( bondYTM, yieldFromBondCurve, tolerance ) << "Difference in bond yield-to-maturity vs yieldFromBondCurve: " << bondObjectName;
@@ -646,7 +646,7 @@ namespace google_test
 			const std::string bondObjectName          = priceFromYieldFile[ "bondObjectName" ];
 			const std::vector<LADate> settlementDates = priceFromYieldFile[ "settlementDates" ];
 			const std::vector<double> yields          = priceFromYieldFile[ "yields" ];
-			const DoubleVector priceFromYields = validation_api::tryMeLWOBondPrice( bondObjectName, settlementDates, yields );
+			const DoubleVector priceFromYields = validation::tryMeLWOBondPrice( bondObjectName, settlementDates, yields );
 			const double priceFromYield = priceFromYields[0];
 
 			// Load the corresponding file to price the bond from bond curve
@@ -657,7 +657,7 @@ namespace google_test
 
 			// Calculate bond price from bond SPREAD curve
 			const LADate settlementDate     = priceFromBondCurveFile[ "settlementDate" ];
-			const double priceFromBondCurve = validation_api::tryMeLWOBondPriceFromBondCurve( bondObjectName, settlementDate, bondSpreadCurveName );
+			const double priceFromBondCurve = validation::tryMeLWOBondPriceFromBondCurve( bondObjectName, settlementDate, bondSpreadCurveName );
 
 			// Compare the two prices for consistency:
 			// The price calculated from the spread bond curve should be strictly less than the price from yield-to-maturity

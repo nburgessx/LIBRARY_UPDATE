@@ -17,7 +17,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
     /* @brief Creates an LWOCurveGenerator object, containing all of the curve properties.
 	 * @param [in] objectName        The name of the Curve Configuration object

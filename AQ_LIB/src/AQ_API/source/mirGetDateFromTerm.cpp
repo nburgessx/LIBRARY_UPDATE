@@ -21,7 +21,7 @@ const std::string mirGetDateFromTerm(const std::string& FromDate,
 		// Data type marshalling
 		LADate LADate(FromDate.c_str(),"YYYYMMDD");
 		LAString mbDayCount(DayCount.c_str());
-		ret = validation_api::tryMirGetDateFromTerm(LADate, TermY, mbDayCount, IncludeLast).getCString();
+		ret = validation::tryMirGetDateFromTerm(LADate, TermY, mbDayCount, IncludeLast).getCString();
 	} 
 	catch (LACoreError& mesx) 
 	{

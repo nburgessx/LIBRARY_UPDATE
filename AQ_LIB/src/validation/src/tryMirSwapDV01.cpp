@@ -23,7 +23,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			validation interface for the mirSwapDV01 method

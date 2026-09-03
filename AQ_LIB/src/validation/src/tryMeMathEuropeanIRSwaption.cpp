@@ -32,7 +32,7 @@ typedef etrading::PayerReceiverSwaptionEnum PayerReceiverSwaptionEnum;
 typedef etrading::VolatilityTypeEnum VolatilityTypeEnum;
 typedef etrading::StubTypeEnum StubTypeEnum;
 
-namespace validation_api
+namespace validation
 {
 
     // Calculate the Price

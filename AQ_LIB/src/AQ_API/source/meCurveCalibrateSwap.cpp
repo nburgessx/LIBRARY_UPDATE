@@ -87,7 +87,7 @@ const std::string meCurveCalibrateSwap( const std::string& curveCollection,
 	LAStringMatrix tmp_tenorBasisRates;
 	swig::buildStringMatrix(tmp_tenorBasisRates, tenorBasisRates);
 
-	ret = validation_api::tryMeCurveCalibrateSwap( tmp_curveCollection,
+	ret = validation::tryMeCurveCalibrateSwap( tmp_curveCollection,
                                                     tmp_staticDataTable,
                                                     tmp_curveIndex,
                                                     tmp_curveConv,

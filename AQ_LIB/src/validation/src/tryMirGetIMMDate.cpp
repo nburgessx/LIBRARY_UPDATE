@@ -11,7 +11,7 @@
 
 using etrading::CreateDataFile;
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation interface for mirGetIMMDate1.
     *  @param [in]		year			The year of the IMM date

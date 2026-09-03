@@ -61,7 +61,7 @@ const std::string meCurveCalibrateOIS(const std::string& curveCollection,
 	LAStringMatrix tmp_swapRates;
 	swig::buildStringMatrix(tmp_swapRates, swapRates);
 
-	ret = validation_api::tryMeCurveCalibrateOIS(
+	ret = validation::tryMeCurveCalibrateOIS(
 										tmp_curveCollection,
                                         tmp_staticDataTable,
                                         tmp_curveIndex,

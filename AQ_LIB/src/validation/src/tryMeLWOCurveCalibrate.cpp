@@ -21,7 +21,7 @@ using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
 
-namespace validation_api
+namespace validation
 {
     /* @brief Builds a curve using a CurveGenerator object and a CurveMarketData object
 	 * @param [in] lwoCurveGeneratorName     The name of the LWOCurveGenerator object to use

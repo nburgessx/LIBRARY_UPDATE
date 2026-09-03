@@ -5,7 +5,7 @@
 
 using etrading::LabelValueBlock;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			return a set of expected keys for ois swap par rate label value block

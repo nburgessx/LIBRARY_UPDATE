@@ -41,7 +41,7 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectZAR3MJ_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameZAR3MJ, etrading::JSON );
+        const std::string curveObjectZAR3MJ_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameZAR3MJ, etrading::JSON );
     };
 
 
@@ -91,7 +91,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20200416", swapTerms[i] ); // Effective Date = 20200416
-            const double actualResult                    = validation_api::tryMeLWOSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryMeLWOSwapParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

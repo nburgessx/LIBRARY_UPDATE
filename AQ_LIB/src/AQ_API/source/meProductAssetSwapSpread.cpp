@@ -21,7 +21,7 @@ double meProductAssetSwapSpread(double bondCleanPrice,
 	// marshall all inputs		
 	LabelValueBlock lvb = swig::buildSingleLabelValueBlock(assetSwapLVB);
 		
-	ret = validation_api::tryMeProductAssetSwapSpread(bondCleanPrice, lvb, validateKeys);
+	ret = validation::tryMeProductAssetSwapSpread(bondCleanPrice, lvb, validateKeys);
 	return ret;
     AQ_API_END
 
@@ -35,7 +35,7 @@ std::vector<std::string> meProductAssetSwapSpreadLVBKeys()
     AQ_API_START
 	std::vector<std::string> ret;
 	
-	ret = validation_api::tryMeProductAssetSwapSpreadLVBKeys();
+	ret = validation::tryMeProductAssetSwapSpreadLVBKeys();
 	return ret;
     AQ_API_END
 }

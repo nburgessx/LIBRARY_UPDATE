@@ -9,7 +9,7 @@
 std::string meUtilityClearEntityPool()
 {
 	AQ_API_START
-	const std::string ret = validation_api::tryMeUtilityClearEntityPool().getCString();
+	const std::string ret = validation::tryMeUtilityClearEntityPool().getCString();
     return ret;
 	AQ_API_END
 }
@@ -20,7 +20,7 @@ std::string meUtilityClearEntityPool()
 std::string meUtilityClearLWOCache()
 {
     AQ_API_START
-    const std::string ret = validation_api::tryMeUtilityClearLWOCache().getCString();
+    const std::string ret = validation::tryMeUtilityClearLWOCache().getCString();
     return ret;
 	AQ_API_END
 }
@@ -33,7 +33,7 @@ std::string meUtilityLoadCalendarFile(const std::string& filepath)
 {
 	AQ_API_START
 	LAString tmp_filepath(filepath.c_str());
-	const std::string ret = validation_api::tryMeUtilityLoadCalendarFile(tmp_filepath).getCString();
+	const std::string ret = validation::tryMeUtilityLoadCalendarFile(tmp_filepath).getCString();
     return ret;
 	AQ_API_END
 }
@@ -46,7 +46,7 @@ std::string meUtilityLoadStaticData(const std::string& filepath)
 {
 	AQ_API_START
 	LAString tmp_filepath(filepath.c_str());
-	const std::string ret = validation_api::tryMeUtilityLoadStaticData(tmp_filepath).getCString();
+	const std::string ret = validation::tryMeUtilityLoadStaticData(tmp_filepath).getCString();
     return ret;
 	AQ_API_END
 }
@@ -64,7 +64,7 @@ std::string meUtilityVersion()
     int dummyExpiryYear = 0;
     bool dummyShowExpiryDate = false;
 
-	const std::string ret = validation_api::tryMeUtilityVersion(dummyExpiryMonth, dummyExpiryYear, dummyShowExpiryDate);
+	const std::string ret = validation::tryMeUtilityVersion(dummyExpiryMonth, dummyExpiryYear, dummyShowExpiryDate);
     return ret;
 
     AQ_API_END
@@ -75,7 +75,7 @@ std::string meUtilityParallelModeEnable(const bool enable)
 {
     AQ_API_START
     
-    const std::string result = validation_api::tryMeUtilityParallelModeEnable(enable);
+    const std::string result = validation::tryMeUtilityParallelModeEnable(enable);
     return result;
     
     AQ_API_END
@@ -86,7 +86,7 @@ std::string meUtilityParallelModeStatus()
 {
     AQ_API_START
 
-    const std::string result = validation_api::tryMeUtilityParallelModeStatus();
+    const std::string result = validation::tryMeUtilityParallelModeStatus();
     return result;
 
     AQ_API_END

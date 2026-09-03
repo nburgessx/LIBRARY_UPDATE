@@ -113,7 +113,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityAppendByRow )
 
 
     // Call the Append Function with Append by Row = TRUE
-    etrading::VariantMatrix actual = validation_api::tryMeUtilityAppend( true, matrix1, matrix2 );
+    etrading::VariantMatrix actual = validation::tryMeUtilityAppend( true, matrix1, matrix2 );
 
 
     // Expected Results
@@ -166,7 +166,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityAppendByColumn )
 
 
     // Call the Append Function with Append by Row = FALSE
-    etrading::VariantMatrix actual = validation_api::tryMeUtilityAppend( false, matrix1, matrix2 );
+    etrading::VariantMatrix actual = validation::tryMeUtilityAppend( false, matrix1, matrix2 );
 
 
     // Expected Results
@@ -218,7 +218,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityDataFilterByRow )
     input.push_back( LADate("20170929") );
 
     // Call the Data Filter function which removes duplicates
-    etrading::VariantMatrix actual = validation_api::tryMeUtilityDataFilter( input, false ); // displayByRow = false
+    etrading::VariantMatrix actual = validation::tryMeUtilityDataFilter( input, false ); // displayByRow = false
 
     // Expected Output Matrix
     etrading::VariantVector rowVector;
@@ -264,7 +264,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityDataFilterByColumn )
     input.push_back( LADate("20170929") );
 
     // Call the Data Filter function which removes duplicates
-    etrading::VariantMatrix actual = validation_api::tryMeUtilityDataFilter( input, true ); // displayByRow = true
+    etrading::VariantMatrix actual = validation::tryMeUtilityDataFilter( input, true ); // displayByRow = true
 
     // Expected Output Matrix
     etrading::VariantMatrix expected;
@@ -348,7 +348,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityCleanByRow )
 
 
     // Call the Clean Function with Clean by Row = TRUE
-    etrading::VariantMatrix actual = validation_api::tryMeUtilityClean( inputMatrix, true );
+    etrading::VariantMatrix actual = validation::tryMeUtilityClean( inputMatrix, true );
 
 
     // Expected Results
@@ -412,7 +412,7 @@ TEST( TestUtilitiesData, UNIT_meUtilityCleanByColumn )
 
 
     // Call the Clean Function with Clean by Row = FALSE
-    etrading::VariantMatrix actual = validation_api::tryMeUtilityClean( inputMatrix, false );
+    etrading::VariantMatrix actual = validation::tryMeUtilityClean( inputMatrix, false );
 
 
     // Expected Results
@@ -448,7 +448,7 @@ TEST(TestDataTrimmingMethods, UNIT_TrimStandardStringVector)
 {
 	StandardStringVector dirtyString = { "", "1", "", "2", "", "3", "" };
 	StandardStringVector expectedResults = { "1", "2", "3" };
-	StandardStringVector actualResults = validation_api::trimStandardStringVector( dirtyString );
+	StandardStringVector actualResults = validation::trimStandardStringVector( dirtyString );
 	
 	ASSERT_EQ( actualResults.size(), expectedResults.size() );
 	for( size_t i = 0; i < expectedResults.size(); ++i )
@@ -461,7 +461,7 @@ TEST(TestDataTrimmingMethods, UNIT_TrimLAStringVector)
 {
 	LAStringVector dirtyString = { "", "1", "", "2", "", "3", "" };
 	LAStringVector expectedResults = { "1", "2", "3" };
-	LAStringVector actualResults = validation_api::trimLAStringVector(dirtyString);
+	LAStringVector actualResults = validation::trimLAStringVector(dirtyString);
 	
 	ASSERT_EQ( actualResults.size(), expectedResults.size() );
 	for ( size_t i = 0; i < expectedResults.size(); ++i )
@@ -484,7 +484,7 @@ TEST(TestDataTrimmingMethods, UNIT_TrimStandardStringMatrix)
         { "1", "2", "3" }, 
         { "4", "5", "6" }
     };
-	StandardStringMatrix actualResults = validation_api::trimStandardStringMatrix( dirtyString );
+	StandardStringMatrix actualResults = validation::trimStandardStringMatrix( dirtyString );
 	
 	ASSERT_EQ( actualResults.size(), expectedResults.size() );
 
@@ -511,7 +511,7 @@ TEST(TestDataTrimmingMethods, UNIT_TrimLAStringMatrix)
         { "1", "2", "3" }, 
         { "4", "5", "6" }
     };
-	LAStringMatrix actualResults = validation_api::trimLAStringMatrix( dirtyString );
+	LAStringMatrix actualResults = validation::trimLAStringMatrix( dirtyString );
 	
 	ASSERT_EQ( actualResults.size(), expectedResults.size() );
 

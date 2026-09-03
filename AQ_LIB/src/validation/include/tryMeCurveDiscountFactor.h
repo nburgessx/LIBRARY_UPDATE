@@ -6,7 +6,7 @@
 // Forward Declaration, for definition see "LACurveCalibrationHelpers.h" was "LACurveCalibrationHelpers.h" 
 struct DiscountFactorTable;
 
-namespace validation_api
+namespace validation
 {
     
     /* @brief			return the day count used in the core library

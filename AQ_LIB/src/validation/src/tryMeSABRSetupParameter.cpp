@@ -10,7 +10,7 @@
 
 using namespace etrading;
 
-namespace validation_api
+namespace validation
 {
 	/* @brief			validation interface for meSABRSetupParameter
 	*  @param [in]		gridID			ID of the parameter being set up

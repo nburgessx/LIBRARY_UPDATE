@@ -23,7 +23,7 @@ double mirGetTerm(const std::string& fromDate,
 		LADate toDt(toDate.c_str(), "YYYYMMDD");
 		LAString dayC(dayCount.c_str());
 
-		ret = validation_api::tryMirGetTerm(fromDt, toDt, dayC, includeLast);		
+		ret = validation::tryMirGetTerm(fromDt, toDt, dayC, includeLast);		
 	} 
 	catch (LACoreError& mesx) 
 	{

@@ -12,7 +12,7 @@ using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
 
-namespace validation_api
+namespace validation
 {
     /* @brief			Validation method for meMathNormalDistributionStandard
     *  @param [in]		z			The Standard Normal Variate z

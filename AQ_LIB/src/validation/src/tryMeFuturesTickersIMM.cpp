@@ -15,7 +15,7 @@
 
 using etrading::CreateDataFile;
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation interface for tryMeFuturesTickerCurrent
     *  @param [in]		valuationDate	The valuation date

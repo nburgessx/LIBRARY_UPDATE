@@ -91,7 +91,7 @@ namespace google_test
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getParRateInputs, i ) );
 
                 LAStringMatrix swapLVB = inputFile["swapLVB"];
-                double parRate = validation_api::tryMeProductSwapParRate( swapLVB, true );
+                double parRate = validation::tryMeProductSwapParRate( swapLVB, true );
 
                 CheckTestResultsAndRebaseOnRequest( parRate, TEST_DIR, getParRateResults, tolerance, i );
             }
@@ -126,7 +126,7 @@ namespace google_test
 
                 // Read the input file into the getParRate and swapPV functions
                 LAStringMatrix swapLVB = inputFile["swapLVB"];
-                double pv = validation_api::tryMeProductSwapPV( swapLVB, true );
+                double pv = validation::tryMeProductSwapPV( swapLVB, true );
 
                 CheckTestResultsAndRebaseOnRequest( pv, TEST_DIR, getPVResults, tolerancePV, i );
             }

@@ -6,7 +6,7 @@
 
 using etrading::LabelValueBlock;
 
-namespace validation_api
+namespace validation
 {
 
 	/* @brief			validation interface for the meLWOAssetSwapParParFromCleanPrice method. Calculate the Par/Par Asset Swap Spreads.

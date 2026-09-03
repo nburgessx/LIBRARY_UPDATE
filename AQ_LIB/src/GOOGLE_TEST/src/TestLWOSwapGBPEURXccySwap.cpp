@@ -101,7 +101,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation_api::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the Par Spread Inputs & the Basis Spreads
                 std::string swapName            = parSpreadInputFile["swapName"];
@@ -109,7 +109,7 @@ namespace google_test
                 LAStringMatrix fixingTableLVB     = parSpreadInputFile.getOptional("fixingTableNames", LAStringMatrix() );
                 auto spreadLegName              = parSpreadInputFile["spreadLegName"];
                 
-                double actualBasisSpread        = validation_api::tryMeLWOSwapParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName );
+                double actualBasisSpread        = validation::tryMeLWOSwapParSpread( swapName, curveCollectionLVB, fixingTableLVB, spreadLegName );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualBasisSpread, TEST_DIR, parSpreadOutputsFilename, basisSpreadTolerance );

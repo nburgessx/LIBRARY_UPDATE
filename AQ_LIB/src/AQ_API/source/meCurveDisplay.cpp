@@ -20,7 +20,7 @@ std::vector<std::vector<double> > meCurveDisplay(const std::string& curveCollect
 	LAString tmp_curveCollection(curveCollection.c_str());
 	LAString tmp_curveIndex(curveIndex.c_str());
 		
-	DoubleArray ans = validation_api::tryMeCurveDisplay(tmp_curveCollection, tmp_curveIndex);
+	DoubleArray ans = validation::tryMeCurveDisplay(tmp_curveCollection, tmp_curveIndex);
 
     LADataHolder* dh = &(etrading::InitializeAQETrading::instance().dataInstance()->getObjectPool().getObject(tmp_curveCollection,ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_DFS2));
 	if(dh->isDefined() && !dh->isNull() && tmp_curveIndex == STD)

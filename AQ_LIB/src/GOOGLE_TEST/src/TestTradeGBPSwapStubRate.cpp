@@ -57,7 +57,7 @@ namespace google_test
 			DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
 			LAStringMatrix swapLVB = inputFile["swapLVB"];
 
-			double stubRate = validation_api::tryMeProductSwapStubRate(swapLVB, curveIndices, curveTenors, tenorCurveFixings, true);
+			double stubRate = validation::tryMeProductSwapStubRate(swapLVB, curveIndices, curveTenors, tenorCurveFixings, true);
 
 			CheckTestResultsAndRebaseOnRequest(stubRate, TEST_DIR, fileStubRateOutput, tolerance);
 
@@ -80,18 +80,18 @@ namespace google_test
 		try
 		{
 			//1) Get fixing rate from Fixing Table object
-			const std::string fixingTableName = validation_api::tryMeLWOLoad(FixingTableObject, etrading::JSON);
+			const std::string fixingTableName = validation::tryMeLWOLoad(FixingTableObject, etrading::JSON);
 			etrading::DataProvider dataProvider(etrading::ValuationSettings(etrading::fromStringToLVB("GBPLIVE"), etrading::fromStringToLVB(fixingTableName), ""));
 			auto fixingTable = etrading::getFixingTable(fixingTableName, false /* do not throw when missing*/);
 			LADate fixingDate("20200309", "YYYYMMDD");
 			double expectedFixingRate = fixingTable->getFixingValue(etrading::toGregorianDateFromLADate(fixingDate));
 
 			//2) Get fixing rate from Swap object
-			const std::string swapName = validation_api::tryMeLWOLoad(SwapObject, etrading::JSON);
+			const std::string swapName = validation::tryMeLWOLoad(SwapObject, etrading::JSON);
 
 			std::vector<std::string> columnList = { "FixingDate", "FloatRate" };
 
-			AnyTypeMatrix fixingDateAndFixingRates = validation_api::tryMeLWOSwapDisplayCashflows(swapName, etrading::fromStringToLVB("GBPLIVE"), LAString("leg2:float"), etrading::fromStringToLVB(fixingTableName), false, columnList).front();
+			AnyTypeMatrix fixingDateAndFixingRates = validation::tryMeLWOSwapDisplayCashflows(swapName, etrading::fromStringToLVB("GBPLIVE"), LAString("leg2:float"), etrading::fromStringToLVB(fixingTableName), false, columnList).front();
 
 			double fixingRateFromSwap = 0.0;
 			for (auto it : fixingDateAndFixingRates)

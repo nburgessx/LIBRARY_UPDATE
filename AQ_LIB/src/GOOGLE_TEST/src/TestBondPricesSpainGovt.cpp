@@ -56,12 +56,12 @@ namespace google_test
 				 const std::string priceOutputFilename = bondFileName + "_" + priceFunctionOutput + ".csv";
 
 				// Load Bond
-				auto loadBond = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondInputFilename, etrading::JSON);
+				auto loadBond = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondInputFilename, etrading::JSON);
 
 				//1) Check Price Matching
 				const ReadDataFile::Load priceInputFile(priceInputFilename.c_str());
 
-				auto actualPrices = validation_api::tryMeLWOBondPrice(priceInputFile["bondObjectName"], priceInputFile["settlementDates"], priceInputFile["yields"]);
+				auto actualPrices = validation::tryMeLWOBondPrice(priceInputFile["bondObjectName"], priceInputFile["settlementDates"], priceInputFile["yields"]);
 				CheckTestResultsAndRebaseOnRequest(actualPrices, TEST_DIR.c_str(), priceOutputFilename.c_str(), priceTolerance);
 
              }
@@ -97,7 +97,7 @@ namespace google_test
 				const std::string yieldOutputFilename = bondFileName + "_" + yieldfunctionOuput + ".csv";
 
 				// Load Bond
-				auto loadBond = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondInputFilename, etrading::JSON);
+				auto loadBond = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + bondInputFilename, etrading::JSON);
 
 				//2) Check Yield Matching
 				const ReadDataFile::Load yieldInputFile(yieldInputFilename.c_str());
@@ -107,7 +107,7 @@ namespace google_test
 				
 				double price = yieldInputFile["price"];
 
-				auto actualYields = validation_api::tryMeLWOBondYield(bondObjectName, LabelValueBlock(valuationSettingLVB), price);
+				auto actualYields = validation::tryMeLWOBondYield(bondObjectName, LabelValueBlock(valuationSettingLVB), price);
 
 				CheckTestResultsAndRebaseOnRequest(actualYields, TEST_DIR.c_str(), yieldOutputFilename.c_str(), yieldTolerance);
 

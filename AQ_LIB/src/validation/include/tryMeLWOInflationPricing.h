@@ -7,7 +7,7 @@
 
 using etrading::LabelValueBlock;
 
-namespace validation_api
+namespace validation
 {
 	/* @brief Creates an Inflation Curve, calibrated from Zero Coupon Inflation Swap market data
 	 * @param [in] objectName        The name of the Inflation Curve object to create
@@ -18,7 +18,7 @@ namespace validation_api
 	 */
 	std::string tryMeLWOInflationCurveCreate( const std::string& objectName,
 											  const std::vector<std::string>& dataBlockNames,
-											  const etrading::JSONInfoBlockTuples& infoBlocks ); // TODO: Move the JSON Info Block below the validation_api - does not belong here
+											  const etrading::JSONInfoBlockTuples& infoBlocks ); // TODO: Move the JSON Info Block below the validation - does not belong here
 
 	/* @brief Obtains the calibration parameters from the specified inflation curve
 	 * @param[in] inflationCurveName	Inflation Curve object name

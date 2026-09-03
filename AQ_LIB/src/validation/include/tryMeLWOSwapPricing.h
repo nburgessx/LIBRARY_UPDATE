@@ -7,7 +7,7 @@
 
 using etrading::LabelValueBlock;
 
-namespace validation_api
+namespace validation
 {
 	/* @brief			validation interface for the meLWOSwapPVs method
 	*  @param [in]		swapNames		    Swap object names
@@ -246,7 +246,7 @@ namespace validation_api
 	 */
     std::string tryMeLWOCreditModelCreate( const std::string& objectName,
                                            const std::vector<std::string>& dataBlockNames,
-                                           const etrading::JSONInfoBlockTuples& infoBlocks ); // TODO: Move the JSON Info Block below the validation_api - does not belong here
+                                           const etrading::JSONInfoBlockTuples& infoBlocks ); // TODO: Move the JSON Info Block below the validation - does not belong here
 
 	/*  @brief Obtains the credit model asOf / valuation Date
 	 *  @param[in] creditModelName	Credit Model object name
@@ -431,7 +431,7 @@ namespace validation_api
 	 */
 	std::string tryMeLWOCreditBasketModelCreate( const std::string& objectName,
 												 const std::vector<std::string>& dataBlockNames,
-												 const etrading::JSONInfoBlockTuples& infoBlocks ); // TODO: Move the JSON Info Block below the validation_api - does not belong here
+												 const etrading::JSONInfoBlockTuples& infoBlocks ); // TODO: Move the JSON Info Block below the validation - does not belong here
 
 
 	// Compute the Survival Probability using the Credit Basket Model

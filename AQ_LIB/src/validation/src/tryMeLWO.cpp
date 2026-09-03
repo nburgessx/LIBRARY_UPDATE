@@ -20,7 +20,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;
 
-namespace validation_api
+namespace validation
 {
 
     bool tryMeLWOExists( const std::string& typeAsString, const std::string& objectName )

@@ -99,7 +99,7 @@ namespace
         LAStringMatrix bondExpressionLVB = createBondInputFile["expressionLVB"];
         bool validateKeys              = createBondInputFile["validateKeys"];
         
-		std::string objectName = validation_api::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
+		std::string objectName = validation::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVB, validateKeys );
 		return objectName;
     };
 
@@ -137,7 +137,7 @@ namespace google_test
 			const double annualizedNextCouponRate = priceInputFile[ "annualizedNextCouponRate" ];
 
 			// Calculate the bond price
-			const double calculatedPrice = validation_api::tryMeLWOBondFRNPriceFromDiscountMargin( bondObjectName, settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedPrice = validation::tryMeLWOBondFRNPriceFromDiscountMargin( bondObjectName, settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 			
 			// Compare the calculatedPrice against snaptshot results
 			std::string priceOutputFilename = TEST_DIR + bondObjectName + frnPriceFromDiscountMarginOutputFileSuffix;
@@ -171,7 +171,7 @@ namespace google_test
 			const double annualizedNextCouponRate = priceInputFile[ "annualizedNextCouponRate" ];
 
 			// Calculate the bond price
-			const double calculatedPrice = validation_api::tryMeLWOBondFRNPriceFromYield( bondObjectName, settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedPrice = validation::tryMeLWOBondFRNPriceFromYield( bondObjectName, settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 			
 			// Compare the calculatedPrice against snaptshot results
 			// Re-use the PriceFromDiscountMargin output file, since the priceFromYield should match exactly.
@@ -206,10 +206,10 @@ namespace google_test
 			const double annualizedNextCouponRate = priceInputFile[ "annualizedNextCouponRate" ];
 
 			// 1. Calculate Price from yield
-			const double calculatedPrice = validation_api::tryMeLWOBondFRNPriceFromYield( bondObjectName, settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedPrice = validation::tryMeLWOBondFRNPriceFromYield( bondObjectName, settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 
 			// 2. Calculate Yield from the Price in step 1
-			const double calculatedYield = validation_api::tryMeLWOBondFRNYieldFromPrice( bondObjectName, settlementDate, calculatedPrice, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedYield = validation::tryMeLWOBondFRNYieldFromPrice( bondObjectName, settlementDate, calculatedPrice, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 			
 			// 3. Verify that the calculated Yield matches the input yield.
 			//    This must always match, and we do not allow rebase.
@@ -242,10 +242,10 @@ namespace google_test
 			const double annualizedNextCouponRate = priceInputFile[ "annualizedNextCouponRate" ];
 
 			// Calculate the bond price
-			const double calculatedPrice = validation_api::tryMeLWOBondFRNPriceFromDiscountMargin( bondObjectName, settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedPrice = validation::tryMeLWOBondFRNPriceFromDiscountMargin( bondObjectName, settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 			
 			// 2. Calculate Discount Margin from the Price in step 1
-			const double calculatedDiscountMargin = validation_api::tryMeLWOBondFRNDiscountMarginFromPrice( bondObjectName, settlementDate, calculatedPrice, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
+			const double calculatedDiscountMargin = validation::tryMeLWOBondFRNDiscountMarginFromPrice( bondObjectName, settlementDate, calculatedPrice, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 			
 			// 3. Verify that the calculated Yield matches the input yield.
 			//    This must always match, and we do not allow rebase.

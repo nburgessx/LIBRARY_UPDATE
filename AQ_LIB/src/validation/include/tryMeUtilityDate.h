@@ -1,7 +1,7 @@
 #pragma once
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			Validation interface for tryMeUtilityTermsToDates function, which retrieves curve payment dates given terms year fractions

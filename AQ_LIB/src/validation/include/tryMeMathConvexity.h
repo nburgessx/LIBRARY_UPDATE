@@ -1,7 +1,7 @@
 #pragma once
 #include "CoreEnumerations.h"
 
-namespace validation_api
+namespace validation
 {
     // Volatility Helper Methods
     // ----------------------------

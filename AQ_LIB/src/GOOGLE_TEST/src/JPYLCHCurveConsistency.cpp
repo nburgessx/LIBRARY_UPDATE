@@ -43,10 +43,10 @@ namespace google_test
     public:
 
         // Load Curves - Must Build Curves in the Correct Order
-        const std::string curveObjectJPYOIS_        = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameJPYOIS, etrading::JSON );
-        const std::string curveObjectJPYStd6ML_     = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameJPY6ML, etrading::JSON );
-        const std::string curveObjectJPYBasis3ML_   = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameJPY3ML, etrading::JSON );
-        const std::string curveObjectJPYBasis1ML_   = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameJPY1ML, etrading::JSON );
+        const std::string curveObjectJPYOIS_        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameJPYOIS, etrading::JSON );
+        const std::string curveObjectJPYStd6ML_     = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameJPY6ML, etrading::JSON );
+        const std::string curveObjectJPYBasis3ML_   = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameJPY3ML, etrading::JSON );
+        const std::string curveObjectJPYBasis1ML_   = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameJPY1ML, etrading::JSON );
     };
 
     // OIS OUTRIGHT SWAPS

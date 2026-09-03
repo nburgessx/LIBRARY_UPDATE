@@ -2,7 +2,7 @@
 
 #include "NormalDistribution.h"
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			Validation method for meMathNormalDistributionStandard

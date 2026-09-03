@@ -9,7 +9,7 @@
 
 using namespace etrading;
 
-namespace validation_api
+namespace validation
 {
 	/* @brief			validation interface for meSABROutputParameter
 	*  @param [in]		gridID		ID identifying data matrix

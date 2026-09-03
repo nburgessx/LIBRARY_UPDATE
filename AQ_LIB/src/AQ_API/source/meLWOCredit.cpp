@@ -51,7 +51,7 @@ std::string meLWOCreditModelCreate( const std::string & objectName,
     const std::vector<std::string> infoBlockNames = { key1, key2 };
 
     // Call the Function
-    std::string result = validation_api::tryMeLWOCreditModelCreate( objectName, infoBlockNames, infoBlocks );
+    std::string result = validation::tryMeLWOCreditModelCreate( objectName, infoBlockNames, infoBlocks );
         
     // Marshall Output(s)
     return result;
@@ -70,7 +70,7 @@ double meLWOCreditModelSurvivalProbability( const std::string& creditModelName, 
     LADate fromDate_( etrading::stringToDate( fromDate ) );
 
     // Call the Function
-    double result = validation_api::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate_, fromDate_ );
+    double result = validation::tryMeLWOCreditModelSurvivalProbability( creditModelName, toDate_, fromDate_ );
         
     // Marshall Output(s)
     return result;
@@ -88,7 +88,7 @@ double meLWOCreditModelDefaultProbability( const std::string& creditModelName, c
     LADate fromDate_( etrading::stringToDate( fromDate ) );
 
     // Call the Function
-    double result = validation_api::tryMeLWOCreditModelDefaultProbability( creditModelName, toDate_, fromDate_ );
+    double result = validation::tryMeLWOCreditModelDefaultProbability( creditModelName, toDate_, fromDate_ );
         
     // Marshall Output(s)
     return result;
@@ -105,7 +105,7 @@ double meLWOCreditModelHazardRate( const std::string& creditModelName, const std
     LADate paymentDate_( etrading::stringToDate( paymentDate ) );
         
     // Call the Function
-    double result = validation_api::tryMeLWOCreditModelHazardRate( creditModelName, paymentDate_ );
+    double result = validation::tryMeLWOCreditModelHazardRate( creditModelName, paymentDate_ );
 
     // Marshall Output(s)
     return result;
@@ -123,7 +123,7 @@ double meLWOCreditModelRiskyDiscountFactor( const std::string& creditModelName, 
         
     // Call the Function
     DateVector paymentDateAsVector( 1, paymentDate_ );
-    std::vector<double> resultVector = validation_api::tryMeLWOCreditModelRiskyDiscountFactors( creditModelName, paymentDateAsVector );
+    std::vector<double> resultVector = validation::tryMeLWOCreditModelRiskyDiscountFactors( creditModelName, paymentDateAsVector );
     double result = resultVector[0]; 
 
     // Marshall Output(s)
@@ -142,7 +142,7 @@ std::vector<double> meLWOCreditModelRiskyDiscountFactors( const std::string& cre
     swig::buildDateVector( paymentDates_, paymentDates );
 
     // Call the Function
-    std::vector<double> result = validation_api::tryMeLWOCreditModelRiskyDiscountFactors( creditModelName, paymentDates_ );
+    std::vector<double> result = validation::tryMeLWOCreditModelRiskyDiscountFactors( creditModelName, paymentDates_ );
         
     // Marshall Output(s)
     return result;
@@ -165,7 +165,7 @@ double meLWOCreditDefaultSwapPV( const std::string& swapName, const std::string&
     // Marshall Input(s)
                 
     // Call the Function
-    double result = validation_api::tryMeLWOCreditDefaultSwapPV( swapName, creditModelName, legName.c_str() );
+    double result = validation::tryMeLWOCreditDefaultSwapPV( swapName, creditModelName, legName.c_str() );
         
     // Marshall Output(s)
     return result;
@@ -188,7 +188,7 @@ double meLWOCreditDefaultSwapRiskyAnnuity( const std::string& swapName, const st
     // Marshall Input(s)
         
     // Call the Function
-    double result = validation_api::tryMeLWOCreditDefaultSwapRiskyAnnuity( swapName, creditModelName, legName.c_str() );
+    double result = validation::tryMeLWOCreditDefaultSwapRiskyAnnuity( swapName, creditModelName, legName.c_str() );
         
     // Marshall Output(s)
     return result;
@@ -211,7 +211,7 @@ double meLWOCreditDefaultSwapCS01( const std::string& swapName, const std::strin
     // Marshall Input(s)
         
     // Call the Function
-    double result = validation_api::tryMeLWOCreditDefaultSwapCS01( swapName, creditModelName, legName.c_str() );
+    double result = validation::tryMeLWOCreditDefaultSwapCS01( swapName, creditModelName, legName.c_str() );
         
     // Marshall Output(s)
     return result;
@@ -236,7 +236,7 @@ double meLWOCreditDefaultSwapParSpread( const std::string& swapName, const std::
     // Marshall Input(s)
         
     // Call the Function
-    double result = validation_api::tryMeLWOCreditDefaultSwapParSpread( swapName, creditModelName, premiumLegName.c_str(), protectionLegName.c_str() );
+    double result = validation::tryMeLWOCreditDefaultSwapParSpread( swapName, creditModelName, premiumLegName.c_str(), protectionLegName.c_str() );
         
     // Marshall Output(s)
     return result;
@@ -262,7 +262,7 @@ double meLWOTotalReturnSwapPV( const std::string& swapName, const std::string& c
 	swig::buildStringMatrix( fixingTableLVB, fixingTableNames );
 
     // Call the Function
-    double result = validation_api::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, legName, fixingTableLVB );
+    double result = validation::tryMeLWOTotalReturnSwapPV( swapName, creditModelName, legName, fixingTableLVB );
         
     // Marshall Output(s)
     return result;
@@ -292,7 +292,7 @@ double meLWOTotalReturnSwapParRate( const std::string& swapName, const std::stri
 	swig::buildStringMatrix( fixingTableLVB, fixingTableNames );
 
     // Call the Function
-    double result = validation_api::tryMeLWOTotalReturnSwapParRate( swapName, creditModelName, fixingTableLVB );
+    double result = validation::tryMeLWOTotalReturnSwapParRate( swapName, creditModelName, fixingTableLVB );
         
     // Marshall Output(s)
     return result;
@@ -322,7 +322,7 @@ double meLWOTotalReturnSwapParSpread( const std::string& swapName, const std::st
 	swig::buildStringMatrix( fixingTableLVB, fixingTableNames );
 
     // Call the Function
-    double result = validation_api::tryMeLWOTotalReturnSwapParSpread( swapName, creditModelName, fixingTableLVB );
+    double result = validation::tryMeLWOTotalReturnSwapParSpread( swapName, creditModelName, fixingTableLVB );
         
     // Marshall Output(s)
     return result;
@@ -351,7 +351,7 @@ double meLWOTotalReturnSwapAnnuity( const std::string& swapName, const std::stri
     // Marshall Input(s)
         
     // Call the Function
-    double result = validation_api::tryMeLWOTotalReturnSwapAnnuity( swapName, creditModelName, legName );
+    double result = validation::tryMeLWOTotalReturnSwapAnnuity( swapName, creditModelName, legName );
         
     // Marshall Output(s)
     return result;

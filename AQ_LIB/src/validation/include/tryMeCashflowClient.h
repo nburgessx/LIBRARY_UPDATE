@@ -10,7 +10,7 @@
 #include "CommonConstants.h"
 
 
-namespace validation_api
+namespace validation
 {
 	/* @brief Projects the monthly cashflows of an amortizing loan
 	* @param[in]	term				The term of the loan, in months. i.e. 5 years = 60

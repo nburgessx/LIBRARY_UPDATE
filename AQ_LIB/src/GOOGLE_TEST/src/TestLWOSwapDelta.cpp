@@ -95,7 +95,7 @@ namespace
 		// Swap Generator
         const ReadDataFile::Load swapGeneratorInputFile( swapGeneratorInputs );
 		LAStringMatrix swapGeneratorLVB = swapGeneratorInputFile[ "swapGeneratorLVB" ];
-		std::string swapGeneratorName = validation_api::tryMeLWOSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
+		std::string swapGeneratorName = validation::tryMeLWOSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
 
 		// Swap
 		const ReadDataFile::Load swapInputFile( swapInputs );
@@ -104,7 +104,7 @@ namespace
 		LAStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
-		return validation_api::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		return validation::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 
 	std::string helperCreateSwapFromLegLVBs( const char* swapInputs )
@@ -116,7 +116,7 @@ namespace
 		LAStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
-		return validation_api::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1Lvb, leg2Lvb, swapProperties, isXccySwap, validateKeys );
+		return validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1Lvb, leg2Lvb, swapProperties, isXccySwap, validateKeys );
 	};
 
 	std::string createSwapFromDataFile( const char* swapInputs )
@@ -127,7 +127,7 @@ namespace
 		LAStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
-		return validation_api::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
+		return validation::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
 	};
 }
 
@@ -168,7 +168,7 @@ namespace google_test
 
 		LAStringVector legNames;
 		DoubleVector deltas;
-		validation_api::tryMeLWOSwapDelta( legNames,
+		validation::tryMeLWOSwapDelta( legNames,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -238,7 +238,7 @@ namespace google_test
 		std::vector< boost::gregorian::date > fixingDates = fixingTableFile[ "fixingDates" ];
 		DoubleVector fixingValues = fixingTableFile[ "fixingValues" ];
 		
-		std::string fixingTableLeg1 = validation_api::tryMeLWOFixingTableCreate( tableName, currency, tenor, fixingDates, fixingValues );
+		std::string fixingTableLeg1 = validation::tryMeLWOFixingTableCreate( tableName, currency, tenor, fixingDates, fixingValues );
 		
 		const ReadDataFile::Load flatShiftDelta( flatShiftDeltaInputs_irs );
 		LAStringVector swapNames					= flatShiftDelta[ "swapNames" ];
@@ -256,7 +256,7 @@ namespace google_test
 
 		LAStringVector legNames;
 		DoubleVector deltas;
-		validation_api::tryMeLWOSwapDelta( legNames,
+		validation::tryMeLWOSwapDelta( legNames,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -314,7 +314,7 @@ namespace google_test
 			// 2. Now recalculate the risk by SWAP
 			DoubleVector deltaBySwap;
 			LAString groupRiskBySwap = "SWAP";
-			validation_api::tryMeLWOSwapDelta( legNames,
+			validation::tryMeLWOSwapDelta( legNames,
 											   deltaBySwap,
 											   swapNames,
 											   curveCollectionNames,
@@ -336,7 +336,7 @@ namespace google_test
 			// As this is a single trade, this will match the SWAP level delta
 			DoubleVector deltaByTotal;
 			LAString groupRiskByTotal = "TOTAL";
-			validation_api::tryMeLWOSwapDelta( legNames,
+			validation::tryMeLWOSwapDelta( legNames,
 											   deltaByTotal,
 											   swapNames,
 											   curveCollectionNames,
@@ -381,7 +381,7 @@ namespace google_test
 
 		LAStringVector legNames;
 		DoubleVector deltas;
-		validation_api::tryMeLWOSwapDelta( legNames,
+		validation::tryMeLWOSwapDelta( legNames,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -455,7 +455,7 @@ namespace google_test
 
 		LAStringVector legNames;
 		DoubleVector deltas;
-		validation_api::tryMeLWOSwapDelta( legNames,
+		validation::tryMeLWOSwapDelta( legNames,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -537,7 +537,7 @@ namespace google_test
 
 		LAStringVector legNames;
 		DoubleVector deltas;
-		validation_api::tryMeLWOSwapDelta( legNames,
+		validation::tryMeLWOSwapDelta( legNames,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -622,7 +622,7 @@ namespace google_test
 		LAStringVector positionIDs;
 		DoubleVector deltas;
 		// The DV01 is actually calculated by the tryMeLWOSwapDelta function
-		validation_api::tryMeLWOSwapDelta( positionIDs,
+		validation::tryMeLWOSwapDelta( positionIDs,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -707,7 +707,7 @@ namespace google_test
 		LAStringVector pillarNames;
 		LAStringVector headers;
 		DoubleMatrix deltas;
-		validation_api::tryMeLWOSwapDeltaLadder(headers,
+		validation::tryMeLWOSwapDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,

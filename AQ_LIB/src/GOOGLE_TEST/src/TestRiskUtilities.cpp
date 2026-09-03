@@ -27,11 +27,11 @@ namespace google_test
 	void loadUSDCurves()
 	{
 		// Load USD Curves
-		const std::string curveObjectUSDOIS_  = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
-		const std::string curveObjectUSD3ML_  = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
-		const std::string curveObjectUSD6ML_  = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
-		const std::string curveObjectUSD1ML_  = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD1ML, etrading::JSON );
-		const std::string curveObjectUSD12ML_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD12ML, etrading::JSON );
+		const std::string curveObjectUSDOIS_  = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSDOIS, etrading::JSON );
+		const std::string curveObjectUSD3ML_  = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD3ML, etrading::JSON );
+		const std::string curveObjectUSD6ML_  = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD6ML, etrading::JSON );
+		const std::string curveObjectUSD1ML_  = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD1ML, etrading::JSON );
+		const std::string curveObjectUSD12ML_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameUSD12ML, etrading::JSON );
 	}
 
 

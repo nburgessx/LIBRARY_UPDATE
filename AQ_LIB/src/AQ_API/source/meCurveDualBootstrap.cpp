@@ -136,7 +136,7 @@ const std::string meCurveDualBootstrap(const std::string& curveCollection,
 	LAStringMatrix tmp_tenorBasisRates_swap;
 	swig::buildStringMatrix(tmp_tenorBasisRates_swap, tenorBasisRates_swap);
 
-	ret = validation_api::tryMeCurveDualBootstrap(tmp_curveCollection,
+	ret = validation::tryMeCurveDualBootstrap(tmp_curveCollection,
 													tmp_curveName_db,
 													tmp_curveName_swap,
 													tmp_curveName_OIS,

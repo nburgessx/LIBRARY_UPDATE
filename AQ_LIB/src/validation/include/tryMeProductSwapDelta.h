@@ -6,7 +6,7 @@
 
 using etrading::LabelValueBlock;
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation interface for the meSwapDelta method
     *  @param [out]		pillarNames		    The final list of pillar names

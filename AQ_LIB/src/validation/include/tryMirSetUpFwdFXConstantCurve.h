@@ -3,7 +3,7 @@
 #include "LACoreTemplateType.h"
 #include "LADataInstance.h"
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation method for mirSetUpFwdFXConstantCurve
     *  @param [in]		dataInstance				Pointer to the object pool

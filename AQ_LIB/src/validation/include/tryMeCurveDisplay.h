@@ -3,7 +3,7 @@
 #include "Variant.h"
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
 
 

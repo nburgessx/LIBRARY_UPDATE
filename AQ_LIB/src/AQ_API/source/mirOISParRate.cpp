@@ -102,7 +102,7 @@ double mirOISParRate(const std::string& EffDt,
 		LAString tRollDay		(TRollDay.c_str());
 		LAString xRollDay		(XRollDay.c_str());
 	
-		ret = validation_api::tryMirOISParRate(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirOISParRate(etrading::InitializeAQETrading::instance().dataInstance(),
 												effectiveDate, 
 												maturity, 
 												curveID, 

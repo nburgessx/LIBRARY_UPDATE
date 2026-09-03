@@ -18,7 +18,7 @@
 using etrading::CreateDataFile;
 
 
-namespace validation_api
+namespace validation
 {
     std::string tryMeLWOGridCreate(
         const std::string& objectName,

@@ -6,7 +6,7 @@
 
 using etrading::LabelValueBlock; 
 
-namespace validation_api
+namespace validation
 {
 	typedef std::tuple<std::vector<std::string>, std::vector<etrading::ContainedTypeEnum>, etrading::VariantMatrix>  TableInfo;
 

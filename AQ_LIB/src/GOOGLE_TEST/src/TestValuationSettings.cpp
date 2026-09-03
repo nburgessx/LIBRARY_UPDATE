@@ -33,8 +33,8 @@ namespace google_test
     TEST_F( TestValuationSettingsUsingObjects, UNIT_CurveHandle_SingleCell )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation_api::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
-        const std::string curveUSD3M    = validation_api::tryMeLWOLoad( USDCurve3M, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
+        const std::string curveUSD3M    = validation::tryMeLWOLoad( USDCurve3M, etrading::JSON );
 
 		StandardStringMatrix rawData = { { curveUSD3M } };
 		StandardStringMatrix expectedResult = { { "CURVECOLLECTION", "USDYC" } };
@@ -54,8 +54,8 @@ namespace google_test
     TEST_F( TestValuationSettingsUsingObjects, UNIT_CurveHandle_SingleRow )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation_api::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
-        const std::string curveUSD3M    = validation_api::tryMeLWOLoad( USDCurve3M, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
+        const std::string curveUSD3M    = validation::tryMeLWOLoad( USDCurve3M, etrading::JSON );
 
 		StandardStringMatrix rawData = { { "CURVECOLLECTION", curveUSD3M } };
 		StandardStringMatrix expectedResult = { { "CURVECOLLECTION", "USDYC" } };
@@ -75,8 +75,8 @@ namespace google_test
     TEST_F( TestValuationSettingsUsingObjects, UNIT_CurveHandle_SingleRow_SpecialCase )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation_api::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
-        const std::string curveUSD3M    = validation_api::tryMeLWOLoad( USDCurve3M, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
+        const std::string curveUSD3M    = validation::tryMeLWOLoad( USDCurve3M, etrading::JSON );
 
 		StandardStringMatrix rawData = { { curveUSD3M, "" } };
 		StandardStringMatrix expectedResult = { { "CURVECOLLECTION", "USDYC" } };
@@ -96,8 +96,8 @@ namespace google_test
     TEST_F( TestValuationSettingsUsingObjects, UNIT_CurveHandle_SingleColumn )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation_api::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
-        const std::string curveUSD3M    = validation_api::tryMeLWOLoad( USDCurve3M, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
+        const std::string curveUSD3M    = validation::tryMeLWOLoad( USDCurve3M, etrading::JSON );
 
 		// Single Column Input is for Curve Objects from the Same Curve Collection Only
 		StandardStringMatrix rawData = { { curveUSDOIS },
@@ -121,10 +121,10 @@ namespace google_test
     TEST_F( TestValuationSettingsUsingObjects, UNIT_CurveHandle_LabelValueBlock )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation_api::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
-        const std::string curveUSD3M    = validation_api::tryMeLWOLoad( USDCurve3M, etrading::JSON );
-		const std::string curveEUROIS   = validation_api::tryMeLWOLoad( EURCurveOIS, etrading::JSON );
-        const std::string curveEUR3M    = validation_api::tryMeLWOLoad( EURCurve3M, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
+        const std::string curveUSD3M    = validation::tryMeLWOLoad( USDCurve3M, etrading::JSON );
+		const std::string curveEUROIS   = validation::tryMeLWOLoad( EURCurveOIS, etrading::JSON );
+        const std::string curveEUR3M    = validation::tryMeLWOLoad( EURCurve3M, etrading::JSON );
 
 		StandardStringMatrix rawData = { { "Leg1:Fixed", curveUSD3M	 },
 										 { "Leg2:Float", curveEUR3M	 },
@@ -154,12 +154,12 @@ namespace google_test
     TEST_F( TestValuationSettingsUsingObjects, UNIT_CurveGroup_SingleCell )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation_api::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
-        const std::string curveUSD3M    = validation_api::tryMeLWOLoad( USDCurve3M, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
+        const std::string curveUSD3M    = validation::tryMeLWOLoad( USDCurve3M, etrading::JSON );
 
 		// Create Curve Group
 		const std::vector<std::string> USDcurves = { curveUSDOIS, curveUSD3M };
-		const std::string curveGroupUSD	= validation_api::tryMeCurveGroupCreate( "USDCurves", USDcurves );
+		const std::string curveGroupUSD	= validation::tryMeCurveGroupCreate( "USDCurves", USDcurves );
 
 		StandardStringMatrix rawData = { { curveGroupUSD } };
 		StandardStringMatrix expectedResult = { { "CURVECOLLECTION", "USDYC" } };
@@ -179,12 +179,12 @@ namespace google_test
     TEST_F( TestValuationSettingsUsingObjects, UNIT_CurveGroup_SingleRow )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation_api::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
-        const std::string curveUSD3M    = validation_api::tryMeLWOLoad( USDCurve3M, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
+        const std::string curveUSD3M    = validation::tryMeLWOLoad( USDCurve3M, etrading::JSON );
 
 		// Create Curve Group
 		const std::vector<std::string> USDcurves = { curveUSDOIS, curveUSD3M };
-		const std::string curveGroupUSD	= validation_api::tryMeCurveGroupCreate( "USDCurves", USDcurves );
+		const std::string curveGroupUSD	= validation::tryMeCurveGroupCreate( "USDCurves", USDcurves );
 
 		StandardStringMatrix rawData = { { "CURVECOLLECTION", curveGroupUSD } };
 		StandardStringMatrix expectedResult = { { "CURVECOLLECTION", "USDYC" } };
@@ -204,12 +204,12 @@ namespace google_test
     TEST_F( TestValuationSettingsUsingObjects, UNIT_CurveGroup_SingleRow_SpecialCase )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation_api::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
-        const std::string curveUSD3M    = validation_api::tryMeLWOLoad( USDCurve3M, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
+        const std::string curveUSD3M    = validation::tryMeLWOLoad( USDCurve3M, etrading::JSON );
 
 		// Create Curve Group
 		const std::vector<std::string> USDcurves = { curveUSDOIS, curveUSD3M };
-		const std::string curveGroupUSD	= validation_api::tryMeCurveGroupCreate( "USDCurves", USDcurves );
+		const std::string curveGroupUSD	= validation::tryMeCurveGroupCreate( "USDCurves", USDcurves );
 
 		StandardStringMatrix rawData = { { curveGroupUSD, "" } };
 		StandardStringMatrix expectedResult = { { "CURVECOLLECTION", "USDYC" } };
@@ -229,12 +229,12 @@ namespace google_test
     TEST_F( TestValuationSettingsUsingObjects, UNIT_CurveGroup_SingleColumn )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation_api::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
-        const std::string curveUSD3M    = validation_api::tryMeLWOLoad( USDCurve3M, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
+        const std::string curveUSD3M    = validation::tryMeLWOLoad( USDCurve3M, etrading::JSON );
 
 		// Create Curve Group
 		const std::vector<std::string> USDcurves = { curveUSDOIS, curveUSD3M };
-		const std::string curveGroupUSD	= validation_api::tryMeCurveGroupCreate( "USDCurves", USDcurves );
+		const std::string curveGroupUSD	= validation::tryMeCurveGroupCreate( "USDCurves", USDcurves );
 
 		// Single Column Input is for Curve Objects from the Same Curve Collection Only
 		StandardStringMatrix rawData = { { curveGroupUSD },
@@ -258,17 +258,17 @@ namespace google_test
     TEST_F( TestValuationSettingsUsingObjects, UNIT_CurveGroup_LabelValueBlock )
     {
         // Load Curves
-        const std::string curveUSDOIS   = validation_api::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
-        const std::string curveUSD3M    = validation_api::tryMeLWOLoad( USDCurve3M, etrading::JSON );
-		const std::string curveEUROIS   = validation_api::tryMeLWOLoad( EURCurveOIS, etrading::JSON );
-        const std::string curveEUR3M    = validation_api::tryMeLWOLoad( EURCurve3M, etrading::JSON );
+        const std::string curveUSDOIS   = validation::tryMeLWOLoad( USDCurveOIS, etrading::JSON );
+        const std::string curveUSD3M    = validation::tryMeLWOLoad( USDCurve3M, etrading::JSON );
+		const std::string curveEUROIS   = validation::tryMeLWOLoad( EURCurveOIS, etrading::JSON );
+        const std::string curveEUR3M    = validation::tryMeLWOLoad( EURCurve3M, etrading::JSON );
 
 		// Create Curve Group
 		const std::vector<std::string> USDcurves = { curveUSDOIS, curveUSD3M };
 		const std::vector<std::string> EURcurves = { curveEUROIS, curveEUR3M };
 		
-		const std::string curveGroupUSD	= validation_api::tryMeCurveGroupCreate( "USDCurves", USDcurves );
-		const std::string curveGroupEUR	= validation_api::tryMeCurveGroupCreate( "EURCurves", EURcurves );
+		const std::string curveGroupUSD	= validation::tryMeCurveGroupCreate( "USDCurves", USDcurves );
+		const std::string curveGroupEUR	= validation::tryMeCurveGroupCreate( "EURCurves", EURcurves );
 		
 		StandardStringMatrix rawData = { { "Leg1:Fixed", curveGroupUSD },
 										 { "Leg2:Float", curveGroupEUR },

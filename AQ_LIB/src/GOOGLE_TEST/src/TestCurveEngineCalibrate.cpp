@@ -148,7 +148,7 @@ namespace
 			}
 		}
 
-		return validation_api::tryMeLWOCurveMarketDataCreate(objectName, marketDataKeys, infoBlocks);
+		return validation::tryMeLWOCurveMarketDataCreate(objectName, marketDataKeys, infoBlocks);
 	}
 
 	
@@ -180,7 +180,7 @@ namespace google_test
 		DateVector toDateVector = inputFile["toDates"];
 
 		const DoubleArray results
-			= validation_api::tryMirGetForwardRate2(
+			= validation::tryMirGetForwardRate2(
 				etrading::InitializeAQETrading::instance().dataInstance(),
 				fromDateVector,
 				toDateVector,
@@ -243,7 +243,7 @@ namespace google_test
     //             StandardString value    = "TRUE";
 	// 			etrading::LabelValueBlock overridingInputs( key, value );
     //             
-	// 			std::string fwd6MCurveGenerator = validation_api::tryMeLWOCurveGeneratorModify("FWD_USD_BASIS_3X6", "USD_BASIS_3X6", overridingInputs);
+	// 			std::string fwd6MCurveGenerator = validation::tryMeLWOCurveGeneratorModify("FWD_USD_BASIS_3X6", "USD_BASIS_3X6", overridingInputs);
 	// 			curveGenerators.push_back(fwd6MCurveGenerator);
 	// 		}
 	// 		else
@@ -252,7 +252,7 @@ namespace google_test
 	// 		}
 	// 		marketDataHandles.push_back(buildMarketDataObjectHandle(testIndex, ccy, "6M"));
     // 
-	// 		validation_api::tryMeLWOCurveEngineCalibrate("",				// engine name
+	// 		validation::tryMeLWOCurveEngineCalibrate("",				// engine name
 	// 			                                         curveCollection,	// curve collection name
 	// 			                                         LAStringMatrix(),	// Engine params
 	// 			                                         curveGenerators,
@@ -265,7 +265,7 @@ namespace google_test
 	// 		testEngineCurveForwardRates("6M", ccy, testIndex);
     // 
 	// 		// Flush the cache in preparation for a new set of curves
-	// 		validation_api::tryMeUtilityClearEntityPool();
+	// 		validation::tryMeUtilityClearEntityPool();
 	// 		curveGenerators.clear();
 	// 		marketDataHandles.clear();
 	// 	}
@@ -302,7 +302,7 @@ namespace google_test
 	//		curveGenerators.push_back("EUR_BASIS_3X12");
 	//		marketDataHandles.push_back(buildMarketDataObjectHandle(testIndex, ccy, "12M"));
 
-	//		validation_api::tryMeLWOCurveEngineCalibrate("",				// engine name
+	//		validation::tryMeLWOCurveEngineCalibrate("",				// engine name
 	//			curveCollection,	// curve collection name
 	//			LAStringMatrix(),		// Engine params
 	//			curveGenerators,
@@ -316,7 +316,7 @@ namespace google_test
 	//		testEngineCurveForwardRates("12M", ccy, testIndex);
 
 	//		// Flush the cache in preparation for a new set of curves
-	//		validation_api::tryMeUtilityClearEntityPool();
+	//		validation::tryMeUtilityClearEntityPool();
 	//		curveGenerators.clear();
 	//		marketDataHandles.clear();
 	//	}

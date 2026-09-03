@@ -93,7 +93,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 LAStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation_api::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, true );
+                double stubRate = validation::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, true );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test1_getStubRateOutputs, tolerance, i );
             }
@@ -141,7 +141,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 LAStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation_api::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
+                double stubRate = validation::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test2_getStubRateOutputs, tolerance, i );
             }
@@ -188,7 +188,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 LAStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation_api::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
+                double stubRate = validation::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test3_getStubRateOutputs, tolerance, i );
             }
@@ -235,7 +235,7 @@ namespace google_test
                 DoubleVector tenorCurveFixings = inputFile["tenorCurveFixings"];
                 LAStringMatrix swapLVB = inputFile["swapLVB"];
 
-                double stubRate = validation_api::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
+                double stubRate = validation::tryMeProductSwapStubRate( swapLVB, curveIndices, curveTenors, tenorCurveFixings, false );
 
                 CheckTestResultsAndRebaseOnRequest( stubRate, TEST_DIR, Test4_getStubRateOutputs, tolerance, i );
             }

@@ -22,7 +22,7 @@ double meUtilityInterpolation(const std::vector<double>& array1,
 	double ret;
 			
 	LAString interp(interpolation.c_str());
-	ret = validation_api::tryMeUtilityInterpolation(array1, array2, point, interp);
+	ret = validation::tryMeUtilityInterpolation(array1, array2, point, interp);
  
 	return ret;
     AQ_API_END

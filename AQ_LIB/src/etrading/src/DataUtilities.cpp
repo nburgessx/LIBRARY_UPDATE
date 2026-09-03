@@ -2,7 +2,7 @@
 
 
 /*
- * @brief			Helper methods used within validation_api
+ * @brief			Helper methods used within validation
  * @Created:		22 September 2017
  * @Author:			Nicholas Burgess
  * @Department:		ISD Quant Research and Analytics

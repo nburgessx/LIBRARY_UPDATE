@@ -71,7 +71,7 @@ namespace google_test
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getParRateInputs, i ) );
 
                 LAStringMatrix oisLVB = inputFile["oisLVB"];
-                double parRate = validation_api::tryMeProductOISParRate( oisLVB, true );
+                double parRate = validation::tryMeProductOISParRate( oisLVB, true );
 
                 if ( etrading::CreateDataFile::rebaseResultsEnabled() )
                 {
@@ -121,7 +121,7 @@ namespace google_test
 
                 LAStringMatrix oisLVB = inputFile["oisLVB"];
 
-                double pv = validation_api::tryMeProductOISPV( oisLVB, true );
+                double pv = validation::tryMeProductOISPV( oisLVB, true );
 
                 CheckTestResultsAndRebaseOnRequest( pv, TEST_DIR, getPVOutputs, pvTolerance, i );
             }

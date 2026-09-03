@@ -15,7 +15,7 @@ using etrading::decorateFilename;
 // Black-Scholes Namespace
 using etrading::BlackScholes;
 
-namespace validation_api
+namespace validation
 {
 
     // Calculate the tryMeMathBlackScholesPrice

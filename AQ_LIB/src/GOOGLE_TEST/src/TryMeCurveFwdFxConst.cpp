@@ -8,7 +8,7 @@ namespace google_test
     {
         try
         {
-            validation_api::tryMeCurveCalibrateFXForwards(
+            validation::tryMeCurveCalibrateFXForwards(
                 inputFile_["curveCollection"],
                 inputFile_["staticDataTable"],
                 inputFile_["curveIndex"],
@@ -37,7 +37,7 @@ namespace google_test
 			 
 			try
 			{
-				validation_api::tryMeCurveCalibrateFXForwards(
+				validation::tryMeCurveCalibrateFXForwards(
 					inputFileObj["curveCollection"],
 					inputFileObj["staticDataTable"],
 					inputFileObj["curveIndex"],

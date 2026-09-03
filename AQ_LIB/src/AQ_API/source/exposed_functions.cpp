@@ -53,7 +53,7 @@ std::string setUpMLIB(const std::string& irPropsFullFilePath, const std::string&
 	
 	try
 	{
-		statusMsg = validation_api::trySetupMLIB( irPropsFullFilePath, calendarFullFilePath );
+		statusMsg = validation::trySetupMLIB( irPropsFullFilePath, calendarFullFilePath );
 	}
 	catch (LACoreError e)
 	{
@@ -90,7 +90,7 @@ std::string initMLIB()  { return setUpMLIB( "","" ); }
 
 std::string tearDownMLIB()
 {
-	return validation_api::tryTearDownMLIB();
+	return validation::tryTearDownMLIB();
 }
 
 

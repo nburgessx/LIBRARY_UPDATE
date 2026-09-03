@@ -143,7 +143,7 @@ namespace google_test
     TEST_F( TestCurveXccyBasisGBP, SNAPSHOT_OutPutDF )
     {
         const DoubleArray results
-            = validation_api::tryMirOutputCurve(
+            = validation::tryMirOutputCurve(
                   getDataInstance(),
                   getCurveID(),
                   getCurveNames().at( 0 ) );

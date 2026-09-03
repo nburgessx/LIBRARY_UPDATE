@@ -122,25 +122,25 @@ namespace google_test
                 case etrading::OIS_MARKETDATA:
                 {
                     // OIS PAR RATE - Percent
-                    actualResult                        = validation_api::tryMeLWOSwapParRate( swapObject, curveLVB );
+                    actualResult                        = validation::tryMeLWOSwapParRate( swapObject, curveLVB );
                     break;
                 }
                 case etrading::LIBOR_OIS_BASISSPREAD_MARKETDATA:
                 {
                     // LIBOR-OIS BASIS - Basis Points
-                    actualResult                        = validation_api::tryMeLWOSwapSpread( swapObject, curveLVB, etrading::LabelValueBlock(), "Leg1:Float" ) / 10000; // Basis Points
+                    actualResult                        = validation::tryMeLWOSwapSpread( swapObject, curveLVB, etrading::LabelValueBlock(), "Leg1:Float" ) / 10000; // Basis Points
                     break;
                 }
                 case etrading::SWAP_MARKETDATA:
                 {
                     // SWAP PAR RATE - Percent
-                    actualResult                        = validation_api::tryMeLWOSwapParRate( swapObject, curveLVB );
+                    actualResult                        = validation::tryMeLWOSwapParRate( swapObject, curveLVB );
                     break;
                 }
                 case etrading::BASIS_SWAP_MARKETDATA:
                 {
                     // TENOR BASIS PAR SPREAD - Basis Points
-                    actualResult                        = validation_api::tryMeLWOSwapSpread( swapObject, curveLVB ) / 10000; // Basis Points
+                    actualResult                        = validation::tryMeLWOSwapSpread( swapObject, curveLVB ) / 10000; // Basis Points
                     break;
                 }
                 // Unsupported calibrationInstrumentType Types

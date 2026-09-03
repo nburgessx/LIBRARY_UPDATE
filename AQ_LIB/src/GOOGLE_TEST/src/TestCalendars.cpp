@@ -119,7 +119,7 @@ namespace google_test
 		const std::string dummyBusinessDayAdjust;
 		const std::string dummyCalendar;
 		const std::string dummyRollConvention;
-		const LADate errorCutoffDate = validation_api::tryMeDateFromTenor( lastCalendarUpdate, errorTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention );
+		const LADate errorCutoffDate = validation::tryMeDateFromTenor( lastCalendarUpdate, errorTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention );
 
 		if ( currentDate > errorCutoffDate )
 		{
@@ -129,7 +129,7 @@ namespace google_test
 						" old, Please regenerate it using the tool CDWCalendarUpdate.bat." );
 		}
 
-		const LADate warningCutoffDate = validation_api::tryMeDateFromTenor(lastCalendarUpdate, warningTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention);
+		const LADate warningCutoffDate = validation::tryMeDateFromTenor(lastCalendarUpdate, warningTenor, dummyBusinessDayAdjust, dummyCalendar, dummyRollConvention);
 
 		if ( currentDate > warningCutoffDate )
 		{

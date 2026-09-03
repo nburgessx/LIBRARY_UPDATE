@@ -21,7 +21,7 @@ using etrading::Swap;
 using etrading::CrossCurrencySwap;
 using etrading::Schedule;
 
-namespace validation_api
+namespace validation
 {
 
     std::vector<std::string> tryMeLWOSwapLVBKeys()

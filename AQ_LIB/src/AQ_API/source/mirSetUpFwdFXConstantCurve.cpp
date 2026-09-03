@@ -34,7 +34,7 @@ const std::string mirSetUpFwdFXConstantCurve(const std::string& CurveID,
 		LAStringMatrix fwdFXConstantConv;
 		swig::buildStringMatrix(fwdFXConstantConv, FwdFXConstantConv);
 
-		ret = validation_api::tryMirSetUpFwdFXConstantCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
+		ret = validation::tryMirSetUpFwdFXConstantCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
 																	curveID, 
 																	marketName, 
 																	generalProps, 

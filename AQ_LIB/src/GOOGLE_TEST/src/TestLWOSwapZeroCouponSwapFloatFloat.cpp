@@ -86,14 +86,14 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation_api::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = parRateInputFile["swapName"];
                 LAString curveCollection        = parRateInputFile["curveCollections"];
                 std::string fixingTable         = parRateInputFile["fixingTableNames"];
 
-                double actualSwapParSpread          = validation_api::tryMeLWOSwapParSpread( swapName, etrading::fromStringToLVB(curveCollection.getCString()), etrading::fromStringToLVB(fixingTable) );
+                double actualSwapParSpread          = validation::tryMeLWOSwapParSpread( swapName, etrading::fromStringToLVB(curveCollection.getCString()), etrading::fromStringToLVB(fixingTable) );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapParSpread, TEST_DIR, parSpreadOutputsFilename, tolerance );
@@ -128,14 +128,14 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation_api::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the ParSpread Inputs & Calculate the parSpread
                 std::string swapName            = parRateInputFile["swapName"];
 				etrading::LabelValueBlock curveCollection        = etrading::fromStringToLVB(parRateInputFile["curveCollections"]);
 				etrading::LabelValueBlock fixingTable         = etrading::fromStringToLVB(parRateInputFile["fixingTableNames"]);
                 
-                double actualSwapParSpread = validation_api::tryMeLWOSwapParSpread( swapName, curveCollection, fixingTable );
+                double actualSwapParSpread = validation::tryMeLWOSwapParSpread( swapName, curveCollection, fixingTable );
 
 				//Update the swap's spread by actualSwapParSpread
 				std::vector<LabelValueBlock> legsLVB = etrading::buildMultiLabelValueBlock(swapLVB);
@@ -146,9 +146,9 @@ namespace google_test
                 legsLVB[1] = LabelValueBlock( legsLVB[1], etrading::IRS_KEY::FLOAT_SPREAD, actualSwapParSpreadStr.str() );
 
 				std::string newSwapTradeName = swapTradeName + "_1";
-				validation_api::tryMeLWOSwapCreateFromLegLVBs(newSwapTradeName, legsLVB[0], legsLVB[1], swapPropertiesLVB, isXccySwap, validateKeys);
+				validation::tryMeLWOSwapCreateFromLegLVBs(newSwapTradeName, legsLVB[0], legsLVB[1], swapPropertiesLVB, isXccySwap, validateKeys);
 
-                double actualPV = validation_api::tryMeLWOSwapPV(newSwapTradeName, curveCollection, "", fixingTable);
+                double actualPV = validation::tryMeLWOSwapPV(newSwapTradeName, curveCollection, "", fixingTable);
                 
                 // 5. Check the Test Results
                 EXPECT_NEAR( 0, actualPV, zeroCouponSwapTolerance );
@@ -181,14 +181,14 @@ namespace google_test
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
 				//1) Check Default Value
-                std::string swapName          = validation_api::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string swapName          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
            		auto swap = etrading::getSwap(swapName);
 
 				etrading::LabelValueBlock curveCollection        = etrading::fromStringToLVB(parRateInputFile["curveCollections"]);
 				etrading::LabelValueBlock fixingTable         = etrading::fromStringToLVB(parRateInputFile["fixingTableNames"]);
 
 				// Call any pricing function so that the fwdInter flag will be retrieved from a specific curveCollection and staticTable
-                validation_api::tryMeLWOSwapPV( swapName, curveCollection, "", fixingTable);
+                validation::tryMeLWOSwapPV( swapName, curveCollection, "", fixingTable);
 
 				EXPECT_EQ(etrading::FALSE_BOOL, swap->getLeg(0)->getStaticData()->getFwdInter()); 
 				EXPECT_EQ(etrading::FALSE_BOOL, swap->getLeg(1)->getStaticData()->getFwdInter());
@@ -198,11 +198,11 @@ namespace google_test
 				auto firstLegLVB = legsLVB[0];
 				auto secondLegLVB = LabelValueBlock( legsLVB[1], etrading::IRS_KEY::IS_FWD_INTER, etrading::toString(etrading::TRUE_BOOL) );
 
-				std::string swapName2 = validation_api::tryMeLWOSwapCreateFromLegLVBs( swapTradeName, firstLegLVB, secondLegLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+				std::string swapName2 = validation::tryMeLWOSwapCreateFromLegLVBs( swapTradeName, firstLegLVB, secondLegLVB, swapPropertiesLVB, isXccySwap, validateKeys );
            		auto swap2 = etrading::getSwap(swapName2);
 
 				// Call any pricing function so that the fwdInter flag will be retrieved from a specific curveCollection and staticTable
-				validation_api::tryMeLWOSwapPV( swapName, curveCollection, "", fixingTable);
+				validation::tryMeLWOSwapPV( swapName, curveCollection, "", fixingTable);
 
 				EXPECT_EQ(etrading::FALSE_BOOL, swap2->getLeg(0)->getStaticData()->getFwdInter()); 
 				EXPECT_EQ(etrading::TRUE_BOOL, swap2->getLeg(1)->getStaticData()->getFwdInter());

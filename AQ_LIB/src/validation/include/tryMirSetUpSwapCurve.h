@@ -4,7 +4,7 @@
 #include "LADataInstance.h"
 #include <stdarg.h>
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			swig interface for mirSetUpOISCurve

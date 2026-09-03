@@ -12,7 +12,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
     
 	/* @brief Method to convert raw input into a valuation settings data block

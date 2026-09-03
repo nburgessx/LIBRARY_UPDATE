@@ -34,8 +34,8 @@ const std::vector<double> meLWOBondPrice( const std::string& bondObjectName,
 	DateVector settlementDatesAsDateVector;
 	swig::buildDateVector( settlementDatesAsDateVector, settlementDates );
 
-    // Call validation_api method
-    const std::vector<double> results = validation_api::tryMeLWOBondPrice( bondObjectName, settlementDatesAsDateVector, yields, yieldCalculationType );
+    // Call validation method
+    const std::vector<double> results = validation::tryMeLWOBondPrice( bondObjectName, settlementDatesAsDateVector, yields, yieldCalculationType );
     return results;
     
     AQ_API_END
@@ -59,8 +59,8 @@ const std::vector<double> meLWOBondCleanPrice( const std::string& bondObjectName
 	DateVector settlementDatesAsDateVector;
 	swig::buildDateVector( settlementDatesAsDateVector, settlementDates );
 
-    // Call validation_api method
-    const std::vector<double> results = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDatesAsDateVector, yields, yieldCalculationType );
+    // Call validation method
+    const std::vector<double> results = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDatesAsDateVector, yields, yieldCalculationType );
     return results;
 
     AQ_API_END
@@ -84,8 +84,8 @@ const std::vector<double> meLWOBondDirtyPrice( const std::string& bondObjectName
 	DateVector settlementDatesAsDateVector;
 	swig::buildDateVector( settlementDatesAsDateVector, settlementDates );
 
-    // Call validation_api method
-    const std::vector<double> results = validation_api::tryMeLWOBondDirtyPrice( bondObjectName, settlementDatesAsDateVector, yields, yieldCalculationType );
+    // Call validation method
+    const std::vector<double> results = validation::tryMeLWOBondDirtyPrice( bondObjectName, settlementDatesAsDateVector, yields, yieldCalculationType );
     return results;
     
     AQ_API_END
@@ -112,8 +112,8 @@ const std::vector<double> meLWOBondYield( const std::string& bondObjectName,
 	DateVector settlementDatesAsDateVector;
 	swig::buildDateVector( settlementDatesAsDateVector, settlementDates );
 
-    // Call validation_api method
-    const std::vector<double> results = validation_api::tryMeLWOBondYield( bondObjectName, settlementDatesAsDateVector, quotedPrices, yieldCalculationType, optimizePerformance );
+    // Call validation method
+    const std::vector<double> results = validation::tryMeLWOBondYield( bondObjectName, settlementDatesAsDateVector, quotedPrices, yieldCalculationType, optimizePerformance );
     return results;
     
     AQ_API_END
@@ -142,8 +142,8 @@ double meLWOBondForwardPrice( const std::string& bondObjectName,
     LADate settleDate_          = swig::fromStringToLADate( settleDate );
     LADate forwardSettleDate_   = swig::fromStringToLADate( forwardSettleDate );
         
-    // Call validation_api method
-    const double result = validation_api::tryMeLWOBondForwardPrice( bondObjectName, settleDate_, forwardSettleDate_, price, repoRate, repoDayCount );
+    // Call validation method
+    const double result = validation::tryMeLWOBondForwardPrice( bondObjectName, settleDate_, forwardSettleDate_, price, repoRate, repoDayCount );
     return result;
     
     AQ_API_END

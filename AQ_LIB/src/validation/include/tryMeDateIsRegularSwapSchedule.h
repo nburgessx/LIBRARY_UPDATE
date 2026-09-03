@@ -1,7 +1,7 @@
 #pragma once
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			Validate if swap has regular date schedule without stub coupons.

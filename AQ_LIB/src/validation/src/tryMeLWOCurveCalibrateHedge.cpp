@@ -10,7 +10,7 @@ using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
 
-namespace validation_api
+namespace validation
 {
     /* @brief			Validation interface for the meLWOCurveCalibrateHedge method. This method calibrates a hedge curve to a pricing curve
 	*  @param [in]		oisCurveObjectName			LWO Object name of the ois hedge curve

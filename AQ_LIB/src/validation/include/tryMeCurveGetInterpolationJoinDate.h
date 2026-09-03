@@ -2,7 +2,7 @@
 
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation interface for the tryMeCurveGetInterpolationJoinDate function, to clear the object pool
     *  @param [in]		curveCollection		ID of the curve set

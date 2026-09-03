@@ -4,7 +4,7 @@
 // Use typedef for etrading enumerator type(s)
 typedef etrading::CallOrPutEnum CallOrPutEnum;
 
-namespace validation_api
+namespace validation
 {
 
     // Calculate the tryMeMathBlackScholesPrice

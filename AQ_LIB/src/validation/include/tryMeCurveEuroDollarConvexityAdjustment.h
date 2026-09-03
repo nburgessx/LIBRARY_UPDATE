@@ -12,7 +12,7 @@
 #pragma once
 #include "LADate.h"
 
-namespace validation_api
+namespace validation
 {
     /* @brief			Calculate the EuroDollar Futures Convexity Adjustment, validation API for meCurveEuroDollarConvexityAdjustment
     * @param [in]		curveAsOfDate       The yield curve as of or valuation date

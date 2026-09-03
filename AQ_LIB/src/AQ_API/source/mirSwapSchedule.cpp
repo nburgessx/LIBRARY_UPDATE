@@ -66,7 +66,7 @@ SWIG_STRINGMATRIX mirSwapSchedule( const std::string& accrualStartDate,
 		LAString lastSt			(lastStub.c_str());
 		LAString pRollDay		(paymentRollDay.c_str());
 
-		LAStringMatrix temp = validation_api::tryMirSwapSchedule(
+		LAStringMatrix temp = validation::tryMirSwapSchedule(
 										aStartDate, aEndDateOrTenor, aDaycount, aFrequency, aSRule, aCalendar,
 										pFrequency, pSRule, pCalendar, pLag,
 										fixingSRule, fixingCal, fixingLg, fixingAdAr,

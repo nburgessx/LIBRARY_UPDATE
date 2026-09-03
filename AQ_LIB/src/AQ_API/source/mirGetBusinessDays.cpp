@@ -20,7 +20,7 @@ int mirGetBusinessDays(const std::string& fromDate,
 		LADate toDt (toDate.c_str(),"YYYYMMDD");
 		LAString cal			(calendar.c_str());
 
-		ret = validation_api::tryMirGetBusinessDays(fromDt, toDt, cal);		
+		ret = validation::tryMirGetBusinessDays(fromDt, toDt, cal);		
 	} 
 	catch (LACoreError& mesx) 
 	{

@@ -15,7 +15,7 @@ std::string mirGetECBStartDate(const std::string& ecbDate)
 		// Input marshalling
 		LADate ecbDt(ecbDate.c_str(),"YYYYMMDD");
 
-		LADate date = validation_api::tryMirGetECBStartDate(ecbDt);
+		LADate date = validation::tryMirGetECBStartDate(ecbDt);
 		ret = date.stringWithFormat("YYYYMMDD").getCString();
 
 	} 

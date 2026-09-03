@@ -84,7 +84,7 @@ namespace google_test
                 LAStringMatrix leg1LVB            = inputFile["leg1LVB"];
                 LAStringMatrix leg2LVB            = inputFile["leg2LVB"];
                 bool validateKeys               = inputFile["validateKeys"];
-	            std::string localResult         = validation_api::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, LAStringMatrix(), false, validateKeys );
+	            std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, LAStringMatrix(), false, validateKeys );
 
                 // Load the output file and the result                   
                 LAString outputFilename = CreateDataFile::makeFilename( tenorBasisSwapOutputs, "_tryMeLWOSwapCreateFromLegLVBs_outputs", i ); // Append the Index and Suffix to test file name
@@ -129,7 +129,7 @@ namespace google_test
                     LAStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
                     LAStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
                     bool validateKeys               = createSwapFile["validateKeys"];
-	                std::string localResult         = validation_api::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, LAStringMatrix(), false, validateKeys );
+	                std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, LAStringMatrix(), false, validateKeys );
                 
                 // 2. Price the Swap
                  LAString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapPV_inputs", i ); // Append the Index and Suffix to test file name
@@ -137,7 +137,7 @@ namespace google_test
 
                     // Read the input file into the tryMeLWOSwapPV
                     std::string swapObjectName      = swapPVFile["swapName"];
-                    double localSwapPV              = validation_api::tryMeLWOSwapPV( swapObjectName, etrading::fromStringToLVB("EURYC") );
+                    double localSwapPV              = validation::tryMeLWOSwapPV( swapObjectName, etrading::fromStringToLVB("EURYC") );
                 
                 // 3. Load the Tenor Basis Spread Results File and Compare against the Local Spread                   
                 const double tolerance = 1e-02;  // Notional of test trades is 1MM
@@ -183,7 +183,7 @@ namespace google_test
                     LAStringMatrix leg1LVB            = createSwapFile["leg1LVB"];
                     LAStringMatrix leg2LVB            = createSwapFile["leg2LVB"];
                     bool validateKeys               = createSwapFile["validateKeys"];
-	                std::string localResult         = validation_api::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, LAStringMatrix(), false, validateKeys );
+	                std::string localResult         = validation::tryMeLWOSwapCreateFromLegLVBs( swapName, leg1LVB, leg2LVB, LAStringMatrix(), false, validateKeys );
                 
                 // 2. Price the Swap
                  LAString SwapPVFilename = CreateDataFile::makeFilename( tenorBasisSwapInputs, "_tryMeLWOSwapSpread_inputs", i ); // Append the Index and Suffix to test file name
@@ -191,7 +191,7 @@ namespace google_test
 
                     // Read the input file into the tryMeLWOSwapSpread
                     std::string swapObjectName      = swapPVFile["swapName"];
-                    double localBasisSpread         = validation_api::tryMeLWOSwapSpread( swapObjectName, etrading::fromStringToLVB("EURYC"));
+                    double localBasisSpread         = validation::tryMeLWOSwapSpread( swapObjectName, etrading::fromStringToLVB("EURYC"));
                 
                 // 3. Load the Swap Spread Results File and Compare against the Local spread
                 const double tolerance = 1e-007;

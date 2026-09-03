@@ -20,7 +20,7 @@ std::string meDateCentralBank(const std::string& centralBankId,
 	LAString cbId(centralBankId.c_str());
 	LADate baseDt( etrading::stringToDate( date ) );
 
-	LADate date = validation_api::tryMeDateCentralBank(cbId, baseDt, strictlyAfter);
+	LADate date = validation::tryMeDateCentralBank(cbId, baseDt, strictlyAfter);
 		
 	ret = date.stringWithFormat("YYYYMMDD").getCString();
 	
@@ -41,7 +41,7 @@ std::string meDateECB(const std::string& date, bool strictlyAfter)
 	// Input marshalling
 	LADate baseDt( etrading::stringToDate( date ) );
 
-	LADate date = validation_api::tryMeDateECB(baseDt, strictlyAfter);
+	LADate date = validation::tryMeDateECB(baseDt, strictlyAfter);
 		
 	ret = date.stringWithFormat("YYYYMMDD").getCString();
 	return ret;
@@ -60,7 +60,7 @@ std::string meDateECBSwapStart(const std::string& date)
 
     // Input marshalling
 	LADate tmp_date( etrading::stringToDate( date ) );
-    LADate date = validation_api::tryMeDateECBSwapStart(tmp_date);
+    LADate date = validation::tryMeDateECBSwapStart(tmp_date);
 	
     ret = date.stringWithFormat("YYYYMMDD").getCString();
     return ret;
@@ -78,7 +78,7 @@ std::string meDateECBSwapEnd(const std::string& date)
 
     // Input marshalling
 	LADate tmp_date( etrading::stringToDate( date ) );
-    LADate date = validation_api::tryMeDateECBSwapEnd(tmp_date);
+    LADate date = validation::tryMeDateECBSwapEnd(tmp_date);
 
 	ret = date.stringWithFormat("YYYYMMDD").getCString();
     return ret;

@@ -1,7 +1,7 @@
 // tryMeEchoDouble.h
 #pragma once
 
-namespace validation_api
+namespace validation
 {
 
     double tryMeEchoDouble( const double& d );

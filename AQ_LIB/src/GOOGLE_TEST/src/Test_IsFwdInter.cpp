@@ -149,7 +149,7 @@ namespace google_test
 				LADate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 
 				// Case 1: IsFwdInter = FALSE, UseFwdData = FALSE
-				double parRate = validation_api::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
+				double parRate = validation::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
 																   effectiveDate.stringWithFormat( "YYYYMMDD" ),
 																   maturity.stringWithFormat("YYYYMMDD"),
 																   curveCollection,
@@ -188,7 +188,7 @@ namespace google_test
 				outputs.push_back(std::make_pair(key, parRate));
 
 				// Case 2: IsFwdInter = TRUE, UseFwdData = FALSE
-				parRate = validation_api::tryMirGetParRate4(
+				parRate = validation::tryMirGetParRate4(
 																   etrading::InitializeAQETrading::instance().dataInstance(),
 																   effectiveDate.stringWithFormat( "YYYYMMDD" ),
 																   maturity.stringWithFormat("YYYYMMDD"),
@@ -230,7 +230,7 @@ namespace google_test
 				// Case 3: IsFwdInter = TRUE, UseFwdData = TRUE
 
 				const bool IS_FWD_INTER = true;
-				parRate = validation_api::tryMirGetParRate4(
+				parRate = validation::tryMirGetParRate4(
 																   etrading::InitializeAQETrading::instance().dataInstance(),
 																   effectiveDate.stringWithFormat( "YYYYMMDD" ),
 																   maturity.stringWithFormat("YYYYMMDD"),
@@ -271,7 +271,7 @@ namespace google_test
 			}
 
 			// Flush the cache in preparation for a new set of curves
-			validation_api::tryMeUtilityClearEntityPool();
+			validation::tryMeUtilityClearEntityPool();
 		}
 
 		if ( etrading::CreateDataFile::rebaseResultsEnabled() )

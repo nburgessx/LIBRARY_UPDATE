@@ -5,7 +5,7 @@
 
 #include "SwapUtilities.h"
 
-namespace validation_api
+namespace validation
 {
     using etrading::CreateDataFile;
     using etrading::decorateFilename;

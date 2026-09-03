@@ -2,7 +2,7 @@
 
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
     // Function to get today's date using the system date
     LADate tryMeDateToday();

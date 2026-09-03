@@ -85,7 +85,7 @@ namespace google_test
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation_api::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, Contiguous_ForwardRatesOutputs, tolerance);
     }
@@ -101,7 +101,7 @@ namespace google_test
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation_api::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, SerialRate_ForwardRatesOutputs, tolerance);
 	}
@@ -116,7 +116,7 @@ namespace google_test
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation_api::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, SerialDF_ForwardRatesOutputs, tolerance);
 	}
@@ -127,12 +127,12 @@ namespace google_test
 		setUpMeOISCurve(Contiguous_USDYC_OIS);
 		setUpMeSTDCurve(Contiguous_USDYC_STD);
 
-		const std::string swapObjectName = validation_api::tryMeLWOLoad(SwapInput);
+		const std::string swapObjectName = validation::tryMeLWOLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(Contiguous_SwapParRateInputs);
 		const LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation_api::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, Contiguous_SwapParRateOutputs, tolerance);
 	}
@@ -143,12 +143,12 @@ namespace google_test
 		setUpMeOISCurve(SerialRate_USDYC_OIS);
 		setUpMeSTDCurve(SerialRate_USDYC_STD);
 
-		const std::string swapObjectName = validation_api::tryMeLWOLoad(SwapInput);
+		const std::string swapObjectName = validation::tryMeLWOLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(SerialRate_SwapParRateInputs);
 		const LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation_api::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, SerialRate_SwapParRateOutputs, tolerance);
 	}
@@ -159,12 +159,12 @@ namespace google_test
 		setUpMeOISCurve(SerialDF_USDYC_OIS);
 		setUpMeSTDCurve(SerialDF_USDYC_STD);
 
-		const std::string swapObjectName = validation_api::tryMeLWOLoad(SwapInput);
+		const std::string swapObjectName = validation::tryMeLWOLoad(SwapInput);
 
 		const ReadDataFile::Load inputFile(SerialDF_SwapParRateInputs);
 		const LAStringMatrix valuationSettingsLVB = inputFile["valuationSettingsLVB"];
 
-		const double result = validation_api::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
+		const double result = validation::tryMeLWOSwapParRate(swapObjectName, valuationSettingsLVB);
 
 		CheckTestResultsAndRebaseOnRequest(result, TEST_DIR, SerialDF_SwapParRateOutputs, tolerance);
 	}

@@ -20,7 +20,7 @@ using etrading::BlackScholes;
 typedef etrading::CapletFloorletEnum CapletFloorletEnum;
 typedef etrading::VolatilityTypeEnum VolatilityTypeEnum;
 
-namespace validation_api
+namespace validation
 {
 
     // Calculate the Price

@@ -76,7 +76,7 @@ namespace google_test
 		common::LACoreLockControl::enableThreadLocks( false );
 
         // Initialize the LWO Configuration Files
-        LAString loadLWOConfigStatus = validation_api::tryMeUtilityLoadConfigurationFiles();
+        LAString loadLWOConfigStatus = validation::tryMeUtilityLoadConfigurationFiles();
     }
 
     InitializeAQGoogleTest::~InitializeAQGoogleTest()

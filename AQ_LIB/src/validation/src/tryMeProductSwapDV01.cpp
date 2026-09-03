@@ -13,7 +13,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			return a set of expected keys for swap DV01 label value block

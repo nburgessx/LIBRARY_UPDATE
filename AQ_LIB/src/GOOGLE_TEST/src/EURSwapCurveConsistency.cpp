@@ -44,9 +44,9 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectEUROIS_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameEUROIS, etrading::JSON );
-        const std::string curveObjectEUR3ML_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameEUR3ML, etrading::JSON );
-        const std::string curveObjectEUR6ML_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameEUR6ML, etrading::JSON );
+        const std::string curveObjectEUROIS_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameEUROIS, etrading::JSON );
+        const std::string curveObjectEUR3ML_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameEUR3ML, etrading::JSON );
+        const std::string curveObjectEUR6ML_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameEUR6ML, etrading::JSON );
     };
 
 
@@ -96,7 +96,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180814", swapTerms[i] ); // Effective Date = 20180814
-            const double actualResult                    = validation_api::tryMeLWOSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryMeLWOSwapParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );
@@ -148,7 +148,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20180814", swapTerms[i] ); // Effective Date = 20180814
-            const double actualResult                    = validation_api::tryMeLWOSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryMeLWOSwapParRate( swapObject, curveLVB );
             const double expectedResult                  = parRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

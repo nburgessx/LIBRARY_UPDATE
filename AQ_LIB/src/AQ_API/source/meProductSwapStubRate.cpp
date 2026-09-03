@@ -32,7 +32,7 @@ double meProductSwapStubRate(const std::vector<std::string>& curveIndices,
 
 	LabelValueBlock lvb = swig::buildSingleLabelValueBlock(swapLVB);
 		
-	ret = validation_api::tryMeProductSwapStubRate( lvb, tmp_curveIndices, tmp_curveTenors, tenorCurveFixings, validateKeys);
+	ret = validation::tryMeProductSwapStubRate( lvb, tmp_curveIndices, tmp_curveTenors, tenorCurveFixings, validateKeys);
 
 	return ret;
     AQ_API_END
@@ -45,7 +45,7 @@ std::vector<std::string> meProductSwapStubRateLVBKeys()
 {
 	AQ_API_START
     std::vector<std::string> ret;
-	ret = validation_api::tryMeProductSwapStubRateLVBKeys();
+	ret = validation::tryMeProductSwapStubRateLVBKeys();
 	return ret;
     AQ_API_END
 }

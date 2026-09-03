@@ -8,7 +8,7 @@ namespace google_test
     {
         try
         {
-            validation_api::tryMirSetUpFwdFXConstantCurve(
+            validation::tryMirSetUpFwdFXConstantCurve(
                 getDataInstance(),
                 curveID_,
                 marketName_,

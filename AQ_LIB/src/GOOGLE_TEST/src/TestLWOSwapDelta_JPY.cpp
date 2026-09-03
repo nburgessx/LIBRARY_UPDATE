@@ -93,7 +93,7 @@ namespace google_test
 		LAStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
-		return validation_api::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		return validation::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 
 	void calcDV01AndCompareToReference()
@@ -115,7 +115,7 @@ namespace google_test
 		LAStringVector positionIDs;
 		DoubleVector deltas;
 		// The DV01 is actually calculated by the tryMeLWOSwapDelta function
-		validation_api::tryMeLWOSwapDelta( positionIDs,
+		validation::tryMeLWOSwapDelta( positionIDs,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,

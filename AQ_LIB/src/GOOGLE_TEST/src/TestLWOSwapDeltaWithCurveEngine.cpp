@@ -69,7 +69,7 @@ namespace
 		marketDataObjects.push_back(marketObj_6M);
 
 		LAStringMatrix engineSettings;	// dummy optional
-		validation_api::tryMeLWOCurveEngineCalibrate("", curveCollection, engineSettings, curveGeneratorNames, marketDataObjects);
+		validation::tryMeLWOCurveEngineCalibrate("", curveCollection, engineSettings, curveGeneratorNames, marketDataObjects);
 	}
 }
 
@@ -123,7 +123,7 @@ namespace google_test
             // Dummy Xccy FX Spot Rates
             DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 
-			validation_api::tryMeLWOSwapDeltaLadder(headers,
+			validation::tryMeLWOSwapDeltaLadder(headers,
 													pillarNames,
 													deltas,
 													swapNames,
@@ -145,7 +145,7 @@ namespace google_test
 
 			//------------------------------------------------
 			// 4. Flush the curve curves
-			validation_api::tryMeUtilityClearEntityPool();
+			validation::tryMeUtilityClearEntityPool();
 		}		
 	}
 	
@@ -195,7 +195,7 @@ namespace google_test
     //         // Dummy Xccy FX Spot Rates
     //         DoubleVector dummyXccyFXSpotRates( swapNames.size(), 1.0 );
 	// 
-	// 		validation_api::tryMeLWOSwapDeltaLadder(headers,
+	// 		validation::tryMeLWOSwapDeltaLadder(headers,
 	// 												pillarNames,
 	// 												deltas,
 	// 												swapNames,
@@ -217,7 +217,7 @@ namespace google_test
 	// 
 	// 		//------------------------------------------------
 	// 		// 4. Flush the object pool cache
-	// 		validation_api::tryMeUtilityClearEntityPool();
+	// 		validation::tryMeUtilityClearEntityPool();
 	// 	}
 	// }
 

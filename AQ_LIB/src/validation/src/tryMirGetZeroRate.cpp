@@ -11,7 +11,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;
 
-namespace validation_api
+namespace validation
 {
     /* @brief			swig interface for mrGetZeroRate1
     *  @param [in]		dataInstance			Pointer to the object pool

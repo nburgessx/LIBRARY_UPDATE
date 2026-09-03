@@ -9,7 +9,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			validation interface for meCurveCalibrateSwap

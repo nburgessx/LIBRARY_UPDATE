@@ -73,23 +73,23 @@ namespace google_test
 
         // Load Curves
         const std::string curveCollection_                  = "USDYC";
-        const std::string loadCurveUSDOIS_                  = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCurveUSDOIS, etrading::JSON );
-        const std::string loadCurveUSD3ML_                  = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCurveUSD3ML, etrading::JSON );
+        const std::string loadCurveUSDOIS_                  = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCurveUSDOIS, etrading::JSON );
+        const std::string loadCurveUSD3ML_                  = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCurveUSD3ML, etrading::JSON );
 
         // Load Trades
-        const std::string loadTradeSwaptionNormalVol_       = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeSwaptionNormalVol, etrading::JSON );
-        const std::string loadTradeSwaption_                = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeSwaption, etrading::JSON );
-        const std::string loadTradePayerSwaption_           = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradePayerSwaption, etrading::JSON );
-        const std::string loadTradeReceiverSwaption_        = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeReceiverSwaption, etrading::JSON );
-        const std::string loadTradeReceiverSwap_            = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeReceiverSwap, etrading::JSON );
-        const std::string loadTradeNegativeRates_           = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeSwaptionNegativeVol, etrading::JSON );
-        const std::string loadTradeSwaptionWithFee_         = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeSwaptionWithFee, etrading::JSON );
-        const std::string loadTradeSwaptionCashParYield_    = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeSwaptionCashParYield, etrading::JSON );
+        const std::string loadTradeSwaptionNormalVol_       = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeSwaptionNormalVol, etrading::JSON );
+        const std::string loadTradeSwaption_                = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeSwaption, etrading::JSON );
+        const std::string loadTradePayerSwaption_           = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradePayerSwaption, etrading::JSON );
+        const std::string loadTradeReceiverSwaption_        = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeReceiverSwaption, etrading::JSON );
+        const std::string loadTradeReceiverSwap_            = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeReceiverSwap, etrading::JSON );
+        const std::string loadTradeNegativeRates_           = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeSwaptionNegativeVol, etrading::JSON );
+        const std::string loadTradeSwaptionWithFee_         = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeSwaptionWithFee, etrading::JSON );
+        const std::string loadTradeSwaptionCashParYield_    = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameTradeSwaptionCashParYield, etrading::JSON );
         
         // Load Volatilities
-        const std::string loadVolNormal_                    = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameVolatilityNormal, etrading::JSON );
-        const std::string loadVolLogNormal_                 = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameVolatilityLogNormal, etrading::JSON );
-        const std::string loadVolShiftedLogNormal_          = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameVolatilityShiftedLogNormal, etrading::JSON );
+        const std::string loadVolNormal_                    = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameVolatilityNormal, etrading::JSON );
+        const std::string loadVolLogNormal_                 = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameVolatilityLogNormal, etrading::JSON );
+        const std::string loadVolShiftedLogNormal_          = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameVolatilityShiftedLogNormal, etrading::JSON );
     };
 
 
@@ -100,7 +100,7 @@ namespace google_test
         LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolNormal_ );
         
         // Price the European Swaption
-        const double swaptionPV = validation_api::tryMeLWOSwaptionPV( loadTradeSwaption_, valuationSettings );
+        const double swaptionPV = validation::tryMeLWOSwaptionPV( loadTradeSwaption_, valuationSettings );
         const double expectedPV = 10991.51;
 
         const double tolerancePV = 1.0;
@@ -114,7 +114,7 @@ namespace google_test
         LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
         
         // Price the European Swaption
-        const double swaptionPV = validation_api::tryMeLWOSwaptionPV( loadTradeSwaption_, valuationSettings );
+        const double swaptionPV = validation::tryMeLWOSwaptionPV( loadTradeSwaption_, valuationSettings );
         const double expectedPV = 12165.57;
 
         const double tolerancePV = 1.0;
@@ -128,7 +128,7 @@ namespace google_test
         LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
         
         // Price the European Swaption
-        const double swaptionPV = validation_api::tryMeLWOSwaptionPV( loadTradeSwaptionWithFee_, valuationSettings );
+        const double swaptionPV = validation::tryMeLWOSwaptionPV( loadTradeSwaptionWithFee_, valuationSettings );
         const double expectedPV = -987834.42;
 
         const double tolerancePV = 1.0;
@@ -142,7 +142,7 @@ namespace google_test
         LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolLogNormal_ );
         
         // Price the European Swaption
-        const double swaptionPV = validation_api::tryMeLWOSwaptionPV( loadTradeSwaptionCashParYield_, valuationSettings );
+        const double swaptionPV = validation::tryMeLWOSwaptionPV( loadTradeSwaptionCashParYield_, valuationSettings );
         const double expectedPV = 12065.96;
 
         const double tolerancePV = 1.0;
@@ -156,7 +156,7 @@ namespace google_test
         LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolShiftedLogNormal_ );
         
         // Price the European Swaption
-        const double swaptionPV = validation_api::tryMeLWOSwaptionPV( loadTradeNegativeRates_, valuationSettings );
+        const double swaptionPV = validation::tryMeLWOSwaptionPV( loadTradeNegativeRates_, valuationSettings );
         const double expectedPV = 156327.77;
 
         const double tolerancePV = 1.0;
@@ -170,9 +170,9 @@ namespace google_test
         LAStringMatrix valuationSettings = createValationSettingsLVB( curveCollection_, loadVolShiftedLogNormal_ );
         
         // Price the European Swaptions and the Underlying Swap
-        const double longPayerSwaption          = validation_api::tryMeLWOSwaptionPV( loadTradePayerSwaption_, valuationSettings );
-        const double shortReceiverSwaption      = validation_api::tryMeLWOSwaptionPV( loadTradeReceiverSwaption_, valuationSettings );
-        const double receiverSwap               = validation_api::tryMeLWOSwapPV( loadTradeReceiverSwap_, valuationSettings );
+        const double longPayerSwaption          = validation::tryMeLWOSwaptionPV( loadTradePayerSwaption_, valuationSettings );
+        const double shortReceiverSwaption      = validation::tryMeLWOSwaptionPV( loadTradeReceiverSwaption_, valuationSettings );
+        const double receiverSwap               = validation::tryMeLWOSwapPV( loadTradeReceiverSwap_, valuationSettings );
         
         const double tolerancePV = 0.1;
         EXPECT_NEAR( longPayerSwaption + shortReceiverSwaption + receiverSwap, 0.0, tolerancePV );

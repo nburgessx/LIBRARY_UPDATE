@@ -132,14 +132,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR1, priceBondOutputFile1, priceTolerance, i );
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -189,14 +189,14 @@ namespace google_test
                 std::vector< double > yields  = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR2, priceBondOutputFile2, priceTolerance, i+25 ); // File starts at 25
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -246,14 +246,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR3, priceBondOutputFile3, priceTolerance, i+50 ); // File Starts at 50
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -302,14 +302,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR4, priceBondOutputFile4, priceTolerance, i+75 ); // File Starts at 75
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -359,14 +359,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR5, priceBondOutputFile5, priceTolerance, i+100 ); // File Starts at 100
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -416,14 +416,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR6, priceBondOutputFile6, priceTolerance, i+125 ); // File Starts at 125
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -473,14 +473,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR7, priceBondOutputFile7, priceTolerance, i+150 ); // File Starts at 150
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -529,14 +529,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR8, priceBondOutputFile8, priceTolerance, i+175 ); // File Starts at 175
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -586,14 +586,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR9, priceBondOutputFile9, priceTolerance, i+200 ); // File Starts at 200
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -643,14 +643,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR10, priceBondOutputFile10, priceTolerance, i+225 ); // File Starts at 225
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -700,14 +700,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR11, priceBondOutputFile11, priceTolerance, i+250 ); // File Starts at 250
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );
@@ -757,14 +757,14 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
                 
                 // Price the Bond
-                auto actualCleanPrice = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+                auto actualCleanPrice = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
                 // Run the Test - Compare Results
                 CheckTestResultsAndRebaseOnRequest( actualCleanPrice, TEST_DIR12, priceBondOutputFile12, priceTolerance, i+275 ); // File Starts at 275
 
                 // Check Yield Matching
-                auto actualYields = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
-                auto compoundYields = validation_api::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
+                auto actualYields = validation::tryMeLWOBondYield( bondObjectName, settlementDates, actualCleanPrice );
+                auto compoundYields = validation::tryMeLWOBondCompoundYields( bondObjectName, settlementDates, actualCleanPrice );
                 for ( size_t i = 0; i != yields.size(); ++i )
                 {
                     EXPECT_NEAR( yields[i], actualYields[i], yieldTolerance );

@@ -97,7 +97,7 @@ namespace
 		LAStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
-		return validation_api::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
+		return validation::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
 	};
 }
 
@@ -199,7 +199,7 @@ namespace google_test
 		LAStringVector positionIDs;
 		DoubleVector deltas;
 		// The DV01 is actually calculated by the tryMeLWOSwapDelta function
-		validation_api::tryMeLWOSwapDelta( positionIDs,
+		validation::tryMeLWOSwapDelta( positionIDs,
 										   deltas,
 										   swapNames,
 										   curveCollectionNames,
@@ -271,7 +271,7 @@ namespace google_test
 		LAStringVector pillarNames;
 		LAStringVector headers;
 		DoubleMatrix deltas;
-		validation_api::tryMeLWOSwapDeltaLadder(headers,
+		validation::tryMeLWOSwapDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,

@@ -53,7 +53,7 @@ const std::string meCurveCalibrateBasis(const std::string& curveCollection,
 	LAStringMatrix tmp_spotFxRates;
 	swig::buildStringMatrix(tmp_spotFxRates, spotFxRates);
 		
-	ret = validation_api::tryMeCurveCalibrateBasis(
+	ret = validation::tryMeCurveCalibrateBasis(
 												tmp_curveCollection,
 												tmp_staticDataTable,
 												tmp_curveIndex,
@@ -128,7 +128,7 @@ const std::string meCurveCalibrateBasis(const std::string& curveCollection,
 	LAStringMatrix fraRates;
 	swig::buildStringMatrix(fraRates, FRARates);
 		
-	ret = validation_api::tryMeCurveCalibrateBasis(
+	ret = validation::tryMeCurveCalibrateBasis(
 												tmp_curveCollection,
 												tmp_staticDataTable,
 												tmp_curveIndex,

@@ -25,7 +25,7 @@ std::vector<double> meCurveDiscountFactors( const std::vector<std::string>& paym
     DateVector tempPaymentDates;
 	swig::buildDateVector(tempPaymentDates, paymentDates);
 
-    result = validation_api::tryMeCurveDiscountFactors( tempPaymentDates, curveCollection.c_str(), curveIndex.c_str() );
+    result = validation::tryMeCurveDiscountFactors( tempPaymentDates, curveCollection.c_str(), curveIndex.c_str() );
 	return result;
      
 	AQ_API_END
@@ -54,7 +54,7 @@ double meCurveDiscountFactorsFromYearFractions(double yearFraction,
 	LAString tmp_curveIndex(curveIndex.c_str());
 	LAString tmp_dayCount(dayCount.c_str());
 
-	std::vector<double> DFs = validation_api::tryMeCurveDiscountFactorsFromYearFractions(yearFractions,
+	std::vector<double> DFs = validation::tryMeCurveDiscountFactorsFromYearFractions(yearFractions,
 																						tmp_dayCount,
 																						tmp_curveCollection, 
 																						tmp_curveIndex);
@@ -82,7 +82,7 @@ std::vector<double> meCurveDiscountFactorsFromYearFractions(const std::vector<do
 	LAString tmp_curveIndex(curveIndex.c_str());
 	LAString tmp_dayCount(dayCount.c_str());
 
-	ret = validation_api::tryMeCurveDiscountFactorsFromYearFractions(yearFractions, 
+	ret = validation::tryMeCurveDiscountFactorsFromYearFractions(yearFractions, 
 																	tmp_dayCount,
 																	tmp_curveCollection, 
 																	tmp_curveIndex);
@@ -116,7 +116,7 @@ double meCurveDiscountFactorsFromTenors(const std::string& tenor,
 	LAString tmp_businessDayAdj(businessDayAdj.c_str());
 	LAString tmp_calendar(calendar.c_str());
 
-	std::vector<double> DFs = validation_api::tryMeCurveDiscountFactorsFromTenors(tenors,
+	std::vector<double> DFs = validation::tryMeCurveDiscountFactorsFromTenors(tenors,
 																				tmp_curveCollection, 
 																				tmp_curveIndex,
 																				tmp_businessDayAdj, 
@@ -152,7 +152,7 @@ std::vector<double> meCurveDiscountFactorsFromTenors(const std::vector<std::stri
 	LAString tmp_businessDayAdj(businessDayAdj.c_str());
 	LAString tmp_calendar(calendar.c_str());
 
-	ret = validation_api::tryMeCurveDiscountFactorsFromTenors(tmp_tenors,
+	ret = validation::tryMeCurveDiscountFactorsFromTenors(tmp_tenors,
 															tmp_curveCollection, 
 															tmp_curveIndex,
 															tmp_businessDayAdj, 
@@ -185,7 +185,7 @@ double meCurveDiscountFactorsForwardStarting(const std::string& fromDate,
 	LAString tmp_curveCollection(curveCollection.c_str());
 	LAString tmp_curveIndex(curveIndex.c_str());
 
-	std::vector<double> DFs = validation_api::tryMeCurveDiscountFactorsForwardStarting(
+	std::vector<double> DFs = validation::tryMeCurveDiscountFactorsForwardStarting(
 										fromDates, 
 										toDates,
 										tmp_curveCollection, 
@@ -222,7 +222,7 @@ std::vector<double> meCurveDiscountFactorsForwardStarting(const std::vector<std:
 	LAString tmp_curveCollection(curveCollection.c_str());
 	LAString tmp_curveIndex(curveIndex.c_str());
 
-	ret = validation_api::tryMeCurveDiscountFactorsForwardStarting(
+	ret = validation::tryMeCurveDiscountFactorsForwardStarting(
 										tmp_fromDates, 
 										tmp_toDates,
 										tmp_curveCollection, 
@@ -260,7 +260,7 @@ double meCurveDiscountFactorsForwardStartingFromYearFractions(const std::string&
 	LAString tmp_curveIndex(curveIndex.c_str());
 	LAString tmp_dayCount(dayCount.c_str());
 
-	std::vector<double> DFs = validation_api::tryMeCurveDiscountFactorsForwardStartingFromYearFractions( fromDates, 
+	std::vector<double> DFs = validation::tryMeCurveDiscountFactorsForwardStartingFromYearFractions( fromDates, 
 														                                                 yearFractions,
 														                                                 tmp_dayCount,
 														                                                 tmp_curveCollection, 
@@ -296,7 +296,7 @@ std::vector<double> meCurveDiscountFactorsForwardStartingFromYearFractions(const
 	LAString tmp_curveIndex(curveIndex.c_str());
 	LAString tmp_dayCount(dayCount.c_str());
 
-	ret = validation_api::tryMeCurveDiscountFactorsForwardStartingFromYearFractions( tmp_fromDates, 
+	ret = validation::tryMeCurveDiscountFactorsForwardStartingFromYearFractions( tmp_fromDates, 
 														                             yearFractions,
                                                                                      tmp_dayCount,
 														                             tmp_curveCollection, 
@@ -335,7 +335,7 @@ double meCurveDiscountFactorsForwardStartingFromTenor(const std::string& fromDat
 	LAString tmp_businessDayAdj(businessDayAdj.c_str());
 	LAString tmp_calendar(calendar.c_str());
 
-	std::vector<double> DFs = validation_api::tryMeCurveDiscountFactorsForwardStartingFromTenor(
+	std::vector<double> DFs = validation::tryMeCurveDiscountFactorsForwardStartingFromTenor(
 												fromDates, 
 												tmp_tenor,
 												tmp_curveCollection, 
@@ -377,7 +377,7 @@ std::vector<double> meCurveDiscountFactorsForwardStartingFromTenor(const std::ve
 	LAString tmp_businessDayAdj(businessDayAdj.c_str());
 	LAString tmp_calendar(calendar.c_str());
 
-	std::vector<double> DFs = validation_api::tryMeCurveDiscountFactorsForwardStartingFromTenor(
+	std::vector<double> DFs = validation::tryMeCurveDiscountFactorsForwardStartingFromTenor(
 												tmp_fromDates, 
 												tmp_tenor,
 												tmp_curveCollection, 

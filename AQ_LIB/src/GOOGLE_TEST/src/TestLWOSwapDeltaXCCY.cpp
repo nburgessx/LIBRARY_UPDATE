@@ -85,7 +85,7 @@ namespace
 		// Swap Generator
         const ReadDataFile::Load swapGeneratorInputFile( swapGeneratorInputs );
 		LAStringMatrix swapGeneratorLVB = swapGeneratorInputFile[ "swapGeneratorLVB" ];
-		std::string swapGeneratorName = validation_api::tryMeLWOSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
+		std::string swapGeneratorName = validation::tryMeLWOSwapGeneratorCreate( "EUR_6ML", swapGeneratorLVB );
 
 		// Swap
 		const ReadDataFile::Load swapInputFile( swapInputs );
@@ -94,7 +94,7 @@ namespace
 		LAStringMatrix swapPropertiesLVB	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap					= swapInputFile[ "isXccySwap" ];
 		bool validateKeys				= swapInputFile[ "validateKeys" ];
-		return validation_api::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		return validation::tryMeLWOSwapCreateFromGenerator( swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 
 	std::string createSwapFromDataFile( const char* swapInputs )
@@ -105,7 +105,7 @@ namespace
 		LAStringMatrix swapProperties	= swapInputFile[ "swapPropertiesLVB" ];
 		bool isXccySwap				= swapInputFile[ "isXccySwap" ];
 		bool validateKeys			= swapInputFile[ "validateKeys" ];
-		return validation_api::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
+		return validation::tryMeLWOSwapCreate( swapName, swapLvb, swapProperties, isXccySwap, validateKeys );
 	};
 
 }
@@ -150,7 +150,7 @@ namespace google_test
 		LAStringVector pillarNames;
 		LAStringVector headers;
 		DoubleMatrix deltas;
-		validation_api::tryMeLWOSwapDeltaLadder(headers,
+		validation::tryMeLWOSwapDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,
@@ -261,7 +261,7 @@ namespace google_test
 		LAStringVector pillarNames;
 		LAStringVector headers;
 		DoubleMatrix deltas;
-		validation_api::tryMeLWOSwapDeltaLadder(headers,
+		validation::tryMeLWOSwapDeltaLadder(headers,
 												pillarNames,
 												deltas,
 												swapNames,
@@ -372,7 +372,7 @@ namespace google_test
 		LAStringVector pillarNames;
 		LAStringVector headers;
 		DoubleMatrix deltas;
-		validation_api::tryMeLWOSwapDeltaLadder( headers,
+		validation::tryMeLWOSwapDeltaLadder( headers,
 												 pillarNames,
 												 deltas,
 												 swapNames,

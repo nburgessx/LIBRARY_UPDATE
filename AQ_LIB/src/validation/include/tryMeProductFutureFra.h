@@ -1,7 +1,7 @@
 #pragma once
 #include "LADate.h"
 
-namespace validation_api
+namespace validation
 {
 
 	/* @brief			Calculate the FRA rate from Future price, validation API for meProductFuturePriceToFraRate

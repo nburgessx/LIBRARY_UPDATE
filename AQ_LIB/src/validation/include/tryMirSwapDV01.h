@@ -15,7 +15,7 @@
 #include "LADataInstance.h"
 
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation interface for the mirSwapDV01 method
     *  @param [in]		dataInstance			                Pointer to the object pool

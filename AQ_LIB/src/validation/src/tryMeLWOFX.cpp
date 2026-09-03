@@ -12,7 +12,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief validation interface for meLWOFXCurveCreate, creating a FxCurve using a CurveGenerator object and a CurveMarketData object

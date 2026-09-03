@@ -12,7 +12,7 @@
 #include "InflationCurve.h"
 #include "ZeroCouponInflationSwap.h"
 
-namespace validation_api
+namespace validation
 {
 
 	/* @brief Creates an Inflation Curve, calibrated from Zero Coupon Inflation Swap market data

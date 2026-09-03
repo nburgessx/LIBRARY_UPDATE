@@ -4,7 +4,7 @@
 #include <vector>
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
 
 

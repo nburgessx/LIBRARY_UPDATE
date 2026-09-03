@@ -2,7 +2,7 @@
 #include "vector"
 #include "CurveInterpolation.h" // CurveInterpolation Class & Core Enumerations
 
-namespace validation_api
+namespace validation
 {
 	// validation interface for tryMeCurveForwardRate method
 	double tryMeMathForwardRate( const LADate & fixingDate,

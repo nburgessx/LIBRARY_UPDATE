@@ -3,7 +3,7 @@
 #include <boost/date_time.hpp>
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation method for meCurveDiscountFactorsFromYearFractions
     *  @param [in]		lwoCurveName	Curve Name

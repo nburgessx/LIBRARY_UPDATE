@@ -6,7 +6,7 @@
 #include <vector>
 
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief Builds a curve using a CurveGenerator object and a CurveMarketData object

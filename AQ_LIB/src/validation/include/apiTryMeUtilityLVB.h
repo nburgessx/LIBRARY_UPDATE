@@ -18,7 +18,7 @@ using etrading::LabelValueBlock;
 
 
 
-namespace validation_api
+namespace validation
 {
     
 

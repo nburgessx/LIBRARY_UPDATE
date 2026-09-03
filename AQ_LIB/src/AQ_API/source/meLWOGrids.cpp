@@ -8,7 +8,7 @@
 SWIG_STRINGMATRIX meLWOGridDisplay( const std::string& objectName, const bool& displayColumnNames  )
 {
 	AQ_API_START
-	auto result = validation_api::tryMeLWOGridDisplay( objectName );
+	auto result = validation::tryMeLWOGridDisplay( objectName );
 
     auto& columnNames = std::get<1>( result );
     auto& flexibleData = std::get<0>( result );

@@ -12,7 +12,7 @@ namespace google_test
         {
             try
             {
-                validation_api::tryMirSetUpSwapCurve(
+                validation::tryMirSetUpSwapCurve(
                     getDataInstance(),
                     curveID_,
                     marketName_,
@@ -58,7 +58,7 @@ namespace google_test
 
 			try
             {
-                validation_api::tryMirSetUpSwapCurve(
+                validation::tryMirSetUpSwapCurve(
                     etrading::InitializeAQETrading::instance().dataInstance(),
                     curveID,
                     marketName,

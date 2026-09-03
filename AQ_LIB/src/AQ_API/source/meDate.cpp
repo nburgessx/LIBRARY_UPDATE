@@ -35,7 +35,7 @@ std::string meDateFromTenor(const std::string& startDate,
     DateVector startDateVector;
     startDateVector.push_back( tmp_startDate );
 		
-    resultVector = validation_api::tryMeDateFromTenor( startDateVector, 
+    resultVector = validation::tryMeDateFromTenor( startDateVector, 
 												        tmp_tenor, 
 												        tmp_businessDayAdj, 
 												        tmp_calendar,
@@ -74,7 +74,7 @@ std::string meDateFromTenor(const std::string& startDate,
     DateVector startDateVector;
     startDateVector.push_back( tmp_startDate );
 		
-    resultVector = validation_api::tryMeDateFromTenor( startDateVector, 
+    resultVector = validation::tryMeDateFromTenor( startDateVector, 
 												        tmp_tenor, 
 												        tmp_businessDayAdj, 
 												        tmp_calendar,
@@ -107,7 +107,7 @@ std::string meDateFromTenor(const std::string& startDate,
     DateVector startDateVector;
     startDateVector.push_back( tmp_startDate );
 		
-    resultVector = validation_api::tryMeDateFromTenor( startDateVector, 
+    resultVector = validation::tryMeDateFromTenor( startDateVector, 
 												       tmp_tenor, 
 												       "",  // businessDayAdjustment
 												       "",  // calendar
@@ -147,7 +147,7 @@ std::vector<std::string> meDateFromTenor( const std::vector<std::string>& startD
 	LAString tmp_calendar(calendar.c_str());
 	LAString tmp_rollConvention(rollConvention.c_str());
 
-	DateVector dates = validation_api::tryMeDateFromTenor( tmp_startDates, 
+	DateVector dates = validation::tryMeDateFromTenor( tmp_startDates, 
 												            tmp_tenor, 
 												            tmp_businessDayAdj, 
 												            tmp_calendar,
@@ -178,7 +178,7 @@ const std::string meDateFromYearFraction(const std::string& startDate,
 	LADate tmp_startDate(etrading::stringToDate( startDate ) );
 	LAString tmp_dayCount(dayCount.c_str());
 
-    ret = validation_api::tryMeDateFromYearFraction(tmp_startDate, yearFraction, tmp_dayCount).stringWithFormat("YYYYMMDD").getCString();
+    ret = validation::tryMeDateFromYearFraction(tmp_startDate, yearFraction, tmp_dayCount).stringWithFormat("YYYYMMDD").getCString();
     return ret;
     AQ_API_END
 }
@@ -201,7 +201,7 @@ int meDateBusinessDays(const std::string& fromDate,
 	LADate toDt ( etrading::stringToDate( toDate ) );
 	LAString cal			(calendar.c_str());
 
-	ret = validation_api::tryMeDateBusinessDays(fromDt, toDt, cal);		
+	ret = validation::tryMeDateBusinessDays(fromDt, toDt, cal);		
 	return ret;
     AQ_API_END
 }
@@ -224,7 +224,7 @@ double meDateYearFraction( const std::string& fromDate,
 	LADate fromLADate( etrading::stringToDate( fromDate ) );
 	LADate toLADate( etrading::stringToDate( toDate ) );
 
-	double yearFraction = validation_api::tryMeDateYearFraction( fromLADate, toLADate, dayCount, includeLast );
+	double yearFraction = validation::tryMeDateYearFraction( fromLADate, toLADate, dayCount, includeLast );
 	return yearFraction;
 
     AQ_API_END
@@ -246,7 +246,7 @@ double meDateYearFraction( const std::string& fromDate,
 	LADate fromLADate( etrading::stringToDate( fromDate ) );
 	LADate toLADate( etrading::stringToDate( toDate ) );
 
-	double yearFraction = validation_api::tryMeDateYearFraction( fromLADate, toLADate, dayCount );
+	double yearFraction = validation::tryMeDateYearFraction( fromLADate, toLADate, dayCount );
 	return yearFraction;
 
     AQ_API_END
@@ -275,7 +275,7 @@ std::string meLWOSwapUSDSpotDate( const std::string & asOfDate,
 	LADate asOfDate_( etrading::stringToDate( asOfDate ) );
 
 	// Call Spot Date Method
-	const LADate spotDate = validation_api::tryMeCurveUSDSpotDate( asOfDate_, spotLag.c_str(), fixingCalendar.c_str(), paymentCalendar.c_str(), businessDayAdj.c_str(), rollConvention.c_str() );
+	const LADate spotDate = validation::tryMeCurveUSDSpotDate( asOfDate_, spotLag.c_str(), fixingCalendar.c_str(), paymentCalendar.c_str(), businessDayAdj.c_str(), rollConvention.c_str() );
 	
 	// Marshall Outputs
 	const std::string spotDateString = spotDate.stringWithFormat("YYYYMMDD").c_str();
@@ -308,7 +308,7 @@ std::string meDateShiftedSpotDate( const std::string& asOfDate,
 	LADate asOfDate_( etrading::stringToDate( asOfDate ) );
 
 	// Call Spot Date Method
-	const LADate spotDate = validation_api::tryMeDateShiftedSpotDate( asOfDate_, fixingLag.c_str(), fixingCalendar.c_str(), fixingBusDayAdj.c_str(), paymentLag.c_str(), paymentCalendar.c_str(), paymentBusDayAdj.c_str() );
+	const LADate spotDate = validation::tryMeDateShiftedSpotDate( asOfDate_, fixingLag.c_str(), fixingCalendar.c_str(), fixingBusDayAdj.c_str(), paymentLag.c_str(), paymentCalendar.c_str(), paymentBusDayAdj.c_str() );
 
     // Marshall Outputs
 	const std::string spotDateString = spotDate.stringWithFormat("YYYYMMDD").c_str();

@@ -134,7 +134,7 @@ namespace google_test
     {
         const ReadDataFile::Load inputFile( curveDisplayInputs );
         const DoubleArray results
-            = validation_api::tryMeCurveDisplay(
+            = validation::tryMeCurveDisplay(
                   inputFile["curveCollection"],
                   inputFile["curveIndex"] );
 

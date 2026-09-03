@@ -15,7 +15,7 @@
 #include "Variant.h"            // Includes DateVector, DoubleVector, VariantVector, VariantMatrix et al.
 #include "CoreEnumerations.h"
 
-namespace validation_api
+namespace validation
 {
 	// Function to enable / disable the swap results object
 	std::string tryMeSwapResultsEnable( const bool & enable );

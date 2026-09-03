@@ -2,7 +2,7 @@
 
 #include "LADate.h"
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			validation interface for the meDateCentralBank method

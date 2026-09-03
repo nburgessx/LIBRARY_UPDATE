@@ -16,7 +16,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
 
 	/* @brief Fits a Nelson-Siegel parameterized curve to the supplied bond maturities and yields.

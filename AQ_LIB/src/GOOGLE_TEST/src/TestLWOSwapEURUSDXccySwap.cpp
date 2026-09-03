@@ -102,7 +102,7 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation_api::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the Price Inputs & Price the Swap
                 std::string swapName            = priceInputFile["swapName"];
@@ -110,7 +110,7 @@ namespace google_test
                 LAString legName                = priceInputFile.getOptional("legName", LAString() );
                 LAStringMatrix fixingTableLVB     = priceInputFile.getOptional("fixingTableNames", LAStringMatrix() );
                 
-                double actualSwapPrice          = validation_api::tryMeLWOSwapPV( swapName, curveCollectionLVB, legName, fixingTableLVB );
+                double actualSwapPrice          = validation::tryMeLWOSwapPV( swapName, curveCollectionLVB, legName, fixingTableLVB );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualSwapPrice, TEST_DIR, priceOutputsFilename, priceTolerance );
@@ -161,14 +161,14 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
                 
-                std::string createSwap          = validation_api::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryMeLWOSwapCreate( swapTradeName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 // 4. Get the Par Spread Inputs & the Basis Spreads
                 std::string swapName            = priceInputFile["swapName"];
                 LAStringMatrix curveCollectionLVB = priceInputFile["curveCollections"];
                 LAStringMatrix fixingTableLVB     = priceInputFile.getOptional("fixingTableNames", LAStringMatrix() );
                 
-                double actualBasisSpread        = validation_api::tryMeLWOSwapParSpread( swapName, curveCollectionLVB, fixingTableLVB );
+                double actualBasisSpread        = validation::tryMeLWOSwapParSpread( swapName, curveCollectionLVB, fixingTableLVB );
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualBasisSpread, TEST_DIR, parSpreadOutputsFilename, basisSpreadTolerance );

@@ -12,7 +12,7 @@ using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
 
-namespace validation_api
+namespace validation
 {
 
 	// @brief		Function to peform polynomial INTERPOLATION for a single x value

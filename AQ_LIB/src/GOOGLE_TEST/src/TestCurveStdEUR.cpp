@@ -97,7 +97,7 @@ namespace google_test
     TEST_F( TestCurveStdEUR, SNAPSHOT_OutPutDF )
     {
         const DoubleArray results
-            = validation_api::tryMirOutputCurve(
+            = validation::tryMirOutputCurve(
                   getDataInstance(),
                   getCurveID(),
                   getMarketName() );
@@ -130,7 +130,7 @@ namespace google_test
         const DoubleArray term = inputFile["terms"];
 
         DoubleArray results
-            = validation_api::tryMirGetDF1(
+            = validation::tryMirGetDF1(
                   getDataInstance(),
                   term,
                   getCurveID(),
@@ -154,7 +154,7 @@ namespace google_test
         const DateVector fromDateVector = inputFile["fromDateVec"];
 
         const DoubleArray results
-            = validation_api::tryMirGetForwardRate1(
+            = validation::tryMirGetForwardRate1(
                   getDataInstance(),
                   fromDateVector,
                   term,					// pass native argument to avoid overloading ambiguity

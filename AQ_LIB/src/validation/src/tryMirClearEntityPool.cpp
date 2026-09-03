@@ -9,7 +9,7 @@
 #include "LACoreDataService.h"
 #include "LAUpdateStaticDataManager.h"
 
-namespace validation_api
+namespace validation
 {
     /* @brief			validation interface for the mirClearEntityPool function, to clear the object pool
     *  @return			A notification string

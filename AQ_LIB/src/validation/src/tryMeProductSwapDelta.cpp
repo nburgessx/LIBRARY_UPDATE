@@ -25,7 +25,7 @@ using etrading::MultiCurveDeltaGenerator;
 using etrading::BaseInstrumentPtr;
 using etrading::TradeCollection;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			validation interface for the meSwapDelta method

@@ -14,7 +14,7 @@
 #include "UserUtilities.h"
 #include "tryMeLWOGrid.h"
 
-namespace validation_api
+namespace validation
 {
 
     bool tryMeLWOExists( const std::string& typeAsString,

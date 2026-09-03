@@ -59,15 +59,15 @@ namespace google_test
 
     TEST_F(TryMeTestCurveStdSerialFRA, SNAPSHOT_CheckForwardRates_Contiguous)
     {
-		validation_api::tryMeLWOLoad(EURYC_OIS);
-		validation_api::tryMeLWOLoad(Contiguous_EURYC_STD);
+		validation::tryMeLWOLoad(EURYC_OIS);
+		validation::tryMeLWOLoad(Contiguous_EURYC_STD);
 
 		const ReadDataFile::Load inputFile(Contiguous_ForwardRatesInputs);
 
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation_api::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, Contiguous_ForwardRatesOutputs, tolerance);
     }
@@ -75,30 +75,30 @@ namespace google_test
 	TEST_F(TryMeTestCurveStdSerialFRA, SNAPSHOT_CheckForwardRates_SerialRate)
 	{
 
-		validation_api::tryMeLWOLoad(EURYC_OIS);
-		validation_api::tryMeLWOLoad(SerialRate_EURYC_STD);
+		validation::tryMeLWOLoad(EURYC_OIS);
+		validation::tryMeLWOLoad(SerialRate_EURYC_STD);
 
 		const ReadDataFile::Load inputFile(SerialRate_ForwardRatesInputs);
 
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation_api::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, SerialRate_ForwardRatesOutputs, tolerance);
 	}
 
 	TEST_F(TryMeTestCurveStdSerialFRA, SNAPSHOT_CheckForwardRates_SerialDF)
 	{
-		validation_api::tryMeLWOLoad(EURYC_OIS);
-		validation_api::tryMeLWOLoad(SerialDF_EURYC_STD);
+		validation::tryMeLWOLoad(EURYC_OIS);
+		validation::tryMeLWOLoad(SerialDF_EURYC_STD);
 
 		const ReadDataFile::Load inputFile(SerialDF_ForwardRatesInputs);
 
 		DateVector fromDateVector = inputFile["fromDates"];
 		DateVector toDateVector = inputFile["toDates"];
 
-		const DoubleArray results = validation_api::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
+		const DoubleArray results = validation::tryMeCurveForwardRatesFromForwardDates(fromDateVector, toDateVector, inputFile["curveCollection"], inputFile["curveIndex"]);
 
 		CheckTestResultsAndRebaseOnRequest(results, TEST_DIR, SerialDF_ForwardRatesOutputs, tolerance);
 	}

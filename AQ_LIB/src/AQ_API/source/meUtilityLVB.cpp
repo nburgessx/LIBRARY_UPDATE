@@ -26,8 +26,8 @@ SWIG_STRINGMATRIX meUtilityLVBCreate( const std::vector<std::string>& keys,
 {
     AQ_API_START
         
-    // Call validation_api method
-    std::vector<std::vector<std::string> > result = validation_api::tryMeUtilityLVBCreate( keys, values );
+    // Call validation method
+    std::vector<std::vector<std::string> > result = validation::tryMeUtilityLVBCreate( keys, values );
 
 #if defined(SWIG_R) || defined(SWIGR)
 	etrading::VariantMatrix variantMatrix;
@@ -55,8 +55,8 @@ SWIG_STRINGMATRIX meUtilityLVBCreate( const std::vector<std::string>& keys,
 {
     AQ_API_START
     
-    // Call validation_api method
-    std::vector<std::vector<std::string> > result = validation_api::tryMeUtilityLVBCreate( keys, values1, values2 );
+    // Call validation method
+    std::vector<std::vector<std::string> > result = validation::tryMeUtilityLVBCreate( keys, values1, values2 );
 	return result;
     AQ_API_END
 }
@@ -75,9 +75,9 @@ std::vector<std::vector<std::string> > meUtilityLVBAppendAndCreate( const std::v
 {
     AQ_API_START
     
-    // Call validation_api method
+    // Call validation method
     std::vector<std::vector<std::string> > resultLVB = LVB;
-    validation_api::tryMeUtilityLVBAdd( resultLVB, key, value );
+    validation::tryMeUtilityLVBAdd( resultLVB, key, value );
     return resultLVB;
     
     AQ_API_END
@@ -97,9 +97,9 @@ std::vector<std::vector<std::string> > meUtilityLVBAppendAndCreate( const std::v
 {
     AQ_API_START
     
-    // Call validation_api method
+    // Call validation method
     std::vector<std::vector<std::string> > resultLVB = LVB;
-    validation_api::tryMeUtilityLVBAdd( resultLVB, key, value1, value2 );
+    validation::tryMeUtilityLVBAdd( resultLVB, key, value1, value2 );
     return resultLVB;
     
     AQ_API_END
@@ -117,8 +117,8 @@ void meUtilityLVBAdd( std::vector<std::vector<std::string> >& LVB,
 {
     AQ_API_START
     
-    // Call validation_api method
-    validation_api::tryMeUtilityLVBAdd( LVB, key, value );
+    // Call validation method
+    validation::tryMeUtilityLVBAdd( LVB, key, value );
     return;
     
     AQ_API_END
@@ -138,8 +138,8 @@ void meUtilityLVBAdd( std::vector<std::vector<std::string> >& LVB,
 {
     AQ_API_START
     
-    // Call validation_api method
-    validation_api::tryMeUtilityLVBAdd( LVB, key, value1, value2 );
+    // Call validation method
+    validation::tryMeUtilityLVBAdd( LVB, key, value1, value2 );
     return;
     
     AQ_API_END

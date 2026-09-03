@@ -7,7 +7,7 @@
 #include "StructuredExceptionHandler.h"
 #include "DataUtilities.h"					// For AQ_TO_STRING macros
 
-namespace validation_api
+namespace validation
 {
 	namespace
 	{

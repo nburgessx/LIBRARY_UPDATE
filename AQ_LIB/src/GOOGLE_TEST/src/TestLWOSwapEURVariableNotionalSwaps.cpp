@@ -84,13 +84,13 @@ namespace google_test
             std::string     fixedScheduleName       = fixedScheduleInputFile["scheduleName"];
             LAStringMatrix    fixedScheduleProperties = fixedScheduleInputFile["bespokeScheduleProperties"];
             LAStringMatrix    fixedScheduleDates      = fixedScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     fixedScheduleResult     = validation_api::tryMeLWOScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
+	        std::string     fixedScheduleResult     = validation::tryMeLWOScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
 
             // Recreate the Float Schedule
             std::string     floatScheduleName       = floatScheduleInputFile["scheduleName"];
             LAStringMatrix    floatScheduleProperties = floatScheduleInputFile["bespokeScheduleProperties"];
             LAStringMatrix    floatScheduleDates      = floatScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     floatScheduleResult     = validation_api::tryMeLWOScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
+	        std::string     floatScheduleResult     = validation::tryMeLWOScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
             // Load the Saved Schedules
             LAString fixedScheduleOutputFilePath = etrading::decorateFilename( fixedSchedulePath, "", "tryMeLWOScheduleCreateBespoke_outputs.csv" );
@@ -135,13 +135,13 @@ namespace google_test
             std::string     fixedScheduleName       = fixedScheduleInputFile["scheduleName"];
             LAStringMatrix    fixedScheduleProperties = fixedScheduleInputFile["bespokeScheduleProperties"];
             LAStringMatrix    fixedScheduleDates      = fixedScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFixedSchedule       = validation_api::tryMeLWOScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
+	        std::string     loadFixedSchedule       = validation::tryMeLWOScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
 
             // Recreate the Float Schedule
             std::string     floatScheduleName       = floatScheduleInputFile["scheduleName"];
             LAStringMatrix    floatScheduleProperties = floatScheduleInputFile["bespokeScheduleProperties"];
             LAStringMatrix    floatScheduleDates      = floatScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFloatSchedule       = validation_api::tryMeLWOScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
+	        std::string     loadFloatSchedule       = validation::tryMeLWOScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
 
 
@@ -157,7 +157,7 @@ namespace google_test
             LAStringMatrix    vnsFloatScheduleParams  = vnsInputFile["leg2LVB"];
             bool            validateKeys            = vnsInputFile["validateKeys"];
 	            
-            std::string     vnsResult = validation_api::tryMeLWOSwapCreateFromSchedule( vnsName,
+            std::string     vnsResult = validation::tryMeLWOSwapCreateFromSchedule( vnsName,
                                                                                         vnsFixedScheduleName,
                                                                                         vnsFloatScheduleName,
                                                                                         vnsFixedScheduleParams,
@@ -206,13 +206,13 @@ namespace google_test
             std::string     fixedScheduleName       = fixedScheduleInputFile["scheduleName"];
             LAStringMatrix    fixedScheduleProperties = fixedScheduleInputFile["bespokeScheduleProperties"];
             LAStringMatrix    fixedScheduleDates      = fixedScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFixedSchedule       = validation_api::tryMeLWOScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
+	        std::string     loadFixedSchedule       = validation::tryMeLWOScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
 
             // Recreate the Float Schedule
             std::string     floatScheduleName       = floatScheduleInputFile["scheduleName"];
             LAStringMatrix    floatScheduleProperties = floatScheduleInputFile["bespokeScheduleProperties"];
             LAStringMatrix    floatScheduleDates      = floatScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFloatSchedule       = validation_api::tryMeLWOScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
+	        std::string     loadFloatSchedule       = validation::tryMeLWOScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
 
 
@@ -228,7 +228,7 @@ namespace google_test
             LAStringMatrix    vnsFloatScheduleParams  = vnsInputFile["leg2LVB"];
             bool            validateKeys            = vnsInputFile["validateKeys"];
 	            
-            std::string     loadVNS = validation_api::tryMeLWOSwapCreateFromSchedule( vnsName,
+            std::string     loadVNS = validation::tryMeLWOSwapCreateFromSchedule( vnsName,
                                                                                       vnsFixedScheduleName,
                                                                                       vnsFloatScheduleName,
                                                                                       vnsFixedScheduleParams,
@@ -246,7 +246,7 @@ namespace google_test
 			etrading::LabelValueBlock        vnsPVCurve  = etrading::fromStringToLVB(vnsPVInputFile["curveCollection"]);
 
             // Price the Variable Notional Swap
-            double          vnsPVResult = validation_api::tryMeLWOSwapPV( vnsPVName, vnsPVCurve );
+            double          vnsPVResult = validation::tryMeLWOSwapPV( vnsPVName, vnsPVCurve );
 
 
 
@@ -287,13 +287,13 @@ namespace google_test
             std::string     fixedScheduleName       = fixedScheduleInputFile["scheduleName"];
             LAStringMatrix    fixedScheduleProperties = fixedScheduleInputFile["bespokeScheduleProperties"];
             LAStringMatrix    fixedScheduleDates      = fixedScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFixedSchedule       = validation_api::tryMeLWOScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
+	        std::string     loadFixedSchedule       = validation::tryMeLWOScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
 
             // Recreate the Float Schedule
             std::string     floatScheduleName       = floatScheduleInputFile["scheduleName"];
             LAStringMatrix    floatScheduleProperties = floatScheduleInputFile["bespokeScheduleProperties"];
             LAStringMatrix    floatScheduleDates      = floatScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFloatSchedule       = validation_api::tryMeLWOScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
+	        std::string     loadFloatSchedule       = validation::tryMeLWOScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
 
 
@@ -309,7 +309,7 @@ namespace google_test
             LAStringMatrix    vnsFloatScheduleParams  = vnsInputFile["leg2LVB"];
             bool            validateKeys            = vnsInputFile["validateKeys"];
 	            
-            std::string     loadVNS = validation_api::tryMeLWOSwapCreateFromSchedule( vnsName,
+            std::string     loadVNS = validation::tryMeLWOSwapCreateFromSchedule( vnsName,
                                                                                       vnsFixedScheduleName,
                                                                                       vnsFloatScheduleName,
                                                                                       vnsFixedScheduleParams,
@@ -328,7 +328,7 @@ namespace google_test
 			etrading::LabelValueBlock        vnsParRateCurve  = etrading::fromStringToLVB(vnsParRateInputFile["curveCollection"]);
 
             // Price the Variable Notional Swap
-            double          vnsParRateResult = validation_api::tryMeLWOSwapParRate( vnsParRateName, vnsParRateCurve );
+            double          vnsParRateResult = validation::tryMeLWOSwapParRate( vnsParRateName, vnsParRateCurve );
 
 
 
@@ -365,13 +365,13 @@ namespace google_test
             std::string     fixedScheduleName       = fixedScheduleInputFile["scheduleName"];
             LAStringMatrix    fixedScheduleProperties = fixedScheduleInputFile["bespokeScheduleProperties"];
             LAStringMatrix    fixedScheduleDates      = fixedScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFixedSchedule       = validation_api::tryMeLWOScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
+	        std::string     loadFixedSchedule       = validation::tryMeLWOScheduleCreateBespoke( fixedScheduleName, fixedScheduleProperties, fixedScheduleDates );
 
             // Recreate the Float Schedule
             std::string     floatScheduleName       = floatScheduleInputFile["scheduleName"];
             LAStringMatrix    floatScheduleProperties = floatScheduleInputFile["bespokeScheduleProperties"];
             LAStringMatrix    floatScheduleDates      = floatScheduleInputFile["bespokeScheduleLVB"];
-	        std::string     loadFloatSchedule       = validation_api::tryMeLWOScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
+	        std::string     loadFloatSchedule       = validation::tryMeLWOScheduleCreateBespoke( floatScheduleName, floatScheduleProperties, floatScheduleDates );
 
 
 
@@ -387,7 +387,7 @@ namespace google_test
             LAStringMatrix    vnsFloatScheduleParams  = vnsInputFile["leg2LVB"];
             bool            validateKeys            = vnsInputFile["validateKeys"];
 	            
-            std::string     loadVNS = validation_api::tryMeLWOSwapCreateFromSchedule( vnsName,
+            std::string     loadVNS = validation::tryMeLWOSwapCreateFromSchedule( vnsName,
                                                                                       vnsFixedScheduleName,
                                                                                       vnsFloatScheduleName,
                                                                                       vnsFixedScheduleParams,
@@ -406,7 +406,7 @@ namespace google_test
 			etrading::LabelValueBlock        vnsPV01Curve  = etrading::fromStringToLVB(vnsPV01InputFile["curveCollection"]);
 
             // Price the Variable Notional Swap
-            double          vnsPV01Result = validation_api::tryMeLWOSwapPV01( vnsPV01Name, vnsPV01Curve );
+            double          vnsPV01Result = validation::tryMeLWOSwapPV01( vnsPV01Name, vnsPV01Curve );
 
 
 

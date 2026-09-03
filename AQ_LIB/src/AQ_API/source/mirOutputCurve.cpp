@@ -19,7 +19,7 @@ std::vector<std::vector<double> > mirOutputCurve(const std::string& curveId,
 		LAString curId			(curveId.c_str());
 		LAString curName		(curveName.c_str());
 		
-		DoubleArray ans = validation_api::tryMirOutputCurve(etrading::InitializeAQETrading::instance().dataInstance(),
+		DoubleArray ans = validation::tryMirOutputCurve(etrading::InitializeAQETrading::instance().dataInstance(),
 												            curId,
 												            curName);
 

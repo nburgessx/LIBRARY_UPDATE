@@ -32,7 +32,7 @@ std::string mirGetIMMDate1(int Year,
 			slidingrule=LAString("FOLLOWING");
 		}
 
-		ret = validation_api::tryMirGetIMMDate1(Year, Month, calendar, slidingrule).getCString();
+		ret = validation::tryMirGetIMMDate1(Year, Month, calendar, slidingrule).getCString();
 	} 
 	catch (LACoreError& mesx) 
 	{
@@ -70,7 +70,7 @@ std::string mirGetIMMDate2(int Year,
 			slidingrule=LAString("FOLLOWING");
 		}
 
-		ret = validation_api::tryMirGetIMMDate2(Year, Number, calendar, slidingrule).getCString();
+		ret = validation::tryMirGetIMMDate2(Year, Number, calendar, slidingrule).getCString();
 	} 
 	catch (LACoreError& mesx) 
 	{
@@ -110,7 +110,7 @@ std::string mirGetIMMDate3(const std::string& BaseDate,
 			slidingrule=LAString("FOLLOWING");
 		}
 
-		ret = validation_api::tryMirGetIMMDate3(baseDate, Number, calendar, slidingrule).getCString();
+		ret = validation::tryMirGetIMMDate3(baseDate, Number, calendar, slidingrule).getCString();
 	} 
 	catch (LACoreError& mesx) 
 	{

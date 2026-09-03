@@ -2,7 +2,7 @@
 
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
 
 	/* @brief			Check forward rates from on the HW model

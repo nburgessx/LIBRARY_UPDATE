@@ -25,7 +25,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
 	// Function to enable / disable the swap results object
 	std::string tryMeSwapResultsEnable( const bool & enable )
@@ -89,8 +89,8 @@ namespace validation_api
 		boost::to_upper( swapHandleUpperCase );
 
         // Trim Discount Factor Risk LVB
-        const LAStringMatrix trimmedDiscountRisk = validation_api::trimLAStringMatrix( discountRiskLVB );
-		const LAStringMatrix trimmedForwardRisk = validation_api::trimLAStringMatrix( forwardRiskLVB );
+        const LAStringMatrix trimmedDiscountRisk = validation::trimLAStringMatrix( discountRiskLVB );
+		const LAStringMatrix trimmedForwardRisk = validation::trimLAStringMatrix( forwardRiskLVB );
 
 		// Record Inputs
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk, trimmedForwardRisk )
@@ -138,7 +138,7 @@ namespace validation_api
 		boost::to_upper( swapHandleUpperCase );
 
         // Trim Discount Factor Risk LVB
-        const LAStringMatrix trimmedDiscountRisk = validation_api::trimLAStringMatrix( discountRiskLVB );
+        const LAStringMatrix trimmedDiscountRisk = validation::trimLAStringMatrix( discountRiskLVB );
 
 		// Record Inputs
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk )
@@ -181,7 +181,7 @@ namespace validation_api
 		boost::to_upper( swapHandleUpperCase );
 
         // Trim Forward Rate Risk LVB
-        const LAStringMatrix trimmedForwardRisk = validation_api::trimLAStringMatrix( forwardRiskLVB );
+        const LAStringMatrix trimmedForwardRisk = validation::trimLAStringMatrix( forwardRiskLVB );
 
 		// Record Inputs
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedForwardRisk )

@@ -14,7 +14,7 @@
 #include "FuturesDates.h"
 #include "CoreEnumerations.h"
 
-namespace validation_api
+namespace validation
 {
     using etrading::CreateDataFile;
 

@@ -83,7 +83,7 @@ namespace google_test
                 LAStringMatrix assetSwapLVB = inputFile["assetSwapLVB"];
                 bool validateKeys = inputFile["validateKeys"];
 
-                double assetSwapSpread = validation_api::tryMeProductAssetSwapSpread( bondPrice, assetSwapLVB, validateKeys );
+                double assetSwapSpread = validation::tryMeProductAssetSwapSpread( bondPrice, assetSwapLVB, validateKeys );
 
                 CheckTestResultsAndRebaseOnRequest( assetSwapSpread, TEST_DIR, getAssetSwapSpreadResults, tolerance, i );
             }

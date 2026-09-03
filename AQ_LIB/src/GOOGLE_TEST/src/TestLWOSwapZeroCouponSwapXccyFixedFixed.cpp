@@ -88,12 +88,12 @@ namespace google_test
                 bool isXccySwap                 = tradeInputFile["isXccySwap"];
                 bool validateKeys               = tradeInputFile["validateKeys"];
 
-                std::string createSwap          = validation_api::tryMeLWOSwapCreate( swapName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+                std::string createSwap          = validation::tryMeLWOSwapCreate( swapName, swapLVB, swapPropertiesLVB, isXccySwap, validateKeys );
                 
                 LAStringMatrix curveCollectionLVB = pvInputFile["curveCollections"];
                 LAStringMatrix fixingTableLVB     = pvInputFile.getOptional("fixingTableNames", LAStringMatrix() );
                 
-                double actualPV = validation_api::tryMeLWOSwapPV( swapName, curveCollectionLVB, "", fixingTableLVB);
+                double actualPV = validation::tryMeLWOSwapPV( swapName, curveCollectionLVB, "", fixingTableLVB);
                 
                 // 5. Check the Test Results or Rebase
                 CheckTestResultsAndRebaseOnRequest( actualPV, TEST_DIR, pvOutputFileName, tolerance );

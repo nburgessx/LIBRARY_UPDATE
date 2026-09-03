@@ -18,7 +18,7 @@
 #include <vector>
 
 
-namespace validation_api
+namespace validation
 {
 	
     /* @brief Displays market data and conventions used for curve calibration

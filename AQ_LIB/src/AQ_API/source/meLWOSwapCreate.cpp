@@ -39,8 +39,8 @@ const std::string meLWOSwapCreate( const std::string& swapObjectName,
     LAStringMatrix xccyPropertiesLVBAsStringMatrix;
 	swig::buildStringMatrix( xccyPropertiesLVBAsStringMatrix, xccyPropertiesLVB );
 
-    // Call validation_api method
-    std::string result = validation_api::tryMeLWOSwapCreate( swapObjectName, swapLVBAsStringMatrix, xccyPropertiesLVBAsStringMatrix, isXccySwap, validateKeys );
+    // Call validation method
+    std::string result = validation::tryMeLWOSwapCreate( swapObjectName, swapLVBAsStringMatrix, xccyPropertiesLVBAsStringMatrix, isXccySwap, validateKeys );
     return result;
 
     AQ_API_END
@@ -71,8 +71,8 @@ const std::string meLWOSwapCreateFromGenerator( const std::string& swapObjectNam
     LAStringMatrix xccyPropertiesLVBAsStringMatrix;
 	swig::buildStringMatrix( xccyPropertiesLVBAsStringMatrix, xccyPropertiesLVB );
 
-    // Call validation_api method
-    std::string result = validation_api::tryMeLWOSwapCreateFromGenerator( swapObjectName, swapGeneratorName, swapLVBAsStringMatrix, xccyPropertiesLVBAsStringMatrix, isXccySwap, validateKeys );
+    // Call validation method
+    std::string result = validation::tryMeLWOSwapCreateFromGenerator( swapObjectName, swapGeneratorName, swapLVBAsStringMatrix, xccyPropertiesLVBAsStringMatrix, isXccySwap, validateKeys );
     return result;
     
     AQ_API_END

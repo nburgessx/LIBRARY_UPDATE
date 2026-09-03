@@ -19,7 +19,7 @@ using etrading::CreateDataFile;
 using etrading::decorateFilename;
 using etrading::Swap;
 
-namespace validation_api
+namespace validation
 {
 
 	void validateAssetSwapInputs(const etrading::BondPtr& bond, const etrading::LegPtr& swapFixedLeg, const etrading::LegPtr& swapFloatLeg)

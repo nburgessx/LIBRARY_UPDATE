@@ -105,7 +105,7 @@ namespace google_test
 			LAString inputDir = TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + curveDisplayInputs_Daily + LAString(".csv");
 			const ReadDataFile::Load inputFile1( inputDir );
 			const DoubleArray results1
-				= validation_api::tryMeCurveDisplay(
+				= validation::tryMeCurveDisplay(
 					  inputFile1["curveCollection"],
 					  inputFile1["curveIndex"] );
 
@@ -124,7 +124,7 @@ namespace google_test
 			inputDir = TEST_DIR + LAString("Test") + LAString(static_cast<int>(i + 1)) + curveDisplayInputs_Quarterly + LAString(".csv");
 			const ReadDataFile::Load inputFile2( inputDir );
 			const DoubleArray results2
-				= validation_api::tryMeCurveDisplay(
+				= validation::tryMeCurveDisplay(
 					  inputFile2["curveCollection"],
 					  inputFile2["curveIndex"] );
 

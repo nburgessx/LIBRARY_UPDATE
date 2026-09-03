@@ -4,7 +4,7 @@
 #include "SupervisoryRules.h"
 
 
-namespace validation_api
+namespace validation
 {
 	/* @brief		Calculates the risk-weight using the (non-IRBA) supervisory formula method
 	*				described in article 262 of the following document:

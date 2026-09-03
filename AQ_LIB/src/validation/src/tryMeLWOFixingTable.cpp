@@ -12,7 +12,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
 	/* @brief			function to create a fixing table object. This function specific to interest rate fixings
 	*

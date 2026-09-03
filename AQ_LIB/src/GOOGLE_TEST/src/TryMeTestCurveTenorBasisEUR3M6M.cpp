@@ -93,7 +93,7 @@ namespace google_test
     {
         const ReadDataFile::Load inputFile( curveDisplayInputs );
         const DoubleArray results
-            = validation_api::tryMeCurveDisplay(
+            = validation::tryMeCurveDisplay(
                   inputFile["curveCollection"],
                   inputFile["curveIndex"] );
 
@@ -133,7 +133,7 @@ namespace google_test
         const ReadDataFile::Load inputFile( CheckDiscountFactorsInputs );
 
         const DoubleArray yearFractions = inputFile["yearFractions"];
-        DoubleArray results = validation_api::tryMeCurveDiscountFactorsFromYearFractions( yearFractions,
+        DoubleArray results = validation::tryMeCurveDiscountFactorsFromYearFractions( yearFractions,
                               inputFile["dayCount"],
                               inputFile["curveCollection"],
                               inputFile["curveIndex"] );
@@ -181,7 +181,7 @@ namespace google_test
         const double yearFraction = inputFile["yearFraction"];
         const DateVector fromDateVector = inputFile["fromDates"];
 
-        const DoubleArray results = validation_api::tryMeCurveForwardRatesFromYearFraction( fromDateVector,
+        const DoubleArray results = validation::tryMeCurveForwardRatesFromYearFraction( fromDateVector,
                                     yearFraction,
                                     inputFile["dayCount"],
                                     inputFile["curveCollection"],

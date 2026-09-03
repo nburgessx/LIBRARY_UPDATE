@@ -3,7 +3,7 @@
 #include "LACoreTemplateType.h"
 #include <stdarg.h>
 
-namespace validation_api
+namespace validation
 {
 
 	/* @brief			validation interface for curve calibration method using dual-bootstrapping

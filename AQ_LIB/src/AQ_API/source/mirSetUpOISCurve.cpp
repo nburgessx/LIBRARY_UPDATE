@@ -64,7 +64,7 @@ const std::string mirSetUpOISCurve(const std::string& CurveID,
 		LAStringMatrix loBasisConv;
 		swig::buildStringMatrix(loBasisConv, LOBasisConv);
 
-		ret = validation_api::tryMirSetUpOISCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
+		ret = validation::tryMirSetUpOISCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
 												  curveID, 
 												  marketName, 
 												  generalProps, 

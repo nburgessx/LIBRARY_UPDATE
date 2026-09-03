@@ -22,7 +22,7 @@ std::string meCurveGetInterpolationJoinDate(const std::string& curveCollection, 
 	LAString tmp_curveIndex(curveIndex.c_str());
 	LAString tmp_interpolation(interpolation.c_str());
 
-	ret = validation_api::tryMeCurveGetInterpolationJoinDate(tmp_curveCollection, tmp_curveIndex, tmp_interpolation).stringWithFormat("YYYYMMDD").getCString();
+	ret = validation::tryMeCurveGetInterpolationJoinDate(tmp_curveCollection, tmp_curveIndex, tmp_interpolation).stringWithFormat("YYYYMMDD").getCString();
 	 
 	return ret;
     AQ_API_END

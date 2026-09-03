@@ -87,7 +87,7 @@ namespace google_test
         LAStringVector headers;
         DoubleMatrix deltas;
 
-        validation_api::tryMeProductSwapDelta(
+        validation::tryMeProductSwapDelta(
             pillarNames,
             headers,
             deltas,
@@ -179,7 +179,7 @@ namespace google_test
         // Dummy Xccy FX Spot Rates
         DoubleVector dummyXccyFXSpotRates( TRADE_COUNT, 1.0 );
 
-        validation_api::tryMeProductSwapDelta(
+        validation::tryMeProductSwapDelta(
             pillarNames,
             headers,
             deltas,

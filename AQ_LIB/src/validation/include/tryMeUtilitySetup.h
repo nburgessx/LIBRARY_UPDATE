@@ -2,7 +2,7 @@
 
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
  	 /* @brief	Set-up AlgoQuantLib - Not to be used with Excel
      *  @return	A notification string

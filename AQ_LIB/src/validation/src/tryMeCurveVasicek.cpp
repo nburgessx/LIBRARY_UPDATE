@@ -15,7 +15,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			Check initial volatility when Vasicek model forward rates match curve's forward rates

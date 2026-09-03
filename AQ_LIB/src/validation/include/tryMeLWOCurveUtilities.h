@@ -21,7 +21,7 @@
 #include "SerializationUtilities.h"
 
 
-namespace validation_api
+namespace validation
 {
     const std::vector<std::string> tryMeLWOCurveList();
 

@@ -22,7 +22,7 @@ std::string mirSetupPCA(const std::string& ID,
 		// Input marshalling
 		LAString id(ID.c_str());
 
-		ret = validation_api::tryMirSetupPCA(etrading::InitializeAQETrading::instance().dataInstance(), id, data, IsScale, FactorNum).getCString();
+		ret = validation::tryMirSetupPCA(etrading::InitializeAQETrading::instance().dataInstance(), id, data, IsScale, FactorNum).getCString();
 	} 
 	catch (LACoreError& mesx) 
 	{

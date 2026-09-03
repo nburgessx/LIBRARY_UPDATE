@@ -4,7 +4,7 @@
 #include "LoanCalculations.h"
 
 
-namespace validation_api
+namespace validation
 {
 	/* @brief	Calculates the monthly payment for a loan.
 	* @param[in]	term			The term of the loan, in months. i.e. 5 years = 60

@@ -17,7 +17,7 @@ SWIG_STRINGMATRIX mirGetPCAResults(const std::string& ID, int update)
 		// Input marshalling
 		LAString id(ID.c_str());
 
-		LAStringMatrix temp = validation_api::tryMirGetPCAResults(etrading::InitializeAQETrading::instance().dataInstance(), id, update);
+		LAStringMatrix temp = validation::tryMirGetPCAResults(etrading::InitializeAQETrading::instance().dataInstance(), id, update);
 
 		ret = swig::fromStringMatrixToMatrixOfString(temp);
 

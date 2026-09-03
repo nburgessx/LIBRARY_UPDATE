@@ -9,7 +9,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
 	/* @brief Display the yield curve engine jacobian matrix
 	* @param [out] matrix							Matrix being returned and displayed

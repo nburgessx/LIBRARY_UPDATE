@@ -83,7 +83,7 @@ namespace google_test
             const std::vector< double > yields              = tradeInputFile["yields"];
 
             // Calculate the Actual Results
-            std::vector< double > actualResults = validation_api::tryMeLWOBondDirtyPrice( bondObjectName, settlementDates, yields );
+            std::vector< double > actualResults = validation::tryMeLWOBondDirtyPrice( bondObjectName, settlementDates, yields );
 
             // Compare Results
             const double tolerance = 0.000000001;
@@ -126,7 +126,7 @@ namespace google_test
             const std::vector< double > yields              = tradeInputFile["yields"];
 
             // Calculate the Actual Results
-            std::vector< double > actualResults = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
+            std::vector< double > actualResults = validation::tryMeLWOBondCleanPrice( bondObjectName, settlementDates, yields );
 
             // Compare Results
             const double tolerance = 0.000000001;
@@ -167,7 +167,7 @@ namespace google_test
             const std::vector< LADate > settlementDates     = tradeInputFile["settlementDates"];
 
             // Calculate the Actual Results
-            std::vector< double > actualResults = validation_api::tryMeLWOBondAccruedInterest( bondObjectName, settlementDates );
+            std::vector< double > actualResults = validation::tryMeLWOBondAccruedInterest( bondObjectName, settlementDates );
 
             // Compare Results
             const double tolerance = 0.000000001;
@@ -209,7 +209,7 @@ namespace google_test
             const std::vector< double > dirtyPrices         = tradeInputFile["prices"];
 
             // Calculate the Actual Results
-            std::vector< double > actualResults = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, dirtyPrices );
+            std::vector< double > actualResults = validation::tryMeLWOBondYield( bondObjectName, settlementDates, dirtyPrices );
 
             // Compare Results
             const double tolerance = 0.000000001;
@@ -260,7 +260,7 @@ namespace google_test
 			const int numIterations = 200;
 			for (int i=0; i<numIterations; i++)
 			{
-				actualResults = validation_api::tryMeLWOBondYield( bondObjectName, settlementDates, dirtyPrices, yieldCalculationType, runInParallel );
+				actualResults = validation::tryMeLWOBondYield( bondObjectName, settlementDates, dirtyPrices, yieldCalculationType, runInParallel );
 			}
 
             // Compare Results
@@ -315,7 +315,7 @@ namespace google_test
             // Calculate the DV01 numerically
 			double bumpSize = 0.01; // in bps
 			LAString bumpMode = "CENTRAL";
-            std::vector< double > actualResults = validation_api::tryMeLWOBondDV01Numerical( bondObjectName, settlementDates, yields,bumpSize, bumpMode );
+            std::vector< double > actualResults = validation::tryMeLWOBondDV01Numerical( bondObjectName, settlementDates, yields,bumpSize, bumpMode );
 
             // Compare Results
             const double tolerance = 0.000001; // Use wider tolerance on Numerical DV01. Allows us to use the same output file for win32 and x64.
@@ -357,7 +357,7 @@ namespace google_test
             const std::vector< double > yields              = tradeInputFile["yields"];
 
             // Calculate the Analytic DV01
-            std::vector< double > actualResults = validation_api::tryMeLWOBondDV01( bondObjectName, settlementDates, yields );
+            std::vector< double > actualResults = validation::tryMeLWOBondDV01( bondObjectName, settlementDates, yields );
 
             // Compare Results
             const double tolerance = 0.000000001;
@@ -399,7 +399,7 @@ namespace google_test
             const std::vector< double > yields              = tradeInputFile["yields"];
        
             // Calculate the Analytic DV01
-            std::vector< double > actualResults = validation_api::tryMeLWOBondModifiedDuration( bondObjectName, settlementDates, yields );
+            std::vector< double > actualResults = validation::tryMeLWOBondModifiedDuration( bondObjectName, settlementDates, yields );
 
             // Compare Results
             const double tolerance = 0.000000001;

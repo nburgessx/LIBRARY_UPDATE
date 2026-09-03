@@ -46,11 +46,11 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectCZKOIS_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCZKOIS, etrading::JSON );
-        const std::string curveObjectCZK6M_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCZK6M, etrading::JSON );
-        const std::string curveObjectCZK3M_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCZK3M, etrading::JSON );
-		const std::string curveObjectCZK1M_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCZK1M, etrading::JSON );
-		const std::string curveObjectCZK12M_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCZK12M, etrading::JSON );
+        const std::string curveObjectCZKOIS_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCZKOIS, etrading::JSON );
+        const std::string curveObjectCZK6M_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCZK6M, etrading::JSON );
+        const std::string curveObjectCZK3M_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCZK3M, etrading::JSON );
+		const std::string curveObjectCZK1M_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCZK1M, etrading::JSON );
+		const std::string curveObjectCZK12M_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameCZK12M, etrading::JSON );
     };
 
     // Call Test Fixture Class

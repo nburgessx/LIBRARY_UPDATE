@@ -10,7 +10,7 @@
 
 using etrading::CreateDataFile;
 
-namespace validation_api
+namespace validation
 {
 
 

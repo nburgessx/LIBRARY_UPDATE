@@ -81,7 +81,7 @@ namespace google_test
                 std::vector< double > yields = priceInputFile["yields"];
 
 				//1) Check Price Matching
-				auto actualPrices = validation_api::tryMeLWOBondPrice(bondObjectName, settlementDates, yields);
+				auto actualPrices = validation::tryMeLWOBondPrice(bondObjectName, settlementDates, yields);
 				CheckTestResultsAndRebaseOnRequest(actualPrices, TEST_DIR1, priceBondOutputFile1, priceTolerance, i );
 
 				//2) Check Yield Matching
@@ -89,8 +89,8 @@ namespace google_test
 				const ReadDataFile::Load yieldInputFile(yieldInputFilename);
 				std::vector< double > prices = yieldInputFile["prices"];
 
-				auto actualYields = validation_api::tryMeLWOBondYield(bondObjectName, settlementDates, prices);
-				auto compoundYields = validation_api::tryMeLWOBondCompoundYields(bondObjectName, settlementDates, prices);
+				auto actualYields = validation::tryMeLWOBondYield(bondObjectName, settlementDates, prices);
+				auto compoundYields = validation::tryMeLWOBondCompoundYields(bondObjectName, settlementDates, prices);
 
 				CheckTestResultsAndRebaseOnRequest(actualYields, TEST_DIR1, yieldBondOutputFile1, yieldTolerance, i);
 				CheckTestResultsAndRebaseOnRequest(compoundYields, TEST_DIR1, yieldBondOutputFile1, yieldTolerance, i);
@@ -138,7 +138,7 @@ namespace google_test
 				std::vector< double > yields = priceInputFile["yields"];
 
 				//1) Check Price Matching
-				auto actualPrices = validation_api::tryMeLWOBondPrice(bondObjectName, settlementDates, yields);
+				auto actualPrices = validation::tryMeLWOBondPrice(bondObjectName, settlementDates, yields);
 				CheckTestResultsAndRebaseOnRequest(actualPrices, TEST_DIR2, priceBondOutputFile2, priceTolerance, i + TEST_COUNT1);
 
 				//2) Check Yield Matching
@@ -146,8 +146,8 @@ namespace google_test
 				const ReadDataFile::Load yieldInputFile(yieldInputFilename);
 				std::vector< double > prices = yieldInputFile["prices"];
 
-				auto actualYields = validation_api::tryMeLWOBondYield(bondObjectName, settlementDates, prices);
-				auto compoundYields = validation_api::tryMeLWOBondCompoundYields(bondObjectName, settlementDates, prices);
+				auto actualYields = validation::tryMeLWOBondYield(bondObjectName, settlementDates, prices);
+				auto compoundYields = validation::tryMeLWOBondCompoundYields(bondObjectName, settlementDates, prices);
 
 				CheckTestResultsAndRebaseOnRequest(actualYields, TEST_DIR2, yieldBondOutputFile2, yieldTolerance, i + TEST_COUNT1);
 				CheckTestResultsAndRebaseOnRequest(compoundYields, TEST_DIR2, yieldBondOutputFile2, yieldTolerance, i + TEST_COUNT1);

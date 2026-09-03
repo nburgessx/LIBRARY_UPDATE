@@ -9,7 +9,7 @@ std::string mirClearEntityPool()
 	std::string ret("");
 	try 
 	{
-		ret = validation_api::tryMirClearEntityPool().getCString();
+		ret = validation::tryMirClearEntityPool().getCString();
 	} 
 	catch (LACoreError& mesx) 
 	{

@@ -60,7 +60,7 @@ namespace google_test
         const DoubleArray term = inputFile["terms"];
 
         DoubleArray results
-            = validation_api::tryMirGetDF1(
+            = validation::tryMirGetDF1(
                   getDataInstance(),
                   term,
                   getCurveID(),
@@ -83,7 +83,7 @@ namespace google_test
         DateVector toDateVector = inputFile["toDates"];
 
         const DoubleArray results
-            = validation_api::tryMirGetForwardRate2(
+            = validation::tryMirGetForwardRate2(
                   getDataInstance(),
                   fromDateVector,
                   toDateVector,

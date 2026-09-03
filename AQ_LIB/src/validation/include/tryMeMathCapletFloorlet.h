@@ -1,7 +1,7 @@
 #pragma once
 #include "CapletFloorlet.h"
 
-namespace validation_api
+namespace validation
 {
     // Calculate the Price
     const double tryMeMathCapletFloorletPrice( const std::string& capletOrFloorlet,

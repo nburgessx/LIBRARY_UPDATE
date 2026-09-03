@@ -5,7 +5,7 @@
 
 using etrading::LabelValueBlock;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			return a set of expected keys for swap stub rate label value block

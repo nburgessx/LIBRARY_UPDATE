@@ -10,7 +10,7 @@
 
 using namespace etrading;
 
-namespace validation_api
+namespace validation
 {
 	/* @brief			validation interface for meSABRSetupSwaptionVol
 	*  @param [in]			gridID			ID that identifies swaption vol matrix

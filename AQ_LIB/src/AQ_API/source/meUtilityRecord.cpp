@@ -26,7 +26,7 @@ std::string meUtilityRecord( bool enable,
     LAString myFolder( folder.c_str() );
         
     // Calculate Result
-    LAString result = validation_api::tryMeUtilityRecord( enable, myFolder, repeat, startIndex, maxIndex );
+    LAString result = validation::tryMeUtilityRecord( enable, myFolder, repeat, startIndex, maxIndex );
 
     // Return as std::string
     return result.getCString();

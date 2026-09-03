@@ -126,19 +126,19 @@ namespace
 
 	void loadIRSTrades()
 	{
-		auto loadIRS1 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_3Y, etrading::JSON);
-		auto loadIRS2 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_4Y, etrading::JSON);
-		auto loadIRS3 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_5Y, etrading::JSON);
-		auto loadIRS4 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_6Y, etrading::JSON);
-		auto loadIRS5 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_7Y, etrading::JSON);
-		auto loadIRS6 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_8Y, etrading::JSON);
-		auto loadIRS7 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_9Y, etrading::JSON);
-		auto loadIRS8 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_10Y, etrading::JSON);
-		auto loadIRS9 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_12Y, etrading::JSON);
-		auto loadIRS10 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_15Y, etrading::JSON);
-		auto loadIRS11 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_20Y, etrading::JSON);
-		auto loadIRS12 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_25Y, etrading::JSON);
-		auto loadIRS13 = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_30Y, etrading::JSON);
+		auto loadIRS1 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_3Y, etrading::JSON);
+		auto loadIRS2 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_4Y, etrading::JSON);
+		auto loadIRS3 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_5Y, etrading::JSON);
+		auto loadIRS4 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_6Y, etrading::JSON);
+		auto loadIRS5 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_7Y, etrading::JSON);
+		auto loadIRS6 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_8Y, etrading::JSON);
+		auto loadIRS7 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_9Y, etrading::JSON);
+		auto loadIRS8 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_10Y, etrading::JSON);
+		auto loadIRS9 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_12Y, etrading::JSON);
+		auto loadIRS10 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_15Y, etrading::JSON);
+		auto loadIRS11 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_20Y, etrading::JSON);
+		auto loadIRS12 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_25Y, etrading::JSON);
+		auto loadIRS13 = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_IRS_30Y, etrading::JSON);
 	}
 }
 
@@ -152,7 +152,7 @@ namespace google_test
 	TEST_F(TestLWOSwapDelta_ZAR, CONSISTENCY_IRS_ParRate_ZAR)
 	{
 		// Load Curve. ZAR_3MJ is self-discounting
-		auto loadZARSTD = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZARYC_STD_CURVE, etrading::JSON);
+		auto loadZARSTD = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZARYC_STD_CURVE, etrading::JSON);
 
 		// Extract par rates from the ZAR_3MJ curve
 		std::vector<double> zarStdParRates = curveCalibrationSwapParRates( loadZARSTD );
@@ -171,7 +171,7 @@ namespace google_test
 			LAStringMatrix valuationSettingsLVB		= parRateInputs[ "valuationSettingsLVB" ];
 			LAStringMatrix fixingTableNames			= parRateInputs[ "fixingTableNames" ];
 
-			const double actualResult	= validation_api::tryMeLWOSwapParRate( swapName, valuationSettingsLVB, fixingTableNames );
+			const double actualResult	= validation::tryMeLWOSwapParRate( swapName, valuationSettingsLVB, fixingTableNames );
 			const double expectedResult	= zarStdParRates[ i ];
 			EXPECT_NEAR( actualResult, expectedResult, parRateTolerance );
 			i++;
@@ -182,7 +182,7 @@ namespace google_test
 	TEST_F(TestLWOSwapDelta_ZAR, RISK_IRS_DV01_ZAR )
 	{
 		// Load Curve. ZAR_3MJ is self-discounting
-		auto loadZARSTD = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZARYC_STD_CURVE, etrading::JSON);
+		auto loadZARSTD = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZARYC_STD_CURVE, etrading::JSON);
 
 		loadIRSTrades();
 
@@ -202,7 +202,7 @@ namespace google_test
 
 		LAStringVector positionIDs;
 		DoubleVector deltas;
-		validation_api::tryMeLWOSwapDelta( positionIDs,
+		validation::tryMeLWOSwapDelta( positionIDs,
 											deltas,
 											swapNames,
 											curveCollectionNames,
@@ -222,14 +222,14 @@ namespace google_test
 	TEST_F(TestLWOSwapDelta_ZAR, RISK_XCCY_DV01_ZAR)
 	{
 		// Load Curves
-		auto loadUSDOIS = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USDYC_OIS_CURVE, etrading::JSON);
-		auto loadUSDSTD = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USDYC_STD_CURVE, etrading::JSON);
+		auto loadUSDOIS = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USDYC_OIS_CURVE, etrading::JSON);
+		auto loadUSDSTD = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_USDYC_STD_CURVE, etrading::JSON);
 
-		auto loadZARSTD  = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZARYC_STD_CURVE, etrading::JSON);
-		auto loadZARXCCY = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZARYC_XCCY_CURVE, etrading::JSON);
+		auto loadZARSTD  = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZARYC_STD_CURVE, etrading::JSON);
+		auto loadZARXCCY = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZARYC_XCCY_CURVE, etrading::JSON);
 
 		// Load XCCY trade
-		auto loadXCCY = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_XCCY_5Y, etrading::JSON);
+		auto loadXCCY = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + fileName_ZAR_XCCY_5Y, etrading::JSON);
 
 
 		// Risk delta ladder config
@@ -248,7 +248,7 @@ namespace google_test
 
 		LAStringVector positionIDs;
 		DoubleVector deltas;
-		validation_api::tryMeLWOSwapDelta(  positionIDs,
+		validation::tryMeLWOSwapDelta(  positionIDs,
 											deltas,
 											swapNames,
 											curveCollectionNames,

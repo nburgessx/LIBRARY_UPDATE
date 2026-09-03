@@ -6,7 +6,7 @@
 
 using etrading::LabelValueBlock;
 
-namespace validation_api
+namespace validation
 {
 
     std::vector<std::string> tryMeLWOSwapLVBKeys();

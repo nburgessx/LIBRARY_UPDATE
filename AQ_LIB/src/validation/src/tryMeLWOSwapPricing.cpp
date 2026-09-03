@@ -37,7 +37,7 @@ using etrading::Swap;
 using etrading::CrossCurrencySwap;
 using etrading::Schedule;
 
-namespace validation_api
+namespace validation
 {
     
     

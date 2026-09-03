@@ -74,7 +74,7 @@ namespace google_test
     const double InterestRateSwap::parRate()
     {
 
-        const double parRate = validation_api::tryMirGetParRate4(
+        const double parRate = validation::tryMirGetParRate4(
                                    dataInstance_,
                                    effectDt_,
                                    maturity_,
@@ -117,7 +117,7 @@ namespace google_test
     {
 
 
-        const double pv = validation_api::tryMirSwapPV(
+        const double pv = validation::tryMirSwapPV(
                               dataInstance_,
                               notional_,
                               payRec_,
@@ -158,7 +158,7 @@ namespace google_test
     const double InterestRateSwap::pv( const double& parRate )
     {
 
-        const double parPV = validation_api::tryMirSwapPV(
+        const double parPV = validation::tryMirSwapPV(
                                  dataInstance_,
                                  notional_,
                                  payRec_,
@@ -199,7 +199,7 @@ namespace google_test
 
 	 const double InterestRateSwap::pv01()
     {
-		const double pv01 = validation_api::tryMirSwapPV01( dataInstance_,
+		const double pv01 = validation::tryMirSwapPV01( dataInstance_,
 															notional_,
 															payRec_,
 															effectDt_,

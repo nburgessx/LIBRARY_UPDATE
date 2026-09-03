@@ -27,7 +27,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateCurvename;
 
-namespace validation_api
+namespace validation
 {
 	/* @brief	Set up AlgoQuantLib - Not to be used with Excel
      *  @return	A notification string
@@ -103,7 +103,7 @@ namespace validation_api
 		common::LACoreLockControl::enableThreadLocks( false );
 
 		// Initialize the Optional LWO Configuration Files - will not throw if unsuccessful
-		validation_api::tryMeUtilityLoadConfigurationFiles();
+		validation::tryMeUtilityLoadConfigurationFiles();
 
 		return "Initialized AlgoQuantLib";
 
@@ -345,7 +345,7 @@ namespace validation_api
         }
 
         // Get the library version number
-        std::string versionNumber = validation_api::versionNumber();
+        std::string versionNumber = validation::versionNumber();
 
 		// Get the libarary bit architecture by determining the pointer size
 		// On x86 a pointer is 4 bytes in size i.e. 4 * 8 = 32 bits
@@ -357,7 +357,7 @@ namespace validation_api
 		s << "AlgoQuantLib: "
 		  << "Version Number: " << versionNumber << ". "
 		  << "Architecture: " << nBits << " bit. "
-		  << "Last built on " << validation_api::versionBuildDate() << " at " << validation_api::versionBuildTime() << ".";
+		  << "Last built on " << validation::versionBuildDate() << " at " << validation::versionBuildTime() << ".";
 
         if ( showLicenceExpiry )
         {

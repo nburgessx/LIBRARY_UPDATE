@@ -79,7 +79,7 @@ namespace google_test
 		LAString market = inputFile["marketName"];
 
         const DoubleArray results
-            = validation_api::tryMirOutputCurve(
+            = validation::tryMirOutputCurve(
                   getDataInstance(),
                   curveID,
                   market );
@@ -95,7 +95,7 @@ namespace google_test
 		LAString market = inputFile["marketName"];
 
         const DoubleArray results
-            = validation_api::tryMirOutputCurve(
+            = validation::tryMirOutputCurve(
                   getDataInstance(),
                   curveID,
                   market );
@@ -111,7 +111,7 @@ namespace google_test
 		LAString market = inputFile["marketName"];
 
         const DoubleArray results
-            = validation_api::tryMirOutputCurve(
+            = validation::tryMirOutputCurve(
                   getDataInstance(),
                   curveID,
                   market );
@@ -127,7 +127,7 @@ namespace google_test
 		LAString market = inputFile["marketName"];
 
         const DoubleArray results
-            = validation_api::tryMirOutputCurve(
+            = validation::tryMirOutputCurve(
                   getDataInstance(),
                   curveID,
                   market );
@@ -143,7 +143,7 @@ namespace google_test
 		LAString market = inputFile["marketName"];
 
         const DoubleArray results
-            = validation_api::tryMirOutputCurve(
+            = validation::tryMirOutputCurve(
                   getDataInstance(),
                   curveID,
                   market );
@@ -159,7 +159,7 @@ namespace google_test
 		LAString market = inputFile["marketName"];
 
         const DoubleArray results
-            = validation_api::tryMirOutputCurve(
+            = validation::tryMirOutputCurve(
                   getDataInstance(),
                   curveID,
                   market );
@@ -175,7 +175,7 @@ namespace google_test
 		LAString market = inputFile["marketName"];
 
         const DoubleArray results
-            = validation_api::tryMirOutputCurve(
+            = validation::tryMirOutputCurve(
                   getDataInstance(),
                   curveID,
                   market );

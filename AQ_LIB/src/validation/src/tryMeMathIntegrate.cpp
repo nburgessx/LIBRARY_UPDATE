@@ -26,7 +26,7 @@ using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
 
-namespace validation_api
+namespace validation
 {
     /* @brief			Calculate the Numerical Integral of a Interpolator Target Function
     *  @param [in]		terms			    A vector of terms year fractions, x-axis
@@ -95,7 +95,7 @@ namespace validation_api
                                             const unsigned int & nSteps,
                                             const bool optimize )
     {
-        // No Thread Guard here since this has been delegated to the underlying itegration method also in the validation_api
+        // No Thread Guard here since this has been delegated to the underlying itegration method also in the validation
         VALID_EXCEPTION_START_WITH_NO_THREAD_GUARD
 
         // Convert Date Inputs to Terms Year Fractions - needed for underlying math function

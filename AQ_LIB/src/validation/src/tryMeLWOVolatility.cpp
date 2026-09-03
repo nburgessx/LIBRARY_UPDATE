@@ -14,7 +14,7 @@ using etrading::decorateFilename;
 using etrading::Volatility;
 
 
-namespace validation_api
+namespace validation
 {
 
 	/* @brief			validation interface for the meLWOVolatilityCreate method

@@ -19,7 +19,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
 	/* @brief Calibrate global yield curve engine to generate multiple synchronous yield curves
 	* @param [in] engineObjectName			The name of the yield curve engine object

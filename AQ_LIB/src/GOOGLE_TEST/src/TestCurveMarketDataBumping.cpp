@@ -32,22 +32,22 @@ namespace google_test
 	TEST_F( TestCurveMarketDataBumping, CONSISTENCY_BumpOutrightInstrumentsOnly_USDOIS )
 	{
 		// 1. Load Original Curve Market Data
-		const std::string loadUSDOISMarketData					= validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USDOIS, etrading::JSON );
+		const std::string loadUSDOISMarketData					= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USDOIS, etrading::JSON );
 
 		// 2. Capture the Original Market Data Inputs
-		const etrading::VariantMatrix originalOISQuotes			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "OIS" );
-		const etrading::VariantMatrix originalLiborOISQuotes	= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "LIBOROISBASISSPREADS" );
-		const etrading::VariantMatrix originalSwapQuotes		= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "SWAPS" );
+		const etrading::VariantMatrix originalOISQuotes			= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "OIS" );
+		const etrading::VariantMatrix originalLiborOISQuotes	= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "LIBOROISBASISSPREADS" );
+		const etrading::VariantMatrix originalSwapQuotes		= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "SWAPS" );
 
 		// 3. Bump the Outright Instruments
 		// *** Only bump outright instruments = true ***
 		const double bumpSize = 1.0e-4;
-		validation_api::tryMeLWOCurveMarketDataBumpAll( loadUSDOISMarketData, bumpSize, true ); 
+		validation::tryMeLWOCurveMarketDataBumpAll( loadUSDOISMarketData, bumpSize, true ); 
 
 		// 4. Capture the Bumped Market Data Inputs
-		const etrading::VariantMatrix bumpedOISQuotes			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "OIS" );
-		const etrading::VariantMatrix bumpedLiborOISQuotes		= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "LIBOROISBASISSPREADS" );
-		const etrading::VariantMatrix bumpedSwapQuotes			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "SWAPS" );
+		const etrading::VariantMatrix bumpedOISQuotes			= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "OIS" );
+		const etrading::VariantMatrix bumpedLiborOISQuotes		= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "LIBOROISBASISSPREADS" );
+		const etrading::VariantMatrix bumpedSwapQuotes			= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "SWAPS" );
 
 		// 5. Check the Results
 		ASSERT_EQ( originalOISQuotes.size(),		bumpedOISQuotes.size() );
@@ -76,22 +76,22 @@ namespace google_test
 	TEST_F( TestCurveMarketDataBumping, CONSISTENCY_BumpAllInstruments_USDOIS )
 	{
 		// 1. Load Original Curve Market Data
-		const std::string loadUSDOISMarketData					= validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USDOIS, etrading::JSON );
+		const std::string loadUSDOISMarketData					= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USDOIS, etrading::JSON );
 
 		// 2. Capture the Original Market Data Inputs
-		const etrading::VariantMatrix originalOISQuotes			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "OIS" );
-		const etrading::VariantMatrix originalLiborOISQuotes	= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "LIBOROISBASISSPREADS" );
-		const etrading::VariantMatrix originalSwapQuotes		= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "SWAPS" );
+		const etrading::VariantMatrix originalOISQuotes			= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "OIS" );
+		const etrading::VariantMatrix originalLiborOISQuotes	= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "LIBOROISBASISSPREADS" );
+		const etrading::VariantMatrix originalSwapQuotes		= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "SWAPS" );
 
 		// 3. Bump the Outright Instruments
 		// *** Only bump outright instruments = false ***
 		const double bumpSize = 1.0e-4;
-		validation_api::tryMeLWOCurveMarketDataBumpAll( loadUSDOISMarketData, bumpSize, false ); 
+		validation::tryMeLWOCurveMarketDataBumpAll( loadUSDOISMarketData, bumpSize, false ); 
 
 		// 4. Capture the Bumped Market Data Inputs
-		const etrading::VariantMatrix bumpedOISQuotes			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "OIS" );
-		const etrading::VariantMatrix bumpedLiborOISQuotes		= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "LIBOROISBASISSPREADS" );
-		const etrading::VariantMatrix bumpedSwapQuotes			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "SWAPS" );
+		const etrading::VariantMatrix bumpedOISQuotes			= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "OIS" );
+		const etrading::VariantMatrix bumpedLiborOISQuotes		= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "LIBOROISBASISSPREADS" );
+		const etrading::VariantMatrix bumpedSwapQuotes			= validation::tryMeLWOCurveMarketDataDisplay( loadUSDOISMarketData, "SWAPS" );
 
 		// 5. Check the Results
 		ASSERT_EQ( originalOISQuotes.size(),		bumpedOISQuotes.size() );
@@ -120,22 +120,22 @@ namespace google_test
 	TEST_F( TestCurveMarketDataBumping, CONSISTENCY_BumpOutrightInstrumentsOnly_USD3ML )
 	{
 		// 1. Load Original Curve Market Data
-		const std::string loadUSD3MLMarketData					= validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USD3ML, etrading::JSON );
+		const std::string loadUSD3MLMarketData					= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USD3ML, etrading::JSON );
 
 		// 2. Capture the Original Market Data Inputs
-		const etrading::VariantMatrix originalFixings			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "LIBORFIXINGS" );
-		const etrading::VariantMatrix originalFutures			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "FUTURES" );
-		const etrading::VariantMatrix originalSwaps				= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "SWAPS" );
+		const etrading::VariantMatrix originalFixings			= validation::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "LIBORFIXINGS" );
+		const etrading::VariantMatrix originalFutures			= validation::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "FUTURES" );
+		const etrading::VariantMatrix originalSwaps				= validation::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "SWAPS" );
 
 		// 3. Bump the Outright Instruments
 		// *** Only bump outright instruments = true ***
 		const double bumpSize = 1.0e-4;
-		validation_api::tryMeLWOCurveMarketDataBumpAll( loadUSD3MLMarketData, bumpSize, true ); 
+		validation::tryMeLWOCurveMarketDataBumpAll( loadUSD3MLMarketData, bumpSize, true ); 
 
 		// 4. Capture the Bumped Market Data Inputs
-		const etrading::VariantMatrix bumpedFixings			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "LIBORFIXINGS" );
-		const etrading::VariantMatrix bumpedFutures			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "FUTURES" );
-		const etrading::VariantMatrix bumpedSwaps			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "SWAPS" );
+		const etrading::VariantMatrix bumpedFixings			= validation::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "LIBORFIXINGS" );
+		const etrading::VariantMatrix bumpedFutures			= validation::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "FUTURES" );
+		const etrading::VariantMatrix bumpedSwaps			= validation::tryMeLWOCurveMarketDataDisplay( loadUSD3MLMarketData, "SWAPS" );
 
 		// 5. Check the Results
 		ASSERT_EQ( originalFixings.size(),		bumpedFixings.size() );
@@ -171,18 +171,18 @@ namespace google_test
 	TEST_F( TestCurveMarketDataBumping, CONSISTENCY_BumpOutrightInstrumentsOnly_USD6ML )
 	{
 		// 1. Load Original Curve Market Data
-		const std::string loadUSD6MLMarketData					= validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USD6ML, etrading::JSON );
+		const std::string loadUSD6MLMarketData					= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USD6ML, etrading::JSON );
 
 		// 2. Capture the Original Market Data Inputs
-		const etrading::VariantMatrix originalBasisSwaps		= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSD6MLMarketData, "BASISSWAPS" );
+		const etrading::VariantMatrix originalBasisSwaps		= validation::tryMeLWOCurveMarketDataDisplay( loadUSD6MLMarketData, "BASISSWAPS" );
 		
 		// 3. Bump the Outright Instruments
 		// *** Only bump outright instruments = true ***
 		const double bumpSize = 1.0e-4;
-		validation_api::tryMeLWOCurveMarketDataBumpAll( loadUSD6MLMarketData, bumpSize, true ); 
+		validation::tryMeLWOCurveMarketDataBumpAll( loadUSD6MLMarketData, bumpSize, true ); 
 
 		// 4. Capture the Bumped Market Data Inputs
-		const etrading::VariantMatrix bumpedBasisSwaps			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSD6MLMarketData, "BASISSWAPS" );
+		const etrading::VariantMatrix bumpedBasisSwaps			= validation::tryMeLWOCurveMarketDataDisplay( loadUSD6MLMarketData, "BASISSWAPS" );
 		
 		// 5. Check the Results
 		ASSERT_EQ( originalBasisSwaps.size(), bumpedBasisSwaps.size() );
@@ -197,18 +197,18 @@ namespace google_test
 	TEST_F( TestCurveMarketDataBumping, CONSISTENCY_BumpAllInstruments_USD6ML )
 	{
 		// 1. Load Original Curve Market Data
-		const std::string loadUSD6MLMarketData					= validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USD6ML, etrading::JSON );
+		const std::string loadUSD6MLMarketData					= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USD6ML, etrading::JSON );
 
 		// 2. Capture the Original Market Data Inputs
-		const etrading::VariantMatrix originalBasisSwaps		= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSD6MLMarketData, "BASISSWAPS" );
+		const etrading::VariantMatrix originalBasisSwaps		= validation::tryMeLWOCurveMarketDataDisplay( loadUSD6MLMarketData, "BASISSWAPS" );
 		
 		// 3. Bump the Outright Instruments
 		// *** Only bump outright instruments = false ***
 		const double bumpSize = 1.0e-4;
-		validation_api::tryMeLWOCurveMarketDataBumpAll( loadUSD6MLMarketData, bumpSize, false ); 
+		validation::tryMeLWOCurveMarketDataBumpAll( loadUSD6MLMarketData, bumpSize, false ); 
 
 		// 4. Capture the Bumped Market Data Inputs
-		const etrading::VariantMatrix bumpedBasisSwaps			= validation_api::tryMeLWOCurveMarketDataDisplay( loadUSD6MLMarketData, "BASISSWAPS" );
+		const etrading::VariantMatrix bumpedBasisSwaps			= validation::tryMeLWOCurveMarketDataDisplay( loadUSD6MLMarketData, "BASISSWAPS" );
 		
 		// 5. Check the Results
 		ASSERT_EQ( originalBasisSwaps.size(), bumpedBasisSwaps.size() );
@@ -223,22 +223,22 @@ namespace google_test
 	TEST_F( TestCurveMarketDataBumping, CONSISTENCY_BumpAllInstruments_USDOIS_WithFutures )
 	{
 		// 1. Load Original Curve Market Data
-		const std::string originalUSDOISMarketData				= validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USDOIS_WithFutures_Original, etrading::JSON );
+		const std::string originalUSDOISMarketData				= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USDOIS_WithFutures_Original, etrading::JSON );
 
 		// 2. Capture the Original Market Data Inputs
-		const etrading::VariantMatrix originalOISQuotes			= validation_api::tryMeLWOCurveMarketDataDisplay( originalUSDOISMarketData, "OIS" );
+		const etrading::VariantMatrix originalOISQuotes			= validation::tryMeLWOCurveMarketDataDisplay( originalUSDOISMarketData, "OIS" );
 
 		// 3. Bump the Outright Instruments
 		// *** Only bump outright instruments = true ***
 		const double bumpSize = 1.0e-4;
-		validation_api::tryMeLWOCurveMarketDataBumpAll( originalUSDOISMarketData, bumpSize, true ); 
+		validation::tryMeLWOCurveMarketDataBumpAll( originalUSDOISMarketData, bumpSize, true ); 
 
 		// 4. Capture the Bumped Market Data Inputs
-		const etrading::VariantMatrix bumpedOISQuotes			= validation_api::tryMeLWOCurveMarketDataDisplay( originalUSDOISMarketData, "OIS" );
+		const etrading::VariantMatrix bumpedOISQuotes			= validation::tryMeLWOCurveMarketDataDisplay( originalUSDOISMarketData, "OIS" );
 
 		// 5. Load Expected Results
-		const std::string expectedUSDOISMarketData				= validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USDOIS_WithFutures_Bumped, etrading::JSON );
-		const etrading::VariantMatrix expectedBumpedOISQuotes	= validation_api::tryMeLWOCurveMarketDataDisplay( expectedUSDOISMarketData, "OIS" );
+		const std::string expectedUSDOISMarketData				= validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + curveMarketData_USDOIS_WithFutures_Bumped, etrading::JSON );
+		const etrading::VariantMatrix expectedBumpedOISQuotes	= validation::tryMeLWOCurveMarketDataDisplay( expectedUSDOISMarketData, "OIS" );
 
 		// 5. Check the Results
 		ASSERT_EQ( originalOISQuotes.size(),		bumpedOISQuotes.size() );

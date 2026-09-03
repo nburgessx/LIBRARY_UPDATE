@@ -18,7 +18,7 @@
 #include "ObjectUtilities.h"
 
 
-namespace validation_api
+namespace validation
 {
     std::string tryMeLWOMultiGridCreate(	const std::string& objectName,
                                             const std::vector<std::string>& gridNames,

@@ -143,7 +143,7 @@ namespace
 	void checkCurveCalibrationParameters( const size_t nExpectedRows, const std::string& inflationFixingsHandle, const std::string& inflationCurveHandle )
 	{
 
-		AnyTypeMatrix results = validation_api::tryMeLWOInflationCurveCalibrationParameters( inflationCurveHandle );
+		AnyTypeMatrix results = validation::tryMeLWOInflationCurveCalibrationParameters( inflationCurveHandle );
 
 		const size_t nRows = results.size();
 		EXPECT_EQ(nExpectedRows, nRows) << "#Error: Expected " << nExpectedRows << " rows of calibration results";  // One row per calibration point
@@ -199,9 +199,9 @@ namespace google_test
 
 	TEST_F(TestInflationCurve, TestCalibrationSingleInstrument )
     {
-		auto loadGBPOIS				= validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
-		auto inflationFixingsHandle = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
-		auto inflationCurveHandle	= validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_SINGLE_SWAP, etrading::JSON);
+		auto loadGBPOIS				= validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
+		auto inflationFixingsHandle = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
+		auto inflationCurveHandle	= validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_SINGLE_SWAP, etrading::JSON);
 
 		/* Check the calibration points. We expect two points in total:
 			1. A point corresponding to the asOf date -2M lag, obtained from the fixing table
@@ -214,9 +214,9 @@ namespace google_test
 
 	TEST_F(TestInflationCurve, TestCalibrationManyInstruments)
 	{
-		auto loadGBPOIS = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
-		auto inflationFixingsHandle = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
-		auto inflationCurveHandle	= validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
+		auto loadGBPOIS = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
+		auto inflationFixingsHandle = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
+		auto inflationCurveHandle	= validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
 
 		/* Check the calibration points. We expect 18 points in total:
 			1. A point corresponding to the asOf date -2M lag, obtained from the fixing table
@@ -228,16 +228,16 @@ namespace google_test
 
 	TEST_F(TestInflationCurve, TestCalibrationFirstYear)
 	{
-		auto loadGBPOIS				= validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
-		auto inflationFixingsHandle = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
-		auto inflationCurveHandle	= validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_FIRST_YEAR, etrading::JSON);
+		auto loadGBPOIS				= validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
+		auto inflationFixingsHandle = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
+		auto inflationCurveHandle	= validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_FIRST_YEAR, etrading::JSON);
 
 		/* Check the calibration points. We expect 13 points in total:
 			1. A point corresponding to the asOf date -2M lag, obtained from the fixing table
 			2. 11 "First year" CPI points: 1M, 2M, ... 11M
 			3. A point in 1 year -2M, corresponding to the single ZeroCouponInflationSwap calibration instrument
 		*/
-		AnyTypeMatrix results = validation_api::tryMeLWOInflationCurveCalibrationParameters( inflationCurveHandle );
+		AnyTypeMatrix results = validation::tryMeLWOInflationCurveCalibrationParameters( inflationCurveHandle );
 
 		const size_t nExpectedRows = 13;
 		const size_t nRows = results.size();
@@ -265,9 +265,9 @@ namespace google_test
 
 	TEST_F(TestInflationCurve, TestZCInflationSwapRepricing)
 	{
-		auto loadGBPOIS = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
-		auto inflationFixingsHandle = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
-		auto inflationCurveHandle = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
+		auto loadGBPOIS = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
+		auto inflationFixingsHandle = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
+		auto inflationCurveHandle = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
 
 		// Parameters for creating a ZC Inflation Swap
 		etrading::ReadDataFile::Load createSwap = etrading::ReadDataFile::Load( api_ZC_INFLATIONSWAP_CREATE_TEMPLATE );
@@ -306,9 +306,9 @@ namespace google_test
 			std::string maturityString = std::to_string( maturityExcelDate );
 
 			LabelValueBlock expressionLVB( expressionTemplateLVB, "MATURITYDATE", maturityString );
-			auto swapHandle = validation_api::tryMeLWOSwapCreateFromGenerator( "dummySwapName", swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccy, validateKeys );
+			auto swapHandle = validation::tryMeLWOSwapCreateFromGenerator( "dummySwapName", swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccy, validateKeys );
 
-			const double calculatedParRate = validation_api::tryMeLWOInflationZCSwapParRate( swapHandle, inflationCurveHandle, valuationSettingsLVB );
+			const double calculatedParRate = validation::tryMeLWOInflationZCSwapParRate( swapHandle, inflationCurveHandle, valuationSettingsLVB );
 			EXPECT_NEAR( swapQuote.instrumentQuote, calculatedParRate, tolerance );
 
 		}
@@ -316,11 +316,11 @@ namespace google_test
 
 	TEST_F( TestInflationCurve, TestMeLWOInflationCPI_OnPillarDates )
 	{
-		auto loadGBPOIS = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
-		auto inflationFixingsHandle = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
-		auto inflationCurveHandle = validation_api::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
+		auto loadGBPOIS = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_GBP_OIS_CURVE, etrading::JSON);
+		auto inflationFixingsHandle = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_FIXINGS, etrading::JSON);
+		auto inflationCurveHandle = validation::tryMeLWOLoad(etrading::getGoogleTestFolder() + obj_INFLATION_CURVE_MANY_SWAPS, etrading::JSON);
 
-		AnyTypeMatrix calibrationResults = validation_api::tryMeLWOInflationCurveCalibrationParameters(inflationCurveHandle);
+		AnyTypeMatrix calibrationResults = validation::tryMeLWOInflationCurveCalibrationParameters(inflationCurveHandle);
 		
 		/* Check the calibration points. We expect 18 points in total:
 		1. A point corresponding to the asOf date -2M lag, obtained from the fixing table
@@ -381,14 +381,14 @@ namespace google_test
 			EXPECT_NEAR(calibrationValue, interpolatedValue, tolerance);
 		}
 
-		// Now check via validation_api
+		// Now check via validation
 		std::string inflationResetType = etrading::toString( inflationResetTypeEnum );
 		for (size_t i = 0; i < nExpectedRows; i++)
 		{
 			const double calibrationValue = boost::get<double>(calibrationResults[i][1]);
 
 			const LADate pillarDate = pillarDates[i];
-			const double interpolatedValue = validation_api::tryMeLWOInflationCPI( inflationCurveHandle, pillarDate, inflationResetType, fixLag );
+			const double interpolatedValue = validation::tryMeLWOInflationCPI( inflationCurveHandle, pillarDate, inflationResetType, fixLag );
 				
 			EXPECT_NEAR( calibrationValue, interpolatedValue, tolerance );
 		}

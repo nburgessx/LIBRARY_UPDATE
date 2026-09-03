@@ -13,7 +13,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			Convert the Fixed/Float Frequency to Fixed Term for Accrued Interest Start Date Calculation

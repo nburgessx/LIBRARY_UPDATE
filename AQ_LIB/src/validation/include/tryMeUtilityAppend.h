@@ -12,7 +12,7 @@
 #pragma once
 #include "DataUtilities.h"
 
-namespace validation_api
+namespace validation
 {
     using etrading::VariantMatrix;
 

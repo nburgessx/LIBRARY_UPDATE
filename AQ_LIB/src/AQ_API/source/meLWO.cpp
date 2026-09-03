@@ -13,7 +13,7 @@
 const std::string meLWOSave( const std::string& objectName, const std::string& objectType, const std::string& filePath )
 {
     AQ_API_START
-    std::string result = validation_api::tryMeLWOSave( objectName, objectType, filePath );
+    std::string result = validation::tryMeLWOSave( objectName, objectType, filePath );
 	return result;
     AQ_API_END
 }
@@ -25,7 +25,7 @@ const std::string meLWOSave( const std::string& objectName, const std::string& o
 const std::string meLWOLoad( const std::string& filePath )
 {
     AQ_API_START
-    std::string result = validation_api::tryMeLWOLoad( filePath );
+    std::string result = validation::tryMeLWOLoad( filePath );
 	return result;
     AQ_API_END
 }

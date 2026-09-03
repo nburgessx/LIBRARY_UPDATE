@@ -20,7 +20,7 @@ double meProductSwapParRate(const std::vector<std::vector <std::string> >& swapL
 	// marshall all inputs		
 	LabelValueBlock lvb = swig::buildSingleLabelValueBlock(swapLVB);
 		
-	ret = validation_api::tryMeProductSwapParRate(lvb, validateKeys);
+	ret = validation::tryMeProductSwapParRate(lvb, validateKeys);
 	return ret;
     AQ_API_END
 }
@@ -32,7 +32,7 @@ std::vector<std::string> meProductSwapParRateLVBKeys()
 {
     AQ_API_START
 	std::vector<std::string> ret;
-	ret = validation_api::tryMeProductSwapParRateLVBKeys();
+	ret = validation::tryMeProductSwapParRateLVBKeys();
 	return ret;
     AQ_API_END
 }

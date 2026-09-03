@@ -63,7 +63,7 @@ namespace google_test
             {
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getParRateInputs, i ) );
 
-                double parRate = validation_api::tryMirOISParRate( getDataInstance(),
+                double parRate = validation::tryMirOISParRate( getDataInstance(),
                                  inputFile["effectDt"],
                                  inputFile["maturity"],
                                  inputFile["curveID"],
@@ -127,7 +127,7 @@ namespace google_test
                 const ReadDataFile::Load inputFile( CreateDataFile::makeFilename( getPVInputs, i ) );
 
                 // Read the input file into the getParRateFunction
-                const double pv = validation_api::tryMirOISSwapPV( getDataInstance(),
+                const double pv = validation::tryMirOISSwapPV( getDataInstance(),
                                   inputFile["notional"],
                                   inputFile["payRec"],
                                   inputFile["effectDt"],

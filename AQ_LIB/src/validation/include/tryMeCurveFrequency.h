@@ -2,7 +2,7 @@
 
 #include "LACoreTemplateType.h"
 
-namespace validation_api
+namespace validation
 {
     /* @brief			Returns the curveFrequency i.e. the float index frequency
     *  @param [in]		curveCollection		The curve collection ID

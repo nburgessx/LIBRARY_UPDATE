@@ -61,7 +61,7 @@ namespace google_test
 		const ReadDataFile::Load inputFile(oisForwardRateInputFile);
 		const DateVector fromDateVector = inputFile["fromDates"];
 		const DateVector toDateVector = inputFile["toDates"];
-		const DoubleArray results = validation_api::tryMeCurveForwardRatesFromForwardDates(fromDateVector,
+		const DoubleArray results = validation::tryMeCurveForwardRatesFromForwardDates(fromDateVector,
 			toDateVector,
 			inputFile["curveCollection"],
 			inputFile["curveIndex"],
@@ -99,7 +99,7 @@ namespace google_test
 			std::string oisCurveMarketObjectHandle = google_test::createLWOMarketDataObjectFromFileName(oisCurveMarketDataFile);
 			std::string stdCurveMarketObjectHandle = google_test::createLWOMarketDataObjectFromFileName(stdCurveMarketDataFile);
 
-			validation_api::tryMeLWOCurveDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
+			validation::tryMeLWOCurveDualBootstrap("", curveCollection, stdGenerator, oisGenerator, stdCurveMarketObjectHandle, oisCurveMarketObjectHandle);
 
 			//----------------------------------------------------------------------------------------
 			// Test forward rates for the OIS curve and the STD curve
@@ -108,7 +108,7 @@ namespace google_test
 
 			//----------------------------------------------------------------------------------------
 			// Flush the cache in preparation for a new set of curves
-			validation_api::tryMeUtilityClearEntityPool();
+			validation::tryMeUtilityClearEntityPool();
 		}
 	}
 

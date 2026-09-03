@@ -20,7 +20,7 @@ std::string mirGetNextCBDate(const std::string& centralBankId,
 		LAString cbId(centralBankId.c_str());
 		LADate baseDt(baseDate.c_str(),"YYYYMMDD");
 
-		LADate date = validation_api::tryMirGetNextCBDate(cbId, baseDt, strictlyAfter);
+		LADate date = validation::tryMirGetNextCBDate(cbId, baseDt, strictlyAfter);
 		
 		ret = date.stringWithFormat("YYYYMMDD").getCString();
 

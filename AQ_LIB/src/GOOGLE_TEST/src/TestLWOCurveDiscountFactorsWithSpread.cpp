@@ -160,7 +160,7 @@ namespace
 			}
 		}
 
-		validation_api::tryMeLWOCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
+		validation::tryMeLWOCurveMarketDataCreate( objectName, marketDataKeys, infoBlocks );
 	}
 
 	/* @brief			Builds Generator curve by invoking the tryMeLWOCurveCalibration() API.
@@ -177,7 +177,7 @@ namespace
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation_api::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -199,7 +199,7 @@ namespace
 		const double spread					= DFInputFileObj[ "spread"];
 		const std::string fixingTableName	= DFInputFileObj[ "fixingTableName" ];
 	
-		const DoubleVector calculatedDFs = validation_api::tryMeLWOCurveDiscountFactorsWithSpread( paymentDates, curveCollection, curveIndex, spread, fixingTableName );
+		const DoubleVector calculatedDFs = validation::tryMeLWOCurveDiscountFactorsWithSpread( paymentDates, curveCollection, curveIndex, spread, fixingTableName );
 		
         google_test::CheckTestResultsAndRebaseOnRequest( calculatedDFs, TEST_DIR, expectedResultsFile, tolerance );
 	
@@ -214,7 +214,7 @@ namespace
 		auto fixingDates   = fixingInputFileObj["fixingDates"];
 		auto fixingValues  = fixingInputFileObj["fixingValues"];
 		
-		const std::string fixingTableName = validation_api::tryMeLWOFixingTableCreate(tableName, currency, curveTenor, fixingDates, fixingValues);
+		const std::string fixingTableName = validation::tryMeLWOFixingTableCreate(tableName, currency, curveTenor, fixingDates, fixingValues);
 	}
 
 }

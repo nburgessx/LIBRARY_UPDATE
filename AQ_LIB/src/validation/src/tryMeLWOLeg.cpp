@@ -17,7 +17,7 @@ using etrading::decorateFilename;
 using etrading::Swap;
 using etrading::Schedule;
 
-namespace validation_api
+namespace validation
 {
  
 	/* @brief			validation interface for the meLWOLegCreate method

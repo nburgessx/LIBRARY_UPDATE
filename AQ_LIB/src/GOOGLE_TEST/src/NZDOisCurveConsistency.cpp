@@ -43,8 +43,8 @@ namespace google_test
     public:
 
         // Load Curves
-        const std::string curveObjectNZDOIS_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameNZDOIS, etrading::JSON );    
-		const std::string curveObjectNZD3ML_ = validation_api::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameNZD3ML, etrading::JSON );
+        const std::string curveObjectNZDOIS_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameNZDOIS, etrading::JSON );    
+		const std::string curveObjectNZD3ML_ = validation::tryMeLWOLoad( etrading::getGoogleTestFolder() + fileNameNZD3ML, etrading::JSON );
     };
 
     // Call Test Fixture Class
@@ -93,7 +93,7 @@ namespace google_test
 
             // Create the Swap & Calculate the Par Rate
             const std::string swapObject                 = google_test::createSwapCalibrationInstrument( swapName, swapGenerator, "20200420", oisSwapTerms[i] ); // Effective Date = 20200420
-            const double actualResult                    = validation_api::tryMeLWOSwapParRate( swapObject, curveLVB );
+            const double actualResult                    = validation::tryMeLWOSwapParRate( swapObject, curveLVB );
             const double expectedResult                  = oisSwapParRates[i];
 
             EXPECT_NEAR( actualResult, expectedResult, tolerance );

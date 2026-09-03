@@ -61,7 +61,7 @@ std::vector<double> mirCompound3(const std::vector<std::string>& startDates,
 		LAString firstOddDt(firstOddDate.c_str());
 		LAString lastOddDt(lastOddDate.c_str());
 
-		ret = validation_api::tryMirCompound3(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirCompound3(etrading::InitializeAQETrading::instance().dataInstance(),
 								startDateVec,
 								endDateVec,
 								cId,
@@ -143,7 +143,7 @@ double mirCompound3(const std::string& startDate,
 		LAString firstOddDt(firstOddDate.c_str());
 		LAString lastOddDt(lastOddDate.c_str());
 
-		ret = validation_api::tryMirCompound3(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirCompound3(etrading::InitializeAQETrading::instance().dataInstance(),
 								startDt,
 								endDt,
 								cId,

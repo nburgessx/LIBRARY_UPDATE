@@ -88,7 +88,7 @@ namespace google_test
         // Dummy Xccy FX Spot Rates
         DoubleVector dummyXccyFXSpotRates( TRADE_COUNT, 1.0 );
 
-        validation_api::tryMeProductSwapDelta( pillarNames,
+        validation::tryMeProductSwapDelta( pillarNames,
                                                headers,
                                                deltas,
                                                getDataInstance(),

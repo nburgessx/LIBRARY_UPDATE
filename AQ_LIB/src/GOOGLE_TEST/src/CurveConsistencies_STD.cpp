@@ -203,7 +203,7 @@ namespace google_test
                 int amount = strtol(maturityTenor.subString(0, maturityTenor.size() - 1).getCString(), &pFirstNonNumber, 10); // base 10 numbers
 				LADate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 				
-                const double calcParRate = validation_api::tryMirGetParRate4( etrading::InitializeAQETrading::instance().dataInstance(),
+                const double calcParRate = validation::tryMirGetParRate4( etrading::InitializeAQETrading::instance().dataInstance(),
 																               effectiveDate.stringWithFormat( "YYYYMMDD" ),
 																               maturity.stringWithFormat("YYYYMMDD"),
 																               curveCollection,
@@ -264,7 +264,7 @@ namespace google_test
 			}
 
 			// Flush the cache in preparation for a new set of curves
-			validation_api::tryMeUtilityClearEntityPool();
+			validation::tryMeUtilityClearEntityPool();
 		}
     }
 

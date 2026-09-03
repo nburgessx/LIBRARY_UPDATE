@@ -19,7 +19,7 @@
 #include "StructuredExceptionHandler.h"
 #include <sstream>
 
-namespace validation_api
+namespace validation
 {
     using etrading::CreateDataFile;
     using etrading::decorateFilename;

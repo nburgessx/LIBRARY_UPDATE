@@ -85,7 +85,7 @@ namespace
 		
 		std::string objectName = lwoCurveGeneratorName;
 
-		validation_api::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
+		validation::tryMeLWOCurveCalibrate(	objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	}	
 
 	/* @brief			Builds and Generator curve using the specified marketData and calibration filename
@@ -109,7 +109,7 @@ namespace
 		const bool isXccySwap					= creditDefaultSwapFileObj[ "isXccySwap" ];
 		const bool validateKeys					= creditDefaultSwapFileObj[ "validateKeys" ];
 		
-		validation_api::tryMeLWOSwapCreateFromGenerator( swapName, lwoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
+		validation::tryMeLWOSwapCreateFromGenerator( swapName, lwoswapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys );
 	}
 }
 
@@ -135,7 +135,7 @@ namespace google_test
 		std::string legName					= PVFileObj[ "legName"];
 		bool includeAccruedInterest			= PVFileObj[ "includeAccruedInterest" ];
 
-		const double calculatedPV = validation_api::tryMeLWOCreditDefaultSwapPVFromHazardRate( swapName, curveCollections, hazardRate, recoveryRate, legName.c_str(), includeAccruedInterest );
+		const double calculatedPV = validation::tryMeLWOCreditDefaultSwapPVFromHazardRate( swapName, curveCollections, hazardRate, recoveryRate, legName.c_str(), includeAccruedInterest );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedPV, TEST_DIR, CDS_EXPECTED_PV, pvTolerance );
@@ -158,7 +158,7 @@ namespace google_test
 		std::string legName					= riskyAnnuityFileObj[ "legName"];
 		bool includeAccruedInterest			= riskyAnnuityFileObj[ "includeAccruedInterest" ];
 
-		const double calculatedAnnuity = validation_api::tryMeLWOCreditDefaultSwapRiskyAnnuityFromHazardRate( swapName, curveCollection, hazardRate, recoveryRate, legName.c_str(), includeAccruedInterest );
+		const double calculatedAnnuity = validation::tryMeLWOCreditDefaultSwapRiskyAnnuityFromHazardRate( swapName, curveCollection, hazardRate, recoveryRate, legName.c_str(), includeAccruedInterest );
 
 		// Check the Test Results or Rebase
 		const double annuityTolerance = 0.01;  // The expected annuity is a large number ( 13e6) ; we can afford to relax tolerance ( to allow 64 bit test to pass ).
@@ -182,7 +182,7 @@ namespace google_test
 		std::string protectionLegName		= parSpreadFileObj[ "protectionLegName"];
 		bool includeAccruedInterest			= parSpreadFileObj[ "includeAccruedInterest" ];
 
-		const double calculatedParSpread = validation_api::tryMeLWOCreditDefaultSwapParSpreadFromHazardRate( swapName, curveCollections, hazardRate, recoveryRate, premiumLegName.c_str(), protectionLegName.c_str(), includeAccruedInterest );
+		const double calculatedParSpread = validation::tryMeLWOCreditDefaultSwapParSpreadFromHazardRate( swapName, curveCollections, hazardRate, recoveryRate, premiumLegName.c_str(), protectionLegName.c_str(), includeAccruedInterest );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedParSpread, TEST_DIR, CDS_EXPECTED_PAR_SPREAD, tolerance );
@@ -205,7 +205,7 @@ namespace google_test
 		std::string protectionLegName		= hazardRateFileObj[ "protectionLegName"];
 		bool includeAccruedInterest			= hazardRateFileObj[ "includeAccruedInterest" ];
 
-		const double calculatedHazardRate = validation_api::tryMeLWOCreditDefaultSwapHazardRateFromParSpread( swapName, curveCollections, parSpread, recoveryRate, premiumLegName.c_str(), protectionLegName.c_str(), includeAccruedInterest );
+		const double calculatedHazardRate = validation::tryMeLWOCreditDefaultSwapHazardRateFromParSpread( swapName, curveCollections, parSpread, recoveryRate, premiumLegName.c_str(), protectionLegName.c_str(), includeAccruedInterest );
 
 		// Check the Test Results or Rebase
         CheckTestResultsAndRebaseOnRequest( calculatedHazardRate, TEST_DIR, CDS_EXPECTED_HAZARD_RATE, tolerance );

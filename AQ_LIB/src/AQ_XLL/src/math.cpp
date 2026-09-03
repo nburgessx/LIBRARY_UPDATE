@@ -23,7 +23,7 @@ XLO_FUNC_START(aqMathBlackScholesPrice(
 
     CallOrPutEnum cp = etrading::toCallOrPutEnum(aq_xll::toNarrowString(callOrPut));
 
-    double result = validation_api::tryMeMathBlackScholesPrice(
+    double result = validation::tryMeMathBlackScholesPrice(
         cp,
         spot.get<double>(),
         strike.get<double>(),

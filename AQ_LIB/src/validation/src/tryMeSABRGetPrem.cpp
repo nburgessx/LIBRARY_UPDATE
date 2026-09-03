@@ -9,7 +9,7 @@
 
 using namespace etrading;
 
-namespace validation_api
+namespace validation
 {
 	/* @brief			validation interface for tryMeSABRGetPrem
 	*  @param [in]		expPoint		Expiry tenor

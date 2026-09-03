@@ -76,8 +76,8 @@ TEST(TestMeMathBlackScholes, UNIT_TestMeMathBlackScholesPrices_Sequential)
 
 	// Calculate Sequentially
 	const bool optimize = false;
-	const std::vector< double > callResults = validation_api::tryMeMathBlackScholesPrices(call, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
-	const std::vector< double > putResults = validation_api::tryMeMathBlackScholesPrices(put, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > callResults = validation::tryMeMathBlackScholesPrices(call, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > putResults = validation::tryMeMathBlackScholesPrices(put, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
 
 	// End and Fail test of Call and Put vector results are not the same
 	ASSERT_EQ(callResults.size(), putResults.size());
@@ -107,8 +107,8 @@ TEST(TestMeMathBlackScholes, UNIT_TestMeMathBlackScholesPrices_Parallel)
 
 	// Calculate in Parallel using OMP
 	const bool optimize = true;
-	const std::vector< double > callResults = validation_api::tryMeMathBlackScholesPrices(call, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
-	const std::vector< double > putResults = validation_api::tryMeMathBlackScholesPrices(put, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > callResults = validation::tryMeMathBlackScholesPrices(call, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > putResults = validation::tryMeMathBlackScholesPrices(put, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
 
 	// End and Fail test of Call and Put vector results are not the same
 	ASSERT_EQ(callResults.size(), putResults.size());
@@ -216,15 +216,15 @@ TEST(TestMeMathBlackScholes, UNIT_TestMeMathBlackScholesImpliedVols_Sequential)
 
 	// Calculate Prices Sequentially
 	const bool optimize = false;
-	const std::vector< double > callPrices = validation_api::tryMeMathBlackScholesPrices(call, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
-	const std::vector< double > putPrices = validation_api::tryMeMathBlackScholesPrices(put, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > callPrices = validation::tryMeMathBlackScholesPrices(call, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > putPrices = validation::tryMeMathBlackScholesPrices(put, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
 
 	// End and Fail test of Call and Put price results are not the same
 	ASSERT_EQ(callPrices.size(), putPrices.size());
 
 	// Calculate Implied Vols Sequentially
-	const std::vector< double > callImpliedVols = validation_api::tryMeMathBlackScholesImpliedVols(callPrices, call, spot, strike, timeToExpiry, rate, carry, shift, optimize);
-	const std::vector< double > putImpliedVols = validation_api::tryMeMathBlackScholesImpliedVols(putPrices, put, spot, strike, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > callImpliedVols = validation::tryMeMathBlackScholesImpliedVols(callPrices, call, spot, strike, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > putImpliedVols = validation::tryMeMathBlackScholesImpliedVols(putPrices, put, spot, strike, timeToExpiry, rate, carry, shift, optimize);
 
 	// End and Fail test of Call and Put implied vols results are not the same
 	ASSERT_EQ(callImpliedVols.size(), putImpliedVols.size());
@@ -255,15 +255,15 @@ TEST(TestMeMathBlackScholes, UNIT_TestMeMathBlackScholesImpliedVols_Parallel)
 
 	// Calculate Prices in Parallel using OMP
 	const bool optimize = true;
-	const std::vector< double > callPrices = validation_api::tryMeMathBlackScholesPrices(call, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
-	const std::vector< double > putPrices = validation_api::tryMeMathBlackScholesPrices(put, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > callPrices = validation::tryMeMathBlackScholesPrices(call, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > putPrices = validation::tryMeMathBlackScholesPrices(put, spot, strike, volatility, timeToExpiry, rate, carry, shift, optimize);
 
 	// End and Fail test of Call and Put price results are not the same
 	ASSERT_EQ(callPrices.size(), putPrices.size());
 
 	// Calculate Implied Vols in Parallel using OMP
-	const std::vector< double > callImpliedVols = validation_api::tryMeMathBlackScholesImpliedVols(callPrices, call, spot, strike, timeToExpiry, rate, carry, shift, optimize);
-	const std::vector< double > putImpliedVols = validation_api::tryMeMathBlackScholesImpliedVols(putPrices, put, spot, strike, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > callImpliedVols = validation::tryMeMathBlackScholesImpliedVols(callPrices, call, spot, strike, timeToExpiry, rate, carry, shift, optimize);
+	const std::vector< double > putImpliedVols = validation::tryMeMathBlackScholesImpliedVols(putPrices, put, spot, strike, timeToExpiry, rate, carry, shift, optimize);
 
 	// End and Fail test of Call and Put implied vols results are not the same
 	ASSERT_EQ(callImpliedVols.size(), putImpliedVols.size());

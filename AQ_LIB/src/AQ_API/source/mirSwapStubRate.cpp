@@ -80,7 +80,7 @@ double mirSwapStubRate(const std::string& EffDt,
 		LAStringVector curveTenors;
 		swig::buildStringVector(curveTenors, CurveTenors);
 
-		ret = validation_api::tryMirSwapStubRate(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirSwapStubRate(etrading::InitializeAQETrading::instance().dataInstance(),
 												effDt, 
 												mat, 
 												freq, 

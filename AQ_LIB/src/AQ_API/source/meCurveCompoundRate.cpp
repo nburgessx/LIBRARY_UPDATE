@@ -61,7 +61,7 @@ std::vector<double> meCurveCompoundRate(const std::vector<std::string>& startDat
 	LAString tmp_firstStubDate(firstStubDate.c_str());
 	LAString tmp_lastStubDate(lastStubDate.c_str());
 
-	ret = validation_api::tryMeCurveCompoundRate(
+	ret = validation::tryMeCurveCompoundRate(
 								tmp_startDates,
 								tmp_endDates,
 								tmp_curveCollection,
@@ -134,7 +134,7 @@ double meCurveCompoundRate(const std::string& startDate,
 	LAString tmp_firstStubDate(firstStubDate.c_str());
 	LAString tmp_lastStubDate(lastStubDate.c_str());
 
-	ret = validation_api::tryMeCurveCompoundRate(
+	ret = validation::tryMeCurveCompoundRate(
 							tmp_startDate,
 							tmp_endDate,
 							tmp_curveCollection,

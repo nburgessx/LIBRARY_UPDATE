@@ -13,8 +13,8 @@ TEST( TestUtilitiesSetupMLIB, UNIT_SetupMLIB_and_TearDownMLIB_CheckForSuccess )
 {
     // Check funtion does not fail
     // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively
-    EXPECT_NO_THROW( validation_api::trySetupMLIB( "", "", "" ));
-    EXPECT_NO_THROW( validation_api::tryTearDownMLIB() );
+    EXPECT_NO_THROW( validation::trySetupMLIB( "", "", "" ));
+    EXPECT_NO_THROW( validation::tryTearDownMLIB() );
 }
 
 
@@ -22,19 +22,19 @@ TEST( TestUtilitiesSetupMLIB, UNIT_SetupMLIB_and_TearDownMLIB_CheckForInvalidPat
 {
     // Check funtion correctly fails
     // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively
-    EXPECT_ANY_THROW( validation_api::trySetupMLIB( "invalid ir.properties filepath", "", "" ));
-    EXPECT_NO_THROW( validation_api::tryTearDownMLIB() );
+    EXPECT_ANY_THROW( validation::trySetupMLIB( "invalid ir.properties filepath", "", "" ));
+    EXPECT_NO_THROW( validation::tryTearDownMLIB() );
 
-    EXPECT_ANY_THROW( validation_api::trySetupMLIB( "", "invalid calendar filepath", "" ));
-    EXPECT_NO_THROW( validation_api::tryTearDownMLIB() );
+    EXPECT_ANY_THROW( validation::trySetupMLIB( "", "invalid calendar filepath", "" ));
+    EXPECT_NO_THROW( validation::tryTearDownMLIB() );
 
-    EXPECT_ANY_THROW( validation_api::trySetupMLIB( "", "", "Invalid central bank calendar filepath" ));
-    EXPECT_NO_THROW( validation_api::tryTearDownMLIB() );
+    EXPECT_ANY_THROW( validation::trySetupMLIB( "", "", "Invalid central bank calendar filepath" ));
+    EXPECT_NO_THROW( validation::tryTearDownMLIB() );
 
     // Check function correctly passes
     // Parameters: ir.properties filepath, calendar filepath and central bank calendar filepath respectively
-    EXPECT_NO_THROW( validation_api::trySetupMLIB( "", "", "" ));
-    EXPECT_NO_THROW( validation_api::tryTearDownMLIB() );
+    EXPECT_NO_THROW( validation::trySetupMLIB( "", "", "" ));
+    EXPECT_NO_THROW( validation::tryTearDownMLIB() );
 }
 
 TEST( TestParallelModeUsingOMP, UNIT_ParallelModeUsingOMP_EnableAndStatus_Methods )

@@ -70,7 +70,7 @@ namespace google_test
 			DateVector toDateVector		= testInputFile["toDates"];
 			
 			const DoubleArray results
-				= validation_api::tryMirGetForwardRate2(
+				= validation::tryMirGetForwardRate2(
 					  getDataInstance(),
 					  fromDateVector,
 					  toDateVector,
@@ -126,7 +126,7 @@ namespace google_test
 			DateVector toDateVector		= testInputFile["toDates"];
 			
 			const DoubleArray results
-				= validation_api::tryMirGetForwardRate2(
+				= validation::tryMirGetForwardRate2(
 					  getDataInstance(),
 					  fromDateVector,
 					  toDateVector,

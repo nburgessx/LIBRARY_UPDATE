@@ -3,7 +3,7 @@
 #include "LACoreTemplateType.h"
 #include "LADataInstance.h"
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			validation interface for the tryMirGetParRate4 method

@@ -103,7 +103,7 @@ double mirGetParRate4(const std::string& EffDt,
 		LAString tRollDay		(TRollDay.c_str());
 		LAString xRollDay		(XRollDay.c_str());
 		
-		ret = validation_api::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
 												effectiveDate, 
 												maturity, 
 												curveID, 
@@ -244,7 +244,7 @@ double mirGetParRate5(const std::string& EffDt,
 		LAString xRollDay		(XRollDay.c_str());
 		LAString tFixCalc		(TFixCalc.c_str());
 		
-		ret = validation_api::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
 												effectiveDate, 
 												maturity, 
 												curveID, 
@@ -342,7 +342,7 @@ double mirGetParRate3(const std::string& fromDate,
 		LAString foreCurName	(foreCurveName.c_str());
 		LAString dfCurName		(dfCurveName.c_str());
 		
-		ret = validation_api::tryMirGetParRate3(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirGetParRate3(etrading::InitializeAQETrading::instance().dataInstance(),
 												fromDt, 
 												toDt, 
 												curId, 

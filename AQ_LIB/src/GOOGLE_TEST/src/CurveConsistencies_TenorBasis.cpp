@@ -388,7 +388,7 @@ namespace google_test
 				LAString calendarFixed  = (isLeg1Spread == isLeg1Target) ? t_calendar : a_calendar;								
 
 				// Calculate 'against leg' par rate
-				const double a_ParRate = validation_api::tryMirGetParRate4(
+				const double a_ParRate = validation::tryMirGetParRate4(
 																   etrading::InitializeAQETrading::instance().dataInstance(),
 																   a_effectiveStart.stringWithFormat( "YYYYMMDD" ),
 																   maturity.stringWithFormat("YYYYMMDD"),
@@ -425,7 +425,7 @@ namespace google_test
 																   );
 
 				// Calculate 'target leg' par rate
-				const double t_ParRate = validation_api::tryMirGetParRate4(
+				const double t_ParRate = validation::tryMirGetParRate4(
 																   etrading::InitializeAQETrading::instance().dataInstance(),
 																   t_effectiveStart.stringWithFormat( "YYYYMMDD" ),
 																   maturity.stringWithFormat("YYYYMMDD"),
@@ -495,7 +495,7 @@ namespace google_test
 			}
 
 			// Flush the cache in preparation for a new set of curves
-			validation_api::tryMeUtilityClearEntityPool();	
+			validation::tryMeUtilityClearEntityPool();	
 		}		
     }
 

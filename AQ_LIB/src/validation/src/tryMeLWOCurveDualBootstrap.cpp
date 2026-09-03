@@ -19,7 +19,7 @@
 using etrading::CreateDataFile;
 using etrading::decorateFilename;
 
-namespace validation_api
+namespace validation
 {
     /* @brief Perform dual bootstrapping to build OIS and Swap curves
 	 * @param [in] objectName				The name of the dual-bootstrapped object

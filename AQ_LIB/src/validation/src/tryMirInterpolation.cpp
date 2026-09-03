@@ -12,7 +12,7 @@
 
 using etrading::CreateDataFile;
 
-namespace validation_api
+namespace validation
 {
 
     /* @brief			swig interface for mirInterpolation

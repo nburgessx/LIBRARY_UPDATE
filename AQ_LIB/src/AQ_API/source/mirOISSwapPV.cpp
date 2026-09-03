@@ -109,7 +109,7 @@ double mirOISSwapPV(double notional,
 		LAString tRollDay		(TRollDay.c_str());
 		LAString xRollDay		(XRollDay.c_str());
 
-		ret = validation_api::tryMirOISSwapPV(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirOISSwapPV(etrading::InitializeAQETrading::instance().dataInstance(),
 												notional,
 												payRec,
 												effectiveDate, 

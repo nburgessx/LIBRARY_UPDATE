@@ -28,7 +28,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity )
     m = 1; 
     tau = 1 / double( m );
     
-    double result1      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, noStub );
+    double result1      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, noStub );
     double df1          = 1.0 / ( 1 + r * tau );
     
     double annuity1     = N * tau * df1;
@@ -38,7 +38,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity )
     m = 2;
     tau = 1 / double( m );
     
-    double result2      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, noStub );
+    double result2      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, noStub );
     df1                 = 1.0 / ( 1 + r * tau );
     double df2          = df1 * df1;
     
@@ -49,7 +49,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity )
     m = 4;
     tau = 1 / double( m );
 
-    double result3      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, noStub );
+    double result3      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, noStub );
     df1                 = 1.0 / ( 1 + r * tau );
     df2                 = df1 * df1;
     double df3          = df1 * df1 * df1;
@@ -62,7 +62,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity )
     m = 12;
     tau = 1 / double( m );
 
-    double result4      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, noStub );
+    double result4      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, noStub );
     df1                 = 1.0 / ( 1 + r * tau );
     df2                 = df1 * df1;
     df3                 = df1 * df1 * df1;
@@ -103,7 +103,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity_WithShortStartSt
     m = 1;
     tau = 1 / double( m );
 
-    double result1      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, short_start );
+    double result1      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, short_start );
     double df_stub      = 1.0 / ( 1 + r * stub_tau );           // time 0.1
     double df1          = df_stub * 1.0 / ( 1 + r * tau );      // time 1.1
     double df2          = df1 * 1.0 / ( 1 + r * tau );          // time 2.1
@@ -115,7 +115,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity_WithShortStartSt
     tau = 1 / double( m );
     stub_tau = 0.1;
 
-    double result2      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, short_start );
+    double result2      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, short_start );
     df_stub             = 1.0 / ( 1 + r * stub_tau );           // time 0.1
     df1                 = df_stub * 1.0 / ( 1 + r * tau );      // time 0.6
     df2                 = df1 * 1.0 / ( 1 + r * tau );          // time 1.1
@@ -146,7 +146,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity_WithShortEndStub
     m = 1;
     tau = 1 / double( m );
 
-    double result1      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, short_end );
+    double result1      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, short_end );
     double df1          = 1.0 / ( 1 + r * tau );                // time 1.0
     double df2          = df1 * 1.0 / ( 1 + r * tau );          // time 2.0
     double df_stub      = df2 * 1.0 / ( 1 + r * stub_tau );     // time 2.1
@@ -158,7 +158,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity_WithShortEndStub
     tau = 1 / double( m );
     stub_tau = 0.1;
 
-    double result2      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, short_end );
+    double result2      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, short_end );
     df1                 = 1.0 / ( 1 + r * tau );                // time 0.5
     df2                 = df1 * 1.0 / ( 1 + r * tau );          // time 1.0
     double df3          = df2 * 1.0 / ( 1 + r * tau );          // time 1.5
@@ -189,7 +189,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity_WithLongStartStu
     m = 1;
     tau = 1 / double( m );
 
-    double result1      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, long_start );
+    double result1      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, long_start );
     double df_stub      = 1.0 / ( 1 + r * stub_tau );               // time 1.1
     double df1          = df_stub * 1.0 / ( 1 + r * tau );          // time 2.1
     double annuity1     = ( N * stub_tau * df_stub ) + ( N * tau * df1 );
@@ -200,7 +200,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity_WithLongStartStu
     tau = 1 / double( m );
     stub_tau = 0.6;
 
-    double result2      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, long_start );
+    double result2      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, long_start );
     df_stub             = 1.0 / ( 1 + r * stub_tau );               // time 0.7
     df1                 = df_stub * 1.0 / ( 1 + r * tau );          // time 1.1
     double df2          = df1 * 1.0 / ( 1 + r * tau );              // time 1.6
@@ -230,7 +230,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity_WithLongEndStub 
     m = 1;
     tau = 1 / double( m );
 
-    double result1      = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, long_end );
+    double result1      = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, long_end );
     double df1          = 1.0 / ( 1 + r * tau );                        // time 1.0
     double df_stub      = df1 * 1.0 / ( 1 + r * stub_tau );             // time 2.0
     double annuity1     = ( N * tau * df1 ) + ( N * stub_tau * df_stub );
@@ -241,7 +241,7 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestCashSettledAnnuity_WithLongEndStub 
     tau = 1 / double( m );
     stub_tau = 0.6;
 
-    double result2  = validation_api::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, long_end );
+    double result2  = validation::tryMeMathEuropeanIRSwaptionCashAnnuity( N, r, m, t, long_end );
     df1             = 1.0 / ( 1 + r * tau );                            // time 0.5
     double df2      = df1 * 1.0 / ( 1 + r * tau );                      // time 1.0
     double df3      = df2 * 1.0 / ( 1 + r * tau );                      // time 1.5
@@ -278,28 +278,28 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestMeMathEuropeanIRSwaptionPrice_LogNo
     // ------------------------------------
 
     // PAYER - ATM
-    const double payerSwaptionPrice1X5_ATM = validation_api::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strikeATM, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
+    const double payerSwaptionPrice1X5_ATM = validation::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strikeATM, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
     EXPECT_NEAR( payerSwaptionPrice1X5_ATM, 0.012953590993095357, priceTestPrecision );
 
     // RECEIVER - ATM
-    const double receiverSwaptionPrice1X5_ATM = validation_api::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strikeATM, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
+    const double receiverSwaptionPrice1X5_ATM = validation::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strikeATM, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
     EXPECT_NEAR( receiverSwaptionPrice1X5_ATM, 0.012953590993095357, priceTestPrecision );
 
     // ATM PAYER = ATM RECEIVER
     EXPECT_NEAR( payerSwaptionPrice1X5_ATM, receiverSwaptionPrice1X5_ATM, priceTestPrecision );
 
     // DEEP OTM
-    const double payerSwaptionPrice1X5_OTM = validation_api::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strike10PCT, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
+    const double payerSwaptionPrice1X5_OTM = validation::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strike10PCT, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
     EXPECT_NEAR( payerSwaptionPrice1X5_OTM, 0.0, priceTestPrecision );
     
-    const double receiverSwaptionPrice1X5_OTM = validation_api::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strike0PCT, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
+    const double receiverSwaptionPrice1X5_OTM = validation::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strike0PCT, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
     EXPECT_NEAR( receiverSwaptionPrice1X5_OTM, 0.0, priceTestPrecision );
 
     // DEEP ITM
-    const double payerSwaptionPrice1X5_ITM = validation_api::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strike0PCT, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
+    const double payerSwaptionPrice1X5_ITM = validation::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strike0PCT, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
     EXPECT_NEAR( payerSwaptionPrice1X5_ITM, 0.135000, priceTestPrecision );
     
-    const double receiverSwaptionPrice1X5_ITM = validation_api::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strike10PCT, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
+    const double receiverSwaptionPrice1X5_ITM = validation::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strike10PCT, lognormalVol, timeToExpiry, NO_VOL_SHIFT, LOGNORMAL );
     EXPECT_NEAR( receiverSwaptionPrice1X5_ITM, 0.365000, priceTestPrecision );
 }
 
@@ -330,27 +330,27 @@ TEST( TestMeMathEuropeanIRSwaption, UNIT_TestMeMathEuropeanIRSwaptionPrice_Norma
     // ------------------------------------
 
     // PAYER - ATM
-    const double payerSwaptionPrice1X5_ATM = validation_api::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strikeATM, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
+    const double payerSwaptionPrice1X5_ATM = validation::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strikeATM, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
     EXPECT_NEAR( payerSwaptionPrice1X5_ATM, 0.012107898210183482, priceTestPrecision );
 
     // RECEIVER - ATM
-    const double receiverSwaptionPrice1X5_ATM = validation_api::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strikeATM, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
+    const double receiverSwaptionPrice1X5_ATM = validation::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strikeATM, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
     EXPECT_NEAR( receiverSwaptionPrice1X5_ATM, 0.012107898210183482, priceTestPrecision );
 
     // ATM PAYER = ATM RECEIVER
     EXPECT_NEAR( payerSwaptionPrice1X5_ATM, receiverSwaptionPrice1X5_ATM, priceTestPrecision );
 
     // DEEP OTM
-    const double payerSwaptionPrice1X5_OTM = validation_api::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strike10PCT, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
+    const double payerSwaptionPrice1X5_OTM = validation::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strike10PCT, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
     EXPECT_NEAR( payerSwaptionPrice1X5_OTM, 0.0, priceTestPrecision );
     
-    const double receiverSwaptionPrice1X5_OTM = validation_api::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strike0PCT, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
+    const double receiverSwaptionPrice1X5_OTM = validation::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strike0PCT, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
     EXPECT_NEAR( receiverSwaptionPrice1X5_OTM, 0.0, priceTestPrecision );
 
     // DEEP ITM
-    const double payerSwaptionPrice1X5_ITM = validation_api::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strike0PCT, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
+    const double payerSwaptionPrice1X5_ITM = validation::tryMeMathEuropeanIRSwaptionPrice( PAYER, annuity, swapRate, strike0PCT, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
     EXPECT_NEAR( payerSwaptionPrice1X5_ITM, 0.135000, priceTestPrecision );
     
-    const double receiverSwaptionPrice1X5_ITM = validation_api::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strike10PCT, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
+    const double receiverSwaptionPrice1X5_ITM = validation::tryMeMathEuropeanIRSwaptionPrice( RECEIVER, annuity, swapRate, strike10PCT, normalVol, timeToExpiry, NO_VOL_SHIFT, NORMAL );
     EXPECT_NEAR( receiverSwaptionPrice1X5_ITM, 0.365000, priceTestPrecision );
 }

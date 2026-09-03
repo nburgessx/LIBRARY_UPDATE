@@ -20,7 +20,7 @@ double mirInterpolation(const std::vector<double>& array1,
 	{
 		
 		LAString interp(interpolation.c_str());
-		ret = validation_api::tryMirInterpolation(array1, array2, point, interp);
+		ret = validation::tryMirInterpolation(array1, array2, point, interp);
 
 
 	} 
