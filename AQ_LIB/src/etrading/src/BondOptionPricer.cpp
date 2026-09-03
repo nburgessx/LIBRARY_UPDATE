@@ -12,14 +12,14 @@ namespace etrading
 		const std::string volObjectName = getVolatilityModelFromValuationSettings(valuationSettingsLVB).getCString();
 		volProvider_ = getVolatility(volObjectName); // LWO Utility method to get the volatility object pointer from the LWO Cache
 
-		MLIB_REQUIRE(bondOption_ != nullptr, "Invalid Bond Optione trade.");
-		MLIB_REQUIRE(bondOption_->getCurrency() == volProvider_->currency(), "The Currency of Volatility and Option must be the same" );
+		AQ_REQUIRE(bondOption_ != nullptr, "Invalid Bond Optione trade.");
+		AQ_REQUIRE(bondOption_->getCurrency() == volProvider_->currency(), "The Currency of Volatility and Option must be the same" );
 
-		MLIB_REQUIRE(volProvider_ != nullptr, "Invalid Vol Model.");
-		MLIB_REQUIRE(volProvider_->volType() == LOGNORMAL_VOLATILITY , "Bond Option/Bond Future Option - only Lognormal Volatility is supported.");
+		AQ_REQUIRE(volProvider_ != nullptr, "Invalid Vol Model.");
+		AQ_REQUIRE(volProvider_->volType() == LOGNORMAL_VOLATILITY , "Bond Option/Bond Future Option - only Lognormal Volatility is supported.");
 
 		asOfDate_ = volProvider_->asOfDate();
-		MLIB_REQUIRE(asOfDate_ != LADate(), "Invalid AsOfDate.");
+		AQ_REQUIRE(asOfDate_ != LADate(), "Invalid AsOfDate.");
 
 		// Default to Settlement Date
 		valuationDate_ = valuationSettingsLVB.getCompulsoryValueAsDate(VALUATION_SETTING_KEYS::VALUATION_DATE, "ValuationSettings");
@@ -28,7 +28,7 @@ namespace etrading
 
 		pricingModel_ = toPricingModelEnum(valuationSettingsLVB.getCompulsoryValueAsString(VALUATION_SETTING_KEYS::PRICING_MODEL, "ValuationSettings"));
 
-		MLIB_REQUIRE(pricingModel_ == BLACK_MODEL, "Bond Option/Bond Future Option - only Black Model is supported.");
+		AQ_REQUIRE(pricingModel_ == BLACK_MODEL, "Bond Option/Bond Future Option - only Black Model is supported.");
 
 		// T in Option formula, is from asOfDate to ExpiryDate, using option dayCount
 		timeToExpiry_ = getYearFraction(asOfDate_, bondOption_->getExpiryDate(), bondOption_->getDayCount());
@@ -82,7 +82,7 @@ namespace etrading
 
 		auto underlyingBond = bondOption_->getUnderlying();
 
-		MLIB_REQUIRE(underlyingBond != nullptr, "The Underlying must be a Bond object, i.e. BondName cannot be empty.");
+		AQ_REQUIRE(underlyingBond != nullptr, "The Underlying must be a Bond object, i.e. BondName cannot be empty.");
 
 		const double bondFwdPrice = underlyingBond->forwardPrice(bondPrice, bondSettlementDate_, bondOption_->getUnderlyingDeliveryDate(), repoRate, repoDayCount);
 
@@ -297,7 +297,7 @@ namespace etrading
 	{
 
 		auto underlyingBond = bondOption_->getUnderlying();
-		MLIB_REQUIRE(underlyingBond != nullptr, "The Underlying must be a Bond object, i.e. BondName cannot be empty.");
+		AQ_REQUIRE(underlyingBond != nullptr, "The Underlying must be a Bond object, i.e. BondName cannot be empty.");
 
 		const double bondFwdPrice = underlyingBond->forwardPrice(bondSpotPrice, bondSettlementDate_, bondOption_->getUnderlyingDeliveryDate(), repoRate, repoDayCount);
 
@@ -313,7 +313,7 @@ namespace etrading
 	double BondOptionPricer::spotOptionRhoNumerical(const double& bondSpotPrice, const double& repoRate, const DayCountEnum& repoDayCount, const double& bump) const
 	{
 		auto underlyingBond = bondOption_->getUnderlying();
-		MLIB_REQUIRE(underlyingBond != nullptr, "The Underlying must be a Bond object, i.e. BondName cannot be empty.");
+		AQ_REQUIRE(underlyingBond != nullptr, "The Underlying must be a Bond object, i.e. BondName cannot be empty.");
 
 		const double bondFwdPrice = underlyingBond->forwardPrice(bondSpotPrice, bondSettlementDate_, bondOption_->getUnderlyingDeliveryDate(), repoRate, repoDayCount);
 		

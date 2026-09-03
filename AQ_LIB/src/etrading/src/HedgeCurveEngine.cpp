@@ -15,7 +15,7 @@
 #include "LADefinitions.h"
 #include "LADataReference.h"
 #include "LAMathDefine.h"
-#include "DataUtilities.h"  // For MLIB_TO_STRING macros
+#include "DataUtilities.h"  // For AQ_TO_STRING macros
 
 namespace
 {
@@ -145,7 +145,7 @@ namespace etrading
             tradeDateKeys[1] = IRS_KEY::MATURITY_DATE;
 
             StandardStringVector tradeDateValues(2);
-            tradeDateValues[0] = MLIB_TO_STRING_FROM_INT( LADateScheduleHelpers::getExcelDate(effectiveDate) );
+            tradeDateValues[0] = AQ_TO_STRING_FROM_INT( LADateScheduleHelpers::getExcelDate(effectiveDate) );
             tradeDateValues[1] = swapTenor.c_str();
 
             repriceSwapExpressionLVB_ = LabelValueBlock( repriceSwapExpressionLVB_, tradeDateKeys, tradeDateValues );

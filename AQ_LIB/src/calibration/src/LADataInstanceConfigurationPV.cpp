@@ -103,7 +103,7 @@ LADataInstanceConfigurationPV::setUp(void)
 	//set maxterm
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	LAString maxFileName = staticData.getStaticData(KEY_DEAL_MAXTERM_FILE);
-	if (maxFileName != MLIB_NO_DATA)
+	if (maxFileName != AQ_NO_DATA)
 	{
 		maxFileName = LAMarketData::getNumFileName(maxFileName, MLIBID);
 		MAFileAccessor file(maxFileName);
@@ -111,7 +111,7 @@ LADataInstanceConfigurationPV::setUp(void)
 		file.readAllData(MARKET_DATA_DELIMITER, dataMtx);
 		file.close();
 		const LAString asofStr = LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE);
-		if (asofStr == MLIB_NO_DATA)
+		if (asofStr == AQ_NO_DATA)
 		{
 			throw LACoreInvalidData("asofdate does not given in arguments", __FILE__, __LINE__);
 		}
@@ -173,7 +173,7 @@ LADataInstanceConfigurationPV::setUpMasters(LADataInstance &dataInstance) const
 	if (!reg)
 	{
 		LAString msg;
-		if (mSDEModels[0] == MLIB_NO_DATA)
+		if (mSDEModels[0] == AQ_NO_DATA)
 		{
 			msg = "IR SED model is not registered !!";
 		}
@@ -619,7 +619,7 @@ LADataInstanceConfigurationPV::loadEntities(LADataInstance &dataInstance) const
 							dh = &(e->add(header[col], att));
 						}
 
-						if (header[col] == CALIBRATION_DATA_VALUE && body[col] != FN_IR_PORTFOLIOVALUE_STR && valueFuncName != MLIB_NO_DATA)
+						if (header[col] == CALIBRATION_DATA_VALUE && body[col] != FN_IR_PORTFOLIOVALUE_STR && valueFuncName != AQ_NO_DATA)
 						{
 							dh->convertFromString(valueFuncName);
 						}
@@ -692,13 +692,13 @@ LADataInstanceConfigurationPV::loadEntities(LADataInstance &dataInstance) const
 		{
 			//get underlying
 			LAString underlying = calibProp.getStaticData(ccys[i] + STATIC_DATA_KEY_CALIB_IRSABR_UNDERLYING);
-			if (underlying == MLIB_NO_DATA) continue;
+			if (underlying == AQ_NO_DATA) continue;
 			underlying.toLower();
 			LAStringVector underlyings = underlying.toToken(':');
 			//get a flag to calibrate all grids
 			bool isAllGridsCalibrate = false;
 			LAString strIsAllCalib= calibProp.getStaticData(ccys[i] + STATIC_DATA_KEY_CALIB_IRSABR_ISALLGRIDSCALIBRATE);
-			if (strIsAllCalib != MLIB_NO_DATA)
+			if (strIsAllCalib != AQ_NO_DATA)
 			{
 				LADataBool tmpAttrBool;
 				tmpAttrBool.convertFromString(strIsAllCalib);
@@ -709,13 +709,13 @@ LADataInstanceConfigurationPV::loadEntities(LADataInstance &dataInstance) const
 			{
 				LAString key = ccys[i] + "." CONTEXT_KEY_DEAL_IRVOL + "." + underlyings[j];
 				const LAString calibTarget = LACoreDataService::getContext(key);
-				if (calibTarget != MLIB_NO_DATA && !isAllGridsCalibrate)
+				if (calibTarget != AQ_NO_DATA && !isAllGridsCalibrate)
 				{
 					continue;
 				}
 				if (isAllGridsCalibrate)
 				{
-					LACoreDataService::setContext(key, MLIB_NO_DATA);
+					LACoreDataService::setContext(key, AQ_NO_DATA);
 				}
 				else
 				{
@@ -1115,12 +1115,12 @@ void LADataInstanceConfigurationPV::insertContext(LAStringMatrix& m, LADataInsta
                 if(header->at(j) == PRICING_DATA_SETTLEDATE){
                     if(m[i][j]!="") continue;
                     const LAString& temp = LACoreDataService::getContext(ARG_KEY_SETTLEDATE);
-                    m[i][j] = temp==MLIB_NO_DATA ? LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE) : temp;
+                    m[i][j] = temp==AQ_NO_DATA ? LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE) : temp;
                     continue;
                 }
                 if(header->at(j) == PRICING_DATA_VALUEDATE){
                     const LAString& temp = LACoreDataService::getContext(ARG_KEY_VALUEDATE);
-                    m[i][j] = temp==MLIB_NO_DATA ? LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE) : temp;
+                    m[i][j] = temp==AQ_NO_DATA ? LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE) : temp;
                     continue;
                 }
                 if(header->at(j) == PRICING_DATA_PATHENTITY){
@@ -1152,7 +1152,7 @@ void LADataInstanceConfigurationPV::setupFundingChangeInfo(LADataInstance& dataI
     typedef map<LAString, LAString> FchMap;
 
     const LAString fname = LACoreDataService::getStaticDataManager().getStaticData().getStaticData(CONTEXT_KEY_FUNDINGCHANGE_FILE);
-    if(fname == MLIB_NO_DATA) return;
+    if(fname == AQ_NO_DATA) return;
     FchMap trade_fchinfo;
     MAFileAccessor fch_file(LAMarketData::getNumFileName(fname));
     LAStringMatrix mat; 

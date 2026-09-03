@@ -13,7 +13,7 @@
 #include "tryMeUtilityLVB.h"
 #include "LACoreTemplateType.h"
 #include "TypeUtilities.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			create a string matrix
@@ -24,7 +24,7 @@
 SWIG_STRINGMATRIX meUtilityLVBCreate( const std::vector<std::string>& keys,
                                       const std::vector<std::string>& values )
 {
-    MLIB_API_START
+    AQ_API_START
         
     // Call validation_api method
     std::vector<std::vector<std::string> > result = validation_api::tryMeUtilityLVBCreate( keys, values );
@@ -38,7 +38,7 @@ SWIG_STRINGMATRIX meUtilityLVBCreate( const std::vector<std::string>& keys,
 	return result;
 #endif
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			create a string matrix
@@ -53,12 +53,12 @@ SWIG_STRINGMATRIX meUtilityLVBCreate( const std::vector<std::string>& keys,
                                       const std::vector<std::string>& values1, 
                                       const std::vector<std::string>& values2 )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Call validation_api method
     std::vector<std::vector<std::string> > result = validation_api::tryMeUtilityLVBCreate( keys, values1, values2 );
 	return result;
-    MLIB_API_END
+    AQ_API_END
 }
 #endif
 
@@ -73,14 +73,14 @@ std::vector<std::vector<std::string> > meUtilityLVBAppendAndCreate( const std::v
                                                                     const std::string& key,
                                                                     const std::string& value )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Call validation_api method
     std::vector<std::vector<std::string> > resultLVB = LVB;
     validation_api::tryMeUtilityLVBAdd( resultLVB, key, value );
     return resultLVB;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			Add a key and value to an existing Label Value Block (LVB)
@@ -95,14 +95,14 @@ std::vector<std::vector<std::string> > meUtilityLVBAppendAndCreate( const std::v
                                                                     const std::string& value1,
                                                                     const std::string& value2 )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Call validation_api method
     std::vector<std::vector<std::string> > resultLVB = LVB;
     validation_api::tryMeUtilityLVBAdd( resultLVB, key, value1, value2 );
     return resultLVB;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			Add a key and value to an existing Label Value Block (LVB)
@@ -115,13 +115,13 @@ void meUtilityLVBAdd( std::vector<std::vector<std::string> >& LVB,
                       const std::string& key,
                       const std::string& value )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Call validation_api method
     validation_api::tryMeUtilityLVBAdd( LVB, key, value );
     return;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			Add a key and value to an existing Label Value Block (LVB)
@@ -136,11 +136,11 @@ void meUtilityLVBAdd( std::vector<std::vector<std::string> >& LVB,
                       const std::string& value1,
                       const std::string& value2 )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Call validation_api method
     validation_api::tryMeUtilityLVBAdd( LVB, key, value1, value2 );
     return;
     
-    MLIB_API_END
+    AQ_API_END
 }

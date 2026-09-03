@@ -75,7 +75,7 @@ namespace validation_api
         VALID_EXCEPTION_START
         
         // LWO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
-        MLIB_CLEAR_CURVE_RESULTS_CACHE
+        AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Ensure Curve Name Data is in uppercase
         // --------------------------------------
@@ -113,17 +113,17 @@ namespace validation_api
 
         if ( !curveConv.empty() && curveConv[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !oisConv.empty() && oisConv[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !oisRates.empty() && oisRates[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         // Remove the Curve from the Object Pool Curve Engine if it is registered
@@ -316,7 +316,7 @@ namespace validation_api
                 CreateDataFile file( decorateCurvename( "tryMeLWOCurveCalibrateOIS_outputs", curveCollection, staticDataTable ) );
                 file.write( "output", errString.c_str() );
             }
-            MLIB_THROW( errString );
+            AQ_THROW( errString );
         }
 
         VALID_EXCEPTION_END

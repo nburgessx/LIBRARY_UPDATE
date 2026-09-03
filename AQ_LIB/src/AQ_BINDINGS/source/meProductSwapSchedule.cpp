@@ -3,7 +3,7 @@
 
 #include "meProductSwapSchedule.h"
 #include "tryMeProductSwapSchedule.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meProductSwapSchedule
@@ -16,7 +16,7 @@ SWIG_STRINGMATRIX meProductSwapSchedule(bool showColumnHeaders,
 							            const SWIG_STRINGMATRIX & swapScheduleLVB, 
 							            bool validateKeys)
 {
-    MLIB_API_START
+    AQ_API_START
 
     // marshall all inputs
 	LAStringMatrix swapScheduleParams;
@@ -33,7 +33,7 @@ SWIG_STRINGMATRIX meProductSwapSchedule(bool showColumnHeaders,
 	SWIG_STRINGMATRIX ret = swig::fromVariantMatrixToMatrixOfString( variantMatrix );
 
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meProductSwapScheduleFixed
@@ -44,7 +44,7 @@ SWIG_STRINGMATRIX meProductSwapSchedule(bool showColumnHeaders,
 SWIG_STRINGMATRIX meProductSwapScheduleFixed( bool showColumnHeaders, 
 											  const SWIG_STRINGMATRIX& swapScheduleLVB )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // marshall all inputs
 	LAStringMatrix swapScheduleParams;
@@ -61,7 +61,7 @@ SWIG_STRINGMATRIX meProductSwapScheduleFixed( bool showColumnHeaders,
 	SWIG_STRINGMATRIX ret = swig::fromVariantMatrixToMatrixOfString( variantMatrix );
 
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meProductSwapScheduleFloat
@@ -72,7 +72,7 @@ SWIG_STRINGMATRIX meProductSwapScheduleFixed( bool showColumnHeaders,
 SWIG_STRINGMATRIX meProductSwapScheduleFloat( bool showColumnHeaders, 
 											  const SWIG_STRINGMATRIX& swapScheduleLVB )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // marshall all inputs
 	LAStringMatrix swapScheduleParams;
@@ -89,7 +89,7 @@ SWIG_STRINGMATRIX meProductSwapScheduleFloat( bool showColumnHeaders,
 	SWIG_STRINGMATRIX ret = swig::fromVariantMatrixToMatrixOfString( variantMatrix );
 
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -98,9 +98,9 @@ SWIG_STRINGMATRIX meProductSwapScheduleFloat( bool showColumnHeaders,
 */
 std::vector<std::string> meProductSwapScheduleLVBKeys()
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<std::string> ret;
     ret = validation_api::tryMeProductSwapScheduleLVBKeys();
     return ret;
-    MLIB_API_END
+    AQ_API_END
 }

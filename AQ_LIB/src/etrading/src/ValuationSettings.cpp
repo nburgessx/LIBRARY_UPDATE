@@ -11,8 +11,8 @@ namespace etrading
 	// Helper Struct to Valuation Settings Data & Validate if the Input String Matrix is LVB Compatible
 	ValuationSettingsData::ValuationSettingsData( const StandardStringMatrix & inputs )
 	{
-		MLIB_REQUIRE( !inputs.empty(),		"Invalid Valuation Settings: Input data is empty" )
-		MLIB_REQUIRE( !inputs[0].empty(),	"Invalid Valuation Settings: Input data is empty" )
+		AQ_REQUIRE( !inputs.empty(),		"Invalid Valuation Settings: Input data is empty" )
+		AQ_REQUIRE( !inputs[0].empty(),	"Invalid Valuation Settings: Input data is empty" )
 
 		rawData_			= inputs;
 		nRows_				= inputs.size();
@@ -52,14 +52,14 @@ namespace etrading
 		// LVB Case
 		// ---------------------
 
-		MLIB_REQUIRE( nCols_ == 2, "Invalid Valuation Settings: LabelValueBlock data must have exactly 2 columns" )
+		AQ_REQUIRE( nCols_ == 2, "Invalid Valuation Settings: LabelValueBlock data must have exactly 2 columns" )
 
 		// Check Input Matrix is Rectangular
 		size_t thisColSize = nCols_;
 		for( size_t thisRow = 0; thisRow < nRows_; ++thisRow )
 		{
 			thisColSize = rawData_[thisRow].size();
-			MLIB_REQUIRE( thisColSize == nCols_, "Invalid ValuationSettings: Only Rectangular Input Data is Permitted" )
+			AQ_REQUIRE( thisColSize == nCols_, "Invalid ValuationSettings: Only Rectangular Input Data is Permitted" )
 		}
 
 		isLVB_ = true;
@@ -109,7 +109,7 @@ namespace etrading
 			for( size_t i = 0; i < valuationSettings.nCols_; ++i )
 			{
 				const std::string thisCurveCollection = getCurveCollectionFromHandle( inputMatrix[i][0], allowCurveCollections );
-				MLIB_REQUIRE( thisCurveCollection == curveCollection, "Invalid Valuation Settings: single curve handle list must be part of the same curve collection and in the same currency" )
+				AQ_REQUIRE( thisCurveCollection == curveCollection, "Invalid Valuation Settings: single curve handle list must be part of the same curve collection and in the same currency" )
 			}
 
 			// Set Single Curve
@@ -141,7 +141,7 @@ namespace etrading
 		}
 
 		// We should not get here
-		MLIB_THROW( "Invalid Valuation Settings: Must be a CurveGroup, CurveHandle, CurveCollection or a LabelValueBlock (LVB)" )
+		AQ_THROW( "Invalid Valuation Settings: Must be a CurveGroup, CurveHandle, CurveCollection or a LabelValueBlock (LVB)" )
 	}
 
 	//Used by Swap,  legName is used in searching curveCollection, and the DEFAULT valuationDate is the found curveCollection's asOfDate
@@ -186,7 +186,7 @@ namespace etrading
 		else
 		{
 			// Check Curve AsOf Date Matches the ValuationDate Specified in the Valuation Settings
-			MLIB_REQUIRE(curveAsOfDate <= valuationDate_, "Invalid Curve Build Date: Curve build date cannot be greater than the valuation date in validation settings");
+			AQ_REQUIRE(curveAsOfDate <= valuationDate_, "Invalid Curve Build Date: Curve build date cannot be greater than the valuation date in validation settings");
 		}
 
 		volatilityModelName_ = getVolatilityModelFromValuationSettings(valuationSettingsLVB, "", false).getCString();
@@ -292,9 +292,9 @@ namespace etrading
 	// inputData - A (N X 2) string matrix representing a raw valuation settings LVB
 	StandardStringMatrix ValuationSettings::convertDataFromObjectsToCurveCollections( const StandardStringMatrix & valuationSettings, const bool allowCurveCollections )
 	{
-		MLIB_REQUIRE( !valuationSettings.empty(), "Invalid Valuation Settings: The valuation settings data is empty" )
-		MLIB_REQUIRE( !valuationSettings[0].empty(), "Invalid Valuation Settings: The valuation settings data is empty" )
-		MLIB_REQUIRE( valuationSettings[0].size() == 2, "Invalid Valuation Settings: Must have exactly 2 columns with a key and value" )
+		AQ_REQUIRE( !valuationSettings.empty(), "Invalid Valuation Settings: The valuation settings data is empty" )
+		AQ_REQUIRE( !valuationSettings[0].empty(), "Invalid Valuation Settings: The valuation settings data is empty" )
+		AQ_REQUIRE( valuationSettings[0].size() == 2, "Invalid Valuation Settings: Must have exactly 2 columns with a key and value" )
 
 		StandardStringMatrix modifiedValuationSettings = valuationSettings;
 		

@@ -14,16 +14,16 @@ namespace etrading
 
     double Convexity::toNormalVolFromLognormalVol( const double & lognormalVol, const double underlyingRate )
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( lognormalVol ), "Volatility Cannot be Negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate ), "Underlying Rate Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( lognormalVol ), "Volatility Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate ), "Underlying Rate Cannot be Negative" );
         const double normalVol = lognormalVol * underlyingRate;
         return normalVol;
     }
 
     double Convexity::toLognormalVolFromNormalVol( const double & normalVol, const double underlyingRate )
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( normalVol ), "Volatility Cannot be Negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate ), "Underlying Rate Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( normalVol ), "Volatility Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate ), "Underlying Rate Cannot be Negative" );
 
         const double lognormalVol = normalVol / underlyingRate;        
         return lognormalVol;
@@ -31,9 +31,9 @@ namespace etrading
 
     double Convexity::toShiftedLognormalVolFromLognormalVol( const double & lognormalVol, const double underlyingRate, const double shiftSize )
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( lognormalVol ), "Volatility Cannot be Negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate ), "Underlying Rate Cannot be Negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftSize ), "ShiftSize Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( lognormalVol ), "Volatility Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate ), "Underlying Rate Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftSize ), "ShiftSize Cannot be Negative" );
 
         const double shiftedLognormalVol = ( lognormalVol * underlyingRate ) / ( underlyingRate + shiftSize );
         return shiftedLognormalVol;
@@ -41,9 +41,9 @@ namespace etrading
 
     double Convexity::toLognormalVolFromShiftedLognormalVol( const double & shiftedLognormalVol, const double underlyingRate, const double shiftSize )
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftedLognormalVol ), "Volatility Cannot be Negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate ), "Underlying Rate Cannot be Negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftSize ), "ShiftSize Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftedLognormalVol ), "Volatility Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate ), "Underlying Rate Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftSize ), "ShiftSize Cannot be Negative" );
 
         const double lognormalVol = shiftedLognormalVol * ( underlyingRate + shiftSize ) / underlyingRate;
         return lognormalVol;
@@ -51,9 +51,9 @@ namespace etrading
     
     double Convexity::toShiftedLognormalVolFromNormalVol( const double & normalVol, const double underlyingRate, const double shiftSize )
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( normalVol ), "Volatility Cannot be Negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate + shiftSize ), "The Sum Total of the UnderlyingRate + ShiftSize Cannot be Negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftSize ), "ShiftSize Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( normalVol ), "Volatility Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate + shiftSize ), "The Sum Total of the UnderlyingRate + ShiftSize Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftSize ), "ShiftSize Cannot be Negative" );
 
         const double shiftedLognormalVol = normalVol / ( underlyingRate + shiftSize );
         return shiftedLognormalVol;
@@ -61,9 +61,9 @@ namespace etrading
     
     double Convexity::toNormalVolFromShiftedLognormalVol( const double & shiftedLognormalVol, const double underlyingRate, const double shiftSize )
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftedLognormalVol ), "Volatility Cannot be Negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate + shiftSize ), "The Sum Total of the UnderlyingRate + ShiftSize Cannot be Negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftSize ), "ShiftSize Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftedLognormalVol ), "Volatility Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( underlyingRate + shiftSize ), "The Sum Total of the UnderlyingRate + ShiftSize Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( shiftSize ), "ShiftSize Cannot be Negative" );
 
         const double normalVol = shiftedLognormalVol * ( underlyingRate + shiftSize );
         return normalVol;
@@ -85,9 +85,9 @@ namespace etrading
     VolatilityParameters::VolatilityParameters( const double & volatility, const VolatilityTypeEnum & volatilityType, const double & volatilityShiftSize )
         : volatility_(volatility), volatilityType_(volatilityType), volatilityShiftSize_(volatilityShiftSize)
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( volatility_ ), "Volatility Cannot be Negative" );
-        MLIB_REQUIRE( volatilityType_ != etrading::NONE_VOLATILITY, "Volatility Type not Provided" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( volatilityShiftSize ), "Volatility Shift Size Cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( volatility_ ), "Volatility Cannot be Negative" );
+        AQ_REQUIRE( volatilityType_ != etrading::NONE_VOLATILITY, "Volatility Type not Provided" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( volatilityShiftSize ), "Volatility Shift Size Cannot be Negative" );
     }
     
     // Copy Constructor
@@ -163,10 +163,10 @@ namespace etrading
     */
     double ConvexityModel::liborConvexityAdjustmentInArrears( const double & liborRate, const double & couponYearFraction, const double & timeToMaturity, const bool useHullApproximation ) const
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
         
         // Boundary Case: timeToMaturity < 0
-        if ( MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
+        if ( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
         {
             return 0.0;
         }
@@ -185,16 +185,16 @@ namespace etrading
     */
     double ConvexityModel::liborRateInArrears(const double & liborRate, const double & couponYearFraction, const double & timeToMaturity, const bool useHullApproximation ) const
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
 
         // Boundary Case: timeToMaturity < 0
-        if ( MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
+        if ( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
         {
             return liborRate;
         }
 
         // Boundary Case: liborRate = 0
-        if ( MLIB_IS_EQUAL_ZERO( liborRate ) )
+        if ( AQ_IS_EQUAL_ZERO( liborRate ) )
         {
             return 0.0;
         }
@@ -208,23 +208,23 @@ namespace etrading
         {
             case NONE_VOLATILITY:
             {
-                MLIB_THROW("Convexity Adjustment Error - No Volatility Type Provided")
+                AQ_THROW("Convexity Adjustment Error - No Volatility Type Provided")
                 break;
             }   
             case NORMAL_VOLATILITY:
             {
                 // Divide by Zero Guard
-                MLIB_REQUIRE( ! MLIB_IS_EQUAL_ZERO( liborRate * ( 1 + tau * liborRate ) ), "Convexity Adjustment Error - Didvide by Zero Error" );
+                AQ_REQUIRE( ! AQ_IS_EQUAL_ZERO( liborRate * ( 1 + tau * liborRate ) ), "Convexity Adjustment Error - Didvide by Zero Error" );
                 convexityAdjustedRate = liborRate * ( 1 + ( tau * vol * vol * timeToMaturity ) / ( liborRate * ( 1 + tau * liborRate ) ) );
                 break;
             }
             case LOGNORMAL_VOLATILITY:
             {
                 // Enforce Log Normal Requirement that State Variable must be Strictly Positive
-                MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO ( liborRate ), "Convexity Adjustment Error - Invalid VolatilityType: LOGNORMAL volatility invalid for negative Libor rates, Use NORMAL or SHIFTED_LOGNORMAL instead." );
+                AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO ( liborRate ), "Convexity Adjustment Error - Invalid VolatilityType: LOGNORMAL volatility invalid for negative Libor rates, Use NORMAL or SHIFTED_LOGNORMAL instead." );
 
                 // Divide by Zero Guard
-                MLIB_REQUIRE( ! MLIB_IS_EQUAL_ZERO( 1 + tau * liborRate ), "Convexity Adjustment Error - Didvide by Zero Error" );
+                AQ_REQUIRE( ! AQ_IS_EQUAL_ZERO( 1 + tau * liborRate ), "Convexity Adjustment Error - Didvide by Zero Error" );
                 
                 if ( useHullApproximation )
                 {
@@ -240,14 +240,14 @@ namespace etrading
             {
                 // Enforce Shifted-Lognormal Requirement that State Variable + Shift must be Strictly Positive
                 const double shiftedLiborRate = liborRate + shiftSize;
-                MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO ( shiftedLiborRate ), "Convexity Adjustment Error - Invalid Volatility ShiftSize. The Shifted-Lognormal ShiftSize is too small; LiborRate + ShiftSize cannot be negative." );
+                AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO ( shiftedLiborRate ), "Convexity Adjustment Error - Invalid Volatility ShiftSize. The Shifted-Lognormal ShiftSize is too small; LiborRate + ShiftSize cannot be negative." );
                 
                 // Variance Term Adjustment
                 const double shiftAdjustment = ( 2 * liborRate * shiftSize ) + ( shiftSize * shiftSize );
                 const double varianceFactor = std::exp( vol * vol * timeToMaturity ) + shiftAdjustment;
 
                 // Divide by Zero Guard
-                MLIB_REQUIRE( ! MLIB_IS_EQUAL_ZERO( 1 + tau * shiftedLiborRate ), "Convexity Adjustment Error - Didvide by Zero Error" );
+                AQ_REQUIRE( ! AQ_IS_EQUAL_ZERO( 1 + tau * shiftedLiborRate ), "Convexity Adjustment Error - Didvide by Zero Error" );
                 convexityAdjustedRate = shiftedLiborRate * ( 1 + tau * shiftedLiborRate * varianceFactor ) / ( 1 + tau * shiftedLiborRate );
 
                 // Adjust Convexity to be Relative to LiborRate instead of the Shifted-Libor Rate
@@ -257,7 +257,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Convexity Volatility Types - Only NORMAL, LOGNORMAL and SHIFTED_LOGNORMAL volatility supported")
+                AQ_THROW("Convexity Volatility Types - Only NORMAL, LOGNORMAL and SHIFTED_LOGNORMAL volatility supported")
             }
         }
         
@@ -276,10 +276,10 @@ namespace etrading
     */
     double ConvexityModel::liborConvexityAdjustmentForArbitraryFixingDate( const double & liborRate, const double & couponYearFraction, const double & timeToMaturity, const double & fixingDateYearFraction, const double & startDiscountFactor, const double & endDiscountFactor, const bool useHullApproximation ) const
     {
-       MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
+       AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
         
         // Boundary Case: timeToMaturity < 0
-        if ( MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
+        if ( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
         {
             return 0.0;
         }
@@ -300,16 +300,16 @@ namespace etrading
     */
     double ConvexityModel::liborRateForArbitraryFixingDate( const double & liborRate, const double & couponYearFraction, const double & timeToMaturity, const double & fixingDateYearFraction, const double & startDiscountFactor, const double & endDiscountFactor, const bool useHullApproximation ) const
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
 
         // Boundary Case: timeToMaturity < 0
-        if ( MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
+        if ( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
         {
             return liborRate;
         }
 
         // Boundary Case: liborRate = 0
-        if ( MLIB_IS_EQUAL_ZERO( liborRate ) )
+        if ( AQ_IS_EQUAL_ZERO( liborRate ) )
         {
             return 0.0;
         }
@@ -344,10 +344,10 @@ namespace etrading
     */
     double ConvexityModel::liborConvexityAdjustmentForArbitraryFixingDate( const double & liborRate, const double & couponYearFraction, const double & timeToMaturity, const double & fixingDateYearFraction, const double & impliedLiborOrStubRate, const bool useHullApproximation ) const
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
         
         // Boundary Case: timeToMaturity < 0
-        if ( MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
+        if ( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
         {
             return 0.0;
         }
@@ -367,16 +367,16 @@ namespace etrading
     */
     double ConvexityModel::liborRateForArbitraryFixingDate( const double & liborRate, const double & couponYearFraction, const double & timeToMaturity, const double & fixingDateYearFraction, const double & impliedLiborOrStubRate, const bool useHullApproximation ) const
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( couponYearFraction ), "Convexity Adjustment Error - CouponYearFraction cannot be Negative" );
 
         // Boundary Case: timeToMaturity < 0
-        if ( MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
+        if ( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( timeToMaturity ) )
         {
             return liborRate;
         }
 
         // Boundary Case: liborRate = 0
-        if ( MLIB_IS_EQUAL_ZERO( liborRate ) )
+        if ( AQ_IS_EQUAL_ZERO( liborRate ) )
         {
             return 0.0;
         }
@@ -401,23 +401,23 @@ namespace etrading
         {
             case NONE_VOLATILITY:
             {
-                MLIB_THROW("Convexity Adjustment Error - No Volatility Type Provided")
+                AQ_THROW("Convexity Adjustment Error - No Volatility Type Provided")
                 break;
             }   
             case NORMAL_VOLATILITY:
             {
                 // Divide by Zero Guard
-                MLIB_REQUIRE( ! MLIB_IS_EQUAL_ZERO( liborRate * ( 1 + LRMslopeParameter * liborRate ) ), "Convexity Adjustment Error - Didvide by Zero Error" );
+                AQ_REQUIRE( ! AQ_IS_EQUAL_ZERO( liborRate * ( 1 + LRMslopeParameter * liborRate ) ), "Convexity Adjustment Error - Didvide by Zero Error" );
                 convexityAdjustedRate = liborRate * ( 1 + ( LRMslopeParameter * vol * vol * timeToMaturity ) / ( liborRate * ( 1 + LRMslopeParameter * liborRate ) ) );
                 break;
             }
             case LOGNORMAL_VOLATILITY:
             {
                 // Enforce Log Normal Requirement that State Variable must be Strictly Positive
-                MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO ( liborRate ), "Convexity Adjustment Error - Invalid VolatilityType: LOGNORMAL volatility invalid for negative Libor rates, Use NORMAL or SHIFTED_LOGNORMAL instead." );
+                AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO ( liborRate ), "Convexity Adjustment Error - Invalid VolatilityType: LOGNORMAL volatility invalid for negative Libor rates, Use NORMAL or SHIFTED_LOGNORMAL instead." );
 
                 // Divide by Zero Guard
-                MLIB_REQUIRE( ! MLIB_IS_EQUAL_ZERO( 1 + LRMslopeParameter * liborRate ), "Convexity Adjustment Error - Didvide by Zero Error" );
+                AQ_REQUIRE( ! AQ_IS_EQUAL_ZERO( 1 + LRMslopeParameter * liborRate ), "Convexity Adjustment Error - Didvide by Zero Error" );
                 if ( useHullApproximation )
                 {
                     convexityAdjustedRate = liborRate * ( 1 + LRMslopeParameter * liborRate * ( 1 + vol * vol * timeToMaturity ) ) / ( 1 + LRMslopeParameter * liborRate );
@@ -432,14 +432,14 @@ namespace etrading
             {
                 // Enforce Shifted-Lognormal Requirement that State Variable + Shift must be Strictly Positive
                 const double shiftedLiborRate = liborRate + shiftSize;
-                MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO ( shiftedLiborRate ), "Convexity Adjustment Error - Invalid Volatility ShiftSize. The Shifted-Lognormal ShiftSize is too small; LiborRate + ShiftSize cannot be negative." );
+                AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO ( shiftedLiborRate ), "Convexity Adjustment Error - Invalid Volatility ShiftSize. The Shifted-Lognormal ShiftSize is too small; LiborRate + ShiftSize cannot be negative." );
                 
                 // Variance Term Adjustment
                 const double shiftAdjustment = ( 2 * liborRate * shiftSize ) + ( shiftSize * shiftSize );
                 const double varianceFactor = std::exp( vol * vol * timeToMaturity ) + shiftAdjustment;
 
                 // Divide by Zero Guard
-                MLIB_REQUIRE( ! MLIB_IS_EQUAL_ZERO( 1 + LRMslopeParameter * shiftedLiborRate ), "Convexity Adjustment Error - Didvide by Zero Error" );
+                AQ_REQUIRE( ! AQ_IS_EQUAL_ZERO( 1 + LRMslopeParameter * shiftedLiborRate ), "Convexity Adjustment Error - Didvide by Zero Error" );
                 convexityAdjustedRate = shiftedLiborRate * ( 1 + LRMslopeParameter * shiftedLiborRate * varianceFactor ) / ( 1 + LRMslopeParameter * shiftedLiborRate );
                 
                 // Adjust Convexity to be Relative to LiborRate instead of the Shifted-Libor Rate
@@ -449,7 +449,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Convexity Volatility Types - Only NORMAL, LOGNORMAL and SHIFTED_LOGNORMAL volatility supported")
+                AQ_THROW("Convexity Volatility Types - Only NORMAL, LOGNORMAL and SHIFTED_LOGNORMAL volatility supported")
             }
         }
         
@@ -462,14 +462,14 @@ namespace etrading
     // Swap Convexity Adjustment for Arbitrary Time Adjustment
     double ConvexityModel::swapConvexityAdjustmentForArbitraryFixingDate( const double & swapRate, const double & couponYearFraction, const double & timeToMaturity ) const
     {
-        MLIB_THROW("Not supported - To be implemented");
+        AQ_THROW("Not supported - To be implemented");
         return 0.0;
     }
     
     // Swap Convexity Adjustment for Arbitrary Time Adjustment
     double ConvexityModel::swapRateForArbitraryFixingDate( const double & swapRate, const double & couponYearFraction, const double & timeToMaturity ) const
     {
-        MLIB_THROW("Not supported - To be implemented");
+        AQ_THROW("Not supported - To be implemented");
         return 0.0;
     }
 

@@ -172,18 +172,18 @@ namespace etrading
 	{
 
 		std::shared_ptr<CurveResults> curveResults = CurveResultsContainer::getInstance().getCurveResults(curveCollection, curveIndex );
-		MLIB_REQUIRE( curveResults != nullptr, "CurveResults missing for curveCollection: " << curveCollection << " and curveIndex: " << curveIndex );
+		AQ_REQUIRE( curveResults != nullptr, "CurveResults missing for curveCollection: " << curveCollection << " and curveIndex: " << curveIndex );
 
 		std::shared_ptr<DiscountFactorResults> discountFactorResults = curveResults->discountFactorResults();
-		MLIB_REQUIRE( discountFactorResults != nullptr, "DiscountFactor results missing for curveCollection: " << curveCollection << " and curveIndex: " << curveIndex );
+		AQ_REQUIRE( discountFactorResults != nullptr, "DiscountFactor results missing for curveCollection: " << curveCollection << " and curveIndex: " << curveIndex );
 
 		VectorDate discountFactorResultsPaymentDates = discountFactorResults->paymentDates();
-		MLIB_REQUIRE( discountFactorResultsPaymentDates.size() > 0, "No payment date pillar points in curve." );
+		AQ_REQUIRE( discountFactorResultsPaymentDates.size() > 0, "No payment date pillar points in curve." );
 
 		// Read curve description parameters from curveResults object
 		const std::shared_ptr<CurveDescription> curveDescription = curveResults->curveDescription();
 		CurveTypeEnum curveType = curveDescription->curveTypeEnum();
-		MLIB_REQUIRE( curveType == SWAP_CURVETYPE || curveType == TENORBASIS_CURVETYPE, "Only Swap / TenorBasis Libor curves are currently supported for the zero-discount margin calculation." );
+		AQ_REQUIRE( curveType == SWAP_CURVETYPE || curveType == TENORBASIS_CURVETYPE, "Only Swap / TenorBasis Libor curves are currently supported for the zero-discount margin calculation." );
 
 		curveTenorEnum                   = curveDescription->curveTenorEnum();
 		const std::string curveTenor     = curveDescription->curveTenor();
@@ -300,8 +300,8 @@ namespace etrading
 		{
 			const LAString& curveCurrency = getCurveCurrency( curveCollection );
 
-			MLIB_REQUIRE( fixingTable->getCurrency() == toCCYEnum(curveCurrency.getCString() ), "FixingTable currency does not match the forecast curve currency." );
-			MLIB_REQUIRE( fixingTable->getCurveTenor() == curveTenorEnum, "FixingTable curve frequency tenor does not match the curve frequency tenor." );
+			AQ_REQUIRE( fixingTable->getCurrency() == toCCYEnum(curveCurrency.getCString() ), "FixingTable currency does not match the forecast curve currency." );
+			AQ_REQUIRE( fixingTable->getCurveTenor() == curveTenorEnum, "FixingTable curve frequency tenor does not match the curve frequency tenor." );
 		}
 
 		LAPriceDataDayCount priceDataDayCount;
@@ -325,7 +325,7 @@ namespace etrading
 			double impliedFwdRate = 0.0;
 			if ( fixingStartDate < asOfDate )
 			{
-				MLIB_REQUIRE( fixingTable != nullptr, "Fixing Table required for fixing date " << fixingStartDate.convertDateToString() );
+				AQ_REQUIRE( fixingTable != nullptr, "Fixing Table required for fixing date " << fixingStartDate.convertDateToString() );
 				impliedFwdRate = fixingTable->getFixingValue( toGregorianDateFromLADate( fixingStartDate ) );
 			}
 			else
@@ -350,7 +350,7 @@ namespace etrading
 			const double returnWithSpread = LAPriceDataConvention::rateToRet( forwardRatePlusSpread, yearFraction, convention );
 
 			// Guard against division by zero
-			MLIB_REQUIRE(returnWithSpread != 0.0, "Period return is zero at fixing date: " << fixingStartDate.convertDateToString() );
+			AQ_REQUIRE(returnWithSpread != 0.0, "Period return is zero at fixing date: " << fixingStartDate.convertDateToString() );
 
 			const double discountFactorWithSpread = prevDiscountFactorWithSpread / returnWithSpread;
 			scheduleDiscountFactors[i] = discountFactorWithSpread;
@@ -392,7 +392,7 @@ namespace etrading
 										  const double& spread,
 										  const std::string& fixingTableName )
     {
-        MLIB_REQUIRE( paymentDates.size() > 0, "Unable to evaluate Discount Factors - No payment dates have been provided")
+        AQ_REQUIRE( paymentDates.size() > 0, "Unable to evaluate Discount Factors - No payment dates have been provided")
         
         LAString interp;
         LAString bdAdj( "NO_CHANGE" );
@@ -415,7 +415,7 @@ namespace etrading
 			discountFactors = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates, getDataInstance(), curveCollection, getDiscountFactorDayCount(), bdAdj, cal, interp, isBasisFlagForDiscountFactor(), curveIndex );
 		}
 
-		MLIB_REQUIRE( discountFactors.size() == paymentDates.size(), "Discount Factor Results should be same size as Payment Dates." );
+		AQ_REQUIRE( discountFactors.size() == paymentDates.size(), "Discount Factor Results should be same size as Payment Dates." );
 
 		// Check if a spread parameter has been provided. The default parameter value = 0.0
 		if ( spread != 0.0 )
@@ -425,7 +425,7 @@ namespace etrading
 			 * This follows the approach in the paper "Credit Spreads Explained"
 			 * by Dominic O'Kane and Saurav Sen p15 Zero Discount Margin method.
 			 */
-			MLIB_REQUIRE( isEnabledCurveResults && doesExistDiscountFactors, "CurveResults are not enabled. Spread Discount Margin calculation only supported with CurveResults enabled." );
+			AQ_REQUIRE( isEnabledCurveResults && doesExistDiscountFactors, "CurveResults are not enabled. Spread Discount Margin calculation only supported with CurveResults enabled." );
 
 			discountFactors = calculateDiscountFactorsUsingZeroDiscountMarginApproach( paymentDates, curveCollection.getCString(), curveIndex.getCString(), spread, fixingTableName );
 		}
@@ -661,8 +661,8 @@ namespace etrading
 													   const BooleanEnum& fwdInter,
 													   const BusinessDayAdjustmentEnum& businessDayAdj)
     {
-		MLIB_REQUIRE( fromDates.size() > 0, "Forward Rate Error: Fixing Start Dates are empty")
-		MLIB_REQUIRE( fromDates.size() == toDates.size(), "Forward Rate Error: Fixing Start and End Dates must be the same size")
+		AQ_REQUIRE( fromDates.size() > 0, "Forward Rate Error: Fixing Start Dates are empty")
+		AQ_REQUIRE( fromDates.size() == toDates.size(), "Forward Rate Error: Fixing Start and End Dates must be the same size")
         
 		// Get Curve Conventions
 		LAString dayC		= "";
@@ -811,7 +811,7 @@ namespace etrading
 		{
 		case IN_ARREARS_FIXING:
 		{
-			MLIB_REQUIRE(volObject, "Volatility Model is Missing")
+			AQ_REQUIRE(volObject, "Volatility Model is Missing")
 				
 			bool useHullApproximation = (convexityMethod == HULL_APPROX_CONVEXITY);
 
@@ -833,7 +833,7 @@ namespace etrading
 		}
 		case ARBITRARY_FIXING:
 		{
-			MLIB_REQUIRE(volObject, "Volatility Model is Missing")
+			AQ_REQUIRE(volObject, "Volatility Model is Missing")
 				
 			bool useHullApproximation = (convexityMethod == HULL_APPROX_CONVEXITY);
 
@@ -845,7 +845,7 @@ namespace etrading
 
 			// Discount factors from OIS CURVE
 			auto discountFactors = getCurveDiscountFactors(boost::assign::list_of(fixingDate)(fixingEndDate), curveCollection.c_str(), curveIndex.c_str());
-			MLIB_REQUIRE(discountFactors.size() == 2, "Two discountFactors required: FixingStartDate and FixingEndDate.")
+			AQ_REQUIRE(discountFactors.size() == 2, "Two discountFactors required: FixingStartDate and FixingEndDate.")
 
 			ConvexityModel convexityModel(Convexity::VolatilityParameters(volObject->vol(), volObject->volType(), volObject->shiftSize()));
 
@@ -858,7 +858,7 @@ namespace etrading
 			break;
 		}
 		default:
-			MLIB_THROW("Invalid fixing type. Must be 'ADVANCE', 'ARREARS', or 'ARBITRARY_FIXING'");
+			AQ_THROW("Invalid fixing type. Must be 'ADVANCE', 'ARREARS', or 'ARBITRARY_FIXING'");
 			break;
 		}
 
@@ -1296,7 +1296,7 @@ namespace etrading
 
         if ( rollConvention.size() != 0 )
         {
-            MLIB_REQUIRE( boost::iequals( rollConvention.c_str(), "IMM" ) || boost::iequals( rollConvention.c_str(), "EOM" ), "Invalid RollConvention: Must be IMM, EOM or blank." )
+            AQ_REQUIRE( boost::iequals( rollConvention.c_str(), "IMM" ) || boost::iequals( rollConvention.c_str(), "EOM" ), "Invalid RollConvention: Must be IMM, EOM or blank." )
         }
 
 		//Handle tenor input as number, e.g. tenor 1, 2 same as 1D, 2D.
@@ -1306,7 +1306,7 @@ namespace etrading
 			tenorToUse = tenor + "D";
 		}
 
-        MLIB_TRY( result = LADateScheduleHelpers::getMultiDate( startDates, tenorToUse, businessDayAdj, calendar, rollConvention.size() == 0 ? nullptr : &rollConvention ) , "Invalid Date/Tenor Input: Invalid Date, TenorString (no spaces), Calendar or BusinessDayAdj" );
+        AQ_TRY( result = LADateScheduleHelpers::getMultiDate( startDates, tenorToUse, businessDayAdj, calendar, rollConvention.size() == 0 ? nullptr : &rollConvention ) , "Invalid Date/Tenor Input: Invalid Date, TenorString (no spaces), Calendar or BusinessDayAdj" );
         return result;
     }
 
@@ -1336,10 +1336,10 @@ namespace etrading
 		// Note: The multi-date method takes curveAsOfDate as a vector and returns a vector
         
 		// 1.	Adjust the AsOfDate using the fixing lag and conventions
-		MLIB_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,asOfDate), fixingLag, fixingBusDayAdj, fixingCalendar, nullptr /* rollConvenction */ )[0] , "Invalid Shifted Spot Date: Invalid Input - AsOfDate, FixingLag, FixingCalendar or FixingBusDayAdj" );
+		AQ_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,asOfDate), fixingLag, fixingBusDayAdj, fixingCalendar, nullptr /* rollConvenction */ )[0] , "Invalid Shifted Spot Date: Invalid Input - AsOfDate, FixingLag, FixingCalendar or FixingBusDayAdj" );
         
 		// 2.	Adjust the Result from (1) using the payment lag and conventions
-		MLIB_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,spotDate), paymentLag, paymentBusDayAdj, paymentCalendar, nullptr /* rollConvenction */ )[0] , "Invalid Shifted Spot Date: Invalid Input - PaymentLag, PaymentCalendar or PaymentBusDayAdj" );
+		AQ_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,spotDate), paymentLag, paymentBusDayAdj, paymentCalendar, nullptr /* rollConvenction */ )[0] , "Invalid Shifted Spot Date: Invalid Input - PaymentLag, PaymentCalendar or PaymentBusDayAdj" );
 		return spotDate;
     }
 
@@ -1362,17 +1362,17 @@ namespace etrading
         LADate spotDate;
 		if ( rollConvention.size() != 0 )
         {
-            MLIB_REQUIRE( boost::iequals( rollConvention.c_str(), "IMM" ) || boost::iequals( rollConvention.c_str(), "EOM" ), "Invalid RollConvention: Must be IMM, EOM or blank." )
+            AQ_REQUIRE( boost::iequals( rollConvention.c_str(), "IMM" ) || boost::iequals( rollConvention.c_str(), "EOM" ), "Invalid RollConvention: Must be IMM, EOM or blank." )
         }
 
 		// *** The Rule *** Adjust the curve asOfDate by the spot lag on fixing calendar then at roll to next payment calendar business day 
 		// Note: The multi-date method takes curveAsOfDate as a vector and returns a vector
         
 		// 1.	Adjust curveAsOfDate by spot Lag with fixing calendar
-		MLIB_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,curveAsOfDate), spotLag, businessDayAdj, fixingCalendar, rollConvention.size() == 0 ? nullptr : &rollConvention )[0] , "Invalid Curve Spot Date: Invalid Input - CurveAsOfDate, SpotLag, FixingCalendar or BusinessDayAdj" );
+		AQ_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,curveAsOfDate), spotLag, businessDayAdj, fixingCalendar, rollConvention.size() == 0 ? nullptr : &rollConvention )[0] , "Invalid Curve Spot Date: Invalid Input - CurveAsOfDate, SpotLag, FixingCalendar or BusinessDayAdj" );
         
 		// 2.	Move adjust the spot date for payment calendar holidays
-		MLIB_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,spotDate), "0D", businessDayAdj, paymentCalendar, rollConvention.size() == 0 ? nullptr : &rollConvention )[0] , "Invalid Curve Spot Date: Invalid Input: PaymentCalendar" );
+		AQ_TRY( spotDate = LADateScheduleHelpers::getMultiDate( DateVector(1,spotDate), "0D", businessDayAdj, paymentCalendar, rollConvention.size() == 0 ? nullptr : &rollConvention )[0] , "Invalid Curve Spot Date: Invalid Input: PaymentCalendar" );
 		return spotDate;
     }
 
@@ -1781,8 +1781,8 @@ namespace etrading
 						const double joinXValue ) 
     {
      
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
 		return LAMathInterpolationUtilities::interpolate( xValues, yValues, xPoint, interpolationMethod, joinXValue);
     }
 
@@ -1793,8 +1793,8 @@ namespace etrading
 							  const InterpolationEnum& interpolationMethod,
 							  const double joinXValue )
 	{
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
 		return LAMathInterpolationUtilities::interpolate( xValues, yValues, xPoints, interpolationMethod, joinXValue);
 	}
 
@@ -1812,8 +1812,8 @@ namespace etrading
                           const InterpolationEnum& interpolationMethod,
 						  const double joinXValue ) 
     {
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
 		return LAMathInterpolationUtilities::differentiate( xValues, yValues, xPoint, interpolationMethod, joinXValue );
     }
 
@@ -1831,8 +1831,8 @@ namespace etrading
 							    const InterpolationEnum& interpolationMethod,
 							    const double joinXValue )
 	{
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
 		return LAMathInterpolationUtilities::differentiate( xValues, yValues, xPoints, interpolationMethod, joinXValue );
 	}
 
@@ -1854,8 +1854,8 @@ namespace etrading
 						  const CompoundingFrequencyEnum & compoundFrequency,
 						  const double joinXValue )
 	{
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
 		
 		// Native derivatives will be in the curve Act365 daycount basis
 		const double derivativeAct365 = LAMathInterpolationUtilities::differentiate( xValues, yValues, fromXPoint, toXPoint, interpolationMethod, joinXValue );
@@ -1883,8 +1883,8 @@ namespace etrading
 								const CompoundingFrequencyEnum & compoundFrequency,
 								const double joinXValue )
 	{
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
 		
 		// Native derivatives will be in the curve Act365 daycount basis
 		const DoubleVector derivativesAct365 = LAMathInterpolationUtilities::differentiate( xValues, yValues, fromXPoints, toXPoints, interpolationMethod, joinXValue );
@@ -1916,11 +1916,11 @@ namespace etrading
 					  const CompoundingFrequencyEnum & compoundFrequency,
 					  const double joinXValue ) 
     {
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
 
 		// Boundary Condition
-		if ( MLIB_IS_EQUAL( lowerBound, upperBound ) )
+		if ( AQ_IS_EQUAL( lowerBound, upperBound ) )
 		{
 			return 0.0;
 		}
@@ -1971,7 +1971,7 @@ namespace etrading
 			}
 			default:
 			{
-				MLIB_THROW( "Integration Error: Invalid Interpolation Daycount Transformation" )
+				AQ_THROW( "Integration Error: Invalid Interpolation Daycount Transformation" )
 			}
 		}
     }
@@ -1987,8 +1987,8 @@ namespace etrading
 							const CompoundingFrequencyEnum & compoundFrequency,
 							const double joinXValue )
 	{
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Interpolation x and y vectors must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Interpolation x and y data is empty" )
 
 		// Set Daycount Adjustment
 		// The different choices were for performing tests, generally transformation of outputs is the required choice.
@@ -2045,7 +2045,7 @@ namespace etrading
 			}
 			default:
 			{
-				MLIB_THROW( "Integration Error: Invalid Interpolation Daycount Transformation" )
+				AQ_THROW( "Integration Error: Invalid Interpolation Daycount Transformation" )
 			}
 		}
 	}
@@ -2161,8 +2161,8 @@ namespace etrading
                                                                           const LAString& curveCollection,
                                                                           const LAString& curveIndex )
     {
-        MLIB_REQUIRE( fromDates.size() > 0, "Discount Factor 'fromDates' cannot be empty" )
-        MLIB_REQUIRE( fromDates.size() == yearFractions.size(), "Inconsistent Discount Factor Parmaeters - The number of discount factor 'fromDates' must match the number of 'yearFractions'" )
+        AQ_REQUIRE( fromDates.size() > 0, "Discount Factor 'fromDates' cannot be empty" )
+        AQ_REQUIRE( fromDates.size() == yearFractions.size(), "Inconsistent Discount Factor Parmaeters - The number of discount factor 'fromDates' must match the number of 'yearFractions'" )
 
         LAString curIndex( curveIndex );
         LAString interp;
@@ -2192,7 +2192,7 @@ namespace etrading
             discountFactors = etrading::LACurveForwardRateHelpers::getMultiDF( fromDates, yearFractionsAct365, etrading::getDataInstance(), curveCollection, getDiscountFactorDayCount(), bdAdj, cal, interp, isBasisFlagForDiscountFactor(), curIndex );
         }
 
-        MLIB_REQUIRE( discountFactors.size() > 0, "Discount Factor Results are Empty" )
+        AQ_REQUIRE( discountFactors.size() > 0, "Discount Factor Results are Empty" )
         return discountFactors;
     }
 
@@ -2209,7 +2209,7 @@ namespace etrading
                                                            const LAString& curveCollection,
                                                            const LAString& curveIndex )
     {
-        MLIB_REQUIRE( yearFractions.size() > 0, "Discount Factor 'yearFractions' cannot be empty" )
+        AQ_REQUIRE( yearFractions.size() > 0, "Discount Factor 'yearFractions' cannot be empty" )
 
         LAString curIndex( curveIndex );
         LAString interp;
@@ -2239,7 +2239,7 @@ namespace etrading
             discountFactors = etrading::LACurveForwardRateHelpers::getMultiDF( yearFractionsAct365, etrading::getDataInstance(), curveCollection, getDiscountFactorDayCount(), interp, isBasisFlagForDiscountFactor(), curIndex );
         }
 
-        MLIB_REQUIRE( discountFactors.size() > 0, "Discount Factor Results are Empty" )
+        AQ_REQUIRE( discountFactors.size() > 0, "Discount Factor Results are Empty" )
         return discountFactors;
     }
 
@@ -2722,7 +2722,7 @@ namespace etrading
 			break;
 		default:
 			// Should never reach here
-			MLIB_THROW("Invalid volatility type. Must be 'LOGNORMAL' or 'NORMAL'");
+			AQ_THROW("Invalid volatility type. Must be 'LOGNORMAL' or 'NORMAL'");
 			break;
 		}
 
@@ -2888,7 +2888,7 @@ namespace etrading
 		const double curveInstrumentToDateInTermFormat		= legacyConventionObject.getTerm( asOfDate, fixingEndDate );
 		
 	    const double result = curveInstrumentToDateInTermFormat - curveInstrumentFromDateInTermFormat;
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( result ), "Invalid Accrual Period - The fixing start date must be before the fixing end date" )
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( result ), "Invalid Accrual Period - The fixing start date must be before the fixing end date" )
 		return result;
 	}
 
@@ -2906,15 +2906,15 @@ namespace etrading
 									 const DayCountEnum & accrualDaycount,
 									 const CompoundingFrequencyEnum & compoundFrequency )
 	{
-		MLIB_REQUIRE( MLIB_IS_LESS_THAN_OR_EQUAL( fixingStartTerm, fixingEndTerm ), "Invalid Daycount Conversion: Start date cannot be after the end date" )
-		if ( MLIB_IS_EQUAL( fixingStartTerm, fixingEndTerm ) ) return 1.0; // No conversion to make, return 1.0
+		AQ_REQUIRE( AQ_IS_LESS_THAN_OR_EQUAL( fixingStartTerm, fixingEndTerm ), "Invalid Daycount Conversion: Start date cannot be after the end date" )
+		if ( AQ_IS_EQUAL( fixingStartTerm, fixingEndTerm ) ) return 1.0; // No conversion to make, return 1.0
 
 		// Short-cuts : known daycount adjustment factors
 		switch( accrualDaycount )
 		{
 			case DayCountEnum::NONE_DAYCOUNT:
 			{
-				MLIB_THROW( "Invalid Daycount: Unable to calculate the accrual daycount adjustment" )
+				AQ_THROW( "Invalid Daycount: Unable to calculate the accrual daycount adjustment" )
 			}
 			case DayCountEnum::ACT_365_DAYCOUNT:
 			{
@@ -2954,7 +2954,7 @@ namespace etrading
 		// The term here must be the converted from the internal ACT/365 daycount used for date transformation to a term in the curve daycount measure
 		// --------------------------------------------------------------------------------------------------------------------------
 
-		MLIB_REQUIRE( fixingStartDate <= fixingEndDate, "Invalid Daycount Conversion: Start date cannot be after the end date" )
+		AQ_REQUIRE( fixingStartDate <= fixingEndDate, "Invalid Daycount Conversion: Start date cannot be after the end date" )
 		if ( fixingStartDate == fixingEndDate ) return 1.0; // No conversion to make, return 1.0
 
 		// LA Rate Convention Method for Year Fraction Calculation

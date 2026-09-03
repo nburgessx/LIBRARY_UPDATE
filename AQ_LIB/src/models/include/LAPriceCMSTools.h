@@ -10,20 +10,20 @@
 #include "LAMathYieldCurve.h"
 #include <utility>
 
-#ifndef MLIB_SABR_NAMES
-#define MLIB_SABR_NAMES LAStringVector { "Alpha", "Beta", "Nu", "Rho"}
+#ifndef AQ_SABR_NAMES
+#define AQ_SABR_NAMES LAStringVector { "Alpha", "Beta", "Nu", "Rho"}
 #endif
 
-#ifndef MLIB_TAIL_NAMES
-#define MLIB_TAIL_NAMES LAStringVector { "Tail1", "Tail2", "Tail3", "Tail4"}
+#ifndef AQ_TAIL_NAMES
+#define AQ_TAIL_NAMES LAStringVector { "Tail1", "Tail2", "Tail3", "Tail4"}
 #endif
 
-#ifndef MLIB_TAIL2_OUT
-#define MLIB_TAIL2_OUT "_Tail2_Out_"
+#ifndef AQ_TAIL2_OUT
+#define AQ_TAIL2_OUT "_Tail2_Out_"
 #endif
 
-#ifndef MLIB_CMS_TGT_OUT
-#define MLIB_CMS_TGT_OUT "_CMS_Targets_Out_"
+#ifndef AQ_CMS_TGT_OUT
+#define AQ_CMS_TGT_OUT "_CMS_Targets_Out_"
 #endif
 
 //================ Data structures ===================================

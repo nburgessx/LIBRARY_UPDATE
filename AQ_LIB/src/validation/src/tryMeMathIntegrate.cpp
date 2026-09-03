@@ -62,7 +62,7 @@ namespace validation_api
         etrading::SimpsonsRuleIntegrand integrand( target );
 
         // Numerically Integrate
-        MLIB_REQUIRE( lowerBounds.size() == upperBounds.size(), "Invalid Integration Limits - The number of integration lower- and upperBounds is inconsistent" )
+        AQ_REQUIRE( lowerBounds.size() == upperBounds.size(), "Invalid Integration Limits - The number of integration lower- and upperBounds is inconsistent" )
         DoubleVector results = integrand.integrate( lowerBounds, upperBounds, nSteps, optimize );
         
         // ------------------------------------------------------------------------------

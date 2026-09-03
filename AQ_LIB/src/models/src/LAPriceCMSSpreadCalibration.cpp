@@ -117,9 +117,9 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
         LAString tenor1, tenor2;
         LAPriceCMSObject::ParseTenors(pairID, tenor1, tenor2);
 
-        theta1[pairIdx] = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, gridDates, pairID, MLIB_THETA1_IN, ccy);
-        theta2[pairIdx] = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, gridDates, pairID, MLIB_THETA2_IN, ccy);
-        rho[pairIdx] = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, gridDates, pairID, MLIB_COPRHO_IN, ccy);
+        theta1[pairIdx] = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, gridDates, pairID, AQ_THETA1_IN, ccy);
+        theta2[pairIdx] = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, gridDates, pairID, AQ_THETA2_IN, ccy);
+        rho[pairIdx] = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, gridDates, pairID, AQ_COPRHO_IN, ccy);
         // Calibrate
         if (mode == "Fixed")
         {
@@ -148,9 +148,9 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
 
             // Interpolate parameters to SL time grid
             DoubleVector theta1Init, theta2Init, rhoInit;
-            theta1Init = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, slDates, pairID, MLIB_THETA1_IN, ccy);
-            theta2Init = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, slDates, pairID, MLIB_THETA2_IN, ccy);
-            rhoInit = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, slDates, pairID, MLIB_COPRHO_IN, ccy);
+            theta1Init = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, slDates, pairID, AQ_THETA1_IN, ccy);
+            theta2Init = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, slDates, pairID, AQ_THETA2_IN, ccy);
+            rhoInit = LAPriceCMSSpreadUtility::InterpolateParameters(dataInstance, slDates, pairID, AQ_COPRHO_IN, ccy);
             SwapRateInfo rateInfo1(dataInstance, ccy, tenor1, discCurveInfo, cmsCurveInfo, cmsScheduler, repConfig, shift);
             SwapRateInfo rateInfo2(dataInstance, ccy, tenor2, discCurveInfo, cmsCurveInfo, cmsScheduler, repConfig, shift);
 
@@ -163,7 +163,7 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
                 {
                     // Define target
                     CashFlowTiming cf = LAMathScheduleUtility::CashFlowSchedule(valDate, slTerms[timeIdx], legScheduler, cmsScheduler);
-                    double quote = LAMathParameterObject::LookUpParameterMatrix(dataInstance, LAPriceCMSObject::MatrixID(MLIB_SL_ATM, ccy), slDates[timeIdx],
+                    double quote = LAMathParameterObject::LookUpParameterMatrix(dataInstance, LAPriceCMSObject::MatrixID(AQ_SL_ATM, ccy), slDates[timeIdx],
                                                                              pairID, "Linear");
 
                     double theta1_ = theta1Init[timeIdx];
@@ -199,14 +199,14 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
                 DoubleVector smileStrikes;
                 if (smileType == "ML") // Strip SL from ML
                 {
-                    LAString quoteMatrixID = LAPriceCMSObject::MatrixID(LAString(MLIB_ML_SMILE + pairID + "_"), ccy);
+                    LAString quoteMatrixID = LAPriceCMSObject::MatrixID(LAString(AQ_ML_SMILE + pairID + "_"), ccy);
                     LAStringMatrix quoteMatrix = LAMathParameterObject::ParameterMatrix(dataInstance, quoteMatrixID);
                     LAPriceCMSSpreadStrip::Strip(dataInstance, convID, ccy,  valDate, pairID, legScheduler, cmsScheduler, quoteMatrix, isCalls,
                                             discCurveInfo, cmsCurveInfo, repConfig, shift, slTerms, slDates, smileStrikes, smilePrices);
                 }
                 else if (smileType == "SL") // Just read SL
                 {
-                    LAString quoteMatrixID = LAPriceCMSObject::MatrixID(LAString(MLIB_SL_SMILE + pairID + "_"), ccy);
+                    LAString quoteMatrixID = LAPriceCMSObject::MatrixID(LAString(AQ_SL_SMILE + pairID + "_"), ccy);
                     LAStringMatrix quoteMatrix = LAMathParameterObject::ParameterMatrix(dataInstance, quoteMatrixID);
                     ParseSLSmile(quoteMatrix, slTerms, isCalls, smileStrikes, smilePrices);
                 }
@@ -238,7 +238,7 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
                 DoubleVector theta1SL(nSLTimes, 1.0), theta2SL(nSLTimes, 1.0);
                 for (size_t timeIdx = 0; timeIdx < nSLTimes; timeIdx++)
                 {
-                    allQuotes[0] = LAMathParameterObject::LookUpParameterMatrix(dataInstance, LAPriceCMSObject::MatrixID(MLIB_SL_ATM, ccy), slDates[timeIdx],
+                    allQuotes[0] = LAMathParameterObject::LookUpParameterMatrix(dataInstance, LAPriceCMSObject::MatrixID(AQ_SL_ATM, ccy), slDates[timeIdx],
                                                                              pairID, "Linear");
                     for (size_t k = 0; k < nStrikes; k++)
                         allQuotes[k + 1] = smilePrices[k][timeIdx];
@@ -294,10 +294,10 @@ LAString LAPriceCMSSpreadCalibration::Calibrate(LADataInstance* dataInstance, LA
     {
         if (timeIdx == 0)
         {
-            theta1Out[0][0] = MLIB_THETA1_OUT;
-            theta2Out[0][0] = MLIB_THETA2_OUT;
-            rhoOut[0][0] = MLIB_COPRHO_OUT;
-            targetsOut[0][0] = MLIB_CMSSPRD_TGT_OUT;
+            theta1Out[0][0] = AQ_THETA1_OUT;
+            theta2Out[0][0] = AQ_THETA2_OUT;
+            rhoOut[0][0] = AQ_COPRHO_OUT;
+            targetsOut[0][0] = AQ_CMSSPRD_TGT_OUT;
             for (size_t pairIdx = 0; pairIdx < nPairs; pairIdx++)
             {
                 LAString pairID = pairIDs[pairIdx];

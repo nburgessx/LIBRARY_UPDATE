@@ -22,7 +22,7 @@
 #include "tryMeLWOSwapPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
-#include "DataUtilities.h" // MLIB_TO_STRING macros
+#include "DataUtilities.h" // AQ_TO_STRING macros
 
 // Define Test Folder Path(s)
 // *** The Google Test DataInstance folder is defined within etrading project, GoogleTest Folder, GetGoogleTestFolder.h ***
@@ -65,7 +65,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    oisSwapTerms    = curveCalibrationOisSwapTenors( curveObjectAUDOIS3_ );		// Load the curve 3 times and use the 3rd curve
         std::vector<double>         oisSwapParRates = curveCalibrationOisSwapParRates( curveObjectAUDOIS3_ );	// Load the curve 3 times and use the 3rd curve
-        MLIB_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
+        AQ_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-4; // TODO: Not a great tolerance; Need to improve the calibration accuracy
@@ -86,7 +86,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "AUDOIS_Swap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "AUDOIS_Swap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "AUD_OIS";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("AUDYC");
 
@@ -105,7 +105,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    oisSwapTerms    = curveCalibrationOisSwapTenors( curveObjectAUDOIS_ ); 
         std::vector<double>         oisSwapParRates = curveCalibrationOisSwapParRates( curveObjectAUDOIS_ );
-        MLIB_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
+        AQ_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-4; // TODO: Not a great tolerance; Need to improve the calibration accuracy
@@ -126,7 +126,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "AUDOIS_Swap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "AUDOIS_Swap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "AUD_OIS";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("AUDYC");
 
@@ -146,7 +146,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    liborOisTerms    = curveCalibrationLiborOisTenors( curveObjectAUDOIS_ ); 
         std::vector<double>         liborOisSpreads  = curveCalibrationLiborOisSpreads( curveObjectAUDOIS_ );
-        MLIB_REQUIRE( liborOisTerms.size() == liborOisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Libor OIS Terms and Spreads" )
+        AQ_REQUIRE( liborOisTerms.size() == liborOisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Libor OIS Terms and Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-4; // TODO: Not a great tolerance; Need to improve the calibration accuracy
@@ -168,7 +168,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "AUDOIS_LiborOISSwap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "AUDOIS_LiborOISSwap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGeneratorQtr          = "AUD_BASIS_LIBOROIS_QUARTERLY";
             const std::string swapGeneratorSemi         = "AUD_BASIS_LIBOROIS_SEMIANNUAL";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("AUDYC");

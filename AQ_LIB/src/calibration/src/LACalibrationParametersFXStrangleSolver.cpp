@@ -232,7 +232,7 @@ LACalibrationParametersFXStrangleSolver::getCalibStaticDataValue(const LAString 
 {
 	LAString ret = mpCalibStaticData->getStaticData(key + "." + grid);
 
-	if (ret == MLIB_NO_DATA)
+	if (ret == AQ_NO_DATA)
 	{
 		return mpCalibStaticData->getStaticData(key);
 	}

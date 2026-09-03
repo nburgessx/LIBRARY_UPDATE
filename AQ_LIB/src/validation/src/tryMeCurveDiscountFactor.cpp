@@ -138,7 +138,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -254,7 +254,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -416,7 +416,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -533,7 +533,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -663,7 +663,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -758,7 +758,7 @@ namespace validation_api
 
         // Validate Inputs
 		etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
-        MLIB_REQUIRE( fixingDates.size() == forwardRates.size(), "Unable to Override Forward Rates - Inconsistent number of fixing dates & forward rates" );
+        AQ_REQUIRE( fixingDates.size() == forwardRates.size(), "Unable to Override Forward Rates - Inconsistent number of fixing dates & forward rates" );
 
         // Override the Curve Forward Rates
         LAString result = etrading::setCurveForwardRates( curveCollection, curveIndex, fixingDates, forwardRates, setCorrespondingDiscountFactors ); // setCorrespondingDiscountFactors for STD curves only
@@ -789,7 +789,7 @@ namespace validation_api
 
         // Validate Inputs
         etrading::getCurveStaticDataTableName( curveCollection, curveIndex );
-        MLIB_REQUIRE( paymentDates.size() == discountFactors.size(), "Unable to Override Discount Factors - Inconsistent number of payment dates & discount factors" );
+        AQ_REQUIRE( paymentDates.size() == discountFactors.size(), "Unable to Override Discount Factors - Inconsistent number of payment dates & discount factors" );
 
 		// Override the Curve Discount Factors
         LAString result = etrading::setCurveDiscountFactors( curveCollection, curveIndex, paymentDates, discountFactors, setCorrespondingForwards ); // setCorrespondingForwards for STD curves only

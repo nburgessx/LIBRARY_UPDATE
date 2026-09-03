@@ -64,7 +64,7 @@ namespace validation_api
         VALID_EXCEPTION_START
         
         // LWO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
-        MLIB_CLEAR_CURVE_RESULTS_CACHE
+        AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Ensure Curve Name Data is in uppercase
         // --------------------------------------
@@ -105,22 +105,22 @@ namespace validation_api
 
         if( ( fxFwdRates.empty() && 2 > basisRates[0].size() ) || 2 > basisConv[0].size() || 2 > curveConv[0].size() )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !fxFwdRates.empty() && fxFwdRates[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !fxFwdConv.empty() && fxFwdConv[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !spotFxRates.empty() && spotFxRates[0].size() < 3 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 3")
+            AQ_THROW("Invalid Data: Input matix data must have column size 3")
         }
 
         LAStringMatrix moneyConv = LAStringMatrix( 0 );
@@ -264,7 +264,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Unable to create LWOCurve named %s" ) % newCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Unable to create LWOCurve named %s" ) % newCurveName.c_str() ).str().c_str() );
         }
 
         /*

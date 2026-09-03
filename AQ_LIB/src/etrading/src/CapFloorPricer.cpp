@@ -11,8 +11,8 @@ namespace etrading
 		: option_(option), volProvider_(volProvider), rateProvider_(rateProvider)
 	
 	{
-		MLIB_REQUIRE(volProvider->asOfDate() == rateProvider->asOfDate(), "The asOfDate of Volatility and Curve must be the same");
-		MLIB_REQUIRE(option->scheduleParameters()->currency() == volProvider->currency(), "The Currency of Volatility and Option must be the same");
+		AQ_REQUIRE(volProvider->asOfDate() == rateProvider->asOfDate(), "The asOfDate of Volatility and Curve must be the same");
+		AQ_REQUIRE(option->scheduleParameters()->currency() == volProvider->currency(), "The Currency of Volatility and Option must be the same");
 
 		createCashflows();
 	}
@@ -25,7 +25,7 @@ namespace etrading
 		const auto schParams = option_->scheduleParameters();
 		const auto schOutput = option_->enrichedSchedule();
 
-		MLIB_REQUIRE(!schOutput->fixingDates().empty(), "Cap/Floor Option has no expiryDates(fixingDates)");
+		AQ_REQUIRE(!schOutput->fixingDates().empty(), "Cap/Floor Option has no expiryDates(fixingDates)");
 
 		const size_t cashflowSize = schOutput->accrualStartDates().size();
 		const CallOrPutEnum callPut = option_->callPut();
@@ -45,7 +45,7 @@ namespace etrading
 		// DFs is from expiryDt to paymentDate
 		const DoubleVector floatRates = rateProvider_->liborRates(schParams, schOutput);
 
-		MLIB_REQUIRE(cashflowSize == discountFactors.size() && cashflowSize == floatRates.size(), "Number of of accrualStartDates, discountFactors, FloatRates not matched");
+		AQ_REQUIRE(cashflowSize == discountFactors.size() && cashflowSize == floatRates.size(), "Number of of accrualStartDates, discountFactors, FloatRates not matched");
 
 		//Is it right to use DF's dayCount?
 		const auto expiryYearFractionDayCount = ACT_365_DAYCOUNT; // toDayCountEnum(getDiscountFactorDayCount().getCString());
@@ -147,7 +147,7 @@ namespace etrading
 	const AnyTypeMatrix CapFloorPricer::view(const bool& showColumnHeaders, const std::unordered_set<CashflowHeaderEnum,EnumClassHash>& columnList) const
 	{
 
-		MLIB_REQUIRE(!cashflows_.empty(), "Option has no cashflow to display");
+		AQ_REQUIRE(!cashflows_.empty(), "Option has no cashflow to display");
 
 		const auto nanValue = std::numeric_limits<double>::quiet_NaN();
 
@@ -179,26 +179,26 @@ namespace etrading
 		{
 			AnyTypeVector headers;
 
-			MLIB_PUSH_BACK_IF(headers, toString(EXPIRY_DATE_HEADER), includeFixingDate);
+			AQ_PUSH_BACK_IF(headers, toString(EXPIRY_DATE_HEADER), includeFixingDate);
 
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_START_HEADER), includeAccrualStart);
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_END_HEADER), includeAccrualEnd);
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_DAYS_HEADER), includeAccrualDays);
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_YEAR_FRACTIONS_HEADER), includeAccrualYearFraction);
-			MLIB_PUSH_BACK_IF(headers, toString(PAYMENT_DATE_HEADER), includePaymentDate);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_START_HEADER), includeAccrualStart);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_END_HEADER), includeAccrualEnd);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_DAYS_HEADER), includeAccrualDays);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_YEAR_FRACTIONS_HEADER), includeAccrualYearFraction);
+			AQ_PUSH_BACK_IF(headers, toString(PAYMENT_DATE_HEADER), includePaymentDate);
 
-			MLIB_PUSH_BACK_IF(headers, toString(NOTIONAL_HEADER), includeNotional);
-			MLIB_PUSH_BACK_IF(headers, toString(LEVERAGE_HEADER),  includeLeverage);
+			AQ_PUSH_BACK_IF(headers, toString(NOTIONAL_HEADER), includeNotional);
+			AQ_PUSH_BACK_IF(headers, toString(LEVERAGE_HEADER),  includeLeverage);
 
-			MLIB_PUSH_BACK_IF(headers, toString(STRIKE_HEADER), includeStrike);
-			MLIB_PUSH_BACK_IF(headers, toString(VOL_HEADER), includeVol);
+			AQ_PUSH_BACK_IF(headers, toString(STRIKE_HEADER), includeStrike);
+			AQ_PUSH_BACK_IF(headers, toString(VOL_HEADER), includeVol);
 
-			MLIB_PUSH_BACK_IF(headers, toString(FLOAT_SPREAD_HEADER), includeSpread);
-			MLIB_PUSH_BACK_IF(headers, toString(FLOAT_RATE_HEADER), includeFloatate);
+			AQ_PUSH_BACK_IF(headers, toString(FLOAT_SPREAD_HEADER), includeSpread);
+			AQ_PUSH_BACK_IF(headers, toString(FLOAT_RATE_HEADER), includeFloatate);
 
-			MLIB_PUSH_BACK_IF(headers, toString(COUPON_HEADER), includeCoupon);
-			MLIB_PUSH_BACK_IF(headers, toString(DISCOUNT_FACTOR_HEADER), includeDF);
-			MLIB_PUSH_BACK_IF(headers, toString(COUPON_PV_HEADER), includeCouponPV);
+			AQ_PUSH_BACK_IF(headers, toString(COUPON_HEADER), includeCoupon);
+			AQ_PUSH_BACK_IF(headers, toString(DISCOUNT_FACTOR_HEADER), includeDF);
+			AQ_PUSH_BACK_IF(headers, toString(COUPON_PV_HEADER), includeCouponPV);
 
 			cashflowDisplayBlock.push_back(headers);
 		}
@@ -211,7 +211,7 @@ namespace etrading
 
 			AnyTypeVector body;
 
-			MLIB_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->coreCashflow()->fixingDate()), includeFixingDate);
+			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->coreCashflow()->fixingDate()), includeFixingDate);
 
 
 			const auto& coreCashflow = cashflow->coreCashflow();
@@ -219,34 +219,34 @@ namespace etrading
 			const auto accrualEndDt = coreCashflow->accrualEndDate();
 			const int accrualDays = getDays(accrualStartDt, accrualEndDt);
 
-			MLIB_PUSH_BACK_IF(body, fromLADateToDouble(accrualStartDt), includeAccrualStart);
-			MLIB_PUSH_BACK_IF(body, fromLADateToDouble(accrualEndDt), includeAccrualEnd);
-			MLIB_PUSH_BACK_IF(body, accrualDays, includeAccrualDays);
-			MLIB_PUSH_BACK_IF(body, coreCashflow->accrualYearFraction(), includeAccrualYearFraction);
-			MLIB_PUSH_BACK_IF(body, fromLADateToDouble(coreCashflow->paymentDate()), includePaymentDate);
+			AQ_PUSH_BACK_IF(body, fromLADateToDouble(accrualStartDt), includeAccrualStart);
+			AQ_PUSH_BACK_IF(body, fromLADateToDouble(accrualEndDt), includeAccrualEnd);
+			AQ_PUSH_BACK_IF(body, accrualDays, includeAccrualDays);
+			AQ_PUSH_BACK_IF(body, coreCashflow->accrualYearFraction(), includeAccrualYearFraction);
+			AQ_PUSH_BACK_IF(body, fromLADateToDouble(coreCashflow->paymentDate()), includePaymentDate);
 
-			MLIB_PUSH_BACK_IF(body, coreCashflow->notional(), includeNotional);
-			MLIB_PUSH_BACK_IF(body, coreCashflow->leverage(), includeLeverage);
+			AQ_PUSH_BACK_IF(body, coreCashflow->notional(), includeNotional);
+			AQ_PUSH_BACK_IF(body, coreCashflow->leverage(), includeLeverage);
 
-			MLIB_PUSH_BACK_IF(body, coreCashflow->strikeRate(), includeStrike);
-			MLIB_PUSH_BACK_IF(body, cashflow->vol(), includeVol);
+			AQ_PUSH_BACK_IF(body, coreCashflow->strikeRate(), includeStrike);
+			AQ_PUSH_BACK_IF(body, cashflow->vol(), includeVol);
 
-			MLIB_PUSH_BACK_IF(body, coreCashflow->spread(), includeSpread);
-			MLIB_PUSH_BACK_IF(body, cashflow->floatOrSwapRate(), includeFloatate);
+			AQ_PUSH_BACK_IF(body, coreCashflow->spread(), includeSpread);
+			AQ_PUSH_BACK_IF(body, cashflow->floatOrSwapRate(), includeFloatate);
 
 			const auto coupon = roundToNearest(cashflow->coupon(), cashflow->currency());
-			MLIB_PUSH_BACK_IF(body, coupon, includeCoupon);
+			AQ_PUSH_BACK_IF(body, coupon, includeCoupon);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->discountFactor(), includeDF);
+			AQ_PUSH_BACK_IF(body, cashflow->discountFactor(), includeDF);
 
 			const auto couponPV = roundToNearest(cashflow->couponPV(), cashflow->valuationCurrency());
-			MLIB_PUSH_BACK_IF(body, couponPV, includeCouponPV);
+			AQ_PUSH_BACK_IF(body, couponPV, includeCouponPV);
 
 			cashflowDisplayBlock.push_back(body);
 		}
 
-		MLIB_REQUIRE(!cashflowDisplayBlock.empty(), "Unable to display the cashflows. The resulted cashflow is empty");
-		MLIB_REQUIRE(!cashflowDisplayBlock[0].empty(), "Unable to display the cashflows. The resulted cashflow has no columns");
+		AQ_REQUIRE(!cashflowDisplayBlock.empty(), "Unable to display the cashflows. The resulted cashflow is empty");
+		AQ_REQUIRE(!cashflowDisplayBlock[0].empty(), "Unable to display the cashflows. The resulted cashflow has no columns");
 
 		return cashflowDisplayBlock;
 	}

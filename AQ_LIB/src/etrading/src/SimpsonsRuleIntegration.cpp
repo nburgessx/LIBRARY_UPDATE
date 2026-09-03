@@ -21,16 +21,16 @@ namespace etrading
         TargetFunction::TargetFunction( const DoubleVector & terms, const DoubleVector & values, const InterpolationEnum & interpolationType )
             : terms(terms), values(values), interpolationType(interpolationType), joinDateAsDouble(0.0) // Set join to zero - not needed
         {
-            MLIB_REQUIRE( terms.size() == values.size(),
+            AQ_REQUIRE( terms.size() == values.size(),
                 "Invalid Numerical Integration Configuration - Invalid Target Function: The number of terms and values must be the same" )
             
-            MLIB_REQUIRE( values.size() >= 3,
+            AQ_REQUIRE( values.size() >= 3,
                 "Invalid Numerical Integration Configuration - Invalid Target Function: A minimum of 3 data points are required" )
             
-            MLIB_REQUIRE( interpolationType != LINEARSPLINE_INTERPOLATION,
+            AQ_REQUIRE( interpolationType != LINEARSPLINE_INTERPOLATION,
                 "Invalid Numerical Integration Configuration - Invalid Target Function Set-Up: Linear-Spline specified with no join date" )
 
-            MLIB_REQUIRE( interpolationType == LINEAR_INTERPOLATION || interpolationType == SPLINE_INTERPOLATION || interpolationType == LINEARSPLINE_INTERPOLATION || interpolationType == STEP_INTERPOLATION || interpolationType == RIGHT_CONTINUOUS_INTERPOLATION || interpolationType == LEFT_CONTINUOUS_INTERPOLATION,
+            AQ_REQUIRE( interpolationType == LINEAR_INTERPOLATION || interpolationType == SPLINE_INTERPOLATION || interpolationType == LINEARSPLINE_INTERPOLATION || interpolationType == STEP_INTERPOLATION || interpolationType == RIGHT_CONTINUOUS_INTERPOLATION || interpolationType == LEFT_CONTINUOUS_INTERPOLATION,
                 "Invalid Numerical Integration Configuration - Invalid Interpolation: We currently support Step, Linear, Spline and Linear-Spline interpolation only" )
         }
 
@@ -44,13 +44,13 @@ namespace etrading
         TargetFunction::TargetFunction( const DoubleVector & terms, const DoubleVector & values, const InterpolationEnum & interpolationType, const double & joinDateAsDouble )
             : terms(terms), values(values), interpolationType(interpolationType), joinDateAsDouble(joinDateAsDouble)
         {
-            MLIB_REQUIRE( terms.size() == values.size(),
+            AQ_REQUIRE( terms.size() == values.size(),
                 "Invalid Target Function: The number of terms and values must be the same" )
             
-            MLIB_REQUIRE( values.size() >= 3,
+            AQ_REQUIRE( values.size() >= 3,
                 "Invalid Target Function: A minimum of 3 data points are required" )
             
-            MLIB_REQUIRE( interpolationType == LINEAR_INTERPOLATION || interpolationType == SPLINE_INTERPOLATION || interpolationType == LINEARSPLINE_INTERPOLATION || interpolationType == STEP_INTERPOLATION,
+            AQ_REQUIRE( interpolationType == LINEAR_INTERPOLATION || interpolationType == SPLINE_INTERPOLATION || interpolationType == LINEARSPLINE_INTERPOLATION || interpolationType == STEP_INTERPOLATION,
                 "Invalid Target Function Interpolation: We currently support Step, Linear, Spline and Linear-Spline interpolation only" )
         }
 
@@ -68,7 +68,7 @@ namespace etrading
                 case etrading::LINEARSPLINE_INTERPOLATION:
                     return "LINEARSPLINE";
 				default:
-					MLIB_THROW( "Invalid Interpolation Method: Only Step, Linear, Spline and LinearSpline are supported" )
+					AQ_THROW( "Invalid Interpolation Method: Only Step, Linear, Spline and LinearSpline are supported" )
             }   
         }
 
@@ -161,7 +161,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Invalid Target Function Interpolation Type: Currently only Step, Linear, Spline, MonotoneSpline, LinearSpline, and LinearMonotoneSpline are supported")
+                AQ_THROW("Invalid Target Function Interpolation Type: Currently only Step, Linear, Spline, MonotoneSpline, LinearSpline, and LinearMonotoneSpline are supported")
             }
         }
 
@@ -175,18 +175,18 @@ namespace etrading
     // Perform Numerical Integration using Simpson's Rule
     double SimpsonsRuleIntegrand::integrate( const srIntegrationLimits & integrationLimits ) const
     {
-        MLIB_REQUIRE( targetInterpolationPtr_ != nullptr, 
+        AQ_REQUIRE( targetInterpolationPtr_ != nullptr, 
             "Unable to Perform Numerical Integration - Target Function has not been initialized" )
 
         const double integrandWidth = integrationLimits.upperBound - integrationLimits.lowerBound;
             
-        MLIB_REQUIRE( integrandWidth >= 0,
+        AQ_REQUIRE( integrandWidth >= 0,
             "Invalid Numerical Integration Limits - Integration Upper Bound < Lower Bound" )
 
-        MLIB_REQUIRE ( integrationLimits.nSteps > 0,
+        AQ_REQUIRE ( integrationLimits.nSteps > 0,
             "Invalid Numerical Integration Limits - Integration nSteps must be greater than zero" )
 
-        MLIB_REQUIRE ( integrationLimits.nSteps <= 10000,
+        AQ_REQUIRE ( integrationLimits.nSteps <= 10000,
             "Invalid Numerical Integration Limits - Maximum Integration nSteps must be less than 10,000" )
 
         // The number of abscissae when using Simpson's Rule must be EVEN
@@ -198,7 +198,7 @@ namespace etrading
         }
 
         // Integrand equals zero if we integrate over a null space
-        if ( MLIB_IS_EQUAL_ZERO( integrandWidth ) )
+        if ( AQ_IS_EQUAL_ZERO( integrandWidth ) )
         {
             return 0.0;
         }
@@ -262,8 +262,8 @@ namespace etrading
 
     DoubleVector SimpsonsRuleIntegrand::integrate( const DoubleVector & lowerBounds, const DoubleVector & upperBounds, const size_t & nSteps, const bool optimize ) const
     {
-        MLIB_REQUIRE( lowerBounds.size() == upperBounds.size(), "Unable to evaluate the integrals provided. The number of lower- and upperbounds are inconsistent" )
-        MLIB_REQUIRE( upperBounds.size() > 0, "Unable to evaluate the integrals provided. No integral limits have been provided" )
+        AQ_REQUIRE( lowerBounds.size() == upperBounds.size(), "Unable to evaluate the integrals provided. The number of lower- and upperbounds are inconsistent" )
+        AQ_REQUIRE( upperBounds.size() > 0, "Unable to evaluate the integrals provided. No integral limits have been provided" )
 
         size_t resultsSize = upperBounds.size();
         DoubleVector results( resultsSize );

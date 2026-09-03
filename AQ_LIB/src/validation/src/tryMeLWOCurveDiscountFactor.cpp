@@ -64,7 +64,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( CreateDataFile::recordEnabled() )
@@ -122,7 +122,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -198,7 +198,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -273,7 +273,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -343,7 +343,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -393,7 +393,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Curve %s does not exist." ) % lwoCurveName.c_str() ).str().c_str() );
         }
 
         if ( ret.size() == 0 )
@@ -494,14 +494,14 @@ namespace validation_api
 		// Record Inputs for logs, tests and playback
 		RECORD_INPUTS( paymentDates, curveCollection, curveIndex, spread, fixingTableName );
 
-		MLIB_REQUIRE( paymentDates.size() > 0, "No payment dates have been provided." );
-		MLIB_REQUIRE( curveCollection.size() > 0, "No curve collection have been provided." );
-		MLIB_REQUIRE( curveIndex.size() > 0, "No curveIndex has been provided." );
+		AQ_REQUIRE( paymentDates.size() > 0, "No payment dates have been provided." );
+		AQ_REQUIRE( curveCollection.size() > 0, "No curve collection have been provided." );
+		AQ_REQUIRE( curveIndex.size() > 0, "No curveIndex has been provided." );
 
 		const DoubleVector discountFactors = etrading::getDiscountFactorsForCurveIndexWithSpread( paymentDates, curveCollection, curveIndex, spread, fixingTableName );
 		
-		MLIB_REQUIRE( discountFactors.size() > 0, "No discount factors have been returned." );
-		MLIB_REQUIRE( discountFactors.size() == paymentDates.size(), "Incorrect number of discount factors returned.");
+		AQ_REQUIRE( discountFactors.size() > 0, "No discount factors have been returned." );
+		AQ_REQUIRE( discountFactors.size() == paymentDates.size(), "Incorrect number of discount factors returned.");
         
 		// Record Outputs and Return the result
         RECORD_OUTPUTS_AND_RETURN_RESULT( discountFactors );

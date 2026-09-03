@@ -29,12 +29,12 @@ SwapRateInfo::SwapRateInfo(LADataInstance* dataInstance, const LAString& ccy, co
     mPayCalendar.convertFromString(LAFunctionUtilities::findElement(cmsScheduler, "PaymentCalendar"));
 
     // Parameter vectors
-    mSabrIDs = LAStringVector(MLIB_SABR_NAMES.size());
-    for (size_t k = 0; k < MLIB_SABR_NAMES.size(); k++)
-        mSabrIDs[k] = LAPriceCMSObject::MatrixID("_" + MLIB_SABR_NAMES[k] + "_", ccy);
-    mTailIDs = LAStringVector(MLIB_TAIL_NAMES.size());
-    for (size_t k = 0; k < MLIB_TAIL_NAMES.size(); k++)
-        mTailIDs[k] = LAPriceCMSObject::MatrixID("_" + MLIB_TAIL_NAMES[k] + "_", ccy);
+    mSabrIDs = LAStringVector(AQ_SABR_NAMES.size());
+    for (size_t k = 0; k < AQ_SABR_NAMES.size(); k++)
+        mSabrIDs[k] = LAPriceCMSObject::MatrixID("_" + AQ_SABR_NAMES[k] + "_", ccy);
+    mTailIDs = LAStringVector(AQ_TAIL_NAMES.size());
+    for (size_t k = 0; k < AQ_TAIL_NAMES.size(); k++)
+        mTailIDs[k] = LAPriceCMSObject::MatrixID("_" + AQ_TAIL_NAMES[k] + "_", ccy);
 
     // For CMSs
     mTau = LAPriceCMSObject::TermToTau(FrequencyToTerm(mFixedLegFreq));

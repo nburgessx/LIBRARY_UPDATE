@@ -1,7 +1,7 @@
 // APISetUp.h
 
 /* 
- * @brief			Collection of SetUp Macros and Utilities for the MLIB_CLIENT_API
+ * @brief			Collection of SetUp Macros and Utilities for the AQ_CLIENT_API
  * @Created:	    21 September 2018
  * @Author:			Nicholas Burgess
  * @Department:		AlgoQuantHub Quant Research and Analytics
@@ -13,11 +13,11 @@
 
 #include <cstring>
 
-#define MLIB_API_START  \
+#define AQ_API_START  \
     try{
 
 
-#define MLIB_API_END                                                \
+#define AQ_API_END                                                \
     }                                                               \
     catch(const LACoreError& e)	                                    \
     {						                                        \

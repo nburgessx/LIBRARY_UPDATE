@@ -45,7 +45,7 @@ namespace etrading
 			else
 			{
 				// Validation - Check all curve handles have the same curve currency and curve collection
-				MLIB_REQUIRE( curveCollection == curveCollection_, "Invalid Curve Group: Curve Handles within the group must have the same curve currency and curve collection" )
+				AQ_REQUIRE( curveCollection == curveCollection_, "Invalid Curve Group: Curve Handles within the group must have the same curve currency and curve collection" )
 			}
 		}
 		

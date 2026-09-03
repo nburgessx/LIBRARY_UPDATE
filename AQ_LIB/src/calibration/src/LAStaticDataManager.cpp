@@ -326,7 +326,7 @@ LAString
 LAStaticDataManager::getPropertiesID()
 {
 	LAString id = LACoreDataService::getContext(ARG_KEY_PROPERTIESID);
-	if (id == MLIB_NO_DATA)
+	if (id == AQ_NO_DATA)
 	{
 		id = LACoreDataService::getContext(ARG_KEY_FILENUM);
 	}

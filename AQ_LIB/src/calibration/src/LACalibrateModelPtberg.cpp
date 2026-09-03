@@ -307,7 +307,7 @@ LACalibrateModelPtberg::setUpVolFunc(const LAString &fx, LAMathVolatility &vol, 
 		// first element set calib info
 		param.refName.push_back(cInfoName);
 
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			param.isOutPut = true;
 		}

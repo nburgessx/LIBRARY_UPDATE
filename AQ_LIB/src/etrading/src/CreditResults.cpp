@@ -93,43 +93,43 @@ namespace etrading
 	// Accessors
 	std::shared_ptr<DataFrame> CreditResults::getDataFrame() const
 	{
-		MLIB_REQUIRE( dataFrame_ != nullptr, "Invalid Credit Results: DataFrame Results do not exist")
+		AQ_REQUIRE( dataFrame_ != nullptr, "Invalid Credit Results: DataFrame Results do not exist")
 		return dataFrame_;
 	}
 
 	std::shared_ptr<LoanPortfolio> CreditResults::getLoanPortfolio() const
 	{
-		MLIB_REQUIRE( loanPortfolio_ != nullptr, "Invalid Credit Results: LoanPortfolio Results do not exist" )
+		AQ_REQUIRE( loanPortfolio_ != nullptr, "Invalid Credit Results: LoanPortfolio Results do not exist" )
 		return loanPortfolio_;
 	}
 
 	std::shared_ptr<TrancheDefinition> CreditResults::getTrancheDefinition() const
 	{
-		MLIB_REQUIRE( trancheDefinition_ != nullptr, "Invalid Credit Results: TrancheDefinition Results do not exist" )
+		AQ_REQUIRE( trancheDefinition_ != nullptr, "Invalid Credit Results: TrancheDefinition Results do not exist" )
 		return trancheDefinition_;
 	}
 
 	std::shared_ptr<SyntheticExcessSpread> CreditResults::getSyntheticExcessSpread() const
 	{
-		MLIB_REQUIRE( syntheticExcessSpread_ != nullptr, "Invalid Credit Results: SyntheticExcessSpread Results do not exist")
+		AQ_REQUIRE( syntheticExcessSpread_ != nullptr, "Invalid Credit Results: SyntheticExcessSpread Results do not exist")
 		return syntheticExcessSpread_;
 	}
 
 	std::shared_ptr<Trigger> CreditResults::getTrigger() const
 	{
-		MLIB_REQUIRE( trigger_ != nullptr, "Invalid Credit Results: Trigger Results do not exist" )
+		AQ_REQUIRE( trigger_ != nullptr, "Invalid Credit Results: Trigger Results do not exist" )
 		return trigger_;
 	}
     
 	std::shared_ptr<CashflowEngine> CreditResults::getCashflowEngine() const
 	{
-		MLIB_REQUIRE( cashflowEngine_ != nullptr, "Invalid Credit Results: CashflowEngine Results do not exist")
+		AQ_REQUIRE( cashflowEngine_ != nullptr, "Invalid Credit Results: CashflowEngine Results do not exist")
 			return cashflowEngine_;
 	}
 
 	std::shared_ptr<LoanAmortizationCashflows> CreditResults::getLoanAmortizationCashflows() const
 	{
-		MLIB_REQUIRE(loanAmortizationCashflows_ != nullptr, "Invalid Credit Results: LoanAmortizationCashflows Results do not exist")
+		AQ_REQUIRE(loanAmortizationCashflows_ != nullptr, "Invalid Credit Results: LoanAmortizationCashflows Results do not exist")
 		return loanAmortizationCashflows_;
 	}
 }

@@ -104,7 +104,7 @@ MADealUtils::getSimulationSDECurrencys(const bool isIncludeVol)
 	// get currencys
 	LAStringVector ret;
 	LAString ccys = LACoreDataService::getContext(ARG_KEY_SIMCURRENCY);
-	if (ccys != MLIB_NO_DATA)
+	if (ccys != AQ_NO_DATA)
 	{
 		ret = ccys.toToken(':');
 		if (isIncludeVol)
@@ -128,7 +128,7 @@ MADealUtils::getSDECurrencysAll()
 	// get currencys
 	LAStringVector ret;
 	LAString ccys = LACoreDataService::getContext(ARG_KEY_CURRENCY);
-	if (ccys != MLIB_NO_DATA)
+	if (ccys != AQ_NO_DATA)
 	{
 		LAStringVector irvec, fxvec;
 		ret = ccys.toToken(':');
@@ -185,7 +185,7 @@ MADealUtils::getAllSingleCurrencys()
 	// get currencys
 	LAStringVector ret;
 	LAString ccys = LACoreDataService::getContext(ARG_KEY_CURRENCY);
-	if (ccys != MLIB_NO_DATA)
+	if (ccys != AQ_NO_DATA)
 	{
 		//LAStringVector irvec, fxvec;
 		LAStringVector sdeccys = ccys.toToken(':');
@@ -495,7 +495,7 @@ MADealUtils::getAppMat()
 {
 	LAString appMat = LACoreDataService::getContext(ARG_KEY_APPMAT);
 
-	if (appMat == MLIB_NO_DATA)
+	if (appMat == AQ_NO_DATA)
 	{
 		return STANDARD
 	}

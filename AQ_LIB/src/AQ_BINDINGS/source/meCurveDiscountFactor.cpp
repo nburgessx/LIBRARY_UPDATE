@@ -3,7 +3,7 @@
 #include "LAString.h"
 #include "meCurveDiscountFactor.h"
 #include "tryMeCurveDiscountFactor.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 #include "ParameterValidation.h"
 
 
@@ -17,7 +17,7 @@ std::vector<double> meCurveDiscountFactors( const std::vector<std::string>& paym
                                             const std::string& curveCollection,
                                             const std::string& curveIndex ) 
 {
-    MLIB_API_START
+    AQ_API_START
     
     std::vector<double> result;
         
@@ -28,7 +28,7 @@ std::vector<double> meCurveDiscountFactors( const std::vector<std::string>& paym
     result = validation_api::tryMeCurveDiscountFactors( tempPaymentDates, curveCollection.c_str(), curveIndex.c_str() );
 	return result;
      
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			swig interface for meCurveDiscountFactorsFromYearFractions
@@ -43,7 +43,7 @@ double meCurveDiscountFactorsFromYearFractions(double yearFraction,
 											const std::string& curveCollection, 
 											const std::string& curveIndex)
 {
-    MLIB_API_START
+    AQ_API_START
 	double ret = 0.0;
 
     // Input marshalling
@@ -60,7 +60,7 @@ double meCurveDiscountFactorsFromYearFractions(double yearFraction,
 																						tmp_curveIndex);
 	ret = DFs[0];
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meCurveDiscountFactorsFromYearFractions
@@ -74,7 +74,7 @@ std::vector<double> meCurveDiscountFactorsFromYearFractions(const std::vector<do
 															const std::string& curveCollection, 
 															const std::string& curveIndex)
 {
-	MLIB_API_START
+	AQ_API_START
     std::vector<double> ret;
 	
     // Input marshalling
@@ -87,7 +87,7 @@ std::vector<double> meCurveDiscountFactorsFromYearFractions(const std::vector<do
 																	tmp_curveCollection, 
 																	tmp_curveIndex);
     return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meCurveDiscountFactorsFromTenors
@@ -104,7 +104,7 @@ double meCurveDiscountFactorsFromTenors(const std::string& tenor,
 					const std::string& businessDayAdj, 
 					const std::string& calendar)
 {
-	MLIB_API_START
+	AQ_API_START
     double ret = 0.0;
 
     // Input marshalling
@@ -123,7 +123,7 @@ double meCurveDiscountFactorsFromTenors(const std::string& tenor,
 																				tmp_calendar);
 	ret = DFs[0];
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meCurveDiscountFactorsFromTenors
@@ -140,7 +140,7 @@ std::vector<double> meCurveDiscountFactorsFromTenors(const std::vector<std::stri
 					const std::string& businessDayAdj, 
 					const std::string& calendar)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<double> ret;
 
     // Input marshalling
@@ -158,7 +158,7 @@ std::vector<double> meCurveDiscountFactorsFromTenors(const std::vector<std::stri
 															tmp_businessDayAdj, 
 															tmp_calendar);
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meCurveDiscountFactorsForwardStarting
@@ -173,7 +173,7 @@ double meCurveDiscountFactorsForwardStarting(const std::string& fromDate,
 												const std::string& curveCollection, 
 												const std::string& curveIndex)
 {
-    MLIB_API_START
+    AQ_API_START
 	double ret = 0.0;
 
     // Input marshalling
@@ -194,7 +194,7 @@ double meCurveDiscountFactorsForwardStarting(const std::string& fromDate,
 
 	ret = DFs[0];
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -210,7 +210,7 @@ std::vector<double> meCurveDiscountFactorsForwardStarting(const std::vector<std:
 															const std::string& curveCollection, 
 															const std::string& curveIndex)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<double> ret;
 
     // Input marshalling
@@ -229,7 +229,7 @@ std::vector<double> meCurveDiscountFactorsForwardStarting(const std::vector<std:
 										tmp_curveIndex
 										);
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -247,7 +247,7 @@ double meCurveDiscountFactorsForwardStartingFromYearFractions(const std::string&
 																const std::string& curveCollection, 
 																const std::string& curveIndex)
 {
-    MLIB_API_START
+    AQ_API_START
 	double ret = 0.0;
 
     // Input marshalling
@@ -267,7 +267,7 @@ double meCurveDiscountFactorsForwardStartingFromYearFractions(const std::string&
 														                                                 tmp_curveIndex);
 	ret = DFs[0];
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -285,7 +285,7 @@ std::vector<double> meCurveDiscountFactorsForwardStartingFromYearFractions(const
 																			const std::string& curveCollection, 
 																			const std::string& curveIndex)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<double> ret;
 	
 	// Input marshalling
@@ -302,7 +302,7 @@ std::vector<double> meCurveDiscountFactorsForwardStartingFromYearFractions(const
 														                             tmp_curveCollection, 
 														                             tmp_curveIndex);
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -322,7 +322,7 @@ double meCurveDiscountFactorsForwardStartingFromTenor(const std::string& fromDat
 														const std::string& businessDayAdj, 
 														const std::string& calendar)
 {
-    MLIB_API_START
+    AQ_API_START
 	double ret = 0.0;
 
     // Input marshalling
@@ -344,7 +344,7 @@ double meCurveDiscountFactorsForwardStartingFromTenor(const std::string& fromDat
 												tmp_calendar);
 	ret = DFs[0];
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -364,7 +364,7 @@ std::vector<double> meCurveDiscountFactorsForwardStartingFromTenor(const std::ve
 														const std::string& businessDayAdj, 
 														const std::string& calendar)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<double> ret;
 
     // Input marshalling
@@ -385,5 +385,5 @@ std::vector<double> meCurveDiscountFactorsForwardStartingFromTenor(const std::ve
 												tmp_businessDayAdj, 
 												tmp_calendar);
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }

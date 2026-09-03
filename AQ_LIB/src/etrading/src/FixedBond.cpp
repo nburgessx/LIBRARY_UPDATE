@@ -361,7 +361,7 @@ namespace etrading
 
         // Get all the bond cashflows excluding the upfrontCashflow
         auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
-		MLIB_REQUIRE( ! cashflows.empty(), "Unable to calculate the dirty price. The bond has no cashflows." );
+		AQ_REQUIRE( ! cashflows.empty(), "Unable to calculate the dirty price. The bond has no cashflows." );
 
         // Get the Bond PV
         double pv = 0;
@@ -376,7 +376,7 @@ namespace etrading
         // Convert the Bond PV into the Dirty Bond Price in Percent, note that the sign of the notional and the pv will cancel out
         const double faceValue            = getSchedule()->getNotional();
 
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
 
         double dirtyPrice                 = pv / faceValue * 100.0;
 
@@ -473,7 +473,7 @@ namespace etrading
 
         // Get all the bond cashflows excluding the upfrontCashflow
         auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
-		MLIB_REQUIRE( ! cashflows.empty(), "Unable to calculate the dv01. The bond has no cashflows." );
+		AQ_REQUIRE( ! cashflows.empty(), "Unable to calculate the dv01. The bond has no cashflows." );
 		
 		auto activeCouponDates = schedule_->getBondFirstActiveCouponDates(settlementDate, true);
 		LADate firstActivePaymentDate = activeCouponDates.firstActiveCouponDate_;
@@ -534,10 +534,10 @@ namespace etrading
 
 		// Get all the bond cashflows excluding the upfrontCashflow
         auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
-		MLIB_REQUIRE( ! cashflows.empty(), "Unable to calculate the dirty price from bond curve. The bond has no cashflows." );
+		AQ_REQUIRE( ! cashflows.empty(), "Unable to calculate the dirty price from bond curve. The bond has no cashflows." );
 
 		const double faceValue = getSchedule()->getNotional();
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
 		
 		double pv = 0;
 
@@ -707,7 +707,7 @@ namespace etrading
 
 		// Get all the bond cashflows excluding the upfrontCashflow
         auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
-		MLIB_REQUIRE( ! cashflows.empty(), "Unable to calculate the dirty price from credit model. The bond has no cashflows." );
+		AQ_REQUIRE( ! cashflows.empty(), "Unable to calculate the dirty price from credit model. The bond has no cashflows." );
 
 		const double faceValue = getSchedule()->getNotional();
 		const double recoveryRate = creditModel.getRecoveryRate();
@@ -736,7 +736,7 @@ namespace etrading
 		}
 
 		// Convert the Bond PV into the Dirty Bond Price in Percent, note that the sign of the notional and the pv will cancel out
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
 
         double dirtyPrice = pv / faceValue * 100.0;
 		return dirtyPrice;
@@ -841,7 +841,7 @@ namespace etrading
 
 		// Get all the bond cashflows excluding the upfrontCashflow
         auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
-		MLIB_REQUIRE( ! cashflows.empty(), "Unable to calculate the forward dirty price. The bond has no cashflows." );
+		AQ_REQUIRE( ! cashflows.empty(), "Unable to calculate the forward dirty price. The bond has no cashflows." );
 
 		const double faceValue = getSchedule()->getNotional();
 		const double recoveryRate = creditModel.getRecoveryRate();
@@ -875,7 +875,7 @@ namespace etrading
 		pv /= survivalProbabilityToForwardSettleDate;
 
 		// Convert the Bond PV into the Dirty Bond Price in Percent, note that the sign of the notional and the pv will cancel out
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
 
         const double fwdDirtyPrice = pv / faceValue * 100.0;
 	
@@ -899,7 +899,7 @@ namespace etrading
 
 		// Get all the bond cashflows excluding the upfrontCashflow
         auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
-		MLIB_REQUIRE( ! cashflows.empty(), "Unable to calculate the forward dirty price. The bond has no cashflows." );
+		AQ_REQUIRE( ! cashflows.empty(), "Unable to calculate the forward dirty price. The bond has no cashflows." );
 
 		double pv = 0;
  		for( size_t i = 0; i < cashflows.size(); i++ )
@@ -917,7 +917,7 @@ namespace etrading
 
 		// Convert the Bond PV into the Dirty Bond Price in Percent, note that the sign of the notional and the pv will cancel out
 		const double faceValue = getSchedule()->getNotional();
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
 
         const double fwdDirtyPrice = pv / faceValue * 100.0;
 	

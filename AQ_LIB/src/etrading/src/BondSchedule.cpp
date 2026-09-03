@@ -821,22 +821,22 @@ namespace etrading
 		auto allCashflows = getAllCashflows();
 		size_t cashflowSize = allCashflows.size();
 
-		MLIB_REQUIRE(cashflowSize != 0, "Cashflows cannot be empty.");
+		AQ_REQUIRE(cashflowSize != 0, "Cashflows cannot be empty.");
 
 		bool hasBondExDividendDate = (!exDividendTenor_.empty());
 
 		//1) Headers
 		if (showColumnHeaders)
 		{
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_START_HEADER), includeAccrualStart);
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_END_HEADER), includeAccrualEnd);
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_YEAR_FRACTIONS_HEADER), includeAccrualYearFraction);
-			MLIB_PUSH_BACK_IF(headers, toString(TRUE_YIELD_YEAR_FRACTIONS_HEADER), includeTrueYieldAccrualYearFraction);
-			MLIB_PUSH_BACK_IF(headers, toString(EX_DIVIDEND_DATE_HEADER), hasBondExDividendDate && includeExDividendDate);
-			MLIB_PUSH_BACK_IF(headers, toString(PAYMENT_DATE_HEADER), includePaymentDate);
-			MLIB_PUSH_BACK_IF(headers, toString(NOTIONAL_HEADER), includeNotional);
-			MLIB_PUSH_BACK_IF(headers, toString(NOTIONAL_EXCHANGE_HEADER), includeNotionalExchange);
-			MLIB_PUSH_BACK_IF(headers, toString(LEVERAGE_HEADER), includeLeverage);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_START_HEADER), includeAccrualStart);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_END_HEADER), includeAccrualEnd);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_YEAR_FRACTIONS_HEADER), includeAccrualYearFraction);
+			AQ_PUSH_BACK_IF(headers, toString(TRUE_YIELD_YEAR_FRACTIONS_HEADER), includeTrueYieldAccrualYearFraction);
+			AQ_PUSH_BACK_IF(headers, toString(EX_DIVIDEND_DATE_HEADER), hasBondExDividendDate && includeExDividendDate);
+			AQ_PUSH_BACK_IF(headers, toString(PAYMENT_DATE_HEADER), includePaymentDate);
+			AQ_PUSH_BACK_IF(headers, toString(NOTIONAL_HEADER), includeNotional);
+			AQ_PUSH_BACK_IF(headers, toString(NOTIONAL_EXCHANGE_HEADER), includeNotionalExchange);
+			AQ_PUSH_BACK_IF(headers, toString(LEVERAGE_HEADER), includeLeverage);
 
 		}
 
@@ -855,19 +855,19 @@ namespace etrading
 
 			// bool isUpfrontCf = cashflow->isUpfrontCashflow(); <--- Unused Variable
 
-			MLIB_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getAccrualStartDate()), includeAccrualStart);
-			MLIB_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getAccrualEndDate()), includeAccrualEnd);
-			MLIB_PUSH_BACK_IF(body, cashflow->getAccrualYearFraction(), includeAccrualYearFraction);
+			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getAccrualStartDate()), includeAccrualStart);
+			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getAccrualEndDate()), includeAccrualEnd);
+			AQ_PUSH_BACK_IF(body, cashflow->getAccrualYearFraction(), includeAccrualYearFraction);
 
-			MLIB_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getPaymentDate()), includePaymentDate);
+			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getPaymentDate()), includePaymentDate);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->getBondTrueYieldYearFraction(), includeTrueYieldAccrualYearFraction);
-			MLIB_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getBondExDividendDate()), hasBondExDividendDate && includeExDividendDate);
+			AQ_PUSH_BACK_IF(body, cashflow->getBondTrueYieldYearFraction(), includeTrueYieldAccrualYearFraction);
+			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getBondExDividendDate()), hasBondExDividendDate && includeExDividendDate);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->getNotional(), includeNotional);
+			AQ_PUSH_BACK_IF(body, cashflow->getNotional(), includeNotional);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->getNotionalExchange(), includeNotionalExchange);
-			MLIB_PUSH_BACK_IF(body, cashflow->getLeverage(), includeLeverage);
+			AQ_PUSH_BACK_IF(body, cashflow->getNotionalExchange(), includeNotionalExchange);
+			AQ_PUSH_BACK_IF(body, cashflow->getLeverage(), includeLeverage);
 
 			bodyBlock.push_back(body);
 		}

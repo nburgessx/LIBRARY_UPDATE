@@ -55,9 +55,9 @@ namespace etrading
 		shiftTypeEnum_ = PERTURBED_SHIFT_TYPE;
 		isFwdInter_ = isFwdInter;
 
-		MLIB_REQUIRE( perturbedInstrumentList.size() == perturbedInstrumentIsOutright.size(), "Invalid Jacobian Data: The number of perturbed instruments must match the number of instrument isOutright vector elements" )
-		MLIB_REQUIRE( perturbedInstrumentList.size() == perturbedMarketDataShiftSizes.size(), "Invalid Jacobian Data: The number of perturbed instruments must match the number of perturbation shift sizes" )
-		MLIB_REQUIRE( perturbedInstrumentList.size() == perturbedDFObjects.size(), "Invalid Jacobian Data: the number of perturbed instruments must match the number of perturbed discount factor objects" )
+		AQ_REQUIRE( perturbedInstrumentList.size() == perturbedInstrumentIsOutright.size(), "Invalid Jacobian Data: The number of perturbed instruments must match the number of instrument isOutright vector elements" )
+		AQ_REQUIRE( perturbedInstrumentList.size() == perturbedMarketDataShiftSizes.size(), "Invalid Jacobian Data: The number of perturbed instruments must match the number of perturbation shift sizes" )
+		AQ_REQUIRE( perturbedInstrumentList.size() == perturbedDFObjects.size(), "Invalid Jacobian Data: the number of perturbed instruments must match the number of perturbed discount factor objects" )
 
 		// Update Jacobian Non-Matrix Data
 		paymentDates_					= originalDFObject->paymentDates();
@@ -94,8 +94,8 @@ namespace etrading
 			const DoubleVector jacobianColumnDataByDiscountFactor( changeInDiscountFactors( originalDFObject, perturbedDFObjects[ jacobianCol ] ) );
 			const DoubleVector jacobianColumnDataByForwardRates( changeInForwardRates( originalDFObject, perturbedDFObjects[ jacobianCol ], isFwdInter ) );
 		
-			MLIB_REQUIRE( jacobianColumnDataByDiscountFactor.size() == nJacobianRows, "Invalid Jacobian Data: The number of Jacobian Deltas by Discount Factor must match the number of discount factor payment dates" )
-			MLIB_REQUIRE( jacobianColumnDataByForwardRates.size() == nJacobianRows, "Invalid Jacobian Data: The number of Jacobian Deltas by Forward Rate must match the number of forward rate fixing dates" )
+			AQ_REQUIRE( jacobianColumnDataByDiscountFactor.size() == nJacobianRows, "Invalid Jacobian Data: The number of Jacobian Deltas by Discount Factor must match the number of discount factor payment dates" )
+			AQ_REQUIRE( jacobianColumnDataByForwardRates.size() == nJacobianRows, "Invalid Jacobian Data: The number of Jacobian Deltas by Forward Rate must match the number of forward rate fixing dates" )
 
 			for( size_t jacobianRow = 0; jacobianRow < nJacobianRows; ++jacobianRow )
 			{
@@ -110,52 +110,52 @@ namespace etrading
 	// Method to return flat-shift Jacobian results by discount factor
 	DoubleVector JacobianData::flatShiftJacobianByDiscountFactor() const
 	{
-		MLIB_REQUIRE( shiftTypeEnum_ == FLAT_SHIFT_TYPE, "Invalid ShiftType used with Flat-Shift Jacobian Data" )
+		AQ_REQUIRE( shiftTypeEnum_ == FLAT_SHIFT_TYPE, "Invalid ShiftType used with Flat-Shift Jacobian Data" )
 		return flatShiftJacobianByDiscountFactor_;
 	}
 	
 	// Method to return flat-shift Jacobian results by forward rate
 	DoubleVector JacobianData::flatShiftJacobianByForwardRate() const
 	{
-		MLIB_REQUIRE( shiftTypeEnum_ == FLAT_SHIFT_TYPE, "Invalid ShiftType used with Flat-Shift Jacobian Data" )
+		AQ_REQUIRE( shiftTypeEnum_ == FLAT_SHIFT_TYPE, "Invalid ShiftType used with Flat-Shift Jacobian Data" )
 		return flatShiftJacobianByForwardRate_;
 	}
 	
 	// Method to return perturbed Jacobian results by discount factor
 	DoubleMatrix JacobianData::perturbedJacobianByDiscountFactor() const
 	{
-		MLIB_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
+		AQ_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
 		return perturbedJacobianByDiscountFactor_;
 	}
 	
 	// Method to return perturbed Jacobian results by forward rate
 	DoubleMatrix JacobianData::perturbedJacobianByForwardRate() const
 	{
-		MLIB_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
+		AQ_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
 		return perturbedJacobianByForwardRate_;
 	}
 
 	DoubleVector JacobianData::perturbedMarketDataShiftSizes() const
 	{
-		MLIB_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
+		AQ_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
 		return perturbedMarketDataShiftSizes_;
 	}
 
 	StandardStringVector JacobianData::perturbedInstrumentList() const
 	{
-		MLIB_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
+		AQ_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
 		return perturbedInstrumentList_;
 	}
 
 	StandardStringVector JacobianData::perturbedInstrumentTenors() const
 	{
-		MLIB_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
+		AQ_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
 		return perturbedInstrumentTenors_;
 	}
 
 	std::vector<bool> JacobianData::perturbedInstrumperturbedInstrumentIsOutright() const
 	{
-		MLIB_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
+		AQ_REQUIRE( shiftTypeEnum_ == PERTURBED_SHIFT_TYPE, "Invalid ShiftType used with Perturbed Jacobian Data" )
 		return perturbedInstrumentIsOutright_;
 	}
 
@@ -169,9 +169,9 @@ namespace etrading
         const size_t nShiftedPaymentDates     = shiftedDFObject->paymentDates().size();
         const size_t nShiftedDFs              = shiftedDFObject->discountFactors().size();
 
-        MLIB_REQUIRE( nOriginalPaymentDates == nOriginalDFs,	"Unable to calculate the Discount Factor Jacobian - Invalid 'OriginalDiscountFactors' - Number of Payment Dates must match the number of original Discount Factors" )
-        MLIB_REQUIRE( nShiftedPaymentDates == nShiftedDFs,		"Unable to calculate the Discount Factor Jacobian - Invalid 'ShiftedDiscountFactors' - Number of Payment Dates must match the number of original Discount Factors" )
-        MLIB_REQUIRE( nOriginalDFs == nShiftedDFs,				"Unable to calculate the Discount Factor Jacobian - Number of Original Discount Factors must match the number of Shifted Discount Factors" )
+        AQ_REQUIRE( nOriginalPaymentDates == nOriginalDFs,	"Unable to calculate the Discount Factor Jacobian - Invalid 'OriginalDiscountFactors' - Number of Payment Dates must match the number of original Discount Factors" )
+        AQ_REQUIRE( nShiftedPaymentDates == nShiftedDFs,		"Unable to calculate the Discount Factor Jacobian - Invalid 'ShiftedDiscountFactors' - Number of Payment Dates must match the number of original Discount Factors" )
+        AQ_REQUIRE( nOriginalDFs == nShiftedDFs,				"Unable to calculate the Discount Factor Jacobian - Number of Original Discount Factors must match the number of Shifted Discount Factors" )
 
         // Change in Discount Factors
         DoubleVector changeInDiscountFactors( nOriginalPaymentDates, 0.0 );
@@ -195,15 +195,15 @@ namespace etrading
         const size_t nShiftedPaymentDates     = shiftedDFObject->paymentDates().size();
         const size_t nShiftedDFs              = shiftedDFObject->discountFactors().size();
 
-        MLIB_REQUIRE( nOriginalPaymentDates == nOriginalDFs,	"Unable to calculate the Forward Rate Jacobian - Invalid 'OriginalDiscountFactors' - Number of Payment Dates must match the number of original Discount Factors" )
-        MLIB_REQUIRE( nShiftedPaymentDates == nShiftedDFs,		"Unable to calculate the Forward Rate Jacobian - Invalid 'ShiftedDiscountFactors' - Number of Payment Dates must match the number of original Discount Factors" )
-        MLIB_REQUIRE( nOriginalDFs == nShiftedDFs,				"Unable to calculate the Forward Rate Jacobian - Number of Original Discount Factors must match the number of Shifted Discount Factors" )
+        AQ_REQUIRE( nOriginalPaymentDates == nOriginalDFs,	"Unable to calculate the Forward Rate Jacobian - Invalid 'OriginalDiscountFactors' - Number of Payment Dates must match the number of original Discount Factors" )
+        AQ_REQUIRE( nShiftedPaymentDates == nShiftedDFs,		"Unable to calculate the Forward Rate Jacobian - Invalid 'ShiftedDiscountFactors' - Number of Payment Dates must match the number of original Discount Factors" )
+        AQ_REQUIRE( nOriginalDFs == nShiftedDFs,				"Unable to calculate the Forward Rate Jacobian - Number of Original Discount Factors must match the number of Shifted Discount Factors" )
 
 		// Forward Rates
 		const DoubleVector originalForwardRates		= originalDFObject->implyForwardRates( isFwdInter );
 		const DoubleVector shiftedForwardRates		= shiftedDFObject->implyForwardRates( isFwdInter );
 
-		MLIB_REQUIRE( originalForwardRates.size() == shiftedForwardRates.size(), "Unable to calculate the Forward Rate Jacobian - Number of Original Forward Rates and Shifted Forward Rates must be the same" )
+		AQ_REQUIRE( originalForwardRates.size() == shiftedForwardRates.size(), "Unable to calculate the Forward Rate Jacobian - Number of Original Forward Rates and Shifted Forward Rates must be the same" )
 
         // Change in Forward Rates
         DoubleVector changeInForwardRates( nOriginalPaymentDates, 0.0 );
@@ -243,8 +243,8 @@ namespace etrading
 		  perturbedInstrumentsIsOutright_(std::vector<bool>()) // null vector
     {
         // Dimension Check(s)
-        MLIB_REQUIRE( flatShiftJacobian.size() > 0, "Invalid Jacobian: The Jacobian is empty")
-        MLIB_REQUIRE( riskDateVector.size() == flatShiftJacobian.size(), "Invalid Jacobian Row Space: The number of riskDates must match the number of Jacobian rows" )
+        AQ_REQUIRE( flatShiftJacobian.size() > 0, "Invalid Jacobian: The Jacobian is empty")
+        AQ_REQUIRE( riskDateVector.size() == flatShiftJacobian.size(), "Invalid Jacobian Row Space: The number of riskDates must match the number of Jacobian rows" )
     }
 
     // Perturbed Jacobian Constructor - Server APIs - Dates stored as Dates
@@ -275,10 +275,10 @@ namespace etrading
           discountFactorResults_(discountFactorResults)
     {
         // Dimension Check(s)
-        MLIB_REQUIRE( perturbedJacobian.size() > 0, "Invalid Jacobian: The Jacobian is empty")
-        MLIB_REQUIRE( riskDateVector.size() == perturbedJacobian.size(), "Invalid Jacobian Results Object: The number of riskDates must match the number of Jacobian rows" )
-        MLIB_REQUIRE( perturbedInstruments.size() == perturbedJacobian[0].size(), "Invalid Jacobian Column Space: The number of Instruments must match the number of Jacobian columns" )
-		MLIB_REQUIRE( perturbedInstrumentsIsOutright.size() == perturbedJacobian[0].size(), "Invalid Jacobian Column Space: The number of OutrightInstrument parameters must match the number of Jacobian columns" )
+        AQ_REQUIRE( perturbedJacobian.size() > 0, "Invalid Jacobian: The Jacobian is empty")
+        AQ_REQUIRE( riskDateVector.size() == perturbedJacobian.size(), "Invalid Jacobian Results Object: The number of riskDates must match the number of Jacobian rows" )
+        AQ_REQUIRE( perturbedInstruments.size() == perturbedJacobian[0].size(), "Invalid Jacobian Column Space: The number of Instruments must match the number of Jacobian columns" )
+		AQ_REQUIRE( perturbedInstrumentsIsOutright.size() == perturbedJacobian[0].size(), "Invalid Jacobian Column Space: The number of OutrightInstrument parameters must match the number of Jacobian columns" )
     }
 
     // Flat-Shift Jacobian Constructor - Object Pool APIs - Dates stored as Term Doubles
@@ -306,8 +306,8 @@ namespace etrading
 		  perturbedInstrumentsIsOutright_(std::vector<bool>()) // null vector
     {
         // Dimension Check(s)
-        MLIB_REQUIRE( flatShiftJacobian.size() > 0, "Invalid Jacobian: The Jacobian is empty")
-        MLIB_REQUIRE( riskDateVectorInTermFormat.size() == flatShiftJacobian.size(), "Invalid Jacobian Row Space: The number of riskDates must match the number of Jacobian rows" )
+        AQ_REQUIRE( flatShiftJacobian.size() > 0, "Invalid Jacobian: The Jacobian is empty")
+        AQ_REQUIRE( riskDateVectorInTermFormat.size() == flatShiftJacobian.size(), "Invalid Jacobian Row Space: The number of riskDates must match the number of Jacobian rows" )
     }
 
     // Perturbed Jacobian Constructor - Object Pool APIs - Dates stored as Term Doubles
@@ -338,10 +338,10 @@ namespace etrading
           discountFactorResults_(discountFactorResults)
     {
         // Dimension Check(s)
-        MLIB_REQUIRE( perturbedJacobian.size() > 0, "Invalid Jacobian: The Jacobian is empty")
-        MLIB_REQUIRE( riskDateVectorInTermFormat.size() == perturbedJacobian.size(), "Invalid Jacobian Results Object: The number of riskDates must match the number of Jacobian rows" )
-        MLIB_REQUIRE( perturbedInstruments.size() == perturbedJacobian[0].size(), "Invalid Jacobian Column Space: The number of Instruments must match the number of Jacobian columns" )
-		MLIB_REQUIRE( perturbedInstrumentsIsOutright.size() == perturbedJacobian[0].size(), "Invalid Jacobian Column Space: The number of OutrightInstrument parameters must match the number of Jacobian columns" )
+        AQ_REQUIRE( perturbedJacobian.size() > 0, "Invalid Jacobian: The Jacobian is empty")
+        AQ_REQUIRE( riskDateVectorInTermFormat.size() == perturbedJacobian.size(), "Invalid Jacobian Results Object: The number of riskDates must match the number of Jacobian rows" )
+        AQ_REQUIRE( perturbedInstruments.size() == perturbedJacobian[0].size(), "Invalid Jacobian Column Space: The number of Instruments must match the number of Jacobian columns" )
+		AQ_REQUIRE( perturbedInstrumentsIsOutright.size() == perturbedJacobian[0].size(), "Invalid Jacobian Column Space: The number of OutrightInstrument parameters must match the number of Jacobian columns" )
     }
 
     // =========================================================================================================================        
@@ -407,13 +407,13 @@ namespace etrading
     // ========= ACCESSORS ===========================================================================================================================
     std::shared_ptr<etrading::CurveDescription> JacobianResults::curveDescription() const
     {
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Invalid Curve Results: CurveDescription does not exist" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Invalid Curve Results: CurveDescription does not exist" )
         return curveDescription_;
     }
 
     std::shared_ptr<etrading::DiscountFactorResults> JacobianResults::discountFactorResults() const
     {
-        MLIB_REQUIRE( discountFactorResults_ != nullptr, "Invalid Curve Results: discountFactorResults do not exist" )
+        AQ_REQUIRE( discountFactorResults_ != nullptr, "Invalid Curve Results: discountFactorResults do not exist" )
         return discountFactorResults_;
     }
 
@@ -422,8 +422,8 @@ namespace etrading
     // Populate FLAT-SHIFT Jacobian from Server APIs *** using Dates ***
     void JacobianResults::populateFlatShiftJacobianFromStringMatrix( DateVector & riskDates, DoubleVector & flatShiftJacobian, const StandardStringMatrix & inputMatrix )
     {
-        MLIB_REQUIRE( !inputMatrix.empty(),         "Unble to create Jacobian - Input Matrix is empty" )
-        MLIB_REQUIRE( inputMatrix[0].size() == 2,   "Unble to create Jacobian - Input Matrix must consist of exactly 2 columns; a single column of risk dates and a single column of risk totals" )
+        AQ_REQUIRE( !inputMatrix.empty(),         "Unble to create Jacobian - Input Matrix is empty" )
+        AQ_REQUIRE( inputMatrix[0].size() == 2,   "Unble to create Jacobian - Input Matrix must consist of exactly 2 columns; a single column of risk dates and a single column of risk totals" )
 
         const size_t rowSizeWithoutHeader = inputMatrix.size() - 1;
         riskDates.reserve( rowSizeWithoutHeader );
@@ -444,8 +444,8 @@ namespace etrading
     // Populate FLAT-SHIFT Jacobian from Object Pool *** using Terms Doubles for Dates ***
     void JacobianResults::populateFlatShiftJacobianFromStringMatrix( DoubleVector & riskDatesAsDouble, DoubleVector & flatShiftJacobian, const StandardStringMatrix & inputMatrix )
     {
-        MLIB_REQUIRE( !inputMatrix.empty(),         "Unble to create Jacobian - Input Matrix is empty" )
-        MLIB_REQUIRE( inputMatrix[0].size() == 2,   "Unble to create Jacobian - Input Matrix must consist of exactly 2 columns; a single column of risk dates and a single column of risk totals" )
+        AQ_REQUIRE( !inputMatrix.empty(),         "Unble to create Jacobian - Input Matrix is empty" )
+        AQ_REQUIRE( inputMatrix[0].size() == 2,   "Unble to create Jacobian - Input Matrix must consist of exactly 2 columns; a single column of risk dates and a single column of risk totals" )
 
         const size_t rowSizeWithoutHeader = inputMatrix.size() - 1;
         riskDatesAsDouble.reserve( rowSizeWithoutHeader );
@@ -467,9 +467,9 @@ namespace etrading
     // Populate PERTURBED Jacobian from Server APIs *** using Dates ***
     void JacobianResults::populatePerturbedJacobianFromStringMatrix( DateVector & riskDates, StandardStringVector & perturbedInstruments, DoubleMatrix & perturbedJacobian, const StandardStringMatrix & inputMatrix )
     {
-        MLIB_REQUIRE( !inputMatrix.empty(),         "Unble to create Jacobian - Input Matrix is empty" )
-        MLIB_REQUIRE( inputMatrix.size() >= 2,      "Unble to create Jacobian - Input Matrix must have 2 or more rows, a single row of instruments and one or more rows of risk totals" )
-        MLIB_REQUIRE( inputMatrix[0].size() >= 2,   "Unble to create Jacobian - Input Matrix must have 2 or more columns, a single column of risk dates and one or more columns of risk totals" )
+        AQ_REQUIRE( !inputMatrix.empty(),         "Unble to create Jacobian - Input Matrix is empty" )
+        AQ_REQUIRE( inputMatrix.size() >= 2,      "Unble to create Jacobian - Input Matrix must have 2 or more rows, a single row of instruments and one or more rows of risk totals" )
+        AQ_REQUIRE( inputMatrix[0].size() >= 2,   "Unble to create Jacobian - Input Matrix must have 2 or more columns, a single column of risk dates and one or more columns of risk totals" )
 
         const size_t rowSizeWithoutHeader = inputMatrix.size() - 1;
         riskDates.reserve( rowSizeWithoutHeader );
@@ -508,9 +508,9 @@ namespace etrading
     // Populate PERTURBED Jacobian from Object Pool *** using Terms Doubles for Dates ***
     void JacobianResults::populatePerturbedJacobianFromStringMatrix( DoubleVector & riskDatesAsDouble, StandardStringVector & perturbedInstruments, DoubleMatrix & perturbedJacobian, const StandardStringMatrix & inputMatrix )
     {
-        MLIB_REQUIRE( !inputMatrix.empty(),         "Unble to create Jacobian - Input Matrix is empty" )
-        MLIB_REQUIRE( inputMatrix.size() >= 2,      "Unble to create Jacobian - Input Matrix must have 2 or more rows, a single row of instruments and one or more rows of risk totals" )
-        MLIB_REQUIRE( inputMatrix[0].size() >= 2,   "Unble to create Jacobian - Input Matrix must have 2 or more columns, a single column of risk dates and one or more columns of risk totals" )
+        AQ_REQUIRE( !inputMatrix.empty(),         "Unble to create Jacobian - Input Matrix is empty" )
+        AQ_REQUIRE( inputMatrix.size() >= 2,      "Unble to create Jacobian - Input Matrix must have 2 or more rows, a single row of instruments and one or more rows of risk totals" )
+        AQ_REQUIRE( inputMatrix[0].size() >= 2,   "Unble to create Jacobian - Input Matrix must have 2 or more columns, a single column of risk dates and one or more columns of risk totals" )
         
         const size_t rowSizeWithoutHeader = inputMatrix.size() - 1;
         riskDatesAsDouble.reserve( rowSizeWithoutHeader );
@@ -551,8 +551,8 @@ namespace etrading
     // Method to consolodate and display the Flat Shift Jacobian
     VariantMatrix JacobianResults::displayFlatShiftJacobian() const
     {
-        MLIB_REQUIRE( shiftType_ == FLAT_SHIFT_TYPE, "Invalid Jacobian: The shiftType must be FLAT_SHIFT" )
-        MLIB_REQUIRE( flatShiftJacobian_.size() > 0, "Invalid Jacobian: The Jacobian is empty" )
+        AQ_REQUIRE( shiftType_ == FLAT_SHIFT_TYPE, "Invalid Jacobian: The shiftType must be FLAT_SHIFT" )
+        AQ_REQUIRE( flatShiftJacobian_.size() > 0, "Invalid Jacobian: The Jacobian is empty" )
 
         // 1.  *** CHECK AND SET DIMENSIONS ***
         // ------------------------------------
@@ -566,7 +566,7 @@ namespace etrading
         // ------------------------------------
         // Risk Dates are in Double Format when populated by the object pool and in Date format otherwise
         // Therefore we must source the correct risk dates from the riskDateVector or the riskDateVectorInTermFormat
-        MLIB_REQUIRE( !riskDateVector_.empty() || !riskDateVectorInTermFormat_.empty(), "Invalid Jacobian: Invalid Risk Dates" )
+        AQ_REQUIRE( !riskDateVector_.empty() || !riskDateVectorInTermFormat_.empty(), "Invalid Jacobian: Invalid Risk Dates" )
         
         DateVector riskDatesToDisplay = riskDateVector_;
         if ( riskDatesToDisplay.empty() )
@@ -575,8 +575,8 @@ namespace etrading
         }
         
         // Consistency Check & Prevent Access Violations
-        MLIB_REQUIRE( riskDatesToDisplay.size() == flatShiftJacobian_.size(), "Invalid Jacobian: Inconsistent Number of Risk Dates and Jacobian Matrix Rows" )
-        MLIB_REQUIRE( riskDatesToDisplay.size() < totalRowSize, "Invalid Jacobian: Inconsistent Number of Risk Dates" )
+        AQ_REQUIRE( riskDatesToDisplay.size() == flatShiftJacobian_.size(), "Invalid Jacobian: Inconsistent Number of Risk Dates and Jacobian Matrix Rows" )
+        AQ_REQUIRE( riskDatesToDisplay.size() < totalRowSize, "Invalid Jacobian: Inconsistent Number of Risk Dates" )
 
         // 3.  *** Construct the Jacobain Display ***
         // ------------------------------------------
@@ -675,7 +675,7 @@ namespace etrading
                             }
                             default:
                             {
-                                MLIB_THROW( "Invalid Jacobian: Invalid Risk Type: " )
+                                AQ_THROW( "Invalid Jacobian: Invalid Risk Type: " )
                             }
                         }
 
@@ -687,7 +687,7 @@ namespace etrading
                     }
                     default:
                     {
-                        MLIB_THROW( "Invalid Jacobian: Inconsistent Jacobian Headers" )
+                        AQ_THROW( "Invalid Jacobian: Inconsistent Jacobian Headers" )
                     }
                 }
             }
@@ -707,8 +707,8 @@ namespace etrading
     // Method to consolodate and display the Perturbed Jacobian
     VariantMatrix JacobianResults::displayPerturbedJacobian() const
     {
-        MLIB_REQUIRE( shiftType_ == PERTURBED_SHIFT_TYPE, "Invalid Jacobian: The shiftType must be 'PERTURBED'" )
-        MLIB_REQUIRE( perturbedJacobian_.size() > 0, "Invalid Jacobian: The Jacobian is empty" )
+        AQ_REQUIRE( shiftType_ == PERTURBED_SHIFT_TYPE, "Invalid Jacobian: The shiftType must be 'PERTURBED'" )
+        AQ_REQUIRE( perturbedJacobian_.size() > 0, "Invalid Jacobian: The Jacobian is empty" )
 
         // 1.  *** CHECK AND SET DIMENSIONS ***
         // ------------------------------------
@@ -724,7 +724,7 @@ namespace etrading
         // ------------------------------------
         // Risk Dates are in Double Format when populated by the object pool and in Date format otherwise
         // Therefore we must source the correct risk dates from the riskDateVector or the riskDateVectorInTermFormat
-        MLIB_REQUIRE( !riskDateVector_.empty() || !riskDateVectorInTermFormat_.empty(), "Invalid Jacobian: Invalid Risk Dates" )
+        AQ_REQUIRE( !riskDateVector_.empty() || !riskDateVectorInTermFormat_.empty(), "Invalid Jacobian: Invalid Risk Dates" )
         
         DateVector riskDatesToDisplay = riskDateVector_;
         if ( riskDatesToDisplay.empty() )
@@ -733,8 +733,8 @@ namespace etrading
         }
         
         // Consistency Check & Prevent Access Violations
-        MLIB_REQUIRE( riskDatesToDisplay.size() == perturbedJacobian_.size(), "Invalid Jacobian: Inconsistent Number of Risk Dates and Jacobian Matrix Rows" )
-        MLIB_REQUIRE( riskDatesToDisplay.size() < totalRowSize, "Invalid Jacobian: Inconsistent Number of Risk Dates" )
+        AQ_REQUIRE( riskDatesToDisplay.size() == perturbedJacobian_.size(), "Invalid Jacobian: Inconsistent Number of Risk Dates and Jacobian Matrix Rows" )
+        AQ_REQUIRE( riskDatesToDisplay.size() < totalRowSize, "Invalid Jacobian: Inconsistent Number of Risk Dates" )
 
         // 3.  *** Construct the Jacobain Display ***
         // ------------------------------------------
@@ -785,7 +785,7 @@ namespace etrading
                         thisRow[0] = "OutrightInstrument";				// Column 1
 
 						// Column 2 Onwards: Instrument Is Outright?
-						MLIB_REQUIRE( perturbedInstrumentsIsOutright_.size() == totalColumnSize - extraColumns, "Invalid Jacobian: Number of Instrument IsOutright parameters must match the number of Jacobian Columns" )
+						AQ_REQUIRE( perturbedInstrumentsIsOutright_.size() == totalColumnSize - extraColumns, "Invalid Jacobian: Number of Instrument IsOutright parameters must match the number of Jacobian Columns" )
                         for( size_t col = 0; col < perturbedInstrumentsIsOutright_.size(); ++col )
                         {
                             thisRow[col+extraColumns] = perturbedInstrumentsIsOutright_[col];    // Column 2 Onwards
@@ -799,7 +799,7 @@ namespace etrading
                         thisRow[0] = "MarketDataShiftSize"; // Column 1
                         
                         // Column 2 Onwards: Shift Sizes
-                        MLIB_REQUIRE( perturbedMarketDataShiftSizes_.size() == totalColumnSize - extraColumns, "Invalid Jacobian: Number of ShiftSizes must match the number of Jacobian Columns" )
+                        AQ_REQUIRE( perturbedMarketDataShiftSizes_.size() == totalColumnSize - extraColumns, "Invalid Jacobian: Number of ShiftSizes must match the number of Jacobian Columns" )
                         for( size_t col = 0; col < perturbedMarketDataShiftSizes_.size(); ++col )
                         {
                             thisRow[col+extraColumns] = perturbedMarketDataShiftSizes_[col];    // Column 2 Onwards
@@ -845,12 +845,12 @@ namespace etrading
                             }
                             default:
                             {
-                                MLIB_THROW( "Invalid Jacobian: Invalid Risk Type: " )
+                                AQ_THROW( "Invalid Jacobian: Invalid Risk Type: " )
                             }
                         }
 
                         // Column 2 Onwards: Perturbed Instruments
-                        MLIB_REQUIRE( perturbedInstruments_.size() == totalColumnSize - extraColumns, "Invalid Jacobian: Number of Perturbed Instrument Buckets must match the number of Jacobian Columns" )
+                        AQ_REQUIRE( perturbedInstruments_.size() == totalColumnSize - extraColumns, "Invalid Jacobian: Number of Perturbed Instrument Buckets must match the number of Jacobian Columns" )
                         for( size_t col = 0; col < perturbedInstruments_.size(); ++col )
                         {
                             thisRow[col+extraColumns] = perturbedInstruments_[col];    // Column 2 Onwards
@@ -860,7 +860,7 @@ namespace etrading
                     }
                     default:
                     {
-                        MLIB_THROW( "Invalid Jacobian: Inconsistent Jacobian Headers" )
+                        AQ_THROW( "Invalid Jacobian: Inconsistent Jacobian Headers" )
                     }
                 }
             }
@@ -887,14 +887,14 @@ namespace etrading
     // Method to Calculate the Total Risk across all instruments for each Risk Date.
     DoubleVector JacobianResults::calculateFlatShiftRiskTotals() const
     {
-        MLIB_REQUIRE( shiftType_ == FLAT_SHIFT_TYPE, "Invalid Shift Type: The shiftType must be 'FLAT_SHIFT'." )
-        MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize_ ), "Invalid Data: GradientShiftSize cannot be zero or less than 1.0e-14 in absolute terms" )
+        AQ_REQUIRE( shiftType_ == FLAT_SHIFT_TYPE, "Invalid Shift Type: The shiftType must be 'FLAT_SHIFT'." )
+        AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize_ ), "Invalid Data: GradientShiftSize cannot be zero or less than 1.0e-14 in absolute terms" )
 
         size_t nRiskDates       = riskDateVector_.size();
         size_t nJacobianRows    = flatShiftJacobian_.size();
     
-        MLIB_REQUIRE( nJacobianRows > 0, "Invalid Jacobian: Jacobian is Empty - Null Row Space" )
-        MLIB_REQUIRE( nRiskDates == nJacobianRows, "Invalid Jacobian: The number of Risk Dates must match the number of Jacobian rows" )
+        AQ_REQUIRE( nJacobianRows > 0, "Invalid Jacobian: Jacobian is Empty - Null Row Space" )
+        AQ_REQUIRE( nRiskDates == nJacobianRows, "Invalid Jacobian: The number of Risk Dates must match the number of Jacobian rows" )
         
         DoubleVector riskTotals( nRiskDates, 0.0 );
         for ( size_t i = 0; i < nRiskDates; ++i )
@@ -910,27 +910,27 @@ namespace etrading
     // Method to Calculate the Total Risk across all instruments for each Risk Date.
     DoubleVector JacobianResults::calculatePerturbedRiskTotals( const bool & useOutrightInstrumentsOnly ) const
     {
-        MLIB_REQUIRE( shiftType_ == PERTURBED_SHIFT_TYPE, "Invalid Shift Type: The shiftType must be 'PERTURBED'." )
-        MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize_ ), "Invalid Data: GradientShiftSize cannot be zero or less than 1.0e-14 in absolute terms" )
+        AQ_REQUIRE( shiftType_ == PERTURBED_SHIFT_TYPE, "Invalid Shift Type: The shiftType must be 'PERTURBED'." )
+        AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize_ ), "Invalid Data: GradientShiftSize cannot be zero or less than 1.0e-14 in absolute terms" )
 
         size_t nRiskDates       = riskDateVector_.size();
         size_t nJacobianRows    = perturbedJacobian_.size();
     
-        MLIB_REQUIRE( nJacobianRows > 0, "Invalid Jacobian: Jacobian is Empty - Null Row Space" )
-        MLIB_REQUIRE( nRiskDates == nJacobianRows, "Invalid Jacobian: The number of Risk Dates must match the number of Jacobian rows" )
+        AQ_REQUIRE( nJacobianRows > 0, "Invalid Jacobian: Jacobian is Empty - Null Row Space" )
+        AQ_REQUIRE( nRiskDates == nJacobianRows, "Invalid Jacobian: The number of Risk Dates must match the number of Jacobian rows" )
         
         size_t nShiftSizes      = perturbedMarketDataShiftSizes_.size();
         size_t nJacobianColumns = perturbedJacobian_[0].size();
     
-        MLIB_REQUIRE( nJacobianColumns > 0, "Invalid Jacobian: Jacobian is Empty - Null Column Space" )
-        MLIB_REQUIRE( nShiftSizes == nJacobianColumns, "Invalid Jacobian: ShiftSizeVector size must equal the number of Jacobian columns"  )
+        AQ_REQUIRE( nJacobianColumns > 0, "Invalid Jacobian: Jacobian is Empty - Null Column Space" )
+        AQ_REQUIRE( nShiftSizes == nJacobianColumns, "Invalid Jacobian: ShiftSizeVector size must equal the number of Jacobian columns"  )
 
 		// Use the perturbedInstrumentIsOutright vector if present, set all columns to isOutright = true otherwise
 		// This vector tells us which instrument buckets to use for risk totals, outright instruments are to be included in risk totals and spread instruments excluded.
 		std::vector<bool> isOutrightInstrument( nJacobianColumns, true );
 		if ( perturbedInstrumentsIsOutright_.size() != 0 )
 		{
-			MLIB_REQUIRE( perturbedInstrumentsIsOutright_.size() == nJacobianColumns, "Invalid Jacobian Data: Number if Jacobian columns must equal size of isOutrightInstrument vector")
+			AQ_REQUIRE( perturbedInstrumentsIsOutright_.size() == nJacobianColumns, "Invalid Jacobian Data: Number if Jacobian columns must equal size of isOutrightInstrument vector")
 			isOutrightInstrument = perturbedInstrumentsIsOutright_;
 		};
 
@@ -957,7 +957,7 @@ namespace etrading
     // Method to Imply New Discount Factors
     DoubleVector JacobianResults::implyNewDiscountFactors() const
     {
-        MLIB_REQUIRE( discountFactorResults_ != nullptr, "Unable to imply new discount factors: Discount Factor results data is empty" )
+        AQ_REQUIRE( discountFactorResults_ != nullptr, "Unable to imply new discount factors: Discount Factor results data is empty" )
         DoubleVector originalDiscountFactors    = discountFactorResults_->discountFactors();
         
         // Calculate the Risk Totals
@@ -972,13 +972,13 @@ namespace etrading
         }
         else
         {
-            MLIB_THROW( "Invalid Jacobian: ShiftType must be 'FLAT_SHIFT' or 'PERTURBED'." )
+            AQ_THROW( "Invalid Jacobian: ShiftType must be 'FLAT_SHIFT' or 'PERTURBED'." )
         }
 
         // Dimension Checks
         size_t nDiscountFactors                 = originalDiscountFactors.size();
         size_t nRiskTotals                      = riskTotals.size();
-        MLIB_REQUIRE( nDiscountFactors == nRiskTotals, "Invalid Jacobian: Number of Discount Factors must match the number of Risk Dates" )
+        AQ_REQUIRE( nDiscountFactors == nRiskTotals, "Invalid Jacobian: Number of Discount Factors must match the number of Risk Dates" )
         
         // Calculate New Discount Factors: Original DiscFact + Jacobian Total Change in DiscFact x ShiftSize
         DoubleVector newDiscountFactors         = originalDiscountFactors;

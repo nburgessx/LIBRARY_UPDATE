@@ -41,7 +41,7 @@ namespace etrading
 						break;
 
 					default:
-						MLIB_THROW( "Unsupported distribution type " + toString( distributionEnum_ ) + " with MersenneTwister generator");
+						AQ_THROW( "Unsupported distribution type " + toString( distributionEnum_ ) + " with MersenneTwister generator");
 						break;
 				}
 				break;
@@ -55,13 +55,13 @@ namespace etrading
 						break;
 
 					default:
-						MLIB_THROW( "Unsupported distribution type " + toString( distributionEnum_ ) + " with Sobol generator");
+						AQ_THROW( "Unsupported distribution type " + toString( distributionEnum_ ) + " with Sobol generator");
 						break;
 				}
 				break;
 			}
 			default:
-				MLIB_THROW( "Only MersenneTwister or Sobol generator is currently supported." );
+				AQ_THROW( "Only MersenneTwister or Sobol generator is currently supported." );
 		}
 
 	}
@@ -75,7 +75,7 @@ namespace etrading
 	RandomNumberGenerator RandomNumberGenerator::buildUniformGenerator( const LabelValueBlock& mcParametersLVB, const double minSample, const double maxSample )
 	{
 		auto distributionEnum = toDistributionEnum( mcParametersLVB.getCompulsoryValue( MONTE_CARLO_PROPERTIES_KEYS::DISTRIBUTION ) );
-		MLIB_REQUIRE( distributionEnum == UNIFORM_DISTRIBUTION, "Incorrect setup of Random Number Generator. Cannot build a Uniform generator from this config." );
+		AQ_REQUIRE( distributionEnum == UNIFORM_DISTRIBUTION, "Incorrect setup of Random Number Generator. Cannot build a Uniform generator from this config." );
 
 		const double unusedMean = std::numeric_limits<double>::quiet_NaN();
 		const double unusedStdDeviation = std::numeric_limits<double>::quiet_NaN();
@@ -91,7 +91,7 @@ namespace etrading
 	RandomNumberGenerator RandomNumberGenerator::buildNormalGenerator( const LabelValueBlock& mcParametersLVB, const double mean, const double stdDeviation )
 	{
 		auto distributionEnum = toDistributionEnum( mcParametersLVB.getCompulsoryValue( MONTE_CARLO_PROPERTIES_KEYS::DISTRIBUTION ) );
-		MLIB_REQUIRE( distributionEnum == NORMAL_DISTRIBUTION, "Incorrect setup of Random Number Generator. Cannot build a Normal generator from this config." );
+		AQ_REQUIRE( distributionEnum == NORMAL_DISTRIBUTION, "Incorrect setup of Random Number Generator. Cannot build a Normal generator from this config." );
 
 		const double unusedMinSample = std::numeric_limits<double>::quiet_NaN();
 		const double unusedMaxSample = std::numeric_limits<double>::quiet_NaN();

@@ -72,7 +72,7 @@ namespace validation_api
         VALID_EXCEPTION_START
         
         // LWO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
-        MLIB_CLEAR_CURVE_RESULTS_CACHE
+        AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Prefix the staticDataTable onto the curveIndex Name Set, using the ':' delimiter by default
         std::string curveIndexStdStr_swap = curveIndex_swap.getCString();

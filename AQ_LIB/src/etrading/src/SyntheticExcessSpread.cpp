@@ -68,7 +68,7 @@ namespace etrading
 	void SyntheticExcessSpread::setThreshold( const double& threshold, const size_t activePeriod )
 	{
 		// We define all periods (including activePeriod) to be zero based in MLIB.		
-		MLIB_REQUIRE( activePeriod < periods_, "Specified activePeriod is larger than the SyntheticExcessSpread period size" );
+		AQ_REQUIRE( activePeriod < periods_, "Specified activePeriod is larger than the SyntheticExcessSpread period size" );
 
 		for ( size_t period = 0; period < periods_; period++ )
 		{
@@ -85,7 +85,7 @@ namespace etrading
 	*/
 	bool SyntheticExcessSpread::verify( size_t period, const double& valueTrigger ) const
 	{
-		MLIB_REQUIRE( period < periods_, "Specified period is larger than the SyntheticExcessSpread period size" );
+		AQ_REQUIRE( period < periods_, "Specified period is larger than the SyntheticExcessSpread period size" );
 
 		const double level = syntheticExcessSpreadAllocation_[period].level;
 
@@ -142,7 +142,7 @@ namespace etrading
 	*/
 	SyntheticExcessSpreadAllocation SyntheticExcessSpread::getAllocation( const size_t period ) const
 	{
-		MLIB_REQUIRE( period < periods_, "Specified period is larger than the SyntheticExcessSpread period size" );
+		AQ_REQUIRE( period < periods_, "Specified period is larger than the SyntheticExcessSpread period size" );
 
 		return syntheticExcessSpreadAllocation_[ period ];
 	}
@@ -153,7 +153,7 @@ namespace etrading
 	*/
 	void SyntheticExcessSpread::setAllocation( const size_t period, const SyntheticExcessSpreadAllocation syntheticExcessSpreadAllocation )
 	{
-		MLIB_REQUIRE(period < periods_, "Specified period is larger than the SyntheticExcessSpread period size" );
+		AQ_REQUIRE(period < periods_, "Specified period is larger than the SyntheticExcessSpread period size" );
 
 		syntheticExcessSpreadAllocation_[ period ] = syntheticExcessSpreadAllocation;
 	}

@@ -40,7 +40,7 @@
 #include "LALinearSplineInterpolation.h"
 #include "LALinearMonotoneSplineInterpolation.h"
 #include "LAObjectHolder.h"
-#include "DataUtilities.h"              // For MLIB_TO_STRING macros
+#include "DataUtilities.h"              // For AQ_TO_STRING macros
 
 using etrading::DiscountFactors;
 using etrading::bootstrapLibors;
@@ -3300,7 +3300,7 @@ CurveCalibrationData::setBasisRates(const LAString &curveType)
 		}
 
 		// Throw error if solution has not been found
-		MLIB_REQUIRE(solutionFound, "Unable to calibrate the Basis Curve. The curve Newton Raphson Discount Factor solver did not converge to a solution")
+		AQ_REQUIRE(solutionFound, "Unable to calibrate the Basis Curve. The curve Newton Raphson Discount Factor solver did not converge to a solution")
 
 			LAPriceDataInterpolation *p_base_inter = 0;
 		double b_spotdf = 1.0;
@@ -4136,14 +4136,14 @@ CurveCalibrationData::setCurveInterpolation(const LAString& curveName, const LAO
 		{
 			thisIndex		= terms[i];
 			previousIndex	= terms[i-1];
-			MLIB_THROW_IF(thisIndex == previousIndex, "Invalid Curve Data: Curve '" + curveName + "' contains duplicate data with time value: " + MLIB_TO_STRING_FROM_DOUBLE(thisIndex) + " years" )
+			AQ_THROW_IF(thisIndex == previousIndex, "Invalid Curve Data: Curve '" + curveName + "' contains duplicate data with time value: " + AQ_TO_STRING_FROM_DOUBLE(thisIndex) + " years" )
 		}
 	}
 
 	// Check for Error Discount Factors
 	for ( size_t i = 1; i < dfs.size(); ++i )
 	{
-		MLIB_THROW_IF( std::isnan(dfs[i]), "Invalid Curve Data: Curve '" + curveName + "' has not been built or contains invalid discount factors" )
+		AQ_THROW_IF( std::isnan(dfs[i]), "Invalid Curve Data: Curve '" + curveName + "' has not been built or contains invalid discount factors" )
 	}
 
 	inter.set(terms, dfs);
@@ -4454,19 +4454,19 @@ CurveCalibrationData::calcAgainstPV(const bool useForwardInterpolation,
 	if ( !forwardRates.isNullOrUndefined() && forwardRates.getMethod().getXValues().size() != 0 )
 	{
 		double maxForwardRates = forwardRates.getMethod().getXValues().back();
-		MLIB_REQUIRE( maxCashflowDateAsDouble < maxForwardRates + extrapolationTolerance, "Invalid Forward Dependency Curve: The Basis Curve is Longer than the Dependent FORWARD Curve. The dependent FORWARD curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + MLIB_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Forward Curve : " + MLIB_TO_STRING_FROM_DOUBLE( maxForwardRates ) + " )" )
+		AQ_REQUIRE( maxCashflowDateAsDouble < maxForwardRates + extrapolationTolerance, "Invalid Forward Dependency Curve: The Basis Curve is Longer than the Dependent FORWARD Curve. The dependent FORWARD curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + AQ_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Forward Curve : " + AQ_TO_STRING_FROM_DOUBLE( maxForwardRates ) + " )" )
 	}
 
 	if ( !forwardInterpolation->isNullOrUndefined() && forwardInterpolation->getMethod().getXValues().size() != 0 )
 	{
 		double maxForwardInterpolation = forwardInterpolation->getMethod().getXValues().back();
-		MLIB_REQUIRE( maxCashflowDateAsDouble < maxForwardInterpolation + extrapolationTolerance, "Invalid Forward Dependency Curve: The Basis Curve is Longer than the Dependent FORWARD Curve. The dependent FORWARD curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + MLIB_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Forward Curve : " + MLIB_TO_STRING_FROM_DOUBLE( maxForwardInterpolation ) + " )" )
+		AQ_REQUIRE( maxCashflowDateAsDouble < maxForwardInterpolation + extrapolationTolerance, "Invalid Forward Dependency Curve: The Basis Curve is Longer than the Dependent FORWARD Curve. The dependent FORWARD curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + AQ_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Forward Curve : " + AQ_TO_STRING_FROM_DOUBLE( maxForwardInterpolation ) + " )" )
 	}
 
 	if ( !discountFactor.isNullOrUndefined() && discountFactor.getMethod().getXValues().size() != 0 )
 	{
 		double maxDiscountFactor = discountFactor.getMethod().getXValues().back();
-		MLIB_REQUIRE( maxCashflowDateAsDouble < maxDiscountFactor + extrapolationTolerance, "Invalid Discount Factor Dependency Curve: The Basis Curve is Longer than the Dependent DISCOUNT FACTOR Curve. The dependent DISCOUNT FACTOR curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + MLIB_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Discount Factor Curve : " + MLIB_TO_STRING_FROM_DOUBLE( maxDiscountFactor ) + " )" )
+		AQ_REQUIRE( maxCashflowDateAsDouble < maxDiscountFactor + extrapolationTolerance, "Invalid Discount Factor Dependency Curve: The Basis Curve is Longer than the Dependent DISCOUNT FACTOR Curve. The dependent DISCOUNT FACTOR curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + AQ_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Discount Factor Curve : " + AQ_TO_STRING_FROM_DOUBLE( maxDiscountFactor ) + " )" )
 	}
 	// -----------------------------------------------------------------
 
@@ -4598,19 +4598,19 @@ double CurveCalibrationData::calcAgainstPV( const bool useForwardInterpolation,
 	if ( !forwardRates.isNullOrUndefined() && forwardRates.getMethod().getXValues().size() != 0 )
 	{
 		double maxForwardRates = forwardRates.getMethod().getXValues().back();
-		MLIB_REQUIRE( maxCashflowDateAsDouble < maxForwardRates + extrapolationTolerance, "Invalid Forward Dependency Curve: The Basis Curve is Longer than the Dependent FORWARD Curve. The dependent FORWARD curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + MLIB_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Forward Curve : " + MLIB_TO_STRING_FROM_DOUBLE( maxForwardRates ) + " )" )
+		AQ_REQUIRE( maxCashflowDateAsDouble < maxForwardRates + extrapolationTolerance, "Invalid Forward Dependency Curve: The Basis Curve is Longer than the Dependent FORWARD Curve. The dependent FORWARD curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + AQ_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Forward Curve : " + AQ_TO_STRING_FROM_DOUBLE( maxForwardRates ) + " )" )
 	}
 
 	if ( !forwardInterpolation->isNullOrUndefined() && forwardInterpolation->getMethod().getXValues().size() != 0 )
 	{
 		double maxForwardInterpolation = forwardInterpolation->getMethod().getXValues().back();
-		MLIB_REQUIRE( maxCashflowDateAsDouble < maxForwardInterpolation + extrapolationTolerance, "Invalid Forward Dependency Curve: The Basis Curve is Longer than the Dependent FORWARD Curve. The dependent FORWARD curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + MLIB_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Forward Curve : " + MLIB_TO_STRING_FROM_DOUBLE( maxForwardInterpolation ) + " )" )
+		AQ_REQUIRE( maxCashflowDateAsDouble < maxForwardInterpolation + extrapolationTolerance, "Invalid Forward Dependency Curve: The Basis Curve is Longer than the Dependent FORWARD Curve. The dependent FORWARD curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + AQ_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Forward Curve : " + AQ_TO_STRING_FROM_DOUBLE( maxForwardInterpolation ) + " )" )
 	}
 
 	if ( !discountFactor.isNullOrUndefined() && discountFactor.getMethod().getXValues().size() != 0 )
 	{
 		double maxDiscountFactor = discountFactor.getMethod().getXValues().back();
-		MLIB_REQUIRE( maxCashflowDateAsDouble < maxDiscountFactor + extrapolationTolerance, "Invalid Discount Factor Dependency Curve: The Basis Curve is Longer than the Dependent DISCOUNT FACTOR Curve. The dependent DISCOUNT FACTOR curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + MLIB_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Discount Factor Curve : " + MLIB_TO_STRING_FROM_DOUBLE( maxDiscountFactor ) + " )" )
+		AQ_REQUIRE( maxCashflowDateAsDouble < maxDiscountFactor + extrapolationTolerance, "Invalid Discount Factor Dependency Curve: The Basis Curve is Longer than the Dependent DISCOUNT FACTOR Curve. The dependent DISCOUNT FACTOR curve does not have enough instruments to support the basis curve. ( Basis Max Tenor in Years: " + AQ_TO_STRING_FROM_DOUBLE( maxCashflowDateAsDouble ) + " vs Dependent Discount Factor Curve : " + AQ_TO_STRING_FROM_DOUBLE( maxDiscountFactor ) + " )" )
 	}
 	// -----------------------------------------------------------------
 
@@ -4984,7 +4984,7 @@ CurveCalibrationData::calcTargetPV(const LAPriceDataInterpolation &spreadTimesTi
 
 	for (unsigned int compoundEndIndex = 0; compoundEndIndex < cashflowDates.size(); compoundEndIndex++)
 	{
-		MLIB_REQUIRE(!basisCurveRateTimesTime[compoundEndIndex].empty(), "#Basis Curve Calibration Error: The basis curve state variable is empty")
+		AQ_REQUIRE(!basisCurveRateTimesTime[compoundEndIndex].empty(), "#Basis Curve Calibration Error: The basis curve state variable is empty")
 	}
 
 	const double spotDiscountFactor = discountFactor.value(spotDate);
@@ -5029,7 +5029,7 @@ CurveCalibrationData::calcTargetPV(const LAPriceDataInterpolation &spreadTimesTi
 			const double indexSpotDF = LAMath::exp(-indexSpotYieldTimesTime);
 
 			// calculate the par rate
-			MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(annuity), "Basis Curve Calibration Error: Unable to solve for the par rate. The swap annuity term is zero.")
+			AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(annuity), "Basis Curve Calibration Error: Unable to solve for the par rate. The swap annuity term is zero.")
 				const double pvFloat = (indexSpotDF - compoundedEndDF);
 			const double rate = pvFloat / annuity;
 
@@ -5063,7 +5063,7 @@ CurveCalibrationData::calcTargetPV(const LAPriceDataInterpolation &spreadTimesTi
 			const double indexSpotYieldTimesTime = indexSpotSpreadTimesTime + basisCurveRateTimesTime[compoundEndIndex][0];
 			const double indexSpotDF = LAMath::exp(-indexSpotYieldTimesTime);
 
-			MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(annuity), "Basis Curve Calibration Error: Unable to solve for the par rate. The swap annuity term is zero.")
+			AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(annuity), "Basis Curve Calibration Error: Unable to solve for the par rate. The swap annuity term is zero.")
 				const double rate = (indexSpotDF - indexEndDF) / annuity;
 			const double endTerm = cashflowDates[compoundEndIndex] + spotDate;
 
@@ -7435,7 +7435,7 @@ CurveCalibrationData::getForwardConvention(const LAString &curveName, LAPriceDat
 				}
 				else
 				{
-					MLIB_THROW("Invalid Frequency: Must be ANNUAL, SEMI-ANNUAL, QUARTERLY or MONTHLY")
+					AQ_THROW("Invalid Frequency: Must be ANNUAL, SEMI-ANNUAL, QUARTERLY or MONTHLY")
 				}
 			}
 		}
@@ -7469,7 +7469,7 @@ CurveCalibrationData::getBasisCurveFrequency(const LAString &curveName, LAString
 			// from the last instrument, which is typically a basis instrument, which is more efficient than searching from the front.
 			// ------------------------------------------------------------------------
 			const LADataMultiReference& mr = dynamic_cast<const LADataMultiReference&>(dh->get());
-			MLIB_REQUIRE(mr.getSize() > 0, "Invalid Basis Curve Calibration Instrument(s): The Basis Curve contains no calibration instruments for CurveName: " + curveName)
+			AQ_REQUIRE(mr.getSize() > 0, "Invalid Basis Curve Calibration Instrument(s): The Basis Curve contains no calibration instruments for CurveName: " + curveName)
 
 				bool foundBasisInstrument = false;
 			size_t basisInstrumentPosition = mr.getSize();
@@ -7490,10 +7490,10 @@ CurveCalibrationData::getBasisCurveFrequency(const LAString &curveName, LAString
 				}
 			}
 
-			MLIB_REQUIRE(foundBasisInstrument == true, "Invalid Basis Curve Calibration Instrument(s): No basis swap reference calibration instruments found")
+			AQ_REQUIRE(foundBasisInstrument == true, "Invalid Basis Curve Calibration Instrument(s): No basis swap reference calibration instruments found")
 
 				LAObject* basis_instrument = &mr.get(basisInstrumentPosition).get();
-			MLIB_REQUIRE(basis_instrument != nullptr, "Invalid Basis Curve Calibration Instrument(s): The reference basis calibration instrument is invalid")
+			AQ_REQUIRE(basis_instrument != nullptr, "Invalid Basis Curve Calibration Instrument(s): The reference basis calibration instrument is invalid")
 
 				frequency = dynamic_cast<const LADataString &>(basis_instrument->getData(IR_CALIBRATION_DATA_INDEXACCESSARY, ISNOTNULL).get()).get();
 			return;
@@ -7521,7 +7521,7 @@ CurveCalibrationData::getBasisCurveFrequency(const LAString &curveName, LAString
 			// from the last instrument, which is typically a basis instrument, which is more efficient than searching from the front.
 			// ------------------------------------------------------------------------
 			const LADataMultiReference& mr = dynamic_cast<const LADataMultiReference&>(dh->get());
-			MLIB_REQUIRE(mr.getSize() > 0, "Invalid Basis Curve Calibration Instrument(s): The Basis Curve contains no calibration instruments for CurveName: " + curveName)
+			AQ_REQUIRE(mr.getSize() > 0, "Invalid Basis Curve Calibration Instrument(s): The Basis Curve contains no calibration instruments for CurveName: " + curveName)
 
 				bool foundBasisInstrument = false;
 			size_t basisInstrumentPosition = mr.getSize();
@@ -7550,10 +7550,10 @@ CurveCalibrationData::getBasisCurveFrequency(const LAString &curveName, LAString
 				}
 			}
 
-			MLIB_REQUIRE(foundBasisInstrument == true, "Invalid Basis Curve Calibration Instrument(s): No basis swap reference calibration instruments found")
+			AQ_REQUIRE(foundBasisInstrument == true, "Invalid Basis Curve Calibration Instrument(s): No basis swap reference calibration instruments found")
 
 				LAObject* basis_instrument = &mr.get(basisInstrumentPosition).get();
-			MLIB_REQUIRE(basis_instrument != nullptr, "Invalid Basis Curve Calibration Instrument(s): The reference basis calibration instrument is invalid")
+			AQ_REQUIRE(basis_instrument != nullptr, "Invalid Basis Curve Calibration Instrument(s): The reference basis calibration instrument is invalid")
 
 				LAString freq;
 			dh = &basis_instrument->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, NOCHECK);
@@ -7598,7 +7598,7 @@ CurveCalibrationData::getBasisCurveFrequency(const LAString &curveName, LAString
 			}
 			else
 			{
-				MLIB_THROW("Invalid Basis Curve Calibration Instrument(s): Invalid Basis Instrument Frequency")
+				AQ_THROW("Invalid Basis Curve Calibration Instrument(s): Invalid Basis Instrument Frequency")
 			}
 		}
 		else

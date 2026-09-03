@@ -54,7 +54,7 @@ namespace etrading
 				break;
 
             default:
-				MLIB_THROW("Invalid Daycount: Only ACT/360, ACT/365, 30/360, 30E/360, ACT/ACT, ACT/365_FJ supported")
+				AQ_THROW("Invalid Daycount: Only ACT/360, ACT/365, 30/360, 30E/360, ACT/ACT, ACT/365_FJ supported")
                 break;
         }
 	}
@@ -88,7 +88,7 @@ namespace etrading
                 break;
 
             default:
-				MLIB_THROW("Invalid Compound Frequency: Only SIMPLE, CONTINUOUS, ANNUAL, SEMI-ANNUAL, QUARTERLY, MONTHLY supported")
+				AQ_THROW("Invalid Compound Frequency: Only SIMPLE, CONTINUOUS, ANNUAL, SEMI-ANNUAL, QUARTERLY, MONTHLY supported")
                 break;
         };
 	}

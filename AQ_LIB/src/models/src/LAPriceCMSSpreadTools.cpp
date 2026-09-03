@@ -183,14 +183,14 @@ double LAPriceCMSSpreadUtility::CMSSpreadSLPrice(LADataInstance* dataInstance, c
     double t = ModelTime(valDate, cf.fixing);
     LAString pairID = proxySpreadID;
     size_t nCopParams = 3;
-    if (MLIB_COP_NAMES.size() < nCopParams)
+    if (AQ_COP_NAMES.size() < nCopParams)
         throw LACoreInvalidData("Invalid copula parameter index", __FILE__, __LINE__);
 
-    LAString theta1ID = LAPriceCMSObject::MatrixID("_" + MLIB_COP_NAMES[0] + "_", ccy);
+    LAString theta1ID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[0] + "_", ccy);
     double theta1 = LAMathParameterObject::LookUpParameterMatrix(dataInstance, theta1ID, cf.fixing, pairID, "Linear");
-    LAString theta2ID = LAPriceCMSObject::MatrixID("_" + MLIB_COP_NAMES[1] + "_", ccy);
+    LAString theta2ID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[1] + "_", ccy);
     double theta2 = LAMathParameterObject::LookUpParameterMatrix(dataInstance, theta2ID, cf.fixing, pairID, "Linear");
-    LAString rhoID = LAPriceCMSObject::MatrixID("_" + MLIB_COP_NAMES[2] + "_", ccy);
+    LAString rhoID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[2] + "_", ccy);
     double rho = LAMathParameterObject::LookUpParameterMatrix(dataInstance, rhoID, cf.fixing, pairID, "Linear");
     DoubleVector copParams(nCopParams);
     copParams[0] = theta1; copParams[1] = theta2; copParams[2] = rho;
@@ -235,17 +235,17 @@ DoubleVector LAPriceCMSSpreadUtility::InterpolateParameters(LADataInstance* data
 void LAPriceCMSSpreadUtility::CheckInitialParameters(LADataInstance* dataInstance, const LAString& ccy, LAStringVector& expiryTerms,
                                                    LAStringVector& indexes)
 {
-    LAString theta1ID = LAPriceCMSObject::MatrixID(MLIB_THETA1_IN, ccy);
+    LAString theta1ID = LAPriceCMSObject::MatrixID(AQ_THETA1_IN, ccy);
     LAStringVector theta1Terms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, theta1ID);
     LAStringVector theta1Indexes = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, theta1ID);
 
-    LAString theta2ID = LAPriceCMSObject::MatrixID(MLIB_THETA2_IN, ccy);
+    LAString theta2ID = LAPriceCMSObject::MatrixID(AQ_THETA2_IN, ccy);
     LAStringVector theta2Terms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, theta2ID);
     LAStringVector theta2Indexes = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, theta2ID);
     CheckStringVectors(theta2Terms, theta1Terms);
     CheckStringVectors(theta2Indexes, theta1Indexes);
 
-    LAString rhoID = LAPriceCMSObject::MatrixID(MLIB_COPRHO_IN, ccy);
+    LAString rhoID = LAPriceCMSObject::MatrixID(AQ_COPRHO_IN, ccy);
     LAStringVector rhoTerms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, rhoID);
     LAStringVector rhoIndexes = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, rhoID);
     CheckStringVectors(rhoTerms, theta2Terms);
@@ -257,7 +257,7 @@ void LAPriceCMSSpreadUtility::CheckInitialParameters(LADataInstance* dataInstanc
 
 void LAPriceCMSSpreadUtility::ReadSLGrid(LADataInstance* dataInstance, const LAString& currency, LAStringVector& slTerms)
 {
-    slTerms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, LAPriceCMSObject::MatrixID(MLIB_SL_ATM, currency));
+    slTerms = LAMathParameterObject::ParameterMatrixTerms(dataInstance, LAPriceCMSObject::MatrixID(AQ_SL_ATM, currency));
 }
 
 void LAPriceCMSSpreadUtility::CheckIndexes(LADataInstance* dataInstance, const LAString& ccy, bool calibrate,
@@ -266,7 +266,7 @@ void LAPriceCMSSpreadUtility::CheckIndexes(LADataInstance* dataInstance, const L
     if (calibrate)
     {
         // Check that pairIDs and SL indexes are the same
-        LAStringVector slVec = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, LAPriceCMSObject::MatrixID(MLIB_SL_ATM, ccy));
+        LAStringVector slVec = LAMathParameterObject::ParameterMatrixIndexes(dataInstance, LAPriceCMSObject::MatrixID(AQ_SL_ATM, ccy));
         CheckStringVectors(slVec, pairIDs);
 
         // Check that all pairIDs have initial parameters
@@ -344,12 +344,12 @@ LAPriceCMSMLATMTarget::LAPriceCMSMLATMTarget(LADataInstance* dataInstance, const
     mDiscCurveInfo = discCurveInfo;
 
     size_t nCopParams = 3;
-    if (MLIB_COP_NAMES.size() < nCopParams)
+    if (AQ_COP_NAMES.size() < nCopParams)
         throw LACoreInvalidData("Invalid copula parameter index", __FILE__, __LINE__);
 
-    mTheta1ID = LAPriceCMSObject::MatrixID("_" + MLIB_COP_NAMES[0] + "_", ccy);
-    mTheta2ID = LAPriceCMSObject::MatrixID("_" + MLIB_COP_NAMES[1] + "_", ccy);
-    mRhoID = LAPriceCMSObject::MatrixID("_" + MLIB_COP_NAMES[2] + "_", ccy);
+    mTheta1ID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[0] + "_", ccy);
+    mTheta2ID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[1] + "_", ccy);
+    mRhoID = LAPriceCMSObject::MatrixID("_" + AQ_COP_NAMES[2] + "_", ccy);
 
     size_t nFlows = mSchedule.size();
     mCopParams.clear();

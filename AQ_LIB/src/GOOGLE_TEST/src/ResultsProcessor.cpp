@@ -32,12 +32,12 @@ namespace google_test
             const etrading::ReadDataFile::Load resultFile( etrading::CreateDataFile::makeFilename( resultFileWithPath, index ) );
             const DoubleMatrix expectedResult = resultFile["output"];
 
-			MLIB_REQUIRE( results.size() == expectedResult.size(), "Expected result and Actual result row sizes must be identical" )
+			AQ_REQUIRE( results.size() == expectedResult.size(), "Expected result and Actual result row sizes must be identical" )
             for ( size_t i = 0; i != expectedResult.size(); ++i )
             {
 				for ( size_t j = 0; j != expectedResult[i].size(); ++j )
 				{
-					MLIB_REQUIRE( results[i].size() == expectedResult[i].size(), "Expected result and Actual result column sizes must be identical" )
+					AQ_REQUIRE( results[i].size() == expectedResult[i].size(), "Expected result and Actual result column sizes must be identical" )
 					EXPECT_NEAR( expectedResult[i][j], results[i][j], tolerance ) << "Test number: " << index << ", Matrix result: row " << i << ", column " << j << std::endl;
 				}
             }
@@ -72,12 +72,12 @@ namespace google_test
             const etrading::ReadDataFile::Load resultFile( etrading::CreateDataFile::makeFilename( resultFileWithPath, index ) );
             const DoubleMatrix expectedResult = resultFile["output"];
 
-			MLIB_REQUIRE( results.size() == expectedResult.size(), "Expected result and Actual result row sizes must be identical" )
+			AQ_REQUIRE( results.size() == expectedResult.size(), "Expected result and Actual result row sizes must be identical" )
             for ( size_t i = 0; i != expectedResult.size(); ++i )
             {
 				for ( size_t j = 0; j != expectedResult[i].size(); ++j )
 				{
-					MLIB_REQUIRE( results[i].size() == expectedResult[i].size(), "Expected result and Actual result column sizes must be identical" )
+					AQ_REQUIRE( results[i].size() == expectedResult[i].size(), "Expected result and Actual result column sizes must be identical" )
 					EXPECT_NEAR( expectedResult[i][j], results[i][j], tolerance ) << "Test number: " << index << ", Matrix result: row " << i << ", column " << j << std::endl;
 				}
             }

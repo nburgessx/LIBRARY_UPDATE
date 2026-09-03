@@ -194,7 +194,7 @@ namespace validation_api
 				CreateDataFile file( decorateFilename( "tryMeLWOCurveDataCreate_outputs", mdcName.c_str() ) );
                 file.write( "output", errString.c_str() );
             }
-            MLIB_THROW( errString );
+            AQ_THROW( errString );
         }
 
 		VALID_EXCEPTION_END

@@ -2,7 +2,7 @@
 
 #include "meCurveZeroRate.h"
 #include "tryMeCurveZeroRate.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meCurveZeroRatesFromYearFractions
@@ -19,7 +19,7 @@ double meCurveZeroRatesFromYearFractions(double yearFraction,
 						const std::string& frequency, 
 						const std::string& dayCount)
 {
-    MLIB_API_START
+    AQ_API_START
 	double ret(0.);
 	
 	// Input marshalling
@@ -38,7 +38,7 @@ double meCurveZeroRatesFromYearFractions(double yearFraction,
 																				tmp_dayCount);
 	ret = results[0];
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -56,7 +56,7 @@ std::vector<double> meCurveZeroRatesFromYearFractions(const std::vector<double>&
 						const std::string& frequency, 
 						const std::string& dayCount)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<double> ret;
 	
 	// Input marshalling
@@ -72,7 +72,7 @@ std::vector<double> meCurveZeroRatesFromYearFractions(const std::vector<double>&
 																tmp_dayCount);
 
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meCurveZeroRatesFromTenors
@@ -93,7 +93,7 @@ double meCurveZeroRatesFromTenors(const std::string& tenor,
 						const std::string& calendar, 
 						const std::string& businessDayAdj)
 {
-    MLIB_API_START
+    AQ_API_START
 	double ret(0.0);
 	
 	LAStringVector tenors;
@@ -117,7 +117,7 @@ double meCurveZeroRatesFromTenors(const std::string& tenor,
 	ret = results[0];
 
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meCurveZeroRatesFromTenors
@@ -138,7 +138,7 @@ std::vector<double> meCurveZeroRatesFromTenors(const std::vector<std::string>& t
 						const std::string& calendar, 
 						const std::string& businessDayAdj)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<double> ret;
 	
 	LAStringVector tmp_tenors;
@@ -161,6 +161,6 @@ std::vector<double> meCurveZeroRatesFromTenors(const std::vector<std::string>& t
 														tmp_businessDayAdj);
 
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 

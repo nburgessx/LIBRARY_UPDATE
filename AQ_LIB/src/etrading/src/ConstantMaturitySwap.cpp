@@ -14,12 +14,12 @@ namespace etrading
         //Single Currency
         if ( leg1->getStaticData()->getCurrency() != leg2->getStaticData()->getCurrency() )
         {
-  		    MLIB_THROW( "Only single currency swaps are supported." );
+  		    AQ_THROW( "Only single currency swaps are supported." );
         }
 
         if (boost::math::isnan( leg1->getSchedule()->getNotional()) || boost::math::isnan(leg2->getSchedule()->getNotional() ))
         {
-    		MLIB_THROW( "Notional not provided." );
+    		AQ_THROW( "Notional not provided." );
         }
 
         inputParameters_ = swapPropertiesLVB;
@@ -106,7 +106,7 @@ namespace etrading
 			}
 			if ( ! legFound )
 			{
-				MLIB_THROW( "Specified legName '" + legName + "' does not exist in the ConstantMaturitySwap." );
+				AQ_THROW( "Specified legName '" + legName + "' does not exist in the ConstantMaturitySwap." );
 			}
 		}
 

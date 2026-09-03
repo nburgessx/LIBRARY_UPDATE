@@ -33,7 +33,7 @@ namespace etrading
 		//If schedule is not from bespoke cashflow, then forcaseCurve cannot be empty
 		if (schedule_->getBespokeScheduleType() != BESPOKE_SCHEDULE)
 		{
-			MLIB_REQUIRE(legStaticData_ ->getForecastCurve().size() != 0, "Float Leg's forcast curve must provided.");
+			AQ_REQUIRE(legStaticData_ ->getForecastCurve().size() != 0, "Float Leg's forcast curve must provided.");
 		}
 	}
 
@@ -58,7 +58,7 @@ namespace etrading
 			{
 				auto creditModelPtr = getCreditModel(dataProvider.getValuationSettings().getCreditModelName(), false /* do not throw if credit model missing */);
 
-				MLIB_REQUIRE( creditModelPtr != nullptr, "A credit model is required if PaymentTrigger is PayOnSurvival." );
+				AQ_REQUIRE( creditModelPtr != nullptr, "A credit model is required if PaymentTrigger is PayOnSurvival." );
 
 				// Calculate Discount Factors and forward rates
 				initializeDataProviderInternal( dataProvider, isFloatRateRequired, updateCurveData );
@@ -76,7 +76,7 @@ namespace etrading
 				break;
 
 			default:
-				MLIB_THROW( "Unsupported PaymentTrigger type: " + toString( getPaymentTrigger() ));
+				AQ_THROW( "Unsupported PaymentTrigger type: " + toString( getPaymentTrigger() ));
 			}
 
 	}
@@ -240,8 +240,8 @@ namespace etrading
 			if (convexityMethod != NONE_CONVEXITY && fixingType == IN_ARREARS_FIXING)
             {
                 volatilityModel = getVolatility( volatilityModelName, false ); // false = don't throw general error message
-                MLIB_REQUIRE( volatilityModel != nullptr, "Libor fixing In-Arrears requires a convexity adjustment - Please provide a volatility model.")
-    	        MLIB_REQUIRE( legStaticData_->getCurrency() == volatilityModel->currency(), "Invalid Volatility Model: Volatility model and trade leg " + getLegName() + " currency must match." )
+                AQ_REQUIRE( volatilityModel != nullptr, "Libor fixing In-Arrears requires a convexity adjustment - Please provide a volatility model.")
+    	        AQ_REQUIRE( legStaticData_->getCurrency() == volatilityModel->currency(), "Invalid Volatility Model: Volatility model and trade leg " + getLegName() + " currency must match." )
             }
 
 			// Convexity Adjustment using fixingDates and fixingEnd dates, BB is using AccrualEndDates
@@ -533,7 +533,7 @@ namespace etrading
 			const DateVector paymentDates = { floatAccrualStartDate, floatAccrualEndDate };
 			
 			const DoubleVector discountFactors = getCurveDiscountFactors( valuationDate, paymentDates, curveCollection, discountCurve );
-			MLIB_REQUIRE( discountFactors.size() == 2, "Internal Error: Expected two discount factors." );
+			AQ_REQUIRE( discountFactors.size() == 2, "Internal Error: Expected two discount factors." );
 			
 			const double df1 = discountFactors[0];
 			const double df2 = discountFactors[1];
@@ -728,7 +728,7 @@ namespace etrading
 			}
 			else
 			{
-				MLIB_THROW( "Unexpected cashflow type found in FloatSchedule. Expecting FloatCashflows." );
+				AQ_THROW( "Unexpected cashflow type found in FloatSchedule. Expecting FloatCashflows." );
 			}
 
 			prevSurvivalProbability = survivalProbability;
@@ -777,7 +777,7 @@ namespace etrading
 
 		if (volatilityModel)
 		{
-			MLIB_REQUIRE(legStaticData_->getCurrency() == volatilityModel->currency(), "Invalid Volatility Model: Volatility model and trade leg " + getLegName() + " currency must match.")
+			AQ_REQUIRE(legStaticData_->getCurrency() == volatilityModel->currency(), "Invalid Volatility Model: Volatility model and trade leg " + getLegName() + " currency must match.")
 		}
 
 		for (size_t i = 0; i < cashflowSize; ++i)
@@ -815,7 +815,7 @@ namespace etrading
 
 			if (convexityMethod != NONE_CONVEXITY && fixingType != IN_ADVANCE_FIXING)
 			{
-				MLIB_REQUIRE(volatilityModel != nullptr, "Unnatural Fixing requires a convexity adjustment - Please provide a volatility model.")
+				AQ_REQUIRE(volatilityModel != nullptr, "Unnatural Fixing requires a convexity adjustment - Please provide a volatility model.")
 			}
 
 			auto accrualYearFraction = cashflow->getAccrualYearFraction();
@@ -866,7 +866,7 @@ namespace etrading
 			{
 				CurveTypeEnum curveType = toCurveTypeEnum(getCurveType(curveCollection, getCurveStaticDataTableName(curveCollection, forecastCurve.c_str())).c_str());
 
-				MLIB_REQUIRE( !(curveType == OIS_CURVETYPE || curveType == ARR_CURVETYPE), "VNS from cashflow does not support OIS, ARR as the ForecastCurve.")
+				AQ_REQUIRE( !(curveType == OIS_CURVETYPE || curveType == ARR_CURVETYPE), "VNS from cashflow does not support OIS, ARR as the ForecastCurve.")
 
 				LAString crvFreqTenor = validateCurveAndGetCurveFrequency(curveCollection, forecastCurve.c_str());
 

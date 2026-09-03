@@ -221,7 +221,7 @@ namespace validation_api
 		const auto& option = etrading::getOption(objectName);
 		const auto& volObject = etrading::getVolatility(volObjectName);
 
-		MLIB_REQUIRE(rateData.size() >= 2, "Invalid dimensions: rateBlock must have at least two columns - discountFactors and liborRates.");
+		AQ_REQUIRE(rateData.size() >= 2, "Invalid dimensions: rateBlock must have at least two columns - discountFactors and liborRates.");
 
 		const auto& dfs = rateData[0];
 		const auto& liborRates = rateData[1];
@@ -256,7 +256,7 @@ namespace validation_api
 		const auto& option = etrading::getOption(objectName);
 		const auto& volObject = etrading::getVolatility(volObjectName);
 
-		MLIB_REQUIRE(rateData.size() >= 2, "Invalid dimensions: rateBlock must have at least two columns - discountFactors and liborRates.");
+		AQ_REQUIRE(rateData.size() >= 2, "Invalid dimensions: rateBlock must have at least two columns - discountFactors and liborRates.");
 
 		const auto& dfs = rateData[0];
 		const auto& liborRates = rateData[1];
@@ -297,7 +297,7 @@ namespace validation_api
 		const auto& option = etrading::getOption(objectName);
 		const auto& volObject = etrading::getVolatility(volObjectName);
 
-		MLIB_REQUIRE(rateData.size() >= 2, "Invalid dimensions: rateBlock must have at least two columns - discountFactors and liborRates.");
+		AQ_REQUIRE(rateData.size() >= 2, "Invalid dimensions: rateBlock must have at least two columns - discountFactors and liborRates.");
 
 		const auto& dfs = rateData[0];
 		const auto& liborRates = rateData[1];
@@ -331,7 +331,7 @@ namespace validation_api
 		const auto& option = etrading::getOption(objectName);
 		const auto& volObject = etrading::getVolatility(volObjectName);
 
-		MLIB_REQUIRE(rateData.size() >= 2, "Invalid dimensions: rateBlock must have at least two columns - discountFactors and liborRates.");
+		AQ_REQUIRE(rateData.size() >= 2, "Invalid dimensions: rateBlock must have at least two columns - discountFactors and liborRates.");
 
 		const auto& dfs = rateData[0];
 		const auto& liborRates = rateData[1];

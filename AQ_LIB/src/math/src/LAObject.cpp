@@ -9,7 +9,7 @@
 #include "LAObjectHolder.h"
 #include "LACoreReferencePool.h"
 #include "LADataInstance.h"
-#include "ExceptionMacros.h"	// etrading exception macros e.g. MLIB_REQUIRE
+#include "ExceptionMacros.h"	// etrading exception macros e.g. AQ_REQUIRE
 
 using namespace std;
 
@@ -106,13 +106,13 @@ LAObject::getData( const LAString& name, AttrCheckType checkType ) const
     {
 		if(checkType == ISDEFINED || checkType == ISNOTNULL) 
 		{
-			MLIB_THROW( "Missing Data: " + name + " does not exist" )
+			AQ_THROW( "Missing Data: " + name + " does not exist" )
 		}
         return NULL_DATA_HOLDER;
     }
     if(checkType == ISNOTNULL && it->second.isNull())
     {
-        MLIB_THROW( "Missing Data: " + name + " does not exist" )
+        AQ_THROW( "Missing Data: " + name + " does not exist" )
     }
     return it->second;
 } 
@@ -135,13 +135,13 @@ LAObject::getData( const LAString& name, AttrCheckType checkType )
     {
         if( checkType == ISDEFINED || checkType == ISNOTNULL )
         {
-			MLIB_THROW( "Missing Data: " + name + " does not exist" )
+			AQ_THROW( "Missing Data: " + name + " does not exist" )
         }
         return NULL_DATA_HOLDER;
     }
     if(checkType == ISNOTNULL && it->second.isNull())
     {
-		MLIB_THROW( "Missing Data: " + name + " does not exist" )			
+		AQ_THROW( "Missing Data: " + name + " does not exist" )			
     }
     return it->second;
 }

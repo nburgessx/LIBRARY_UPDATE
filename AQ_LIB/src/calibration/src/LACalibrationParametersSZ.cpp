@@ -95,7 +95,7 @@ LACalibrationParametersSZ::createCalibrationInfo(LAObjectPool &objPool, const LA
 	LAStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
 	const LAString curveType_d = staticData.getStaticData(ccys[0].toLower() + STATIC_DATA_KEY_YIELD_DF2);
-	if (curveType_d != MLIB_NO_DATA)
+	if (curveType_d != AQ_NO_DATA)
 	{
 		info.add(PRICING_DATA_DOMESTICCURVETYPE, new LADataString(curveType_d));
 	}
@@ -104,7 +104,7 @@ LACalibrationParametersSZ::createCalibrationInfo(LAObjectPool &objPool, const LA
 		info.add(PRICING_DATA_DOMESTICCURVETYPE, new LADataString(STD));
 	}
 	const LAString curveType_f = staticData.getStaticData(ccys[1].toLower() + STATIC_DATA_KEY_YIELD_DF2);
-	if (curveType_f != MLIB_NO_DATA)
+	if (curveType_f != AQ_NO_DATA)
 	{
 		info.add(PRICING_DATA_FOREIGNCURVETYPE, new LADataString(curveType_f));
 	}
@@ -445,7 +445,7 @@ LACalibrationParametersSZ::getCalibStaticDataValue(const LAString &key, const LA
 {
 	LAString ret = mpCalibStaticData->getStaticData(key + "." + grid);
 
-	if (ret == MLIB_NO_DATA)
+	if (ret == AQ_NO_DATA)
 	{
 		return mpCalibStaticData->getStaticData(key);
 	}

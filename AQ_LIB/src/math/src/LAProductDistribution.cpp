@@ -46,17 +46,17 @@ double LAProductDistribution::Cumulative(double x, double y)
     double x_ = (mStandard ? x : Standardize(x, mMeanX, mStDevX));
     double y_ = (mStandard ? y : Standardize(y, mMeanY, mStDevY));
     //// Edge cases ////
-    if (x_ <= -MLIB_MACHINE_MAX || y_ <= -MLIB_MACHINE_MAX)
+    if (x_ <= -AQ_MACHINE_MAX || y_ <= -AQ_MACHINE_MAX)
         return 0.0;
     // Reduces to univariate
-    if (x_ >= MLIB_MACHINE_MAX)
+    if (x_ >= AQ_MACHINE_MAX)
     {
         if (mUnivariateY == 0)
             throw LACoreInvalidData("Univariate sub-distribution not defined in product distribution", __FILE__, __LINE__);
         else
             return mUnivariateY->Cumulative(y_);
     }
-    if (y_ >= MLIB_MACHINE_MAX)
+    if (y_ >= AQ_MACHINE_MAX)
     {
         if (mUnivariateX == 0)
             throw LACoreInvalidData("Univariate sub-distribution not defined in product distribution", __FILE__, __LINE__);

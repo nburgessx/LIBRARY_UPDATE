@@ -300,7 +300,7 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 	LADate firstSwapDate;
     if (is_fra_use_ || is_f_use_)
 	{
-        MLIB_REQUIRE( size_s > 0, "Unable to build curve: Missing swap calibration instruments" )
+        AQ_REQUIRE( size_s > 0, "Unable to build curve: Missing swap calibration instruments" )
 		
 		const LADate& spotdate = dynamic_cast<const LADataDate&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 		const LAString& term_str = dynamic_cast<const LADataString&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
@@ -469,18 +469,18 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 	}
 	else if (baseFreq == MONTHLY)
 	{
-		MLIB_THROW_IF( is_fra_use_ && size_fra > 0, "Invalid Swap Curve: Only 3M and 6M Swap curves are allowed to calibrate using FRAs" )
+		AQ_THROW_IF( is_fra_use_ && size_fra > 0, "Invalid Swap Curve: Only 3M and 6M Swap curves are allowed to calibrate using FRAs" )
 		refRateTerm = "1M";
 	}
 	else if (baseFreq == ANNUAL)
 	{
-		MLIB_THROW_IF( is_fra_use_ && size_fra > 0, "Invalid Swap Curve: Only 3M and 6M Swap curves are allowed to calibrate using FRAs")
-		MLIB_THROW_IF( is_f_use_ && size_f > 0,		"Invalid Swap Curve: Only 1M, 3M and 6M Swap curves are allowed to calibrate using Futures")
+		AQ_THROW_IF( is_fra_use_ && size_fra > 0, "Invalid Swap Curve: Only 3M and 6M Swap curves are allowed to calibrate using FRAs")
+		AQ_THROW_IF( is_f_use_ && size_f > 0,		"Invalid Swap Curve: Only 1M, 3M and 6M Swap curves are allowed to calibrate using Futures")
 		refRateTerm = "12M";
 	}
 	else
 	{
-		MLIB_THROW("Invalid Swap Curve: Swap curve frequency must be 1M, 3M, 6M or 12M.")
+		AQ_THROW("Invalid Swap Curve: Swap curve frequency must be 1M, 3M, 6M or 12M.")
 	}
 
 	// get fwd swap
@@ -828,13 +828,13 @@ void SwapComponentCurve::calibrateSwapCurveWithCashAndForwards()
 			{
 				convexityQuoteTypeStr = dynamic_cast<const LADataString &>(dhConvexityQuoteType->get()).get();
 				convexityQuoteTypeStr.toUpper();
-				MLIB_REQUIRE( convexityQuoteTypeStr == "VOL" || convexityQuoteTypeStr == "PRICE", "Invalid Futures Convexity Quote Type: ConvexityQuoteType must be VOL or PRICE" )
+				AQ_REQUIRE( convexityQuoteTypeStr == "VOL" || convexityQuoteTypeStr == "PRICE", "Invalid Futures Convexity Quote Type: ConvexityQuoteType must be VOL or PRICE" )
 				convexityQuotedAsVol = ( convexityQuoteTypeStr == "VOL" ) ? true : false;
 		
 				// TODO: Property Manager does not allow us to clear parameters once set ... hence the below fails ... prioritize the convexityQuoteType parameter for now
 				// if ( dhConvexityQuotedAsPrice->isDefined() && !dhConvexityQuotedAsPrice->isNull() )
 				// {
-				// 	MLIB_THROW("Invalid Futures Convexity Parameter: Cannot use ConvexityQuoteType and UseConvexAdjustment (ConvexityQuotedAsPrice) parameters at the same time.")
+				// 	AQ_THROW("Invalid Futures Convexity Parameter: Cannot use ConvexityQuoteType and UseConvexAdjustment (ConvexityQuotedAsPrice) parameters at the same time.")
 				// }
 			}
 

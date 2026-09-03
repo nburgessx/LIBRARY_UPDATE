@@ -203,7 +203,7 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBucketGridTerm(const LAString &ccy)
 {
 	ccy;
 	vector<LAString> ret;
-	ret.push_back(MLIB_NO_DATA);
+	ret.push_back(AQ_NO_DATA);
 	return ret;
 	
 }
@@ -436,7 +436,7 @@ LARiskConfigurationYieldIRShiftVolIRVega::isRiskCurrencyMode(const LAString &ccy
 	LAString tmpCurrency = ccy;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_ISRISKCURRENCYMODE + getCurveSuffix(ccy));
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);
@@ -658,7 +658,7 @@ LARiskConfigurationYieldIRShiftVolIRVega::getBaseShiftCurveType(const LAString &
 	LAString tmpCurrency = ccy;
 	LAString ret = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 								STATIC_DATA_KEY_RISK_FRONT_VOL_IRSHIFTIRVEGA_BASESHIFTCURVETYPE + getCurveSuffix(ccy));
-	if (ret != MLIB_NO_DATA)
+	if (ret != AQ_NO_DATA)
 	{
 		return ret.toUpper();
 	}

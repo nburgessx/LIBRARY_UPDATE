@@ -248,7 +248,7 @@ namespace google_test
 
 		if (sabrIDs.size() != 4)
 		{
-			MLIB_THROW("Failure to retrieve all four SABR parameters");
+			AQ_THROW("Failure to retrieve all four SABR parameters");
 		}
 
 		LAString alphaID = sabrIDs[0];
@@ -306,7 +306,7 @@ namespace google_test
 
 	//	if (sabrIDs.size() != 4)
 	//	{
-	//		MLIB_THROW("Failure to retrieve all four SABR parameters");
+	//		AQ_THROW("Failure to retrieve all four SABR parameters");
 	//	}
 
 	//	LAString alphaID = sabrIDs[0];
@@ -380,7 +380,7 @@ namespace google_test
 
 		if (sabrIDs.size() != 4)
 		{
-			MLIB_THROW("Failure to retrieve all four SABR parameters");
+			AQ_THROW("Failure to retrieve all four SABR parameters");
 		}
 						
 		// Loop through a predefined list of swap and expiry tenors

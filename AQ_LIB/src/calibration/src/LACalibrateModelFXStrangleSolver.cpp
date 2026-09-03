@@ -241,7 +241,7 @@ LACalibrateModelFXStrangleSolver::setUpVolFunc(const LAString &fx, LAMathVolatil
 		// first element set calib info
 		param.refName.push_back(cInfoName);
 
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			param.isOutPut = true;
 		}

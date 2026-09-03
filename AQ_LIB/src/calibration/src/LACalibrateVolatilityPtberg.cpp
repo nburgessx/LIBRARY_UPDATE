@@ -225,7 +225,7 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 		//LACalibratePtberg *request = new LACalibratePtberg();
 		// set up
 		request->setUp(*objPool, *param, method, gridPos);
-		if (LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == AQ_NO_DATA)
 		{
 			LACalibratePool *reqChannel = LACalibratePool::getInstance();
 			// put request ,calibration will be done in differenct thread.
@@ -281,7 +281,7 @@ LACalibrateVolatilityPtberg::createVolatility(const LAStringVector &filePath, co
 
 		LAString includeFX = LACoreDataService::getStaticDataManager().getStaticData().getStaticData(propKey+FX_KEY_PTBERG_VOLATILITY_CALIB_FILE_FORWORDGRIDS_ISINCLUDE);
 		LADataBool isIncludeFx;
-		if (includeFX==MLIB_NO_DATA)
+		if (includeFX==AQ_NO_DATA)
 		{
 			isIncludeFx.set(false);
 		}

@@ -11,7 +11,7 @@ namespace etrading
 															const DateVector& fixingDates, const DoubleVector& targetValues, const double& rt, const bool& futureValuation)
 		: modelHelper_ (modelHelper), curveCollection_(curveCollection), curveIndex_(curveIndex), fixingDates_(fixingDates), targetValues_ (targetValues), rt_(rt), futureValuation_(futureValuation)
 	{
-        MLIB_REQUIRE( fixingDates.size() == targetValues.size(),  "The number of FixingDates and ForwardRates must be the same" );
+        AQ_REQUIRE( fixingDates.size() == targetValues.size(),  "The number of FixingDates and ForwardRates must be the same" );
 	}
 
 	VasicekFittingCostFunction::VasicekFittingCostFunction( const VasicekFittingCostFunction& rhs ) 
@@ -41,7 +41,7 @@ namespace etrading
 
 	DoubleVector VasicekFittingCostFunction::getFittedValues(const QuantLib::Array& x) const
 	{
-        MLIB_REQUIRE( x.size() == 2,  "Vasicek Fitting parameter must be two: Theta, Sigma" );
+        AQ_REQUIRE( x.size() == 2,  "Vasicek Fitting parameter must be two: Theta, Sigma" );
 
 		// 1) Set vol as input (changing) paramter
 		modelHelper_->setTheta(x[0]);

@@ -42,14 +42,14 @@ namespace
 		auto curveMarketDataObj = singleCurveObject->getCurveMarketDataObj();
 		// We must transpose, since the curve Market Data is Inverted - what a stupid thing to have to do!
 		const etrading::VariantMatrix curveMarketData = Variant::transpose( curveMarketDataObj->viewInputParameters( etrading::CurveMarketDataEnum::NONE_MARKETDATA, -1 ) ); // NONE_MARKETDATA = Display All, -1 = Display All Columns
-		MLIB_REQUIRE( curveMarketData.size() != 0, "No curve market data to display" )
-		MLIB_REQUIRE( curveMarketData[0].size() != 0, "No curve market data to display" )
+		AQ_REQUIRE( curveMarketData.size() != 0, "No curve market data to display" )
+		AQ_REQUIRE( curveMarketData[0].size() != 0, "No curve market data to display" )
 
 		// 2. Get the Curve Conventions
 		auto curveConventionsObj = singleCurveObject->getCurveGeneratorObj();
 		const etrading::VariantMatrix curveConventions = curveConventionsObj->viewInputParameters(""); // PropertyName = "" = Display All Properties
-		MLIB_REQUIRE( curveConventions.size() != 0, "No curve conventions data to display" )
-		MLIB_REQUIRE( curveConventions[0].size() != 0, "No curve conventions data to display" )
+		AQ_REQUIRE( curveConventions.size() != 0, "No curve conventions data to display" )
+		AQ_REQUIRE( curveConventions[0].size() != 0, "No curve conventions data to display" )
 
 		// 3. Append the Market Data and Convention Variant Matrices
         
@@ -100,7 +100,7 @@ namespace validation_api
 		std::vector<std::string> objectTypes = tryMeLWOType(curveObjectName);
 		if (objectTypes.size() == 0)
 		{
-			MLIB_THROW("Unrecognised object type from " + curveObjectName)
+			AQ_THROW("Unrecognised object type from " + curveObjectName)
 		}
 		std::string objectTypeUsed = objectTypes[0];
 		
@@ -109,7 +109,7 @@ namespace validation_api
 			// 1. First create the curve pointer to the correct curve in the Cache
 			auto& env = etrading::Environment::defaultEnv();
 			auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( curveObjectName );
-			MLIB_REQUIRE(singleCurveObject, "LWO Curve " + curveObjectName + " does not exist")
+			AQ_REQUIRE(singleCurveObject, "LWO Curve " + curveObjectName + " does not exist")
 
 			displaySingleCurve(singleCurveObject, results);
         }
@@ -118,7 +118,7 @@ namespace validation_api
 			// 1. First create the curve pointer to the correct curve in the Cache
 			auto& env = etrading::Environment::defaultEnv();
 			auto curveEngineObject = env.accessObject<etrading::MultiCurveObject>(curveObjectName);
-			MLIB_REQUIRE(curveEngineObject, "LWO Curve Engine" + curveObjectName + " does not exist")
+			AQ_REQUIRE(curveEngineObject, "LWO Curve Engine" + curveObjectName + " does not exist")
 
 			std::vector<etrading::SingleCurveObjectPtr> singleCurveObjs = curveEngineObject->getCurveObjects();
 			size_t curveCount = singleCurveObjs.size();
@@ -132,7 +132,7 @@ namespace validation_api
 		}
 		else
 		{
-			MLIB_THROW("This function only support CURVE and MULTICURVE types. You gave me: " + objectTypeUsed )
+			AQ_THROW("This function only support CURVE and MULTICURVE types. You gave me: " + objectTypeUsed )
 		}
         return results;
         VALID_EXCEPTION_END

@@ -80,7 +80,7 @@ namespace etrading
         // Get the ycProperties from the object pool or create a new one if is empty / not defined
         if( !ehCurve.isDefined() )
         {
-            MLIB_REQUIRE( !throwIfCurveDoesNotExist, "Invalid Curve: CurveCollection '" + curveCollection + "' does not exist" );
+            AQ_REQUIRE( !throwIfCurveDoesNotExist, "Invalid Curve: CurveCollection '" + curveCollection + "' does not exist" );
             
             // Create and Set a new ycProperties object if it doesn't exist
             ycProperties = new CurveCalibrationData( instance_->dataInstance() );

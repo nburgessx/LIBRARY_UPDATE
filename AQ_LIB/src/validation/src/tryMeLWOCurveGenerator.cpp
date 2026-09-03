@@ -35,8 +35,8 @@ namespace validation_api
 		size_t nColumnHeaders   = propertyNames.size();
         size_t nDataColumns     = infoBlocks.size();
 		
-        MLIB_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided" )
-        MLIB_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " +  std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " +  std::to_string(static_cast<long long>(nDataColumns)) )
+        AQ_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided" )
+        AQ_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " +  std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " +  std::to_string(static_cast<long long>(nDataColumns)) )
         
         // TODO: JSONInfoBlocks should not be here move below the valiation_api
         // Clean Data - Remove Blanks
@@ -67,7 +67,7 @@ namespace validation_api
             return ( propertyName.empty() || propertyName == "" );
         } );
 
-        MLIB_REQUIRE( !hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString( propertyNames ) )
+        AQ_REQUIRE( !hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString( propertyNames ) )
 
 		// Verify that the supplied propertyNames match the CurveGeneratorEnum
 		std::set<etrading::CurveGeneratorEnum> enumSet;
@@ -152,7 +152,7 @@ namespace validation_api
 
 		auto& env = etrading::Environment::defaultEnv();
         auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( objectName );
-        MLIB_REQUIRE( singleCurveObject, "LWO Curve " + objectName + " does not exist" )
+        AQ_REQUIRE( singleCurveObject, "LWO Curve " + objectName + " does not exist" )
 
 		// Attempt to retrieve LWOCurveConventions / generator object from the LWO Cache
 		auto curveGenerator = singleCurveObject->getCurveGeneratorObj();

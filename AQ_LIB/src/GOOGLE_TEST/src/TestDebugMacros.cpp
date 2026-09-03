@@ -8,7 +8,7 @@
 namespace google_test
 {
     
-    // Test the MLIB_DEBUG_VALUE function prints to the visual studio output window or google_test.exe command screen
+    // Test the AQ_DEBUG_VALUE function prints to the visual studio output window or google_test.exe command screen
     TEST( TestDebugMacros, UNIT_TestMacro_MLIB_DEBUG_VALUE )
     {
         const double d1 = 1.1;
@@ -28,30 +28,30 @@ namespace google_test
         const double d15 = 15.15;
 
 
-        // MLIB_DEBUG_PARAMETER: Displays the variable names
-        MLIB_DEBUG_PARAMETER( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15 );
+        // AQ_DEBUG_PARAMETER: Displays the variable names
+        AQ_DEBUG_PARAMETER( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15 );
 
-        // MLIB_DEBUG_VALUE: Displays the variable values
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5, d6 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4, d5 );
-        MLIB_DEBUG_VALUE( d1, d2, d3, d4 );
-        MLIB_DEBUG_VALUE( d1, d2, d3 );
-        MLIB_DEBUG_VALUE( d1, d2 );
-        MLIB_DEBUG_VALUE( d1 );
+        // AQ_DEBUG_VALUE: Displays the variable values
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9, d10 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8, d9 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7, d8 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5, d6, d7 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5, d6 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4, d5 );
+        AQ_DEBUG_VALUE( d1, d2, d3, d4 );
+        AQ_DEBUG_VALUE( d1, d2, d3 );
+        AQ_DEBUG_VALUE( d1, d2 );
+        AQ_DEBUG_VALUE( d1 );
         
     }
 
 
-    // Test the MLIB_DEBUG_PARAMETER function prints to the visual studio output window or google_test.exe command screen
+    // Test the AQ_DEBUG_PARAMETER function prints to the visual studio output window or google_test.exe command screen
     TEST( TestDebugMacros, UNIT_TestMacro_MLIB_DEBUG_PARAMETER )
     {
         const std::string s1 = "a";
@@ -71,25 +71,25 @@ namespace google_test
         const std::string s15 = "o";
 
 
-        // MLIB_DEBUG_PARAMETER: Displays the variable names
-        MLIB_DEBUG_PARAMETER( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15 );
+        // AQ_DEBUG_PARAMETER: Displays the variable names
+        AQ_DEBUG_PARAMETER( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15 );
 
-        // MLIB_DEBUG_VALUE: Displays the variable values
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5, s6 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4, s5 );
-        MLIB_DEBUG_VALUE( s1, s2, s3, s4 );
-        MLIB_DEBUG_VALUE( s1, s2, s3 );
-        MLIB_DEBUG_VALUE( s1, s2 );
-        MLIB_DEBUG_VALUE( s1 );
+        // AQ_DEBUG_VALUE: Displays the variable values
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9, s10 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8, s9 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7, s8 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5, s6, s7 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5, s6 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4, s5 );
+        AQ_DEBUG_VALUE( s1, s2, s3, s4 );
+        AQ_DEBUG_VALUE( s1, s2, s3 );
+        AQ_DEBUG_VALUE( s1, s2 );
+        AQ_DEBUG_VALUE( s1 );
         
     }
 

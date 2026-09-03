@@ -3,7 +3,7 @@
 
 #include "meProductSwapParRate.h"
 #include "tryMeProductSwapParRate.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meProductSwapParRate
@@ -14,7 +14,7 @@
 double meProductSwapParRate(const std::vector<std::vector <std::string> >& swapLVB, 
 						bool validateKeys)
 {
-	MLIB_API_START
+	AQ_API_START
     double ret;
 	
 	// marshall all inputs		
@@ -22,7 +22,7 @@ double meProductSwapParRate(const std::vector<std::vector <std::string> >& swapL
 		
 	ret = validation_api::tryMeProductSwapParRate(lvb, validateKeys);
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			return a set of expected keys for swap par rate label value block
@@ -30,9 +30,9 @@ double meProductSwapParRate(const std::vector<std::vector <std::string> >& swapL
 */
 std::vector<std::string> meProductSwapParRateLVBKeys()
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<std::string> ret;
 	ret = validation_api::tryMeProductSwapParRateLVBKeys();
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }

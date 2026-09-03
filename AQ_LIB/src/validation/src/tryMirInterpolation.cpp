@@ -34,8 +34,8 @@ namespace validation_api
         RECORD_INPUTS( array1, array2, point, interpolation )
 
         // Validate parameters
-        MLIB_REQUIRE( array1.size() == array2.size(), "Invalid Interpolation Data: xValues and yValues must be the same size")
-		MLIB_REQUIRE( array1.size() == 0, "Invalid Interpolation Data: Interpolation data is empty")
+        AQ_REQUIRE( array1.size() == array2.size(), "Invalid Interpolation Data: xValues and yValues must be the same size")
+		AQ_REQUIRE( array1.size() == 0, "Invalid Interpolation Data: Interpolation data is empty")
         
 		const double result = LAMathInterpolationUtilities::interpolate( array1, array2, point, interpolation.c_str() );
 		RECORD_OUTPUTS_AND_RETURN_RESULT( result );

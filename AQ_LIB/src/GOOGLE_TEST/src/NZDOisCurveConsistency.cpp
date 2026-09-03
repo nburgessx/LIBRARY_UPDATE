@@ -23,7 +23,7 @@
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "RepriceCalibrationInstruments.h"
-#include "DataUtilities.h" // MLIB_TO_STRING macros
+#include "DataUtilities.h" // AQ_TO_STRING macros
 
 // Define Test Folder Path(s)
 // *** The Google Test DataInstance folder is defined within etrading project, GoogleTest Folder, GetGoogleTestFolder.h ***
@@ -66,7 +66,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    oisSwapTerms    = curveCalibrationOisSwapTenors( curveObjectNZDOIS_ ); 
         std::vector<double>         oisSwapParRates = curveCalibrationOisSwapParRates( curveObjectNZDOIS_ );
-        MLIB_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
+        AQ_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-6;
@@ -87,7 +87,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "NZDOIS_Swap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "NZDOIS_Swap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "NZD_OIS";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("NZDYC");
 

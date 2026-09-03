@@ -97,7 +97,7 @@ namespace etrading
                                        const bool throwIfMultipleSolutions,
                                        const double shiftSizeForMultipleSolutionCheck )
 		{
-            MLIB_REQUIRE( initialLowerBound < initialUpperBound, "No Solution Found: Invalid Problem Interval; Bisection Method LowerBound must be smaller than the UpperBound" )
+            AQ_REQUIRE( initialLowerBound < initialUpperBound, "No Solution Found: Invalid Problem Interval; Bisection Method LowerBound must be smaller than the UpperBound" )
             
             double lowerBound               = initialLowerBound;
             double lowerValue               = function( lowerBound );
@@ -112,14 +112,14 @@ namespace etrading
 
             // 1. Check Boundary Conditions
             // --------------------------------------------------------------------------
-            const bool isLowerValueZero     = MLIB_IS_EQUAL_ZERO( lowerValue );
-            const bool isUpperValueZero     = MLIB_IS_EQUAL_ZERO( upperValue );
+            const bool isLowerValueZero     = AQ_IS_EQUAL_ZERO( lowerValue );
+            const bool isUpperValueZero     = AQ_IS_EQUAL_ZERO( upperValue );
 
             if ( isLowerValueZero || isUpperValueZero )
             {
                 if( isLowerValueZero && isUpperValueZero )
                 {
-                    MLIB_THROW("No Solution Found: Multiple Solutions Found in the Problem Interval.")
+                    AQ_THROW("No Solution Found: Multiple Solutions Found in the Problem Interval.")
                 }
                 
                 midPoint = isLowerValueZero ? lowerBound : upperBound;
@@ -132,14 +132,14 @@ namespace etrading
                 
                 // A solution exists in the interval when the target function changes value
                 // i.e. No dataInstance found in the problem interval
-                if ( MLIB_IS_GREATER_THAN_ZERO( lowerValue * upperValue ) )
+                if ( AQ_IS_GREATER_THAN_ZERO( lowerValue * upperValue ) )
                 {
                     if ( maxIntervalExpansionAttempts > 0 )
                     {
                         // Expand the Problem Search Interval
                         size_t intervalExpansionAttempt = 1;
                         
-                        while(  MLIB_IS_GREATER_THAN_ZERO( lowerValue * upperValue ) && intervalExpansionAttempt <= maxIntervalExpansionAttempts )
+                        while(  AQ_IS_GREATER_THAN_ZERO( lowerValue * upperValue ) && intervalExpansionAttempt <= maxIntervalExpansionAttempts )
                         {
                             // Expand Bounds
                             lowerBound -= std::fabs( lowerBound );
@@ -152,7 +152,7 @@ namespace etrading
                             ++intervalExpansionAttempt;
                         }
                     }
-                    MLIB_REQUIRE( MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO( lowerValue * upperValue ), "No Solution Found: Problem interval does not contain a solution." )
+                    AQ_REQUIRE( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( lowerValue * upperValue ), "No Solution Found: Problem interval does not contain a solution." )
                 }
             
                 // 3. Biscect the Interval and Search for a Soltion
@@ -168,7 +168,7 @@ namespace etrading
                     
                     // Check for a Solution in the Lower Half of the Interval
                     // i.e. we have a dataInstance in the interval when the function value changes sign
-                    if ( MLIB_IS_LESS_THAN_ZERO( lowerValue * midValue ) )
+                    if ( AQ_IS_LESS_THAN_ZERO( lowerValue * midValue ) )
                     {
                         upperBound = midPoint;
                     }
@@ -189,13 +189,13 @@ namespace etrading
                     iterationCount++;
 
                 }
-                MLIB_REQUIRE( iterationCount <= maxIterations, "No Solution Found: The Bisection Solver ran out of iterations." )
+                AQ_REQUIRE( iterationCount <= maxIterations, "No Solution Found: The Bisection Solver ran out of iterations." )
             }
 
 
             // Check for Convergence
             // Mid Value is the target function - target price
-            MLIB_REQUIRE( std::fabs( midValue ) <= tolerance, "No Solution Found: The Bisection Solver failed to converge." )
+            AQ_REQUIRE( std::fabs( midValue ) <= tolerance, "No Solution Found: The Bisection Solver failed to converge." )
             
             // Do not Allow Underdetermined Solutions i.e. Many solutions giving the same target price 
             // This the same as ensuring the derivative of the solution is non-zero
@@ -204,7 +204,7 @@ namespace etrading
                 const double changeInInterval   = ( shiftSizeForMultipleSolutionCheck < 1e-8 ) ? 1e-8 : shiftSizeForMultipleSolutionCheck;
                 const double dMidValue          = function( midPoint + changeInInterval );
                 const double solutionSlope      = ( midValue - dMidValue ) / changeInInterval;
-                MLIB_REQUIRE( MLIB_IS_GREATER_THAN( std::fabs(solutionSlope), gradientTolerance ), "No Solution Found: Multiple Solutions Found in the Problem Interval." )
+                AQ_REQUIRE( AQ_IS_GREATER_THAN( std::fabs(solutionSlope), gradientTolerance ), "No Solution Found: Multiple Solutions Found in the Problem Interval." )
             }
 
             // Populate the Results Struct
@@ -241,7 +241,7 @@ namespace etrading
 			//				 y0 = Distance from Search Target: Function valuation for the nth iteration MINUS target
 			//				dy0 = derivative of function valuation MINUS target for nth iteration
 			
-			MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( bumpSize ), "Invalid Optimzation Set-Up: must be greater than zero" )
+			AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( bumpSize ), "Invalid Optimzation Set-Up: must be greater than zero" )
 
 			double x1 = initialGuess;
 			double x0 = initialGuess;
@@ -267,7 +267,7 @@ namespace etrading
 				dy0									= ( funcValueWithUpwardBump - functionValue ) / bumpSize; // Difference, target terms cancel
             
 				// Divide by zero guard
-				MLIB_THROW_IF( dy0 == 0, "No Solution Found. The Newton-Raphson derivative has zero value." )
+				AQ_THROW_IF( dy0 == 0, "No Solution Found. The Newton-Raphson derivative has zero value." )
 
 				// Newton-Raphson Formula:
                 x1 = x0 - ( y0 / dy0 );
@@ -277,7 +277,7 @@ namespace etrading
 			}
         
 			// We already checked if the target value = solver value above, so if we have reached our max iterations we have not found a solution
-			MLIB_THROW_IF( iterationCount == maxIterations, "No Solution Found. The Newton-Raphson solver ran out of iterations." )
+			AQ_THROW_IF( iterationCount == maxIterations, "No Solution Found. The Newton-Raphson solver ran out of iterations." )
 			
 			const double solution = x1;
 
@@ -319,7 +319,7 @@ namespace etrading
 			//				dy1 = first derivative of function valuation MINUS target for nth iteration
 			//				dy2 = second derivative of function valuation MINUS target for nth iteration
 			
-			MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( bumpSize ), "Invalid Optimzation Set-Up: must be greater than zero" )
+			AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( bumpSize ), "Invalid Optimzation Set-Up: must be greater than zero" )
 
 			// Apply Interval Bounds if the interval lower- and upper-bounds are not NaN
 			const bool applyIntervalLowerBound = !std::isnan( intervalLowerBound );
@@ -328,12 +328,12 @@ namespace etrading
 			// Validation of the Optional Interval Bounds
 			if( applyIntervalLowerBound && applyIntervalUpperBound )
 			{
-				MLIB_REQUIRE( intervalLowerBound < intervalUpperBound, "Invalid Optimzation Set-Up: The Interval Lowerbound must be less than the Upperbound" )
+				AQ_REQUIRE( intervalLowerBound < intervalUpperBound, "Invalid Optimzation Set-Up: The Interval Lowerbound must be less than the Upperbound" )
 			}
 			
 			// Validation of the Optional Interval Bounds
-			MLIB_THROW_IF( applyIntervalUpperBound && (initialGuess > intervalUpperBound), "Invalid Optimzation Set-Up: Initial Guess must not be greater than the Interval Upperbound" )
-			MLIB_THROW_IF( applyIntervalLowerBound && (initialGuess <  intervalLowerBound), "Invalid Optimzation Set-Up: Initial Guess must not be lower than the Interval Lowerbound" )
+			AQ_THROW_IF( applyIntervalUpperBound && (initialGuess > intervalUpperBound), "Invalid Optimzation Set-Up: Initial Guess must not be greater than the Interval Upperbound" )
+			AQ_THROW_IF( applyIntervalLowerBound && (initialGuess <  intervalLowerBound), "Invalid Optimzation Set-Up: Initial Guess must not be lower than the Interval Lowerbound" )
 
 			double x1 = initialGuess;
 			double x0 = initialGuess;
@@ -355,7 +355,7 @@ namespace etrading
 				dy2		= ( funcValueWithUpBump - 2 * functionValue + funcValueWithDownBump ) / ( bumpSize * bumpSize );
 
 				// Divide by zero guard
-				MLIB_THROW_IF( dy2 == 0.0, "No Minimum Value Found. The underlying problem has no local minimum since it is constant or linear having a second derivative zero." );
+				AQ_THROW_IF( dy2 == 0.0, "No Minimum Value Found. The underlying problem has no local minimum since it is constant or linear having a second derivative zero." );
 
 				// Newton-Raphson Mimimization Formula:
                 x1 = x0 - ( dy1 / dy2 );
@@ -387,7 +387,7 @@ namespace etrading
 			// We already checked for convergence above, so if we have reached our max iterations we have not found a solution
 			if ( iterationCount >= maxIterations )
 			{
-				MLIB_THROW_IF( std::isnan( defaultValueToUseOnFailure ), "No Minimum Found. The Newton-Raphson solver ran out of iterations." )
+				AQ_THROW_IF( std::isnan( defaultValueToUseOnFailure ), "No Minimum Found. The Newton-Raphson solver ran out of iterations." )
 				solution = defaultValueToUseOnFailure;
 			}
 
@@ -531,7 +531,7 @@ namespace etrading
 							break;
 						}
 					}
-					MLIB_THROW_IF( derivativeIsZero, "No Solution Found. The Newton-Raphson derivative has zero value." );
+					AQ_THROW_IF( derivativeIsZero, "No Solution Found. The Newton-Raphson derivative has zero value." );
 
 					// Compute the inverse-jacobian matrix by bumping the state variables and revaluing the target function
 					jacobianMatrix.resize(numPoints, numPoints);
@@ -616,7 +616,7 @@ namespace etrading
 
 			// 7.	Populate Results
 			// ************************************************************************************************
-			MLIB_REQUIRE( solutionFound, "No Solution Found. The Newton-Raphson solver ran out of iterations." );
+			AQ_REQUIRE( solutionFound, "No Solution Found. The Newton-Raphson solver ran out of iterations." );
 
             MultiVariateSolverResults results;
 			

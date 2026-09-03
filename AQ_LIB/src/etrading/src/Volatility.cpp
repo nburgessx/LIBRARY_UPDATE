@@ -10,7 +10,7 @@ namespace etrading
         // Validate Object Type
         const std::string inputLVB = "VolatilityLVB";
         CachedObjectEnum objectType = toCachedObjectEnum( volLVB.getCompulsoryValueAsString( OBJECT_KEY::OBJECT_TYPE, inputLVB ) );
-        MLIB_REQUIRE( objectType == VOLATILITY, "Invalid Object Type - 'VOLATILITY' type required" )
+        AQ_REQUIRE( objectType == VOLATILITY, "Invalid Object Type - 'VOLATILITY' type required" )
 
 		asOfDate_       = stringToDate(volLVB.getCompulsoryValueAsString(OPTION_KEYS::AS_OF_DATE, inputLVB).c_str(), "#Error: Invalid Volatility 'AsOfDate'");
 		currency_       = toCCYEnum(volLVB.getCompulsoryValueAsString(IRS_KEY::CURRENCY, inputLVB));

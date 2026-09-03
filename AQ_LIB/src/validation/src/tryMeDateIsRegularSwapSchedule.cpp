@@ -36,8 +36,8 @@ namespace validation_api
         RECORD_INPUTS( swapStart, swapMaturity, isMaturityAdjusted, frequency, busDayAdj, calendar, rollDay, rollConvention );
 
         // Validation
-        MLIB_REQUIRE( swapMaturity >= swapStart, "Invalid Swap Dates sepcified - Swap Maturity cannot be before the Swap Start date." );
-        MLIB_REQUIRE( rollDay >= 0, "Invalid RollDay sepcified - RollDay cannot be negative." );
+        AQ_REQUIRE( swapMaturity >= swapStart, "Invalid Swap Dates sepcified - Swap Maturity cannot be before the Swap Start date." );
+        AQ_REQUIRE( rollDay >= 0, "Invalid RollDay sepcified - RollDay cannot be negative." );
         
         // Call the underlying function
         const bool result = etrading::isRegularSwapSchedule( swapStart, swapMaturity, isMaturityAdjusted, frequency, busDayAdj, calendar, rollDay, rollConvention );

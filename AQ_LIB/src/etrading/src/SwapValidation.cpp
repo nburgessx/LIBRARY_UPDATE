@@ -68,14 +68,14 @@ namespace etrading
         if( !isMaturityInDateFormat )
         {
             // *** As a market convention, maturity date is NOT adjusted for holiday
-            MLIB_REQUIRE( LADateScheduleHelpers::isValidDate( effectiveDate ), "Invalid Date: Unable to convert MaturityTenor to a date" )
+            AQ_REQUIRE( LADateScheduleHelpers::isValidDate( effectiveDate ), "Invalid Date: Unable to convert MaturityTenor to a date" )
             maturityDate = LADateScheduleHelpers::getDate( effectiveDate,
                                                          maturityDateStr,		// maturity is Tenor
                                                          LAString(),         // BusinessDayAdjustment is NO_CHANGE
                                                          LAString());       // Calendar is NONE
         }
         
-        MLIB_REQUIRE( LADateScheduleHelpers::isValidDate( maturityDate ), "Invalid Maturity Date " + maturityDateStr )
+        AQ_REQUIRE( LADateScheduleHelpers::isValidDate( maturityDate ), "Invalid Maturity Date " + maturityDateStr )
         return maturityDate;
     }
 
@@ -145,7 +145,7 @@ namespace etrading
         }
         else
         {
-            MLIB_THROW("Must specify if the Swap is a Payer (PAY) or Receiver (REC).")
+            AQ_THROW("Must specify if the Swap is a Payer (PAY) or Receiver (REC).")
         }
 
         return isFixedRatePayerSwap;
@@ -167,7 +167,7 @@ namespace etrading
         }
 		else
 		{
-            MLIB_THROW("Must specify if the Swap is a Payer (PAY) or Receiver (REC).")
+            AQ_THROW("Must specify if the Swap is a Payer (PAY) or Receiver (REC).")
 		}
 	}
 

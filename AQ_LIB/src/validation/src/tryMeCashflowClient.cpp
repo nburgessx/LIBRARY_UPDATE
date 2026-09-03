@@ -5,7 +5,7 @@
 #include "ExceptionMacros.h"
 #include "RecordMacros.h"
 #include "StructuredExceptionHandler.h"
-#include "DataUtilities.h"					// For MLIB_TO_STRING macros
+#include "DataUtilities.h"					// For AQ_TO_STRING macros
 
 namespace validation_api
 {
@@ -40,7 +40,7 @@ namespace validation_api
 			auto it = std::find( fileColumnHeadings.begin(), fileColumnHeadings.end(), requiredColumnName );
 			if ( it == fileColumnHeadings.end() )
 			{
-				MLIB_THROW( "Could not find column " + requiredColumnName + " in the CSV file headings." );
+				AQ_THROW( "Could not find column " + requiredColumnName + " in the CSV file headings." );
 			}		 
 
 			const int index = std::distance( fileColumnHeadings.begin(), it );
@@ -93,7 +93,7 @@ namespace validation_api
 			std::ifstream infile( filename.c_str() );
 			if ( ! infile )
 			{
-				MLIB_THROW( "Unable to open file: " + filename );
+				AQ_THROW( "Unable to open file: " + filename );
 			}
 		
 			std::string line;
@@ -202,19 +202,19 @@ namespace validation_api
 				const etrading::LoanCashflowBreakdown& cashflow = cashflowBreakdown[ i ];
 				LAStringVector row;
 
-				row.push_back( MLIB_TO_STRING_FROM_INT( cashflow.period ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.balanceStart ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.defaultBalance ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.lossGivenLoss ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.severityRecovered ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.prepayment ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.balanceAfterDefaultAndPrepayment ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.loanPayment ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.interestComponent ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.principalComponent ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.balanceEnd ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.riskWeight ).c_str() );
-				row.push_back( MLIB_TO_STRING_FROM_DOUBLE( cashflow.kirbAmount ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_INT( cashflow.period ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.balanceStart ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.defaultBalance ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.lossGivenLoss ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.severityRecovered ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.prepayment ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.balanceAfterDefaultAndPrepayment ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.loanPayment ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.interestComponent ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.principalComponent ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.balanceEnd ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.riskWeight ).c_str() );
+				row.push_back( AQ_TO_STRING_FROM_DOUBLE( cashflow.kirbAmount ).c_str() );
 
 				cashflowMatrix.push_back( row );
 			}

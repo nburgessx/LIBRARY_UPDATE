@@ -82,8 +82,8 @@ LACalibrationParametersIRSABR::createCalibrationInfo(LAObjectPool &objPool, cons
 	tmpCurrency.toLower();
 
 	LAString underlying = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_IRSABR_UNDERLYING);
-	if (underlying == MLIB_NO_DATA)
-		return MLIB_NO_DATA;
+	if (underlying == AQ_NO_DATA)
+		return AQ_NO_DATA;
 
 	underlying.toLower();
 	LAStringVector underlyings = underlying.toToken(':');
@@ -137,7 +137,7 @@ LACalibrationParametersIRSABR::createCalibrationInfo(LAObjectPool &objPool, cons
 		LAStringVector swapdatavec = strSwaptionData.toToken(MULTI_STATIC_DATA_DELIMITER);
 		LAStringVector weightvec = strWeight.toToken(MULTI_STATIC_DATA_DELIMITER);
 		LAStringVector optiontypevec;
-		if (strOptionType == MLIB_NO_DATA)
+		if (strOptionType == AQ_NO_DATA)
 		{
 			optiontypevec.resize(1, CALL);
 		}
@@ -269,7 +269,7 @@ LACalibrationParametersIRSABR::createCalibrationInfo(LAObjectPool &objPool, cons
 			if (k == 0)
 			{
 				const LAString premFileName = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_PREMIUM_FILE + "." + underlyings[i]);
-				if (premFileName != MLIB_NO_DATA)
+				if (premFileName != AQ_NO_DATA)
 				{
 					const LAString _premFileName =  LAMarketData::getNumFileName(premFileName);
 					DoubleMatrix premiummat(tmpmat);
@@ -321,7 +321,7 @@ LACalibrationParametersIRSABR::createCalibrationInfo(LAObjectPool &objPool, cons
 		ecap->add(IR_CALIBRATION_DATA_FREQUENCY, new LADataString()).convertFromString(strCapfrequency);
 		//cap spotlag
 		LAString strCapspotlag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_IRSABR_CAPSPOTLAG + "." + underlyings[i]);
-		if (MLIB_NO_DATA == strCapspotlag)
+		if (AQ_NO_DATA == strCapspotlag)
 			throw LACoreInvalidData("Spotlag Error",__FILE__,__LINE__);
 		
 		//tmp
@@ -366,12 +366,12 @@ LACalibrationParametersIRSABR::createCalibrationInfo(LAObjectPool &objPool, cons
 			LAString suffix = "." + sTenorVec[j];
 			suffix.toLower();
 			LAString strSwaptionfrequency = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_IRSABR_SWAPTIONFREQUENCY + "." + underlyings[i] + suffix).toUpper();
-			if (strSwaptionfrequency != MLIB_NO_DATA)
+			if (strSwaptionfrequency != AQ_NO_DATA)
 				eswaption->add(IR_CALIBRATION_DATA_FREQUENCY + LAString("_") + sTenorVec[j], new LADataString()).convertFromString(strSwaptionfrequency);
 		}; 
 		//swaption spotlag
 		LAString strSwaptionspotlag = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_IRSABR_SWAPTIONSPOTLAG + "." + underlyings[i]);
-		if (MLIB_NO_DATA == strSwaptionspotlag)
+		if (AQ_NO_DATA == strSwaptionspotlag)
 			throw LACoreInvalidData("Spotlag Error",__FILE__,__LINE__);
 		eswaption->add(CURVEINPUT_SPOTLAG, new LADataString()).convertFromString(strSwaptionspotlag.getCString());
 		//swaption slidingrule
@@ -395,13 +395,13 @@ LACalibrationParametersIRSABR::createCalibrationInfo(LAObjectPool &objPool, cons
 		info->add(PRICING_DATA_CALIBMETHOD, new LADataString()).convertFromString(strCalibMehod);
 		//ishaganatmvolfixed
 		LAString strIsHaganAtmVolFixed = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_IRSABR_ISHAGANATMVOLFIXED + "." + underlyings[i]);
-		if (strIsHaganAtmVolFixed != MLIB_NO_DATA)
+		if (strIsHaganAtmVolFixed != AQ_NO_DATA)
 		{
 			info->add(PRICING_DATA_ISHAGANATMVOLFIXED, new LADataBool()).convertFromString(strIsHaganAtmVolFixed);
 		}
 		//forwardshift
 		LAString strForwardShift = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_IRSABR_FORWARDSHIFTVALUE + "." + underlyings[i]);
-		if (strForwardShift != MLIB_NO_DATA)
+		if (strForwardShift != AQ_NO_DATA)
 		{
 			info->add(PRICING_DATA_FORWARDSHIFTVALUE, new LADataDouble()).convertFromString(strForwardShift);
 		}
@@ -410,10 +410,10 @@ LACalibrationParametersIRSABR::createCalibrationInfo(LAObjectPool &objPool, cons
 		LAStringMatrix gridWithMethod(optionMatVec.size(),stmpvec);
 
         LAString strExtraGrid = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_IRSABR_EXTRAGRID + "." + underlyings[i]);
-		if (strExtraGrid != MLIB_NO_DATA)
+		if (strExtraGrid != AQ_NO_DATA)
 		{
 			LAString strExtraGridApproxMehod = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_IRSABR_EXTRAGRIDAPPROXMETHOD + "." + underlyings[i]);
-			if (MLIB_NO_DATA == strExtraGridApproxMehod)
+			if (AQ_NO_DATA == strExtraGridApproxMehod)
 				throw LACoreInvalidData("The extra grid approx method doesn`t exist.",__FILE__,__LINE__);
 
 			LAStringVector designatedExtraGridVec = strExtraGrid.toToken(MULTI_STATIC_DATA_DELIMITER);

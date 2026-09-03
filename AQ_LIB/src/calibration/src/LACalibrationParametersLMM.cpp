@@ -335,7 +335,7 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 	}
 
 	LAString interpolationG = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_LMM_VOLATILITY_OPT_INTERPOLATION_G);
-	if (interpolationG == MLIB_NO_DATA)
+	if (interpolationG == AQ_NO_DATA)
 	{
 		interpolationG = "fn_stepinterpolation";
 	}
@@ -566,7 +566,7 @@ LACalibrationParametersLMM::createCalibrationInfo(LAObjectPool &objPool, const L
 
 	// set up the flag for setting up result of lmm swatpion vol
 	LAString isResultoutLMMSwaptionStr = mpCalibStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_CALIB_LMM_ISRESULTOUT_SWAPTION);
-	const bool isResultoutLMMSwaption = (isResultoutLMMSwaptionStr.toUpper() == "TRUE" || isResultoutLMMSwaptionStr == MLIB_NO_DATA);
+	const bool isResultoutLMMSwaption = (isResultoutLMMSwaptionStr.toUpper() == "TRUE" || isResultoutLMMSwaptionStr == AQ_NO_DATA);
 	info->add(CALIBRATION_DATA_IS_RESULTOUT_LMM_SWAPTION, new LADataBool(isResultoutLMMSwaption));
 
 	return CALIBINFONAME;
@@ -649,7 +649,7 @@ LACalibrationParametersLMM::getCalibStaticDataValue(const LAString &key, const L
 {
 	LAString ret = mpCalibStaticData->getStaticData(key + "." + grid);
 
-	if (ret == MLIB_NO_DATA)
+	if (ret == AQ_NO_DATA)
 	{
 		return mpCalibStaticData->getStaticData(key);
 	}

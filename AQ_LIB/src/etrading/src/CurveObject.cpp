@@ -139,7 +139,7 @@ namespace etrading
     void OISCurveObjectData::applyFlatShift( const double & shiftSize )
     {
         // Check if bump already applied - don't allow multiple bumps, otherwise we have no way to restore the data, if required.
-        MLIB_REQUIRE( MLIB_IS_EQUAL_ZERO( shiftSize_ ), "Unable to apply Flat-Shift to OIS Market Data: The market data has a shift applied to it already" )
+        AQ_REQUIRE( AQ_IS_EQUAL_ZERO( shiftSize_ ), "Unable to apply Flat-Shift to OIS Market Data: The market data has a shift applied to it already" )
         shiftSize_ = shiftSize;
 
         // Flat-Shift Bumps should bump outright instruments only
@@ -150,7 +150,7 @@ namespace etrading
     // Function to remove a flat-shift a clear an existing flat-shift
     void OISCurveObjectData::restoreDataAndClearFlatShift()
     {
-        if ( MLIB_IS_EQUAL_ZERO( shiftSize_ ) )
+        if ( AQ_IS_EQUAL_ZERO( shiftSize_ ) )
         {
             // Do nothing if the shift-size applied was zero
             return;
@@ -185,14 +185,14 @@ namespace etrading
 				CurveMarketData::perturbMarketDataFromLAStringMatrix( loBasisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			default:
-				MLIB_THROW("Unable to Pertrub OIS Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instruments can be Perturbed.")
+				AQ_THROW("Unable to Pertrub OIS Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instruments can be Perturbed.")
 		}
 	}
 
 	// Function to restore market data and clear perturbation shifts
 	void OISCurveObjectData::restoreDataAndClearPerturbation()
 	{
-		if ( MLIB_IS_EQUAL_ZERO( shiftSize_ ) )
+		if ( AQ_IS_EQUAL_ZERO( shiftSize_ ) )
         {
             // Do nothing if the shift-size applied was zero
             return;
@@ -222,7 +222,7 @@ namespace etrading
 				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( loBasisRates_, riskInstrumentType );
 				break;
 			default:
-				MLIB_THROW("Unable to Determine OIS Tenors from Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instrument Market Data is permitted.")
+				AQ_THROW("Unable to Determine OIS Tenors from Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instrument Market Data is permitted.")
 		}
 	}
 
@@ -241,7 +241,7 @@ namespace etrading
 				return std::vector<bool>( loBasisRates_.size(), false );
 				break;
 			default:
-				MLIB_THROW("Unable to Determine if OIS Outright Instruments from Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instrument Market Data is permitted.")
+				AQ_THROW("Unable to Determine if OIS Outright Instruments from Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instrument Market Data is permitted.")
 		}
 	}
 
@@ -297,7 +297,7 @@ namespace etrading
     void ARRCurveObjectData::applyFlatShift( const double & shiftSize )
     {
         // Check if bump already applied - don't allow multiple bumps, otherwise we have no way to restore the data, if required.
-        MLIB_REQUIRE( MLIB_IS_EQUAL_ZERO( shiftSize_ ), "Unable to apply Flat-Shift to ARR Curve Market Data: The market data has a shift applied to it already" )
+        AQ_REQUIRE( AQ_IS_EQUAL_ZERO( shiftSize_ ), "Unable to apply Flat-Shift to ARR Curve Market Data: The market data has a shift applied to it already" )
         shiftSize_ = shiftSize;
 
         // Flat-Shift Bumps should bump outright instruments only
@@ -308,7 +308,7 @@ namespace etrading
     // Function to remove a flat-shift a clear an existing flat-shift
     void ARRCurveObjectData::restoreDataAndClearFlatShift()
     {
-        if ( MLIB_IS_EQUAL_ZERO( shiftSize_ ) )
+        if ( AQ_IS_EQUAL_ZERO( shiftSize_ ) )
         {
             // Do nothing if the shift-size applied was zero
             return;
@@ -343,14 +343,14 @@ namespace etrading
 				CurveMarketData::perturbMarketDataFromLAStringMatrix( loBasisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			default:
-				MLIB_THROW("Unable to Pertrub ARR Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instruments can be Perturbed.")
+				AQ_THROW("Unable to Pertrub ARR Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instruments can be Perturbed.")
 		}
 	}
 
 	// Function to restore market data and clear perturbation shifts
 	void ARRCurveObjectData::restoreDataAndClearPerturbation()
 	{
-		if ( MLIB_IS_EQUAL_ZERO( shiftSize_ ) )
+		if ( AQ_IS_EQUAL_ZERO( shiftSize_ ) )
         {
             // Do nothing if the shift-size applied was zero
             return;
@@ -380,7 +380,7 @@ namespace etrading
 				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( loBasisRates_, riskInstrumentType );
 				break;
 			default:
-				MLIB_THROW("Unable to Determine ARR Tenors from Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instrument Market Data is permitted.")
+				AQ_THROW("Unable to Determine ARR Tenors from Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instrument Market Data is permitted.")
 		}
 	}
 
@@ -399,7 +399,7 @@ namespace etrading
 				return std::vector<bool>( loBasisRates_.size(), false );
 				break;
 			default:
-				MLIB_THROW("Unable to Determine if ARR Outright Instruments from Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instrument Market Data is permitted.")
+				AQ_THROW("Unable to Determine if ARR Outright Instruments from Curve Market Data: Only OIS, LIBOROISBASISSPREADS or SWAPS Instrument Market Data is permitted.")
 		}
 	}
 
@@ -463,7 +463,7 @@ namespace etrading
     void SwapCurveObjectData::applyFlatShift( const double & shiftSize )
     {
         // Check if bump already applied - don't allow multiple bumps, otherwise we have no way to restore the data, if required.
-        MLIB_REQUIRE( MLIB_IS_EQUAL_ZERO( shiftSize_ ), "Unable to apply Flat-Shift to Swap Curve Market Data: The market data has a shift applied to it already" )
+        AQ_REQUIRE( AQ_IS_EQUAL_ZERO( shiftSize_ ), "Unable to apply Flat-Shift to Swap Curve Market Data: The market data has a shift applied to it already" )
         shiftSize_ = shiftSize;
         
         // Flat-Shift Bumps should bump outright instruments only
@@ -478,7 +478,7 @@ namespace etrading
     // Function to remove a flat-shift a clear an existing flat-shift
     void SwapCurveObjectData::restoreDataAndClearFlatShift()
     {
-        if ( MLIB_IS_EQUAL_ZERO( shiftSize_ ) )
+        if ( AQ_IS_EQUAL_ZERO( shiftSize_ ) )
         {
             // Do nothing if the shift-size applied was zero
             return;
@@ -519,7 +519,7 @@ namespace etrading
 				
 				const bool is3MFra = fra3mRates_.size() == 0 ? false : true;
 				const bool is6MFra = fra6mRates_.size() == 0 ? false : true;
-				MLIB_REQUIRE( !is3MFra || !is6MFra, "Invalid Market Data: Cannot calibrate to 3M and 6M FRA Instruments within the same Swap Curve" )
+				AQ_REQUIRE( !is3MFra || !is6MFra, "Invalid Market Data: Cannot calibrate to 3M and 6M FRA Instruments within the same Swap Curve" )
 
 				if ( is3MFra )
 				{
@@ -540,14 +540,14 @@ namespace etrading
 				CurveMarketData::perturbMarketDataFromLAStringMatrix( basisAdjRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			default:
-				MLIB_THROW("Unable to Pertrub Swap Curve Market Data: Only LIBORFIXINGS, FUTURES, FRAS, SWAPS or BASISSWAPS Instruments can be Perturbed.")
+				AQ_THROW("Unable to Pertrub Swap Curve Market Data: Only LIBORFIXINGS, FUTURES, FRAS, SWAPS or BASISSWAPS Instruments can be Perturbed.")
 		}
 	}
 
 	// Function to restore market data and clear perturbation shifts
 	void SwapCurveObjectData::restoreDataAndClearPerturbation()
 	{
-		if ( MLIB_IS_EQUAL_ZERO( shiftSize_ ) )
+		if ( AQ_IS_EQUAL_ZERO( shiftSize_ ) )
         {
             // Do nothing if the shift-size applied was zero
             return;
@@ -577,7 +577,7 @@ namespace etrading
 			{
 				const bool is3MFra = fra3mRates_.size() == 0 ? false : true;
 				const bool is6MFra = fra6mRates_.size() == 0 ? false : true;
-				MLIB_REQUIRE( !is3MFra || !is6MFra, "Invalid Market Data: Cannot calibrate to 3M and 6M FRA Instruments within the same Swap Curve" )
+				AQ_REQUIRE( !is3MFra || !is6MFra, "Invalid Market Data: Cannot calibrate to 3M and 6M FRA Instruments within the same Swap Curve" )
 				
 				if ( is3MFra )
 				{
@@ -602,7 +602,7 @@ namespace etrading
 				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( basisAdjRates_, riskInstrumentType );
 				break;
 			default:
-				MLIB_THROW("Unable to Determine Tenors from Swap Curve Market Data: Only LIBORFIXINGS, FUTURES, FRAS, SWAPS or BASISSWAPS Instrument Market Data is permitted.")
+				AQ_THROW("Unable to Determine Tenors from Swap Curve Market Data: Only LIBORFIXINGS, FUTURES, FRAS, SWAPS or BASISSWAPS Instrument Market Data is permitted.")
 		}
 	}
 
@@ -621,7 +621,7 @@ namespace etrading
 			{
 				const bool is3MFra = fra3mRates_.size() == 0 ? false : true;
 				const bool is6MFra = fra6mRates_.size() == 0 ? false : true;
-				MLIB_REQUIRE( !is3MFra || !is6MFra, "Invalid Market Data: Cannot calibrate to 3M and 6M FRA Instruments within the same Swap Curve" )
+				AQ_REQUIRE( !is3MFra || !is6MFra, "Invalid Market Data: Cannot calibrate to 3M and 6M FRA Instruments within the same Swap Curve" )
 
 				if( is3MFra )
 				{
@@ -646,7 +646,7 @@ namespace etrading
 				return std::vector<bool>( basisAdjRates_.size(), false );
 				break;
 			default:
-				MLIB_THROW("Unable to Determine if Outright Instruments from Swap Curve Market Data: Only LIBORFIXINGS, FUTURES, FRAS, SWAPS or BASISSWAPS Instrument Market Data is permitted.")
+				AQ_THROW("Unable to Determine if Outright Instruments from Swap Curve Market Data: Only LIBORFIXINGS, FUTURES, FRAS, SWAPS or BASISSWAPS Instrument Market Data is permitted.")
 		}
 	}
 
@@ -695,7 +695,7 @@ namespace etrading
     void TenorBasisCurveObjectData::applyFlatShift( const double & shiftSize )
     {
          // Check if bump already applied - don't allow multiple bumps, otherwise we have no way to restore the data, if required.
-        MLIB_REQUIRE( MLIB_IS_EQUAL_ZERO( shiftSize_ ), "Unable to apply Flat-Shift to Tenor-Basis Curve Market Data: The market data has a shift applied to it already" )
+        AQ_REQUIRE( AQ_IS_EQUAL_ZERO( shiftSize_ ), "Unable to apply Flat-Shift to Tenor-Basis Curve Market Data: The market data has a shift applied to it already" )
         shiftSize_ = shiftSize;
         
         // *** For Tenor Basis *** Flat-Shift Bumps should bump outright and basis instruments
@@ -707,7 +707,7 @@ namespace etrading
     // Function to remove a flat-shift a clear an existing flat-shift
     void TenorBasisCurveObjectData::restoreDataAndClearFlatShift()
     {
-        if ( MLIB_IS_EQUAL_ZERO( shiftSize_ ) )
+        if ( AQ_IS_EQUAL_ZERO( shiftSize_ ) )
         {
             // Do nothing if the shift-size applied was zero
             return;
@@ -743,14 +743,14 @@ namespace etrading
 				CurveMarketData::perturbMarketDataFromLAStringMatrix( basisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			default:
-				MLIB_THROW("Unable to Pertrub Tenor-Basis Curve Market Data: Only LIBORFIXINGS, FRAS or BASISSWAPS Instruments can be Perturbed.")
+				AQ_THROW("Unable to Pertrub Tenor-Basis Curve Market Data: Only LIBORFIXINGS, FRAS or BASISSWAPS Instruments can be Perturbed.")
 		}
 	}
 
 	// Function to restore market data and clear perturbation shifts
 	void TenorBasisCurveObjectData::restoreDataAndClearPerturbation()
 	{
-		if ( MLIB_IS_EQUAL_ZERO( shiftSize_ ) )
+		if ( AQ_IS_EQUAL_ZERO( shiftSize_ ) )
         {
             // Do nothing if the shift-size applied was zero
             return;
@@ -783,7 +783,7 @@ namespace etrading
 				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( basisRates_, riskInstrumentType );
 				break;
 			default:
-				MLIB_THROW("Unable to Determine Tenors from Tenor Basis Curve Market Data: Only LIBORFIXINGS, FRAS or BASISSWAPS Instrument Market Data is permitted.")
+				AQ_THROW("Unable to Determine Tenors from Tenor Basis Curve Market Data: Only LIBORFIXINGS, FRAS or BASISSWAPS Instrument Market Data is permitted.")
 		}
 	}
 
@@ -802,7 +802,7 @@ namespace etrading
 				return std::vector<bool>( basisRates_.size(), false );
 				break;
 			default:
-				MLIB_THROW("Unable to Determine if Outright Instruments from Tenor Basis Curve Market Data: Only LIBORFIXINGS, FRAS or BASISSWAPS Instrument Market Data is permitted.")
+				AQ_THROW("Unable to Determine if Outright Instruments from Tenor Basis Curve Market Data: Only LIBORFIXINGS, FRAS or BASISSWAPS Instrument Market Data is permitted.")
 		}
 	}
 	
@@ -836,7 +836,7 @@ namespace etrading
     void XccyBasisCurveObjectData::applyFlatShift( const double & shiftSize )
     {
         // Check if bump already applied - don't allow multiple bumps, otherwise we have no way to restore the data, if required.
-        MLIB_REQUIRE( MLIB_IS_EQUAL_ZERO( shiftSize_ ), "Unable to apply Flat-Shift to Xccy Basis Curve Market Data: The market data has a shift applied to it already" )
+        AQ_REQUIRE( AQ_IS_EQUAL_ZERO( shiftSize_ ), "Unable to apply Flat-Shift to Xccy Basis Curve Market Data: The market data has a shift applied to it already" )
         shiftSize_ = shiftSize;
         
 		// *** For Xccy Basis *** Flat-Shift Bumps should bump outright and basis instruments
@@ -848,7 +848,7 @@ namespace etrading
 	// Function to remove a flat-shift a clear an existing flat-shift
     void XccyBasisCurveObjectData::restoreDataAndClearFlatShift()
     {
-        if ( MLIB_IS_EQUAL_ZERO( shiftSize_ ) )
+        if ( AQ_IS_EQUAL_ZERO( shiftSize_ ) )
         {
             // Do nothing if the shift-size applied was zero
             return;
@@ -886,14 +886,14 @@ namespace etrading
 				CurveMarketData::perturbMarketDataFromLAStringMatrix( basisRates_, nthRiskInstrument_, shiftSize_, riskInstrumentType_ );
 				break;
 			default:
-				MLIB_THROW("Unable to Pertrub Xccy-Basis Curve Market Data: Only FXFORWARDS, FXSPOTS or XCCYSWAPS Instruments can be Perturbed.")
+				AQ_THROW("Unable to Pertrub Xccy-Basis Curve Market Data: Only FXFORWARDS, FXSPOTS or XCCYSWAPS Instruments can be Perturbed.")
 		}
 	}
 
 	// Function to restore market data and clear perturbation shifts
 	void XccyBasisCurveObjectData::restoreDataAndClearPerturbation()
 	{
-		if ( MLIB_IS_EQUAL_ZERO( shiftSize_ ) )
+		if ( AQ_IS_EQUAL_ZERO( shiftSize_ ) )
         {
             // Do nothing if the shift-size applied was zero
             return;
@@ -923,7 +923,7 @@ namespace etrading
 				return CurveMarketData::getMarketDataTenorsFromLAStringMatrix( basisRates_, riskInstrumentType );
 				break;
 			default:
-				MLIB_THROW("Unable to Determine Tenors from Xccy Basis Curve Market Data: Only FXFORWARDS, FXSPOTS or XCCYSWAPS Instrument Market Data is permitted.")
+				AQ_THROW("Unable to Determine Tenors from Xccy Basis Curve Market Data: Only FXFORWARDS, FXSPOTS or XCCYSWAPS Instrument Market Data is permitted.")
 		}
 	}
 
@@ -942,7 +942,7 @@ namespace etrading
 				return std::vector<bool>( basisRates_.size(), false );
 				break;
 			default:
-				MLIB_THROW("Unable to Determine if Outright Instruments from Xccy Basis Curve Market Data: Only FXFORWARDS, FXSPOTS or XCCYSWAPS Instrument Market Data is permitted.")
+				AQ_THROW("Unable to Determine if Outright Instruments from Xccy Basis Curve Market Data: Only FXFORWARDS, FXSPOTS or XCCYSWAPS Instrument Market Data is permitted.")
 		}
 	}
 

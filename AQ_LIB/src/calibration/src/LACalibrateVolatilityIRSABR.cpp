@@ -145,7 +145,7 @@ LACalibrateVolatilityIRSABR::createVolatility(vector<LAFunctionBase *> &vol, con
 	
 	if (param->isCalib)
 	{
-		if (param->refName[0] != MLIB_NO_DATA)
+		if (param->refName[0] != AQ_NO_DATA)
 		{
 			MACalibrationFunc method;
 			LACalibrateIRSABR request;

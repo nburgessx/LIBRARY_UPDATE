@@ -2,7 +2,7 @@
 #include "Solvers.h"
 #include "CommonConstants.h"
 #include "LabelValueBlockValidation.h"
-#include "ExceptionMacros.h"	// MLIB_REQUIRE
+#include "ExceptionMacros.h"	// AQ_REQUIRE
 
 #include <cmath>				// std::pow()
 
@@ -103,7 +103,7 @@ namespace etrading
 			break;
 
 		default:
-			MLIB_THROW( "Unsupported tranche coupon frequency " << toString( couponFrequency_ ) << " . Only MONTHLY, QUARTERLY, SEMI-ANNUAL, ANNUAL is supported." );
+			AQ_THROW( "Unsupported tranche coupon frequency " << toString( couponFrequency_ ) << " . Only MONTHLY, QUARTERLY, SEMI-ANNUAL, ANNUAL is supported." );
 			break;
 		}
 	}
@@ -171,7 +171,7 @@ namespace etrading
 	{
 		// *** Note: valuationDate is not used.
 
-		MLIB_REQUIRE( callPeriod < nPeriods_, "Specified callPeriod is outside of range. Maximum tranch period is: " << nPeriods_ << "; specified callPeriod is: " << callPeriod );
+		AQ_REQUIRE( callPeriod < nPeriods_, "Specified callPeriod is outside of range. Maximum tranch period is: " << nPeriods_ << "; specified callPeriod is: " << callPeriod );
 
 		double totalPV = 0.0;
 		for ( size_t iPeriod = 0; iPeriod < callPeriod; iPeriod++ )
@@ -197,7 +197,7 @@ namespace etrading
 	*/
 	double TrancheScheduleData::calculateNPV( const double& interestRate, const size_t callPeriod, const LADate& valuationDate ) const
 	{
-		MLIB_REQUIRE( callPeriod < nPeriods_, "Specified callPeriod is outside of range. Maximum tranch period is: " << nPeriods_ << "; specified callPeriod is: " << callPeriod );
+		AQ_REQUIRE( callPeriod < nPeriods_, "Specified callPeriod is outside of range. Maximum tranch period is: " << nPeriods_ << "; specified callPeriod is: " << callPeriod );
 
 		double totalPV = 0.0;
 
@@ -241,9 +241,9 @@ namespace etrading
 
 	double TrancheScheduleData::calculateIRR( const size_t callPeriod, const LADate& valuationDate, const double& targetPrice ) const
 	{
-		MLIB_REQUIRE( callPeriod < nPeriods_, "Specified callPeriod is outside of range. Maximum tranch period is: " << nPeriods_ << "; specified callPeriod is: " << callPeriod );
+		AQ_REQUIRE( callPeriod < nPeriods_, "Specified callPeriod is outside of range. Maximum tranch period is: " << nPeriods_ << "; specified callPeriod is: " << callPeriod );
 
-		MLIB_REQUIRE ( callPeriod > 0, "Invalid callPeriod: CallPeriod must be greater than 0 for the IRR calculation." );
+		AQ_REQUIRE ( callPeriod > 0, "Invalid callPeriod: CallPeriod must be greater than 0 for the IRR calculation." );
 
 		// Newton-Raphson Solver Settings
 		double initialGuessForIRR = 0.0;

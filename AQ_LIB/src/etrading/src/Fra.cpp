@@ -71,7 +71,7 @@ namespace etrading
 			double accrualYearFaction = cf->getAccrualYearFraction();
 
 			// Ignore annuity terms if they are fully in the past
-			if (MLIB_IS_GREATER_THAN_ZERO(discountFactor))
+			if (AQ_IS_GREATER_THAN_ZERO(discountFactor))
 			{
 				//double factor = 1.0 / (1.0 + accrualYearFaction * floatRate);
 
@@ -85,7 +85,7 @@ namespace etrading
 			}
 		}
 
-		MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO(sumOfAnnuityAmount), "Cannot calculate FraRate since Fra's annuity is zero.");
+		AQ_REQUIRE( !AQ_IS_EQUAL_ZERO(sumOfAnnuityAmount), "Cannot calculate FraRate since Fra's annuity is zero.");
 
 		//3) k = sumOf(tao_i*L_i*DF_i/(1+tao_i*L_i))/sumOf(tao_i*DF_i/(1+tao_i*L_i)) 
 		const double parRate = sumOfLiborRateAmount / sumOfAnnuityAmount;

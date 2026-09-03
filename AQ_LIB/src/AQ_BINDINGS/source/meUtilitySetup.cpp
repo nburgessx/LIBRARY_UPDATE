@@ -1,6 +1,6 @@
 #include "meUtilitySetup.h"
 #include "tryMeUtilitySetup.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for the meUtilityLoadCalendarFile method
@@ -8,10 +8,10 @@
 */
 std::string meUtilityClearEntityPool()
 {
-	MLIB_API_START
+	AQ_API_START
 	const std::string ret = validation_api::tryMeUtilityClearEntityPool().getCString();
     return ret;
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			swig interface for the meUtilityClearLWOCache method
@@ -19,10 +19,10 @@ std::string meUtilityClearEntityPool()
 */
 std::string meUtilityClearLWOCache()
 {
-    MLIB_API_START
+    AQ_API_START
     const std::string ret = validation_api::tryMeUtilityClearLWOCache().getCString();
     return ret;
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			swig interface for the meUtilityLoadCalendarFile method
@@ -31,11 +31,11 @@ std::string meUtilityClearLWOCache()
 */
 std::string meUtilityLoadCalendarFile(const std::string& filepath)
 {
-	MLIB_API_START
+	AQ_API_START
 	LAString tmp_filepath(filepath.c_str());
 	const std::string ret = validation_api::tryMeUtilityLoadCalendarFile(tmp_filepath).getCString();
     return ret;
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			swig interface for the meUtilityLoadStaticData method
@@ -44,11 +44,11 @@ std::string meUtilityLoadCalendarFile(const std::string& filepath)
 */
 std::string meUtilityLoadStaticData(const std::string& filepath)
 {
-	MLIB_API_START
+	AQ_API_START
 	LAString tmp_filepath(filepath.c_str());
 	const std::string ret = validation_api::tryMeUtilityLoadStaticData(tmp_filepath).getCString();
     return ret;
-	MLIB_API_END
+	AQ_API_END
 }
 
   
@@ -57,7 +57,7 @@ std::string meUtilityLoadStaticData(const std::string& filepath)
 */
 std::string meUtilityVersion()
 {
-    MLIB_API_START
+    AQ_API_START
 	
     // TODO: Clean-up these dummy Excel Default Parameters
     int dummyExpiryMonth = 0;
@@ -67,27 +67,27 @@ std::string meUtilityVersion()
 	const std::string ret = validation_api::tryMeUtilityVersion(dummyExpiryMonth, dummyExpiryYear, dummyShowExpiryDate);
     return ret;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 // Method to enable/disable Parllel Mode
 std::string meUtilityParallelModeEnable(const bool enable)
 {
-    MLIB_API_START
+    AQ_API_START
     
     const std::string result = validation_api::tryMeUtilityParallelModeEnable(enable);
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 // Method to get the Parallel Mode Status
 std::string meUtilityParallelModeStatus()
 {
-    MLIB_API_START
+    AQ_API_START
 
     const std::string result = validation_api::tryMeUtilityParallelModeStatus();
     return result;
 
-    MLIB_API_END
+    AQ_API_END
 }

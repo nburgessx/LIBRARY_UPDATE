@@ -2,7 +2,7 @@
 
 #include "meCurveForwardRate.h"
 #include "tryMeCurveForwardRate.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meCurveForwardRatesFromYearFraction
@@ -19,7 +19,7 @@ std::vector<double> meCurveForwardRatesFromYearFraction( const std::vector<std::
 											             const std::string& curveIndex, 
 											             const std::string& dayCount)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<double> results;
 	
 	// Input marshalling
@@ -36,7 +36,7 @@ std::vector<double> meCurveForwardRatesFromYearFraction( const std::vector<std::
 																	    tmp_curveCollection, 
 																	    tmp_curveIndex );
 	return results;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -50,7 +50,7 @@ std::vector<double> meCurveForwardRates( const std::vector<std::string>& fixingD
 										 const std::string& curveCollection,
 										 const std::string& curveIndex)
 {
-	MLIB_API_START
+	AQ_API_START
     std::vector<double> results;
 	
 	// Input marshalling
@@ -64,7 +64,7 @@ std::vector<double> meCurveForwardRates( const std::vector<std::string>& fixingD
 														tmp_curveCollection, 
 														tmp_curveIndex );
 	return results;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -80,7 +80,7 @@ std::vector<double> meCurveForwardRatesFromForwardDates( const std::vector<std::
 											             const std::string& curveCollection,
 											             const std::string& curveIndex )
 {
-	MLIB_API_START
+	AQ_API_START
     std::vector<double> results;
 		
     // Input marshalling
@@ -98,7 +98,7 @@ std::vector<double> meCurveForwardRatesFromForwardDates( const std::vector<std::
 														                tmp_curveCollection, 
 														                tmp_curveIndex );
 	return results;
-    MLIB_API_END
+    AQ_API_END
 }
 
 std::vector<double> meCurveForwardRatesFromForwardDates(const std::vector<std::string>& fromDates,
@@ -107,7 +107,7 @@ std::vector<double> meCurveForwardRatesFromForwardDates(const std::vector<std::s
 														const std::string& curveIndex,
 														const std::string& fwdInter)
 {
-	MLIB_API_START
+	AQ_API_START
 	
 	std::vector<double> results;
 
@@ -127,5 +127,5 @@ std::vector<double> meCurveForwardRatesFromForwardDates(const std::vector<std::s
 																	 tmp_curveIndex,
 																	 fwdInter);
 	return results;
-	MLIB_API_END
+	AQ_API_END
 }

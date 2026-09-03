@@ -310,7 +310,7 @@ namespace etrading
             // ------------------------------------------------------
             auto result = solveSpread ( dataProviderSpreadLeg, pv, pvRefLeg, deltaPV, spread, epsilonForPv, spreadLeg);
             bool solutionFound = result.first;
-            MLIB_REQUIRE( solutionFound, "Unable to calculate the swap spread. Solver failed to converge to a solution.")
+            AQ_REQUIRE( solutionFound, "Unable to calculate the swap spread. Solver failed to converge to a solution.")
             spread = result.second;
             // ------------------------------------------------------
         }
@@ -336,7 +336,7 @@ namespace etrading
 		bool validFirstRefLegType = (refLegs.get(0)->getType() == FIXED_SCHEDULE_TYPE || refLegs.get(0)->getType() == FLOAT_SCHEDULE_TYPE);
 		bool validSpreadLegType = (spreadLeg->getType() == FIXED_SCHEDULE_TYPE || spreadLeg->getType() == FLOAT_SCHEDULE_TYPE);
 
-		MLIB_REQUIRE(validFirstRefLegType &&  validSpreadLegType, "#Spread function supports a Swap with Fixed or Float legs.");
+		AQ_REQUIRE(validFirstRefLegType &&  validSpreadLegType, "#Spread function supports a Swap with Fixed or Float legs.");
 		
 		spread = calculateSwapSpread(refLegs, spreadLeg, valuationSettingsLVB, fixingTableNames, isParSpread);
 
@@ -354,7 +354,7 @@ namespace etrading
 		bool validFirstRefLegType = (refLegs.get(0)->getType() == FIXED_SCHEDULE_TYPE || refLegs.get(0)->getType() == FLOAT_SCHEDULE_TYPE);
 		bool validSpreadLegType = (spreadLeg->getType() == FIXED_SCHEDULE_TYPE || spreadLeg->getType() == FLOAT_SCHEDULE_TYPE);
 
-		MLIB_REQUIRE(validFirstRefLegType &&  validSpreadLegType, "#Spread function supports a Swap with Fixed or Float legs.");
+		AQ_REQUIRE(validFirstRefLegType &&  validSpreadLegType, "#Spread function supports a Swap with Fixed or Float legs.");
 
         double spread = calculateSwapSpread(refLegs, spreadLeg, valuationSettingsLVB, fixingTableNames, isParSpread); 
     
@@ -397,7 +397,7 @@ namespace etrading
 		}
 		else
 		{
-			MLIB_THROW("Valuation Currency must be one of the leg currency of the swap's first two legs.");
+			AQ_THROW("Valuation Currency must be one of the leg currency of the swap's first two legs.");
 		}
 
 		LAString valCcyLegCurveCollection = getLWOCurveCollectionFromValuationSettings(valuationSettingsLVB, valCcyLeg->getLegName());

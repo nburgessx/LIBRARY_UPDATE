@@ -3,7 +3,7 @@
 
 #include "meProductSwapStubRate.h"
 #include "tryMeProductSwapStubRate.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meProductSwapStubRate
@@ -20,7 +20,7 @@ double meProductSwapStubRate(const std::vector<std::string>& curveIndices,
 							const std::vector<std::vector <std::string> >& swapLVB, 
 							bool validateKeys)
 {
-	MLIB_API_START
+	AQ_API_START
     double ret;
 	
 	// marshall all inputs		
@@ -35,7 +35,7 @@ double meProductSwapStubRate(const std::vector<std::string>& curveIndices,
 	ret = validation_api::tryMeProductSwapStubRate( lvb, tmp_curveIndices, tmp_curveTenors, tenorCurveFixings, validateKeys);
 
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			return a set of expected keys for swap stub rate label value block
@@ -43,9 +43,9 @@ double meProductSwapStubRate(const std::vector<std::string>& curveIndices,
 */
 std::vector<std::string> meProductSwapStubRateLVBKeys()
 {
-	MLIB_API_START
+	AQ_API_START
     std::vector<std::string> ret;
 	ret = validation_api::tryMeProductSwapStubRateLVBKeys();
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }

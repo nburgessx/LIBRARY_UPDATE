@@ -59,9 +59,9 @@ LAString LAPriceCMSCalibration::Calibrate(LADataInstance* dataInstance, LAString
     LAPriceDataSlidingRule modelSlidingRule = LAMathScheduleUtility::ModelSlidingRule();
     LAPriceDataCalendar modelCalendar = LAMathScheduleUtility::ModelCalendar();
     vector<SwapRateInfo*> rateInfos(nTenors);
-    LAStringVector sabrIDs(MLIB_SABR_NAMES.size());
-    for (size_t k = 0; k < MLIB_SABR_NAMES.size(); k++)
-        sabrIDs[k] = LAPriceCMSObject::MatrixID("_" + MLIB_SABR_NAMES[k] + "_", ccy);
+    LAStringVector sabrIDs(AQ_SABR_NAMES.size());
+    for (size_t k = 0; k < AQ_SABR_NAMES.size(); k++)
+        sabrIDs[k] = LAPriceCMSObject::MatrixID("_" + AQ_SABR_NAMES[k] + "_", ccy);
     for (size_t j = 0; j < nTenors; j++)
     {
         LAString tenor = tenors[j];
@@ -113,8 +113,8 @@ LAString LAPriceCMSCalibration::Calibrate(LADataInstance* dataInstance, LAString
     }
 
     // Load results in memory
-    LAString paramsID = MLIB_TAIL2_OUT;
-    LAString targetsID = MLIB_CMS_TGT_OUT;
+    LAString paramsID = AQ_TAIL2_OUT;
+    LAString targetsID = AQ_CMS_TGT_OUT;
     LAStringVector outTerms(nExpiries);
     for (size_t i = 0; i < nExpiries; i++)
         outTerms[i] = expiryTerms[i];

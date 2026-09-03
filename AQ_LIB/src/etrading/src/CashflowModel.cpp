@@ -16,7 +16,7 @@ namespace
 			if ( ( cappedValue - 1.0 ) > noiseTolerance )
 			{
 				// Significantly greater than 1.0. There must be a problem in the calculation
-				MLIB_THROW( "Calculated value for " + valueName + " point is greater than 1.0" );
+				AQ_THROW( "Calculated value for " + valueName + " point is greater than 1.0" );
 			}
 			else
 			{
@@ -49,7 +49,7 @@ namespace etrading
 												const PoolTypeEnum& poolTypeEnum )
 	{
 
-		MLIB_REQUIRE( loanCashflows.size() > 0, "loanCashflows should contain at least 1 period.");
+		AQ_REQUIRE( loanCashflows.size() > 0, "loanCashflows should contain at least 1 period.");
 		
 		const size_t nPeriods = loanCashflows.size();
 		const size_t nTranches = trancheStructure.size();
@@ -217,7 +217,7 @@ namespace etrading
 						break;
 					}
 					default:
-						MLIB_THROW( "Tranche  type must be either  'SEQUENTIAL' or 'PRORATA'" );
+						AQ_THROW( "Tranche  type must be either  'SEQUENTIAL' or 'PRORATA'" );
 						break;
 				}
 			}
@@ -299,7 +299,7 @@ namespace etrading
 								break;
 							}
 							default:
-								MLIB_THROW( "supervisory_type must be either 'NEW' or 'OLD'" );
+								AQ_THROW( "supervisory_type must be either 'NEW' or 'OLD'" );
 								break;
 						}
 					}

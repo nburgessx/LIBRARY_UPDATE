@@ -1500,8 +1500,8 @@ namespace validation_api
 		RECORD_INPUTS(futurePrice, settleDate, deliveryDate, repoDayCount, bondObjectNames, bondPrices, conversionFactors);
 
 		const size_t expectedSize = bondObjectNames.size();
-		MLIB_REQUIRE(expectedSize != 0, "At least one underlying bond object is required");
-		MLIB_REQUIRE(expectedSize == bondPrices.size() && expectedSize == conversionFactors.size(), "The number of underlying bond object names, bond prices, and conversionFactors not matched");
+		AQ_REQUIRE(expectedSize != 0, "At least one underlying bond object is required");
+		AQ_REQUIRE(expectedSize == bondPrices.size() && expectedSize == conversionFactors.size(), "The number of underlying bond object names, bond prices, and conversionFactors not matched");
 
 		const auto repoDayC = etrading::toDayCountEnum(repoDayCount);
 
@@ -1557,8 +1557,8 @@ namespace validation_api
 		RECORD_INPUTS(futurePrice, settleDate, deliveryDate, repoDayCount, bondObjectNames, bondPrices, conversionFactors, actualRepoRates);
 
 		const size_t expectedSize = bondObjectNames.size();
-		MLIB_REQUIRE(expectedSize != 0, "At least one underlying bond object is required");
-		MLIB_REQUIRE(expectedSize == bondPrices.size() && expectedSize == conversionFactors.size() && expectedSize == actualRepoRates.size(), "The number of underlying bond object names, bond prices, conversionFactors, and actualRepoRates not matched");
+		AQ_REQUIRE(expectedSize != 0, "At least one underlying bond object is required");
+		AQ_REQUIRE(expectedSize == bondPrices.size() && expectedSize == conversionFactors.size() && expectedSize == actualRepoRates.size(), "The number of underlying bond object names, bond prices, conversionFactors, and actualRepoRates not matched");
 
 		const auto repoDayC = etrading::toDayCountEnum(repoDayCount);
 
@@ -1684,7 +1684,7 @@ namespace validation_api
 
 		const double expectedSize = underlyingBondYields.size();
 
-		MLIB_REQUIRE(expectedSize != 0, "At least one underlying bond yield is required");
+		AQ_REQUIRE(expectedSize != 0, "At least one underlying bond yield is required");
 
 		const double averageYield = std::accumulate(underlyingBondYields.begin(), underlyingBondYields.end(), 0.0) / expectedSize;
 
@@ -1735,7 +1735,7 @@ namespace validation_api
 		etrading::BondPtr bondPtr = etrading::getBond(bondObjectName);
 
 		std::shared_ptr<etrading::FloatingBond> floatingBondPtr = std::dynamic_pointer_cast<etrading::FloatingBond>( bondPtr );
-		MLIB_REQUIRE( floatingBondPtr != nullptr, "Bond '" + bondObjectName + "' is not a floating rate bond." )
+		AQ_REQUIRE( floatingBondPtr != nullptr, "Bond '" + bondObjectName + "' is not a floating rate bond." )
 
 		const double price = floatingBondPtr->priceFromDiscountMargin( settlementDate, discountMargin, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 
@@ -1770,7 +1770,7 @@ namespace validation_api
 		etrading::BondPtr bondPtr = etrading::getBond(bondObjectName);
 
 		std::shared_ptr<etrading::FloatingBond> floatingBondPtr = std::dynamic_pointer_cast<etrading::FloatingBond>( bondPtr );
-		MLIB_REQUIRE( floatingBondPtr != nullptr, "Bond '" + bondObjectName + "' is not a floating rate bond." )
+		AQ_REQUIRE( floatingBondPtr != nullptr, "Bond '" + bondObjectName + "' is not a floating rate bond." )
 
 		const double price = floatingBondPtr->priceFromYield( settlementDate, yield, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 
@@ -1805,7 +1805,7 @@ namespace validation_api
 		etrading::BondPtr bondPtr = etrading::getBond(bondObjectName);
 
 		std::shared_ptr<etrading::FloatingBond> floatingBondPtr = std::dynamic_pointer_cast<etrading::FloatingBond>( bondPtr );
-		MLIB_REQUIRE( floatingBondPtr != nullptr, "Bond '" + bondObjectName + "' is not a floating rate bond." )
+		AQ_REQUIRE( floatingBondPtr != nullptr, "Bond '" + bondObjectName + "' is not a floating rate bond." )
 
 		const double yield = floatingBondPtr->yieldFromPrice( settlementDate, price, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 
@@ -1840,7 +1840,7 @@ namespace validation_api
 		etrading::BondPtr bondPtr = etrading::getBond(bondObjectName);
 
 		std::shared_ptr<etrading::FloatingBond> floatingBondPtr = std::dynamic_pointer_cast<etrading::FloatingBond>( bondPtr );
-		MLIB_REQUIRE( floatingBondPtr != nullptr, "Bond '" + bondObjectName + "' is not a floating rate bond." )
+		AQ_REQUIRE( floatingBondPtr != nullptr, "Bond '" + bondObjectName + "' is not a floating rate bond." )
 
 		const double discountMargin = floatingBondPtr->discountMarginFromPrice( settlementDate, price, assumedRate, indexToNextCoupon, annualizedNextCouponRate );
 

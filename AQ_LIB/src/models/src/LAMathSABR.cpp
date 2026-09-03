@@ -510,7 +510,7 @@ void LAMathSABR_Hagan::setAlphaForATMVol(double atmVol, double T, double F, bool
 {
 	double alpha0 = alpha;
 
-	MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(F), "SABR: swapRate/forwardRate cannot be zero.");
+	AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(F), "SABR: swapRate/forwardRate cannot be zero.");
 
 	double a0 = isLognormal ? ((1. - beta) * (1. - beta) / LAMath::pow(F, 2. - 2. * beta) / 24. * T)
 							: (beta * (beta - 2.) / LAMath::pow(F, 2. - 2. * beta) / 24. * T);

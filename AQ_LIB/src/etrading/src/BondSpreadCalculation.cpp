@@ -118,7 +118,7 @@ namespace etrading
 		//Get DFs from the discount curve
 		auto paymentDates = schedule->getAllPaymentDates();
 
-		MLIB_REQUIRE(cashflowSize == zeroRates.size() && cashflowSize == paymentDates.size(), "Cashflows, DiscountFactors, and paymentDates should have the same size.");
+		AQ_REQUIRE(cashflowSize == zeroRates.size() && cashflowSize == paymentDates.size(), "Cashflows, DiscountFactors, and paymentDates should have the same size.");
 
 		//Discount factor's year fraction: If it's continuouslyCompounding, CURVE's convention is used; otherwise, BOND's convention is used:
 		const auto dfDayCount = continuouslyCompounding ? toDayCountEnum(getDiscountFactorDayCount().getCString()) : bond->getSchedule()->getAccrualDaycount();
@@ -281,7 +281,7 @@ namespace etrading
 		// 1) Validate Bond's MaturityDate, Coupon, DayCount, Frequency are matching Swap's Fixed Leg
 		bool isFixedFloatSwap = (swapFixedLeg->getType() == etrading::SWAPSCHEDULE_FIXEDBOND && swapFloatLeg->getType() == etrading::FLOAT_SCHEDULE_TYPE);
 
-        MLIB_REQUIRE( isFixedFloatSwap, "Invalid Asset Swap Set-Up - Asset Swaps must be contain a FixedBond and Float Leg" )
+        AQ_REQUIRE( isFixedFloatSwap, "Invalid Asset Swap Set-Up - Asset Swaps must be contain a FixedBond and Float Leg" )
 
 		//Assume bond and swap's fixed leg has the same notional
 		const double absNotional = std::fabs(swapFixedLeg->getSchedule()->getNotional());
@@ -303,7 +303,7 @@ namespace etrading
 		// fixed leg pv  + float leg pv
 		assetSwapPV += swapFloatLeg->pv(floatDataProvider);
 
-		MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO(absNotional), "Bond Notional must not be zero" )
+		AQ_REQUIRE( !AQ_IS_EQUAL_ZERO(absNotional), "Bond Notional must not be zero" )
 
 		// BondCleanPrice = Par - Par * assetSwapPV/ (FactValue * floatLegSign)
 		const double bondCleanPrice = Par - Par * assetSwapPV / (absNotional * swapFloatLeg->getSchedule()->getPayRecIndicator());
@@ -320,7 +320,7 @@ namespace etrading
 
 		bool isFixedFloatSwap = (fixedLeg->getType() == etrading::FIXED_SCHEDULE_TYPE && floatLeg->getType() == etrading::SWAPSCHEDULE_FLOATBOND);
 
-		MLIB_REQUIRE(isFixedFloatSwap, "Invalid Asset Swap Set-Up - Asset Swaps must be contain a Fixed Leg and Float Bond Leg")
+		AQ_REQUIRE(isFixedFloatSwap, "Invalid Asset Swap Set-Up - Asset Swaps must be contain a Fixed Leg and Float Bond Leg")
 
 		ValuationSettings fixedVal;
 		ValuationSettings floatVal;
@@ -378,7 +378,7 @@ namespace etrading
 		const double Par = 100.0;
 		//Assume bond and swap's fixed leg has the same notional
 		const double absNotional = std::fabs(swapFixedLeg->getSchedule()->getNotional());
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(absNotional), "Bond Notional must not be zero")
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(absNotional), "Bond Notional must not be zero")
 
 		const double bondCleanPrice = Par - Par * assetSwapPV / (absNotional * swapFixedLeg->getSchedule()->getPayRecIndicator());
 		return bondCleanPrice;
@@ -481,7 +481,7 @@ namespace etrading
 
 		double floatAnnuityWithSign = spreadLeg->annuityWithNotional(dataProviderSpreadLeg) * spreadLeg->getSchedule()->getPayRecIndicator();
 
-		MLIB_REQUIRE(floatAnnuityWithSign != 0, "Unable to calculate the Asset Swap Spread - The float leg specified has a zero PV and/or zero float Annuity value.")
+		AQ_REQUIRE(floatAnnuityWithSign != 0, "Unable to calculate the Asset Swap Spread - The float leg specified has a zero PV and/or zero float Annuity value.")
 
 		// Newton-Raphson Solver Settings
 		// Initial Guess for Spread using Analytical formula: for Par Par Swap Spread we require: SwapPV = SwapPVWithoutAswSpread + aswSpread * floatAnnuityWithSign,

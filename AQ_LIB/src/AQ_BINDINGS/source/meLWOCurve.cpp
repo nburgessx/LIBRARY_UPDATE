@@ -11,7 +11,7 @@
 #include "ExceptionMacros.h"
 #include "TypeUtilities.h"          // Swig Marshalling Helper Methods
 #include "Variant.h"                // Variant and Variant Matrix Types
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 /* @brief			swig interface for meLWOCurveDisplay
 *  @param [in]		curveHandle		    LWO curve handle or object name
@@ -19,7 +19,7 @@
 */
 SWIG_STRINGMATRIX meLWOCurveDisplay(const std::string& curveHandle)
 {
-	MLIB_API_START
+	AQ_API_START
     
 	// This returns a ragged matrix
 	etrading::VariantMatrix results = validation_api::tryMeLWOCurveDisplay(curveHandle);
@@ -31,7 +31,7 @@ SWIG_STRINGMATRIX meLWOCurveDisplay(const std::string& curveHandle)
 
     return resultsStringMatrix;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meLWOCurveMarketDataDisplay
@@ -41,7 +41,7 @@ SWIG_STRINGMATRIX meLWOCurveDisplay(const std::string& curveHandle)
 */
 SWIG_STRINGMATRIX meLWOCurveMarketDataDisplay(const std::string& marketDataObjectName, const std::string marketDataKey )
 {
-	MLIB_API_START
+	AQ_API_START
     
 	etrading::VariantMatrix results = validation_api::tryMeLWOCurveMarketDataDisplay( marketDataObjectName, marketDataKey );
 
@@ -50,7 +50,7 @@ SWIG_STRINGMATRIX meLWOCurveMarketDataDisplay(const std::string& marketDataObjec
 
     return resultsStringMatrix;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meLWOCurveDisplayMarketDataFromCurve
@@ -60,7 +60,7 @@ SWIG_STRINGMATRIX meLWOCurveMarketDataDisplay(const std::string& marketDataObjec
 */
 SWIG_STRINGMATRIX meLWOCurveMarketDataDisplayFromCurve(const std::string& curveObjectName, const std::string marketDataKey )
 {
-	MLIB_API_START
+	AQ_API_START
     
 	etrading::VariantMatrix results = validation_api::tryMeLWOCurveMarketDataDisplayFromCurve( curveObjectName, marketDataKey );
 
@@ -69,7 +69,7 @@ SWIG_STRINGMATRIX meLWOCurveMarketDataDisplayFromCurve(const std::string& curveO
 
     return resultsStringMatrix;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief Builds a curve using a CurveGenerator object and a CurveMarketData object
@@ -86,12 +86,12 @@ std::string meLWOCurveCalibrate( const std::string& objectName,
 								 const std::string& domesticCurveCollection,
 								 const std::string& foreignCurveCollection )
 {
-	MLIB_API_START
+	AQ_API_START
 
 	std::string curveIndexAndAliasNames = validation_api::tryMeLWOCurveCalibrate( objectName, lwoCurveGeneratorName, lwoCurveMarketDataName, domesticCurveCollection, foreignCurveCollection );
 	return curveIndexAndAliasNames;
 
-	MLIB_API_END
+	AQ_API_END
 }
 
 	/* @brief			Builds a "TableInfo" tuple from a LAStringMatrix of marketdata
@@ -138,12 +138,12 @@ std::string meLWOCurveMarketDataCreate( const std::string& objectName,
 										const std::string& key3, const SWIG_STRINGMATRIX& value3,
 										const std::string& key4, const SWIG_STRINGMATRIX& value4)
 {
-	MLIB_API_START
+	AQ_API_START
 
 	std::vector<std::string> marketDataKeys;
 	std::vector<etrading::JSONInfoBlockTuple> infoBlocks;
 
-	MLIB_REQUIRE( key1 == etrading::GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES, "Please specify the MARKETDATAPROPERTIES in the first data block." );
+	AQ_REQUIRE( key1 == etrading::GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES, "Please specify the MARKETDATAPROPERTIES in the first data block." );
 	marketDataKeys.push_back( key1 );
 
 	LAStringMatrix matrix1;
@@ -190,7 +190,7 @@ std::string meLWOCurveMarketDataCreate( const std::string& objectName,
 
 	return result;
 
-	MLIB_API_END
+	AQ_API_END
 
 }
 
@@ -206,13 +206,13 @@ std::string meLWOCurveMarketDataCreateUsingMultipleBlocks( const std::string& ob
 												  		   const std::vector<std::string>& keyVector,
 														   const std::vector<SWIG_STRINGMATRIX>& valueVector )
 {
-	MLIB_API_START
+	AQ_API_START
 	
-	MLIB_REQUIRE( keyVector.size() == valueVector.size(), "Number of keys must match number of value blocks in CurveMarketDataCreate().");
-	MLIB_REQUIRE( keyVector.size() > 0, "Require 1 or more value blocks in CurveMarketDataCreate().");
+	AQ_REQUIRE( keyVector.size() == valueVector.size(), "Number of keys must match number of value blocks in CurveMarketDataCreate().");
+	AQ_REQUIRE( keyVector.size() > 0, "Require 1 or more value blocks in CurveMarketDataCreate().");
 
 	const std::string& key1 = keyVector[0];
-	MLIB_REQUIRE( key1 == etrading::GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES, "Please specify the MARKETDATAPROPERTIES in the first data block." );
+	AQ_REQUIRE( key1 == etrading::GENERATOR_COMPONENTS::KEY_MARKETDATAPROPERTIES, "Please specify the MARKETDATAPROPERTIES in the first data block." );
 	
 	// Read the first block of data to determine the curveType
 	LAStringMatrix matrix1;
@@ -244,7 +244,7 @@ std::string meLWOCurveMarketDataCreateUsingMultipleBlocks( const std::string& ob
 
 	return result;
 
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			function to create a fixing table object
@@ -261,7 +261,7 @@ std::string meLWOFixingTableCreate( const std::string& tableName,
                                     const std::vector< std::string >& fixingDates,
                                     const std::vector< double >& fixingValues )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Marshall Inputs
     std::vector<boost::gregorian::date> gregorianFixingDates;
@@ -276,7 +276,7 @@ std::string meLWOFixingTableCreate( const std::string& tableName,
     // Output
     return result;
 
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			function to display a fixing table object
@@ -285,7 +285,7 @@ std::string meLWOFixingTableCreate( const std::string& tableName,
 */
 SWIG_STRINGMATRIX meLWOFixingTableDisplay( const std::string& tableName )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Call Method
 	etrading::VariantMatrix results = validation_api::tryMeLWOFixingTableDisplay( tableName );
@@ -294,7 +294,7 @@ SWIG_STRINGMATRIX meLWOFixingTableDisplay( const std::string& tableName )
 	SWIG_STRINGMATRIX resultsStringMatrix = swig::fromVariantMatrixToMatrixOfString( results );
     return resultsStringMatrix;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			function to get the fixing value for a particular date
@@ -304,7 +304,7 @@ SWIG_STRINGMATRIX meLWOFixingTableDisplay( const std::string& tableName )
 */
 double meLWOFixingTableValue( const std::string& tableName, const std::string & fixingDate )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Input Marshalling
     boost::gregorian::date gregorianFixingDate( etrading::validateAndConvertStringToGregorianDate( fixingDate ) );
@@ -315,7 +315,7 @@ double meLWOFixingTableValue( const std::string& tableName, const std::string & 
     // Output
     return result;
 
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			function to get fixing values for a vector of dates
@@ -325,7 +325,7 @@ double meLWOFixingTableValue( const std::string& tableName, const std::string & 
 */
 std::vector<double> meLWOFixingTableValues( const std::string& tableName, const std::vector< std::string >& fixingDates )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Input Marshalling
     std::vector<boost::gregorian::date> gregorianFixingDates;
@@ -337,7 +337,7 @@ std::vector<double> meLWOFixingTableValues( const std::string& tableName, const 
     // Output
     return results;
 
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			Validation method which calculates a set of discount factors for the specified dates.
@@ -353,7 +353,7 @@ std::vector<double> meLWOFixingTableValues( const std::string& tableName, const 
 */
 std::vector<double> meLWOCurveDiscountFactorsWithSpread( const std::vector<std::string>& paymentDates, const std::string& curveCollection, const std::string& curveIndex, const double& spread, const std::string& fixingTableName )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Input Marshalling
      DateVector tempPaymentDates;
@@ -365,7 +365,7 @@ std::vector<double> meLWOCurveDiscountFactorsWithSpread( const std::vector<std::
     // Output
     return discountFactors;
 
-	MLIB_API_END
+	AQ_API_END
 
 }
 

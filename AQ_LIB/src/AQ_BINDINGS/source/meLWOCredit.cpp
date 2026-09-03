@@ -11,7 +11,7 @@
  */
 
 #include "meLWOCredit.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 #include "TypeUtilities.h"          // Swig Type Marshalling & TypeDefs
 #include "tryMeLWOSwapPricing.h"    // Credit Model
 #include "JSONInfoBlock.h"          // JSON InfoBlock Container
@@ -32,7 +32,7 @@ std::string meLWOCreditModelCreate( const std::string & objectName,
                                     const std::string & key2,
                                     const std::vector<std::vector<std::string> > & dataBlock2 )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Inputs
     etrading::VariantMatrix variantDataBlock1;
@@ -56,14 +56,14 @@ std::string meLWOCreditModelCreate( const std::string & objectName,
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 
 // Extracts the Survival Probability from the Credit Model
 double meLWOCreditModelSurvivalProbability( const std::string& creditModelName, const std::string& toDate, const std::string& fromDate )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
     LADate toDate_( etrading::stringToDate( toDate ) );
@@ -75,13 +75,13 @@ double meLWOCreditModelSurvivalProbability( const std::string& creditModelName, 
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 // Extracts the Default Probability from the Credit Model
 double meLWOCreditModelDefaultProbability( const std::string& creditModelName, const std::string& toDate, const std::string& fromDate )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
     LADate toDate_( etrading::stringToDate( toDate ) );
@@ -93,13 +93,13 @@ double meLWOCreditModelDefaultProbability( const std::string& creditModelName, c
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 // Calculates the HarzardRate
 double meLWOCreditModelHazardRate( const std::string& creditModelName, const std::string& paymentDate )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
     LADate paymentDate_( etrading::stringToDate( paymentDate ) );
@@ -110,13 +110,13 @@ double meLWOCreditModelHazardRate( const std::string& creditModelName, const std
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 // Calculates the Risky Discount Factor from the Credit Model
 double meLWOCreditModelRiskyDiscountFactor( const std::string& creditModelName, const std::string & paymentDate )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
     LADate paymentDate_( etrading::stringToDate( paymentDate ) );
@@ -129,13 +129,13 @@ double meLWOCreditModelRiskyDiscountFactor( const std::string& creditModelName, 
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 // Calculates a Vector of Risky Discount Factors from the Credit Model
 std::vector<double> meLWOCreditModelRiskyDiscountFactors( const std::string& creditModelName, const std::vector<std::string>& paymentDates )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
     DateVector paymentDates_;
@@ -147,7 +147,7 @@ std::vector<double> meLWOCreditModelRiskyDiscountFactors( const std::string& cre
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief validation interface for the meLWOCreditDefaultSwapPV method.
@@ -160,7 +160,7 @@ std::vector<double> meLWOCreditModelRiskyDiscountFactors( const std::string& cre
 */
 double meLWOCreditDefaultSwapPV( const std::string& swapName, const std::string& creditModelName,  const std::string& legName )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
                 
@@ -170,7 +170,7 @@ double meLWOCreditDefaultSwapPV( const std::string& swapName, const std::string&
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -183,7 +183,7 @@ double meLWOCreditDefaultSwapPV( const std::string& swapName, const std::string&
 */
 double meLWOCreditDefaultSwapRiskyAnnuity( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
         
@@ -193,7 +193,7 @@ double meLWOCreditDefaultSwapRiskyAnnuity( const std::string& swapName, const st
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END 
+    AQ_API_END 
 }
 
 
@@ -206,7 +206,7 @@ double meLWOCreditDefaultSwapRiskyAnnuity( const std::string& swapName, const st
 */
 double meLWOCreditDefaultSwapCS01( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
         
@@ -216,7 +216,7 @@ double meLWOCreditDefaultSwapCS01( const std::string& swapName, const std::strin
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END 
+    AQ_API_END 
 }
 
 
@@ -231,7 +231,7 @@ double meLWOCreditDefaultSwapCS01( const std::string& swapName, const std::strin
 */
 double meLWOCreditDefaultSwapParSpread( const std::string& swapName, const std::string& creditModelName, const std::string& premiumLegName, const std::string& protectionLegName )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
         
@@ -241,7 +241,7 @@ double meLWOCreditDefaultSwapParSpread( const std::string& swapName, const std::
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief validation interface for the meLWOTotalReturnSwapPV method.
@@ -255,7 +255,7 @@ double meLWOCreditDefaultSwapParSpread( const std::string& swapName, const std::
 */
 double meLWOTotalReturnSwapPV( const std::string& swapName, const std::string& creditModelName,  const std::string& legName, const SWIG_STRINGMATRIX & fixingTableNames )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
     LAStringMatrix fixingTableLVB;
@@ -267,7 +267,7 @@ double meLWOTotalReturnSwapPV( const std::string& swapName, const std::string& c
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 // Optional Argument Method
@@ -285,7 +285,7 @@ double meLWOTotalReturnSwapPV( const std::string& swapName, const std::string& c
 */
 double meLWOTotalReturnSwapParRate( const std::string& swapName, const std::string& creditModelName, const SWIG_STRINGMATRIX & fixingTableNames )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
     LAStringMatrix fixingTableLVB;
@@ -297,7 +297,7 @@ double meLWOTotalReturnSwapParRate( const std::string& swapName, const std::stri
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 // Optional Argument Method
@@ -315,7 +315,7 @@ double meLWOTotalReturnSwapParRate( const std::string& swapName, const std::stri
 */
 double meLWOTotalReturnSwapParSpread( const std::string& swapName, const std::string& creditModelName, const SWIG_STRINGMATRIX & fixingTableNames )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
     LAStringMatrix fixingTableLVB;
@@ -327,7 +327,7 @@ double meLWOTotalReturnSwapParSpread( const std::string& swapName, const std::st
     // Marshall Output(s)
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 // Optional Argument Method
@@ -346,7 +346,7 @@ double meLWOTotalReturnSwapParSpread( const std::string& swapName, const std::st
 */
 double meLWOTotalReturnSwapAnnuity( const std::string& swapName, const std::string& creditModelName, const std::string& legName )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Input(s)
         
@@ -356,7 +356,7 @@ double meLWOTotalReturnSwapAnnuity( const std::string& swapName, const std::stri
     // Marshall Output(s)
     return result;
         
-    MLIB_API_END 
+    AQ_API_END 
 }
 
 

@@ -160,12 +160,12 @@ namespace etrading
 	*/
 	OptionPtr createOption(const std::string& objectName, const LabelValueBlock& tradeLVB, const bool& validateKeys )
     {
-        MLIB_REQUIRE( !tradeLVB.isEmpty() , "The trade Label Value Block is empty or contains errors" )
+        AQ_REQUIRE( !tradeLVB.isEmpty() , "The trade Label Value Block is empty or contains errors" )
 
         // Validate Object Type
         const std::string inputLVB = "tradeLVB";
         CachedObjectEnum objectType = toCachedObjectEnum( tradeLVB.getCompulsoryValueAsString( OBJECT_KEY::OBJECT_TYPE, inputLVB ) );
-        MLIB_REQUIRE( objectType == OPTION, "Invalid Object Type - 'OPTION' type required" )
+        AQ_REQUIRE( objectType == OPTION, "Invalid Object Type - 'OPTION' type required" )
 
         // Determine the trade type can call the appropriate constructor
         OptionTradeTypeEnum optionTradeType = toOptionTradeTypeEnum( tradeLVB.getCompulsoryValueAsString( OPTION_KEYS::TRADE_TYPE, inputLVB ) );
@@ -201,7 +201,7 @@ namespace etrading
 	*/
 	OptionPtr createCapFloor(const std::string& objectName, const LabelValueBlock& tradeLVB, const bool& validateKeys)
     {
-        MLIB_REQUIRE( !tradeLVB.isEmpty(), "The trade Label Value Block is empty or contains errors" )
+        AQ_REQUIRE( !tradeLVB.isEmpty(), "The trade Label Value Block is empty or contains errors" )
         
         // Validate Keys
         const std::string inputLVB = "CapFloorTradeLVB";
@@ -221,7 +221,7 @@ namespace etrading
 	*/
 	OptionPtr createEuropeanSwaption(const std::string& objectName, const LabelValueBlock& tradeLVB, const bool& validateKeys)
     {
-        MLIB_REQUIRE( !tradeLVB.isEmpty(), "The trade Label Value Block is empty or contains errors" )
+        AQ_REQUIRE( !tradeLVB.isEmpty(), "The trade Label Value Block is empty or contains errors" )
         
         // Validate Keys
         const std::string inputLVB = "swaptionLVB";
@@ -241,7 +241,7 @@ namespace etrading
 	*/
 	OptionPtr createBondOption(const std::string& objectName, const LabelValueBlock& tradeLVB, const bool& validateKeys)
 	{
-        MLIB_REQUIRE( !tradeLVB.isEmpty(), "The trade Label Value Block is empty or contains errors" )
+        AQ_REQUIRE( !tradeLVB.isEmpty(), "The trade Label Value Block is empty or contains errors" )
 
         // Validate Keys
         const std::string inputLVB = "BondOptionTradeLVB";
@@ -261,7 +261,7 @@ namespace etrading
 	*/
 	std::shared_ptr<Volatility> createVolatility(const std::string& objectName, const LabelValueBlock& volLVB, const bool& validateKeys)
 	{
-        MLIB_REQUIRE( !volLVB.isEmpty(), "The volatility Label Value Block is empty or contains errors" )
+        AQ_REQUIRE( !volLVB.isEmpty(), "The volatility Label Value Block is empty or contains errors" )
 		
         // Validate Keys
         const std::string inputLVB = "VolatilityLVB";

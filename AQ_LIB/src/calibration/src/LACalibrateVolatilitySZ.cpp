@@ -213,7 +213,7 @@ LACalibrateVolatilitySZ::createVolatility(const LAStringVector &filePath, const 
 		request = new LACalibrateSZ();
 		// set up
 		request->setUp(*objPool, *param, method, gridPos);
-		if (LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == AQ_NO_DATA)
 		{
 			LACalibratePool *reqChannel = LACalibratePool::getInstance();
 			// put request ,calibration will be done in differenct thread.

@@ -39,7 +39,7 @@ public:
 protected:
 	//==============================================
 	// get target names 
-	virtual  LAString getTargetNames(const LAString &fx, LADataInstance &dataInstance)  const {fx; return MLIB_NO_DATA;};
+	virtual  LAString getTargetNames(const LAString &fx, LADataInstance &dataInstance)  const {fx; return AQ_NO_DATA;};
 	//==============================================
 	// create risk object
 	virtual std::vector<std::pair<LAString, std::vector<LAObject *> > > createRiskEntity(LAObjectPool &objPool) const;
@@ -69,13 +69,13 @@ protected:
 	virtual std::vector<LAObject *> createBaseScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, int index) const { (void)ccy, (void)dataInstance, (void)index; return std::vector<LAObject *>(0); }
 	//==============================================
 	// get baseoutputname
-	virtual  LAString  getBaseOutPutName(const LAString &ccy, int index) const  { (void)ccy, (void)index; return MLIB_NO_DATA; }
+	virtual  LAString  getBaseOutPutName(const LAString &ccy, int index) const  { (void)ccy, (void)index; return AQ_NO_DATA; }
 	//==============================================
 	// get baseoperator
-	virtual  LAString  getBaseOperator(void) const { return MLIB_NO_DATA; }	
+	virtual  LAString  getBaseOperator(void) const { return AQ_NO_DATA; }	
 	//==============================================
 	// get basecoefficient
-	virtual  LAString  getBaseCoefficient(const LAString &ccy) const  { (void)ccy; return MLIB_NO_DATA; }
+	virtual  LAString  getBaseCoefficient(const LAString &ccy) const  { (void)ccy; return AQ_NO_DATA; }
 	////==============================================
 	// get outputname1
 	virtual  LAString  getOutPutName1(const LAString &ccy, int index) const {(void)index; return LARiskConfigurationFXShiftDelta::getOutPutName1(ccy);}

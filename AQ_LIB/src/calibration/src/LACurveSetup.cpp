@@ -165,7 +165,7 @@ setUpBasisCurve
 
 	LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	if (useMarkets == MLIB_NO_DATA) useMarkets = "";
+	if (useMarkets == AQ_NO_DATA) useMarkets = "";
 	LAString tmpCurveName = marketName; tmpCurveName.toUpper();
 	if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 	{
@@ -185,7 +185,7 @@ setUpBasisCurve
 	
 	//basis file
 	LAString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix);
-	if (basisfile == MLIB_NO_DATA)
+	if (basisfile == AQ_NO_DATA)
 	{
 		basisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + suffix_data + LAString(".csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix, basisfile);
@@ -547,7 +547,7 @@ setUpSwapCurve
 	LAString suffix_data;
 	LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	if (useMarkets == MLIB_NO_DATA) useMarkets = "";
+	if (useMarkets == AQ_NO_DATA) useMarkets = "";
 	if (generateCurveName != STD)
 	{
 		staticDataSuffix = "." + generateCurveName;
@@ -688,7 +688,7 @@ setUpSwapCurve
 
 		//swapfile
 		LAString adjfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
-		if (adjfile == MLIB_NO_DATA)
+		if (adjfile == AQ_NO_DATA)
 		{
 			adjfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + adjsuffix_data + LAString(".csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + adjsuffix_prop, adjfile);
@@ -738,7 +738,7 @@ setUpSwapCurve
 	LAString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
 
 	LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
-	if (liborfile == MLIB_NO_DATA)
+	if (liborfile == AQ_NO_DATA)
 	{
 		liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor") + suffix_data + LAString(".csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
@@ -762,7 +762,7 @@ setUpSwapCurve
 
 	//set Swap Object;
 	LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
-	if (swapfile == MLIB_NO_DATA)
+	if (swapfile == AQ_NO_DATA)
 	{
 		swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap") + suffix_data + LAString(".csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix, swapfile);
@@ -788,7 +788,7 @@ setUpSwapCurve
 	bool isFRAUse = false;
 	LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
 	LADataBool tmpAttrB;
-	if (isFRAUse_str != MLIB_NO_DATA)
+	if (isFRAUse_str != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(isFRAUse_str);
 		isFRAUse = tmpAttrB.get();
@@ -798,7 +798,7 @@ setUpSwapCurve
 	if (isFRAUse)
 	{
 		LAString fra3mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE + staticDataSuffix);
-		if (fra3mfile == MLIB_NO_DATA)
+		if (fra3mfile == AQ_NO_DATA)
 		{
 			fra3mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_3mfra") + suffix_data + LAString(".csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE + staticDataSuffix, fra3mfile);
@@ -822,7 +822,7 @@ setUpSwapCurve
 
 		//set fra6m Object;
 		LAString fra6mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE + staticDataSuffix);
-		if (fra6mfile == MLIB_NO_DATA)
+		if (fra6mfile == AQ_NO_DATA)
 		{
 			fra6mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_6mfra") + suffix_data + LAString(".csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE + staticDataSuffix, fra6mfile);
@@ -848,7 +848,7 @@ setUpSwapCurve
 	//set future Object;
 	bool isFutureUse = false;
 	LAString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + staticDataSuffix);
-	if (tmpFutureStr != MLIB_NO_DATA)
+	if (tmpFutureStr != AQ_NO_DATA)
 	{
 		LADataBool tmpAttrB;
 		tmpAttrB.convertFromString(tmpFutureStr);
@@ -858,7 +858,7 @@ setUpSwapCurve
 	if (isFutureUse)
 	{
 		LAString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix);
-		if (futureFile == MLIB_NO_DATA)
+		if (futureFile == AQ_NO_DATA)
 		{
 			futureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_future") + suffix_data + LAString(".csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix, futureFile);
@@ -1011,7 +1011,7 @@ SetUpArbFreeCurve
 
 	LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	if (useMarkets == MLIB_NO_DATA) useMarkets = "";
+	if (useMarkets == AQ_NO_DATA) useMarkets = "";
 	if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),SWAP)) 
 	{
 		if (useMarkets == "") useMarkets = SWAP;
@@ -1115,7 +1115,7 @@ SetUpArbFreeCurve
 
 	//set Libor Object;
 	LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE);
-	if (liborfile == MLIB_NO_DATA)
+	if (liborfile == AQ_NO_DATA)
 	{
 		liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE, liborfile);
@@ -1139,7 +1139,7 @@ SetUpArbFreeCurve
 
 	//set Swap Object;
 	LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE);
-	if (swapfile == MLIB_NO_DATA)
+	if (swapfile == AQ_NO_DATA)
 	{
 		swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE, swapfile);
@@ -1165,7 +1165,7 @@ SetUpArbFreeCurve
 	bool isFRAUse = false;
 	LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE);
 	LADataBool tmpAttrB;
-	if (isFRAUse_str != MLIB_NO_DATA)
+	if (isFRAUse_str != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(isFRAUse_str);
 		isFRAUse = tmpAttrB.get();
@@ -1175,7 +1175,7 @@ SetUpArbFreeCurve
 	if (isFRAUse)
 	{
 		LAString fra3mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE);
-		if (fra3mfile == MLIB_NO_DATA)
+		if (fra3mfile == AQ_NO_DATA)
 		{
 			fra3mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_3mfra.csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE, fra3mfile);
@@ -1199,7 +1199,7 @@ SetUpArbFreeCurve
 
 		//set fra6m Object;
 		LAString fra6mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE);
-		if (fra6mfile == MLIB_NO_DATA)
+		if (fra6mfile == AQ_NO_DATA)
 		{
 			fra6mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_6mfra.csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE, fra6mfile);
@@ -1224,7 +1224,7 @@ SetUpArbFreeCurve
 
 	///Xccy Basis Rate
 	LAString xccyBasisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis");
-	if (xccyBasisFile == MLIB_NO_DATA)
+	if (xccyBasisFile == AQ_NO_DATA)
 	{
 		xccyBasisFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_xccybasis.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis", xccyBasisFile);
@@ -1248,7 +1248,7 @@ SetUpArbFreeCurve
 
 	///36 Basis Rate
 	LAString threeSixFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis");
-	if (threeSixFile == MLIB_NO_DATA)
+	if (threeSixFile == AQ_NO_DATA)
 	{
 		threeSixFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_3m6mbasis.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis", threeSixFile);
@@ -1278,7 +1278,7 @@ SetUpArbFreeCurve
 	//set future Object;
 	bool isFutureUse = false;
 	LAString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE);
-	if (tmpFutureStr != MLIB_NO_DATA)
+	if (tmpFutureStr != AQ_NO_DATA)
 	{
 		tmpAttrB.convertFromString(tmpFutureStr);
 		isFutureUse = tmpAttrB.get();
@@ -1287,7 +1287,7 @@ SetUpArbFreeCurve
 	if (isFutureUse)
 	{
 		LAString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE);
-		if (futureFile == MLIB_NO_DATA)
+		if (futureFile == AQ_NO_DATA)
 		{
 			futureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_future") + LAString(".csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE, futureFile);
@@ -1297,7 +1297,7 @@ SetUpArbFreeCurve
 	
 	//set Adjust Data Object;
 	LAString adjustValueFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis");
-	if (adjustValueFile == MLIB_NO_DATA)
+	if (adjustValueFile == AQ_NO_DATA)
 	{
 		adjustValueFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisadjust.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis", adjustValueFile);
@@ -1502,7 +1502,7 @@ const LAStringMatrix& swapConv
 	staticDataSuffix.toLower();
 	LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	if (useMarkets == MLIB_NO_DATA) useMarkets = "";
+	if (useMarkets == AQ_NO_DATA) useMarkets = "";
 	LAString tmpCurveName = marketName; tmpCurveName.toUpper();
 	if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 	{
@@ -1544,21 +1544,21 @@ const LAStringMatrix& swapConv
 	}	
 
 	LAString oisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + staticDataSuffix);
-	if (oisFile == MLIB_NO_DATA)
+	if (oisFile == AQ_NO_DATA)
 	{
 		oisFile = LAString("data/in/") + tmpCurrency + LAString("_yield_ois_oiscurve.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + staticDataSuffix, oisFile);
 	}
 
 	LAString fedFundFutureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + staticDataSuffix);
-	if (fedFundFutureFile == MLIB_NO_DATA)
+	if (fedFundFutureFile == AQ_NO_DATA)
 	{
 		fedFundFutureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fffuture.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + staticDataSuffix, fedFundFutureFile);
 	}
 
 	LAString histFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + staticDataSuffix);
-	if (histFile == MLIB_NO_DATA)
+	if (histFile == AQ_NO_DATA)
 	{
 		histFile = LAString("data/in/") + tmpCurrency + LAString("_yield_historical_ois_oiscurve.csv");
 		irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + staticDataSuffix, histFile);
@@ -1686,7 +1686,7 @@ const LAStringMatrix& swapConv
 	LACoreDataService::setIStringStream(LAMarketData::getNumFileName(histFile), pHISTStream);
 
 	LAString lobasisname = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_LOBASISNAME + staticDataSuffix);
-	if (lobasisname == MLIB_NO_DATA)
+	if (lobasisname == AQ_NO_DATA)
 	{
 		lobasisname = LOBASIS;
 		LAString key = LAString(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_LOBASISNAME + staticDataSuffix).toLower();
@@ -1703,7 +1703,7 @@ const LAStringMatrix& swapConv
 		irStaticData.setStaticData(key, data);
 	}
 	LAString lobasisfile = irStaticData.getStaticData(LAString(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + suffix_lob_prop).toLower());
-	if (lobasisfile == MLIB_NO_DATA)
+	if (lobasisfile == AQ_NO_DATA)
 	{
 		lobasisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + suffix_lob_data + LAString(".csv");
 		lobasisfile.toLower();
@@ -1730,7 +1730,7 @@ const LAStringMatrix& swapConv
 		irStaticData.setStaticData(key, data);
 	}	
 	LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
-	if (swapfile == MLIB_NO_DATA)
+	if (swapfile == AQ_NO_DATA)
 	{
 		swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap") + suffix_data + LAString(".csv");
 		swapfile.toLower();
@@ -1868,7 +1868,7 @@ setUpFloater
 
 		LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 		LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-		if (useMarkets == MLIB_NO_DATA) useMarkets = "";
+		if (useMarkets == AQ_NO_DATA) useMarkets = "";
 		if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),XCCYBASIS)) 
 		{
 			if (useMarkets == "") useMarkets = XCCYBASIS;
@@ -1880,7 +1880,7 @@ setUpFloater
 		tmpBasisCurveName.toLower();
 
 		LAString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName);
-		if (basisfile == MLIB_NO_DATA)
+		if (basisfile == AQ_NO_DATA)
 		{
 			basisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_xccybasis.csv");
 			irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName, basisfile);
@@ -1920,7 +1920,7 @@ setUpFloater
 		{
 			LAString adjustValueFile = irStaticData.getStaticData(tmpCurrency + 
 				STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + tmpBasisCurveName);
-			if (adjustValueFile == MLIB_NO_DATA)
+			if (adjustValueFile == AQ_NO_DATA)
 			{
 				adjustValueFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisadjust.csv");
 				irStaticData.setStaticData(tmpCurrency + 
@@ -1999,7 +1999,7 @@ setUpForIRServer()
 	// set polynomial dimension
 	staticData.setStaticData(KEY_SIMULATION_LSMC_BASEFUNCDIM, "2");
 	//set calib prop
-	//this is for avoiding LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == MLIB_NO_DATA
+	//this is for avoiding LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == AQ_NO_DATA
 	LACoreDataService::setContext(ARG_KEY_NOCALIBTHREAD, "tmp");
 	staticData.setStaticData(KEY_CALIB_SCENARIO_FILE, "calib.properties"); 
 	LACoreDataService::setIStringStream(LAMarketData::getNumFileName("calib.properties"), pCprofSf);
@@ -2372,7 +2372,7 @@ LACurveSetup::setStaticDataValue(LAStaticData &staticData, const LAString &key, 
 	else
 	{
 		const LAString orig = staticData.getStaticData(key);
-		if (orig == MLIB_NO_DATA)
+		if (orig == AQ_NO_DATA)
 		{
 			staticData.setStaticData(key , val);
 		}

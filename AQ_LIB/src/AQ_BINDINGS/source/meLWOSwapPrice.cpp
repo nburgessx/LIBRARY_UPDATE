@@ -13,7 +13,7 @@
 #include "LACoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "tryMeLWOSwapPricing.h"
-#include "APISetUp.h"					// MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"					// AQ_API_START and AQ_API_END Macros
 
 /* @brief			Function to calculate the Swap PV
 *  @param [in]		swapName			Swap object name
@@ -27,7 +27,7 @@ double meLWOSwapPV( const std::string& swapName,
                     const std::string& legName,
                     const SWIG_STRINGMATRIX & fixingTableNames )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Marshall Inputs
     LAString legNameAsLAString( legName.c_str() );
@@ -45,7 +45,7 @@ double meLWOSwapPV( const std::string& swapName,
                                                     fixingTableAsStringMatrix );
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 	
 }
 
@@ -59,7 +59,7 @@ double meLWOSwapPV01( const std::string& swapName,
                       const SWIG_STRINGMATRIX & valuationSettings,
                       const SWIG_STRINGMATRIX & fixingTableNames )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Marshall Inputs
     LAStringMatrix valuationSettingsAsStringMatrix;
@@ -74,7 +74,7 @@ double meLWOSwapPV01( const std::string& swapName,
                                                         fixingTableAsStringMatrix );
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			Function to calculate the Swap Par Rate
@@ -87,7 +87,7 @@ double meLWOSwapParRate( const std::string& swapName,
                          const SWIG_STRINGMATRIX & valuationSettings,
                          const SWIG_STRINGMATRIX & fixingTableNames )
 {
-    MLIB_API_START    	
+    AQ_API_START    	
     
     // Marshall Inputs
     LAStringMatrix valuationSettingsAsStringMatrix;
@@ -102,7 +102,7 @@ double meLWOSwapParRate( const std::string& swapName,
                                                             fixingTableAsStringMatrix );
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			Function to calculate the Swap Par Rate
@@ -116,7 +116,7 @@ double meLWOSwapParRate( const std::string& swapName,
                          const SWIG_STRINGMATRIX & fixingTableNames,
                          const std::string& legName )
 {
-    MLIB_API_START    	
+    AQ_API_START    	
     
     // Marshall Inputs
     LAStringMatrix valuationSettingsAsStringMatrix;
@@ -130,7 +130,7 @@ double meLWOSwapParRate( const std::string& swapName,
 
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			Function to calculate the Swap Annuity
@@ -143,7 +143,7 @@ double meLWOSwapAnnuity( const std::string& swapName,
                          const SWIG_STRINGMATRIX & valuationSettings,
                          const std::string& legName )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Marshall Inputs
     LAString legNameAsLAString( legName.c_str() );
@@ -156,7 +156,7 @@ double meLWOSwapAnnuity( const std::string& swapName,
                                                             valuationSettingsAsStringMatrix,
                                                             legNameAsLAString );
     return result;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			Function to calculate the Par Spread - Excluding existing spread
@@ -171,7 +171,7 @@ double meLWOSwapParSpread( const std::string& swapName,
                            const SWIG_STRINGMATRIX & fixingTableNames,
                            const std::string & spreadLegName )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Marshall Inputs
     LAString spreadLegNameAsLAString( spreadLegName.c_str() );
@@ -188,7 +188,7 @@ double meLWOSwapParSpread( const std::string& swapName,
                                                            fixingTableAsStringMatrix,
                                                            spreadLegNameAsLAString );
     return result;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -204,7 +204,7 @@ double meLWOSwapSpread( const std::string& swapName,
                         const SWIG_STRINGMATRIX & fixingTableNames,
                         const std::string & spreadLegName )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Marshall Inputs
     LAString spreadLegNameAsLAString( spreadLegName.c_str() );
@@ -221,7 +221,7 @@ double meLWOSwapSpread( const std::string& swapName,
                                                        fixingTableAsStringMatrix,
                                                        spreadLegNameAsLAString );
     return result;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -239,7 +239,7 @@ SWIG_STRINGMATRIX meLWOSwapDisplayCashflows( const std::string& swapName,
 											 const SWIG_STRINGMATRIX & fixingTableNames,
 											 const bool showColumnHeaders )
 {
-	MLIB_API_START
+	AQ_API_START
 
 	// Marshall Inputs
 	LAString legNameAsLAString( legName.c_str() );
@@ -263,5 +263,5 @@ SWIG_STRINGMATRIX meLWOSwapDisplayCashflows( const std::string& swapName,
 
 	return resultsStringMatrix;
 
-	MLIB_API_END
+	AQ_API_END
 }

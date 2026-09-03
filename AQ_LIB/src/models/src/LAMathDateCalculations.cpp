@@ -108,7 +108,7 @@ namespace
 		}
 		else
 		{
-			MLIB_THROW("Invalid Roll Convention: Must be NORMAL, IMM or EOM")
+			AQ_THROW("Invalid Roll Convention: Must be NORMAL, IMM or EOM")
 		}
 	}
 }
@@ -147,7 +147,7 @@ const LAString toString( const RollConventionEnum enumValue )
 
         default:
 		{
-			MLIB_THROW("Invalid Roll Convention: Must be NORMAL, IMM or EOM")
+			AQ_THROW("Invalid Roll Convention: Must be NORMAL, IMM or EOM")
 			break;
 		}
     }
@@ -202,7 +202,7 @@ LAMathDateCalculations::setDate(const int* pday, LADate &date, const RollConvent
 	}
 	else
 	{
-		MLIB_THROW("Invalid Roll Convention: Must be NORMAL, IMM or EOM")
+		AQ_THROW("Invalid Roll Convention: Must be NORMAL, IMM or EOM")
 	}
 }
 
@@ -301,7 +301,7 @@ LAMathDateCalculations::generateRegularSchedule(const LADate& start,
 				}
 				else
 				{
-					MLIB_THROW("Invalid Frequency: Must be ANNUAL, SEMI-ANNUAL, QUARTERLY or MONTHLY.")
+					AQ_THROW("Invalid Frequency: Must be ANNUAL, SEMI-ANNUAL, QUARTERLY or MONTHLY.")
 				}
 				tempDate.addDays(days);
 				for (unsigned int i = 1; tempDate < end; i++)
@@ -336,7 +336,7 @@ LAMathDateCalculations::generateRegularSchedule(const LADate& start,
 				}
 				else
 				{
-					MLIB_THROW("Invalid Frequency: Must be ANNUAL, SEMI-ANNUAL, QUARTERLY or MONTHLY.")		
+					AQ_THROW("Invalid Frequency: Must be ANNUAL, SEMI-ANNUAL, QUARTERLY or MONTHLY.")		
 				}
 				tempDate.addMonths(months);
 				for (unsigned int i = 1; tempDate < end; i++)
@@ -411,7 +411,7 @@ LAMathDateCalculations::generateRegularSchedule(const LADate& start,
 				}
 				else
 				{
-					MLIB_THROW("Invalid Frequency: Must be ANNUAL, SEMI-ANNUAL, QUARTERLY or MONTHLY.")		
+					AQ_THROW("Invalid Frequency: Must be ANNUAL, SEMI-ANNUAL, QUARTERLY or MONTHLY.")		
 				}
 				tempDate.addDays(days);
 				for (unsigned int i = 1; tempDate > start; i++)
@@ -446,7 +446,7 @@ LAMathDateCalculations::generateRegularSchedule(const LADate& start,
 				}
 				else
 				{
-					MLIB_THROW("Invalid Frequency: Must be ANNUAL, SEMI-ANNUAL, QUARTERLY or MONTHLY.")		
+					AQ_THROW("Invalid Frequency: Must be ANNUAL, SEMI-ANNUAL, QUARTERLY or MONTHLY.")		
 				}
 				tempDate.addMonths(months);
 				for (unsigned int i = 1; tempDate > start; i++)
@@ -510,7 +510,7 @@ void LAMathDateCalculations::generateSchedule( const LADate& start,
 
 	if (start > end)
 	{
-		MLIB_THROW("Invalid Dates: Start Date '" + start.stringWithFormat("DD-MMM-YY") + "' must be before End Date '" + end.stringWithFormat("DD-MMM-YY") + "'")			
+		AQ_THROW("Invalid Dates: Start Date '" + start.stringWithFormat("DD-MMM-YY") + "' must be before End Date '" + end.stringWithFormat("DD-MMM-YY") + "'")			
 	}
 
 	if (freq_str == NONE)
@@ -534,7 +534,7 @@ void LAMathDateCalculations::generateSchedule( const LADate& start,
 	//check timing of oddday
 	if ( (firstStubDate != NULL || lastStubDate != NULL) && (start > fodd || fodd > lodd || lodd > end) )
 	{
-	    MLIB_THROW( "Invalid Cashflow Dates: Cashflow dates must be startDate <= firstStubDate <= lastStubDate <= endDate" )
+	    AQ_THROW( "Invalid Cashflow Dates: Cashflow dates must be startDate <= firstStubDate <= lastStubDate <= endDate" )
 	}
 	
 	//basic pattern
@@ -613,12 +613,12 @@ LAMathDateCalculations::termStrtoYMDW(const LAString& term, int& y, int& m, int&
 		
 	if (pl_y == -1 && pl_m == -1 && pl_d == -1 && pl_w == -1) 
 	{
-		MLIB_THROW( "Invalid Tenor String: Term must have format ON, TN, Y, M, W or D." )
+		AQ_THROW( "Invalid Tenor String: Term must have format ON, TN, Y, M, W or D." )
 	}
 	// week 
 	if ((pl_y != -1 || pl_m != -1 || pl_d != -1) && pl_w != -1)
 	{
-		MLIB_THROW( "Invalid Tenor String: Term must have format ON, TN, Y, M, W or D." )
+		AQ_THROW( "Invalid Tenor String: Term must have format ON, TN, Y, M, W or D." )
 	}
 
     // Check for valid strings
@@ -630,7 +630,7 @@ LAMathDateCalculations::termStrtoYMDW(const LAString& term, int& y, int& m, int&
         // Allow digits or Y, M, D, W characters or minus (negative terms) or blanks
         if ( !isdigit(str[i]) && str[i] != 'Y' && str[i] != 'M' && str[i] != 'W' && str[i] != 'D' && str[i] != '-' && str[i] != ' ' )
         {
-            MLIB_THROW( "Invalid Tenor String: Term must have format ON, TN, Y, M, W or D." )
+            AQ_THROW( "Invalid Tenor String: Term must have format ON, TN, Y, M, W or D." )
         }
     }
     
@@ -795,7 +795,7 @@ LAMathDateCalculations::getDate(const LADate& basedate,
 	{
 		if (!pCal)
 		{
-            MLIB_THROW("Invalid Date Calculation: Calendar is Required")
+            AQ_THROW("Invalid Date Calculation: Calendar is Required")
 		}
 		date = pCal->getBusinessDay(date, d);
 	}
@@ -822,7 +822,7 @@ LAMathDateCalculations::slideDate(const LADate& date, const LAPriceDataSlidingRu
 	{
 		if (!pCal)
 		{
-			MLIB_THROW("Invalid Date Calculation: Calendar is Required")
+			AQ_THROW("Invalid Date Calculation: Calendar is Required")
 		}
 		return srule.getDate(date, *pCal);
 	}
@@ -859,7 +859,7 @@ LAMathDateCalculations::getIMMDate(const int& y, const int& m, bool isOddMonth)
 {
 	if ((m%3 && !isOddMonth) || m <= 0 || m>=13) 
 	{ 
-		MLIB_THROW("Invalid IMM month. The IMM month must be 3, 6, 9, or 12.")
+		AQ_THROW("Invalid IMM month. The IMM month must be 3, 6, 9, or 12.")
 	}
 
 	LADate date;
@@ -896,7 +896,7 @@ LAMathDateCalculations::getIMMDate(const int& y, const int& m, bool isOddMonth)
     }
     else 
     {
-		MLIB_THROW("Invalid Date: Invalid weekday provided")
+		AQ_THROW("Invalid Date: Invalid weekday provided")
     }
 	
 	date.addWeeks(2);
@@ -977,7 +977,7 @@ LAMathDateCalculations::getFuturesContractStartDate(const unsigned int& month, c
 {
 	if ( month > 12 ) 
     {
-        MLIB_THROW( "Invalid Date: Invalid month provided" )
+        AQ_THROW( "Invalid Date: Invalid month provided" )
     }
 	
 	LADate date;
@@ -1016,7 +1016,7 @@ LAMathDateCalculations::getFuturesContractStartDate(const unsigned int& month, c
     }
     else 
     {
-        MLIB_THROW( "Invalid Date: Invalid weekday provided" )
+        AQ_THROW( "Invalid Date: Invalid weekday provided" )
     }
 	
 	date.addWeeks( 2 );
@@ -1033,9 +1033,9 @@ LAMathDateCalculations::getFuturesContractStartDate(const unsigned int& month, c
 LADate
 LAMathDateCalculations::getIMMDateFromTerm(const LADate& baseDate, const LAString& futureTerm)
 {
-	MLIB_THROW_IF(futureTerm.size() != 4, "Invalid Futures Contract Tenor: Futures contracts must be 4 letters" )
+	AQ_THROW_IF(futureTerm.size() != 4, "Invalid Futures Contract Tenor: Futures contracts must be 4 letters" )
 	
-    MLIB_THROW_IF(!isdigit(*futureTerm.subString(3, 3).getCString()), "Invalid Futures Contract Tenor: Futures contracts must end with a number" );
+    AQ_THROW_IF(!isdigit(*futureTerm.subString(3, 3).getCString()), "Invalid Futures Contract Tenor: Futures contracts must end with a number" );
 	
     unsigned int month = changeFutureMonthFormat(futureTerm.subString(2, 2));
 	int year = baseDate.yearOfEra();
@@ -1056,7 +1056,7 @@ LAMathDateCalculations::getIMMDateFromTerm(const LADate& baseDate, const LAStrin
 DateVector
 LAMathDateCalculations::getFFDatesFromTerm(const LADate& baseDate, const LAString& fedfundTerm)
 {
-	MLIB_THROW_IF(fedfundTerm.size() != 4, "Invalid FED Fund Tenor Contract: FED Fund Futures contracts must be 4 letters");
+	AQ_THROW_IF(fedfundTerm.size() != 4, "Invalid FED Fund Tenor Contract: FED Fund Futures contracts must be 4 letters");
 	
     unsigned int month = changeFutureMonthFormat(fedfundTerm.subString(2, 2));
 	LAString yearStr_basedate = LAString(baseDate.yearOfEra());
@@ -1155,11 +1155,11 @@ LAMathDateCalculations::getNextCBDate(
 	{
 		if (strictlyAfter)
 		{
-            MLIB_THROW("No central bank data available after specified reference date");
+            AQ_THROW("No central bank data available after specified reference date");
 		}
 		else
 		{
-			MLIB_THROW("No central bank data available on or after specified reference date");
+			AQ_THROW("No central bank data available on or after specified reference date");
 		}
 	}
 
@@ -1257,7 +1257,7 @@ LAMathDateCalculations::changeFutureMonthFormat(const LAString& futureMonth)
 	}
 	else
 	{
-        MLIB_THROW("Invalid Futures Contract - Invalid futures month specified");
+        AQ_THROW("Invalid Futures Contract - Invalid futures month specified");
 	}	
 }
 
@@ -1288,7 +1288,7 @@ LAMathDateCalculations::convertToDateGrid(const LADate &asofDate, const DoubleAr
 
 	if (dates.size() != terms.size())
 	{
-        MLIB_THROW("Inconsistent Data: Dates and Terms sizes must be the same.");
+        AQ_THROW("Inconsistent Data: Dates and Terms sizes must be the same.");
 	}
 }
 
@@ -1309,7 +1309,7 @@ double LAMathDateCalculations::getPeriodFrequencyInMonths(const LAString& freq)
 	else if (freq_capital == DAILY || freq_capital == BUSINESS_DAYS)	frequencyInMonths = 0.0333333333;	// 1/30 of a months
 	else
 	{
-		MLIB_THROW("Invalid Frequency: Must be ANNUAL, SEMI_ANNUAL, QUARTERLY, MONTHLY, WEEKLY or DAILY");
+		AQ_THROW("Invalid Frequency: Must be ANNUAL, SEMI_ANNUAL, QUARTERLY, MONTHLY, WEEKLY or DAILY");
 	}
 
 	return frequencyInMonths;
@@ -1331,7 +1331,7 @@ LAMathDateCalculations::calcCompoundingTimes(const LAString& freq_rst, const LAS
 
     if (paymentFrequency < resetFrequency)
 	{
-        MLIB_THROW("Invalid Compound Frequency: Payment Frequency is more frequent than the reset frequency");
+        AQ_THROW("Invalid Compound Frequency: Payment Frequency is more frequent than the reset frequency");
 	}
 	else return paymentFrequency / resetFrequency;
 }

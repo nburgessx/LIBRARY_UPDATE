@@ -6,7 +6,7 @@
 #include "ExceptionMacros.h"
 #include "ScheduleValidation.h"
 #include "ParameterValidation.h"		// stringToDate
-#include "DataUtilities.h"				// trimStandardStringMatrix, MLIB_TO_STRING_FROM_INT
+#include "DataUtilities.h"				// trimStandardStringMatrix, AQ_TO_STRING_FROM_INT
 #include "CurveInstruments.h"			// getInterpolatedForwardRate
 #include "LADateScheduleHelpers.h"		// getDate() to get the forward endDate given the startDate
 #include "LACurveForwardRateHelpers.h"	// Legacy method 'getMultiForwardRate()' for use when isFwdInter = true
@@ -39,15 +39,15 @@ namespace etrading
 				const StandardStringVector& thisRow = forwardAdjustments[i];
 
 				// Check Dimensions of Forward Adjustment Table
-				MLIB_REQUIRE( thisRow.size() == 4, "Forward rate adjustment table must have exactly 4 columns: AdjustmentType, StartDate, EndDate, RateOrSpread")
+				AQ_REQUIRE( thisRow.size() == 4, "Forward rate adjustment table must have exactly 4 columns: AdjustmentType, StartDate, EndDate, RateOrSpread")
 
 				const TurnOfYearAdjustmentTypeEnum turnType = toTurnOfYearAdjustmentTypeEnum( thisRow[turnTypeColumn] );
 				const LADate startDate = stringToDate( thisRow[startDateColumn] );
 				const LADate endDate = stringToDate( thisRow[endDateColumn] );
 
-				MLIB_REQUIRE( endDate >= startDate, "Invalid Forward Adjustment Data in Row " + MLIB_TO_STRING_FROM_SIZE_T( i ) + " : StartDate cannot be after the EndDate" )
-				MLIB_REQUIRE( startDate > previousStartDate, "Invalid Forward Adjustment Data in Row " + MLIB_TO_STRING_FROM_SIZE_T( i ) + " : StartDates must be sorted in ascending order with no duplicates" )
-				MLIB_REQUIRE( startDate > previousEndDate, "Invalid Forward Adjustment Data in Row " + MLIB_TO_STRING_FROM_SIZE_T( i ) + " : Overlapping adjustments are not allowed, StartDates must be greater than previous EndDates" )
+				AQ_REQUIRE( endDate >= startDate, "Invalid Forward Adjustment Data in Row " + AQ_TO_STRING_FROM_SIZE_T( i ) + " : StartDate cannot be after the EndDate" )
+				AQ_REQUIRE( startDate > previousStartDate, "Invalid Forward Adjustment Data in Row " + AQ_TO_STRING_FROM_SIZE_T( i ) + " : StartDates must be sorted in ascending order with no duplicates" )
+				AQ_REQUIRE( startDate > previousEndDate, "Invalid Forward Adjustment Data in Row " + AQ_TO_STRING_FROM_SIZE_T( i ) + " : Overlapping adjustments are not allowed, StartDates must be greater than previous EndDates" )
 
 				// Populate Turn-of-Year Structure: Key: StartDateAsDouble, Value: TurnDataStruct( turnType, startDateAsDouble, endDateAsDouble, Adjustment )
 				turnData_[ convertCurveDateToTerm( asOfDate, startDate ) ] 
@@ -65,7 +65,7 @@ namespace etrading
 	std::vector<double> ForwardAdjustments::adjustForwardRates(const std::vector<double> & fixingDatesAsTerms, std::vector<double>& forwardRates) const
 	{
 		std::vector<double> adjustedForwards = forwardRates;
-		MLIB_REQUIRE( fixingDatesAsTerms.size() == forwardRates.size(), "Invalid Forward Rates: Unable to apply the forward rate adjustment(s). The number of fixingDates and forwardRates must match" )
+		AQ_REQUIRE( fixingDatesAsTerms.size() == forwardRates.size(), "Invalid Forward Rates: Unable to apply the forward rate adjustment(s). The number of fixingDates and forwardRates must match" )
 
 		// Simply return if there is no turns data
 		if ( !turnData_.empty() )
@@ -101,7 +101,7 @@ namespace etrading
 							}
 							default:
 							{
-								MLIB_THROW("Invalid TurnAdjustmentType");
+								AQ_THROW("Invalid TurnAdjustmentType");
 							}
 						}
 					}
@@ -115,7 +115,7 @@ namespace etrading
 	std::vector<double> ForwardAdjustments::adjustDiscountFactors(const std::vector<double> & paymentDatesAsTerms, std::vector<double>& discountFactors) const
 	{
 		std::vector<double> adjustedDiscountFactors = discountFactors;
-		MLIB_REQUIRE( paymentDatesAsTerms.size() == discountFactors.size(), "Invalid Discount Factors: Unable to apply the forward rate adjustment(s). The number of paymentDates and discountFactors must match" )
+		AQ_REQUIRE( paymentDatesAsTerms.size() == discountFactors.size(), "Invalid Discount Factors: Unable to apply the forward rate adjustment(s). The number of paymentDates and discountFactors must match" )
 
 		// Simply return if there is no turns data
 		if ( !turnData_.empty() )
@@ -153,7 +153,7 @@ namespace etrading
 							}
 							default:
 							{
-								MLIB_THROW("Invalid TurnAdjustmentType");
+								AQ_THROW("Invalid TurnAdjustmentType");
 							}
 						}
 					}
@@ -183,7 +183,7 @@ namespace etrading
 							}
 							default:
 							{
-								MLIB_THROW("Invalid TurnAdjustmentType");
+								AQ_THROW("Invalid TurnAdjustmentType");
 							}
 						}
 					}
@@ -270,7 +270,7 @@ namespace etrading
 
 	double Interpolator::joinDateAsDouble( const LADate& asOfDate, const LADate& joinDate )
 	{
-		MLIB_REQUIRE( asOfDate != LADate(), "Invalid Interpolator Parameters: 'AsOfDate' is missing")
+		AQ_REQUIRE( asOfDate != LADate(), "Invalid Interpolator Parameters: 'AsOfDate' is missing")
 		double joinDateAsDouble = 0.0;
 		if ( joinDate != LADate() )
 		{
@@ -311,8 +311,8 @@ namespace etrading
 		// For Backward Compatibility
 		assumePiecewiseConstant_		= false;
 	
-		MLIB_REQUIRE( xValues_.size() == yValues_.size(),	"Interpolation x and y vectors must be the same size" )
-		MLIB_REQUIRE( xValues_.size() > 0,					"Interpolation x and y data is empty" )
+		AQ_REQUIRE( xValues_.size() == yValues_.size(),	"Interpolation x and y vectors must be the same size" )
+		AQ_REQUIRE( xValues_.size() > 0,					"Interpolation x and y data is empty" )
 	
 		// Initialize the Polynomial Class Interpolator
 		if( interpolationEnum_ == POLYNOMIAL_INTERPOLATION )
@@ -525,7 +525,7 @@ namespace etrading
 	double CurveInterpolation::discountFactor(const double & paymentDateAsTerms, const CompoundingFrequencyEnum compoundFrequency ) const
 	{
 		const std::vector<double> discountFactorVector =  discountFactors( std::vector<double>( 1, paymentDateAsTerms ), compoundFrequency );
-		MLIB_REQUIRE( discountFactorVector.size() == 1, "Invalid Discount Factor Result")
+		AQ_REQUIRE( discountFactorVector.size() == 1, "Invalid Discount Factor Result")
 		return discountFactorVector[0];
 	}
 
@@ -547,7 +547,7 @@ namespace etrading
 					for (std::size_t i = 0; i < nTerms; i++)
 					{
 						// Boundary Condition: Forwards at time zero (or before ) are zero i.e. Discount Factors are one
-						if( MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO( paymentDatesAsTerms[i] ) )
+						if( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( paymentDatesAsTerms[i] ) )
 						{
 							discountFactors[i] = 1.0;
 						}
@@ -565,7 +565,7 @@ namespace etrading
 				}
 				default:
 				{
-					MLIB_THROW("Invalid State Variable: '" + toString(interpolator_->stateVariableEnum_) + "'. When using 'AssumePiecewiseConstant' = TRUE we must use DF, LogDF, ZeroRate or ZeroRateTimesTime.")
+					AQ_THROW("Invalid State Variable: '" + toString(interpolator_->stateVariableEnum_) + "'. When using 'AssumePiecewiseConstant' = TRUE we must use DF, LogDF, ZeroRate or ZeroRateTimesTime.")
 				}
 			}
 		}
@@ -580,7 +580,7 @@ namespace etrading
 					for( size_t i = 0; i < paymentDatesAsTerms.size(); ++i )
 					{ 
 						// Boundary Condition: Spot Discount Factors Equal 1.0
-						if ( MLIB_IS_EQUAL_ZERO( paymentDatesAsTerms[i] ) )
+						if ( AQ_IS_EQUAL_ZERO( paymentDatesAsTerms[i] ) )
 						{
 							discountFactors[i] = 1.0;
 							continue;
@@ -596,7 +596,7 @@ namespace etrading
 					for( size_t i = 0; i < paymentDatesAsTerms.size(); ++i )
 					{ 
 						// Boundary Condition: Spot Discount Factors Equal 1.0
-						if ( MLIB_IS_EQUAL_ZERO( paymentDatesAsTerms[i] ) )
+						if ( AQ_IS_EQUAL_ZERO( paymentDatesAsTerms[i] ) )
 						{
 							discountFactors[i] = 1.0;
 							continue;
@@ -616,7 +616,7 @@ namespace etrading
 							}
 							default:
 							{
-								MLIB_THROW( "Invalid Compound Frequency: Only Simple and Continuous Compounding Supported" )
+								AQ_THROW( "Invalid Compound Frequency: Only Simple and Continuous Compounding Supported" )
 							}
 						}
 					}
@@ -628,7 +628,7 @@ namespace etrading
 					for( size_t i = 0; i < paymentDatesAsTerms.size(); ++i )
 					{ 
 						// Boundary Condition: Spot Discount Factors Equal 1.0
-						if ( MLIB_IS_EQUAL_ZERO( paymentDatesAsTerms[i] ) )
+						if ( AQ_IS_EQUAL_ZERO( paymentDatesAsTerms[i] ) )
 						{
 							discountFactors[i] = 1.0;
 							continue;
@@ -648,7 +648,7 @@ namespace etrading
 							}
 							default:
 							{
-								MLIB_THROW( "Invalid Compound Frequency: Only Simple and Continuous Compounding Supported" )
+								AQ_THROW( "Invalid Compound Frequency: Only Simple and Continuous Compounding Supported" )
 							}
 						}
 					}
@@ -660,7 +660,7 @@ namespace etrading
 					for( size_t i = 0; i < paymentDatesAsTerms.size(); ++i )
 					{ 
 						// Boundary Condition: Spot Discount Factors Equal 1.0
-						if ( MLIB_IS_EQUAL_ZERO( paymentDatesAsTerms[i] ) )
+						if ( AQ_IS_EQUAL_ZERO( paymentDatesAsTerms[i] ) )
 						{
 							discountFactors[i] = 1.0;
 							continue;
@@ -675,7 +675,7 @@ namespace etrading
 					for (size_t i = 0; i < paymentDatesAsTerms.size(); ++i)
 					{
 						// Boundary Condition: Spot Discount Factors Equal 1.0
-						if ( MLIB_IS_EQUAL_ZERO( paymentDatesAsTerms[i] ) )
+						if ( AQ_IS_EQUAL_ZERO( paymentDatesAsTerms[i] ) )
 						{
 							discountFactors[i] = 1.0;
 							continue;
@@ -695,14 +695,14 @@ namespace etrading
 							}
 							default:
 							{
-								MLIB_THROW( "Invalid Compound Frequency: Only Simple and Continuous Compounding Supported" )
+								AQ_THROW( "Invalid Compound Frequency: Only Simple and Continuous Compounding Supported" )
 							}
 						}
 					}
 					break;
 				}
 				default:
-					MLIB_THROW("Invalid State Variable: " + toString(interpolator_->stateVariableEnum_) )
+					AQ_THROW("Invalid State Variable: " + toString(interpolator_->stateVariableEnum_) )
 			}
 		}
 
@@ -717,7 +717,7 @@ namespace etrading
 	double CurveInterpolation::forwardRate(const double & fixingDateAsTerm, const bool useForwardInterpolation, const CompoundingFrequencyEnum compoundFrequency ) const
 	{
 		const std::vector<double> forwardRateVector =  forwardRates( std::vector<double>( 1, fixingDateAsTerm ), useForwardInterpolation, compoundFrequency );
-		MLIB_REQUIRE( forwardRateVector.size() == 1, "Invalid Forward Rate Result")
+		AQ_REQUIRE( forwardRateVector.size() == 1, "Invalid Forward Rate Result")
 		return forwardRateVector[0];
 	}
 
@@ -739,8 +739,8 @@ namespace etrading
 					// *** Legacy Scenario when using State Variable DF with useForwardInterpolation = TRUE ***
 					if( useForwardInterpolation && interpolator_->stateVariableEnum_ == STATE_VARIABLE_DF )
 					{
-						MLIB_REQUIRE( interpolator_->curveCollection_ != "", "Invalid Forward Rates: Curve Collection is missing and required when using forward interpolation i.e. isFwdInter = true" );
-						MLIB_REQUIRE( interpolator_->curveIndex_	  != "", "Invalid Forward Rates: Curve Index is missing and required when using forward interpolation i.e. isFwdInter = true" );
+						AQ_REQUIRE( interpolator_->curveCollection_ != "", "Invalid Forward Rates: Curve Collection is missing and required when using forward interpolation i.e. isFwdInter = true" );
+						AQ_REQUIRE( interpolator_->curveIndex_	  != "", "Invalid Forward Rates: Curve Index is missing and required when using forward interpolation i.e. isFwdInter = true" );
 						
 						const DateVector fixingDates = convertCurveTermsToDates( interpolator_->curveCollection_, fixingDatesAsTerms );
 						
@@ -751,14 +751,14 @@ namespace etrading
 															 "", // calendar
 															 toBooleanEnumFromBool(useForwardInterpolation) );
 						
-						MLIB_REQUIRE( forwardRates.size() ==  nTerms, "Invalid Forward Rates: Inconsistent number of forward rates." )
+						AQ_REQUIRE( forwardRates.size() ==  nTerms, "Invalid Forward Rates: Inconsistent number of forward rates." )
 					}
 					else
 					{
 						for (std::size_t i = 0; i < nTerms; i++)
 						{
 							// Boundary Condition: Forwards at time zero (or before ) are zero i.e. Discount Factors are one
-							if( MLIB_IS_LESS_THAN_ZERO( fixingDatesAsTerms[i] ) )
+							if( AQ_IS_LESS_THAN_ZERO( fixingDatesAsTerms[i] ) )
 							{
 								forwardRates[i] = 0.0;
 							}
@@ -787,7 +787,7 @@ namespace etrading
 					for (std::size_t i = 0; i < nTerms; i++)
 					{
 						// Boundary Condition: Forwards in the past are valued as zero for backwards compatibility
-						if( MLIB_IS_LESS_THAN_ZERO( fixingDatesAsTerms[i] ) )
+						if( AQ_IS_LESS_THAN_ZERO( fixingDatesAsTerms[i] ) )
 						{
 							forwardRates[i] = 0.0;
 						}
@@ -800,7 +800,7 @@ namespace etrading
 				}
 				default:
 				{
-					MLIB_THROW("Invalid State Variable: '" + toString(interpolator_->stateVariableEnum_) + "'. When using 'AssumePiecewiseConstant' = TRUE we must use DF, LogDF, ZeroRate or ZeroRateTimesTime.")
+					AQ_THROW("Invalid State Variable: '" + toString(interpolator_->stateVariableEnum_) + "'. When using 'AssumePiecewiseConstant' = TRUE we must use DF, LogDF, ZeroRate or ZeroRateTimesTime.")
 				}
 			}
 		}
@@ -829,7 +829,7 @@ namespace etrading
 				{
 					for (std::size_t i = 0; i < nTerms; i++)
 					{
-						if( MLIB_IS_LESS_THAN_ZERO( fixingDatesAsTerms[i] ) )
+						if( AQ_IS_LESS_THAN_ZERO( fixingDatesAsTerms[i] ) )
 						{
 							forwardRates[i] = 0.0;
 						}
@@ -845,7 +845,7 @@ namespace etrading
 				{
 					for( size_t i = 0; i < fixingDatesAsTerms.size(); ++i )
 					{
-						if( MLIB_IS_LESS_THAN_ZERO( fixingDatesAsTerms[i] ) )
+						if( AQ_IS_LESS_THAN_ZERO( fixingDatesAsTerms[i] ) )
 						{
 							forwardRates[i] = 0.0;
 						}
@@ -870,7 +870,7 @@ namespace etrading
 				{
 					for( size_t i = 0; i < fixingDatesAsTerms.size(); ++i )
 					{
-						if( MLIB_IS_LESS_THAN_ZERO( fixingDatesAsTerms[i] ) )
+						if( AQ_IS_LESS_THAN_ZERO( fixingDatesAsTerms[i] ) )
 						{
 							forwardRates[i] = 0.0;
 						}
@@ -883,7 +883,7 @@ namespace etrading
 				}
 				default:
 				{
-					MLIB_THROW("Invalid State Variable: '" + toString(interpolator_->stateVariableEnum_) + "' is not valid")
+					AQ_THROW("Invalid State Variable: '" + toString(interpolator_->stateVariableEnum_) + "' is not valid")
 				}
 			}
 		}
@@ -899,7 +899,7 @@ namespace etrading
 	// Method to calculate the OIS or ARR effective compound rate(s)
 	std::vector<double> CurveInterpolation::compoundRates(const std::vector<double> & fixingDatesAsTerms, const OISCompoundingEnum & compoundingEnum ) const
 	{
-		MLIB_THROW("Method 'compoundRates' Not Implemented")
+		AQ_THROW("Method 'compoundRates' Not Implemented")
 	}
 
 	// Methods using Dates (Server Users Provide Dates)
@@ -910,7 +910,7 @@ namespace etrading
 	double CurveInterpolation::discountFactor( const LADate & paymentDate ) const
 	{
 		const std::vector<double> discountFactorVector =  discountFactors( std::vector<LADate>( 1, paymentDate ) );
-		MLIB_REQUIRE( discountFactorVector.size() == 1, "Invalid Discount Factor Result")
+		AQ_REQUIRE( discountFactorVector.size() == 1, "Invalid Discount Factor Result")
 		return discountFactorVector[0];
 	}
 	
@@ -928,7 +928,7 @@ namespace etrading
 	double CurveInterpolation::forwardRate( const LADate & fixingDate, const bool & useForwardInterpolation ) const
 	{
 		const std::vector<double> forwardRateVector =  forwardRates( std::vector<LADate>( 1, fixingDate ), useForwardInterpolation );
-		MLIB_REQUIRE( forwardRateVector.size() == 1, "Invalid Forward Rate Result")
+		AQ_REQUIRE( forwardRateVector.size() == 1, "Invalid Forward Rate Result")
 		return forwardRateVector[0];
 	}
 
@@ -962,7 +962,7 @@ namespace etrading
 		{
 			case POLYNOMIAL_INTERPOLATION:
 			{
-				MLIB_REQUIRE( interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Interpolation Data" )
+				AQ_REQUIRE( interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Interpolation Data" )
 				result = interpolator_->polynomialInterpolator_->interpolate( x );
 				break;
 			}
@@ -990,7 +990,7 @@ namespace etrading
 		{
 			case POLYNOMIAL_INTERPOLATION:
 			{
-				MLIB_REQUIRE( interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Interpolation Data" )
+				AQ_REQUIRE( interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Interpolation Data" )
 				results = interpolator_->polynomialInterpolator_->interpolate( xVector );
 				break;
 			}
@@ -1018,7 +1018,7 @@ namespace etrading
 		{
 			case POLYNOMIAL_INTERPOLATION:
 			{
-				MLIB_REQUIRE( interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data" )
+				AQ_REQUIRE( interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data" )
 				result = interpolator_->polynomialInterpolator_->integrate( lowerBound, upperBound );
 				break;
 			}
@@ -1043,14 +1043,14 @@ namespace etrading
 	// Method to interpolate using vectorised integration method to prevent the reconstuction of the interpolation state for each interpolated value, for better performance
 	std::vector<double> CurveInterpolation::integrate( const std::vector<double> & lowerBounds, const std::vector<double> & upperBounds ) const
 	{
-		MLIB_REQUIRE( lowerBounds.size() == upperBounds.size(), "Invalid Integration Bounds: The number of intergrand lowerbounds and upperbounds must match" )
+		AQ_REQUIRE( lowerBounds.size() == upperBounds.size(), "Invalid Integration Bounds: The number of intergrand lowerbounds and upperbounds must match" )
 		std::vector<double> results( lowerBounds.size() );
 
 		switch( interpolator_->interpolationEnum_ )
 		{
 			case POLYNOMIAL_INTERPOLATION:
 			{
-				MLIB_REQUIRE( interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data" )
+				AQ_REQUIRE( interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data" )
 				results = interpolator_->polynomialInterpolator_->integrate( lowerBounds, upperBounds );
 				break;
 			}
@@ -1080,7 +1080,7 @@ namespace etrading
 		{
 			case POLYNOMIAL_INTERPOLATION:
 			{
-				MLIB_REQUIRE(interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data")
+				AQ_REQUIRE(interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data")
 				result = interpolator_->polynomialInterpolator_->differentiate(x);
 				break;
 			}
@@ -1105,7 +1105,7 @@ namespace etrading
 		{
 			case POLYNOMIAL_INTERPOLATION:
 			{
-				MLIB_REQUIRE(interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data")
+				AQ_REQUIRE(interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data")
 				results = interpolator_->polynomialInterpolator_->differentiate( xVector );
 				break;
 			}
@@ -1130,7 +1130,7 @@ namespace etrading
 		{
 			case POLYNOMIAL_INTERPOLATION:
 			{
-				MLIB_REQUIRE(interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data")
+				AQ_REQUIRE(interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data")
 				result = interpolator_->polynomialInterpolator_->differentiate(fromXPoint, toXPoint);
 				break;
 			}
@@ -1160,7 +1160,7 @@ namespace etrading
 		{
 			case POLYNOMIAL_INTERPOLATION:
 			{
-				MLIB_REQUIRE(interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data")
+				AQ_REQUIRE(interpolator_->polynomialInterpolator_ != nullptr, "Interpolation Error: Missing Polynomial Data")
 				
 				// Native Results will be in the curve Act365 daycount basis
 				results = interpolator_->polynomialInterpolator_->differentiate( fromXPoints, toXPoints );

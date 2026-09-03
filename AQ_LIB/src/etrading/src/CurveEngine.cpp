@@ -17,7 +17,7 @@
 #include "CurveResultsContainer.h"          // CurveResultsContainer - Singleton object for storage of curve results
 #include <boost/algorithm/string.hpp>       // boost::iequals
 #include "JacobianResults.h"                // JacobianResults Helper Methods
-#include "DataUtilities.h"					// for MLIB_TO_STRING_FROM_SIZE_T macro
+#include "DataUtilities.h"					// for AQ_TO_STRING_FROM_SIZE_T macro
 
 namespace etrading
 {
@@ -69,56 +69,56 @@ namespace etrading
 
 	std::shared_ptr<CurveDescription> CurveEngine::curveDescription() const
     { 
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
         return curveDescription_; 
     }
     
     
     std::shared_ptr<CurveResults> CurveEngine::curveResults() const
     { 
-        MLIB_REQUIRE( curveResults_ != nullptr, "Curve Results are Missing" )
+        AQ_REQUIRE( curveResults_ != nullptr, "Curve Results are Missing" )
         return curveResults_;
     }
     
 	std::shared_ptr<CurveConventionsAndMarketData> CurveEngine::curveConventionsAndMarketData() const
 	{
-		MLIB_REQUIRE( curveConventionsAndMarketData_ != nullptr, "Curve Static Data Conventions and Market Data are Missing" )
+		AQ_REQUIRE( curveConventionsAndMarketData_ != nullptr, "Curve Static Data Conventions and Market Data are Missing" )
         return curveConventionsAndMarketData_;
 	}
 
     std::shared_ptr<OISCurveObjectData> CurveEngine::oisCurveData() const
     { 
-        MLIB_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
+        AQ_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
         return oisCurveData_; 
     }
 
 	std::shared_ptr<ARRCurveObjectData> CurveEngine::arrCurveData() const
     { 
-        MLIB_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
+        AQ_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
         return arrCurveData_;
     }
 
 	std::shared_ptr<SwapCurveObjectData> CurveEngine::swapCurveData() const
     {
-        MLIB_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
+        AQ_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
         return swapCurveData_;
     }
     
     std::shared_ptr<TenorBasisCurveObjectData> CurveEngine::tenorBasisCurveData() const
     { 
-        MLIB_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve MarketData is Missing" )
+        AQ_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve MarketData is Missing" )
         return tenorBasisCurveData_;
     }
     
     std::shared_ptr<XccyBasisCurveObjectData> CurveEngine::xccyBasisCurveData() const
     {
-        MLIB_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
+        AQ_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
         return xccyBasisCurveData_;
     }
     
     std::shared_ptr<FwdConstantCurveObjectData> CurveEngine::fxFwdConstantCurveData() const
     {
-        MLIB_REQUIRE( fxFwdConstantCurveData_ != nullptr, "FX Fwd Constant Curve Market Data is Missing" )
+        AQ_REQUIRE( fxFwdConstantCurveData_ != nullptr, "FX Fwd Constant Curve Market Data is Missing" )
         return fxFwdConstantCurveData_;
     }
 
@@ -129,7 +129,7 @@ namespace etrading
     CurveEngine::CurveEngine( const std::shared_ptr<CurveDescription> & curveDescription )
         : curveDescription_(curveDescription)
     {
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
 
         // 1. Curve Description
         const std::string curveCollection           = curveDescription_->curveCollection();
@@ -151,8 +151,8 @@ namespace etrading
 							  const std::shared_ptr<ARRCurveObjectData> & arrCurveData)
 		: curveDescription_(curveDescription), arrCurveData_(arrCurveData) /* curveConventionsAndMarketData_ in body */
 	{
-		MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
+		AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
 		
 		// LEGACY OBJECT POOL CALIBRATION ONLY
 		// -------------------------------------------
@@ -188,7 +188,7 @@ namespace etrading
 				// Get Jacobian Parameters
                 const double gradientShiftSize		= arrCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE, DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= arrCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE, DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
 
                 // 1. Calibrate ARR Curve and Compute the Flat-Shift Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateARRCurveAndCalculateFlatShiftJacobian( gradientShiftSize );
@@ -203,7 +203,7 @@ namespace etrading
                 // Get Jacobian Parameters
                 const double gradientShiftSize		= arrCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE, DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= arrCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE, DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
 
                 // 1. Calibrate ARR Curve and Compute the Perturbed Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateARRCurveAndCalculatePerturbedJacobian( gradientShiftSize );
@@ -215,7 +215,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
+                AQ_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
                 break;
             }
         }
@@ -229,8 +229,8 @@ namespace etrading
 							  const std::shared_ptr<OISCurveObjectData> & oisCurveData )
         : curveDescription_(curveDescription), oisCurveData_(oisCurveData) /* curveConventionsAndMarketData_ in body */
     {
-		MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-		MLIB_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
+		AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+		AQ_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
 
 		// LEGACY OBJECT POOL CALIBRATION ONLY
 		// -------------------------------------------
@@ -266,7 +266,7 @@ namespace etrading
 				// Get Jacobian Parameters
                 const double gradientShiftSize		= oisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE,		DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= oisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE,	DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
 				
 				// 1. Calibrate OIS Curve and Compute the Flat-Shift Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateOISCurveAndCalculateFlatShiftJacobian( gradientShiftSize );
@@ -281,7 +281,7 @@ namespace etrading
                 // Get Jacobian Parameters
                 const double gradientShiftSize		= oisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE,		DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= oisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE,	DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
 				
 				// 1. Calibrate OIS Curve and Compute the Perturbed Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateOISCurveAndCalculatePerturbedJacobian( gradientShiftSize );
@@ -293,7 +293,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
+                AQ_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
                 break;
             }
         }
@@ -307,8 +307,8 @@ namespace etrading
 							  const std::shared_ptr<SwapCurveObjectData> & swapCurveData )
         : curveDescription_(curveDescription), swapCurveData_(swapCurveData) /* curveConventionsAndMarketData_ in body */
     {
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
 		
 		// LEGACY OBJECT POOL CALIBRATION ONLY
 		// -------------------------------------------
@@ -344,7 +344,7 @@ namespace etrading
 				// Get Jacobian Parameters
                 const double gradientShiftSize		= swapCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE,		DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= swapCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE,	DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
 
                 // 1. Calibrate Swap Curve and Compute the Flat-Shift Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateSwapCurveAndCalculateFlatShiftJacobian( gradientShiftSize );
@@ -359,7 +359,7 @@ namespace etrading
                 // Get Jacobian Parameters
                 const double gradientShiftSize		= swapCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE,		DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= swapCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE,	DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
 
                 // 1. Calibrate Swap Curve and Compute the Perturbed Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateSwapCurveAndCalculatePerturbedJacobian( gradientShiftSize );
@@ -371,7 +371,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
+                AQ_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
                 break;
             }
         }
@@ -386,8 +386,8 @@ namespace etrading
 							  const std::shared_ptr<TenorBasisCurveObjectData> & tenorBasisCurveData )
         : curveDescription_(curveDescription), tenorBasisCurveData_(tenorBasisCurveData) /* curveConventionsAndMarketData_ in body */
     {
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve Market Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve Market Data is Missing" )
 		
 		// LEGACY OBJECT POOL CALIBRATION ONLY
 		// -------------------------------------------
@@ -423,7 +423,7 @@ namespace etrading
 				// Get Jacobian Parameters
                 const double gradientShiftSize		= tenorBasisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE,		DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= tenorBasisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE,	DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
                 
 				// 1. Calibrate Swap Curve and Compute the Flat-Shift Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateTenorBasisCurveAndCalculateFlatShiftJacobian( gradientShiftSize );
@@ -438,7 +438,7 @@ namespace etrading
                 // Get Jacobian Parameters
                 const double gradientShiftSize		= tenorBasisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE,		DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= tenorBasisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE,	DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
                 
 				// 1. Calibrate Swap Curve and Compute the Perturbed Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateTenorBasisCurveAndCalculatePerturbedJacobian( gradientShiftSize );
@@ -450,7 +450,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
+                AQ_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
                 break;
             }
         }
@@ -464,8 +464,8 @@ namespace etrading
 							  const std::shared_ptr<XccyBasisCurveObjectData> & xccyBasisCurveData )
         : curveDescription_(curveDescription), xccyBasisCurveData_(xccyBasisCurveData) /* curveConventionsAndMarketData_ in body */
     {
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
 		
 		// LEGACY OBJECT POOL CALIBRATION ONLY
 		// -------------------------------------------
@@ -501,7 +501,7 @@ namespace etrading
 				// Get Jacobian Parameters
                 const double gradientShiftSize		= xccyBasisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE,	DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= xccyBasisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE, DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
 
                 // 1. Calibrate Swap Curve and Compute the Flat-Shift Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateXccyBasisCurveAndCalculateFlatShiftJacobian( gradientShiftSize );
@@ -516,7 +516,7 @@ namespace etrading
                 // Get Jacobian Parameters
                 const double gradientShiftSize		= xccyBasisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE,	DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= xccyBasisCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE, DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
 
                 // 1. Calibrate Swap Curve and Compute the Perturbed Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateXccyBasisCurveAndCalculatePerturbedJacobian( gradientShiftSize );
@@ -528,7 +528,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
+                AQ_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
                 break;
             }
         }
@@ -542,8 +542,8 @@ namespace etrading
 							  const std::shared_ptr<FwdConstantCurveObjectData> & fxFwdConstantCurveData )
 		: curveDescription_( curveDescription ), fxFwdConstantCurveData_( fxFwdConstantCurveData ) /* curveConventionsAndMarketData_ in body */
 	{
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( fxFwdConstantCurveData_ != nullptr, "FX Forward Constant Curve Market Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( fxFwdConstantCurveData_ != nullptr, "FX Forward Constant Curve Market Data is Missing" )
 		
 		// LEGACY OBJECT POOL CALIBRATION ONLY
 		// -------------------------------------------
@@ -579,7 +579,7 @@ namespace etrading
 				// Get Jacobian Parameters
                 const double gradientShiftSize		= fxFwdConstantCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE,	DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= fxFwdConstantCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE, DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
 
                 // 1. Calibrate Swap Curve and Compute the Flat-Shift Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateFxForwardConstantCurveAndCalculateFlatShiftJacobian( gradientShiftSize );
@@ -594,7 +594,7 @@ namespace etrading
                 // Get Jacobian Parameters
                 const double gradientShiftSize		= fxFwdConstantCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_GRADIENT_SHIFT_SIZE,	DEFAULT_GRADIENT_SHIFT_SIZE );
 				const double marketDatetShiftSize	= fxFwdConstantCurveData_->curveConvLVB_.getOptionalValueAsDouble( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_MARKET_DATA_SHIFT_SIZE, DEFAULT_MARKET_DATA_SHIFT_SIZE );
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Curve Input: 'JacobianGradientShiftSize' parameter must not be set to zero")
 
                 // 1. Calibrate Swap Curve and Compute the Perturbed Jacobian
 				std::shared_ptr<JacobianData> jacobianData = calibrateFxForwardConstantCurveAndCalculatePerturbedJacobian( gradientShiftSize );
@@ -606,7 +606,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
+                AQ_THROW("Invalid Curve JacobianShiftType: Must be 'FLAT_SHIFT', 'PERTURBED' or 'NONE'")
                 break;
             }
         }
@@ -621,7 +621,7 @@ namespace etrading
     // Method to get the Jacobian Results, will return nullptr if they don't exist
     std::shared_ptr<etrading::JacobianResults> CurveEngine::getJacobianResultsByDiscountFactor() const
     {
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
 
         std::shared_ptr<etrading::JacobianResults> result = nullptr;
         if( etrading::doesExistCurveResultsJacobianByDiscountFactor( curveDescription_->curveCollection(), curveDescription_->objectPoolLookupTable() ) )
@@ -634,7 +634,7 @@ namespace etrading
 	// Method to get the Jacobian Results, will return nullptr if they don't exist
     std::shared_ptr<etrading::JacobianResults> CurveEngine::getJacobianResultsByForwardRate() const
     {
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
 
         std::shared_ptr<etrading::JacobianResults> result = nullptr;
         if( etrading::doesExistCurveResultsJacobianByForwardRate( curveDescription_->curveCollection(), curveDescription_->objectPoolLookupTable() ) )
@@ -647,7 +647,7 @@ namespace etrading
 	// Method to get the Jacobian Results, will return nullptr if they don't exist
     std::shared_ptr<etrading::JacobianResults> CurveEngine::getJacobianResultsByCompoundRate() const
     {
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
 
         std::shared_ptr<etrading::JacobianResults> result = nullptr;
         if( etrading::doesExistCurveResultsJacobianByCompoundRate( curveDescription_->curveCollection(), curveDescription_->objectPoolLookupTable() ) )
@@ -661,7 +661,7 @@ namespace etrading
     ShiftTypeEnum CurveEngine::curveRiskMetricsRequired() const
     {
         // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
 
         std::string jacobianBuildFrequency;
         std::string jacobianShiftType;
@@ -673,7 +673,7 @@ namespace etrading
             case OIS_CURVETYPE:
             {
                 // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-                MLIB_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
+                AQ_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
 
                 jacobianBuildFrequency    = oisCurveData_->curveConvLVB_.getOptionalValueAsString( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_BUILD_FREQUENCY,  "NEVER" );
                 jacobianShiftType         = oisCurveData_->curveConvLVB_.getOptionalValueAsString( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_SHIFT_TYPE,       "NONE" );
@@ -682,7 +682,7 @@ namespace etrading
             case ARR_CURVETYPE:
             {
                 // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-                MLIB_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
+                AQ_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
 
                 jacobianBuildFrequency    = arrCurveData_->curveConvLVB_.getOptionalValueAsString( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_BUILD_FREQUENCY,  "NEVER" );
                 jacobianShiftType         = arrCurveData_->curveConvLVB_.getOptionalValueAsString( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_SHIFT_TYPE,       "NONE" );
@@ -691,7 +691,7 @@ namespace etrading
             case SWAP_CURVETYPE:
             {
                 // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-                MLIB_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
+                AQ_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
 
                 jacobianBuildFrequency    = swapCurveData_->curveConvLVB_.getOptionalValueAsString( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_BUILD_FREQUENCY,  "NEVER" );
                 jacobianShiftType         = swapCurveData_->curveConvLVB_.getOptionalValueAsString( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_SHIFT_TYPE,       "NONE" );
@@ -700,7 +700,7 @@ namespace etrading
             case TENORBASIS_CURVETYPE:
             {
                 // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-                MLIB_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve Market Data is Missing" )
+                AQ_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve Market Data is Missing" )
 
                 jacobianBuildFrequency    = tenorBasisCurveData_->curveConvLVB_.getOptionalValueAsString( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_BUILD_FREQUENCY,  "NEVER" );
                 jacobianShiftType         = tenorBasisCurveData_->curveConvLVB_.getOptionalValueAsString( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_SHIFT_TYPE,       "NONE" );
@@ -709,7 +709,7 @@ namespace etrading
             case XCCYBASIS_CURVETYPE:
             {
                 // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-                MLIB_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
+                AQ_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
 
                 jacobianBuildFrequency    = xccyBasisCurveData_->curveConvLVB_.getOptionalValueAsString( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_BUILD_FREQUENCY,  "NEVER" );
                 jacobianShiftType         = xccyBasisCurveData_->curveConvLVB_.getOptionalValueAsString( CURVEGENERATOR_CURVEPROPERTIES_KEY::JACOBIAN_SHIFT_TYPE,       "NONE" );
@@ -723,7 +723,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Invalid Curve Type '" + toString( curveDescription_->curveTypeEnum() ) + "'")
+                AQ_THROW("Invalid Curve Type '" + toString( curveDescription_->curveTypeEnum() ) + "'")
                 break;
             }
         }
@@ -734,7 +734,7 @@ namespace etrading
         const ShiftTypeEnum jacobianShiftTypeEnum               = toShiftTypeEnum( jacobianShiftType ); // Non-Const - This is our result, which we may override in this method
         const BuildFrequencyEnum jacobianBuildFrequencyEnum     = toBuildFrequencyEnum( jacobianBuildFrequency );
 
-		MLIB_REQUIRE( jacobianBuildFrequencyEnum != TOLERANCE_BUILD_FREQUENCY, "Invalid JacobianBuildFrequency: 'TOLERANCE' method not supported")
+		AQ_REQUIRE( jacobianBuildFrequencyEnum != TOLERANCE_BUILD_FREQUENCY, "Invalid JacobianBuildFrequency: 'TOLERANCE' method not supported")
 
         // 3. Case when no need to build the curve risks
         // ================================================================================================================
@@ -775,7 +775,7 @@ namespace etrading
             case TOLERANCE_BUILD_FREQUENCY:
             default:
             {
-                MLIB_THROW("Invalid JacobianBuildFrequency: Only 'NEVER', 'ALWAYS', 'ONCE' JacobianBuildFrequency supported")
+                AQ_THROW("Invalid JacobianBuildFrequency: Only 'NEVER', 'ALWAYS', 'ONCE' JacobianBuildFrequency supported")
             }
         }
         
@@ -940,7 +940,7 @@ namespace etrading
 		// ==========================
 		const size_t nOISInstruments = arrCurveData_->oisRates_.size();
 		const StandardStringVector perturbedOISTenors = arrCurveData_->instrumentTenors( OIS_MARKETDATA );
-		MLIB_REQUIRE( perturbedOISTenors.size() == nOISInstruments, "Invalid Market Data: Number of OIS Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedOISTenors.size() == nOISInstruments, "Invalid Market Data: Number of OIS Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nOISInstruments; ++i )
 		{
@@ -965,7 +965,7 @@ namespace etrading
 		// ==========================
 		const size_t nLiborOISInstruments = arrCurveData_->loBasisRates_.size();
 		const StandardStringVector perturbedLiborOISTenors = arrCurveData_->instrumentTenors( LIBOR_OIS_BASISSPREAD_MARKETDATA );
-		MLIB_REQUIRE( perturbedLiborOISTenors.size() == nLiborOISInstruments, "Invalid Market Data: Number of Libor-OIS Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedLiborOISTenors.size() == nLiborOISInstruments, "Invalid Market Data: Number of Libor-OIS Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nLiborOISInstruments; ++i )
 		{
@@ -990,7 +990,7 @@ namespace etrading
 		// ==========================
 		const size_t nSwapInstruments = arrCurveData_->swapRates_.size();
 		const StandardStringVector perturbedSwapTenors = arrCurveData_->instrumentTenors( SWAP_MARKETDATA );
-		MLIB_REQUIRE( perturbedSwapTenors.size() == nSwapInstruments, "Invalid Market Data: Number of Swap Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedSwapTenors.size() == nSwapInstruments, "Invalid Market Data: Number of Swap Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nSwapInstruments; ++i )
 		{
@@ -1038,7 +1038,7 @@ namespace etrading
 		// ==========================
 		const size_t nOISInstruments = oisCurveData_->oisRates_.size();
 		const StandardStringVector perturbedOISTenors = oisCurveData_->instrumentTenors( OIS_MARKETDATA );
-		MLIB_REQUIRE( perturbedOISTenors.size() == nOISInstruments, "Invalid Market Data: Number of OIS Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedOISTenors.size() == nOISInstruments, "Invalid Market Data: Number of OIS Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nOISInstruments; ++i )
 		{
@@ -1063,7 +1063,7 @@ namespace etrading
 		// ==========================
 		const size_t nLiborOISInstruments = oisCurveData_->loBasisRates_.size();
 		const StandardStringVector perturbedLiborOISTenors = oisCurveData_->instrumentTenors( LIBOR_OIS_BASISSPREAD_MARKETDATA );
-		MLIB_REQUIRE( perturbedLiborOISTenors.size() == nLiborOISInstruments, "Invalid Market Data: Number of Libor-OIS Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedLiborOISTenors.size() == nLiborOISInstruments, "Invalid Market Data: Number of Libor-OIS Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nLiborOISInstruments; ++i )
 		{
@@ -1088,7 +1088,7 @@ namespace etrading
 		// ==========================
 		const size_t nSwapInstruments = oisCurveData_->swapRates_.size();
 		const StandardStringVector perturbedSwapTenors = oisCurveData_->instrumentTenors( SWAP_MARKETDATA );
-		MLIB_REQUIRE( perturbedSwapTenors.size() == nSwapInstruments, "Invalid Market Data: Number of Swap Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedSwapTenors.size() == nSwapInstruments, "Invalid Market Data: Number of Swap Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nSwapInstruments; ++i )
 		{
@@ -1136,7 +1136,7 @@ namespace etrading
 		// ==========================
 		const size_t nLiborFixings = swapCurveData_->liborRates_.size();
 		const StandardStringVector perturbedLiborFixingTenors = swapCurveData_->instrumentTenors( LIBOR_FIXING_TABLE );
-		MLIB_REQUIRE( perturbedLiborFixingTenors.size() == nLiborFixings, "Invalid Market Data: Number of Libor Fixing Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedLiborFixingTenors.size() == nLiborFixings, "Invalid Market Data: Number of Libor Fixing Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nLiborFixings; ++i )
 		{
@@ -1161,7 +1161,7 @@ namespace etrading
 		// ==========================
 		const size_t nFuturesInstruments = swapCurveData_->futureRates_.size();
 		const StandardStringVector perturbedFuturesTenors = swapCurveData_->instrumentTenors( FUTURES_MARKETDATA );
-		MLIB_REQUIRE( perturbedFuturesTenors.size() == nFuturesInstruments, "Invalid Market Data: Number of Futures Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedFuturesTenors.size() == nFuturesInstruments, "Invalid Market Data: Number of Futures Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nFuturesInstruments; ++i )
 		{
@@ -1190,7 +1190,7 @@ namespace etrading
 		const size_t nFRA6MInstruments = swapCurveData_->fra6mRates_.size();
 		const size_t nFRAInstruments = nFRA3MInstruments > nFRA6MInstruments ? nFRA3MInstruments : nFRA6MInstruments;
 		const StandardStringVector perturbedFRATenors = swapCurveData_->instrumentTenors( FRA_MARKETDATA );
-		MLIB_REQUIRE( perturbedFRATenors.size() == nFRAInstruments, "Invalid Market Data: Number of FRA Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedFRATenors.size() == nFRAInstruments, "Invalid Market Data: Number of FRA Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nFRAInstruments; ++i )
 		{
@@ -1215,7 +1215,7 @@ namespace etrading
 		// ==========================
 		const size_t nSwapInstruments = swapCurveData_->swapRates_.size();
 		const StandardStringVector perturbedSwapTenors = swapCurveData_->instrumentTenors( SWAP_MARKETDATA );
-		MLIB_REQUIRE( perturbedSwapTenors.size() == nSwapInstruments, "Invalid Market Data: Number of Swap Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedSwapTenors.size() == nSwapInstruments, "Invalid Market Data: Number of Swap Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nSwapInstruments; ++i )
 		{
@@ -1240,7 +1240,7 @@ namespace etrading
 		// ==========================
 		const size_t nBasisInstruments = swapCurveData_->basisAdjRates_.size();
 		const StandardStringVector perturbedBasisTenors = swapCurveData_->instrumentTenors( BASIS_SWAP_MARKETDATA );
-		MLIB_REQUIRE( perturbedBasisTenors.size() == nBasisInstruments, "Invalid Market Data: Number of Basis Swap Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedBasisTenors.size() == nBasisInstruments, "Invalid Market Data: Number of Basis Swap Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nBasisInstruments; ++i )
 		{
@@ -1288,7 +1288,7 @@ namespace etrading
 		// ==========================
 		const size_t nLiborFixings = tenorBasisCurveData_->liborRates_.size();
 		const StandardStringVector perturbedLiborFixingTenors = tenorBasisCurveData_->instrumentTenors( LIBOR_FIXING_TABLE );
-		MLIB_REQUIRE( perturbedLiborFixingTenors.size() == nLiborFixings, "Invalid Market Data: Number of Libor Fixing Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedLiborFixingTenors.size() == nLiborFixings, "Invalid Market Data: Number of Libor Fixing Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nLiborFixings; ++i )
 		{
@@ -1314,7 +1314,7 @@ namespace etrading
 
 		const size_t nFRAInstruments = tenorBasisCurveData_->fraRates_.size();
 		const StandardStringVector perturbedFRATenors = tenorBasisCurveData_->instrumentTenors( FRA_MARKETDATA );
-		MLIB_REQUIRE( perturbedFRATenors.size() == nFRAInstruments, "Invalid Market Data: Number of FRA Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedFRATenors.size() == nFRAInstruments, "Invalid Market Data: Number of FRA Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nFRAInstruments; ++i )
 		{
@@ -1339,7 +1339,7 @@ namespace etrading
 		// ==========================
 		const size_t nBasisInstruments = tenorBasisCurveData_->basisRates_.size();
 		const StandardStringVector perturbedBasisTenors = tenorBasisCurveData_->instrumentTenors( BASIS_SWAP_MARKETDATA );
-		MLIB_REQUIRE( perturbedBasisTenors.size() == nBasisInstruments, "Invalid Market Data: Number of Basis Swap Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedBasisTenors.size() == nBasisInstruments, "Invalid Market Data: Number of Basis Swap Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nBasisInstruments; ++i )
 		{
@@ -1388,7 +1388,7 @@ namespace etrading
 		// The FX PipSize stored in the Curve Market Data FXFWDS data block as the 'denomintor' parameter, where 10,000 indicates a PipSize of 1/10000 = 0.0001
 		
 		const size_t nFXSpotInstruments = xccyBasisCurveData_->spotFxRates_.size();
-		MLIB_REQUIRE( nFXSpotInstruments == 1, "Invalid Xccy Curve Market Data: Exactly one FX Spot Rate is required" )
+		AQ_REQUIRE( nFXSpotInstruments == 1, "Invalid Xccy Curve Market Data: Exactly one FX Spot Rate is required" )
 		const bool useFXForwardInstruments = xccyBasisCurveData_->curveConvLVB_.getOptionalValueAsBool( CURVEGENERATOR_CURVEPROPERTIES_KEY::IS_FWD_FX, false );
 
 		// FX Parameter PlaceHolders
@@ -1435,10 +1435,10 @@ namespace etrading
 		if( useFXForwardInstruments )
 		{
 			const size_t nFXForwards = xccyBasisCurveData_->fxFwdRates_.size();
-			MLIB_REQUIRE( nFXForwards > 0, "Invalid Xccy Curve Market Data: Missing FXForward market data, which is required when parameter 'isFWDFX' is set to True" )
+			AQ_REQUIRE( nFXForwards > 0, "Invalid Xccy Curve Market Data: Missing FXForward market data, which is required when parameter 'isFWDFX' is set to True" )
 		
 			const StandardStringVector perturbedFXForwardTenors = xccyBasisCurveData_->instrumentTenors( FXFWD_MARKETDATA );
-			MLIB_REQUIRE( perturbedFXForwardTenors.size() == nFXForwards, "Invalid Market Data: Number of FX Forwards Instruments must match number of Instrument Tenors" )
+			AQ_REQUIRE( perturbedFXForwardTenors.size() == nFXForwards, "Invalid Market Data: Number of FX Forwards Instruments must match number of Instrument Tenors" )
 
 			for( size_t i = 0; i < nFXForwards; ++i )
 			{
@@ -1464,7 +1464,7 @@ namespace etrading
 		// ==========================
 		const size_t nXccyBasisInstruments = xccyBasisCurveData_->basisRates_.size();
 		const StandardStringVector perturbedXccyBasisTenors = xccyBasisCurveData_->instrumentTenors( XCCY_SWAP_MARKETDATA );
-		MLIB_REQUIRE( perturbedXccyBasisTenors.size() == nXccyBasisInstruments, "Invalid Market Data: Number of Xccy Basis Instruments must match number of Instrument Tenors" )
+		AQ_REQUIRE( perturbedXccyBasisTenors.size() == nXccyBasisInstruments, "Invalid Market Data: Number of Xccy Basis Instruments must match number of Instrument Tenors" )
 
 		for( size_t i = 0; i < nXccyBasisInstruments; ++i )
 		{
@@ -1590,8 +1590,8 @@ namespace etrading
     void CurveEngine::calibrateARRCurve() const
     {
         // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-		MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
+		AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
 
 		// 1. Curve Static ARR Data
 		etrading::LAUpdateStaticDataManager::loadStaticDataOISCurve( getDataInstance(),
@@ -1618,8 +1618,8 @@ namespace etrading
     void CurveEngine::calibrateOISCurve() const
     {
         // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-		MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
+		AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
 		
         // 1. Curve Static OIS Data
 		etrading::LAUpdateStaticDataManager::loadStaticDataOISCurve( getDataInstance(),
@@ -1646,8 +1646,8 @@ namespace etrading
     void CurveEngine::calibrateSwapCurve() const
     {
         // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-		MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
+		AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
 
         // 1. Load Curve Static Data
         LAUpdateStaticDataManager::loadStaticDataSwapCurve( etrading::getDataInstance(),
@@ -1679,8 +1679,8 @@ namespace etrading
     void CurveEngine::calibrateTenorBasisCurve() const
     {
         // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-		MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve Market Data is Missing" )
+		AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve Market Data is Missing" )
 
         // 1. Load Curve Static Data
         LAUpdateStaticDataManager::loadStaticDataBasisCurve( etrading::getDataInstance(),
@@ -1709,8 +1709,8 @@ namespace etrading
     void CurveEngine::calibrateXccyBasisCurve() const
     {
         // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-		MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
+		AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
 
         // 1. Load Curve Static Data
         LAUpdateStaticDataManager::loadStaticDataBasisCurve( etrading::getDataInstance(),
@@ -1737,8 +1737,8 @@ namespace etrading
     void CurveEngine::calibrateFwdFXConstantCurve() const
     {
         // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-		MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
-        MLIB_REQUIRE( fxFwdConstantCurveData_ != nullptr, "FX Forward Constant Curve Market Data is Missing" )
+		AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( fxFwdConstantCurveData_ != nullptr, "FX Forward Constant Curve Market Data is Missing" )
 
 		// 1. Load Curve Static Data
 		LAUpdateStaticDataManager::loadStaticDataFwdFXConstantCurve( etrading::getDataInstance(),
@@ -1759,7 +1759,7 @@ namespace etrading
     void CurveEngine::storeCurveResults() const
     {
         // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
 
         // Persist curveResults in Singleton Curve Results Container for the Index and any alias Indices
         const LAStringVector curveIndexAliasList = etrading::curveIndexAliasList( curveDescription_->curveCollection().c_str(),
@@ -1775,7 +1775,7 @@ namespace etrading
     std::shared_ptr<DiscountFactorResults> CurveEngine::createDiscountFactorResultsObject() const
     {
         // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-        MLIB_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
+        AQ_REQUIRE( curveDescription_ != nullptr, "Curve Description Static Data is Missing" )
 
         // Curve Description Parameters
         const CurveTypeEnum curveTypeEnum                       = curveDescription_->curveTypeEnum();
@@ -1795,7 +1795,7 @@ namespace etrading
             case OIS_CURVETYPE:
             {
                 // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-                MLIB_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
+                AQ_REQUIRE( oisCurveData_ != nullptr, "OIS Curve Market Data is Missing" )
 
                 fixingCalendar                                      = oisCurveData_->oisConvLVB_.getOptionalValueAsString(CURVEGENERATOR_OIS_KEY::CALENDAR, "NO_CHANGE");
                 fixingBusDayAdj                                     = oisCurveData_->oisConvLVB_.getOptionalValueAsString(CURVEGENERATOR_OIS_KEY::SLIDING_RULE, "NO_CHANGE");
@@ -1806,7 +1806,7 @@ namespace etrading
             case ARR_CURVETYPE:
             {
                 // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-                MLIB_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
+                AQ_REQUIRE( arrCurveData_ != nullptr, "ARR Curve Market Data is Missing" )
 
                 fixingCalendar                                      = arrCurveData_->oisConvLVB_.getOptionalValueAsString(CURVEGENERATOR_OIS_KEY::CALENDAR, "NO_CHANGE");
                 fixingBusDayAdj                                     = arrCurveData_->oisConvLVB_.getOptionalValueAsString(CURVEGENERATOR_OIS_KEY::SLIDING_RULE, "NO_CHANGE");
@@ -1817,7 +1817,7 @@ namespace etrading
             case SWAP_CURVETYPE:
             {
                 // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-                MLIB_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
+                AQ_REQUIRE( swapCurveData_ != nullptr, "Swap Curve Market Data is Missing" )
 
                 fixingCalendar                                      = swapCurveData_->swapConvLVB_.getOptionalValueAsString( CURVEGENERATOR_SWAPS_KEY::CALENDAR, "NO_CHANGE" );
                 fixingBusDayAdj                                     = swapCurveData_->swapConvLVB_.getOptionalValueAsString( CURVEGENERATOR_SWAPS_KEY::SLIDING_RULE, "NO_CHANGE" );
@@ -1828,7 +1828,7 @@ namespace etrading
             case TENORBASIS_CURVETYPE:
             {
                 // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-                MLIB_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve Market Data is Missing" )
+                AQ_REQUIRE( tenorBasisCurveData_ != nullptr, "Tenor Basis Curve Market Data is Missing" )
 
                 const bool isTargetLeg1 = isBasisTargetLeg1( curveTypeEnum, tenorBasisCurveData_->basisConvLVB_ );
                 if ( isTargetLeg1 )
@@ -1852,7 +1852,7 @@ namespace etrading
             case XCCYBASIS_CURVETYPE:
             {
                 // Note getting private shared pointer member data has no nullptr check, so we check here to prevent structured execptions
-                MLIB_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
+                AQ_REQUIRE( xccyBasisCurveData_ != nullptr, "Xccy Basis Curve Market Data is Missing" )
 
                 const bool isTargetLeg1 = isBasisTargetLeg1( curveTypeEnum, xccyBasisCurveData_->basisConvLVB_ );
                 if ( isTargetLeg1 )
@@ -1886,7 +1886,7 @@ namespace etrading
             }
             default:
             {
-                MLIB_THROW("Invalid Curve Type '" + toString( curveTypeEnum ) + "'. Unable to Create Discount Factors Results.")
+                AQ_THROW("Invalid Curve Type '" + toString( curveTypeEnum ) + "'. Unable to Create Discount Factors Results.")
                 break;
             }
         }
@@ -1904,8 +1904,8 @@ namespace etrading
 																			      const double gradientShiftSize,
                                                                                   const double marketDataShiftSizeForFlatShift ) const
     {
-        MLIB_REQUIRE( jacobianData != nullptr,			"Jacobian Data is Missing" )
-        MLIB_REQUIRE( discountFactorResults != nullptr, "Discount Factor Results Data is Missing" )
+        AQ_REQUIRE( jacobianData != nullptr,			"Jacobian Data is Missing" )
+        AQ_REQUIRE( discountFactorResults != nullptr, "Discount Factor Results Data is Missing" )
         
         // Flat-Shift Risk Parameters
         const LADate asOfDate                       = discountFactorResults->asOfDate();
@@ -1926,7 +1926,7 @@ namespace etrading
 			}
 			default:
 			{
-				MLIB_THROW("Invalid Jacobian Risk Type: Only DiscountFactor and ForwardRate Risk Types are supported")
+				AQ_THROW("Invalid Jacobian Risk Type: Only DiscountFactor and ForwardRate Risk Types are supported")
 			}
 		}
 
@@ -1948,8 +1948,8 @@ namespace etrading
 																				  const RiskTypeEnum & riskType,
 																				  const double gradientShiftSize ) const
 	{
-		MLIB_REQUIRE( jacobianData != nullptr,			"Jacobian Data is Missing" )
-        MLIB_REQUIRE( discountFactorResults != nullptr, "Discount Factor Results Data is Missing" )
+		AQ_REQUIRE( jacobianData != nullptr,			"Jacobian Data is Missing" )
+        AQ_REQUIRE( discountFactorResults != nullptr, "Discount Factor Results Data is Missing" )
         
         // Perturbed Risk Parameters
         const LADate asOfDate									= discountFactorResults->asOfDate();
@@ -1973,7 +1973,7 @@ namespace etrading
 			}
 			default:
 			{
-				MLIB_THROW("Invalid Jacobian Risk Type: Only DiscountFactor and ForwardRate Risk Types are supported")
+				AQ_THROW("Invalid Jacobian Risk Type: Only DiscountFactor and ForwardRate Risk Types are supported")
 			}
 		}
 
@@ -2072,7 +2072,7 @@ namespace etrading
 			}
             default:
 			{
-				MLIB_THROW("Invalid Curve Type: " + toString(curveType) + ", Supported types include OIS, SWAP, TENORBASIS, XCCY and FWDFXCONST curve types")
+				AQ_THROW("Invalid Curve Type: " + toString(curveType) + ", Supported types include OIS, SWAP, TENORBASIS, XCCY and FWDFXCONST curve types")
                 break;
 			}
 		}
@@ -2153,7 +2153,7 @@ namespace etrading
                 {
                     return false;
                 }
-                MLIB_THROW( "Invalid Tenor Basis Curve Config: Target must me 'Leg1Forecast' or 'Leg2Forecast' rates." )
+                AQ_THROW( "Invalid Tenor Basis Curve Config: Target must me 'Leg1Forecast' or 'Leg2Forecast' rates." )
             }
             case XCCYBASIS_CURVETYPE:
             {
@@ -2167,11 +2167,11 @@ namespace etrading
                 {
                     return false;
                 }
-                MLIB_THROW( "Invalid Xccy Basis Curve Config: Target must me 'Leg1Discount' or 'Leg2Discount' rates." )
+                AQ_THROW( "Invalid Xccy Basis Curve Config: Target must me 'Leg1Discount' or 'Leg2Discount' rates." )
             }
             default:
             {
-                MLIB_THROW( "Unable to find the basis curve target leg: Invalid Curve Type: Must be a TenorBasis or XccyBasis Curve." )
+                AQ_THROW( "Unable to find the basis curve target leg: Invalid Curve Type: Must be a TenorBasis or XccyBasis Curve." )
             }
         }
     }

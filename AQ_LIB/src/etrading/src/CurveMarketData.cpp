@@ -4,7 +4,7 @@
 #include "DataUtilities.h"
 #include "CommonConstants.h"
 #include "CurveInstruments.h"	// required for isARRFuture method checks if an OIS or ARR swap instrument is actually a future from it's term string
-#include "DataUtilities.h"		// required for MLIB_TO_STRING_FROM_SIZE_T macro
+#include "DataUtilities.h"		// required for AQ_TO_STRING_FROM_SIZE_T macro
 
 #include <vector>
 #include <string>
@@ -26,7 +26,7 @@ namespace etrading
 						 variantMarketDataLocalCache_(),
 						 stringMarketDataLocalCache_()
 	{
-		MLIB_REQUIRE( marketDataKeys.size() == infoBlocks.size(), "Invalid Market Data: Inconsistent number of market data keys and values")
+		AQ_REQUIRE( marketDataKeys.size() == infoBlocks.size(), "Invalid Market Data: Inconsistent number of market data keys and values")
 
 		// Create a FreeObject from each property label-value block, and concatenate
 		const bool allowJaggedData = false;
@@ -234,8 +234,8 @@ namespace etrading
                 // Check the Market Data Matrix Dimensions and Market Data Rate Data Type
                 if ( i == 0 )
                 {
-                    MLIB_REQUIRE( marketDataStringMatrix[0].size() >= size_t(marketDataRateColumn), "Invalid Market Data: There are not enough columns in the market data block '"
-                        + toString( marketDataType ) + "'. Need at least " + MLIB_TO_STRING_FROM_INT( marketDataRateColumn ) + " data columns." )
+                    AQ_REQUIRE( marketDataStringMatrix[0].size() >= size_t(marketDataRateColumn), "Invalid Market Data: There are not enough columns in the market data block '"
+                        + toString( marketDataType ) + "'. Need at least " + AQ_TO_STRING_FROM_INT( marketDataRateColumn ) + " data columns." )
                 }
                 
                 const double originalMarketData = marketDataStringMatrix[i][marketDataRateColumn].getDoubleValue();
@@ -257,14 +257,14 @@ namespace etrading
 
                 // Update Market Data Row
                 // Market Data in the Entity Pool is stored as a string so use high precision when casting from double to string
-                marketDataStringMatrix[i][marketDataRateColumn] = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION(bumpedMarketData,20).c_str();
+                marketDataStringMatrix[i][marketDataRateColumn] = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION(bumpedMarketData,20).c_str();
 		    }
         }
         else
         {
             // Market Data Rate Column not Found - or market data block bumping not permitted
             // =================================
-            MLIB_THROW( "Invalid Market Data: Cannot apply a bump or shift to market data of type '" + toString( marketDataType ) + "'" )
+            AQ_THROW( "Invalid Market Data: Cannot apply a bump or shift to market data of type '" + toString( marketDataType ) + "'" )
             
         }
     }
@@ -281,7 +281,7 @@ namespace etrading
         // ================================================================
 
         // 1. Throw if the market data block is empty
-		MLIB_REQUIRE( !marketDataStringMatrix.empty(), "Unble to Perturb '" + toString( marketDataType) + "' Market Data: The Market Data Block is Empty" )
+		AQ_REQUIRE( !marketDataStringMatrix.empty(), "Unble to Perturb '" + toString( marketDataType) + "' Market Data: The Market Data Block is Empty" )
         
         // 2. Check if Market Data Contains the Rate Column
         const int marketDataRateColumn  = findMarketDataRateColumnNumber_ForAllInstrumentTypes( marketDataType );
@@ -292,13 +292,13 @@ namespace etrading
         // 3. Perturb the nth Market Data instrument
         if ( doesMarketDataContainRateColumn )
         {
-			MLIB_REQUIRE( nthInstrumentToBump < marketDataStringMatrix.size(), "Unable to Perturb Instrument Number " + MLIB_TO_STRING_FROM_SIZE_T( nthInstrumentToBump + 1u )
-						  + " , since Market Data Type '" + toString( marketDataType) + "' contains only " + MLIB_TO_STRING_FROM_SIZE_T( marketDataStringMatrix.size() ) + "instruments" )
+			AQ_REQUIRE( nthInstrumentToBump < marketDataStringMatrix.size(), "Unable to Perturb Instrument Number " + AQ_TO_STRING_FROM_SIZE_T( nthInstrumentToBump + 1u )
+						  + " , since Market Data Type '" + toString( marketDataType) + "' contains only " + AQ_TO_STRING_FROM_SIZE_T( marketDataStringMatrix.size() ) + "instruments" )
 
 
 			// Check the Market Data Matrix Dimensions and Market Data Rate Data Type
-            MLIB_REQUIRE( marketDataStringMatrix[nthInstrumentToBump].size() >= size_t( marketDataRateColumn ), "Invalid Market Data: There are not enough columns in the market data block '"
-                          + toString( marketDataType ) + "'. Need at least " + MLIB_TO_STRING_FROM_INT( marketDataRateColumn ) + " data columns." )
+            AQ_REQUIRE( marketDataStringMatrix[nthInstrumentToBump].size() >= size_t( marketDataRateColumn ), "Invalid Market Data: There are not enough columns in the market data block '"
+                          + toString( marketDataType ) + "'. Need at least " + AQ_TO_STRING_FROM_INT( marketDataRateColumn ) + " data columns." )
                 
             const double originalMarketData = marketDataStringMatrix[nthInstrumentToBump][marketDataRateColumn].getDoubleValue();
             double bumpedMarketData;
@@ -319,13 +319,13 @@ namespace etrading
 
             // Update Market Data Row
             // Market Data in the Entity Pool is stored as a string so use high precision when casting from double to string
-            marketDataStringMatrix[nthInstrumentToBump][marketDataRateColumn] = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION(bumpedMarketData,20).c_str();
+            marketDataStringMatrix[nthInstrumentToBump][marketDataRateColumn] = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION(bumpedMarketData,20).c_str();
         }
         else
         {
             // Market Data Rate Column not Found - or market data block bumping not permitted
             // =================================
-            MLIB_THROW( "Invalid Market Data: Cannot perturb market data of type '" + toString( marketDataType ) + "'" )
+            AQ_THROW( "Invalid Market Data: Cannot perturb market data of type '" + toString( marketDataType ) + "'" )
             
         }
 	}
@@ -360,8 +360,8 @@ namespace etrading
 			for( size_t i = 0; i < nInstruments; ++i )
 			{
 				// Check the Market Data Matrix Column Dimensions
-				MLIB_REQUIRE( marketDataStringMatrix[i].size() >= size_t( marketDataTenorColumn ), "Invalid Market Data: There are not enough columns in the market data block '"
-							+ toString( marketDataType ) + "'. Need at least " + MLIB_TO_STRING_FROM_INT( marketDataTenorColumn ) + " data columns in market data row " + MLIB_TO_STRING_FROM_INT( i ) )
+				AQ_REQUIRE( marketDataStringMatrix[i].size() >= size_t( marketDataTenorColumn ), "Invalid Market Data: There are not enough columns in the market data block '"
+							+ toString( marketDataType ) + "'. Need at least " + AQ_TO_STRING_FROM_INT( marketDataTenorColumn ) + " data columns in market data row " + AQ_TO_STRING_FROM_INT( i ) )
 
 				resultInstrumentTenors[i] = marketDataStringMatrix[i][marketDataTenorColumn].c_str();
 			}
@@ -371,7 +371,7 @@ namespace etrading
         
 		// Market Data Rate Column not Found
         // =================================
-        MLIB_THROW( "Invalid Market Data: Unable to determine the tenor for instrument type '" + toString( marketDataType ) + "'" )
+        AQ_THROW( "Invalid Market Data: Unable to determine the tenor for instrument type '" + toString( marketDataType ) + "'" )
 	}
 
 	/* @brief Method to recalculate the futures price for given bump in the underlying forward rate
@@ -423,8 +423,8 @@ namespace etrading
                 // Check the Market Data Matrix Dimensions and Market Data Rate Data Type
                 if ( i == 0 )
                 {
-                    MLIB_REQUIRE( marketData[0].size() >= size_t(marketDataRateColumn), "Invalid Market Data: There are not enough columns in the market data block '"
-                        + marketDataType + "'. Need at least " + MLIB_TO_STRING_FROM_INT( marketDataRateColumn ) + " data columns." )
+                    AQ_REQUIRE( marketData[0].size() >= size_t(marketDataRateColumn), "Invalid Market Data: There are not enough columns in the market data block '"
+                        + marketDataType + "'. Need at least " + AQ_TO_STRING_FROM_INT( marketDataRateColumn ) + " data columns." )
                 }
                 
                 const double originalMarketData = marketData[i][marketDataRateColumn].getValue<double>();
@@ -464,7 +464,7 @@ namespace etrading
             // in this case we set noThrow = true and we update the local cache with the original data unbumped.
             if ( noThrow == false )
             {
-                MLIB_THROW( "Invalid Market Data: Cannot apply a bump or shift to market data of type '" + marketDataType + "'" )
+                AQ_THROW( "Invalid Market Data: Cannot apply a bump or shift to market data of type '" + marketDataType + "'" )
             }
         }
         
@@ -501,7 +501,7 @@ namespace etrading
                 break;
             }
         }
-        MLIB_REQUIRE( marketDataTypeFound, "Unable to update market data, since marketDataType ' " +  marketDataType + "' not found in the market data object" )
+        AQ_REQUIRE( marketDataTypeFound, "Unable to update market data, since marketDataType ' " +  marketDataType + "' not found in the market data object" )
         variantMarketDataLocalCache_[marketDataType] = transpose( marketData );
 
         stringMarketDataLocalCache_[marketDataType] = transpose( toLAStringMatrixFromVariantMatrix( marketData ) );
@@ -567,7 +567,7 @@ namespace etrading
         {
             // Return a pre-specified column
             // Access Violation Guard Above
-            MLIB_REQUIRE( size_t(columnNumber) <= variantMatrix[0].size(), "Invalid Column Number - Column number must not be greater than the total number of columns" )
+            AQ_REQUIRE( size_t(columnNumber) <= variantMatrix[0].size(), "Invalid Column Number - Column number must not be greater than the total number of columns" )
 
             VariantMatrix infoColumn( variantMatrix.size(), std::vector<Variant>(1) ); // Vector of Size 1 Vector
             for( unsigned int i = 0; i < variantMatrix.size(); ++i )
@@ -579,7 +579,7 @@ namespace etrading
         }
         else
         {
-            MLIB_THROW( "Unable to Display Data - When specified the column number must be greater than zero and less than the total number of columns" )
+            AQ_THROW( "Unable to Display Data - When specified the column number must be greater than zero and less than the total number of columns" )
         }
         
         // We should never reach here
@@ -599,11 +599,11 @@ namespace etrading
 
         // Return the Entire Block or a Particular Column as Requested
         // *** Note We are using Base 1 and also use -1 as a special key to indicate return all columns ***
-        MLIB_REQUIRE( columnNumber > 0, "Unable to Display Data - When specified the column number must be greater than zero")
+        AQ_REQUIRE( columnNumber > 0, "Unable to Display Data - When specified the column number must be greater than zero")
 
         // Return a pre-specified column 
         // Access Violation Guard Above
-        MLIB_REQUIRE( size_t(columnNumber) <= marketData[0].size(), "Invalid Column Number - Column number must not be greater than the total number of columns" )
+        AQ_REQUIRE( size_t(columnNumber) <= marketData[0].size(), "Invalid Column Number - Column number must not be greater than the total number of columns" )
 
         for( unsigned int i = 0; i < marketData.size(); ++i )
         {
@@ -774,14 +774,14 @@ namespace etrading
 			case OIS_MARKETDATA:
 			{
 				// Note: Data is Transposed and using Index Base 0
-				MLIB_REQUIRE(nDataRows == 2 || nDataRows == 4 || nDataRows == 5 || nDataRows == 6, "Invalid Market Data: OIS data must have 2, 4, 5 or 6 columns:- Tenor, Rate, Start (OIS Futures), End(OIS Futures), Convexity (OIS Futures), Use (Optional)")
+				AQ_REQUIRE(nDataRows == 2 || nDataRows == 4 || nDataRows == 5 || nDataRows == 6, "Invalid Market Data: OIS data must have 2, 4, 5 or 6 columns:- Tenor, Rate, Start (OIS Futures), End(OIS Futures), Convexity (OIS Futures), Use (Optional)")
 					useMarketDataRow = 5; // i.e. Transposed Column 6 with base 0
 				break;
 			}
 			case LIBOR_OIS_BASISSPREAD_MARKETDATA:
 			{
 				// Note: Data is Transposed and using Index Base 0
-				MLIB_REQUIRE(nDataRows == 2 || nDataRows == 3 || nDataRows == 4, "Invalid Market Data: LIBOROISBASISSPREADS data must have between 2-4 columns:- Tenor, Rate, BasisType (Optional), Use (Optional)")
+				AQ_REQUIRE(nDataRows == 2 || nDataRows == 3 || nDataRows == 4, "Invalid Market Data: LIBOROISBASISSPREADS data must have between 2-4 columns:- Tenor, Rate, BasisType (Optional), Use (Optional)")
 					useMarketDataRow = 3; // i.e. Transposed Column 4 with base 0
 				break;
 			}
@@ -789,7 +789,7 @@ namespace etrading
 			{
 				// Note: Data is Transposed and using Index Base 0
 				// Dynamic Use Market Data Column: Can be Column 3 or 5
-				MLIB_REQUIRE(nDataRows == 2 || nDataRows == 3, "Invalid Market Data: FRAS data must have 2-3 columns:- Tenor, Rate, Use (Optional)")
+				AQ_REQUIRE(nDataRows == 2 || nDataRows == 3, "Invalid Market Data: FRAS data must have 2-3 columns:- Tenor, Rate, Use (Optional)")
 					useMarketDataRow = 2; // i.e. Transposed Column 3 with base 0
 				if ( nDataRows >= 4 )
 				{
@@ -800,42 +800,42 @@ namespace etrading
 			case FUTURES_MARKETDATA:
 			{
 				// Note: Data is Transposed and using Index Base 0
-				MLIB_REQUIRE(nDataRows == 5 || nDataRows == 6, "Invalid Market Data: FUTURES data must have 5-6 columns:- Tenor, Start, End, Rate, Convexity, Use (Optional)")
+				AQ_REQUIRE(nDataRows == 5 || nDataRows == 6, "Invalid Market Data: FUTURES data must have 5-6 columns:- Tenor, Start, End, Rate, Convexity, Use (Optional)")
 					useMarketDataRow = 5; // i.e. Transposed Column 6 with base 0
 				break;
 			}
 			case SWAP_MARKETDATA:
 			{
 				// Note: Data is Transposed and using Index Base 0
-				MLIB_REQUIRE(nDataRows == 2 || nDataRows == 3, "Invalid Market Data: SWAPS data must have 2-3 columns:- Tenor, Rate, Use (Optional)")
+				AQ_REQUIRE(nDataRows == 2 || nDataRows == 3, "Invalid Market Data: SWAPS data must have 2-3 columns:- Tenor, Rate, Use (Optional)")
 					useMarketDataRow = 2; // i.e. Transposed Column 3 with base 0
 				break;
 			}
 			case BASIS_SWAP_MARKETDATA:
 			{
 				// Note: Data is Transposed and using Index Base 0
-				MLIB_REQUIRE(nDataRows == 2 || nDataRows == 3, "Invalid Market Data: BASISSWAPS data must have 2-3 columns:- Tenor, Rate, Use (Optional)")
+				AQ_REQUIRE(nDataRows == 2 || nDataRows == 3, "Invalid Market Data: BASISSWAPS data must have 2-3 columns:- Tenor, Rate, Use (Optional)")
 					useMarketDataRow = 2; // i.e. Transposed Column 3 with base 0
 				break;
 			}
 			case XCCY_SWAP_MARKETDATA:
 			{
 				// Note: Data is Transposed and using Index Base 0
-				MLIB_REQUIRE(nDataRows == 2 || nDataRows == 3, "Invalid Market Data: XCCYSWAPS data must have 2-3 columns:- Tenor, Rate, Use (Optional)")
+				AQ_REQUIRE(nDataRows == 2 || nDataRows == 3, "Invalid Market Data: XCCYSWAPS data must have 2-3 columns:- Tenor, Rate, Use (Optional)")
 					useMarketDataRow = 2; // i.e. Transposed Column 3 with base 0
 				break;
 			}
 			case FXFWD_MARKETDATA:
 			{
 				// Note: Data is Transposed and using Index Base 0
-				MLIB_REQUIRE(nDataRows == 2 || nDataRows == 3, "Invalid Market Data: FXFWDS data must have 2-3 columns:- Tenor, Rate, Use (Optional)")
+				AQ_REQUIRE(nDataRows == 2 || nDataRows == 3, "Invalid Market Data: FXFWDS data must have 2-3 columns:- Tenor, Rate, Use (Optional)")
 					useMarketDataRow = 2; // i.e. Transposed Column 3 with base 0
 				break;
 			}
             case FXFWD_BIDASK_MARKETDATA:
 			{   
 				// Note: Data is Transposed and using Index Base 0
-				MLIB_REQUIRE(nDataRows == 3 || nDataRows == 4, "Invalid Market Data: FXFWDS data must have 3-4 columns:- Tenor, Bid, Ask, Use (Optional)")
+				AQ_REQUIRE(nDataRows == 3 || nDataRows == 4, "Invalid Market Data: FXFWDS data must have 3-4 columns:- Tenor, Bid, Ask, Use (Optional)")
 					useMarketDataRow = 3; // i.e. Transposed Column 4 with base 0
 				break;
 			}
@@ -885,8 +885,8 @@ namespace etrading
 				}
 				else
 				{
-					MLIB_THROW("Invalid Curve Market Data: " + marketDataKey + " 'Use' parameter in row " + MLIB_TO_STRING_FROM_SIZE_T(i+1) +
-							   " and column " + MLIB_TO_STRING_FROM_SIZE_T( useMarketDataRow + 1 ) + " is set to '" + useValue +
+					AQ_THROW("Invalid Curve Market Data: " + marketDataKey + " 'Use' parameter in row " + AQ_TO_STRING_FROM_SIZE_T(i+1) +
+							   " and column " + AQ_TO_STRING_FROM_SIZE_T( useMarketDataRow + 1 ) + " is set to '" + useValue +
 							   "' but should be 'TRUE', 'FALSE' or blank" )
 				}
 			}

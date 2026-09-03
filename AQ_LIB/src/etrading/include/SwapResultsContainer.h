@@ -18,7 +18,7 @@
 #include "CoreEnumerations.h"
 
 // Macro to Clear Swap Results Container
-#define MLIB_CLEAR_SWAP_RESULTS_CACHE etrading::SwapResultsContainer::getInstance().deleteAllSwapResults(); 
+#define AQ_CLEAR_SWAP_RESULTS_CACHE etrading::SwapResultsContainer::getInstance().deleteAllSwapResults(); 
 
 namespace etrading
 {

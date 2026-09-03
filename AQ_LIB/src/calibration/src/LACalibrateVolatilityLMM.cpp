@@ -210,7 +210,7 @@ LACalibrateVolatilityLMM::createVolatility(vector<LAFunctionBase *> &vol, const 
 
 		// set up
 		request->setUp(*objPool, *param, method, gridPos);
-		if (LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == AQ_NO_DATA)
 		{
 			LACalibratePool *reqChannel = LACalibratePool::getInstance();
 			// put request ,calibration will be done in differenct thread.
@@ -374,7 +374,7 @@ LACalibrateVolatilityLMM::getGridInfo(DoubleArray &tenor_30_360, DoubleArray &te
 		freq = FREQ_QUARTERLY;
 	}
 	LAStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
-	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA);
+	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA);
 	LAMarketDataLMM::getCanonicalGrid(tenor_30_360, tenor, deltatenor, exFlag, asOfDate, dayCount, freq, term, exTenor, isDataOut);
 }
 

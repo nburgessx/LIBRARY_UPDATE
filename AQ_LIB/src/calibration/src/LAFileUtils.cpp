@@ -49,7 +49,7 @@ MAFileUtils::~MAFileUtils(void)
 LAString
 MAFileUtils::getNumFileName(const LAString &fileName, FileID fileid)
 {
-	LAString num = MLIB_NO_DATA;
+	LAString num = AQ_NO_DATA;
 	if (fileid == MARKETID)
 	{
 		num = LACoreDataService::getContext(ARG_KEY_MARKETID);
@@ -63,12 +63,12 @@ MAFileUtils::getNumFileName(const LAString &fileName, FileID fileid)
 		num = LACoreDataService::getContext(ARG_KEY_PROPERTIESID);
 	}
 
-	if (num == MLIB_NO_DATA)
+	if (num == AQ_NO_DATA)
 	{
 		 num = LACoreDataService::getContext(ARG_KEY_FILENUM);
 	}
 
-	if (num != MLIB_NO_DATA)
+	if (num != AQ_NO_DATA)
 	{
 		std::string sFileName(fileName.getCString());
 		unsigned int ex_pos = sFileName.find_last_of(".");

@@ -30,7 +30,7 @@ namespace google_test
 		}
 		catch (...)
 		{
-			MLIB_THROW("ECB Calendar has Expired!!! - Less than 3 ECB Meeting Dates Available")
+			AQ_THROW("ECB Calendar has Expired!!! - Less than 3 ECB Meeting Dates Available")
 		}
 
 		//

@@ -81,19 +81,19 @@ namespace validation_api
         const size_t nFixingTables    = trimmedFixingTableNames.size();
         const size_t nFXSpotRates     = trimmedXccyFXSpotRates.size();
 
-		MLIB_REQUIRE( !trimmedSwapNames.empty(), "No swap names have been provided" )
-        MLIB_REQUIRE( nSwaps == nCurves, "Inconsistent Data: Number of Swaps and Curve Collections do not match. There are " + MLIB_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + MLIB_TO_STRING_FROM_SIZE_T(nCurves) + " Curves." )
+		AQ_REQUIRE( !trimmedSwapNames.empty(), "No swap names have been provided" )
+        AQ_REQUIRE( nSwaps == nCurves, "Inconsistent Data: Number of Swaps and Curve Collections do not match. There are " + AQ_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + AQ_TO_STRING_FROM_SIZE_T(nCurves) + " Curves." )
         
         // Optional Fixing Tables
         if ( nFixingTables > 0 )
         {
-            MLIB_REQUIRE( nSwaps == nFixingTables, "Inconsistent Data: Number of Swaps and Fixing Tables does not match. There are " + MLIB_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + MLIB_TO_STRING_FROM_SIZE_T(nFixingTables) + " Fixing Tables." )
+            AQ_REQUIRE( nSwaps == nFixingTables, "Inconsistent Data: Number of Swaps and Fixing Tables does not match. There are " + AQ_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + AQ_TO_STRING_FROM_SIZE_T(nFixingTables) + " Fixing Tables." )
         }
 
         // Optional Xccy FX Spot Rates
         if ( nFXSpotRates > 0 )
         {
-            MLIB_REQUIRE( nSwaps == nFXSpotRates, "Inconsistent Data: Number of Swaps and Xccy FXSpot Rates does not match. There are " + MLIB_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + MLIB_TO_STRING_FROM_SIZE_T(nFXSpotRates) + " Xccy FXSpot Rates." )
+            AQ_REQUIRE( nSwaps == nFXSpotRates, "Inconsistent Data: Number of Swaps and Xccy FXSpot Rates does not match. There are " + AQ_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + AQ_TO_STRING_FROM_SIZE_T(nFXSpotRates) + " Xccy FXSpot Rates." )
         }
 
         //----------------------------------------------------------------------------------
@@ -244,19 +244,19 @@ namespace validation_api
         const size_t nFixingTables    = trimmedFixingTableNames.size();
         const size_t nFXSpotRates     = trimmedXccyFXSpotRates.size();
 
-		MLIB_REQUIRE( !trimmedSwapNames.empty(), "No swap names have been provided" )
-        MLIB_REQUIRE( nSwaps == nCurves, "Inconsistent Data: Number of Swaps and Curve Collections do not match. There are " + MLIB_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + MLIB_TO_STRING_FROM_SIZE_T(nCurves) + " Curves." )
+		AQ_REQUIRE( !trimmedSwapNames.empty(), "No swap names have been provided" )
+        AQ_REQUIRE( nSwaps == nCurves, "Inconsistent Data: Number of Swaps and Curve Collections do not match. There are " + AQ_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + AQ_TO_STRING_FROM_SIZE_T(nCurves) + " Curves." )
         
         // Optional Fixing Tables
         if ( nFixingTables > 0 )
         {
-            MLIB_REQUIRE( nSwaps == nFixingTables, "Inconsistent Data: Number of Swaps and Fixing Tables does not match. There are " + MLIB_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + MLIB_TO_STRING_FROM_SIZE_T(nFixingTables) + " Fixing Tables." )
+            AQ_REQUIRE( nSwaps == nFixingTables, "Inconsistent Data: Number of Swaps and Fixing Tables does not match. There are " + AQ_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + AQ_TO_STRING_FROM_SIZE_T(nFixingTables) + " Fixing Tables." )
         }
 
         // Optional Xccy FX Spot Rates
         if ( nFXSpotRates > 0 )
         {
-            MLIB_REQUIRE( nSwaps == nFXSpotRates, "Inconsistent Data: Number of Swaps and Xccy FXSpot Rates does not match. There are " + MLIB_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + MLIB_TO_STRING_FROM_SIZE_T(nFXSpotRates) + " Xccy FXSpot Rates." )
+            AQ_REQUIRE( nSwaps == nFXSpotRates, "Inconsistent Data: Number of Swaps and Xccy FXSpot Rates does not match. There are " + AQ_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + AQ_TO_STRING_FROM_SIZE_T(nFXSpotRates) + " Xccy FXSpot Rates." )
         }
 
 		// Clear the output parameters
@@ -453,19 +453,19 @@ namespace validation_api
         const size_t nFixingTables    = trimmedFixingTableNames.size();
         const size_t nFXSpotRates     = trimmedXccyFXSpotRates.size();
 
-		MLIB_REQUIRE( !trimmedSwapNames.empty(), "No swap names have been provided" )
-        MLIB_REQUIRE( nSwaps == nCurves, "Inconsistent Data: Number of Swaps and Curve Collections do not match. There are " + MLIB_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + MLIB_TO_STRING_FROM_SIZE_T(nCurves) + " Curves." )
+		AQ_REQUIRE( !trimmedSwapNames.empty(), "No swap names have been provided" )
+        AQ_REQUIRE( nSwaps == nCurves, "Inconsistent Data: Number of Swaps and Curve Collections do not match. There are " + AQ_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + AQ_TO_STRING_FROM_SIZE_T(nCurves) + " Curves." )
         
         // Optional Fixing Tables
         if ( nFixingTables > 0 )
         {
-            MLIB_REQUIRE( nSwaps == nFixingTables, "Inconsistent Data: Number of Swaps and Fixing Tables does not match. There are " + MLIB_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + MLIB_TO_STRING_FROM_SIZE_T(nFixingTables) + " Fixing Tables." )
+            AQ_REQUIRE( nSwaps == nFixingTables, "Inconsistent Data: Number of Swaps and Fixing Tables does not match. There are " + AQ_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + AQ_TO_STRING_FROM_SIZE_T(nFixingTables) + " Fixing Tables." )
         }
 
         // Optional Xccy FX Spot Rates
         if ( nFXSpotRates > 0 )
         {
-            MLIB_REQUIRE( nSwaps == nFXSpotRates, "Inconsistent Data: Number of Swaps and Xccy FXSpot Rates does not match. There are " + MLIB_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + MLIB_TO_STRING_FROM_SIZE_T(nFXSpotRates) + " Xccy FXSpot Rates." )
+            AQ_REQUIRE( nSwaps == nFXSpotRates, "Inconsistent Data: Number of Swaps and Xccy FXSpot Rates does not match. There are " + AQ_TO_STRING_FROM_SIZE_T(nSwaps) + " Swaps and " + AQ_TO_STRING_FROM_SIZE_T(nFXSpotRates) + " Xccy FXSpot Rates." )
         }
 
         //----------------------------------------------------------------------------------

@@ -46,7 +46,7 @@ namespace validation_api
         RECORD_INPUTS( objectName, curveCollection, swapCurveGeneratorName, oisCurveGeneratorName, lwoSwapMarketObj, lwoOISMarketObj, commonParams);
 
         // LWO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
-        MLIB_CLEAR_CURVE_RESULTS_CACHE
+        AQ_CLEAR_CURVE_RESULTS_CACHE
 
 		// Perform initial basic sanity checks
 		if ( swapCurveGeneratorName.size() == 0 )

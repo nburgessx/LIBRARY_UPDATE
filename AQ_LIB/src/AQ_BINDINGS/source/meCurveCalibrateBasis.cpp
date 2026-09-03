@@ -2,7 +2,7 @@
 #include "TypeUtilities.h"
 #include "meCurveCalibrateBasis.h"
 #include "tryMeCurveCalibrateBasis.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meCurveCalibrateBasis
@@ -26,7 +26,7 @@ const std::string meCurveCalibrateBasis(const std::string& curveCollection,
 										const SWIG_STRINGMATRIX & fxFwdRates, 
 										const SWIG_STRINGMATRIX & spotFxRates) 
 {
-	MLIB_API_START
+	AQ_API_START
 
     LAString ret;
 	
@@ -65,7 +65,7 @@ const std::string meCurveCalibrateBasis(const std::string& curveCollection,
 												tmp_spotFxRates);
 	return ret.getCString();
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -95,7 +95,7 @@ const std::string meCurveCalibrateBasis(const std::string& curveCollection,
 										const SWIG_STRINGMATRIX & FRAConv,
 										const SWIG_STRINGMATRIX & FRARates)
 {
-    MLIB_API_START
+    AQ_API_START
 	
     LAString ret;
 	
@@ -143,5 +143,5 @@ const std::string meCurveCalibrateBasis(const std::string& curveCollection,
 	
 	return ret.getCString();
 
-    MLIB_API_END
+    AQ_API_END
 }

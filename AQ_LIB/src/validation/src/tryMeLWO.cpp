@@ -33,7 +33,7 @@ namespace validation_api
     std::string tryMeLWOTypeAsString( const std::string& objectName )
     {
         const std::vector<std::string> listOfPossibleTypes = tryMeLWOType( objectName );
-        MLIB_REQUIRE( listOfPossibleTypes.size() > 0, "Invalid Object: Object does not exist" )
+        AQ_REQUIRE( listOfPossibleTypes.size() > 0, "Invalid Object: Object does not exist" )
         const std::string result = listOfPossibleTypes[0];
         return result;
     }
@@ -62,7 +62,7 @@ namespace validation_api
     {
         if ( !etrading::doesLWOExist( objectName, typeAsString ) )
         {
-            MLIB_THROW( ( boost::format( "Object %s does not exist." ) % objectName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Object %s does not exist." ) % objectName.c_str() ).str().c_str() );
         }
         const etrading::CachedObjectEnum objEnum = etrading::toCachedObjectEnum( etrading::trim_to_upper( typeAsString.c_str() ) );
         return etrading::Environment::defaultEnv().deleteObject( objectName, objEnum );
@@ -127,7 +127,7 @@ namespace validation_api
         std::vector<std::string> cleansedObjectNames;
         
         // Check Folder Specified Correctly
-        MLIB_REQUIRE( folder.size() > 0, "No Folder Specified")
+        AQ_REQUIRE( folder.size() > 0, "No Folder Specified")
         std::string folderWithForwardSlash = folder;
         
         if ( folder[ folder.size()-1 ] != '\\' && folder[ folder.size()-1 ] != '/' )
@@ -146,14 +146,14 @@ namespace validation_api
             }
         }
             
-        MLIB_REQUIRE( objectFilePaths.size() > 0, "Unable to Load: No Object Names Provided" )
+        AQ_REQUIRE( objectFilePaths.size() > 0, "Unable to Load: No Object Names Provided" )
         std::vector<std::string> resultsVector( objectFilePaths.size() );
 
         for ( size_t i = 0; i < objectFilePaths.size(); ++i )
         {
             // Iterate over and try to load each object. Don't throw if one object fails to load, ...
             // ... rather try to load all objects and report failures in the output results vector.
-            MLIB_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE( 
+            AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE( 
                 resultsVector[i],
                 tryMeLWOLoad( objectFilePaths[i], fileType, env ),
                 std::string( "Not Loaded: Object '" + cleansedObjectNames[i] + "' does not exist in folder specified") );
@@ -175,20 +175,20 @@ namespace validation_api
         // Use object type string if provided otherwise determine from the object type method
         if ( objectTypeString.empty() || objectTypeString.size() == 0 )
         {
-            MLIB_REQUIRE( objectTypes.size() == 1, "Unable to save object - Object does not exist or duplicate object types with the same name. If a duplicate please specify object type" )
+            AQ_REQUIRE( objectTypes.size() == 1, "Unable to save object - Object does not exist or duplicate object types with the same name. If a duplicate please specify object type" )
             objectTypeUsed = objectTypes[0];
         }
         
 		const etrading::CachedObjectEnum objectType = etrading::toCachedObjectEnum(objectTypeUsed);
 		
-        MLIB_REQUIRE( env.hasObject( objectName, objectType ), "Object '" + objectName + "' with type '" + toString(objectType) + " ' does not exist")
+        AQ_REQUIRE( env.hasObject( objectName, objectType ), "Object '" + objectName + "' with type '" + toString(objectType) + " ' does not exist")
 		
 		// typename etrading::to_cached_object_type<objectType>::type  // this does not work because it is not a constant expression for compilation
 		// so we should try to code to an interface
 		auto lwoPtr = env.accessObjectInterface( objectName , objectType); // etrading::getLWOCurve(lwoCurveName);
 		
         // For Intel Linux Compiler use nullptr = {}
-        MLIB_REQUIRE( lwoPtr != nullptr, "Object '" + objectName + " ' with type '" + toString(objectType) + "' does not exist" )
+        AQ_REQUIRE( lwoPtr != nullptr, "Object '" + objectName + " ' with type '" + toString(objectType) + "' does not exist" )
 
         // Append the file extension if missing
         std::string filenameWithExtension = etrading::appendFileExtension( fileName, fileType );
@@ -201,7 +201,7 @@ namespace validation_api
 			
         // Create the Result String
         std::string resultString;
-        MLIB_SET_VARIABLE( resultString, "Saved: Object '" + objectName + "' saved to file " + filenameWithExtension )
+        AQ_SET_VARIABLE( resultString, "Saved: Object '" + objectName + "' saved to file " + filenameWithExtension )
         
         return resultString;
 		
@@ -221,7 +221,7 @@ namespace validation_api
         std::vector<std::string> cleansedObjectNames;
 
         // Check Folder Specified Correctly
-        MLIB_REQUIRE( folder.size() > 0, "No Folder Specified")
+        AQ_REQUIRE( folder.size() > 0, "No Folder Specified")
         std::string folderWithForwardSlash = folder;
         
         if ( folder[ folder.size()-1 ] != '\\' && folder[ folder.size()-1 ] != '/' )
@@ -241,8 +241,8 @@ namespace validation_api
         }
         
         // Dimension & Access Violation Checks
-        MLIB_REQUIRE( objectFilePaths.size() > 0, "Unable to Save: No Object Names Provided" )
-        MLIB_REQUIRE( objectFilePaths.size() == cleansedObjectNames.size(), "Unable to Save: Inconsistent number of Object names and filepaths" )
+        AQ_REQUIRE( objectFilePaths.size() > 0, "Unable to Save: No Object Names Provided" )
+        AQ_REQUIRE( objectFilePaths.size() == cleansedObjectNames.size(), "Unable to Save: Inconsistent number of Object names and filepaths" )
 
         std::vector<std::string> resultsVector( objectFilePaths.size() );
 
@@ -252,14 +252,14 @@ namespace validation_api
 
             // Iterate over and try to get the type of each object. Don't throw if we can't find one object type, ...
             // ... rather report failures in the output results vector.
-            MLIB_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE(
+            AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE(
                 thisObjectType,
                 tryMeLWOTypeAsString( cleansedObjectNames[i] ),
                 std::string("UNKNOWN_TYPE") );
 
             // Iterate over and try to load each object. Don't throw if one object fails to load, ...
             // ... rather try to load all objects and report failures in the output results vector.
-            MLIB_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE( 
+            AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE( 
                 resultsVector[i],
                 tryMeLWOSave( cleansedObjectNames[i], thisObjectType, objectFilePaths[i], fileType, env ),
                 std::string( "Not Saved: Invalid Folder or Object '" + cleansedObjectNames[i] + " ' of type '" + thisObjectType + "' does not exist" ) );

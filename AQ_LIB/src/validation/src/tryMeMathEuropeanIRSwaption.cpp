@@ -79,13 +79,13 @@ namespace validation_api
         const bool noShift = ( shift.size() == 0 ) ? true : false;
         
         // Dimension Validation
-        MLIB_REQUIRE( payerReceiver.size() == swapRate.size(),              "Invalid dimensions: Number of payerReceiver parameters must equal the number of swapRate parameters." );
-        MLIB_REQUIRE( payerReceiver.size() == annuity.size(),               "Invalid dimensions: Number of payerReceiver parameters must equal the number of annuity parameters." );
-        MLIB_REQUIRE( payerReceiver.size() == strike.size(),                "Invalid dimensions: Number of payerReceiver parameters must equal the number of strike parameters." );
-        MLIB_REQUIRE( payerReceiver.size() == vol.size(),                   "Invalid dimensions: Number of payerReceiver parameters must equal the number of vol parameters." );
-        MLIB_REQUIRE( payerReceiver.size() == time.size(),                  "Invalid dimensions: Number of payerReceiver parameters must equal the number of time parameters." );
-        MLIB_REQUIRE( noVolType || payerReceiver.size() == volatilityType.size(), "Invalid dimensions: Number of payerReceiver parameters must equal the number of volatilityType parameters." );
-        MLIB_REQUIRE( noShift || payerReceiver.size() == shift.size(),      "Invalid dimensions: Number of payerReceiver parameters must equal the number of shift parameters." );
+        AQ_REQUIRE( payerReceiver.size() == swapRate.size(),              "Invalid dimensions: Number of payerReceiver parameters must equal the number of swapRate parameters." );
+        AQ_REQUIRE( payerReceiver.size() == annuity.size(),               "Invalid dimensions: Number of payerReceiver parameters must equal the number of annuity parameters." );
+        AQ_REQUIRE( payerReceiver.size() == strike.size(),                "Invalid dimensions: Number of payerReceiver parameters must equal the number of strike parameters." );
+        AQ_REQUIRE( payerReceiver.size() == vol.size(),                   "Invalid dimensions: Number of payerReceiver parameters must equal the number of vol parameters." );
+        AQ_REQUIRE( payerReceiver.size() == time.size(),                  "Invalid dimensions: Number of payerReceiver parameters must equal the number of time parameters." );
+        AQ_REQUIRE( noVolType || payerReceiver.size() == volatilityType.size(), "Invalid dimensions: Number of payerReceiver parameters must equal the number of volatilityType parameters." );
+        AQ_REQUIRE( noShift || payerReceiver.size() == shift.size(),      "Invalid dimensions: Number of payerReceiver parameters must equal the number of shift parameters." );
         
         // Declare Results Vector
         std::vector<double> results( payerReceiver.size(), 0.0 );
@@ -172,13 +172,13 @@ namespace validation_api
         const bool noShift = ( shift.size() == 0 ) ? true : false;
 
         // Dimension Validation
-        MLIB_REQUIRE( payerReceiver.size() == price.size(),                 "Invalid dimensions: Number of payerReceiver parameters must equal the number of price parameters." );
-        MLIB_REQUIRE( payerReceiver.size() == annuity.size(),               "Invalid dimensions: Number of payerReceiver parameters must equal the number of annuity parameters." );
-        MLIB_REQUIRE( payerReceiver.size() == swapRate.size(),              "Invalid dimensions: Number of payerReceiver parameters must equal the number of swapRate parameters." );
-        MLIB_REQUIRE( payerReceiver.size() == strike.size(),                "Invalid dimensions: Number of payerReceiver parameters must equal the number of strike parameters." );
-        MLIB_REQUIRE( payerReceiver.size() == time.size(),                  "Invalid dimensions: Number of payerReceiver parameters must equal the number of time parameters." );
-        MLIB_REQUIRE( noVolType || payerReceiver.size() == volatilityType.size(), "Invalid dimensions: Number of payerReceiver parameters must equal the number of volatilityType parameters." );
-        MLIB_REQUIRE( noShift || payerReceiver.size() == shift.size(),      "Invalid dimensions: Number of payerReceiver parameters must equal the number of shift parameters." );
+        AQ_REQUIRE( payerReceiver.size() == price.size(),                 "Invalid dimensions: Number of payerReceiver parameters must equal the number of price parameters." );
+        AQ_REQUIRE( payerReceiver.size() == annuity.size(),               "Invalid dimensions: Number of payerReceiver parameters must equal the number of annuity parameters." );
+        AQ_REQUIRE( payerReceiver.size() == swapRate.size(),              "Invalid dimensions: Number of payerReceiver parameters must equal the number of swapRate parameters." );
+        AQ_REQUIRE( payerReceiver.size() == strike.size(),                "Invalid dimensions: Number of payerReceiver parameters must equal the number of strike parameters." );
+        AQ_REQUIRE( payerReceiver.size() == time.size(),                  "Invalid dimensions: Number of payerReceiver parameters must equal the number of time parameters." );
+        AQ_REQUIRE( noVolType || payerReceiver.size() == volatilityType.size(), "Invalid dimensions: Number of payerReceiver parameters must equal the number of volatilityType parameters." );
+        AQ_REQUIRE( noShift || payerReceiver.size() == shift.size(),      "Invalid dimensions: Number of payerReceiver parameters must equal the number of shift parameters." );
         
         // Declare Results Vector
         std::vector<double> results( payerReceiver.size(), 0.0 );

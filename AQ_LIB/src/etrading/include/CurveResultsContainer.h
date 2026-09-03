@@ -18,7 +18,7 @@
 #include "CoreEnumerations.h"
 
 // Macro to Clear Curve Results Container - Only Single LWO Curves Generate Curve Results, so we must clear the Cache for Other Curve Types
-#define MLIB_CLEAR_CURVE_RESULTS_CACHE etrading::CurveResultsContainer::getInstance().deleteAllCurveResults(); 
+#define AQ_CLEAR_CURVE_RESULTS_CACHE etrading::CurveResultsContainer::getInstance().deleteAllCurveResults(); 
 
 namespace etrading
 {

@@ -42,15 +42,15 @@ namespace etrading
 												 const double& defaultStressAddition )
 	{
 		// Make these column names into const variables
-		MLIB_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::MATURITY_MONTH ), "Missing column MATURITYMONTH in Loan Portfolio" );
-		MLIB_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::PEAD ), "Missing column PEAD in Loan Portfolio" );
-		MLIB_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::LOAN_TYPE ), "Missing column LOAN_TYPE in Loan Portfolio" );
-		MLIB_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::RISK_WEIGHT ), "Missing column RW in Loan Portfolio" );
-		MLIB_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::KIRB ), "Missing column KIRB in Loan Portfolio" );
-		MLIB_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::RATE ), "Missing column Rate in Loan Portfolio" );
-		MLIB_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::FREQ ), "Missing column Freq in Loan Portfolio" );
-		MLIB_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::PDP ), "Missing column PDP in Loan Portfolio" );
-		MLIB_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::LGD ), "Missing column LGD in Loan Portfolio" );
+		AQ_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::MATURITY_MONTH ), "Missing column MATURITYMONTH in Loan Portfolio" );
+		AQ_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::PEAD ), "Missing column PEAD in Loan Portfolio" );
+		AQ_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::LOAN_TYPE ), "Missing column LOAN_TYPE in Loan Portfolio" );
+		AQ_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::RISK_WEIGHT ), "Missing column RW in Loan Portfolio" );
+		AQ_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::KIRB ), "Missing column KIRB in Loan Portfolio" );
+		AQ_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::RATE ), "Missing column Rate in Loan Portfolio" );
+		AQ_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::FREQ ), "Missing column Freq in Loan Portfolio" );
+		AQ_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::PDP ), "Missing column PDP in Loan Portfolio" );
+		AQ_REQUIRE( loanPortfolio.hasColumn( STRUCTURED_CREDIT_CSV_KEYS::LGD ), "Missing column LGD in Loan Portfolio" );
 
 		// The Proportion Probability of Default ( vs Regulatory Probability of Default )
 		const auto pdpColumn = loanPortfolio.getColumnAsDoubleVector( STRUCTURED_CREDIT_CSV_KEYS::PDP );
@@ -105,7 +105,7 @@ namespace etrading
 			const double loanPrepaymentRate = prepaymentColumn[loanIndex];
 
 			const int loanTypeAsInt = loanTypeColumn[loanIndex];
-			MLIB_REQUIRE(loanTypeAsInt == 0 || loanTypeAsInt == 1, "LOAN_TYPE column must contain 0 or 1 only, representing Amortizing or Bullet loans");
+			AQ_REQUIRE(loanTypeAsInt == 0 || loanTypeAsInt == 1, "LOAN_TYPE column must contain 0 or 1 only, representing Amortizing or Bullet loans");
 
 			const LoanTypeEnum loanType  = loanTypeAsInt == 0 ? AMORTIZING_LOAN_TYPE : BULLET_LOAN_TYPE;
 			const double loanRiskWeight  = riskWeightColumn[loanIndex];

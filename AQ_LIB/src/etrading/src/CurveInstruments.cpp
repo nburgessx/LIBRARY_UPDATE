@@ -48,7 +48,7 @@ namespace etrading
 	// Get and synch the termsDFMatrix with the paymentDatesAsTerms and discountFactor member variables
 	DoubleMatrix DiscountFactors::termsDFMatrix()
 	{
-		MLIB_REQUIRE( paymentDatesAsTerms_.size() == discountFactors_.size(), "Invalid Discount Factor Results: Inconsistent number of payment dates and discount factors" )
+		AQ_REQUIRE( paymentDatesAsTerms_.size() == discountFactors_.size(), "Invalid Discount Factor Results: Inconsistent number of payment dates and discount factors" )
 		DoubleMatrix termsDFMatrix_(2);
 		termsDFMatrix_[0] = paymentDatesAsTerms_;
 		termsDFMatrix_[1] = discountFactors_;
@@ -58,7 +58,7 @@ namespace etrading
 	// Get and synch the termsDFMatrix with the paymentDatesAsTerms and discountFactor member variables
 	void DiscountFactors::termsDFMatrix( const DoubleMatrix & termsDFMatrix )
 	{
-		MLIB_REQUIRE( termsDFMatrix.size() == 2, "Invalid Discount Factor Data: termsDFMatrix must have 2 columns with terms & discount factors" )
+		AQ_REQUIRE( termsDFMatrix.size() == 2, "Invalid Discount Factor Data: termsDFMatrix must have 2 columns with terms & discount factors" )
 		termsDFMatrix_ = termsDFMatrix;
 		paymentDatesAsTerms_ = termsDFMatrix[0];
 		discountFactors_ = termsDFMatrix[1];
@@ -184,7 +184,7 @@ namespace etrading
 		bool isFRAUse = false;
 		LAString isFRAUse_str = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
 		LADataBool tmpAttrB;
-		if (isFRAUse_str != MLIB_NO_DATA)
+		if (isFRAUse_str != AQ_NO_DATA)
 		{
 			tmpAttrB.convertFromString(isFRAUse_str);
 			isFRAUse = tmpAttrB.get();
@@ -197,7 +197,7 @@ namespace etrading
 		*  Otherwise, for non-STD curves use the full object pool data IR_CALIBRATION_DATA_ISFRAUSE plus suffix.
 		*  This prevents the settings of two or more swap curves from overwriting each other.
 		*/
-		if ((marketName == MLIB_SWAP) && (suffix_data == ""))
+		if ((marketName == AQ_SWAP) && (suffix_data == ""))
 		{
 			curveCalibrationData.getIsFRAUse().set(isFRAUse);
 		}
@@ -213,14 +213,14 @@ namespace etrading
 			// use grid
 			LAStringVector fraUseGrid;
 			LAString tmpFraUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_USEGRID + staticDataSuffix).toUpper();
-			if (tmpFraUseGrid != MLIB_NO_DATA)
+			if (tmpFraUseGrid != AQ_NO_DATA)
 			{
 				fraUseGrid = tmpFraUseGrid.toToken(':');
 			}
 
 			// get market rate
 			LAString fraFileName = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
-			if (fraFileName == MLIB_NO_DATA)
+			if (fraFileName == AQ_NO_DATA)
 			{
 				throw LACoreInvalidData("No FRA File", __FILE__, __LINE__);
 			}
@@ -255,7 +255,7 @@ namespace etrading
 			// get applyTension
 			bool applyTensionFRAs = false;
 			LAString applyTensionFRAsStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_APPLYTENSION + staticDataSuffix).toUpper();
-			if (applyTensionFRAsStr != MLIB_NO_DATA)
+			if (applyTensionFRAsStr != AQ_NO_DATA)
 			{
 				LADataBool tmpApplyTensionFRAs;
 				tmpApplyTensionFRAs.convertFromString(applyTensionFRAsStr);
@@ -274,7 +274,7 @@ namespace etrading
 			else
 			{
 				LAString strSmoothShortEnd = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_SMOOTHSHORTEND + staticDataSuffix);
-				if (strSmoothShortEnd != MLIB_NO_DATA)
+				if (strSmoothShortEnd != AQ_NO_DATA)
 				{
 					LADataBool tmpSmoothShortEnd;
 					tmpSmoothShortEnd.convertFromString(strSmoothShortEnd);
@@ -288,7 +288,7 @@ namespace etrading
 			// Alias Method
 			auto dh = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_SERIAL_CALC_TYPE + staticDataSuffix,
 												  currency + STATIC_DATA_KEY_YIELD_FRA_INSTRUMENT_TYPE + staticDataSuffix);
-			if (dh != MLIB_NO_DATA)
+			if (dh != AQ_NO_DATA)
 			{
 				fraSerialCalcType = dh.getCString();
 			}
@@ -296,7 +296,7 @@ namespace etrading
 			// get eomroll
 			bool isEOMRollFRA = false;
 			LAString strEOMRollFRA = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_ISEOMROLL + staticDataSuffix).toUpper();
-			if (strEOMRollFRA != MLIB_NO_DATA)
+			if (strEOMRollFRA != AQ_NO_DATA)
 			{
 				LADataBool tmpIsEOMRoll;
 				tmpIsEOMRoll.convertFromString(strEOMRollFRA);
@@ -305,7 +305,7 @@ namespace etrading
 			if (isEOMRollFRA)
 			{
 				LAString strEOMDay = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_EOMDAY + staticDataSuffix).toUpper();
-				if (strEOMDay != MLIB_NO_DATA)
+				if (strEOMDay != AQ_NO_DATA)
 				{
 					if (spotDateFRA.dayOfMonth() != strEOMDay.getIntValue())
 					{
@@ -329,7 +329,7 @@ namespace etrading
 
 				//set FRA object
 				LAObject *mktDataFRA = NULL;
-				LAString nameFRA = yieldDataName + MLIB_FRA + LAString("_") + LAString(i) + suffix_data;
+				LAString nameFRA = yieldDataName + AQ_FRA + LAString("_") + LAString(i) + suffix_data;
 				const LAObjectHolder ehfra = objPool.getObject(nameFRA);
 				if (!ehfra.isDefined())
 				{
@@ -392,7 +392,7 @@ namespace etrading
 					mktDataFRA->add(IR_CALIBRATION_DATA_GRIDUSEFLAG, new LADataBool(true));
 				}
 				//set yield type
-				mktDataFRA->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(MLIB_FRA);
+				mktDataFRA->add(IR_CALIBRATION_DATA_DATATYPE, new LADataString()).convertFromString(AQ_FRA);
 				// smooth short end of curve
 				mktDataFRA->add(IR_CALIBRATION_DATA_SMOOTHSHORTEND, new LADataBool(includeSwapsBeforeMPCSwaps));
 				// serial calc type
@@ -462,7 +462,7 @@ namespace etrading
 			LADate syntheticEndDate = instrumentData.frontEndDate;
 			syntheticEndDate.addDays(tensionGap);
 
-			RateConvention rateConvention = LACurvePricingObject::setRC(MLIB_SIMPLE);
+			RateConvention rateConvention = LACurvePricingObject::setRC(AQ_SIMPLE);
 			LAPriceDataConvention discountConvention(instrumentDaycount.getDayCount(), rateConvention);
 			const etrading::DayCountEnum accrualDaycount = instrumentDaycount.dayCountEnum();
 
@@ -492,7 +492,7 @@ namespace etrading
 				double syntheticEndTerm = termsToDateDaycount.getTerm(spotDate, syntheticEndDate);
 
 				// Interest Rate Convention - Controls instrument daycount and interest rate compounding conventions e.g. Simple Interest Act/Act.
-				RateConvention rateCompoundingMethod = LACurvePricingObject::setRC(MLIB_SIMPLE);
+				RateConvention rateCompoundingMethod = LACurvePricingObject::setRC(AQ_SIMPLE);
 				LAPriceDataConvention discFactConvention(instrumentDaycount.getDayCount(), rateCompoundingMethod);
 
 				// Linear interpolate existing FRAs to imply an artificial / synthetic FRA rate
@@ -617,7 +617,7 @@ namespace etrading
 	*/
 	void insertDFData(DoubleMatrix& dfs, DateVector& dates, double df_insert, double term_insert, const LADate& date_insert, bool overrideIfDatesClash)
 	{
-		MLIB_REQUIRE( dfs.size() == 2, "Invalid Discount Factor Data: TermsDF matrix must have two columns with payment dates and discount factors" )
+		AQ_REQUIRE( dfs.size() == 2, "Invalid Discount Factor Data: TermsDF matrix must have two columns with payment dates and discount factors" )
 		DoubleVector dummyYields;
 		insertDFData(dfs[0], dfs[1], dates, df_insert, term_insert, date_insert, dummyYields, std::numeric_limits<double>::quiet_NaN(), overrideIfDatesClash);
 	}
@@ -933,17 +933,17 @@ namespace etrading
 		}
 
 		// set roll convention			
-		if (baseFreq == MLIB_LUNAR)
+		if (baseFreq == AQ_LUNAR)
 		{
-			roll_conv = MLIB_ROLLCONV_LUNAR;
+			roll_conv = AQ_ROLLCONV_LUNAR;
 		}
 		else if (isEOMRoll)
 		{
-			roll_conv = MLIB_ROLLCONV_EOM;
+			roll_conv = AQ_ROLLCONV_EOM;
 		}
 		else
 		{
-			roll_conv = MLIB_ROLLCONV_NORMAL;
+			roll_conv = AQ_ROLLCONV_NORMAL;
 		}
 
 		const LAPriceDataSlidingRule& sld = dynamic_cast<const LAPriceDataSlidingRule&> ((data_fra->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
@@ -1076,17 +1076,17 @@ namespace etrading
 
 			// Set Roll Convention
 			LAString instrumentRollConvention("");
-			if (instrumentFrequency == MLIB_LUNAR)
+			if (instrumentFrequency == AQ_LUNAR)
 			{
-				instrumentRollConvention = MLIB_ROLLCONV_LUNAR;
+				instrumentRollConvention = AQ_ROLLCONV_LUNAR;
 			}
 			else if (isEOMRoll)
 			{
-				instrumentRollConvention = MLIB_ROLLCONV_EOM;
+				instrumentRollConvention = AQ_ROLLCONV_EOM;
 			}
 			else
 			{
-				instrumentRollConvention = MLIB_ROLLCONV_NORMAL;
+				instrumentRollConvention = AQ_ROLLCONV_NORMAL;
 			}
 
 			RateConvention instrumentRateConvention	= LACurvePricingObject::setRC(instrumentFrequency);
@@ -1143,7 +1143,7 @@ namespace etrading
 					MoneyMarketData::const_iterator it_ = data_moneymarket.begin();
 					rate_on								= dynamic_cast<const LADataDouble&> ((it_->second->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 					const LAPriceDataDayCount& dc_on	= dynamic_cast<const LAPriceDataDayCount&> ((it_->second->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-					RateConvention rc_on				= LACurvePricingObject::setRC(MLIB_SIMPLE);
+					RateConvention rc_on				= LACurvePricingObject::setRC(AQ_SIMPLE);
 					conv_on								= LAPriceDataConvention(dc_on.getDayCount(), rc_on);
 				}
 
@@ -1186,7 +1186,7 @@ namespace etrading
 		}
 
 		// Check Size - Allowing For Boundary Condition 
-		MLIB_THROW_IF(is_fra_use && results.paymentDatesAsTerms_.size() <= 1, "Invalid Curve Data: Missing 3M or 6M Cash Deposit Instrument(s)");
+		AQ_THROW_IF(is_fra_use && results.paymentDatesAsTerms_.size() <= 1, "Invalid Curve Data: Missing 3M or 6M Cash Deposit Instrument(s)");
 		
 		// Apply Spot Date Adjustments (if required)
 		// *************************************************************
@@ -1232,14 +1232,14 @@ namespace etrading
 		}
 
 		// Discount Factor Dimension Check
-		MLIB_REQUIRE( results.paymentDatesAsTerms_.size() == results.discountFactors_.size(), "Invalid Curve Cash Deposit Data: Inconsistent number of payment date terms and discount factors" )
-		MLIB_REQUIRE( results.paymentDates_.size() == results.discountFactors_.size(), "Invalid Curve Cash Deposit Data: Inconsistent number of payment dates and discount factors" )
+		AQ_REQUIRE( results.paymentDatesAsTerms_.size() == results.discountFactors_.size(), "Invalid Curve Cash Deposit Data: Inconsistent number of payment date terms and discount factors" )
+		AQ_REQUIRE( results.paymentDates_.size() == results.discountFactors_.size(), "Invalid Curve Cash Deposit Data: Inconsistent number of payment dates and discount factors" )
 		
 		// Forwards Dimension Check
 		if ( fwd_termsmtx.size() == 2 )
 		{	
-			MLIB_REQUIRE( fwd_termsmtx[0].size() == fwd_termsmtx[1].size(), "Invalid Curve Cash Deposit Data: Number of forward rate start- and end-dates" )
-			MLIB_REQUIRE( fwd_termsmtx[0].size() == fwds.size(), "Invalid Curve Cash Deposit Data: Inconsistent number of fixing dates and forward rates" )
+			AQ_REQUIRE( fwd_termsmtx[0].size() == fwd_termsmtx[1].size(), "Invalid Curve Cash Deposit Data: Number of forward rate start- and end-dates" )
+			AQ_REQUIRE( fwd_termsmtx[0].size() == fwds.size(), "Invalid Curve Cash Deposit Data: Inconsistent number of fixing dates and forward rates" )
 		}
 
 		return results;
@@ -1481,7 +1481,7 @@ namespace etrading
 			cashDepositTerms.push_back(endTerm);
 
 			// Validation Log Discount Factors - Floor Values at Zero, since DF's can't be negative
-			MLIB_REQUIRE( dfResults.discountFactors_.front() >= 0.0, "Invalid Market Data provided to Smooth Short Start of Curve Algorithm: Short End of Curve has Negative LogDF" )
+			AQ_REQUIRE( dfResults.discountFactors_.front() >= 0.0, "Invalid Market Data provided to Smooth Short Start of Curve Algorithm: Short End of Curve has Negative LogDF" )
 			startDF			= std::max<double>( startDF, DISCFACTOR_FLOOR );
 			endDF			= std::max<double>( endDF, DISCFACTOR_FLOOR );
 			
@@ -1552,7 +1552,7 @@ namespace etrading
 
 				double impliedLiborDiff1_temp = liborRate - liborConv.getRate(liborDF, spotDateLibor, liborDate);
 				double gradient = (impliedLiborDiff1 - impliedLiborDiff1_temp) / delta;
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO(gradient), "Smooth Curve Short End Algorithm Converged to an Invalid Solution using LogDF State Variable. Please check market data and convexity adjustment levels" )
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO(gradient), "Smooth Curve Short End Algorithm Converged to an Invalid Solution using LogDF State Variable. Please check market data and convexity adjustment levels" )
 
 				// adjust startDF by gradient and go again
 				impliedLiborDiff0 = impliedLiborDiff1;
@@ -1578,7 +1578,7 @@ namespace etrading
 				}
 			}
 			// Ensure that a solution is found
-			MLIB_REQUIRE( solutionFound, "Smooth Curve Short End Algorithm Found No Solution using logDF State Variable. Please check market data and convexity adjustment levels" )
+			AQ_REQUIRE( solutionFound, "Smooth Curve Short End Algorithm Found No Solution using logDF State Variable. Please check market data and convexity adjustment levels" )
 		}
 		else
 		{
@@ -1607,7 +1607,7 @@ namespace etrading
 			cashDepositTerms.push_back(endTerm);
 
 			// Validation Log Discount Factors - Floor Values at Zero, since DF's can't be negative
-			MLIB_REQUIRE( dfResults.discountFactors_.front() >= 0.0, "Invalid Market Data provided to Smooth Short Start of Curve Algorithm: Short End of Curve has Negative LogDF" )
+			AQ_REQUIRE( dfResults.discountFactors_.front() >= 0.0, "Invalid Market Data provided to Smooth Short Start of Curve Algorithm: Short End of Curve has Negative LogDF" )
 			startDF			= std::max<double>( startDF, DISCFACTOR_FLOOR );
 			endDF			= std::max<double>( endDF, DISCFACTOR_FLOOR );
 
@@ -1669,7 +1669,7 @@ namespace etrading
 
 				double impliedLiborDiff1_temp = liborRate - liborConv.getRate(liborDF, spotDateLibor, liborDate);
 				double gradient = (impliedLiborDiff1 - impliedLiborDiff1_temp) / delta;
-				MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO(gradient), "Smooth Curve Short End Algorithm Converged to an Invalid Solution using DF State Variable. Please check market data and convexity adjustment levels" )
+				AQ_REQUIRE( !AQ_IS_EQUAL_ZERO(gradient), "Smooth Curve Short End Algorithm Converged to an Invalid Solution using DF State Variable. Please check market data and convexity adjustment levels" )
 
 				// adjust startDF by gradient and go again
 				impliedLiborDiff0 = impliedLiborDiff1;
@@ -1694,7 +1694,7 @@ namespace etrading
 				}
 			}
 			// Ensure that a solution is found
-			MLIB_REQUIRE( solutionFound, "Smooth Curve Short End Algorithm Found No Solution using DF State Variable. Please check market data and convexity adjustment levels" )
+			AQ_REQUIRE( solutionFound, "Smooth Curve Short End Algorithm Found No Solution using DF State Variable. Please check market data and convexity adjustment levels" )
 		}
 	}
 
@@ -1748,19 +1748,19 @@ namespace etrading
 		LADate* lastStubDate	= NULL;
 		int*	rollDay			= NULL;
 
-		LAString thisRollConv = MLIB_ROLLCONV_NORMAL;
+		LAString thisRollConv = AQ_ROLLCONV_NORMAL;
 		LAString* roll_convention;
 		
 		// TODO: EOM Roll is missing its implementation
 		//
 		// if( isEOMRoll )
 		// {
-		// 	  thisRollConv = MLIB_ROLLCONV_EOM;
+		// 	  thisRollConv = AQ_ROLLCONV_EOM;
 		// }
 
-		if(frequency == MLIB_LUNAR)
+		if(frequency == AQ_LUNAR)
 		{
-			thisRollConv = MLIB_ROLLCONV_LUNAR;
+			thisRollConv = AQ_ROLLCONV_LUNAR;
 		}
 		roll_convention = &thisRollConv;
 		// ****************************************
@@ -1809,10 +1809,10 @@ namespace etrading
 		}
 
 		// Validate Outputs - Cannot price and calibrate to swaps without a payment date schedule
-		MLIB_THROW_IF (cashflowPaymentDates.empty() || cashflowPaymentDates.size() < 1, "Invalid Swap Payment Schedule - Cashflow Payment Dates are Missing");
+		AQ_THROW_IF (cashflowPaymentDates.empty() || cashflowPaymentDates.size() < 1, "Invalid Swap Payment Schedule - Cashflow Payment Dates are Missing");
 
 		// Validate Outputs - Ensure we are not including past coupons in our calculations
-		MLIB_THROW_IF(cashflowPaymentDates[0] <= startDate, "Invalid Swap Payment Schedule - Cashflow Payment Dates are before the Start Date.");
+		AQ_THROW_IF(cashflowPaymentDates[0] <= startDate, "Invalid Swap Payment Schedule - Cashflow Payment Dates are before the Start Date.");
 	}
 
 	/*!
@@ -1849,9 +1849,9 @@ namespace etrading
 		}
 
 		LAString roll_conv;
-		if (freq == MLIB_LUNAR) roll_conv = MLIB_ROLLCONV_LUNAR;
-		else if (isEOMRoll) roll_conv = MLIB_ROLLCONV_EOM;
-		else roll_conv = MLIB_ROLLCONV_NORMAL;
+		if (freq == AQ_LUNAR) roll_conv = AQ_ROLLCONV_LUNAR;
+		else if (isEOMRoll) roll_conv = AQ_ROLLCONV_EOM;
+		else roll_conv = AQ_ROLLCONV_NORMAL;
 
 		LADate startDate, endDate;
 		DateVector datesVec;
@@ -1967,7 +1967,7 @@ namespace etrading
 		LAString suffix = "." + grid + curve;
 		suffix.toLower();
 		LAString val = mpStaticData->getStaticData(key + suffix);
-		if (val != MLIB_NO_DATA)
+		if (val != AQ_NO_DATA)
 		{
 			return val;
 		}
@@ -2034,7 +2034,7 @@ namespace etrading
 
 		bool skipONTN = false;
 		LAString calMStr = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_MONEYMARKET_CALENDAR + staticDataSuffix);
-		if (calMStr == MLIB_NO_DATA && fixingSource == ITSELF)
+		if (calMStr == AQ_NO_DATA && fixingSource == ITSELF)
 		{
 			skipONTN = true;
 		}
@@ -2114,7 +2114,7 @@ namespace etrading
 
 		bool isOnSpotAdj = false;
 		LAString strIsOnSpotAdj = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_ISONFORSPOTADJUST + staticDataSuffix).toUpper();
-		if (strIsOnSpotAdj != MLIB_NO_DATA)
+		if (strIsOnSpotAdj != AQ_NO_DATA)
 		{
 			LADataBool tmpIsOnSpotAdj;
 			tmpIsOnSpotAdj.convertFromString(strIsOnSpotAdj);
@@ -2128,14 +2128,14 @@ namespace etrading
 		// use grid
 		LAStringVector liborUseGrid;
 		LAString tmpLiborUseGrid = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_USEGRID + staticDataSuffix).toUpper();
-		if (tmpLiborUseGrid != MLIB_NO_DATA)
+		if (tmpLiborUseGrid != AQ_NO_DATA)
 		{
 			liborUseGrid = tmpLiborUseGrid.toToken(':');
 		}
 		// get eomroll
 		bool isEOMRollL = false;
 		LAString strEOMRollL = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_ISEOMROLL + staticDataSuffix).toUpper();
-		if (strEOMRollL != MLIB_NO_DATA)
+		if (strEOMRollL != AQ_NO_DATA)
 		{
 			LADataBool tmpIsEOMRoll;
 			tmpIsEOMRoll.convertFromString(strEOMRollL);
@@ -2144,7 +2144,7 @@ namespace etrading
 		if (isEOMRollL)
 		{
 			LAString strEOMDay = mpStaticData->getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_EOMDAY + staticDataSuffix).toUpper();
-			if (strEOMDay != MLIB_NO_DATA)
+			if (strEOMDay != AQ_NO_DATA)
 			{
 				if (spotDateL.dayOfMonth() != strEOMDay.getIntValue())
 				{
@@ -2681,7 +2681,7 @@ namespace etrading
 		double joinDateZoneStart = futuresStartDateTerms.back();
 		double joinDateZoneEnd = futuresEndDateTerms.back();
 		double joindDateZoneMidPoint = ( joinDateZoneStart + joinDateZoneEnd ) * 0.5;
-		MLIB_REQUIRE( joinDateZoneEnd >= joinDateZoneStart, "Unable to Optimize Interpolation Join Date: Futures EndDates must be smaller than the StartDates" )
+		AQ_REQUIRE( joinDateZoneEnd >= joinDateZoneStart, "Unable to Optimize Interpolation Join Date: Futures EndDates must be smaller than the StartDates" )
 
 		// Optimization zone is set between the start and end of the second last future		
 		double optimizationZoneStart = futuresStartDateTerms[futuresCount - 2];
@@ -3326,7 +3326,7 @@ namespace etrading
 
 		if (fixingsSize == 0 || oisHistDataMtx[0].size() < 2)
 		{
-            MLIB_THROW("OIS / ARR fixing data is required and empty")
+            AQ_THROW("OIS / ARR fixing data is required and empty")
 		}
 
 		DateVector histdates;
@@ -3363,14 +3363,14 @@ namespace etrading
 		{
 			LAString convexityQuoteTypeStr = dynamic_cast<const LADataString &>(dh->get()).get();
 			convexityQuoteTypeStr.toUpper();
-			MLIB_REQUIRE( convexityQuoteTypeStr == "VOL" || convexityQuoteTypeStr == "PRICE", "Invalid Futures Convexity Quote Type: ConvexityQuoteType must be VOL or PRICE" )
+			AQ_REQUIRE( convexityQuoteTypeStr == "VOL" || convexityQuoteTypeStr == "PRICE", "Invalid Futures Convexity Quote Type: ConvexityQuoteType must be VOL or PRICE" )
 			convexityQuotedAsVol = ( convexityQuoteTypeStr == "VOL" ) ? true : false;
 		
 			// TODO: Property Manager does not allow us to clear parameters once set ... hence the below fails ... prioritize the convexityQuoteType parameter for now
 			// // Don't allow the legacy name and alias to be used at the same time
 			// if ( dhUseConvexAdj->isDefined() && !dhUseConvexAdj->isNull() )
 			// {
-			// 	MLIB_THROW("Invalid Futures Convexity Parameter: Cannot use ConvexityQuoteType and UseConvexAdjustment (ConvexityQuotedAsPrice) parameters at the same time.")
+			// 	AQ_THROW("Invalid Futures Convexity Parameter: Cannot use ConvexityQuoteType and UseConvexAdjustment (ConvexityQuotedAsPrice) parameters at the same time.")
 			// }
 		}
 
@@ -3804,7 +3804,7 @@ namespace etrading
 			break;
 
 		default:
-			MLIB_THROW("Invalid Yield Curve Interpolation State Variable");
+			AQ_THROW("Invalid Yield Curve Interpolation State Variable");
 			break;
 		}
 
@@ -3821,7 +3821,7 @@ namespace etrading
 	double getStateVariableValueFromDF(const double& discountFactor, const StateVariableEnum& stateVariableType)
 	{
 		double result;
-		MLIB_REQUIRE( discountFactor >= 0.0, "Invalid State Variable: Calibration Error, Discount Factors cannot be Negative")
+		AQ_REQUIRE( discountFactor >= 0.0, "Invalid State Variable: Calibration Error, Discount Factors cannot be Negative")
 
 		switch (stateVariableType)
 		{
@@ -3836,7 +3836,7 @@ namespace etrading
 			break;
 
 		default:
-			MLIB_THROW("Invalid Yield Curve Interpolation State Variable");
+			AQ_THROW("Invalid Yield Curve Interpolation State Variable");
 			break;
 		}
 		return result;
@@ -3863,7 +3863,7 @@ namespace etrading
 			break;
 
 		default:
-			MLIB_THROW("Invalid Yield Curve Interpolation State Variable");
+			AQ_THROW("Invalid Yield Curve Interpolation State Variable");
 			break;
 		}
 		return result;
@@ -3890,7 +3890,7 @@ namespace etrading
 		double zeroRate = 0.0;
 
 		// Return a zero rate of 0.0 when term is zero
-		const bool isTermZero = MLIB_IS_EQUAL_ZERO(accrualPeriod);
+		const bool isTermZero = AQ_IS_EQUAL_ZERO(accrualPeriod);
 		if (isTermZero)
 		{
 			return zeroRate;
@@ -3908,11 +3908,11 @@ namespace etrading
 			zeroRate = -stateVariableValue / accrualPeriod;
 			break;
 		case STATE_VARIABLE_DF:
-			MLIB_REQUIRE(MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO(stateVariableValue), "Unable to calculate the zero rate from a negative discount factor")
+			AQ_REQUIRE(AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO(stateVariableValue), "Unable to calculate the zero rate from a negative discount factor")
 			zeroRate = -LAMath::log(stateVariableValue) / accrualPeriod;
 			break;
 		default:
-			MLIB_THROW("Invalid State Variable used in curve calibration")
+			AQ_THROW("Invalid State Variable used in curve calibration")
 				break;
 		}
 
@@ -3944,7 +3944,7 @@ namespace etrading
 		double df = 1.0;
 
 		// Return a Discount Factor of 1.0 when term is zero
-		const bool isTermZero = MLIB_IS_EQUAL_ZERO(paymentDateAsTerm);
+		const bool isTermZero = AQ_IS_EQUAL_ZERO(paymentDateAsTerm);
 		if (isTermZero)
 		{
 			return df;
@@ -3958,7 +3958,7 @@ namespace etrading
 			// The forwardTerm here must be the converted from the internal ACT/365 daycount used for date transformation to a term in the curve daycount measure
 			// --------------------------------------------------------------------------------------------------------------------------
 			const double accrualTerm = accrualPeriod( 0.0, paymentDateAsTerm, asOfDate, accrualDaycount, compoundFreq );
-			MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( accrualTerm ), "Unable to imply Discount Factor - The fixing start date must be before the fixing end date" )
+			AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( accrualTerm ), "Unable to imply Discount Factor - The fixing start date must be before the fixing end date" )
 			
 			df = LAMath::exp(-interpolator.value(paymentDateAsTerm) * accrualTerm);
 			break;
@@ -3979,7 +3979,7 @@ namespace etrading
 			break;
 		}
 		default:
-			MLIB_THROW("Invalid Yield Curve Interpolation State Variable: Must be DF, LogDF, ZeroRate or ZeroRateTimesTime");
+			AQ_THROW("Invalid Yield Curve Interpolation State Variable: Must be DF, LogDF, ZeroRate or ZeroRateTimesTime");
 			break;
 		}
 
@@ -4014,17 +4014,17 @@ namespace etrading
 		double startDF = 1.0;
 		double endDF = 1.0;
 
-		const bool isStartTermZero = MLIB_IS_EQUAL_ZERO(fixingStartTerm);
-		const bool isEndTermZero = MLIB_IS_EQUAL_ZERO(fixingEndTerm);
+		const bool isStartTermZero = AQ_IS_EQUAL_ZERO(fixingStartTerm);
+		const bool isEndTermZero = AQ_IS_EQUAL_ZERO(fixingEndTerm);
 
 		// Important!!
 		// The term here must be the converted from the internal ACT/365 daycount used for date transformation to a term in the curve daycount measure
 		// --------------------------------------------------------------------------------------------------------------------------
 		const double accrualTerm = accrualPeriod( fixingStartTerm, fixingEndTerm, asOfDate, accrualDaycount, compoundFreq );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( accrualTerm ), "Unable to imply Forward Rates(s) - The fixing start date must be before the fixing end date" )
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( accrualTerm ), "Unable to imply Forward Rates(s) - The fixing start date must be before the fixing end date" )
         
 		// Return a Forward Rate of zero when the forward term is zero
-		const bool isAccrualTermZero = MLIB_IS_EQUAL_ZERO(accrualTerm);
+		const bool isAccrualTermZero = AQ_IS_EQUAL_ZERO(accrualTerm);
 		if (isAccrualTermZero)
 		{
 			return forwardRate;
@@ -4060,11 +4060,11 @@ namespace etrading
 			break;
 		}
 		default:
-			MLIB_THROW("Invalid Yield Curve Interpolation State Variable: Must be DF, LogDF, ZeroRate or ZeroRateTimesTime");
+			AQ_THROW("Invalid Yield Curve Interpolation State Variable: Must be DF, LogDF, ZeroRate or ZeroRateTimesTime");
 			break;
 		}
 		
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(endDF), "Unable to calculate the Forward Rate. End Discount Factor is Zero")
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(endDF), "Unable to calculate the Forward Rate. End Discount Factor is Zero")
 
 		forwardRate = ((startDF / endDF) - 1) / accrualTerm;
 		return forwardRate;
@@ -4095,7 +4095,7 @@ namespace etrading
 		double zeroRate = 0.0;
 
 		// Return a zero rate of 0.0 when term is zero
-		const bool isTermZero = MLIB_IS_EQUAL_ZERO(dateInTermFormat);
+		const bool isTermZero = AQ_IS_EQUAL_ZERO(dateInTermFormat);
 		if (isTermZero)
 		{
 			return zeroRate;
@@ -4105,7 +4105,7 @@ namespace etrading
 		// The term here must be the converted from the internal ACT/365 daycount used for date transformation to a term in the curve daycount measure
 		// --------------------------------------------------------------------------------------------------------------------------
 		const double accrualTerm = accrualPeriod( 0.0, dateInTermFormat, asOfDate, accrualDaycount, compoundFreq );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( accrualTerm ), "Unable to imply Zero Rates(s) - The reset start date must be before the reset end date" )
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( accrualTerm ), "Unable to imply Zero Rates(s) - The reset start date must be before the reset end date" )
 
 		switch (stateVariableType)
 		{
@@ -4126,7 +4126,7 @@ namespace etrading
 			break;
 
 		default:
-			MLIB_THROW("Invalid Yield Curve Interpolation State Variable: Must be DF, LogDF, ZeroRate or ZeroRateTimesTime");
+			AQ_THROW("Invalid Yield Curve Interpolation State Variable: Must be DF, LogDF, ZeroRate or ZeroRateTimesTime");
 			break;
 		}
 
@@ -4542,7 +4542,7 @@ namespace etrading
 
 		std::unique_ptr<LAInterpolationBase> futureDFInterp(dynamic_cast<LAInterpolationBase *>(pInter_fw.clone()));
 
-		RateConvention rc = LAMathYieldCurve::setRC(MLIB_SIMPLE);
+		RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
 		LAPriceDataConvention conv(dc.getDayCount(), rc);
 		DayCountEnum accrualDaycount = dc.dayCountEnum();
 
@@ -4691,7 +4691,7 @@ namespace etrading
 		std::unique_ptr<LAInterpolationBase> logDF_FuturesInterpolation(dynamic_cast<LAInterpolationBase *>(pInter_fw.clone()));
 		logDF_FuturesInterpolation->setJoinDateAsDouble(interpolationJoinDateAsDouble);
 
-		RateConvention rc = LAMathYieldCurve::setRC(MLIB_SIMPLE);
+		RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
 		LAPriceDataConvention conv(dc.getDayCount(), rc);
 		DayCountEnum accrualDayCount = dc.dayCountEnum();
 
@@ -4879,17 +4879,17 @@ namespace etrading
 	{
 		LAString roll_conv("");
 
-		if (freq == MLIB_LUNAR)
+		if (freq == AQ_LUNAR)
 		{
-			roll_conv = MLIB_ROLLCONV_LUNAR;
+			roll_conv = AQ_ROLLCONV_LUNAR;
 		}
 		else if (isEOMRoll)
 		{
-			roll_conv = MLIB_ROLLCONV_EOM;
+			roll_conv = AQ_ROLLCONV_EOM;
 		}
 		else
 		{
-			roll_conv = MLIB_ROLLCONV_NORMAL;
+			roll_conv = AQ_ROLLCONV_NORMAL;
 		}
 		return roll_conv;
 

@@ -11,7 +11,7 @@ namespace etrading
 		// Validate Object Type
         const std::string inputLVB = "BondOptionTradeLVB";
         CachedObjectEnum objectType = toCachedObjectEnum( dealLVB.getCompulsoryValueAsString( OBJECT_KEY::OBJECT_TYPE, inputLVB ) );
-        MLIB_REQUIRE( objectType == OPTION, "Invalid Object Type - 'OPTION' type required" )
+        AQ_REQUIRE( objectType == OPTION, "Invalid Object Type - 'OPTION' type required" )
 		
         // Parse the input parameter block
 		inputParameters_ = dealLVB;
@@ -32,8 +32,8 @@ namespace etrading
 		const std::string underlyingBondObjectName = getKeyFromValuationSettings(OPTION_KEYS::BOND_NAME, dealLVB).getCString();
 		const std::string futureName = dealLVB.getOptionalValueAsString(OPTION_KEYS::FUTURE_NAME, "");
 
-		MLIB_REQUIRE( !(underlyingBondObjectName.empty() && futureName.empty()) , "Either BondName or FutureName must be provided as the Option Underlying.")
-		MLIB_REQUIRE( (underlyingBondObjectName.empty() || futureName.empty()), "Cannot provide both BondName and FutureName for the Option Underlying.")
+		AQ_REQUIRE( !(underlyingBondObjectName.empty() && futureName.empty()) , "Either BondName or FutureName must be provided as the Option Underlying.")
+		AQ_REQUIRE( (underlyingBondObjectName.empty() || futureName.empty()), "Cannot provide both BondName and FutureName for the Option Underlying.")
 
 		// Populate the underlyingBond pointer if the bondName is provided, otherwise it 
 		if (!underlyingBondObjectName.empty())

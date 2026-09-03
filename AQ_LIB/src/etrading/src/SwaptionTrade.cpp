@@ -13,11 +13,11 @@ namespace etrading
         // Validate Object Type
         const std::string inputLVB = "swaptionLVB";
         CachedObjectEnum objectType = toCachedObjectEnum( dealLVB.getCompulsoryValueAsString( OBJECT_KEY::OBJECT_TYPE, inputLVB ) );
-        MLIB_REQUIRE( objectType == OPTION, "Invalid Object Type - 'OPTION' type required" )
+        AQ_REQUIRE( objectType == OPTION, "Invalid Object Type - 'OPTION' type required" )
         
         // Validate Swaption Style: European, Bermudan, American
 		optionStyle_    = toOptionStyleEnum(dealLVB.getCompulsoryValueAsString(OPTION_KEYS::OPTION_STYLE, inputLVB));
-        MLIB_REQUIRE( optionStyle_ == EUROPEAN_OPTION, "Invalid Option Stlye, Only EUROPEAN swaptions supported" )
+        AQ_REQUIRE( optionStyle_ == EUROPEAN_OPTION, "Invalid Option Stlye, Only EUROPEAN swaptions supported" )
         
 
         // Parse the input parameter block
@@ -36,7 +36,7 @@ namespace etrading
 		leverage_           = dealLVB.getOptionalValueAsDouble( IRS_KEY::LEVERAGE, 1.0 );
 		strike_             = dealLVB.getCompulsoryValueAsDoubleFromKeys( IRS_KEY::STRIKE_RATE, OPTION_KEYS::STRIKE, inputLVB );
         
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( notional_ ), "Invalid Notional - Trade Notional cannot be negative or zero")
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( notional_ ), "Invalid Notional - Trade Notional cannot be negative or zero")
 
         tenorDescription_   = dealLVB.getOptionalValueAsString( SWAPTION_KEYS::TENOR_DESCRIPTION, "" );
 		optionDayCount_     = toDayCountEnum( dealLVB.getOptionalValueAsString( OPTION_KEYS::DAYCOUNT, "" ) );
@@ -51,11 +51,11 @@ namespace etrading
         feePayReceive_          = toPayReceiveEnum( dealLVB.getOptionalValueAsString( SWAPTION_KEYS::FEE_PAY_RECEIVE, toString( etrading::NONE_PAYRECEIVE_ENUM ) ) );
         feePayReceiveIndicator_ = 0.0;
 
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( fee_ ), "Fees cannot be negative - Use the FeePayReceive parameter to specify if the fee is to be paid or received.")
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( fee_ ), "Fees cannot be negative - Use the FeePayReceive parameter to specify if the fee is to be paid or received.")
     
-        if ( !MLIB_IS_EQUAL_ZERO( fee_ ) ) 
+        if ( !AQ_IS_EQUAL_ZERO( fee_ ) ) 
         {
-            MLIB_REQUIRE( feeDate_ != LADate(), "Fee Date required - Must provide a feeDate when specifying fee payments")
+            AQ_REQUIRE( feeDate_ != LADate(), "Fee Date required - Must provide a feeDate when specifying fee payments")
 
             if ( feePayReceive_ == etrading::PAY_PAYRECEIVE_ENUM )
             {
@@ -67,7 +67,7 @@ namespace etrading
             }
             else
             {
-                MLIB_THROW( "Invalid or missing FeePayReceive parameter - FeePayReceive must be set to Pay or Receive" )
+                AQ_THROW( "Invalid or missing FeePayReceive parameter - FeePayReceive must be set to Pay or Receive" )
             }
         }
 
@@ -119,7 +119,7 @@ namespace etrading
         if ( notificationDays_ != "0D" )
         {
             // The notification tenor string should be negative, add the -ve prefix
-            MLIB_REQUIRE( isDateTenor( notificationDays_ ), "Invalid Notification Days: Must specify a tenorString e.g. 2D" )
+            AQ_REQUIRE( isDateTenor( notificationDays_ ), "Invalid Notification Days: Must specify a tenorString e.g. 2D" )
             
             LAString notificationTenorString = LAString("-") + LAString( notificationDays_.c_str() );
             adjustedOptionExpiryDate_        = validateDateOrTenor( adjustedOptionExpiryDate_, notificationTenorString, toString( busDayAdj_ ).c_str(), calendar_.c_str()  );
@@ -145,7 +145,7 @@ namespace etrading
             swapMaturityDate_   = stringToDate( swapEndString.c_str(), "Invalid Swap End Date" );
         }
 
-        MLIB_REQUIRE( swapStartDate_ >= adjustedOptionExpiryDate_, "Invalid Swap Start Date: The swap start date cannot be before the option expiry date" )
+        AQ_REQUIRE( swapStartDate_ >= adjustedOptionExpiryDate_, "Invalid Swap Start Date: The swap start date cannot be before the option expiry date" )
 
 
 		// Underlying Swap parameters
@@ -161,7 +161,7 @@ namespace etrading
 		LabelValueBlock swapPropertiesLVB;
 		bool isXccySwap = false;
 		underlyingSwap_ = createSwapFromGenerator( GENERATOR_COMPONENTS::KEY_SWAPS, swapGeneratorString_, swapExpressionLVB, swapPropertiesLVB, isXccySwap );
-		MLIB_REQUIRE( underlyingSwap_ != nullptr, "Unable to build swap from generator." );
+		AQ_REQUIRE( underlyingSwap_ != nullptr, "Unable to build swap from generator." );
 
 	}
 

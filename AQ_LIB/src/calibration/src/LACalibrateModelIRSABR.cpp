@@ -112,7 +112,7 @@ LACalibrateModelIRSABR::setUpVolFunc(const LAString &currency, LAMathVolatility 
 		//get a flag to calibrate all grids
 		bool isAllGridsCalibrate = false;
 		LAString strIsAllCalib= calibProp.getStaticData(key_ccy + STATIC_DATA_KEY_CALIB_IRSABR_ISALLGRIDSCALIBRATE);
-		if (strIsAllCalib != MLIB_NO_DATA)
+		if (strIsAllCalib != AQ_NO_DATA)
 		{
 			LADataBool tmpAttrBool;
 			tmpAttrBool.convertFromString(strIsAllCalib);
@@ -123,7 +123,7 @@ LACalibrateModelIRSABR::setUpVolFunc(const LAString &currency, LAMathVolatility 
 			const LAString key = key_ccy + "." CONTEXT_KEY_DEAL_IRVOL + "." + underlyings[j];
 			const LAString val = LACoreDataService::getContext(key);
 			const LAString fileName = calibProp.getStaticData(key_ccy + STATIC_DATA_KEY_CALIB_IRSABR_TARGETVOLGRID_FILE + "." + underlyings[j]);
-			if (val == MLIB_NO_DATA && fileName != MLIB_NO_DATA && !isAllGridsCalibrate)
+			if (val == AQ_NO_DATA && fileName != AQ_NO_DATA && !isAllGridsCalibrate)
 			{
 				LADate asofDate = LAMarketData::getAsofDate(objPool);
 				BoolMatrix calibTarget = MADealUtils::getCalibTargetIRVolGrids(objPool, asofDate, key_ccy, underlyings[j], true);
@@ -138,7 +138,7 @@ LACalibrateModelIRSABR::setUpVolFunc(const LAString &currency, LAMathVolatility 
 		// first element set calib info
 		param.refName.push_back(cInfoName);
 
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			param.isOutPut = true;
 		}

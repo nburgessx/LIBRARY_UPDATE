@@ -2,7 +2,7 @@
 #include "LoanValidation.h"
 
 #include "ExceptionMacros.h"
-#include "DataUtilities.h"	// For MLIB_TO_STRING macros
+#include "DataUtilities.h"	// For AQ_TO_STRING macros
 #include <cmath>
 
 
@@ -116,7 +116,7 @@ namespace etrading
 			if ( reinvestmentRepLines_.empty() )
 			{
 				// ... new_loan = loan_amortization_default_prepayment()
-				MLIB_THROW( "No reinvestment portfolio or reinvestment RepLines available." );
+				AQ_THROW( "No reinvestment portfolio or reinvestment RepLines available." );
 			}
 			else
 			{
@@ -290,7 +290,7 @@ namespace etrading
 	// Specifying a loanNumber > 0 returns the amortization cashflows corresponding to loan reinvestment.
 	LoanAmortizationCashflows LoanPortfolio::getLoanProjection( const size_t resultNumber ) const
 	{
-		MLIB_REQUIRE( resultNumber < projectedLoans_.size(), "No loan projection data at position " << resultNumber );
+		AQ_REQUIRE( resultNumber < projectedLoans_.size(), "No loan projection data at position " << resultNumber );
 
 		return projectedLoans_[ resultNumber ];
 	}
@@ -607,7 +607,7 @@ namespace etrading
 	// Get the amount which has been reinvested into new loans, at the specified time period
 	double LoanPortfolio::getReinvestmentBalance( const size_t period ) const
 	{
-		MLIB_REQUIRE( period < reinvestmentBalance_.size(), "Specified reinvestment period '" << period << "' is outside range of known reinvestment balances" );
+		AQ_REQUIRE( period < reinvestmentBalance_.size(), "Specified reinvestment period '" << period << "' is outside range of known reinvestment balances" );
 		return reinvestmentBalance_[ period ];
 	}
 
@@ -624,7 +624,7 @@ namespace etrading
 	// Get the amount of capital / principal available for reinvestment at the specified time period.
 	double LoanPortfolio::getPrincipalCollection( const size_t period ) const
 	{
-		MLIB_REQUIRE(period < principalCollection_.size(), "Specified reinvestment period '" << period << "' is outside range of known principal collection");
+		AQ_REQUIRE(period < principalCollection_.size(), "Specified reinvestment period '" << period << "' is outside range of known principal collection");
 		return principalCollection_[ period ];
 	}
 

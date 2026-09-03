@@ -29,9 +29,9 @@ double LAUnivariateDistribution::CumulativeInverse(double y)
 {
     // Limiting cases
     if (eq(y, 0.0))
-        return -MLIB_MACHINE_MAX;
+        return -AQ_MACHINE_MAX;
     if (eq(y, 1.0))
-        return MLIB_MACHINE_MAX;
+        return AQ_MACHINE_MAX;
     if (y < 0.0 || y > 1.0)
         throw LACoreInvalidData("Argument out of range [0, 1]", __FILE__, __LINE__);
     if (mInvMethod == 0)

@@ -381,7 +381,7 @@ LACoreDataService::getContext(const LAString &key)
 	}
 	else
 	{
-		return MLIB_NO_DATA;
+		return AQ_NO_DATA;
 		//LAString msg = LAString("Key is not set in context key = ") + key;
 		//throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
 	}

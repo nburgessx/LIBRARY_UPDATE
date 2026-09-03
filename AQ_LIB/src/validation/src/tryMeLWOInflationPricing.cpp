@@ -33,8 +33,8 @@ namespace validation_api
 		size_t nColumnHeaders = dataBlockNames.size();
 		size_t nDataColumns = infoBlocks.size();
 
-		MLIB_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided")
-		MLIB_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " + std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " + std::to_string(static_cast<long long>(nDataColumns)))
+		AQ_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided")
+		AQ_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " + std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " + std::to_string(static_cast<long long>(nDataColumns)))
 
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled())
@@ -60,7 +60,7 @@ namespace validation_api
 			return (dataBlockName.empty() || dataBlockName == "");
 		});
 
-		MLIB_REQUIRE(!hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString(dataBlockNames))
+		AQ_REQUIRE(!hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString(dataBlockNames))
 
 		// Verify that the supplied propertyNames match the InflationCurveEnum
 		std::set<etrading::InflationCurveEnum> enumSet;
@@ -125,10 +125,10 @@ namespace validation_api
 
 		auto swap = etrading::getSwap(swapName);
 
-		MLIB_REQUIRE(swap->getSwapType() == etrading::ZERO_COUPON_INFLATION_SWAP, "Swap '" + swapName + "' has incorrect Swap Type of '" + toString(swap->getSwapType()) + "'. It is not a zero coupon inflation swap.");
+		AQ_REQUIRE(swap->getSwapType() == etrading::ZERO_COUPON_INFLATION_SWAP, "Swap '" + swapName + "' has incorrect Swap Type of '" + toString(swap->getSwapType()) + "'. It is not a zero coupon inflation swap.");
 
 		auto inflationSwap = std::dynamic_pointer_cast<etrading::ZeroCouponInflationSwap>(swap);
-		MLIB_REQUIRE(inflationSwap != nullptr, "Swap '" + swapName + "' is not a zero coupon inflation swap swap.");
+		AQ_REQUIRE(inflationSwap != nullptr, "Swap '" + swapName + "' is not a zero coupon inflation swap swap.");
 
 		double result = inflationSwap->pvFromInflationIndex(valuationSettingsLVB, baseIndex, resetIndex, legName);
 
@@ -157,10 +157,10 @@ namespace validation_api
 
 		auto swap = etrading::getSwap( swapName );
 
-		MLIB_REQUIRE( swap->getSwapType() == etrading::ZERO_COUPON_INFLATION_SWAP, "Swap '" + swapName + "' has incorrect Swap Type of '" + toString(swap->getSwapType()) + "'. It is not a zero coupon inflation swap." );
+		AQ_REQUIRE( swap->getSwapType() == etrading::ZERO_COUPON_INFLATION_SWAP, "Swap '" + swapName + "' has incorrect Swap Type of '" + toString(swap->getSwapType()) + "'. It is not a zero coupon inflation swap." );
 
 		auto inflationSwap = std::dynamic_pointer_cast<etrading::ZeroCouponInflationSwap>( swap );
-		MLIB_REQUIRE(inflationSwap != nullptr, "Swap '" + swapName + "' is not a zero coupon inflation swap swap.");
+		AQ_REQUIRE(inflationSwap != nullptr, "Swap '" + swapName + "' is not a zero coupon inflation swap swap.");
 
 		auto inflationCurve = etrading::getInflationCurve( inflationCurveName );
 
@@ -193,10 +193,10 @@ namespace validation_api
 
 		auto swap = etrading::getSwap(swapName);
 
-		MLIB_REQUIRE(swap->getSwapType() == etrading::ZERO_COUPON_INFLATION_SWAP, "Swap '" + swapName + "' has incorrect Swap Type of '" + toString(swap->getSwapType()) + "'. It is not a zero coupon inflation swap.");
+		AQ_REQUIRE(swap->getSwapType() == etrading::ZERO_COUPON_INFLATION_SWAP, "Swap '" + swapName + "' has incorrect Swap Type of '" + toString(swap->getSwapType()) + "'. It is not a zero coupon inflation swap.");
 
 		auto inflationSwap = std::dynamic_pointer_cast<etrading::ZeroCouponInflationSwap>(swap);
-		MLIB_REQUIRE(inflationSwap != nullptr, "Swap '" + swapName + "' is not a zero coupon inflation swap swap.");
+		AQ_REQUIRE(inflationSwap != nullptr, "Swap '" + swapName + "' is not a zero coupon inflation swap swap.");
 
 		double result = inflationSwap->parRateFromInflationIndex(valuationSettingsLVB, baseIndex, resetIndex);
 
@@ -224,10 +224,10 @@ namespace validation_api
 
 		auto swap = etrading::getSwap(swapName);
 
-		MLIB_REQUIRE(swap->getSwapType() == etrading::ZERO_COUPON_INFLATION_SWAP, "Swap '" + swapName + "' has incorrect Swap Type of '" + toString(swap->getSwapType()) + "'. It is not a zero coupon inflation swap.");
+		AQ_REQUIRE(swap->getSwapType() == etrading::ZERO_COUPON_INFLATION_SWAP, "Swap '" + swapName + "' has incorrect Swap Type of '" + toString(swap->getSwapType()) + "'. It is not a zero coupon inflation swap.");
 
 		auto inflationSwap = std::dynamic_pointer_cast<etrading::ZeroCouponInflationSwap>(swap);
-		MLIB_REQUIRE(inflationSwap != nullptr, "Swap '" + swapName + "' is not a zero coupon inflation swap swap.");
+		AQ_REQUIRE(inflationSwap != nullptr, "Swap '" + swapName + "' is not a zero coupon inflation swap swap.");
 
 		auto inflationCurve = etrading::getInflationCurve( inflationCurveName );
 

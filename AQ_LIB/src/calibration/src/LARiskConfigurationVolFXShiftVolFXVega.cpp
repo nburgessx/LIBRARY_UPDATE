@@ -108,9 +108,9 @@ LARiskConfigurationVolFXShiftVolFXVega::getBucketGridTerm(const LAString &fx) co
 								FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_BUCKET_GRID_TERM);
 	LAStringVector BucketTerm = strBucketGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
 	BucketTerm[0].toUpper();
-	if (BucketTerm[0] == "NONE" || BucketTerm[0] == MLIB_NO_DATA)
+	if (BucketTerm[0] == "NONE" || BucketTerm[0] == AQ_NO_DATA)
 	{
-		ret.push_back(MLIB_NO_DATA);
+		ret.push_back(AQ_NO_DATA);
 		return ret;
 	}
 	else
@@ -447,7 +447,7 @@ LARiskConfigurationVolFXShiftVolFXVega::createBaseScenarioEntity(const LAString 
 	paramvol.refName.push_back(LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, paramvol.refName.back())));
 
 	// dataout
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		paramvol.isOutPut = true;
 	}
@@ -492,7 +492,7 @@ LARiskConfigurationVolFXShiftVolFXVega::isRiskCurrencyMode(const LAString &fx) c
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(fxKey.toLower() + 
 													FX_KEY_RISK_FRONT_VOL_FXVOLSHIFTFXVEGA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);

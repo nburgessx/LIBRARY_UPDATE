@@ -10,8 +10,8 @@ namespace etrading
 
 		// Hull White 1F SDE: dr = (theta - alpha* r)*dt + sigma * dW, where theta is time dependent, alpha and sigma are constant
 
-		MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( alpha ),    "Hull White alpha (mean reversion spread) parameter must be greater than zero" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( sigma ),    "Hull White sigma (volatility) parameter cannot be negative" );
+		AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( alpha ),    "Hull White alpha (mean reversion spread) parameter must be greater than zero" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( sigma ),    "Hull White sigma (volatility) parameter cannot be negative" );
     }
 
     // Copy Constructor

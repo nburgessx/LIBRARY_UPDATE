@@ -5,7 +5,7 @@
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
 #include "TypeHelpers.h"
-#include "DataUtilities.h"              // For MLIB_TO_STRING macros
+#include "DataUtilities.h"              // For AQ_TO_STRING macros
 #include <boost/algorithm/string.hpp>   // For boost::to_upper and boost:iequals i.e. case insensitve string comparison
 
 namespace etrading
@@ -58,10 +58,10 @@ namespace etrading
 
     LabelValueBlock::LabelValueBlock( const LAStringVector & keys, const LAStringVector & values, const bool& makeAllKeysUppercase )
     {
-        MLIB_REQUIRE( keys.size() == values.size(),
+        AQ_REQUIRE( keys.size() == values.size(),
             "Unable to create LVB: Inconsistent number of keys and values. There are "
-            + MLIB_TO_STRING_FROM_SIZE_T( keys.size() ) + " keys and "
-            + MLIB_TO_STRING_FROM_SIZE_T( values.size() ) + " values." );
+            + AQ_TO_STRING_FROM_SIZE_T( keys.size() ) + " keys and "
+            + AQ_TO_STRING_FROM_SIZE_T( values.size() ) + " values." );
 
         // Build a key-value string matrix
         LAStringMatrix stringMatrix( keys.size() );
@@ -79,10 +79,10 @@ namespace etrading
 
     LabelValueBlock::LabelValueBlock( const StandardStringVector & keys, const StandardStringVector & values, const bool& makeAllKeysUppercase )
     {
-        MLIB_REQUIRE( keys.size() == values.size(),
+        AQ_REQUIRE( keys.size() == values.size(),
             "Unable to create LVB: Inconsistent number of keys and values. There are "
-            + MLIB_TO_STRING_FROM_SIZE_T( keys.size() ) + " keys and "
-            + MLIB_TO_STRING_FROM_SIZE_T( values.size() ) + " values." );
+            + AQ_TO_STRING_FROM_SIZE_T( keys.size() ) + " keys and "
+            + AQ_TO_STRING_FROM_SIZE_T( values.size() ) + " values." );
 
         // Build a key-value string matrix
         StandardStringMatrix stringMatrix( keys.size() );
@@ -125,10 +125,10 @@ namespace etrading
     
     LabelValueBlock::LabelValueBlock( const LabelValueBlock& originalLVB, const LAStringVector& appendKeys, const LAStringVector& appendValues, const bool& makeAllKeysUppercase )
     {
-        MLIB_REQUIRE( appendKeys.size() == appendValues.size(),
+        AQ_REQUIRE( appendKeys.size() == appendValues.size(),
             "Unable to create LVB: Inconsistent number of keys and values. There are "
-            + MLIB_TO_STRING_FROM_SIZE_T( appendKeys.size() ) + " keys and "
-            + MLIB_TO_STRING_FROM_SIZE_T( appendValues.size() ) + " values." );
+            + AQ_TO_STRING_FROM_SIZE_T( appendKeys.size() ) + " keys and "
+            + AQ_TO_STRING_FROM_SIZE_T( appendValues.size() ) + " values." );
 
         // Build a key-value string matrix
         LAStringMatrix appendMatrix( appendKeys.size() );
@@ -159,10 +159,10 @@ namespace etrading
     
     LabelValueBlock::LabelValueBlock( const LabelValueBlock& originalLVB, const StandardStringVector& appendKeys, const StandardStringVector& appendValues, const bool& makeAllKeysUppercase )
     {
-         MLIB_REQUIRE( appendKeys.size() == appendValues.size(),
+         AQ_REQUIRE( appendKeys.size() == appendValues.size(),
             "Unable to create LVB: Inconsistent number of keys and values. There are "
-            + MLIB_TO_STRING_FROM_SIZE_T( appendKeys.size() ) + " keys and "
-            + MLIB_TO_STRING_FROM_SIZE_T( appendValues.size() ) + " values." );
+            + AQ_TO_STRING_FROM_SIZE_T( appendKeys.size() ) + " keys and "
+            + AQ_TO_STRING_FROM_SIZE_T( appendValues.size() ) + " values." );
 
         // Build a key-value string matrix
         StandardStringMatrix appendMatrix( appendKeys.size() );
@@ -812,7 +812,7 @@ namespace etrading
             }
             else
             {
-                MLIB_THROW( "Invalid Input Matrix: Must be a 2 column matrix, namely a column of keys and a column of values")
+                AQ_THROW( "Invalid Input Matrix: Must be a 2 column matrix, namely a column of keys and a column of values")
             }
         }
     }
@@ -856,7 +856,7 @@ namespace etrading
             }
             else
             {
-                MLIB_THROW( "Invalid Input Matrix: Must be a 2 column matrix, namely a column of keys and a column of values")
+                AQ_THROW( "Invalid Input Matrix: Must be a 2 column matrix, namely a column of keys and a column of values")
             }
         }
     }
@@ -1030,10 +1030,10 @@ namespace etrading
     
     LAString searchLAStringMatrix( const LAString & searchKey, const LAStringMatrix & searchMatrix )
     {
-        MLIB_REQUIRE( searchMatrix.size() >0, "Unable to find lookup value: Thesearch matrix is empty" )
+        AQ_REQUIRE( searchMatrix.size() >0, "Unable to find lookup value: Thesearch matrix is empty" )
         
         // Assume a Square Matrix for Performance Reasons and Only check dimensions of the first inner vector
-        MLIB_REQUIRE( searchMatrix[0].size() == 2, "Invalid LVB search matrix: LVB searchMatrix must have exactly 2 columns, namely a column of keys and a column of values" )
+        AQ_REQUIRE( searchMatrix[0].size() == 2, "Invalid LVB search matrix: LVB searchMatrix must have exactly 2 columns, namely a column of keys and a column of values" )
         
         for ( size_t i = 0; i < searchMatrix.size(); ++i )
         {
@@ -1045,15 +1045,15 @@ namespace etrading
             }
         }
 
-        MLIB_THROW("Unable to find key in search matrix")
+        AQ_THROW("Unable to find key in search matrix")
     }
     
     StandardString searchStandardStringMatrix( const StandardString & searchKey, const StandardStringMatrix & searchMatrix )
     {
-        MLIB_REQUIRE( searchMatrix.size() > 0, "Unable to find lookup value: Thesearch matrix is empty" )
+        AQ_REQUIRE( searchMatrix.size() > 0, "Unable to find lookup value: Thesearch matrix is empty" )
         
         // Assume a Square Matrix for Performance Reasons and Only check dimensions of the first inner vector
-        MLIB_REQUIRE( searchMatrix[0].size() == 2, "Invalid LVB search matrix: LVB searchMatrix must have exactly 2 columns, namely a column of keys and a column of values" )
+        AQ_REQUIRE( searchMatrix[0].size() == 2, "Invalid LVB search matrix: LVB searchMatrix must have exactly 2 columns, namely a column of keys and a column of values" )
 
         for ( size_t i = 0; i < searchMatrix.size(); ++i )
         {
@@ -1065,7 +1065,7 @@ namespace etrading
             }
         }
 
-        MLIB_THROW("Unable to find key in search matrix")
+        AQ_THROW("Unable to find key in search matrix")
     }
 
 }

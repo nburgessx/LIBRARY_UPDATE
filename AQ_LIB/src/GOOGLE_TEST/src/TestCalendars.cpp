@@ -55,7 +55,7 @@ namespace google_test
 			fin.open(resolvedfilename);
 			if (!fin)
 			{
-				MLIB_THROW( "Unable to locate Calendar.conf file: " + resolvedfilename );
+				AQ_THROW( "Unable to locate Calendar.conf file: " + resolvedfilename );
 			}
 
 			std::string line;
@@ -88,7 +88,7 @@ namespace google_test
 
 				if (tokens.size() != 2)
 				{
-					MLIB_THROW("Expected two columns of config data: key, value");
+					AQ_THROW("Expected two columns of config data: key, value");
 				}
 
 				std::string key = tokens[0];
@@ -100,7 +100,7 @@ namespace google_test
 			}
 			fin.close();
 
-			MLIB_THROW("Did not find valid data inside the Calendar.conf file");
+			AQ_THROW("Did not find valid data inside the Calendar.conf file");
 		}
 	}
 
@@ -122,7 +122,7 @@ namespace google_test
 
 		if ( currentDate > errorCutoffDate )
 		{
-			MLIB_THROW( "According to config file: " + resolvedCalendarConfFile +
+			AQ_THROW( "According to config file: " + resolvedCalendarConfFile +
 						", the calendar file: " + resolvedCalendarFile +
 						" is more than " + errorTenor + 
 						" old, Please regenerate it using the tool CDWCalendarUpdate.bat." );

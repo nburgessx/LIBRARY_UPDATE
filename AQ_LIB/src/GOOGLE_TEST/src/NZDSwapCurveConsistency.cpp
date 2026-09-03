@@ -66,7 +66,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    swapTerms   = curveCalibrationSwapTenors( curveObjectNZD3ML_ ); 
         std::vector<double>         parRates    = curveCalibrationSwapParRates( curveObjectNZD3ML_ );
-        MLIB_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )
+        AQ_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-6;
@@ -87,7 +87,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "NZD3ML_Swap" + MLIB_TO_STRING_FROM_SIZE_T(i);
+            const std::string swapName                  = "NZD3ML_Swap" + AQ_TO_STRING_FROM_SIZE_T(i);
             const std::string swapGenerator             = "NZD_3ML";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("NZDYC");
 

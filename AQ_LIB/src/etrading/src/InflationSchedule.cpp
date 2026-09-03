@@ -65,7 +65,7 @@ namespace etrading
 		fxFixingbusinessDayAdj_                 = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAString(IRS_KEY::FXFIXINGBUSINESSDAYADJUSTMENT, defaultBusinessDayAdj).getCString() );
         fxFixingCalendar_                       = scheduleLVB.getOptionalValueAsLAString(IRS_KEY::FXFIXINGCALENDAR, defaultCalendar);
 
-		MLIB_REQUIRE( accrualFrequency_ == AT_MATURITY_FREQUENCY, "Only AT_MATURITY inflation accrual is currently supported." );
+		AQ_REQUIRE( accrualFrequency_ == AT_MATURITY_FREQUENCY, "Only AT_MATURITY inflation accrual is currently supported." );
 
         populateAccrualStartDates( scheduleLVB );
 
@@ -130,7 +130,7 @@ namespace etrading
 			break;
 		}
 		default:
-			MLIB_THROW( "Unsupported InflationResetType '" + toString( inflationResetType_ ) + "' Only MonthlyInterpolation is allowed.");
+			AQ_THROW( "Unsupported InflationResetType '" + toString( inflationResetType_ ) + "' Only MonthlyInterpolation is allowed.");
 		}
 
 		// TODO: Should we apply payLag *after* businessDayAdjustment?
@@ -161,7 +161,7 @@ namespace etrading
     {
         auto cashflowSize	= accrualStartDates_.size();
 		auto fixingsSize	= fixingDates_.size();
-		MLIB_REQUIRE( fixingsSize == ( cashflowSize + 1 ), "Wrong number of fixings. Require a start and end fixing for each cashflow." );
+		AQ_REQUIRE( fixingsSize == ( cashflowSize + 1 ), "Wrong number of fixings. Require a start and end fixing for each cashflow." );
 
         std::vector<double> cashflowNotionals = getCashflowNotionals( cashflowSize ); 
 

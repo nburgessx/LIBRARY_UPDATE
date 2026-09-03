@@ -132,7 +132,7 @@ LAMarketData::registCalendar(const LAString &fileName)
 	LAStringVector terms = LACoreDataService::getContext(CONTEXT_KEY_CALENDAR_TERM).toUpper().toToken(MULTI_STATIC_DATA_DELIMITER);
 	DateVector boundDates(2);
 	BoolVector isBounds(2, false);
-	if (asofdateStr != MLIB_NO_DATA && terms.size() == 2) 
+	if (asofdateStr != AQ_NO_DATA && terms.size() == 2) 
 	{
 		LADate asofdate = LADate(asofdateStr.getCString());
 		if (terms[0].size() != 0) 
@@ -154,7 +154,7 @@ LAMarketData::registCalendar(const LAString &fileName)
 	{
 		const LAString city = data[i][0].toUpper();
 		if (city.size() != 3) throw LACoreInvalidData("Calendar file format is wrong !! ", __FILE__, __LINE__);
-		if (cities[0] != MLIB_NO_DATA && find(cities.begin(), cities.end(), city) == cities.end()) continue;
+		if (cities[0] != AQ_NO_DATA && find(cities.begin(), cities.end(), city) == cities.end()) continue;
 
 		LAMathCalendar cal;
 		cal.setWeekly(SAT);
@@ -469,7 +469,7 @@ LAMarketData::getSDECorrelation(const LAStringVector &ccys, DoubleMatrix &corDat
 LAString
 LAMarketData::getNumFileName(const LAString &fileName, FileID fileid)
 {
-	LAString num = MLIB_NO_DATA;
+	LAString num = AQ_NO_DATA;
 	if (fileid == MARKETID)
 	{
 		num = LACoreDataService::getContext(ARG_KEY_MARKETID);
@@ -483,12 +483,12 @@ LAMarketData::getNumFileName(const LAString &fileName, FileID fileid)
 		num = LACoreDataService::getContext(ARG_KEY_PROPERTIESID);
 	}
 
-	if (num == MLIB_NO_DATA)
+	if (num == AQ_NO_DATA)
 	{
 		 num = LACoreDataService::getContext(ARG_KEY_FILENUM);
 	}
 
-	if (num != MLIB_NO_DATA)
+	if (num != AQ_NO_DATA)
 	{
 		std::string sFileName(fileName.getCString());
 		unsigned int ex_pos = sFileName.find_last_of(".");
@@ -523,7 +523,7 @@ LAMarketData::getBaseVolatilityName(const LAString &key)
 
 	LAString tmpKey = key;
 	LAString name = LACoreDataService::getContext(tmpKey.toLower() + CONTEXT_KEY_VOLENTITY_NAME);
-	if (name != MLIB_NO_DATA)
+	if (name != AQ_NO_DATA)
 	{
 		return name;
 	}
@@ -577,7 +577,7 @@ LAMarketData::getBaseYieldName(const LAString &ccy)
 
 	LAString tmpCurrency = ccy;
 	LAString name = LACoreDataService::getContext(tmpCurrency.toLower() + CONTEXT_KEY_YIELDENTITY_NAME);
-	if (name != MLIB_NO_DATA)
+	if (name != AQ_NO_DATA)
 	{
 		return name;
 	}
@@ -610,7 +610,7 @@ LAMarketData::getBaseYieldProName(const LAString &ccy)
 {
 	LAString tmpCurrency = ccy;
 	LAString name = LACoreDataService::getContext(tmpCurrency.toLower() + CONTEXT_KEY_YIELDPROENTITY_NAME);
-	if (name != MLIB_NO_DATA)
+	if (name != AQ_NO_DATA)
 	{
 		return name;
 	}
@@ -629,7 +629,7 @@ LADate
 LAMarketData::getAsofDate(const LAObjectPool &objPool)
 {
 	const LAString asofStr = LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE);
-	if (asofStr != MLIB_NO_DATA)
+	if (asofStr != AQ_NO_DATA)
 	{
 		return LADate(asofStr.getCString());
 	}
@@ -830,7 +830,7 @@ LAMarketData::setUpMarket2FXEntity(LAMathFXEntity &fx)
 
 		//set calendar;
 		LAString calstr = staticData.getStaticData(sccy + STATIC_DATA_KEY_FXSPOTRATES_CALENDAR);
-		if (calstr == MLIB_NO_DATA)
+		if (calstr == AQ_NO_DATA)
 		{
 			throw LACoreInvalidData("fxspotrates.calendar is not set.", __FILE__, __LINE__);
 		}
@@ -878,7 +878,7 @@ LAMarketData::setUpMarket2FXEntity(LAMathFXEntity &fx)
 		{
 			LAString tmp_currency = sdeccys [i];
 			LAString spotlag_txt = staticData.getStaticData(tmp_currency.toLower() + STATIC_DATA_KEY_SPOTLAG);
-			if (spotlag_txt != MLIB_NO_DATA)
+			if (spotlag_txt != AQ_NO_DATA)
 			{
 				LADataDouble spot_tmp;
 				spot_tmp.convertFromString(spotlag_txt);
@@ -2403,7 +2403,7 @@ void
 LAMarketData::setUpScenario(MAScenarioParam& param)
 {
 	// is detail output
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		param.isOutPut = true;
 	}
@@ -2426,7 +2426,7 @@ LAMarketData::setUpScenario(MAScenarioParam& param)
 
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	LAString strIsAudExtra = staticData.getStaticData(KEY_SDE_YIELD_ISAUDEXTRA);
-	if (strIsAudExtra != MLIB_NO_DATA)
+	if (strIsAudExtra != AQ_NO_DATA)
 	{
 		tmpBool.convertFromString(strIsAudExtra);
 		param.isAudExtra = tmpBool.get();
@@ -2617,7 +2617,7 @@ LAMarketData::getBaseCurrencyOfFXPair(const LAString& ccy)
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 
 	LAString ret = staticData.getStaticData(tmpCurrency + FX_KEY_VALUATION_BASECURRENCYOFFXPAIR).toUpper();
-	if (ret == MLIB_NO_DATA)
+	if (ret == AQ_NO_DATA)
 		throw LACoreInvalidData("Input Error", __FILE__,__LINE__);
 
 	return ret;
@@ -2810,7 +2810,7 @@ LAMarketData::getStaticDataValue(const LAStaticData &staticData, const LAString 
 	LAString val = staticData.getStaticData(tmpCurrency + "." + key);
 	if (is_include_key)
 	{
-		if (val == MLIB_NO_DATA)
+		if (val == AQ_NO_DATA)
 		{
 			return staticData.getStaticData(key);
 		}
@@ -3171,7 +3171,7 @@ LAMarketData::getCalibStaticDataValue(const LAStaticData* pCalibStaticData, cons
 {
 	LAString ret = pCalibStaticData->getStaticData(key + "." + grid);
 
-	if (ret == MLIB_NO_DATA)
+	if (ret == AQ_NO_DATA)
 	{
 		return pCalibStaticData->getStaticData(key);
 	}
@@ -3365,7 +3365,7 @@ LAMarketData::getVolFileName(const LAString& model, const LAString& currency, co
 	{
 		const LAStringVector underlyings = pCalibStaticData->getStaticData(currencyLower + STATIC_DATA_KEY_CALIB_IRSABR_UNDERLYING).toLower().toToken(':');
 
-		volFileName = MLIB_NO_DATA;
+		volFileName = AQ_NO_DATA;
 		for (size_t i = 0; i < underlyings.size(); ++i)
 		{
 			if (LAString(underlying).toLower() == underlyings[i])
@@ -3377,7 +3377,7 @@ LAMarketData::getVolFileName(const LAString& model, const LAString& currency, co
 	}
 	else
 	{
-		volFileName = MLIB_NO_DATA;
+		volFileName = AQ_NO_DATA;
 	}
 
 	return volFileName;

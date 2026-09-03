@@ -17,12 +17,12 @@ namespace etrading
         //Single Currency
         if ( leg1->getStaticData()->getCurrency() != leg2->getStaticData()->getCurrency() )
         {
-  		    MLIB_THROW( "Only single currency swaps are supported." );
+  		    AQ_THROW( "Only single currency swaps are supported." );
         }
 
         if (boost::math::isnan( leg1->getSchedule()->getNotional()) || boost::math::isnan(leg2->getSchedule()->getNotional() ))
         {
-    		MLIB_THROW( "Notional not provided." );
+    		AQ_THROW( "Notional not provided." );
         }
 
         inputParameters_ = swapPropertiesLVB;
@@ -48,7 +48,7 @@ namespace etrading
 
 		if ( firstLegCurrency != creditModel.getCurrency() )
 		{
-			MLIB_THROW( "Leg currency '" + toString( firstLegCurrency ) + "' does not match Credit Model currency '" + toString( creditModel.getCurrency() ) + "'." );
+			AQ_THROW( "Leg currency '" + toString( firstLegCurrency ) + "' does not match Credit Model currency '" + toString( creditModel.getCurrency() ) + "'." );
 		}		
 	}
 
@@ -119,7 +119,7 @@ namespace etrading
 			}
 			if ( ! legFound )
 			{
-				MLIB_THROW( "Specified legName '" + legName + "' does not exist in the TotalReturnSwap." );
+				AQ_THROW( "Specified legName '" + legName + "' does not exist in the TotalReturnSwap." );
 			}
 		}
 
@@ -158,14 +158,14 @@ namespace etrading
 		auto premiumLeg = std::dynamic_pointer_cast<PremiumLeg>( targetLeg );
 		if ( premiumLeg == nullptr )
 		{
-			MLIB_THROW( "Specified leg '" + targetLeg->getLegName() + "' is not a CDS Premium Leg." );
+			AQ_THROW( "Specified leg '" + targetLeg->getLegName() + "' is not a CDS Premium Leg." );
 		}
 
 		// This simplified parRate calculation using annuity is only valid if
 		// the accrual frequency is the same as the payment frequency
 		if ( premiumLeg->getSchedule()->isAccrualFreqLessThanPaymentFreq() || premiumLeg->getSchedule()->isPaymentFreqEnumAtMaturity() )
 		{
-			MLIB_THROW( "Par-rate calculation for TRS trade does not support compounding cashflows. ");
+			AQ_THROW( "Par-rate calculation for TRS trade does not support compounding cashflows. ");
 		}
 
 		// NOTE: the RiskyAnnuityWithNotional() calculation will also update cashflows on the premioum leg, setting discount factors
@@ -210,7 +210,7 @@ namespace etrading
 
 		if(legs_.size() < 2)
 		{
-			MLIB_THROW( "Expecting two legs to be present on the Total Return Swap" );
+			AQ_THROW( "Expecting two legs to be present on the Total Return Swap" );
 		}
 
 		LegPtr leg1 = legs_.get(0);
@@ -222,14 +222,14 @@ namespace etrading
 
 		if (spreadLeg->getType() != FLOAT_SCHEDULE_TYPE )
 		{
-			MLIB_THROW( "Par-Spread calculation is only supported for a TRS with a Float leg." );
+			AQ_THROW( "Par-Spread calculation is only supported for a TRS with a Float leg." );
 		}
 
 		// This simplified parRate calculation using annuity is only valid if
 		// the accrual frequency is the same as the payment frequency
 		if (spreadLeg->getSchedule()->isAccrualFreqLessThanPaymentFreq() || spreadLeg->getSchedule()->isPaymentFreqEnumAtMaturity() )
 		{
-			MLIB_THROW( "Par-spread calculation for TRS trade does not support compounding cashflows. ");
+			AQ_THROW( "Par-spread calculation for TRS trade does not support compounding cashflows. ");
 		}
 
 		// Spread formula: pvSpreadLegWithZeroSpread + pvSpreadLegSpread + pvRefLeg = 0 => pvSpreadLegSpread = -1 * (pvSpreadLegWithZeroSpread + pvRefLeg)
@@ -238,7 +238,7 @@ namespace etrading
 		auto premiumLeg = std::dynamic_pointer_cast<PremiumLeg>( againstLeg );
 		if ( premiumLeg == nullptr )
 		{
-			MLIB_THROW( "Specified leg '" + againstLeg->getLegName() + "' is not a CDS Premium Leg." );
+			AQ_THROW( "Specified leg '" + againstLeg->getLegName() + "' is not a CDS Premium Leg." );
 		}
 
 		double pvAgainstLeg = premiumLeg->pv( *creditModel );

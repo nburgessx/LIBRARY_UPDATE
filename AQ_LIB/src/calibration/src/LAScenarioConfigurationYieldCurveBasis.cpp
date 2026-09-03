@@ -581,7 +581,7 @@ LAScenarioConfigurationYieldCurveBasis::createScenario(LADataInstance &dataInsta
 	restoreBumpedRate(basisVec, baseRates);
 
 	// data out for Curveinfo
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataInstance.getReferencePool().completeDependency();
 		const LAString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);

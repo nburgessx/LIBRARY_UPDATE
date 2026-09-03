@@ -15,7 +15,7 @@
 #include "tryMeLWOSwapPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
-#include "DataUtilities.h"	// For MLIB_TO_STRING macros
+#include "DataUtilities.h"	// For AQ_TO_STRING macros
 
 using etrading::CurveTypeEnum;
 
@@ -84,12 +84,12 @@ namespace google_test
             // Unsupported calibrationInstrumentType Types
             default:
             {
-                MLIB_THROW("Unsupported Calibration Instrument")
+                AQ_THROW("Unsupported Calibration Instrument")
             }
         }
 
         // Check Tenors and ParRates have the same Dimensions
-        MLIB_REQUIRE( swapTenorsFromCurve.size() == swapRatesFromCurve.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Tenors and Rates from Curve" )
+        AQ_REQUIRE( swapTenorsFromCurve.size() == swapRatesFromCurve.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Tenors and Rates from Curve" )
 
 
         // Reprice Calibration Instruments
@@ -110,7 +110,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "SWAP" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "SWAP" + AQ_TO_STRING_FROM_SIZE_T( i );
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB(curveCollection);
 
             // Create the Swap & Calculate the Instrument Par Rate or Par Spread
@@ -146,7 +146,7 @@ namespace google_test
                 // Unsupported calibrationInstrumentType Types
                 default:
                 {
-                    MLIB_THROW("Unsupported Calibration Instrument")
+                    AQ_THROW("Unsupported Calibration Instrument")
                 }
             }
                         
@@ -155,7 +155,7 @@ namespace google_test
             
             if ( fabs(actualResult - expectedResult) > tolerance )
             {
-                    MLIB_THROW( "Swap Instrument " + swapTenorsFromCurve[i] + " does not reprice. Actual Result: " + std::to_string( static_cast<long double> (actualResult) ) + " Expected Result: " + std::to_string( static_cast<long double>(expectedResult) ) )
+                    AQ_THROW( "Swap Instrument " + swapTenorsFromCurve[i] + " does not reprice. Actual Result: " + std::to_string( static_cast<long double> (actualResult) ) + " Expected Result: " + std::to_string( static_cast<long double>(expectedResult) ) )
             }
 
             // Update the Test Count
@@ -163,7 +163,7 @@ namespace google_test
         }
 
         // Ensure at least 1 instrument was price tested
-        MLIB_REQUIRE( testCount > 0, "Repricing Test Failure: No Calibration Instruments were Tested" )
+        AQ_REQUIRE( testCount > 0, "Repricing Test Failure: No Calibration Instruments were Tested" )
         return;
     }
 

@@ -2189,7 +2189,7 @@ namespace etrading
     {
         LAString curveCollectionID = curveCollection;
         LAString curveName = currentCurveName;
-		MLIB_REQUIRE( curveName.size() > 0, "Unable to set risk dependencies, curveName is missing" )
+		AQ_REQUIRE( curveName.size() > 0, "Unable to set risk dependencies, curveName is missing" )
 
         // 'allCurvesInEachCollection_' is a collection of curves that will definitely be bumped
         // under each curve collection in the process of delta ladder calculation
@@ -2239,7 +2239,7 @@ namespace etrading
 		}
         
         std::string curveTypeStr = curveType.toUpper().getCString();
-		MLIB_REQUIRE( curveTypeStr.size() > 0, "Unable to set risk dependencies, unable to determine the curveType for curve index: " + curveName );
+		AQ_REQUIRE( curveTypeStr.size() > 0, "Unable to set risk dependencies, unable to determine the curveType for curve index: " + curveName );
 
         //-------------------------------------------------------------------------------------------------------------------
         // Below we build a number of special curve relationships so that cross curve impacts are accounted for

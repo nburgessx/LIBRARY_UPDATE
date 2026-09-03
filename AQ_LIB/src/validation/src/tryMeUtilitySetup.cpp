@@ -46,17 +46,17 @@ namespace validation_api
 
         if (irPropsFullFilePath.size() != 0 && !irPropsFullFilePath.empty())
         {
-            MLIB_REQUIRE(etrading::FolderConfig::check_file_availability(irPropsFullFilePath.c_str()), "Failed to initialize MLIBQ. Invalid ir.properties path.");
+            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(irPropsFullFilePath.c_str()), "Failed to initialize MLIBQ. Invalid ir.properties path.");
         }
 
         if (calendarFullFilePath.size() != 0 && !calendarFullFilePath.empty())
         {
-            MLIB_REQUIRE(etrading::FolderConfig::check_file_availability(calendarFullFilePath.c_str()), "Failed to initialize MLIBQ. Invalid calendar path.");
+            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(calendarFullFilePath.c_str()), "Failed to initialize MLIBQ. Invalid calendar path.");
         }
 
         if (centralBankCalendarFullFilePath.size() != 0 && !centralBankCalendarFullFilePath.empty())
         {
-            MLIB_REQUIRE(etrading::FolderConfig::check_file_availability(centralBankCalendarFullFilePath.c_str()), "Failed to initialize MLIBQ. Invalid central bank calendar path.");
+            AQ_REQUIRE(etrading::FolderConfig::check_file_availability(centralBankCalendarFullFilePath.c_str()), "Failed to initialize MLIBQ. Invalid central bank calendar path.");
         }
 
 		// Original LA Start-Up Code
@@ -204,7 +204,7 @@ namespace validation_api
             fin.open( filepath.getCString() );
             if ( !fin )
             {
-                MLIB_THROW("Unable to load calendar file; invalid filepath.");
+                AQ_THROW("Unable to load calendar file; invalid filepath.");
             }
 			fin.close();
         }
@@ -240,7 +240,7 @@ namespace validation_api
             fin.open( filepath.getCString() );
             if ( !fin )
             {
-                MLIB_THROW("Unable to load the ir properties configuration file; invalid filepath.");
+                AQ_THROW("Unable to load the ir properties configuration file; invalid filepath.");
             }
 			fin.close();
         }

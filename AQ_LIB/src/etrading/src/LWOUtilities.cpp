@@ -12,7 +12,7 @@ namespace etrading
 		auto swap  = Environment::defaultEnv().accessObject<Swap>(objectName);
 		if(!swap)
 		{
-            MLIB_THROW( (boost::format("Swap %s does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format("Swap %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return swap;
 	}
@@ -22,7 +22,7 @@ namespace etrading
 		auto schedule  = Environment::defaultEnv().accessObject<Schedule>(objectName);
 		if(!schedule)
 		{
-            MLIB_THROW( (boost::format("Schedule %s does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format("Schedule %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return schedule;
 	}
@@ -32,7 +32,7 @@ namespace etrading
 		auto creditModel  = Environment::defaultEnv().accessObject<CreditModel>(objectName);
 		if ( !creditModel && throwIfMissing )
 		{
-            MLIB_THROW( (boost::format("CreditModel %s does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format("CreditModel %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return creditModel;
 	}
@@ -42,7 +42,7 @@ namespace etrading
 		auto creditBasketModel  = Environment::defaultEnv().accessObject<CreditBasketModel>(objectName);
 		if ( !creditBasketModel && throwIfMissing )
 		{
-            MLIB_THROW( (boost::format("CreditBasketModel %s does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format("CreditBasketModel %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return creditBasketModel;
 	}
@@ -52,7 +52,7 @@ namespace etrading
 		auto bondCurve  = Environment::defaultEnv().accessObject<BondCurve>(objectName);
 		if ( !bondCurve && throwIfMissing )
 		{
-            MLIB_THROW( (boost::format("BondCurve %s does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format("BondCurve %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return bondCurve;
 	}
@@ -62,7 +62,7 @@ namespace etrading
 		auto inflationCurve = Environment::defaultEnv().accessObject<InflationCurve>(objectName);
 		if ( ! inflationCurve && throwIfMissing )
 		{
-			MLIB_THROW( (boost::format("InflationCurve %s does not exist") % objectName.c_str()).str().c_str() );
+			AQ_THROW( (boost::format("InflationCurve %s does not exist") % objectName.c_str()).str().c_str() );
 		}
 		return inflationCurve;
 	}
@@ -85,7 +85,7 @@ namespace etrading
 		auto leg  = Environment::defaultEnv().accessObject<Leg>(objectName);
 		if(!leg)
 		{
-			MLIB_THROW( (boost::format("Leg %s does not exist") % objectName.c_str()).str().c_str() );			
+			AQ_THROW( (boost::format("Leg %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return leg;
 	}
@@ -95,7 +95,7 @@ namespace etrading
 		auto bond  = Environment::defaultEnv().accessObject< Bond >( objectName );
 		if( !bond )
 		{
-			MLIB_THROW( (boost::format("Bond %s does not exist") % objectName.c_str()).str().c_str() );			
+			AQ_THROW( (boost::format("Bond %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return bond;
 	}
@@ -105,7 +105,7 @@ namespace etrading
 		auto bondGen  = Environment::defaultEnv().accessObject<BondGenerator>( objectName );
 		if ( ! bondGen )
 		{
-            MLIB_THROW( (boost::format( "Bond %s does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format( "Bond %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return bondGen;
 	}
@@ -115,7 +115,7 @@ namespace etrading
 		auto swapGen  = Environment::defaultEnv().accessObject<SwapGenerator>( objectName );
 		if(!swapGen)
 		{
-            MLIB_THROW( (boost::format("Swap Generator '%s' does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format("Swap Generator '%s' does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return swapGen;
 	}
@@ -125,7 +125,7 @@ namespace etrading
 		auto fixingTable  = Environment::defaultEnv().accessObject<FixingTable>( objectName );
 		if(!fixingTable && throwIfMissing)
 		{
-            MLIB_THROW( (boost::format("Fixing Table %s does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format("Fixing Table %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return fixingTable;
 	}
@@ -135,7 +135,7 @@ namespace etrading
 		auto curveGenerator  = Environment::defaultEnv().accessObject<CurveGenerator>( objectName );
 		if ( !curveGenerator )
 		{
-            MLIB_THROW( (boost::format("CurveGenerator %s does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format("CurveGenerator %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return curveGenerator;
 	}
@@ -145,7 +145,7 @@ namespace etrading
 		auto curveMarketData = Environment::defaultEnv().accessObject<CurveMarketData>( objectName );
 		if ( !curveMarketData )
 		{
-            MLIB_THROW( (boost::format("CurveMarketData %s does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format("CurveMarketData %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return curveMarketData;
 	}
@@ -155,7 +155,7 @@ namespace etrading
 		auto fxCurve = Environment::defaultEnv().accessObject<FXCurve>( objectName );
 		if ( !fxCurve )
 		{
-            MLIB_THROW( (boost::format( "FXCurve %s does not exist") % objectName.c_str()).str().c_str() );			
+            AQ_THROW( (boost::format( "FXCurve %s does not exist") % objectName.c_str()).str().c_str() );			
 		}
 		return fxCurve;
 	}
@@ -165,7 +165,7 @@ namespace etrading
 		auto option = Environment::defaultEnv().accessObject<Option>(objectName);
 		if (!option)
 		{
-			MLIB_THROW((boost::format("Option %s does not exist") % objectName.c_str()).str().c_str());
+			AQ_THROW((boost::format("Option %s does not exist") % objectName.c_str()).str().c_str());
 		}
 		return option;
 	}
@@ -175,7 +175,7 @@ namespace etrading
 		auto vol = Environment::defaultEnv().accessObject<Volatility>(objectName);
 		if (!vol && throwIfMissing)
 		{
-			MLIB_THROW((boost::format("Volatility %s does not exist") % objectName.c_str()).str().c_str());
+			AQ_THROW((boost::format("Volatility %s does not exist") % objectName.c_str()).str().c_str());
 		}
 		return vol;
 	}
@@ -185,7 +185,7 @@ namespace etrading
 		auto sabrModel = Environment::defaultEnv().accessObject<SabrModel>(objectName);
 		if (!sabrModel && throwIfMissing)
 		{
-			MLIB_THROW((boost::format("SabrModel %s does not exist") % objectName.c_str()).str().c_str());
+			AQ_THROW((boost::format("SabrModel %s does not exist") % objectName.c_str()).str().c_str());
 		}
 		return sabrModel;
 	}
@@ -195,7 +195,7 @@ namespace etrading
 		auto sabrMktData = Environment::defaultEnv().accessObject<SabrMarketData>(objectName);
 		if (!sabrMktData && throwIfMissing)
 		{
-			MLIB_THROW((boost::format("SabrMarketData %s does not exist") % objectName.c_str()).str().c_str());
+			AQ_THROW((boost::format("SabrMarketData %s does not exist") % objectName.c_str()).str().c_str());
 		}
 		return sabrMktData;
 	}
@@ -207,7 +207,7 @@ namespace etrading
 
 		if (!freeObject)
 		{
-			MLIB_THROW((boost::format("FreeObject %s does not exist") % objectName.c_str()).str().c_str());
+			AQ_THROW((boost::format("FreeObject %s does not exist") % objectName.c_str()).str().c_str());
 		}
 		return freeObject;
 	}
@@ -220,7 +220,7 @@ namespace etrading
 		auto curveObj = Environment::defaultEnv().accessObject<SingleCurveObject>(objectName);
 		if (!curveObj && throwIfMissing )
 		{
-			MLIB_THROW( "Curve Object " + objectName + " does not exist" )
+			AQ_THROW( "Curve Object " + objectName + " does not exist" )
 		}
 		return curveObj;
 	}
@@ -230,7 +230,7 @@ namespace etrading
 		auto curveObj = Environment::defaultEnv().accessObject<MultiCurveObject>(objectName);
 		if (!curveObj && throwIfMissing )
 		{
-			MLIB_THROW( "Curve Object " + objectName + " does not exist" )
+			AQ_THROW( "Curve Object " + objectName + " does not exist" )
 		}
 		return curveObj;
 	}
@@ -240,7 +240,7 @@ namespace etrading
 		auto curveObj = Environment::defaultEnv().accessObject<DualBootstrappedCurveObject>(objectName);
 		if (!curveObj && throwIfMissing )
 		{
-			MLIB_THROW( "Curve Object " + objectName + " does not exist" )
+			AQ_THROW( "Curve Object " + objectName + " does not exist" )
 		}
 		return curveObj;
 	}
@@ -310,7 +310,7 @@ namespace etrading
 		}
 
 		// 4) Assume a Curve Collection and not a curve Handle
-		MLIB_REQUIRE( allowCurveCollections, "Invalid Curve Object: " + curveName + " is not a curve handle. Hint: CurveCollection strings are not accepted in this method.")
+		AQ_REQUIRE( allowCurveCollections, "Invalid Curve Object: " + curveName + " is not a curve handle. Hint: CurveCollection strings are not accepted in this method.")
 		return curveName;
 	}
 

@@ -149,7 +149,7 @@ LARiskConfigurationVolSwaptionVega::createExtraScenario1Entity(const LAString &c
 				// set file dmy
 				param.paraFile.push_back(CALIB_DMY_FILE);
 				// dataout
-				if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+				if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 				{
 					param.isOutPut = true;
 				}
@@ -339,7 +339,7 @@ LARiskConfigurationVolSwaptionVega::getParallelShiftVal(const LAString &ccy) con
 	{
 		LAStaticData &calibPropAccessor = LACoreDataService::getStaticDataManager().getCalibStaticData();
 		LAString strIsZeroVol = calibPropAccessor.getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_CALIB_HW_ISZEROVOL);
-		if (strIsZeroVol != MLIB_NO_DATA && convertBoolFromStr(strIsZeroVol))
+		if (strIsZeroVol != AQ_NO_DATA && convertBoolFromStr(strIsZeroVol))
 		{
 			return 0.0;
 		}
@@ -355,7 +355,7 @@ LARiskConfigurationVolSwaptionVega::isRiskCurrencyMode(const LAString &ccy) cons
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_OFFICIAL_VOL_SWAPTIONVEGA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);

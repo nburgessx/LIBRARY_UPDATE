@@ -81,7 +81,7 @@ namespace validation_api
         VALID_EXCEPTION_START
         
         // LWO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
-        MLIB_CLEAR_CURVE_RESULTS_CACHE
+        AQ_CLEAR_CURVE_RESULTS_CACHE
 
         // Ensure Curve Name Data is in uppercase
         // --------------------------------------
@@ -124,52 +124,52 @@ namespace validation_api
 
         if ( !curveConv.empty() && curveConv[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !moneyMarketConv.empty() && moneyMarketConv[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !liborConv.empty() && liborConv[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !liborRates.empty() && liborRates[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !swapConv.empty() && swapConv[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !swapRates.empty() && swapRates[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !fraConv.empty() && fraConv[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !fra3mRates.empty() && fra3mRates[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !fra6mRates.empty() && fra6mRates[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !futureConv.empty() && futureConv[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !futureRates.empty() && futureRates[0].size() < 3 )
@@ -179,12 +179,12 @@ namespace validation_api
 
         if ( !convexityAdjConv.empty() && convexityAdjConv[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         if ( !convexityAdjRates.empty() && convexityAdjRates[0].size() < 2 )
         {
-            MLIB_THROW("Invalid Data: Input matix data must have column size 2")
+            AQ_THROW("Invalid Data: Input matix data must have column size 2")
         }
 
         // Remove the Curve from the Object Pool Curve Engine if it is registered
@@ -368,7 +368,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( ( boost::format( "Unable to create LWOCurve named %s" ) % curveNameForLWOCurve.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Unable to create LWOCurve named %s" ) % curveNameForLWOCurve.c_str() ).str().c_str() );
         }
 
         VALID_EXCEPTION_END

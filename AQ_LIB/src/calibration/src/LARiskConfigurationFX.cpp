@@ -160,7 +160,7 @@ LARiskConfigurationFX::createFXVolEntity(const LAString &fx, LADataInstance &dat
 {
 	// scenario param
 	MAScenarioParam param;
-	setFXVolEntityParams(MLIB_NO_DATA, fx, dataInstance, scenarioNum, index, param, false);
+	setFXVolEntityParams(AQ_NO_DATA, fx, dataInstance, scenarioNum, index, param, false);
 
 	// set file path dmy
 	param.paraFile.push_back(CALIB_DMY_FILE);
@@ -232,7 +232,7 @@ LARiskConfigurationFX::getBucketGridTerm(const LAString &fx) const
 {
 	//fx;
 	vector<LAString> ret;
-	LAString str = MLIB_NO_DATA;
+	LAString str = AQ_NO_DATA;
 	ret.push_back(str);
 	return ret;
 }
@@ -304,7 +304,7 @@ LARiskConfigurationFX::createExtraScenarioEntity(const LAString &fx, LADataInsta
 	// FwdFXConst curve
 	for (int unsigned i = 0; i < curs.size(); ++i)
 	{
-		if (ColAffectedCcy[curs[i]].isDefined() && ColAffectedCcy[curs[i]] != MLIB_NO_DATA)
+		if (ColAffectedCcy[curs[i]].isDefined() && ColAffectedCcy[curs[i]] != AQ_NO_DATA)
 		{
 			sce = createCollateralYieldEntity(fx, curs[i], dataInstance, scenarioNum, index);
 			scemap[curs[i]] = sce;
@@ -533,7 +533,7 @@ LARiskConfigurationFX::createExtraIRVolEntity(const LAString &fx, const LAString
 	param.inputType = LAMarketData::getVolInputType(model, ccy, riskName);
 	param.targetName = LAMarketData::getBaseVolatilityName(ccy);
 
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		param.isOutPut = true;
 	}
@@ -567,7 +567,7 @@ LARiskConfigurationFX::createExtraFXVolEntity(const LAString &fx, LADataInstance
 {
 	// scenario param
 	MAScenarioParam param;
-	setFXVolEntityParams(MLIB_NO_DATA, fx, dataInstance, scenarioNum, index, param, false);
+	setFXVolEntityParams(AQ_NO_DATA, fx, dataInstance, scenarioNum, index, param, false);
 	param.calcType = getExtraCalcType(fx, scenarioNum, index);
 	param.targetCurveType = getCurveType(fx);
 
@@ -677,7 +677,7 @@ LARiskConfigurationFX::createExtraIRVolEntityBase(const LAString &fx, const LASt
 	param.inputType = LAMarketData::getVolInputType(model, ccy, riskName);
 	param.targetName = LAMarketData::getBaseVolatilityName(ccy);
 
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		param.isOutPut = true;
 	}
@@ -739,7 +739,7 @@ LARiskConfigurationFX::getBaseOutPutName(const LAString &ccy , int index) const
 	if (omitNotionalExposure(ccy))
 	{
 		LAStringVector ccys = ccy.toToken(FX_DELIMITER);
-		if (ccys.size() != 2) return MLIB_NO_DATA;
+		if (ccys.size() != 2) return AQ_NO_DATA;
 		LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 		LAString ret = mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_FX_DELTA_OUTPUTNAME);
 		ret += LAString("_BasePV");
@@ -747,7 +747,7 @@ LARiskConfigurationFX::getBaseOutPutName(const LAString &ccy , int index) const
 	}
 	else
 	{
-		return MLIB_NO_DATA;
+		return AQ_NO_DATA;
 	}
 }
 
@@ -783,7 +783,7 @@ LARiskConfigurationFX::omitNotionalExposure(const LAString &ccy) const
 	if (ccys.size() != 2) return LARiskConfiguration::omitNotionalExposure(ccy);
 	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	LAString omitNotionalExposure = mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_FX_DELTA_OMITNOTIONALEXPOSURE);
-	if (omitNotionalExposure == MLIB_NO_DATA)
+	if (omitNotionalExposure == AQ_NO_DATA)
 	{
 		return false;
 	}

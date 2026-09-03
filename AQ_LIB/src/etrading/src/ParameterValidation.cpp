@@ -151,7 +151,7 @@ namespace etrading
                 {
                     inDate.remove( 4, 1 );
                         
-                    MLIB_REQUIRE( inDate.size() == 8, "Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
+                    AQ_REQUIRE( inDate.size() == 8, "Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
                     try
                     {
                         outDate = LADate( inDate.getCString(), "DDMMYYYY" );
@@ -159,7 +159,7 @@ namespace etrading
                     catch( LACoreError& )
                     {
                             
-                        MLIB_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
+                        AQ_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
                     }
                 }
             }
@@ -172,7 +172,7 @@ namespace etrading
                 }
                 else
                 {
-                    MLIB_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
+                    AQ_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
                 }
 
                 forwardSlashCheck = inDate.findString( "/" );
@@ -187,7 +187,7 @@ namespace etrading
                 }
                 else
                 {
-                    MLIB_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
+                    AQ_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
                 }
 
                 if( inDate.size() == 7 )
@@ -196,7 +196,7 @@ namespace etrading
                 }
                 else if( inDate.size() != 8 )
                 {
-                    MLIB_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
+                    AQ_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
                 }
 
                 LADate ret_( inDate.getCString() );
@@ -212,7 +212,7 @@ namespace etrading
                 }
                 else
                 {
-                    MLIB_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
+                    AQ_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
                 }
             }
 
@@ -220,7 +220,7 @@ namespace etrading
         }
 
         // If we reach here we have an invalid date and we should throw and error
-        MLIB_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
+        AQ_THROW("Invalid Date, unable to convert date string '" + in + "' to date. Acceptable Date String Formats: DD/MM/YYYY, YYYY/MM/DD and YYYYMMDD." );
         return outDate;
     }
 
@@ -394,15 +394,15 @@ namespace etrading
 	void validateDisplayCashflowHeaderAndBody(const bool& showColumnHeaders, const AnyTypeVector& headers, const AnyTypeMatrix& bodyBlock)
 	{
 		unsigned int numberOfRows = bodyBlock.size();
-		MLIB_REQUIRE(numberOfRows != 0, "Unable to build the schedule. The results schedule is empty.");
+		AQ_REQUIRE(numberOfRows != 0, "Unable to build the schedule. The results schedule is empty.");
 
 		unsigned int numberOfColumns = bodyBlock[0].size();
-		MLIB_REQUIRE(numberOfColumns != 0, "Unable to build the schedule. The results schedule has no columns.");
+		AQ_REQUIRE(numberOfColumns != 0, "Unable to build the schedule. The results schedule has no columns.");
 
 		// Check header and body column number match 
 		if (showColumnHeaders)
 		{
-			MLIB_REQUIRE(headers.size() == numberOfColumns, "The column numbers of Display headers and body  not matched.");
+			AQ_REQUIRE(headers.size() == numberOfColumns, "The column numbers of Display headers and body  not matched.");
 		}
 	}
 
@@ -430,14 +430,14 @@ namespace etrading
 		// Check if Maturity End Date is a Tenor or Date and Convert to a Date, if required
 		if (!isInputStrInDateFormat)
 		{
-			MLIB_REQUIRE(LADateScheduleHelpers::isValidDate(startDate), "Invalid Date: Unable to convert tenor to a date");
+			AQ_REQUIRE(LADateScheduleHelpers::isValidDate(startDate), "Invalid Date: Unable to convert tenor to a date");
 
 			//endDateStr is a tenor
 			endDate = LADateScheduleHelpers::getDate(startDate, endDateStr, businessDayAdjustment, calendar); 
 
 		}
 
-		MLIB_REQUIRE(LADateScheduleHelpers::isValidDate(endDate), "Invalid Date " + endDateStr)
+		AQ_REQUIRE(LADateScheduleHelpers::isValidDate(endDate), "Invalid Date " + endDateStr)
 		return endDate;
 	}
 

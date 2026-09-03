@@ -7355,7 +7355,7 @@ BasisCurveCalibration::getBasisCurveFrequency(const LAString &curveName, LAStrin
             // from the last instrument, which is typically a basis instrument, which is more efficient than searching from the front.
             // ------------------------------------------------------------------------
             const LADataMultiReference& mr = dynamic_cast<const LADataMultiReference&>(dh->get());
-            MLIB_REQUIRE( mr.getSize() > 0, "Invalid Basis Curve Calibration Instrument(s): The Basis Curve contains no calibration instruments for CurveName: " + curveName )
+            AQ_REQUIRE( mr.getSize() > 0, "Invalid Basis Curve Calibration Instrument(s): The Basis Curve contains no calibration instruments for CurveName: " + curveName )
             
             bool foundBasisInstrument = false;
             size_t basisInstrumentPosition = mr.getSize();
@@ -7376,10 +7376,10 @@ BasisCurveCalibration::getBasisCurveFrequency(const LAString &curveName, LAStrin
                 }
             }
             
-            MLIB_REQUIRE( foundBasisInstrument == true, "Invalid Basis Curve Calibration Instrument(s): No basis swap reference calibration instruments found" )
+            AQ_REQUIRE( foundBasisInstrument == true, "Invalid Basis Curve Calibration Instrument(s): No basis swap reference calibration instruments found" )
             
             LAObject* basis_instrument = &mr.get(basisInstrumentPosition).get();
-            MLIB_REQUIRE( basis_instrument != nullptr, "Invalid Basis Curve Calibration Instrument(s): The reference basis calibration instrument is invalid" )
+            AQ_REQUIRE( basis_instrument != nullptr, "Invalid Basis Curve Calibration Instrument(s): The reference basis calibration instrument is invalid" )
             
 			frequency = dynamic_cast<const LADataString &>(basis_instrument->getData(IR_CALIBRATION_DATA_INDEXACCESSARY, ISNOTNULL).get()).get();
             return;
@@ -7407,7 +7407,7 @@ BasisCurveCalibration::getBasisCurveFrequency(const LAString &curveName, LAStrin
             // from the last instrument, which is typically a basis instrument, which is more efficient than searching from the front.
             // ------------------------------------------------------------------------
             const LADataMultiReference& mr = dynamic_cast<const LADataMultiReference&>(dh->get());
-            MLIB_REQUIRE( mr.getSize() > 0, "Invalid Basis Curve Calibration Instrument(s): The Basis Curve contains no calibration instruments for CurveName: " + curveName )
+            AQ_REQUIRE( mr.getSize() > 0, "Invalid Basis Curve Calibration Instrument(s): The Basis Curve contains no calibration instruments for CurveName: " + curveName )
             
             bool foundBasisInstrument = false;
             size_t basisInstrumentPosition = mr.getSize();
@@ -7436,10 +7436,10 @@ BasisCurveCalibration::getBasisCurveFrequency(const LAString &curveName, LAStrin
                 }
             }
             
-            MLIB_REQUIRE( foundBasisInstrument == true, "Invalid Basis Curve Calibration Instrument(s): No basis swap reference calibration instruments found" )
+            AQ_REQUIRE( foundBasisInstrument == true, "Invalid Basis Curve Calibration Instrument(s): No basis swap reference calibration instruments found" )
             
             LAObject* basis_instrument = &mr.get(basisInstrumentPosition).get();
-            MLIB_REQUIRE( basis_instrument != nullptr, "Invalid Basis Curve Calibration Instrument(s): The reference basis calibration instrument is invalid" )
+            AQ_REQUIRE( basis_instrument != nullptr, "Invalid Basis Curve Calibration Instrument(s): The reference basis calibration instrument is invalid" )
 
 			LAString freq;
             dh = &basis_instrument->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, NOCHECK);
@@ -7484,7 +7484,7 @@ BasisCurveCalibration::getBasisCurveFrequency(const LAString &curveName, LAStrin
 			}
 			else 
 			{
-                MLIB_THROW("Invalid Basis Curve Calibration Instrument(s): Invalid Basis Instrument Frequency")
+                AQ_THROW("Invalid Basis Curve Calibration Instrument(s): Invalid Basis Instrument Frequency")
 			}
 		}
 		else

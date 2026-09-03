@@ -242,7 +242,7 @@ LARiskConfigurationCorDelta::isRiskCurrencyMode(const LAString& key) const
 	//if MA_NODATA return false
 	LAString proprslt = mpRiskStaticData->getStaticData(LAString(key).toLower() +
 		COR_KEY_RISK_FRONT_COR_CORDELTA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 	{
 		return false;
 	}
@@ -375,7 +375,7 @@ LARiskConfigurationCorDelta::createExtraScenario1Entity(const LAString &key, LAD
 	param.isWave = false;
 	param.extraBaseVolParam = getBaseVolVal(fx, index);
 	param.extraBaseParam = getBaseSpotVal(fx, index);
-	param.isOutPut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA);
+	param.isOutPut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA);
 
 	std::shared_ptr<LACalibrationParameters> calibInfoCreator(
 		LACalibrationParametersManager::getInstance()->createCalibInfoCreator(param.model));

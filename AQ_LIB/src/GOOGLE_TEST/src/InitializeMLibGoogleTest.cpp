@@ -86,7 +86,7 @@ namespace google_test
 
     void InitializeMLibGoogleTest::tearDown()
     {
-        // TODO: Clean-up required for now Keep this in synch with the tearDown function within MLIB_CLIENT_API exposed_functions.cpp
+        // TODO: Clean-up required for now Keep this in synch with the tearDown function within AQ_CLIENT_API exposed_functions.cpp
         // This code should be centralized at some point soon
 
         // Clear LWO Cache

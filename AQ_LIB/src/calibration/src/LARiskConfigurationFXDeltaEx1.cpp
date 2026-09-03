@@ -61,7 +61,7 @@ LARiskConfigurationFXDeltaEx1::getOperator1(void) const
 LAString
 LARiskConfigurationFXDeltaEx1::getOperator2(void) const
 {
-	return MLIB_NO_DATA;
+	return AQ_NO_DATA;
 }
 
 /*!
@@ -86,7 +86,7 @@ LARiskConfigurationFXDeltaEx1::getCoefficient1(const LAString &fx) const
 LAString
 LARiskConfigurationFXDeltaEx1::getCoefficient2(const LAString &fx) const
 {
-	return MLIB_NO_DATA;
+	return AQ_NO_DATA;
 }
 
 
@@ -114,7 +114,7 @@ LARiskConfigurationFXDeltaEx1::getOutPutName1(const LAString &fx) const
 LAString
 LARiskConfigurationFXDeltaEx1::getOutPutName2(const LAString &fx) const
 {
-	return MLIB_NO_DATA;
+	return AQ_NO_DATA;
 }
 
 /*!
@@ -244,7 +244,7 @@ LARiskConfigurationFXDeltaEx1::getCoefficientRatio1(const LAString &fx, LAObject
 	const LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]).toLower();
 	
 	const LAString isAdjustString = mpRiskStaticData->getStaticData(fxKey + FX_KEY_RISK_FRONT_FX_DELTA_ISCOEFFICIENTRATIO);
-	const bool isAdjust = (isAdjustString != MLIB_NO_DATA) && convertBoolFromStr(isAdjustString);
+	const bool isAdjust = (isAdjustString != AQ_NO_DATA) && convertBoolFromStr(isAdjustString);
 	const LAString shiftType = getShiftType(fx).toUpper();
 
 	if ((shiftType == RISK_SHIFTTYPE_RATIO) && isAdjust)
@@ -310,7 +310,7 @@ LARiskConfigurationFXDeltaEx1::isRiskCurrencyMode(const LAString &fx) const
 	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	LAString proprslt = mpRiskStaticData->getStaticData(fxKey + 
 													FX_KEY_RISK_FRONT_FX_DELTA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);

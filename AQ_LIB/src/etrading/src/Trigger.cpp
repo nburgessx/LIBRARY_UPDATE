@@ -1,6 +1,6 @@
 #include "Trigger.h"
 
-#include "ExceptionMacros.h"	// MLIB_REQUIRE
+#include "ExceptionMacros.h"	// AQ_REQUIRE
 
 
 namespace etrading
@@ -82,8 +82,8 @@ namespace etrading
 	*/
 	void Trigger::setThresholdVector( const std::vector<double>& thresholds, const std::vector<bool>& isActive )
 	{
-		MLIB_REQUIRE( thresholds.size() == isActive.size(), "Thresholds vector should be same length as isActive vector: " << thresholds.size() << "; vs: " << isActive.size() );
-		MLIB_REQUIRE( thresholds.size() <= nPeriods_, "Threshold vector length should be less than or equal to the number of time periods: " << thresholds.size() << "; vs: " << nPeriods_  );
+		AQ_REQUIRE( thresholds.size() == isActive.size(), "Thresholds vector should be same length as isActive vector: " << thresholds.size() << "; vs: " << isActive.size() );
+		AQ_REQUIRE( thresholds.size() <= nPeriods_, "Threshold vector length should be less than or equal to the number of time periods: " << thresholds.size() << "; vs: " << nPeriods_  );
 
 		const size_t nThresholds = thresholds.size();
 		for ( size_t iPeriod = 0; iPeriod < nThresholds; iPeriod++ )
@@ -101,7 +101,7 @@ namespace etrading
 	*/
 	bool Trigger::verify( const size_t period, const double value ) const
 	{
-		MLIB_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
+		AQ_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
 		if ( triggerStatus_.isActive[ period ] )
 		{
 			if ( value < triggerStatus_.level[ period ] )

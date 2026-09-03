@@ -101,7 +101,7 @@ LARiskConfigurationYieldIRDelta::createZeroBumpYieldEntity(const LAString &ccy, 
 	// check
 	// bucket term
 	LAStringVector bucketTerm = getBucketGridTerm(ccy);
-	if (!bucketTerm.empty() && bucketTerm[0] != MLIB_NO_DATA)
+	if (!bucketTerm.empty() && bucketTerm[0] != AQ_NO_DATA)
 	{
 		throw  LACoreInvalidData("IR delta fail. Zero rate bump does not support bucket.", __FILE__, __LINE__);
 	}
@@ -151,7 +151,7 @@ LARiskConfigurationYieldIRDelta::createZeroBumpYieldEntity(const LAString &ccy, 
 	param.calendar = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_MONEYMARKET_CALENDAR);
 	LAString recalc = mpRiskStaticData->getStaticData(
 		tmpCurrency + STATIC_DATA_KEY_RISK_FRONT_YIELD_IRDELTA_RECALCBASISDFSONZERORATEBUMP + getCurveSuffix(ccy));
-	if (recalc != MLIB_NO_DATA)
+	if (recalc != AQ_NO_DATA)
 	{
 		LADataBool attrBool;
 		attrBool.convertFromString(recalc);
@@ -257,7 +257,7 @@ LARiskConfigurationYieldIRDelta::createMarketBumpYieldEntity(const LAString &ccy
 
 
 	LAString oismethod = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + getCurveSuffix(ccy)).toUpper();
-	bool isoismode  = (oismethod != MLIB_NO_DATA);
+	bool isoismode  = (oismethod != AQ_NO_DATA);
     LAStringVector fMarketTerms;
     getMarketTerms(tmpCurrency, fMarketTerms);
     const bool onValFlg = find(fMarketTerms.begin(), fMarketTerms.end(), "ON")!=fMarketTerms.end();
@@ -272,7 +272,7 @@ LARiskConfigurationYieldIRDelta::createMarketBumpYieldEntity(const LAString &ccy
 	// for bucket term
 	LAStringVector BucketTerm = getBucketGridTerm(tmpCurrency);
 	vector<int> pos;
-	if (BucketTerm[0] == MLIB_NO_DATA)
+	if (BucketTerm[0] == AQ_NO_DATA)
 	{
 		const unsigned int checkSize = checkGrid.size();
 		if (checkSize != fMarketTerms.size())
@@ -429,7 +429,7 @@ LARiskConfigurationYieldIRDelta::createMarketBumpYieldEntity(const LAString &ccy
 
 		paramGrid[i] = term;
 		//for bucket grid
-		if (BucketTerm[0] == MLIB_NO_DATA)
+		if (BucketTerm[0] == AQ_NO_DATA)
 		{
 			gridGroupID[i] = id;
 		}
@@ -554,7 +554,7 @@ LARiskConfigurationYieldIRDelta::getIMMFwdRiskMode(const LAString &ccy) const
 	LAString tmpCurrency = ccy;
 	LAString isIMMProp = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
 											STATIC_DATA_KEY_RISK_FRONT_YIELD_IRDELTA_ISIMMFWDRATEBUMP + getCurveSuffix(ccy));
-	if ((isIMMProp == MLIB_NO_DATA) || !convertBoolFromStr(isIMMProp))
+	if ((isIMMProp == AQ_NO_DATA) || !convertBoolFromStr(isIMMProp))
 	{
 		return 0;
 	}
@@ -600,7 +600,7 @@ LARiskConfigurationYieldIRDelta::getIMMRiskYieldCurveName(const LAString &ccy) c
 		LADataString riskYieldCurveName;
 		riskYieldCurveName.convertFromString(LAStaticDataManager::getStaticData().getStaticData(
 			propName).toToken(MULTI_STATIC_DATA_DELIMITER).front());
-		if (riskYieldCurveName.get() == MLIB_NO_DATA)
+		if (riskYieldCurveName.get() == AQ_NO_DATA)
 		{
 #ifndef NDEBUG
 cout << "Property " << propName.getCString() << " is not set but "
@@ -665,7 +665,7 @@ LARiskConfigurationYieldIRDelta::getGridTerm(const LAString &ccy) const
 		LAString tmpCurrency = ccy;
 		tmpCurrency.toLower();
 		LAString oismethod = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + getCurveSuffix(ccy)).toUpper();
-		if (oismethod != MLIB_NO_DATA)
+		if (oismethod != AQ_NO_DATA)
 		{
 			LAStringVector boj;
 			LAStringVector fedfund;
@@ -675,7 +675,7 @@ LARiskConfigurationYieldIRDelta::getGridTerm(const LAString &ccy) const
 			// read fedfund file
 			LAStringMatrix fedfundDataMtx;
 			LAString fedfundFileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + getCurveSuffix(ccy));
-			if (fedfundFileName != MLIB_NO_DATA)
+			if (fedfundFileName != AQ_NO_DATA)
 			{
 				MAFileAccessor fedfundFile(LAMarketData::getNumFileName(fedfundFileName));
 				fedfundFile.readAllData(MARKET_DATA_DELIMITER, fedfundDataMtx);
@@ -744,21 +744,21 @@ LARiskConfigurationYieldIRDelta::getGridTerm(const LAString &ccy) const
 		// read fra file
 		LAStringMatrix fra3DataMtx,fra6DataMtx,futureDataMtx;
 		LAString fra3FileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE + getCurveSuffix(ccy));
-		if (fra3FileName != MLIB_NO_DATA)
+		if (fra3FileName != AQ_NO_DATA)
 		{
 			MAFileAccessor fra3File(LAMarketData::getNumFileName(fra3FileName));
 			fra3File.readAllData(MARKET_DATA_DELIMITER, fra3DataMtx);
 			fra3File.close();
 		}
 		LAString fra6FileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE + getCurveSuffix(ccy));
-		if (fra6FileName != MLIB_NO_DATA)
+		if (fra6FileName != AQ_NO_DATA)
 		{
 			MAFileAccessor fra6File(LAMarketData::getNumFileName(fra6FileName));
 			fra6File.readAllData(MARKET_DATA_DELIMITER, fra6DataMtx);
 			fra6File.close();
 		}
 		LAString futureFileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + getCurveSuffix(ccy));
-		if (futureFileName != MLIB_NO_DATA)
+		if (futureFileName != AQ_NO_DATA)
 		{
 			MAFileAccessor futureFile(LAMarketData::getNumFileName(futureFileName));
 			futureFile.readAllData(MARKET_DATA_DELIMITER, futureDataMtx);
@@ -852,9 +852,9 @@ LARiskConfigurationYieldIRDelta::getBucketGridTerm(const LAString &ccy) const
 									STATIC_DATA_KEY_RISK_FRONT_YIELD_IRDELTA_BUCKET_TERM + getCurveSuffix(ccy));
 	LAStringVector BucketTerm = strBucketGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
 	BucketTerm[0].toUpper();
-	if (BucketTerm[0] == "NONE" || BucketTerm[0] == MLIB_NO_DATA)
+	if (BucketTerm[0] == "NONE" || BucketTerm[0] == AQ_NO_DATA)
 	{
-		ret.push_back(MLIB_NO_DATA);
+		ret.push_back(AQ_NO_DATA);
 		return ret;
 	}
 	else
@@ -1142,7 +1142,7 @@ LARiskConfigurationYieldIRDelta::isRiskCurrencyMode(const LAString &ccy) const
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_YIELD_IRDELTA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);
@@ -1161,7 +1161,7 @@ LARiskConfigurationYieldIRDelta::isZeroBump(const LAString &ccy) const
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_YIELD_IRDELTA_ISZERORATEBUMP + getCurveSuffix(ccy));
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);
@@ -1172,14 +1172,14 @@ LARiskConfigurationYieldIRDelta::getMarketTerms(const LAString& ccy, LAStringVec
 {
     LAString ccy_lower = ccy; ccy_lower.toLower();	
 
-	const bool isoismode  = (mpStaticData->getStaticData(ccy_lower + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + getCurveSuffix(ccy_lower)).toUpper() != MLIB_NO_DATA);
+	const bool isoismode  = (mpStaticData->getStaticData(ccy_lower + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + getCurveSuffix(ccy_lower)).toUpper() != AQ_NO_DATA);
 
 	LAStringMatrix liborDataMtx, swapDataMtx,fra3DataMtx,fra6DataMtx,futureDataMtx;
 	
 	//read future file
 	LAString futureFileName = isoismode ? mpStaticData->getStaticData(ccy_lower + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + getCurveSuffix(ccy_lower)) :
                                           mpStaticData->getStaticData(ccy_lower + STATIC_DATA_KEY_YIELD_FUTURE_FILE + getCurveSuffix(ccy_lower));
-	if (futureFileName != MLIB_NO_DATA)
+	if (futureFileName != AQ_NO_DATA)
 	{
 		MAFileAccessor futureFile(LAMarketData::getNumFileName(futureFileName));
 		futureFile.readAllData(MARKET_DATA_DELIMITER, futureDataMtx);
@@ -1202,14 +1202,14 @@ LARiskConfigurationYieldIRDelta::getMarketTerms(const LAString& ccy, LAStringVec
 		liborFile.close();
 		//read fra file
 		LAString fra3FileName = mpStaticData->getStaticData(ccy_lower + STATIC_DATA_KEY_YIELD_3MFRA_FILE + getCurveSuffix(ccy_lower));
-		if (fra3FileName != MLIB_NO_DATA)
+		if (fra3FileName != AQ_NO_DATA)
 		{
 			MAFileAccessor fra3File(LAMarketData::getNumFileName(fra3FileName));
 			fra3File.readAllData(MARKET_DATA_DELIMITER, fra3DataMtx);
 			fra3File.close();
 		}
 		LAString fra6FileName = mpStaticData->getStaticData(ccy_lower + STATIC_DATA_KEY_YIELD_6MFRA_FILE + getCurveSuffix(ccy_lower));
-		if (fra6FileName != MLIB_NO_DATA)
+		if (fra6FileName != AQ_NO_DATA)
 		{
 			MAFileAccessor fra6File(LAMarketData::getNumFileName(fra6FileName));
 			fra6File.readAllData(MARKET_DATA_DELIMITER, fra6DataMtx);
@@ -1290,7 +1290,7 @@ LARiskConfigurationYieldIRDelta::getBaseOutPutName(const LAString &ccy , int ind
 	}
 	else
 	{
-		return MLIB_NO_DATA;
+		return AQ_NO_DATA;
 	}
 }
 
@@ -1306,7 +1306,7 @@ LARiskConfigurationYieldIRDelta::omitNotionalExposure(const LAString &ccy) const
 	LAString tmpCcy = ccy;
 	tmpCcy.toLower();
 	LAString omitNotionalExposure = mpRiskStaticData->getStaticData(tmpCcy + STATIC_DATA_KEY_RISK_FRONT_YIELD_IRDELTA_OMITNOTIONALEXPOSURE);
-	if (omitNotionalExposure == MLIB_NO_DATA)
+	if (omitNotionalExposure == AQ_NO_DATA)
 	{
 		return false;
 	}

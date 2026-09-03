@@ -23,7 +23,7 @@
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
 #include "RepriceCalibrationInstruments.h"
-#include "DataUtilities.h" // MLIB_TO_STRING macros
+#include "DataUtilities.h" // AQ_TO_STRING macros
 
 // Define Test Folder Path(s)
 // *** The Google Test DataInstance folder is defined within etrading project, GoogleTest Folder, GetGoogleTestFolder.h ***
@@ -72,7 +72,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    basisTerms   = curveCalibrationBasisSwapTenors( curveObjectEUR1ML_ ); 
         std::vector<double>         basisSpreads = curveCalibrationBasisSwapSpreads( curveObjectEUR1ML_ );
-        MLIB_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
+        AQ_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-6;
@@ -93,7 +93,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "EUR1ML_BasisSwap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "EUR1ML_BasisSwap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "EUR_BASIS_1X3";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("EURYC");
 
@@ -125,7 +125,7 @@ namespace google_test
          // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    basisTerms   = curveCalibrationBasisSwapTenors( curveObjectEUR12ML_ ); 
         std::vector<double>         basisSpreads = curveCalibrationBasisSwapSpreads( curveObjectEUR12ML_ );
-        MLIB_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
+        AQ_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-6;
@@ -147,7 +147,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "EUR12ML_BasisSwap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "EUR12ML_BasisSwap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "EUR_BASIS_6X12";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("EURYC");
 

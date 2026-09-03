@@ -36,9 +36,9 @@ namespace validation_api
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
 		RECORD_INPUTS( fixingDate, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
 		
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		MLIB_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
+		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const double forwardRate = curveModule.forwardRate( fixingDate );
@@ -69,9 +69,9 @@ namespace validation_api
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
 		RECORD_INPUTS( fixingDates, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
 		
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		MLIB_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
+		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const std::vector<double> forwardRates = curveModule.forwardRates( fixingDates );
@@ -101,9 +101,9 @@ namespace validation_api
 		
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
 		RECORD_INPUTS( paymentDate, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		MLIB_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
+		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const double discountFactor = curveModule.discountFactor( paymentDate );
@@ -139,9 +139,9 @@ namespace validation_api
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
 		RECORD_INPUTS( paymentDates, asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, compoundFreqEnum ) // forwardAdjustmentTable
 		
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		MLIB_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
+		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		const etrading::CurveInterpolation curveModule( asOfDate, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, polynomialOrder, forwardAdjustmentTable );
 		const std::vector<double> discountFactors = curveModule.discountFactors( paymentDates );
@@ -174,9 +174,9 @@ namespace validation_api
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
 		RECORD_INPUTS( fixingDate, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
 		
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		MLIB_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
+		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		// Convert Dates to Terms
 		double joinDateAsDouble = etrading::convertCurveDateToTerm( asOfDate, joinDate );
@@ -232,9 +232,9 @@ namespace validation_api
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
 		RECORD_INPUTS( fixingDates, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
 		
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		MLIB_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
+		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		// Convert Dates to Terms
 		double joinDateAsDouble = etrading::convertCurveDateToTerm( asOfDate, joinDate );
@@ -290,9 +290,9 @@ namespace validation_api
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
 		RECORD_INPUTS( paymentDate, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
 		
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		MLIB_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
+		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		// Convert Dates to Terms
 		double joinDateAsDouble = etrading::convertCurveDateToTerm( asOfDate, joinDate );
@@ -348,9 +348,9 @@ namespace validation_api
 		// TODO: Cannot Write Out StandardStringMatrix - Fix this
 		RECORD_INPUTS( paymentDates, asOfDate, curveCollection, curveIndex, useForwardInterpolation, interpolationEnum, stateVariableEnum, xValues, yValues, accrualDaycount, curveFrequencyTenor, fixingBusinessDayAdjustment, fixingCalendar, joinDate, compoundFreqEnum ) // forwardAdjustmentTable
 		
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
-		MLIB_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
-		MLIB_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Input: Interpolation xValues and yValues must be the same size" )
+		AQ_REQUIRE( xValues.size() > 0, "Invalid Input: Interpolation xValues and yValues cannot be empty" )
+		AQ_REQUIRE( joinDate == LADate() || joinDate >= asOfDate, "Invalid Input: JoinDate cannot be before the curve AsOfDate" )
 
 		// Convert Dates to Terms
 		double joinDateAsDouble = etrading::convertCurveDateToTerm( asOfDate, joinDate );

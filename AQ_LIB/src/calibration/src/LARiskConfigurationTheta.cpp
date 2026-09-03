@@ -122,7 +122,7 @@ LARiskConfigurationTheta::createRiskEntity(LAObjectPool &objPool) const
 
 		e->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(name);
 		vector<LAObject *> eVec(1, e);
-		ret.push_back(make_pair(MLIB_NO_DATA, eVec));
+		ret.push_back(make_pair(AQ_NO_DATA, eVec));
 		
 		//for yieldcredit spread delta we must set befor SetUpTargetNames
 		objPool.set(name, e);
@@ -224,7 +224,7 @@ LARiskConfigurationTheta::setUpTargetNames(const LAString &ccy, LAObject &e, LAD
 		// get cal and calc spot date
 		LAPriceDataCalendar cal;
 		LAString calStr = mpRiskStaticData->getStaticData(RISK_OFFICIAL_THETA_CALENDAR);
-		if (calStr != MLIB_NO_DATA)
+		if (calStr != AQ_NO_DATA)
 			cal.convertFromString(calStr);
 		
 		LAPriceDataSlidingRule fol(SLIDING_RULE_FOLLOWING);
@@ -365,7 +365,7 @@ LARiskConfigurationTheta::setUpTargetNames(const LAString &ccy, LAObject &e, LAD
 	//			
 	//		}
 
-	//		if (temp==MLIB_NO_DATA)
+	//		if (temp==AQ_NO_DATA)
 	//		{
 	//			setUpRecalcTrade(objPool, dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
  //           }
@@ -565,7 +565,7 @@ LARiskConfigurationTheta::createThetaEntity(const LAString &ccy, LADataInstance 
 	int changeinterval = static_cast<int>(getShiftVal(ccy, SCENARIO_1));
 	LAPriceDataCalendar cal;
 	LAString calStr = mpRiskStaticData->getStaticData(RISK_OFFICIAL_THETA_CALENDAR);
-	if (calStr != MLIB_NO_DATA)
+	if (calStr != AQ_NO_DATA)
 		cal.convertFromString(calStr);
 	LAPriceDataSlidingRule fol(SLIDING_RULE_FOLLOWING);
 	LAString days = LAString(changeinterval) + "D";
@@ -697,7 +697,7 @@ LARiskConfigurationTheta::isRiskCurrencyMode(const LAString &fx) const
 	LAString tmpCurrency = fx;
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(RISK_OFFICIAL_THETA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);
@@ -717,7 +717,7 @@ LARiskConfigurationTheta::isPLChangeMode(const LAString &fx) const
 	LAString tmpCurrency = fx;
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(RISK_OFFICIAL_THETA_WITHOUTCASH);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return (!convertBoolFromStr(proprslt));

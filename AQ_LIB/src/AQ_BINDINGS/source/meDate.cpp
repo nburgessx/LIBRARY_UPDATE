@@ -3,7 +3,7 @@
 #include "meDate.h"
 #include "tryMeDate.h"
 #include "ExceptionMacros.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 #include "ParameterValidation.h"
 
 
@@ -21,7 +21,7 @@ std::string meDateFromTenor(const std::string& startDate,
 							const std::string& calendar, 
 							const std::string& rollConvention)
 {
-    MLIB_API_START
+    AQ_API_START
 	DateVector resultVector;
     std::string result="";
 
@@ -41,12 +41,12 @@ std::string meDateFromTenor(const std::string& startDate,
 												        tmp_calendar,
 												        tmp_rollConvention);
         
-    MLIB_REQUIRE( resultVector.size() > 0, "Empty result vector");
+    AQ_REQUIRE( resultVector.size() > 0, "Empty result vector");
         
     result = resultVector[0].stringWithFormat("YYYYMMDD").getCString();
     
     return result;
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			swig interface for meDateFromTenor
@@ -61,7 +61,7 @@ std::string meDateFromTenor(const std::string& startDate,
 							const std::string& businessDayAdj, 
 							const std::string& calendar)
 {
-    MLIB_API_START
+    AQ_API_START
 	DateVector resultVector;
     std::string result="";
 
@@ -80,12 +80,12 @@ std::string meDateFromTenor(const std::string& startDate,
 												        tmp_calendar,
 												        "" ); // rollConvention = ""
         
-    MLIB_REQUIRE( resultVector.size() > 0, "Empty result vector");
+    AQ_REQUIRE( resultVector.size() > 0, "Empty result vector");
         
     result = resultVector[0].stringWithFormat("YYYYMMDD").getCString();
     
     return result;
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			swig interface for meDateFromTenor
@@ -96,7 +96,7 @@ std::string meDateFromTenor(const std::string& startDate,
 std::string meDateFromTenor(const std::string& startDate, 
 							const std::string& tenor)
 {
-    MLIB_API_START
+    AQ_API_START
 	DateVector resultVector;
     std::string result="";
 
@@ -113,12 +113,12 @@ std::string meDateFromTenor(const std::string& startDate,
 												       "",  // calendar
 												       ""); // rollConvention
         
-    MLIB_REQUIRE( resultVector.size() > 0, "Empty result vector");
+    AQ_REQUIRE( resultVector.size() > 0, "Empty result vector");
         
     result = resultVector[0].stringWithFormat("YYYYMMDD").getCString();
     
     return result;
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			swig interface for meDateFromTenor
@@ -135,7 +135,7 @@ std::vector<std::string> meDateFromTenor( const std::vector<std::string>& startD
 										  const std::string& calendar, 
 										  const std::string& rollConvention)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<std::string> resultVector;
 
     // Input marshalling
@@ -158,7 +158,7 @@ std::vector<std::string> meDateFromTenor( const std::vector<std::string>& startD
 	}		
 	    
     return resultVector;
-	MLIB_API_END
+	AQ_API_END
 }
 
 /* @brief			swig interface for meDateFromYearFraction
@@ -171,7 +171,7 @@ const std::string meDateFromYearFraction(const std::string& startDate,
 									double yearFraction, 
 									const std::string& dayCount) 
 {
-    MLIB_API_START
+    AQ_API_START
 	std::string ret;
 
     // Data type marshalling
@@ -180,7 +180,7 @@ const std::string meDateFromYearFraction(const std::string& startDate,
 
     ret = validation_api::tryMeDateFromYearFraction(tmp_startDate, yearFraction, tmp_dayCount).stringWithFormat("YYYYMMDD").getCString();
     return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			 swig interface for the meDateBusinessDays method
@@ -193,7 +193,7 @@ int meDateBusinessDays(const std::string& fromDate,
 					const std::string& toDate,
 					const std::string& calendar) 
 {
-    MLIB_API_START
+    AQ_API_START
 	int ret = 0;
 	
     // Input marshalling
@@ -203,7 +203,7 @@ int meDateBusinessDays(const std::string& fromDate,
 
 	ret = validation_api::tryMeDateBusinessDays(fromDt, toDt, cal);		
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for the meDateYearFraction method
@@ -218,7 +218,7 @@ double meDateYearFraction( const std::string& fromDate,
 						   const std::string& dayCount,
 						   bool includeLast)
 {
-    MLIB_API_START
+    AQ_API_START
 
 	// Input marshalling
 	LADate fromLADate( etrading::stringToDate( fromDate ) );
@@ -227,7 +227,7 @@ double meDateYearFraction( const std::string& fromDate,
 	double yearFraction = validation_api::tryMeDateYearFraction( fromLADate, toLADate, dayCount, includeLast );
 	return yearFraction;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for the meDateYearFraction method
@@ -240,7 +240,7 @@ double meDateYearFraction( const std::string& fromDate,
 						   const std::string& toDate,
 						   const std::string& dayCount )
 {
-    MLIB_API_START
+    AQ_API_START
 
 	// Input marshalling
 	LADate fromLADate( etrading::stringToDate( fromDate ) );
@@ -249,7 +249,7 @@ double meDateYearFraction( const std::string& fromDate,
 	double yearFraction = validation_api::tryMeDateYearFraction( fromLADate, toLADate, dayCount );
 	return yearFraction;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -269,7 +269,7 @@ std::string meLWOSwapUSDSpotDate( const std::string & asOfDate,
 							      const std::string & businessDayAdj,
 							      const std::string & rollConvention )
 {
-	MLIB_API_START
+	AQ_API_START
 
 	// Marshall Inputs
 	LADate asOfDate_( etrading::stringToDate( asOfDate ) );
@@ -281,7 +281,7 @@ std::string meLWOSwapUSDSpotDate( const std::string & asOfDate,
 	const std::string spotDateString = spotDate.stringWithFormat("YYYYMMDD").c_str();
 	return spotDateString;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			Method to get the curve spot date by applying multiple date shifts
@@ -302,7 +302,7 @@ std::string meDateShiftedSpotDate( const std::string& asOfDate,
 						           const std::string& paymentCalendar,
                                    const std::string& paymentBusDayAdj )
 {
-    MLIB_API_START
+    AQ_API_START
 
 	// Marshall Inputs
 	LADate asOfDate_( etrading::stringToDate( asOfDate ) );
@@ -314,5 +314,5 @@ std::string meDateShiftedSpotDate( const std::string& asOfDate,
 	const std::string spotDateString = spotDate.stringWithFormat("YYYYMMDD").c_str();
 	return spotDateString;
 
-    MLIB_API_END
+    AQ_API_END
 }

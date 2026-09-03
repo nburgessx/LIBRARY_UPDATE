@@ -65,12 +65,12 @@ namespace etrading
 				break;
 
 			default:
-				// MLIB_THROW( "Unsupported PaymentTrigger type: " + toString( getPaymentTrigger() + "Only 'PayAlways' and 'PayOnSurvival' is currently supported." ));
-				MLIB_THROW( "Unsupported PaymentTrigger type: " + toString( getPaymentTrigger() ));
+				// AQ_THROW( "Unsupported PaymentTrigger type: " + toString( getPaymentTrigger() + "Only 'PayAlways' and 'PayOnSurvival' is currently supported." ));
+				AQ_THROW( "Unsupported PaymentTrigger type: " + toString( getPaymentTrigger() ));
 				break;
 		}
 
-		MLIB_REQUIRE( premiumSchedule->getAssetPerformanceEnum() == NO_PERFORMANCE, "Total Return Swap performance calculation requires a credit model." );
+		AQ_REQUIRE( premiumSchedule->getAssetPerformanceEnum() == NO_PERFORMANCE, "Total Return Swap performance calculation requires a credit model." );
 	}
 
 	/* @brief Updates the cashflow survival / default probabilities using the provided credit model.
@@ -94,7 +94,7 @@ namespace etrading
 				break;
 
 			default:
-				MLIB_THROW( "Unsupported PaymentTrigger type: " + toString( getPaymentTrigger() ));
+				AQ_THROW( "Unsupported PaymentTrigger type: " + toString( getPaymentTrigger() ));
 				break;
 		}
 		
@@ -190,7 +190,7 @@ namespace etrading
 
 		//get all the cashflows including upfront cashflow
 		auto cashflows = schedule_->getAllCashflows();
-		MLIB_REQUIRE(cashflows.size() > 0, "No cashflow has been built yet");
+		AQ_REQUIRE(cashflows.size() > 0, "No cashflow has been built yet");
 
 		// Find most recent cashflow date just passed
 		for (size_t i = 0; i < cashflows.size(); i++)
@@ -233,7 +233,7 @@ namespace etrading
 
 		//get all the cashflows including upfront cashflow
 		auto cashflows = schedule_->getAllCashflows();
-		MLIB_REQUIRE ( cashflows.size() > 0, "No cashflow has been built yet" );
+		AQ_REQUIRE ( cashflows.size() > 0, "No cashflow has been built yet" );
 
 		auto curCashflow = cashflows[0];
 		const double premiumRate = curCashflow->getFixedRate();

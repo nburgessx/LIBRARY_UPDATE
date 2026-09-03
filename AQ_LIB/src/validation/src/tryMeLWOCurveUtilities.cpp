@@ -30,7 +30,7 @@ namespace validation_api
         auto keys = curveStore.keys();
         if( keys.size() <= 0 )
         {
-            MLIB_THROW( "No LWOCurves are registered" );
+            AQ_THROW( "No LWOCurves are registered" );
         }
         return curveStore.keys();
     };
@@ -39,7 +39,7 @@ namespace validation_api
     {
         if ( !etrading::doesLWOExist( curveName, "CURVE" ) )
         {
-            MLIB_THROW( ( boost::format( "Object %s does not exist." ) % curveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "Object %s does not exist." ) % curveName.c_str() ).str().c_str() );
         }
         return etrading::Environment::defaultEnv().deleteObject<etrading::LWOCurve>(curveName);
     };
@@ -59,7 +59,7 @@ namespace validation_api
 
         if( !lwoCurve )
         {
-            MLIB_THROW( ( boost::format( "LWOCurve %s does not exist" ) % lwoCurveName.c_str() ).str().c_str() );
+            AQ_THROW( ( boost::format( "LWOCurve %s does not exist" ) % lwoCurveName.c_str() ).str().c_str() );
         }
         
         // Append the file extension if missing

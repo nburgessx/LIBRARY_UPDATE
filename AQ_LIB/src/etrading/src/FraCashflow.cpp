@@ -26,8 +26,8 @@ namespace etrading
 	double FraCashflow::getCompoundRate( const CashflowData& cashflowData ) const
 	{
 		const double floatRate = cashflowData.floatRateData.resetRate;
-		MLIB_REQUIRE( !boost::math::isnan(floatRate), "FRA's forwardRate cannot be empty" );
-		MLIB_REQUIRE( !boost::math::isnan(strikeRate_), "FRA's strikeRate cannot be empty" );
+		AQ_REQUIRE( !boost::math::isnan(floatRate), "FRA's forwardRate cannot be empty" );
+		AQ_REQUIRE( !boost::math::isnan(strikeRate_), "FRA's strikeRate cannot be empty" );
 
 		double compoundRate = 0.0;
 

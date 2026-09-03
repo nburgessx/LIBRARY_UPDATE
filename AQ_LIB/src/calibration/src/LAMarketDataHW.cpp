@@ -49,7 +49,7 @@ LAMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const LADate &asOfDate, con
 	tenor.clear();
 
 	LAString str_tenor = LACoreDataService::getContext(CONTEXT_KEY_HW_TENOR);
-	if (str_tenor != MLIB_NO_DATA)
+	if (str_tenor != AQ_NO_DATA)
 	{
 		LADataDoubles data_tenor;
 		data_tenor.convertFromString(str_tenor);
@@ -147,7 +147,7 @@ LAMarketDataHW::getCanonicalGrid(DoubleArray &tenor, const LADate &asOfDate, con
 		tenor[i] = dayCount.getTerm(start, dates_[i - 1]);
 	}
 
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
  		const LAString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);
 		const LAString dirName = LACoreDataService::getOutputDirectory(); 

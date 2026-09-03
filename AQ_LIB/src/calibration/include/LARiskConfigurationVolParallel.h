@@ -66,13 +66,13 @@ protected:
 	virtual std::vector<LAString> getGridTerm(const LAString &ccy) const { (void)ccy; return std::vector<LAString>(0); }
 	//==============================================
 	// get bucket grid term
-	virtual std::vector<LAString> getBucketGridTerm(const LAString &ccy) const { (void)ccy;std::vector<LAString> ret; ret.push_back(MLIB_NO_DATA); return ret; }
+	virtual std::vector<LAString> getBucketGridTerm(const LAString &ccy) const { (void)ccy;std::vector<LAString> ret; ret.push_back(AQ_NO_DATA); return ret; }
 	//==============================================
 	// get scenario1 parallel shift
 	virtual double getParallelShiftVal(const LAString &ccy) const = 0;
 	//==============================================
 	// get grid term
-	virtual LAString getParallelShiftTerm(const LAString &ccy) const { (void)ccy; return MLIB_NO_DATA; }
+	virtual LAString getParallelShiftTerm(const LAString &ccy) const { (void)ccy; return AQ_NO_DATA; }
 
 };
 

@@ -408,7 +408,7 @@ LACalibrateModelHW::setUpVolFunc(const LAString &currency, LAMathVolatility &vol
 		// first element set calib info
 		param.refName.push_back(cInfoName);
 
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			param.isOutPut = true;
 		}
@@ -475,7 +475,7 @@ LACalibrateModelHW::isZeroVol(const LAString &currency) const
 	LAString key_ccy(currency);
 	LADataBool* pIsZeroVol = new LADataBool(false);
 	LAString isZeroVolStr = mpStaticData->getStaticData(key_ccy.toLower() + STATIC_DATA_KEY_HW_ISZEROVOL);
-	if (isZeroVolStr != MLIB_NO_DATA)
+	if (isZeroVolStr != AQ_NO_DATA)
 		pIsZeroVol->convertFromString(isZeroVolStr);
 	bool ret = pIsZeroVol->get();
 	delete pIsZeroVol;

@@ -287,7 +287,7 @@ vector<LAString>
 LARiskConfigurationYieldBasis::getBucketGridTerm(const LAString &ccy) const
 {
 	vector<LAString> ret;
-	ret.push_back(MLIB_NO_DATA);
+	ret.push_back(AQ_NO_DATA);
 	return ret;
 }
 
@@ -389,7 +389,7 @@ LARiskConfigurationYieldBasis::getCalibTargetCurrencies() const
 {
 	if (!isRealCalib())
 	{
-		return MLIB_NO_DATA;
+		return AQ_NO_DATA;
 	}
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_YIELD_BASIS_CALIBRATION_TARGET_CURRENCY);
 }
@@ -406,7 +406,7 @@ LARiskConfigurationYieldBasis::getCoefficientRatio1(const LAString &ccy, LAObjec
 	LAString ircur = ccy;
 	LAString isadjstr = mpRiskStaticData->getStaticData(ircur.toLower() + 
 													STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_BASIS_ISCOEFFICIENTRATIO1);
-	if (isadjstr == MLIB_NO_DATA)
+	if (isadjstr == AQ_NO_DATA)
 		return 1.0;
 
 	return 1.0;
@@ -424,7 +424,7 @@ LARiskConfigurationYieldBasis::getCoefficientRatio2(const LAString &ccy, LAObjec
 	LAString ircur = ccy;
 	LAString isadjstr = mpRiskStaticData->getStaticData(ircur.toLower() + 
 													STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_BASIS_ISCOEFFICIENTRATIO2);
-	if (isadjstr == MLIB_NO_DATA)
+	if (isadjstr == AQ_NO_DATA)
 		return 1.0;
 
 	return 1.0;
@@ -443,7 +443,7 @@ LARiskConfigurationYieldBasis::isRiskCurrencyMode(const LAString &ccy) const
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_BASIS_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);

@@ -3,7 +3,7 @@
 
 #include "meProductSwapDV01.h"
 #include "tryMeProductSwapDV01.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meProductSwapDV01
@@ -14,7 +14,7 @@
 double meProductSwapDV01(const std::vector<std::vector <std::string> >& swapLVB, 
 						bool validateKeys)
 {
-	MLIB_API_START
+	AQ_API_START
     double ret;
 	
 	// marshall all inputs		
@@ -22,7 +22,7 @@ double meProductSwapDV01(const std::vector<std::vector <std::string> >& swapLVB,
 		
 	ret = validation_api::tryMeProductSwapDV01(lvb, validateKeys);
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			return a set of expected keys for swap DV01 label value block
@@ -30,9 +30,9 @@ double meProductSwapDV01(const std::vector<std::vector <std::string> >& swapLVB,
 */
 std::vector<std::string> meProductSwapDV01LVBKeys()
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<std::string> ret;
 	ret = validation_api::tryMeProductSwapDV01LVBKeys();
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }

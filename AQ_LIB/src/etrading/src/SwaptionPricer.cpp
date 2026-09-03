@@ -15,7 +15,7 @@ namespace etrading
     SwaptionPricer::SwaptionPricer(const std::shared_ptr<SwaptionTrade>& swaption, const LAStringMatrix& valuationSettingsLVB )
 		: swaptionTrade_( swaption ), valuationSettingsLVB_( valuationSettingsLVB )
 	{
-		MLIB_REQUIRE( swaptionTrade_ != nullptr, "Invalid swaption trade" );
+		AQ_REQUIRE( swaptionTrade_ != nullptr, "Invalid swaption trade" );
 		
 
         // Set the CurveCollection from the Valuation Settings - Compatible with CurveCollection or LWO CurveObject input
@@ -31,9 +31,9 @@ namespace etrading
 
         // Validation: Ensure that Curve and Vol Model have the same Valuation Date and Currency
         // =======================================================================================================
-        MLIB_REQUIRE( volProvider_->asOfDate() == getCurveAsOfDate(curveCollection_.c_str()), "Inconsistent Model Valuation Dates - The yield curve and the volatility model asOfDates do not match" )
-        MLIB_REQUIRE( volProvider_->currency() == toCCYEnum( getCurveCurrency(curveCollection_.c_str()).getCString()), "Inconsistent Model Currencies - The yield curve and the volatility model currencies do not match" )
-        MLIB_REQUIRE( swaptionTrade_->currency() == volProvider_->currency(), "Invalid Volatility Model - The currency of the volatility model does not match that of the swaption trade" );
+        AQ_REQUIRE( volProvider_->asOfDate() == getCurveAsOfDate(curveCollection_.c_str()), "Inconsistent Model Valuation Dates - The yield curve and the volatility model asOfDates do not match" )
+        AQ_REQUIRE( volProvider_->currency() == toCCYEnum( getCurveCurrency(curveCollection_.c_str()).getCString()), "Inconsistent Model Currencies - The yield curve and the volatility model currencies do not match" )
+        AQ_REQUIRE( swaptionTrade_->currency() == volProvider_->currency(), "Invalid Volatility Model - The currency of the volatility model does not match that of the swaption trade" );
 	}
 
 	// Copy Constructor
@@ -49,7 +49,7 @@ namespace etrading
     {
         const std::string discountFactorCurveIndex = "OIS";
         const std::vector<double> discountFactors = etrading::getCurveDiscountFactors( std::vector<LADate>(1, paymentDate), curveCollection_.c_str(), discountFactorCurveIndex.c_str() );
-        MLIB_REQUIRE( discountFactors.size() > 0, "Invalid Discount Factor(s) - Discount factor results are empty")
+        AQ_REQUIRE( discountFactors.size() > 0, "Invalid Discount Factor(s) - Discount factor results are empty")
         return discountFactors[0];
     }
 
@@ -73,7 +73,7 @@ namespace etrading
 		const LADate valuationDate                  = volProvider_->asOfDate();
 		const LADate adjustedOptionExpiryDate       = swaptionTrade_->adjustedOptionExpiryDate(); // Option Expiry Adjusted for Notification Lag
         const std::string notificationLag           = swaptionTrade_->notificationDays();
-        MLIB_REQUIRE( adjustedOptionExpiryDate >= valuationDate, "The swaption has expired! - OptionExpiryDate: " + adjustedOptionExpiryDate.stringWithFormat("DD-MM-YYYY") + ", NotificationDays: " + notificationLag.c_str() )
+        AQ_REQUIRE( adjustedOptionExpiryDate >= valuationDate, "The swaption has expired! - OptionExpiryDate: " + adjustedOptionExpiryDate.stringWithFormat("DD-MM-YYYY") + ", NotificationDays: " + notificationLag.c_str() )
 
 		const DayCountEnum optionDayCount   = swaptionTrade_->optionDayCount();
 
@@ -234,7 +234,7 @@ namespace etrading
 		const ScheduleTypeEnum leg1Type = underlyingSwap->getLeg(1)->getType();
 		if ( ( leg0Type != FIXED_SCHEDULE_TYPE ) && ( leg1Type != FIXED_SCHEDULE_TYPE ) )
 		{
-			MLIB_THROW( "Swaption underlying swap instrument does not contain a FIXED_SCHEDULE_TYPE leg.");
+			AQ_THROW( "Swaption underlying swap instrument does not contain a FIXED_SCHEDULE_TYPE leg.");
 		}
 
 		const size_t fixedLegIdx = ( leg0Type == FIXED_SCHEDULE_TYPE ) ? 0 : 1;
@@ -271,7 +271,7 @@ namespace etrading
 			}
 			default:
             {
-				MLIB_THROW("UnSupported Swaption SettlementType: " + toString( swaptionSettlementType ) );
+				AQ_THROW("UnSupported Swaption SettlementType: " + toString( swaptionSettlementType ) );
             }
 		}
 
@@ -285,7 +285,7 @@ namespace etrading
         const double feePayRecIndicator = swaptionTrade_->feePayReceiveIndicator();
         const double fee                = swaptionTrade_->fee() * feePayRecIndicator;
         
-        if ( !MLIB_IS_EQUAL_ZERO( fee ) ) 
+        if ( !AQ_IS_EQUAL_ZERO( fee ) ) 
         {
             // Fees in the past have zero PV
             const LADate feeDate        = swaptionTrade_->feeDate();
@@ -312,7 +312,7 @@ namespace etrading
 
         const double fee                        = swaptionTrade_->fee();
 
-        if ( !MLIB_IS_EQUAL_ZERO( fee ) )
+        if ( !AQ_IS_EQUAL_ZERO( fee ) )
         {
             // Calculate BlackScholes Parameters
             const LADate valuationDate          = volProvider_->asOfDate();
@@ -340,7 +340,7 @@ namespace etrading
 
         const double fee                        = swaptionTrade_->fee();
 
-        if ( !MLIB_IS_EQUAL_ZERO( fee ) )
+        if ( !AQ_IS_EQUAL_ZERO( fee ) )
         {
             // Calculate BlackScholes Parameters
             const LADate valuationDate          = volProvider_->asOfDate();
@@ -368,7 +368,7 @@ namespace etrading
         const double feePayRecIndicator         = swaptionTrade_->feePayReceiveIndicator();
         const double fee                        = swaptionTrade_->fee() * feePayRecIndicator;
         
-        if ( !MLIB_IS_EQUAL_ZERO( fee ) ) 
+        if ( !AQ_IS_EQUAL_ZERO( fee ) ) 
         {
             // Fees in the past have zero PV
             const LADate feeDate                = swaptionTrade_->feeDate();
@@ -384,7 +384,7 @@ namespace etrading
                 todayPlusOne.addDays(1);
                 
                 double oneDayDiscountFactor     = discountFactor( todayPlusOne );
-                MLIB_REQUIRE ( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( oneDayDiscountFactor), "Unable to calculate Theta - Discount Factor cannot be zero or negative" )
+                AQ_REQUIRE ( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( oneDayDiscountFactor), "Unable to calculate Theta - Discount Factor cannot be zero or negative" )
                 
                 double tomorrowDiscountFactor   = todayDiscountFactor / oneDayDiscountFactor;
                 feeTheta                        = fee * ( tomorrowDiscountFactor - todayDiscountFactor );

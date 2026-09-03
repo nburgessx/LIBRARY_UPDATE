@@ -8,48 +8,48 @@
 #include "LADataInstance.h"
 #include "LAPriceSwapRateCalculator.h"
 
-#ifndef MLIB_THETA1_IN
-#define MLIB_THETA1_IN "_Theta1_In_"
+#ifndef AQ_THETA1_IN
+#define AQ_THETA1_IN "_Theta1_In_"
 #endif
 
-#ifndef MLIB_THETA2_IN
-#define MLIB_THETA2_IN "_Theta2_In_"
+#ifndef AQ_THETA2_IN
+#define AQ_THETA2_IN "_Theta2_In_"
 #endif
 
-#ifndef MLIB_COPRHO_IN
-#define MLIB_COPRHO_IN "_CopRho_In_" // Named for Copula-Rho to distinguish from SABR Rho
+#ifndef AQ_COPRHO_IN
+#define AQ_COPRHO_IN "_CopRho_In_" // Named for Copula-Rho to distinguish from SABR Rho
 #endif
 
-#ifndef MLIB_THETA1_OUT
-#define MLIB_THETA1_OUT "_Theta1_Out_" // Named for Copula-Rho to distinguish from SABR Rho
+#ifndef AQ_THETA1_OUT
+#define AQ_THETA1_OUT "_Theta1_Out_" // Named for Copula-Rho to distinguish from SABR Rho
 #endif
 
-#ifndef MLIB_THETA2_OUT
-#define MLIB_THETA2_OUT "_Theta2_Out_" // Named for Copula-Rho to distinguish from SABR Rho
+#ifndef AQ_THETA2_OUT
+#define AQ_THETA2_OUT "_Theta2_Out_" // Named for Copula-Rho to distinguish from SABR Rho
 #endif
 
-#ifndef MLIB_COPRHO_OUT
-#define MLIB_COPRHO_OUT "_CopRho_Out_" // Named for Copula-Rho to distinguish from SABR Rho
+#ifndef AQ_COPRHO_OUT
+#define AQ_COPRHO_OUT "_CopRho_Out_" // Named for Copula-Rho to distinguish from SABR Rho
 #endif
 
-#ifndef MLIB_CMSSPRD_TGT_OUT
-#define MLIB_CMSSPRD_TGT_OUT "_CMSSpread_Targets_Out_"
+#ifndef AQ_CMSSPRD_TGT_OUT
+#define AQ_CMSSPRD_TGT_OUT "_CMSSpread_Targets_Out_"
 #endif
 
-#ifndef MLIB_SL_ATM
-#define MLIB_SL_ATM "_SL_ATM_"
+#ifndef AQ_SL_ATM
+#define AQ_SL_ATM "_SL_ATM_"
 #endif
 
-#ifndef MLIB_SL_SMILE
-#define MLIB_SL_SMILE "_SL_SMILE_"
+#ifndef AQ_SL_SMILE
+#define AQ_SL_SMILE "_SL_SMILE_"
 #endif
 
-#ifndef MLIB_ML_SMILE
-#define MLIB_ML_SMILE "_ML_SMILE_"
+#ifndef AQ_ML_SMILE
+#define AQ_ML_SMILE "_ML_SMILE_"
 #endif
 
-#ifndef MLIB_COP_NAMES
-#define MLIB_COP_NAMES LAStringVector { "Theta1", "Theta2", "CopRho" }
+#ifndef AQ_COP_NAMES
+#define AQ_COP_NAMES LAStringVector { "Theta1", "Theta2", "CopRho" }
 #endif
 
 class LAPriceCMSMLATMTarget;

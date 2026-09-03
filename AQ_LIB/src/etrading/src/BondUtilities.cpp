@@ -664,7 +664,7 @@ namespace etrading
 		for (size_t i = 0; i < expectedSize; ++i)
 		{
 			//Internal check
-			MLIB_REQUIRE(!boost::math::isnan(reinvestedCoupons[i].couponFwdValue), "Bond's couponFwdValue cannot be NaN.");
+			AQ_REQUIRE(!boost::math::isnan(reinvestedCoupons[i].couponFwdValue), "Bond's couponFwdValue cannot be NaN.");
 
 			sumOfReceivedCouponsFwdValue += reinvestedCoupons[i].couponFwdValue;
 		}
@@ -685,7 +685,7 @@ namespace etrading
 	double calculateForwardDirtyPrice(const double& dirtyPrice, const LADate& settleDate, const LADate& forwardSettleDate, const double& repoRate, const DayCountEnum& repoDayCount, const double& reinvestedCouponFwdValue)
 	{
 
-		MLIB_REQUIRE(settleDate < forwardSettleDate, "Bond's settle date must be earlier than forward settle date.");
+		AQ_REQUIRE(settleDate < forwardSettleDate, "Bond's settle date must be earlier than forward settle date.");
 
 		//Formula: bondForwardDirtyPrice = currentDirtyPrice * (1+ repoRate * repoYearFraction) - sumOf (coupon_i * (1+ repoRate * couponYearFraction_i)), where couponYearFraction_i is the yearFractions between couponDate_i to forwardSettleDate
 
@@ -710,12 +710,12 @@ namespace etrading
 	*/
 	double calculateRepoRate(const double& dirtyPrice, const double& forwardDirtyPrice, const LADate& settleDate, const LADate& forwardSettleDate, const DayCountEnum& repoDayCount, const std::vector< BondFwdReinvestedCoupon >& reinvestedCoupons)
 	{
-		MLIB_REQUIRE(settleDate < forwardSettleDate, "Bond's settle date must be earlier than forward settle date.");
+		AQ_REQUIRE(settleDate < forwardSettleDate, "Bond's settle date must be earlier than forward settle date.");
 
 		//Formula: bondForwardDirtyPrice = currentDirtyPrice * (1+ repoRate * repoYearFraction) - sumOf (coupon_i * (1+ repoRate * couponYearFraction_i)), where couponYearFraction_i is the yearFractions between couponDate_i to forwardSettleDate
 		// => repoRate = [bondForwardDirtyPrice - currentDirtyPrice + sumOf(coupon_i)] / [currentDirtyPrice * repoYearFraction - sumOf(coupon_i * couponYearFraction_i)]
 
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(dirtyPrice), "Bond price cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(dirtyPrice), "Bond price cannot be zero.");
 
 		const double repoYearFraction = getYearFraction(settleDate, forwardSettleDate, repoDayCount);
 

@@ -207,7 +207,7 @@ namespace etrading
 	// This helper method initializes the interpolator object once all member data has been set up.
 	void DiscountFactorResults::initializeInterpolator()
 	{
-		MLIB_REQUIRE( paymentDatesInTermFormat_.size() == discountFactors_.size(), "Invalid Discount Factor Results: Curve Index '" + curveIndex_ + "' within Curve Collection '" + curveCollection_ + "' has an inconsistent number of paymentDates and discountFactors" )
+		AQ_REQUIRE( paymentDatesInTermFormat_.size() == discountFactors_.size(), "Invalid Discount Factor Results: Curve Index '" + curveIndex_ + "' within Curve Collection '" + curveCollection_ + "' has an inconsistent number of paymentDates and discountFactors" )
 		
 		// Boundary Condition for Interpolation Object Only
 		// *** IMPORTANT NOTE *** Interpolator Objects Fail if this boundary point is missing or duplicated
@@ -220,14 +220,14 @@ namespace etrading
 		// Check Discount Factor Data for Errors
 		for( size_t i = 0; i < discountFactors.size(); ++i )
 		{
-			MLIB_THROW_IF( std::isnan( discountFactors[i] ), "Curve Index '" + curveIndex_ + "' within Curve Collection '" + curveCollection_ + " has not been built or has invalid discount factors" )
+			AQ_THROW_IF( std::isnan( discountFactors[i] ), "Curve Index '" + curveIndex_ + "' within Curve Collection '" + curveCollection_ + " has not been built or has invalid discount factors" )
 		}
 
 		if( paymentTerms.size() > 0  )
 		{
-			if( MLIB_IS_EQUAL_ZERO( paymentTerms[0] ) )
+			if( AQ_IS_EQUAL_ZERO( paymentTerms[0] ) )
 			{
-				MLIB_REQUIRE( MLIB_IS_EQUAL( discountFactors[0], 1.0 ), "Invalid Discount Factors: Curve Index '" + curveIndex_ + "' within Curve Collection '" + curveCollection_ + "' has invalid discount factors, Boundary Condition Error: Spot Discount Factors must be set to One" )
+				AQ_REQUIRE( AQ_IS_EQUAL( discountFactors[0], 1.0 ), "Invalid Discount Factors: Curve Index '" + curveIndex_ + "' within Curve Collection '" + curveCollection_ + "' has invalid discount factors, Boundary Condition Error: Spot Discount Factors must be set to One" )
 			}
 			else
 			{
@@ -324,7 +324,7 @@ namespace etrading
 			}
 			default:
 			{
-				MLIB_THROW( "Unsupported Interpolation Type" + toString( interpolationEnum_ ) + " - Valid interpolation schemes include STEP, LINEAR, SPLINE, MONOTONESPLINE, LINEARSPLINE, MONOTONEPARABLIC, LINEARMONOTONEPARABOLIC and LINEARMONOTONESPLINE" );
+				AQ_THROW( "Unsupported Interpolation Type" + toString( interpolationEnum_ ) + " - Valid interpolation schemes include STEP, LINEAR, SPLINE, MONOTONESPLINE, LINEARSPLINE, MONOTONEPARABLIC, LINEARMONOTONEPARABOLIC and LINEARMONOTONESPLINE" );
 			}
 		}
 
@@ -384,7 +384,7 @@ namespace etrading
                                                                  const LADate & joinDate,
 																 const StandardStringMatrix & forwardAdjustments )
     {
-        MLIB_REQUIRE( paymentDatesInTermFormat.size() == discountFactors.size(), "Invalid Discount Factor Results - Inconsistent number of paymentDates and discountFactors" )
+        AQ_REQUIRE( paymentDatesInTermFormat.size() == discountFactors.size(), "Invalid Discount Factor Results - Inconsistent number of paymentDates and discountFactors" )
 
 		// Update Member Variables
         curveTenorEnum_                 = curveTenor;
@@ -405,7 +405,7 @@ namespace etrading
 
 		if ( !forwardAdjustments_.empty() )
         {
-			MLIB_REQUIRE( forwardAdjustments_[0].size() == 4, "Invalid Data: Forward adjustment tables must have 4 columns:- AdjustmentType, StartDate, EndDate, RateOrSpread ");
+			AQ_REQUIRE( forwardAdjustments_[0].size() == 4, "Invalid Data: Forward adjustment tables must have 4 columns:- AdjustmentType, StartDate, EndDate, RateOrSpread ");
         }
 
 		initializeInterpolator();
@@ -428,7 +428,7 @@ namespace etrading
 																 const double & joinDateAsDouble,
 																 const StandardStringMatrix & forwardAdjustments )
 	{
-		MLIB_REQUIRE( paymentDatesInTermFormat.size() == discountFactors.size(), "Invalid Discount Factor Results - Inconsistent number of paymentDates and discountFactors" )
+		AQ_REQUIRE( paymentDatesInTermFormat.size() == discountFactors.size(), "Invalid Discount Factor Results - Inconsistent number of paymentDates and discountFactors" )
 
 		// Update Member Variables
 		curveTenorEnum_					= curveTenor;
@@ -449,7 +449,7 @@ namespace etrading
 
 		if ( !forwardAdjustments_.empty() )
         {
-			MLIB_REQUIRE( forwardAdjustments_[0].size() == 4, "Invalid Data: Forward adjustment tables must have 4 columns:- AdjustmentType, StartDate, EndDate, RateOrSpread ");
+			AQ_REQUIRE( forwardAdjustments_[0].size() == 4, "Invalid Data: Forward adjustment tables must have 4 columns:- AdjustmentType, StartDate, EndDate, RateOrSpread ");
         }
 
 		initializeInterpolator();
@@ -482,9 +482,9 @@ namespace etrading
 		// Discount Factors on the AsOfDate = 1.0
 		// Discount Factors before the AsOfDate = 0.0
 		// -------------------
-		if( MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO( paymentDateInTermFormat ) )
+		if( AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( paymentDateInTermFormat ) )
 		{
-			if( MLIB_IS_EQUAL_ZERO( paymentDateInTermFormat ) )
+			if( AQ_IS_EQUAL_ZERO( paymentDateInTermFormat ) )
 			{
 				return 1.0;
 			}
@@ -530,7 +530,7 @@ namespace etrading
 
     VariantMatrix DiscountFactorResults::paymentDatesInTermsFormatAndDiscountFactors() const
     {
-        MLIB_REQUIRE( paymentDatesInTermFormat_.size() == discountFactors_.size(), "Invalid Discount Factor Results - Inconsistent number of paymentDates and discountFactors" )
+        AQ_REQUIRE( paymentDatesInTermFormat_.size() == discountFactors_.size(), "Invalid Discount Factor Results - Inconsistent number of paymentDates and discountFactors" )
 
         const size_t TWO_COLUMNS_OF_DATA = 2;
         VariantMatrix results( discountFactors_.size() );
@@ -548,7 +548,7 @@ namespace etrading
 
     VariantMatrix DiscountFactorResults::paymentDatesAndDiscountFactors() const
     {
-        MLIB_REQUIRE( paymentDatesInTermFormat_.size() == discountFactors_.size(), "Invalid Discount Factor Results - Inconsistent number of paymentDates and discountFactors" )
+        AQ_REQUIRE( paymentDatesInTermFormat_.size() == discountFactors_.size(), "Invalid Discount Factor Results - Inconsistent number of paymentDates and discountFactors" )
 
         const size_t TWO_COLUMNS_OF_DATA = 2;
         VariantMatrix results( discountFactors_.size() );
@@ -579,7 +579,7 @@ namespace etrading
 		{
 			// For Backwards Compatibility we set historic forward rates to zero
 			// --------------------------------------------------------------------------------------------------------------------------
-			// MLIB_REQUIRE( fromDateInTermFormat >= AsOfDateInTermsFormat, "Unable to imply Forward Rate(s) from Discount Factors - The reset date is before the curve asOfDate; Fixing Table required" )
+			// AQ_REQUIRE( fromDateInTermFormat >= AsOfDateInTermsFormat, "Unable to imply Forward Rate(s) from Discount Factors - The reset date is before the curve asOfDate; Fixing Table required" )
 			const double AsOfDateInTermsFormat = 0.0;
 			if ( fromDateInTermFormat <  AsOfDateInTermsFormat )
 			{
@@ -595,7 +595,7 @@ namespace etrading
 			// The term here must be the converted from the internal ACT/365 daycount used for date transformation to a term in the curve daycount measure
 			// --------------------------------------------------------------------------------------------------------------------------
 			const double accrualTerm = accrualPeriod( fromDateInTermFormat, toDateInTermFormat, asOfDate_, daycount_, compoundFrequency );
-			MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( accrualTerm ), "Unable to imply Forward Rates(s) from Discount Factors - The reset start date must be before the reset end date" )
+			AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( accrualTerm ), "Unable to imply Forward Rates(s) from Discount Factors - The reset start date must be before the reset end date" )
 			
 			const double fromDF				= getDiscountFactor( fromDateInTermFormat );
 			const double toDF				= getDiscountFactor( toDateInTermFormat );
@@ -621,7 +621,7 @@ namespace etrading
 			    forwardRate					= ( std::pow( fromDF / toDF, 1.0 / ( accrualTerm * 4.0 ) ) - 1.0 ) * 4.0;
 			    break;
 			default:
-			    MLIB_THROW("Invalid Curve Compound Frequency: " + toString(compoundFrequency) );
+			    AQ_THROW("Invalid Curve Compound Frequency: " + toString(compoundFrequency) );
 			}
 		}
 		else
@@ -643,8 +643,8 @@ namespace etrading
             return 0.0;
         }
 
-        //MLIB_REQUIRE( fromDate >= asOfDate_,    "Unable to imply Forward Rate(s) from Discount Factors - The reset date is before the curve asOfDate; Fixing Table required" )
-        MLIB_REQUIRE( toDate > fromDate,        "Unable to imply Forward Rates(s) from Discount Factors - The reset start date must be before the reset end date" )
+        //AQ_REQUIRE( fromDate >= asOfDate_,    "Unable to imply Forward Rate(s) from Discount Factors - The reset date is before the curve asOfDate; Fixing Table required" )
+        AQ_REQUIRE( toDate > fromDate,        "Unable to imply Forward Rates(s) from Discount Factors - The reset start date must be before the reset end date" )
 
         const double fromDateInTermFormat   = convertCurveDateToTerm( asOfDate_, fromDate );
         const double toDateInTermFormat     = convertCurveDateToTerm( asOfDate_, toDate );
@@ -682,7 +682,7 @@ namespace etrading
 														   const bool isFwdInter,
                                                            const CompoundingFrequencyEnum & compoundFrequency ) const
     {
-        MLIB_REQUIRE( fromDatesInTermFormat.size() == toDatesInTermFormat.size(), "Unable to imply Forward Rates - The number of reset start and end dates must match" )
+        AQ_REQUIRE( fromDatesInTermFormat.size() == toDatesInTermFormat.size(), "Unable to imply Forward Rates - The number of reset start and end dates must match" )
         VectorDouble forwardResults( fromDatesInTermFormat.size() );
         for ( size_t i = 0; i < fromDatesInTermFormat.size(); ++i )
         {
@@ -696,7 +696,7 @@ namespace etrading
 														   const bool isFwdInter,
                                                            const CompoundingFrequencyEnum & compoundFrequency ) const
     {
-        MLIB_REQUIRE( fromDates.size() == toDates.size(), "Unable to imply Forward Rates - The number of reset start and end dates must match" )
+        AQ_REQUIRE( fromDates.size() == toDates.size(), "Unable to imply Forward Rates - The number of reset start and end dates must match" )
         VectorDouble forwardResults( fromDates.size() );
         for ( size_t i = 0; i < fromDates.size(); ++i )
         {

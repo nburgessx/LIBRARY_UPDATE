@@ -5,27 +5,27 @@
 
 // #Pragma Macro for OMP Parallelized Loop
 // *** This macro must be preceeded with the #pragma keyword ***
-#define MLIB_PARALLEL_FOR                                               omp parallel for num_threads( omp_get_max_threads() )
+#define AQ_PARALLEL_FOR                                               omp parallel for num_threads( omp_get_max_threads() )
 
 // #Pragma Macro for OMP Parallelized Loop with Shared Variable Addition
 // *** This macro must be preceeded with the #pragma keyword ***
-#define MLIB_PARALLEL_FOR_WITH_SHARED_VARIABLE( sharedVariable )        omp parallel for shared (sharedVariable) num_threads( omp_get_max_threads() )
+#define AQ_PARALLEL_FOR_WITH_SHARED_VARIABLE( sharedVariable )        omp parallel for shared (sharedVariable) num_threads( omp_get_max_threads() )
 
 // #Pragma Macro for OMP Parallelized Loop with Shared Variable Addition
 // *** This macro must be preceeded with the #pragma keyword ***
-#define MLIB_PARALLEL_FOR_WITH_REDUCTION_ADD( sharedVariable )          omp parallel for reduction (+:sharedVariable) num_threads( omp_get_max_threads() )
+#define AQ_PARALLEL_FOR_WITH_REDUCTION_ADD( sharedVariable )          omp parallel for reduction (+:sharedVariable) num_threads( omp_get_max_threads() )
 
 // #Pragma Macro for OMP Parallelized Loop with Shared Variable Subtraction
 // *** This macro must be preceeded with the #pragma keyword ***
-#define MLIB_PARALLEL_FOR_WITH_REDUCTION_SUBTRACT( sharedVariable )     omp parallel for reduction (-:sharedVariable) num_threads( omp_get_max_threads() )
+#define AQ_PARALLEL_FOR_WITH_REDUCTION_SUBTRACT( sharedVariable )     omp parallel for reduction (-:sharedVariable) num_threads( omp_get_max_threads() )
 
 // #Pragma Macro for OMP Parallelized Loop with Shared Variable Multiplication
 // *** This macro must be preceeded with the #pragma keyword ***
-#define MLIB_PARALLEL_FOR_WITH_REDUCTION_MULTIPLY( sharedVariable )     omp parallel for reduction (*:sharedVariable) num_threads( omp_get_max_threads() )
+#define AQ_PARALLEL_FOR_WITH_REDUCTION_MULTIPLY( sharedVariable )     omp parallel for reduction (*:sharedVariable) num_threads( omp_get_max_threads() )
 
 // #Pragma Macro for OMP Parallelized Loop with Shared Variable Division
 // *** This macro must be preceeded with the #pragma keyword ***
-#define MLIB_PARALLEL_FOR_WITH_REDUCTION_DIVIDE( sharedVariable )       omp parallel for reduction (/:sharedVariable) num_threads( omp_get_max_threads() )
+#define AQ_PARALLEL_FOR_WITH_REDUCTION_DIVIDE( sharedVariable )       omp parallel for reduction (/:sharedVariable) num_threads( omp_get_max_threads() )
 
 
 namespace etrading

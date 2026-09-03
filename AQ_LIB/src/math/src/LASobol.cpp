@@ -21345,7 +21345,7 @@ extern "C"
 
 #endif
 
-const int *const MLIB_PrimitivePolynomials[N_MAX_DEGREE]={
+const int *const AQ_PrimitivePolynomials[N_MAX_DEGREE]={
    PrimitivePolynomialDegree01
 #if PPMT_MAX_DIM > N_PRIMITIVES_UP_TO_DEGREE_01
  , PrimitivePolynomialDegree02
@@ -61257,12 +61257,12 @@ LASobol::initialize(void)
 
     for (; k<dimensionality; k++,index++)
     {
-        ppmt[k] = MLIB_PrimitivePolynomials[currentDegree - 1][index];
+        ppmt[k] = AQ_PrimitivePolynomials[currentDegree - 1][index];
         if (ppmt[k] == -1)
         {
             ++currentDegree;
             index=0;
-            ppmt[k] = MLIB_PrimitivePolynomials[currentDegree - 1][index];
+            ppmt[k] = AQ_PrimitivePolynomials[currentDegree - 1][index];
         }
         degree[k] = currentDegree;
     }

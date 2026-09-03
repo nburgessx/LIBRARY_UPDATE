@@ -84,7 +84,7 @@ namespace etrading
 
     double FloatingBond::yield( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const
     {
-		MLIB_THROW( "yield() is not yet supported for FloatingBonds." );
+		AQ_THROW( "yield() is not yet supported for FloatingBonds." );
     }
 
 	/* @brief	Calculates the bond yield. This API takes in a dataProvider object
@@ -111,17 +111,17 @@ namespace etrading
     //The price can be either dirtyPrice or cleanPrice
     double FloatingBond::compoundYield( const LADate& settlementDate, const double& price, const YieldCalculationTypeEnum& yieldCalcType) const
     {
-		MLIB_THROW( "compoundYield() is not yet supported for FloatingBonds." );
+		AQ_THROW( "compoundYield() is not yet supported for FloatingBonds." );
     }
 
     double FloatingBond::dirtyPrice( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool isCompoundYield, const std::shared_ptr<BondActiveCouponDates>& activeCouponDatesPtr ) const
     {
-		MLIB_THROW( "dirtyPrice() is not yet supported for FloatingBonds." );
+		AQ_THROW( "dirtyPrice() is not yet supported for FloatingBonds." );
     }
 
     double FloatingBond::cleanPrice( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
     {
-         MLIB_THROW( "cleanPrice() is not yet supported for FloatingBonds." );
+         AQ_THROW( "cleanPrice() is not yet supported for FloatingBonds." );
     }
 
 	/* @brief Calculates the bond accrued interest. This API takes in a dataProvider object.
@@ -136,7 +136,7 @@ namespace etrading
 		const double annualizedNextCouponRate = dataProvider.getValuationSettings().getFloatBondCurrentCouponRate();
 		if (boost::math::isnan(annualizedNextCouponRate))
 		{
-			MLIB_THROW( "Missing FloatBondCoupon for floating bond." );
+			AQ_THROW( "Missing FloatBondCoupon for floating bond." );
 		}
 
 		const BondActiveCouponDates activeCouponDates = schedule_->getBondFirstActiveCouponDates( settlementDate, false );
@@ -152,7 +152,7 @@ namespace etrading
 	*/
 	double FloatingBond::dirtyPriceFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
 	{
-		MLIB_THROW( "dirtyPriceFromBondCurve() is not yet supported for FloatingBonds." );
+		AQ_THROW( "dirtyPriceFromBondCurve() is not yet supported for FloatingBonds." );
 	}
 	
 	/* @brief Calculates the clean price of a bond using a BondCurve to discount the coupons.
@@ -162,7 +162,7 @@ namespace etrading
 	*/
 	double FloatingBond::cleanPriceFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
 	{
-		MLIB_THROW( "cleanPriceFromBondCurve() is not yet supported for FloatingBonds." );
+		AQ_THROW( "cleanPriceFromBondCurve() is not yet supported for FloatingBonds." );
 	}
 
 	/* @brief	calculate the bond yield from the price quote and a bondCurve for discounting coupons
@@ -177,7 +177,7 @@ namespace etrading
 	*/
 	double FloatingBond::yieldFromPriceAndBondCurve( const LADate& settlementDate, const double& price, BondCurve& bondCurve ) const
 	{
-		MLIB_THROW( "yieldFromPriceAndBondCurve() is not yet supported for FloatingBonds." );
+		AQ_THROW( "yieldFromPriceAndBondCurve() is not yet supported for FloatingBonds." );
 	}
 	
 	/* @brief	Calculates the bond yield-to-maturity from a bund curve
@@ -187,22 +187,22 @@ namespace etrading
 	*/
 	double FloatingBond::yieldFromBondCurve( const LADate& settlementDate, const BondCurve& bondCurve ) const
 	{
-		MLIB_THROW( "yieldFromBondCurve() is not yet supported for FloatingBonds." );
+		AQ_THROW( "yieldFromBondCurve() is not yet supported for FloatingBonds." );
 	}
 
 	double FloatingBond::dirtyPriceFromCreditModel( const LADate& settlementDate, const CreditModel& creditModel ) const
 	{
-		MLIB_THROW( "dirtyPriceFromCreditModel() is not yet supported for FloatingBonds." );
+		AQ_THROW( "dirtyPriceFromCreditModel() is not yet supported for FloatingBonds." );
 	}
 
 	double FloatingBond::cleanPriceFromCreditModel( const LADate& settlementDate, const CreditModel& creditModel ) const
 	{
-		MLIB_THROW( "cleanPriceFromCreditModel() is not yet supported for FloatingBonds." );
+		AQ_THROW( "cleanPriceFromCreditModel() is not yet supported for FloatingBonds." );
 	}
 
 	double FloatingBond::hazardRateFromPrice( const LADate& settlementDate, const double price, CreditModel& creditModel, const bool useHullApproximation ) const
 	{
-		MLIB_THROW( "hazardRateFromPrice() is not yet supported for FloatingBonds." );
+		AQ_THROW( "hazardRateFromPrice() is not yet supported for FloatingBonds." );
 	}
 
 	/* @brief	Credit Risky forward dirty price calculated from a credit model and underlying discount curve
@@ -212,7 +212,7 @@ namespace etrading
 	*/
 	double FloatingBond::forwardDirtyPriceFromCreditModel( const LADate& forwardSettleDate, const CreditModel& creditModel ) const
 	{
-		MLIB_THROW( "forwardDirtyPriceFromCreditModel() is not yet supported for FloatingBonds." );
+		AQ_THROW( "forwardDirtyPriceFromCreditModel() is not yet supported for FloatingBonds." );
 	}
 
 	/* @brief	Risk-free forward dirty price calculated from a discount curve
@@ -223,7 +223,7 @@ namespace etrading
 	*/
 	double FloatingBond::forwardDirtyPriceFromDiscountCurve( const LADate& forwardSettleDate, const std::string& curveCollection, const std::string& discountCurve ) const
 	{
-		MLIB_THROW( "forwardDirtyPriceFromDiscountCurve() is not yet supported for FloatingBonds." );
+		AQ_THROW( "forwardDirtyPriceFromDiscountCurve() is not yet supported for FloatingBonds." );
 	}
 
     unsigned int FloatingBond::accruedInterestDays( const LADate& settlementDate ) const
@@ -234,17 +234,17 @@ namespace etrading
 
     double FloatingBond::annuity( const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
     {
-        MLIB_THROW( "annuity() is not yet supported for FloatingBonds.");
+        AQ_THROW( "annuity() is not yet supported for FloatingBonds.");
     }
 
 	double FloatingBond::annuityWithNotional( const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
     {
-        MLIB_THROW( "annuityWithNotional() is not yet supported for FloatingBonds.");
+        AQ_THROW( "annuityWithNotional() is not yet supported for FloatingBonds.");
     }
 
     double FloatingBond::pv01( const double& yield, const YieldCalculationTypeEnum& yieldCalcType ) const
     {
-        MLIB_THROW( "pv01() is not yet supported for FloatingBonds.");
+        AQ_THROW( "pv01() is not yet supported for FloatingBonds.");
     }
     
     ScheduleTypeEnum FloatingBond::getScheduleType() const
@@ -254,12 +254,12 @@ namespace etrading
 
 	double FloatingBond::dv01( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType, bool isCompoundYield ) const
 	{
-		MLIB_THROW( "dv01() is not yet supported for FloatingBonds.");
+		AQ_THROW( "dv01() is not yet supported for FloatingBonds.");
 	}
 
 	double FloatingBond::modifiedDuration( const LADate& settlementDate, const double& yield, const YieldCalculationTypeEnum& yieldCalcType , bool isCompoundYield ) const
 	{
-		MLIB_THROW( "modifiedDuration() is not yet supported for FloatingBonds.");
+		AQ_THROW( "modifiedDuration() is not yet supported for FloatingBonds.");
 	}
 
 	/* @brief	Computes the price of a floating rate bond without requiring discount and forecast curves.
@@ -281,7 +281,7 @@ namespace etrading
 
 		if ( schedule_->getBondCalculationType() != TYPE21_FLOATING_RATE_NOTE )
 		{
-			MLIB_THROW( "Discount margin calculation is only supported for Bond Calc Type 21.")	
+			AQ_THROW( "Discount margin calculation is only supported for Bond Calc Type 21.")	
 		}
 
 		/*
@@ -300,7 +300,7 @@ namespace etrading
 		 * Compute the first floating coupon amount. This coupon rate has already fixed.
 		 */
 		const double faceValue        = getSchedule()->getNotional();
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(faceValue), "Bond notional cannot be zero.");
 		
         const double exactCouponYearFraction = getYearFraction( activeCouponDates.priorFirstActiveCouponDate_, activeCouponDates.firstActiveCouponDate_, dayCount); 
 
@@ -332,7 +332,7 @@ namespace etrading
 
         auto cashflows = schedule_->getAllCashflowsExcludingUpfrontNotional();
 		const size_t nCoupons = cashflows.size();
-		MLIB_REQUIRE( nCoupons > 0, "Unable to calculate the price. The bond has no cashflows." )
+		AQ_REQUIRE( nCoupons > 0, "Unable to calculate the price. The bond has no cashflows." )
 
 	     /*
 		 *  Compute the PV of all future cashflows to the first coupon date:
@@ -391,7 +391,7 @@ namespace etrading
 
 		if ( schedule_->getBondCalculationType() != TYPE21_FLOATING_RATE_NOTE )
 		{
-			MLIB_THROW( "Price from Yield calculation is only supported for Bond Calc Type 21.")	
+			AQ_THROW( "Price from Yield calculation is only supported for Bond Calc Type 21.")	
 		}
 
 		/*
@@ -569,7 +569,7 @@ namespace etrading
 			return 365.25 / 365.;
 
 		default:
-			MLIB_THROW( "Unsupported daycount: " + toString( dayCount ));
+			AQ_THROW( "Unsupported daycount: " + toString( dayCount ));
 		}
 	}
 

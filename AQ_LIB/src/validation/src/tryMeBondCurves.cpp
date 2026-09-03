@@ -10,7 +10,7 @@
 #include "StructuredExceptionHandler.h"
 #include "CommonConstants.h"
 #include "RecordMacros.h"
-#include "DataUtilities.h"	// For MLIB_TO_STRING macros
+#include "DataUtilities.h"	// For AQ_TO_STRING macros
 
 // Namespaces for Input/Output Logging
 using etrading::CreateDataFile;
@@ -46,7 +46,7 @@ namespace validation_api
 		DoubleVector lowBounds = { -50.0, -50.0, -50.0, 0.0 };  // beta0, beta1, beta2, lambda
 		if ( lowerBounds.size() > 0 )
 		{
-            MLIB_REQUIRE( lowerBounds.size() == 4, "Invalid LowerBounds: Require 4 LowerBounds Values" )
+            AQ_REQUIRE( lowerBounds.size() == 4, "Invalid LowerBounds: Require 4 LowerBounds Values" )
 			lowBounds = lowerBounds;
 		}
 
@@ -54,15 +54,15 @@ namespace validation_api
 		DoubleVector upBounds = { 50.0, 50.0, 50.0, 50.0 };  // beta0, beta1, beta2, lambda
 		if ( upperBounds.size() > 0 )
 		{
-            MLIB_REQUIRE( upperBounds.size() == 4, "Invalid UpperBounds: Require 4 UpperBounds Values" )
+            AQ_REQUIRE( upperBounds.size() == 4, "Invalid UpperBounds: Require 4 UpperBounds Values" )
 			upBounds = upperBounds;
 		}
 
-		MLIB_REQUIRE( lowBounds.size() == upBounds.size(), "Number of Nelson Siegel lower bounds should match number of upper bounds.");
-		MLIB_REQUIRE( bondYields.size() == bondMaturities.size(), "Number of bond yields should match the number of bond maturities. ");
+		AQ_REQUIRE( lowBounds.size() == upBounds.size(), "Number of Nelson Siegel lower bounds should match number of upper bounds.");
+		AQ_REQUIRE( bondYields.size() == bondMaturities.size(), "Number of bond yields should match the number of bond maturities. ");
 
-		MLIB_REQUIRE( bondMaturities.size() >= 4, "Require a minimum of 4 bond maturities." );
-		MLIB_REQUIRE( bondYields.size() >= 4, "Require a minimum of 4 bond yields." );
+		AQ_REQUIRE( bondMaturities.size() >= 4, "Require a minimum of 4 bond maturities." );
+		AQ_REQUIRE( bondYields.size() >= 4, "Require a minimum of 4 bond yields." );
 
 		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = etrading::calibrateNelsonSiegelSvenssonToBondYields( etrading::NELSON_SIEGEL_INTERPOLATION,
 																														          bondMaturities,
@@ -120,7 +120,7 @@ namespace validation_api
 		DoubleVector lowBounds = { -50.0, -50.0, -50.0, -50.0, 0.0, 0.0 };  // beta0, beta1, beta2, beta3, lambda1, lambda2
 		if ( lowerBounds.size() > 0 )
 		{
-            MLIB_REQUIRE( lowerBounds.size() == 6, "Invalid LowerBounds: Require 6 LowerBounds Values" )
+            AQ_REQUIRE( lowerBounds.size() == 6, "Invalid LowerBounds: Require 6 LowerBounds Values" )
 			lowBounds = lowerBounds;
 		}
 
@@ -128,15 +128,15 @@ namespace validation_api
 		DoubleVector upBounds = { 50.0, 50.0, 50.0, 50.0, 50.0, 50.0 };  // beta0, beta1, beta2, beta3, lambda1, lambda2
 		if ( upperBounds.size() > 0 )
 		{
-		    MLIB_REQUIRE( upperBounds.size() == 6, "Invalid UpperBounds: Require 6 UpperBound Values" )
+		    AQ_REQUIRE( upperBounds.size() == 6, "Invalid UpperBounds: Require 6 UpperBound Values" )
             upBounds = upperBounds;
 		}
 
-		MLIB_REQUIRE( lowBounds.size() == upBounds.size(), "Number of Nelson Siegel lower bounds should match number of upper bounds.")
-		MLIB_REQUIRE( bondYields.size() == bondMaturities.size(), "Number of bond yields should match the number of bond maturities. ")
+		AQ_REQUIRE( lowBounds.size() == upBounds.size(), "Number of Nelson Siegel lower bounds should match number of upper bounds.")
+		AQ_REQUIRE( bondYields.size() == bondMaturities.size(), "Number of bond yields should match the number of bond maturities. ")
 
-		MLIB_REQUIRE( bondMaturities.size() >= 6, "Require a minimum of 6 bond maturities." )
-		MLIB_REQUIRE( bondYields.size() >= 6, "Require a minimum of 6 bond yields." )
+		AQ_REQUIRE( bondMaturities.size() >= 6, "Require a minimum of 6 bond maturities." )
+		AQ_REQUIRE( bondYields.size() >= 6, "Require a minimum of 6 bond yields." )
 
 		etrading::NelsonSiegelSvenssonCalibrationResults calibrationResult = etrading::calibrateNelsonSiegelSvenssonToBondYields( etrading::SVENSSON_INTERPOLATION,
 																														          bondMaturities,
@@ -194,10 +194,10 @@ namespace validation_api
 		// Record Inputs for logs, tests and playback - Note the first argument is the decorated file prefix and the second the suffix
         RECORD_INPUTS( polynomialOrder, bondMaturities, bondYields, maxIterations, maxStationaryStateIterations, lowerBound, upperBound );
 
-		MLIB_REQUIRE( bondYields.size() == bondMaturities.size(), "Number of bond yields should match the number of bond maturities. ");
+		AQ_REQUIRE( bondYields.size() == bondMaturities.size(), "Number of bond yields should match the number of bond maturities. ");
 
-		MLIB_REQUIRE( bondMaturities.size() >= polynomialOrder, "Require a minimum of " + MLIB_TO_STRING_FROM_SIZE_T(polynomialOrder) + " of Bond Maturities, NumberOfDataPoints >= PolynomialOrder" );
-		MLIB_REQUIRE( bondYields.size() >= polynomialOrder, "Require a minimum of " + MLIB_TO_STRING_FROM_SIZE_T(polynomialOrder) + " of Bond Yields, NumberOfDataPoints >= PolynomialOrder" );
+		AQ_REQUIRE( bondMaturities.size() >= polynomialOrder, "Require a minimum of " + AQ_TO_STRING_FROM_SIZE_T(polynomialOrder) + " of Bond Maturities, NumberOfDataPoints >= PolynomialOrder" );
+		AQ_REQUIRE( bondYields.size() >= polynomialOrder, "Require a minimum of " + AQ_TO_STRING_FROM_SIZE_T(polynomialOrder) + " of Bond Yields, NumberOfDataPoints >= PolynomialOrder" );
 
 		etrading::PolynomialCalibrationResults calibrationResult = etrading::calibratePolynomialBondYields( polynomialOrder,
 																										    bondMaturities,
@@ -233,8 +233,8 @@ namespace validation_api
         size_t nColumnHeaders   = dataBlockNames.size();
         size_t nDataColumns     = infoBlocks.size();
 		
-        MLIB_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided" )
-        MLIB_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " +  std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " +  std::to_string(static_cast<long long>(nDataColumns)) )
+        AQ_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided" )
+        AQ_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " +  std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " +  std::to_string(static_cast<long long>(nDataColumns)) )
 
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
@@ -260,7 +260,7 @@ namespace validation_api
             return ( dataBlockName.empty() || dataBlockName == "" );
         } );
 
-        MLIB_REQUIRE( !hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString( dataBlockNames ) )
+        AQ_REQUIRE( !hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString( dataBlockNames ) )
 
 		// Verify that the supplied propertyNames match the BondCurveEnum
 		std::set<etrading::BondCurveEnum> enumSet;

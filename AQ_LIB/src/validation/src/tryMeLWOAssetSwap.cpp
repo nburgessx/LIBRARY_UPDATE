@@ -35,18 +35,18 @@ namespace validation_api
 			const std::shared_ptr<etrading::BondSchedule>& bondSchedule = std::static_pointer_cast<etrading::BondSchedule>(bond->getSchedule());
 			const std::shared_ptr<etrading::FixedBondLegSchedule>& fixedSchedule = std::static_pointer_cast<etrading::FixedBondLegSchedule>(swapFixedLeg->getSchedule());
 
-			MLIB_REQUIRE(MLIB_IS_EQUAL(std::fabs(bondSchedule->getNotional()), std::fabs(fixedSchedule->getNotional())), "The Notional of Bond and Swap Fixed Leg are not matched.");
-			MLIB_REQUIRE(MLIB_IS_EQUAL(bondSchedule->getFixedRate(), fixedSchedule->getFixedRate()), "Bond's Coupon Rate and Swap Fixed Leg's Fixed Rate are not matched.");
+			AQ_REQUIRE(AQ_IS_EQUAL(std::fabs(bondSchedule->getNotional()), std::fabs(fixedSchedule->getNotional())), "The Notional of Bond and Swap Fixed Leg are not matched.");
+			AQ_REQUIRE(AQ_IS_EQUAL(bondSchedule->getFixedRate(), fixedSchedule->getFixedRate()), "Bond's Coupon Rate and Swap Fixed Leg's Fixed Rate are not matched.");
 
-			MLIB_REQUIRE(bondSchedule->getMaturityDate()				== fixedSchedule->getMaturityDate(), "The Maturity Date of Bond and Swap Fixed Leg are not matched.");
-			MLIB_REQUIRE(bondSchedule->getAccrualCalendar()				== fixedSchedule->getAccrualCalendar(), "The Accrual Calendar of Bond and Swap Fixed Leg are not matched.");
-			MLIB_REQUIRE(bondSchedule->getAccrualDaycount()				== fixedSchedule->getAccrualDaycount(), "The Accrual Daycount of Bond and Swap Fixed Leg are not matched.");
-			MLIB_REQUIRE(bondSchedule->getAccrualFrequency()			== fixedSchedule->getAccrualFrequency(), "The Accrual Frequency of Bond and Swap Fixed Leg are not matched.");
-			MLIB_REQUIRE(bondSchedule->getPaymentFrequency()			== fixedSchedule->getPaymentFrequency(), "The Payment Frequency of Bond and Swap Float Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getMaturityDate()				== fixedSchedule->getMaturityDate(), "The Maturity Date of Bond and Swap Fixed Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getAccrualCalendar()				== fixedSchedule->getAccrualCalendar(), "The Accrual Calendar of Bond and Swap Fixed Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getAccrualDaycount()				== fixedSchedule->getAccrualDaycount(), "The Accrual Daycount of Bond and Swap Fixed Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getAccrualFrequency()			== fixedSchedule->getAccrualFrequency(), "The Accrual Frequency of Bond and Swap Fixed Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getPaymentFrequency()			== fixedSchedule->getPaymentFrequency(), "The Payment Frequency of Bond and Swap Float Leg are not matched.");
 
-			MLIB_REQUIRE(bondSchedule->getBondCalculationType()			== fixedSchedule->getBondCalculationType(), "The CalculationType of Bond and Swap Fixed Leg are not matched.");
-			MLIB_REQUIRE(bondSchedule->getExDividendTenor()				== fixedSchedule->getExDividendTenor(), "The ExDividendTenor of Bond and Swap Fixed Leg are not matched.");
-			MLIB_REQUIRE(bondSchedule->getExDividendBusinessDayAdj()	== fixedSchedule->getExDividendBusinessDayAdj(), "The ExDividendBusinessDayAdj of Bond and Swap Fixed Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getBondCalculationType()			== fixedSchedule->getBondCalculationType(), "The CalculationType of Bond and Swap Fixed Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getExDividendTenor()				== fixedSchedule->getExDividendTenor(), "The ExDividendTenor of Bond and Swap Fixed Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getExDividendBusinessDayAdj()	== fixedSchedule->getExDividendBusinessDayAdj(), "The ExDividendBusinessDayAdj of Bond and Swap Fixed Leg are not matched.");
 
 			break;
 		}
@@ -56,21 +56,21 @@ namespace validation_api
 			const std::shared_ptr<etrading::BondSchedule>& bondSchedule = std::static_pointer_cast<etrading::BondSchedule>(bond->getSchedule());
 			const std::shared_ptr<etrading::FloatBondLegSchedule>& floatSchedule = std::static_pointer_cast<etrading::FloatBondLegSchedule>(swapFloatLeg->getSchedule());
 
-			MLIB_REQUIRE(MLIB_IS_EQUAL(std::fabs(bondSchedule->getNotional()), std::fabs(floatSchedule->getNotional()) ), "The Notional of Bond and Swap Float Leg are not matched.");
+			AQ_REQUIRE(AQ_IS_EQUAL(std::fabs(bondSchedule->getNotional()), std::fabs(floatSchedule->getNotional()) ), "The Notional of Bond and Swap Float Leg are not matched.");
 
-			MLIB_REQUIRE(bondSchedule->getMaturityDate()			== floatSchedule->getMaturityDate(), "The Maturity Date of Bond and Swap Float Leg are not matched.");
-			MLIB_REQUIRE(bondSchedule->getAccrualCalendar()			== floatSchedule->getAccrualCalendar(), "The Accrual Calendar of Bond and Swap Float Leg are not matched.");
-			MLIB_REQUIRE(bondSchedule->getAccrualDaycount()			== floatSchedule->getAccrualDaycount(), "The Accrual Daycount of Bond and Swap Float Leg are not matched.");
-			MLIB_REQUIRE(bondSchedule->getAccrualFrequency()		== floatSchedule->getAccrualFrequency(), "The Accrual Frequency of Bond and Swap Float Leg are not matched.");
-			MLIB_REQUIRE(bondSchedule->getPaymentFrequency()		== floatSchedule->getPaymentFrequency(), "The Payment Frequency of Bond and Swap Float Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getMaturityDate()			== floatSchedule->getMaturityDate(), "The Maturity Date of Bond and Swap Float Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getAccrualCalendar()			== floatSchedule->getAccrualCalendar(), "The Accrual Calendar of Bond and Swap Float Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getAccrualDaycount()			== floatSchedule->getAccrualDaycount(), "The Accrual Daycount of Bond and Swap Float Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getAccrualFrequency()		== floatSchedule->getAccrualFrequency(), "The Accrual Frequency of Bond and Swap Float Leg are not matched.");
+			AQ_REQUIRE(bondSchedule->getPaymentFrequency()		== floatSchedule->getPaymentFrequency(), "The Payment Frequency of Bond and Swap Float Leg are not matched.");
 
 			// Check bond parameters
 			auto floatingBond = std::dynamic_pointer_cast<etrading::FloatingBond>(bond);
-			MLIB_REQUIRE( floatingBond != nullptr, "Bond '" + bond->getBondObjectName() + "' is not a floating rate bond." )
+			AQ_REQUIRE( floatingBond != nullptr, "Bond '" + bond->getBondObjectName() + "' is not a floating rate bond." )
 		
 			const double assetSwapQuotedMargin = floatSchedule->getQuotedMargin();
 			const double floatBondQuotedMargin = floatingBond->getQuotedMargin();
-			MLIB_REQUIRE( MLIB_IS_EQUAL( assetSwapQuotedMargin, floatBondQuotedMargin ), "Asset Swap QuotedMargin should match the Floating Bond QuotedMargin");
+			AQ_REQUIRE( AQ_IS_EQUAL( assetSwapQuotedMargin, floatBondQuotedMargin ), "Asset Swap QuotedMargin should match the Floating Bond QuotedMargin");
 
 			break;
 		}
@@ -154,13 +154,13 @@ namespace validation_api
 		const bool isCleanPriceEmpty = isCleanPrices.empty();
 		if (!isCleanPriceEmpty)
 		{
-			MLIB_REQUIRE(expectedSize == isCleanPrices.size(), "Inconsistent number of settlement dates and isCleanPrices");
+			AQ_REQUIRE(expectedSize == isCleanPrices.size(), "Inconsistent number of settlement dates and isCleanPrices");
 		}
 
 		const bool emptyBondAccrualStartDate = bondAccrualStartDates.empty();
 		if (!emptyBondAccrualStartDate)
 		{
-			MLIB_REQUIRE(expectedSize == bondAccrualStartDates.size(), "Inconsistent number of settlement dates and bondAccrualStartDates");
+			AQ_REQUIRE(expectedSize == bondAccrualStartDates.size(), "Inconsistent number of settlement dates and bondAccrualStartDates");
 		}
 
         std::vector< double > spreads(expectedSize);
@@ -207,7 +207,7 @@ namespace validation_api
 		auto swapFixedLeg = etrading::getFixedLeg(swap);
 		auto swapFloatLeg = etrading::getFloatLeg(swap);
 		
-		MLIB_REQUIRE(swapFixedLeg->getType() == etrading::SWAPSCHEDULE_FIXEDBOND, "Asset Swaps must be contain a FixedBond.");
+		AQ_REQUIRE(swapFixedLeg->getType() == etrading::SWAPSCHEDULE_FIXEDBOND, "Asset Swaps must be contain a FixedBond.");
 
 		double aswSpread = 0.0;
 
@@ -219,7 +219,7 @@ namespace validation_api
 		{
 			//Create a dummy bond, so that clean price can be calculated from the dirty price
 
-			MLIB_REQUIRE(bondAccrualStartDate != LADate(), "bondAccrualStartDate is required to calculate Bond's clean price from dirty price.");
+			AQ_REQUIRE(bondAccrualStartDate != LADate(), "bondAccrualStartDate is required to calculate Bond's clean price from dirty price.");
 
 			const std::string bondName = swapObjectName + "_Bond";
 
@@ -326,7 +326,7 @@ namespace validation_api
 
 		auto bond = etrading::getBond(bondObjectName);
 
-		MLIB_REQUIRE(bond->getBondTypeEnum() == etrading::FLOATER_BOND, "AssetSwap's Fixed Equivalent Coupon calculation is only supported for Floating Bond.");
+		AQ_REQUIRE(bond->getBondTypeEnum() == etrading::FLOATER_BOND, "AssetSwap's Fixed Equivalent Coupon calculation is only supported for Floating Bond.");
 
 		auto swap = etrading::getSwap(swapObjectName);
 		auto swapFixedLeg = etrading::getFixedLeg(swap);
@@ -431,7 +431,7 @@ namespace validation_api
 		const bool isFixedFloatAssetSwap = (swapFixedLeg->getType() == etrading::FIXED_SCHEDULE_TYPE && swapFloatLeg->getType() == etrading::SWAPSCHEDULE_FLOATBOND)
 								|| (swapFixedLeg->getType() == etrading::SWAPSCHEDULE_FIXEDBOND && swapFloatLeg->getType() == etrading::FLOAT_SCHEDULE_TYPE);
 
-		MLIB_REQUIRE(isFixedFloatAssetSwap, "Invalid Asset Swap Set-Up - Asset Swaps must be contain a FixedLeg and a FloatBondLeg, or a FixedBondLeg and FloatLeg")
+		AQ_REQUIRE(isFixedFloatAssetSwap, "Invalid Asset Swap Set-Up - Asset Swaps must be contain a FixedLeg and a FloatBondLeg, or a FixedBondLeg and FloatLeg")
 			
 		double bondCleanPrice = 0.0;
 		if (swapFixedLeg->getType() == etrading::SWAPSCHEDULE_FIXEDBOND)

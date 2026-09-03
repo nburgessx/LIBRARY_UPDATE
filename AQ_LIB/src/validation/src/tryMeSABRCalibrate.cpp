@@ -71,7 +71,7 @@ namespace validation_api
 
 		if (forwardID != LAString("") && convID != LAString(""))
 		{
-			MLIB_THROW("Do not input ForwardID and Convention ID at the same time")
+			AQ_THROW("Do not input ForwardID and Convention ID at the same time")
 		}
 
 		LADataInstance* dataInstance = etrading::InitializeMLibETrading::instance().dataInstance();
@@ -81,7 +81,7 @@ namespace validation_api
 		{
 			if (curveMat.size() == 0)
 			{
-				MLIB_THROW("Must provide curve matrix when forwardID is not given.")
+				AQ_THROW("Must provide curve matrix when forwardID is not given.")
 			}
 			else
 			{

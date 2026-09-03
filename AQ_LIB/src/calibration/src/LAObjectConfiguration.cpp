@@ -118,7 +118,7 @@ LAObjectConfiguration::setUpValuableEntity(LAObjectPool &objPool) const
 	LAString isDetail =  mpStaticData->getStaticData(KEY_SIMULATION_ISDETAILOUTPUT);
 
     LAString zeroCalc = LACoreDataService::getContext(ARG_KEY_ZEROCALC);
-    if (zeroCalc == MLIB_NO_DATA) {
+    if (zeroCalc == AQ_NO_DATA) {
         zeroCalc = "FALSE";
     }
 
@@ -128,7 +128,7 @@ LAObjectConfiguration::setUpValuableEntity(LAObjectPool &objPool) const
 	{
 		//for risk currency mode
 		LAString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
-		if (fxName != MLIB_NO_DATA)
+		if (fxName != AQ_NO_DATA)
 		{
 			objHolder.get().remove(PRICING_DATA_FXRATE);
 			objHolder.get().add(PRICING_DATA_FXRATE, new LADataReference()).convertFromString(fxName);
@@ -157,13 +157,13 @@ LAObjectConfiguration::setUpValuableEntity(LAObjectPool &objPool) const
 			}
 		
 			// ! Set isResultOut
-			if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) != MLIB_NO_DATA )
+			if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) != AQ_NO_DATA )
 			{
 				trade.remove( PRICING_DATA_ISRESULTOUTPUT );
 				trade.add( PRICING_DATA_ISRESULTOUTPUT, new LADataBool( true ) );
 			}
 
-			if(LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != MLIB_NO_DATA)
+			if(LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != AQ_NO_DATA)
 			{
 				trade.remove(PRICING_DATA_COMPOUNDED_RATE_OUT);
 				trade.add(PRICING_DATA_COMPOUNDED_RATE_OUT, new LADataBool(true));
@@ -206,13 +206,13 @@ LAObjectConfiguration::setUpValuableEntity(LAObjectPool &objPool) const
 		}
 
 		// ! Set isResultOut
-		if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) != MLIB_NO_DATA )
+		if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) != AQ_NO_DATA )
 		{
 			objHolder.remove( PRICING_DATA_ISRESULTOUTPUT );
 			objHolder.add( PRICING_DATA_ISRESULTOUTPUT, new LADataBool( true ) );
 		}
 
-        if(LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != MLIB_NO_DATA)
+        if(LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != AQ_NO_DATA)
         {
             objHolder.remove(PRICING_DATA_COMPOUNDED_RATE_OUT);
             objHolder.add(PRICING_DATA_COMPOUNDED_RATE_OUT, new LADataBool(true));
@@ -253,7 +253,7 @@ LAObjectConfiguration::setUpRiskInfo(LADataInstance &dataInstance) const
 	vector<const LAObject *> riskEVec;
 	for (unsigned int i = 0; i < riskENames.size(); ++i)
 	{
-		if (riskENames[i] != MLIB_NO_DATA)
+		if (riskENames[i] != AQ_NO_DATA)
 		{
 			riskEVec.push_back(&objPool.getObject(riskENames[i], ENCHKTYPE_ISDEFINED).get());
 		}
@@ -265,7 +265,7 @@ LAObjectConfiguration::setUpRiskInfo(LADataInstance &dataInstance) const
 	{
 		//for risk currency mode
 		LAString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
-		if (fxName != MLIB_NO_DATA)
+		if (fxName != AQ_NO_DATA)
 		{
 			objHolder.get().remove(PRICING_DATA_FXRATE);
 			objHolder.get().add(PRICING_DATA_FXRATE, new LADataReference()).convertFromString(fxName);
@@ -371,7 +371,7 @@ LAObjectConfiguration::setUpPathEntity(LAObjectPool &objPool, const LAString *pP
 	//getSDETimeGrid(sdeTimeGrid);
 	//path->getSDETimeGrid().set(sdeTimeGrid);
 	LAString timegridContext = LACoreDataService::getContext(CONTEXT_KEY_SDE_TIMEGRID);
-	if (timegridContext==MLIB_NO_DATA)
+	if (timegridContext==AQ_NO_DATA)
 	{
 		getSDETimeGrid(sdeTimeGrid);
 		path->getSDETimeGrid().set(sdeTimeGrid);
@@ -391,7 +391,7 @@ LAObjectConfiguration::setUpPathEntity(LAObjectPool &objPool, const LAString *pP
 	//// set sdedividnum
 	//LAString divNum = mpStaticData->getStaticData("sde." + mainModel + ".integral.divnum");
 
-	//if (divNum != MLIB_NO_DATA)
+	//if (divNum != AQ_NO_DATA)
 	//{
 	//	path->getSDEIntegralDivNum().convertFromString(divNum);
 	//}
@@ -399,7 +399,7 @@ LAObjectConfiguration::setUpPathEntity(LAObjectPool &objPool, const LAString *pP
 	//// set sdedividnum
 	//LAString integralTimeGridStr = mpStaticData->getStaticData("sde." + mainModel + ".integral.timegrid");
 
-	//if (integralTimeGridStr != MLIB_NO_DATA)
+	//if (integralTimeGridStr != AQ_NO_DATA)
 	//{
 	//	LADataDoubles tmpAttr;
 	//	tmpAttr.convertFromString(integralTimeGridStr);
@@ -622,7 +622,7 @@ LAObjectConfiguration::setUpFXEntity(LAObjectPool &objPool) const
 
 			LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 			LAString temp = staticData.getStaticData(KEY_SDE_XCCY_USD_IS_GENERATE_ONLY_CURVE);
-			if (temp==MLIB_NO_DATA)
+			if (temp==AQ_NO_DATA)
 				temp = "FALSE";
 			LADataBool isOnlyCurve;
 			isOnlyCurve.convertFromString(temp);
@@ -687,7 +687,7 @@ LAObjectConfiguration::setUpExtraEntity(LAObjectPool &objPool) const
             // setUpRecalcTrade(objPool, dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
             LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
             LAString temp = staticData.getStaticData(KEY_SIMULATION_FUNDING_CHANGED);
-            if (temp==MLIB_NO_DATA){
+            if (temp==AQ_NO_DATA){
                 setUpRecalcTrade(objPool, dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
             }
             ///////////////////////////////////////////////////////////
@@ -724,7 +724,7 @@ LAObjectConfiguration::setUpExtraEntity(LAObjectPool &objPool) const
         // setUpRecalcTrade(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));
         LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
         LAString temp = staticData.getStaticData(KEY_SIMULATION_FUNDING_CHANGED);
-        if (temp==MLIB_NO_DATA){
+        if (temp==AQ_NO_DATA){
             setUpRecalcTrade(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));
         }
         /////////////////////////////////////////////////
@@ -1232,10 +1232,10 @@ LAObjectConfiguration::getFixedRate(const LAString &key, const LAString &index) 
 	index_tmp.remove(0, 13);
     LAString fixedrate = staticData.getStaticData(key + "." + index_tmp);
 
-	if (fixedrate == MLIB_NO_DATA)
+	if (fixedrate == AQ_NO_DATA)
 	{
 		fixedrate = staticData.getStaticData(key + ".standard");
-		if (fixedrate == MLIB_NO_DATA)
+		if (fixedrate == AQ_NO_DATA)
 			fixedrate = "0.01";
 	}
 	return fixedrate.getDoubleValue();
@@ -1668,7 +1668,7 @@ LAObjectConfiguration::setUpDigitalCallSpreadCoupon(LAObjectPool &objPool,  LAMa
 				continue;
 
 			LAString spreadvalstr = staticData.getStaticData(indexcur + FX_KEY_DEAL_DIGITALCOUPON_CALLSPREADVALUE);
-			if (spreadvalstr == MLIB_NO_DATA)
+			if (spreadvalstr == AQ_NO_DATA)
 				throw LACoreInvalidData("DigitalCoupon CallSpread error",__FILE__,__LINE__);
 
 			//set coupon digitalmode
@@ -1904,26 +1904,26 @@ LAObjectConfiguration::setUpScaleShftOfLSMC(LAObjectPool &objPool, LAMathObjectV
 
 	LAString tmp = mpStaticData->getStaticData(KEY_SIMULATION_LSMC_ISSHIFTY).toUpper();
 	callinfo.remove(PRICING_DATA_ISSHIFT_Y);
-	if (tmp != MLIB_NO_DATA && tmp == "TRUE")
+	if (tmp != AQ_NO_DATA && tmp == "TRUE")
 	{
 		callinfo.add(PRICING_DATA_ISSHIFT_Y, new LADataBool(true));
 	}
 	tmp = mpStaticData->getStaticData(KEY_SIMULATION_LSMC_ISSHIFTX).toUpper();
 	callinfo.remove(PRICING_DATA_ISSHIFT_X);
-	if (tmp != MLIB_NO_DATA && tmp == "TRUE")
+	if (tmp != AQ_NO_DATA && tmp == "TRUE")
 	{
 		callinfo.add(PRICING_DATA_ISSHIFT_X, new LADataBool(true));
 	}
 
 	tmp = mpStaticData->getStaticData(KEY_SIMULATION_LSMC_ISSCALEY).toUpper();
 	callinfo.remove(PRICING_DATA_ISSCALE_Y);
-	if (tmp != MLIB_NO_DATA && tmp == "TRUE")
+	if (tmp != AQ_NO_DATA && tmp == "TRUE")
 	{
 		callinfo.add(PRICING_DATA_ISSCALE_Y, new LADataBool(true));
 	}
 	tmp = mpStaticData->getStaticData(KEY_SIMULATION_LSMC_ISSCALEX).toUpper();
 	callinfo.remove(PRICING_DATA_ISSCALE_X);
-	if (tmp != MLIB_NO_DATA && tmp == "TRUE")
+	if (tmp != AQ_NO_DATA && tmp == "TRUE")
 	{
 		callinfo.add(PRICING_DATA_ISSCALE_X, new LADataBool(true));
 	}
@@ -1960,7 +1960,7 @@ LAObjectConfiguration::setUpAsOfDateForTradeEntity(LAObjectPool &objPool, LAMath
     if(!dh->isDefined() || dh->isNull()){
         LAString settlestr = LACoreDataService::getContext(ARG_KEY_SETTLEDATE);
         trade.remove(PRICING_DATA_SETTLEDATE);
-        if (settlestr != MLIB_NO_DATA)
+        if (settlestr != AQ_NO_DATA)
             trade.LAObject::add(PRICING_DATA_SETTLEDATE, new LADataDate()).convertFromString(settlestr);
         else
             trade.LAObject::add(PRICING_DATA_SETTLEDATE, new LADataDate(asOf));
@@ -2124,7 +2124,7 @@ LAObjectConfiguration::setUpDiscountCurve(LAObjectPool &objPool, LAMathObjectVal
 		ccy.toLower();
 		LAString dCurve = DF2;
 		const LAString dCurve_p = mpStaticData->getStaticData(ccy + STATIC_DATA_KEY_YIELD_DF2);
-		if (dCurve_p != MLIB_NO_DATA)
+		if (dCurve_p != AQ_NO_DATA)
 		{
 			dCurve = dCurve_p;
 		}
@@ -2276,7 +2276,7 @@ void LAObjectConfiguration::setUpRangeAccrueFixedRates(const LADate& asOfDate, L
 	// read fixing rate file
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	LAString ratefile = staticData.getStaticData(KEY_DEAL_RATE_FILE);
-	if (ratefile == MLIB_NO_DATA)
+	if (ratefile == AQ_NO_DATA)
 	{
 		return;
 	}
@@ -2530,7 +2530,7 @@ void LAObjectConfiguration::setUpPastIndexRate(LAObjectPool &objPool, LAMathObje
 	// read fixing rate file
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	LAString ratefile = staticData.getStaticData(KEY_DEAL_RATE_FILE);
-	if (ratefile == MLIB_NO_DATA)
+	if (ratefile == AQ_NO_DATA)
 	{
 		return;
 	}
@@ -2653,7 +2653,7 @@ void LAObjectConfiguration::setUpCompoundingFixedRates(const LADate& asOfDate, L
 	// read fixing rate file
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	LAString ratefile = staticData.getStaticData(KEY_DEAL_RATE_FILE);
-	if (ratefile == MLIB_NO_DATA)
+	if (ratefile == AQ_NO_DATA)
 	{
 		return;
 	}
@@ -2822,7 +2822,7 @@ LAObjectConfiguration::setUpSVDToleranceForLSMC(LAObjectPool &objPool, LAMathObj
 
 	LAString tmp = mpStaticData->getStaticData(KEY_SIMULATION_LSMC_SVDTOLERANCE).toUpper();
 	callinfo.remove(PRICING_DATA_SVDTOLERANCE);
-	if (tmp != MLIB_NO_DATA)
+	if (tmp != AQ_NO_DATA)
 	{
 		callinfo.add(PRICING_DATA_SVDTOLERANCE, new LADataDouble()).convertFromString(tmp);
 	}

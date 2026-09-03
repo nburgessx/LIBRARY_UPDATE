@@ -318,14 +318,14 @@ namespace etrading
 
 		AnyTypeVector outputs;
 
-		MLIB_PUSH_BACK_IF(outputs, fxFwdPoint.bid, includeFXPriceColumn(BID_POINTS_FXPRICE, columnList) );
-		MLIB_PUSH_BACK_IF(outputs, fxFwdPoint.ask, includeFXPriceColumn(ASK_POINTS_FXPRICE, columnList) );
+		AQ_PUSH_BACK_IF(outputs, fxFwdPoint.bid, includeFXPriceColumn(BID_POINTS_FXPRICE, columnList) );
+		AQ_PUSH_BACK_IF(outputs, fxFwdPoint.ask, includeFXPriceColumn(ASK_POINTS_FXPRICE, columnList) );
 
-		MLIB_PUSH_BACK_IF(outputs, fxFwdRate.bid, includeFXPriceColumn(BID_OUTRIGHT_FXPRICE, columnList) );
-		MLIB_PUSH_BACK_IF(outputs, fxFwdRate.ask, includeFXPriceColumn(ASK_OUTRIGHT_FXPRICE, columnList) );
+		AQ_PUSH_BACK_IF(outputs, fxFwdRate.bid, includeFXPriceColumn(BID_OUTRIGHT_FXPRICE, columnList) );
+		AQ_PUSH_BACK_IF(outputs, fxFwdRate.ask, includeFXPriceColumn(ASK_OUTRIGHT_FXPRICE, columnList) );
 
-		MLIB_PUSH_BACK_IF(outputs, fxFwdPoint.mid, includeFXPriceColumn(MID_POINTS_FXPRICE, columnList) );
-		MLIB_PUSH_BACK_IF(outputs, fxFwdRate.mid, includeFXPriceColumn(MID_OUTRIGHT_FXPRICE, columnList) );
+		AQ_PUSH_BACK_IF(outputs, fxFwdPoint.mid, includeFXPriceColumn(MID_POINTS_FXPRICE, columnList) );
+		AQ_PUSH_BACK_IF(outputs, fxFwdRate.mid, includeFXPriceColumn(MID_OUTRIGHT_FXPRICE, columnList) );
 
 		return outputs;
      }
@@ -350,14 +350,14 @@ namespace etrading
 			AnyTypeMatrix result;
             AnyTypeVector headers;
 			
-			MLIB_PUSH_BACK_IF(headers, toString(BID_POINTS_FXPRICE), includeFXPriceColumn(BID_POINTS_FXPRICE, columnList) );
-			MLIB_PUSH_BACK_IF(headers, toString(ASK_POINTS_FXPRICE), includeFXPriceColumn(ASK_POINTS_FXPRICE, columnList) );
+			AQ_PUSH_BACK_IF(headers, toString(BID_POINTS_FXPRICE), includeFXPriceColumn(BID_POINTS_FXPRICE, columnList) );
+			AQ_PUSH_BACK_IF(headers, toString(ASK_POINTS_FXPRICE), includeFXPriceColumn(ASK_POINTS_FXPRICE, columnList) );
 
-			MLIB_PUSH_BACK_IF(headers, toString(BID_OUTRIGHT_FXPRICE), includeFXPriceColumn(BID_OUTRIGHT_FXPRICE, columnList) );
-			MLIB_PUSH_BACK_IF(headers, toString(ASK_OUTRIGHT_FXPRICE), includeFXPriceColumn(ASK_OUTRIGHT_FXPRICE, columnList) );
+			AQ_PUSH_BACK_IF(headers, toString(BID_OUTRIGHT_FXPRICE), includeFXPriceColumn(BID_OUTRIGHT_FXPRICE, columnList) );
+			AQ_PUSH_BACK_IF(headers, toString(ASK_OUTRIGHT_FXPRICE), includeFXPriceColumn(ASK_OUTRIGHT_FXPRICE, columnList) );
 
-			MLIB_PUSH_BACK_IF(headers, toString(MID_POINTS_FXPRICE), includeFXPriceColumn(MID_POINTS_FXPRICE, columnList) );
-			MLIB_PUSH_BACK_IF(headers, toString(MID_OUTRIGHT_FXPRICE), includeFXPriceColumn(MID_OUTRIGHT_FXPRICE, columnList) );
+			AQ_PUSH_BACK_IF(headers, toString(MID_POINTS_FXPRICE), includeFXPriceColumn(MID_POINTS_FXPRICE, columnList) );
+			AQ_PUSH_BACK_IF(headers, toString(MID_OUTRIGHT_FXPRICE), includeFXPriceColumn(MID_OUTRIGHT_FXPRICE, columnList) );
 
 			result.push_back(headers);
 
@@ -421,7 +421,7 @@ namespace etrading
 
 			double bidTermDF = termDF, askTermDF = termDF;
 
-			if (!MLIB_IS_EQUAL_ZERO(xccySwapRateBumpSize))
+			if (!AQ_IS_EQUAL_ZERO(xccySwapRateBumpSize))
 			{
 				//Analytical formula to calculate new DF' when swapRate is bumped:
 				//Formula: fxFwdRate_usdrub = fxSpot_usdrub * (1+r_rub * yf_rub)/(1+r_usd *yf_usd) = fxSpot_usdrub * DF_usd/DF_rub
@@ -542,7 +542,7 @@ namespace etrading
 
 		LADate curveAsOfDate = getCurveAsOfDate(xccyCurveCollection);
 
-		MLIB_REQUIRE(isEnabledCurveResults() && doesExistCurveResultsConventionsAndMarketData(xccyCurveCollection, xccyCurveIndex), "Curve Results have been Disabled");
+		AQ_REQUIRE(isEnabledCurveResults() && doesExistCurveResultsConventionsAndMarketData(xccyCurveCollection, xccyCurveIndex), "Curve Results have been Disabled");
 
 		LabelValueBlock curveFxConventionsLVB;
 		auto curveConvMarketData = CurveResultsContainer::getInstance().getCurveResults(xccyCurveCollection, xccyCurveIndex)->curveConventionsAndMarketData();
@@ -576,7 +576,7 @@ namespace etrading
 			}
 			else 
 			{
-				MLIB_THROW("#Error: FWDFXCONST's Target must be either Leg2Discount or Leg1Discount");
+				AQ_THROW("#Error: FWDFXCONST's Target must be either Leg2Discount or Leg1Discount");
 			}
 		}
 				
@@ -625,7 +625,7 @@ namespace etrading
 		}
 		auto domensticCurveType = toCurveTypeEnum(getCurveType(xccyCurveObject->getDomesticCurveCollection(), getCurveStaticDataTableName(xccyCurveObject->getDomesticCurveCollection(), domensticDiscountCurve)).getCString());
 
-		MLIB_REQUIRE(domensticCurveType == XCCYBASIS_CURVETYPE, "This method only supports curve object with XccyBasis curve type.");
+		AQ_REQUIRE(domensticCurveType == XCCYBASIS_CURVETYPE, "This method only supports curve object with XccyBasis curve type.");
 
 		const LabelValueBlock curveFxConventionsLVB = xccyCurveObject->getCurveGeneratorObj()->toLabelValueBlock(toString(FXFWD_CONVENTIONS));
 		const LabelValueBlock curveXccySwapConventionsLVB = xccyCurveObject->getCurveGeneratorObj()->toLabelValueBlock(toString(XCCY_BASIS_CONVENTIONS));
@@ -660,7 +660,7 @@ namespace etrading
 
 		const int marketDataRateColumn = CurveMarketData::findMarketDataRateColumnNumber_ForAllInstrumentTypes(FXSPOT_MARKETDATA);
 
-		MLIB_REQUIRE(fxSpotMatrix.size() > 0 && marketDataRateColumn >= 0, "Invalid Market Data: Not enough columns in the FxSpot market data block.");
+		AQ_REQUIRE(fxSpotMatrix.size() > 0 && marketDataRateColumn >= 0, "Invalid Market Data: Not enough columns in the FxSpot market data block.");
 
 		double fxSpotRate = fxSpotMatrix[0][marketDataRateColumn].getDoubleValue();
 
@@ -744,7 +744,7 @@ namespace etrading
 		auto baseDF = etrading::getCurveDiscountFactors(boost::assign::list_of(spotFXDate), baseCurveCollection, baseCurveIndex)[0];
 		auto termDF = etrading::getCurveDiscountFactors(boost::assign::list_of(spotFXDate), termCurveCollection, termCurveIndex)[0];
 
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(baseDF), "base ccy DF as denominator cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(baseDF), "base ccy DF as denominator cannot be zero.");
 
 		//fx rate is from base to term ccy
 		const double asOfDateFxRate = spotFXRate * termDF / baseDF;
@@ -763,7 +763,7 @@ namespace etrading
 		auto baseDF = etrading::getCurveDiscountFactors(boost::assign::list_of(spotFXDate), baseCurveCollection, baseCurveIndex)[0];
 		auto termDF = etrading::getCurveDiscountFactors(boost::assign::list_of(spotFXDate), termCurveCollection, termCurveIndex)[0];
 
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(termDF), "term ccy DF as denominator cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(termDF), "term ccy DF as denominator cannot be zero.");
 
 		//fx rate is from base to term ccy
 		const double spotFX = asOfDateFXRate * baseDF / termDF;

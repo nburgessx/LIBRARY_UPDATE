@@ -10,7 +10,7 @@
  * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
  */
 
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 #include "TypeUtilities.h"          // Swig Marshalling Helper Methods
 #include "meBondCurve.h"
 #include "BondUtilities.h"
@@ -36,7 +36,7 @@ swig::NelsonSiegelSvenssonCalibrationResults meBondCurveNelsonSiegelCalibrate( c
 																	  const std::vector<double>& lowerBounds,
 																	  const std::vector<double>& upperBounds )
 {
-	MLIB_API_START
+	AQ_API_START
 
     // Call validation_api method and marshall swig inputs
     etrading::NelsonSiegelSvenssonCalibrationResults nsResult = validation_api::tryMeBondCurveNelsonSiegelCalibrate( bondMaturities,
@@ -49,7 +49,7 @@ swig::NelsonSiegelSvenssonCalibrationResults meBondCurveNelsonSiegelCalibrate( c
     // Marshall Outputs
     return swig::toSwigNelsonSiegelSvenssonCalibrationResults( nsResult );
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -70,7 +70,7 @@ swig::NelsonSiegelSvenssonCalibrationResults meBondCurveSvenssonCalibrate( const
 															      const std::vector<double>& lowerBounds,
 															      const std::vector<double>& upperBounds )
 {
-	MLIB_API_START
+	AQ_API_START
 
     // Call validation_api method and marshall swig inputs
     etrading::NelsonSiegelSvenssonCalibrationResults sResult = validation_api::tryMeBondCurveSvenssonCalibrate( bondMaturities,
@@ -83,7 +83,7 @@ swig::NelsonSiegelSvenssonCalibrationResults meBondCurveSvenssonCalibrate( const
     // Marshall Outputs
     return swig::toSwigNelsonSiegelSvenssonCalibrationResults( sResult );
 
-    MLIB_API_END 
+    AQ_API_END 
 }
 
 /* @brief Main API: Calibrates Polynomial-interpolation coefficients to the specified bond yields and maturities
@@ -105,7 +105,7 @@ swig::PolynomialCalibrationResults meBondCurvePolynomialCalibrate( const unsigne
 																  const double lowerBound,
 																  const double upperBound )
 {
-    MLIB_API_START
+    AQ_API_START
 
     /// Call validation_api method
     etrading::PolynomialCalibrationResults nsResult = validation_api::tryMeBondCurvePolynomialCalibrate( polynomialOrder,
@@ -123,7 +123,7 @@ swig::PolynomialCalibrationResults meBondCurvePolynomialCalibrate( const unsigne
     swig::PolynomialCalibrationResults result;
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief	Nelson-Siegel interpolation. Given a set of maturities, calculates the corresponding bond yields
@@ -140,13 +140,13 @@ std::vector<double> meBondCurveNelsonSiegelYield( const double& beta0,
 										          const double& lambda,
 										          const std::vector<double>& bondMaturities )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Call validation_api method
     std::vector<double> result = validation_api::tryMeBondCurveNelsonSiegelYield( beta0, beta1, beta2, lambda, bondMaturities );
     return result;
     
-    MLIB_API_END	
+    AQ_API_END	
 }
 
 /* @brief	Nelson-Siegel-Svensson interpolation. Given a set of maturities, calculates the corresponding bond yields
@@ -167,13 +167,13 @@ std::vector<double> meBondCurveSvenssonYield( const double& beta0,
 									          const double& lambda2,
 									          const std::vector<double>& bondMaturities )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Call validation_api method
     std::vector<double> result = validation_api::tryMeBondCurveSvenssonYield( beta0, beta1, beta2, beta3, lambda1, lambda2, bondMaturities );
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief Polynomial interpolation. Given a vector of polynomial coefficients and a bond maturity, interpolates the corresponding bond yield on the curve
@@ -183,13 +183,13 @@ std::vector<double> meBondCurveSvenssonYield( const double& beta0,
 */
 std::vector<double> meBondCurvePolynomialYield( const std::vector<double>& coefficients, const std::vector<double>& bondMaturities )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Call validation_api method
     std::vector<double> result = validation_api::tryMeBondCurvePolynomialYield( coefficients, bondMaturities );
     return result;
     
-    MLIB_API_END	
+    AQ_API_END	
 }
 
 /* @brief Function to display bond cashflows
@@ -202,12 +202,12 @@ std::vector<double> meBondCurvePolynomialYield( const std::vector<double>& coeff
 */
 SWIG_STRINGMATRIX meLWOBondDisplayCashflows( const std::string& bondObjectName, const std::string& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders )
 {
-    MLIB_API_START
+    AQ_API_START
 
 	SWIG_STRINGMATRIX result =  meLWOBondDisplayCashflows( bondObjectName, settlementDate, yield, yieldCalculationType, showColumnHeaders, std::vector<std::string>() ); // columnList = Empty
 	return result;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief Function to display bond cashflows
@@ -221,7 +221,7 @@ SWIG_STRINGMATRIX meLWOBondDisplayCashflows( const std::string& bondObjectName, 
 */
 SWIG_STRINGMATRIX meLWOBondDisplayCashflows( const std::string& bondObjectName, const std::string& settlementDate, const double& yield, const std::string& yieldCalculationType, const bool& showColumnHeaders, const std::vector<std::string>& columnList )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Inputs
     LADate settlementDate_( etrading::stringToDate( settlementDate ) );
@@ -233,7 +233,7 @@ SWIG_STRINGMATRIX meLWOBondDisplayCashflows( const std::string& bondObjectName, 
 	SWIG_STRINGMATRIX result = swig::fromAnyTypeMatrixToMatrixOfString( cashflows );
 	return result;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief Function to display bond cashflows
@@ -244,12 +244,12 @@ SWIG_STRINGMATRIX meLWOBondDisplayCashflows( const std::string& bondObjectName, 
 */
 SWIG_STRINGMATRIX meLWOBondDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders )
 {
-    MLIB_API_START
+    AQ_API_START
 
 	SWIG_STRINGMATRIX result = meLWOBondDisplaySchedule( bondObjectName, showColumnHeaders, std::vector<std::string>() ); // columnList = Empty
 	return result;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -261,7 +261,7 @@ SWIG_STRINGMATRIX meLWOBondDisplaySchedule( const std::string& bondObjectName, c
 */
 SWIG_STRINGMATRIX meLWOBondDisplaySchedule( const std::string& bondObjectName, const bool& showColumnHeaders, const std::vector<std::string>& columnList )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Inputs
 
@@ -272,7 +272,7 @@ SWIG_STRINGMATRIX meLWOBondDisplaySchedule( const std::string& bondObjectName, c
 	SWIG_STRINGMATRIX result = swig::fromAnyTypeMatrixToMatrixOfString( schedule );
 	return result;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
  

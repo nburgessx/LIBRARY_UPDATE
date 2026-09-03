@@ -3278,7 +3278,7 @@ namespace etrading
 	    {
 		    result = getCurveTypeInterpolation(mCurveType).value(term);
 		    result = (isinterprateterm) ? LAMath::exp(-result) : result;
-		    MLIB_THROW_IF( std::isnan( result ), "Invalid Curve Data: Curve not built or its discount factors contain errors" )
+		    AQ_THROW_IF( std::isnan( result ), "Invalid Curve Data: Curve not built or its discount factors contain errors" )
 			return result;
 	    }
 
@@ -3286,7 +3286,7 @@ namespace etrading
 	    {
 			result = getCurveTypeInterpolation(mCurveType).value(term);
 		    result = (isinterprateterm) ? LAMath::exp(-result) : result;
-			MLIB_THROW_IF( std::isnan( result ), "Invalid Curve Data: Curve not built or its discount factors contain errors" )
+			AQ_THROW_IF( std::isnan( result ), "Invalid Curve Data: Curve not built or its discount factors contain errors" )
 		    return result;
 	    }
 	
@@ -3304,7 +3304,7 @@ namespace etrading
 	
 	    result =  getCurveTypeInterpolation(mCurveType).value(termTmp);
 	    result = (isinterprateterm) ? LAMath::exp(-result) : result;
-		MLIB_THROW_IF( std::isnan( result ), "Invalid Curve Data: Curve not built or its discount factors contain errors" )
+		AQ_THROW_IF( std::isnan( result ), "Invalid Curve Data: Curve not built or its discount factors contain errors" )
 	    return result;
     }
 

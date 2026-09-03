@@ -3,7 +3,7 @@
 
 #include "meUtilityPCA.h"
 #include "tryMeUtilityPCA.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meUtilityPCA
@@ -18,7 +18,7 @@ SWIG_STRINGMATRIX meUtilityPCA(const std::string& key,
 							   bool useCorrelationMatrix,
 							   int nFactors)
 {
-    MLIB_API_START
+    AQ_API_START
 
 	// Input marshalling
 	LAString tmp_key(key.c_str());
@@ -30,5 +30,5 @@ SWIG_STRINGMATRIX meUtilityPCA(const std::string& key,
 	
 	return ret;
 
-    MLIB_API_END
+    AQ_API_END
 }

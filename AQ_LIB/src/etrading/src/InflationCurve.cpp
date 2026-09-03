@@ -178,7 +178,7 @@ namespace etrading
 			return marketDataMap;
 		}
 
-		MLIB_REQUIRE(numMarketDataColumns == 2, toString(INFLATIONCURVE_ZC_INFLATIONSWAPS) + ": should contain 2 columns. Found " + std::to_string(static_cast<long long> (numMarketDataColumns)) + " columns.");
+		AQ_REQUIRE(numMarketDataColumns == 2, toString(INFLATIONCURVE_ZC_INFLATIONSWAPS) + ": should contain 2 columns. Found " + std::to_string(static_cast<long long> (numMarketDataColumns)) + " columns.");
 
 		// Iterate through the calibration marketData rows and for each row determine the instrumentMaturityDate and instrument quote.
 		const size_t numMarketDataRows = marketData[0].size();
@@ -204,7 +204,7 @@ namespace etrading
 				{
 					std::string stringValue = value.getValue<std::string>();
 					boost::trim( stringValue );
-					MLIB_REQUIRE( stringValue != "", "Missing instrument quote." );
+					AQ_REQUIRE( stringValue != "", "Missing instrument quote." );
 					char * pFirstNonNumber;
                     instrumentQuote = strtod( stringValue.c_str(), &pFirstNonNumber );
 					break;
@@ -216,7 +216,7 @@ namespace etrading
 					instrumentQuote = static_cast<double> (value.getValue<int>());
 					break;
 				default:
-					MLIB_THROW("Unexpected data type in Inflation Curve Market Data ");
+					AQ_THROW("Unexpected data type in Inflation Curve Market Data ");
 				}
 
 				ZCInflationSwapMarketData marketData;
@@ -225,7 +225,7 @@ namespace etrading
 
 				if (marketDataMap.find(instrumentMaturityDate) != marketDataMap.end())
 				{
-					MLIB_THROW("Found two or more calibration instruments with the same maturity date '"
+					AQ_THROW("Found two or more calibration instruments with the same maturity date '"
 						+ instrumentMaturityDate.stringWithFormat("DD-MM-YYYY")
 						+ "'.");
 				}
@@ -253,11 +253,11 @@ namespace etrading
 			return;
 		}
 
-		MLIB_REQUIRE( numSeasonalityColumns == 2, toString( INFLATIONCURVE_SEASONALITY ) + ": should contain 2 columns. Found " + std::to_string(static_cast<long long> (numSeasonalityColumns)) + " columns." );
+		AQ_REQUIRE( numSeasonalityColumns == 2, toString( INFLATIONCURVE_SEASONALITY ) + ": should contain 2 columns. Found " + std::to_string(static_cast<long long> (numSeasonalityColumns)) + " columns." );
 
 		// Iterate through the seasonality rows and for each row obtain the seasonality quote.
 		const size_t numSeasonalityRows = seasonalityMatrix[0].size();
-		MLIB_REQUIRE( numSeasonalityRows == 12, toString( INFLATIONCURVE_SEASONALITY ) + ": should contain 12 rows. Found " + std::to_string(static_cast<long long> (numSeasonalityRows)) + " rows." );
+		AQ_REQUIRE( numSeasonalityRows == 12, toString( INFLATIONCURVE_SEASONALITY ) + ": should contain 12 rows. Found " + std::to_string(static_cast<long long> (numSeasonalityRows)) + " rows." );
 		for ( size_t i = 0; i < numSeasonalityRows; i++ )
 		{
 			// Only process the row if the data in column 0 is non-blank. i.e. trim blank rows
@@ -275,7 +275,7 @@ namespace etrading
 				{
 					std::string stringValue = value.getValue<std::string>();
 					boost::trim( stringValue );
-					MLIB_REQUIRE( stringValue != "", "Missing seasonality quote." );
+					AQ_REQUIRE( stringValue != "", "Missing seasonality quote." );
 					char * pFirstNonNumber;
                     seasonalityQuote = strtod( stringValue.c_str(), &pFirstNonNumber );
 					break;
@@ -287,7 +287,7 @@ namespace etrading
 					seasonalityQuote = static_cast<double> ( value.getValue<int>() );
 					break;
 				default:
-					MLIB_THROW("Unexpected data type in Inflation Curve Seasonality Data ");
+					AQ_THROW("Unexpected data type in Inflation Curve Seasonality Data ");
 				}
 
 				monthlySeasonalData_.push_back( seasonalityQuote );
@@ -301,7 +301,7 @@ namespace etrading
 		*/
 		const int nSeasonalPoints = monthlySeasonalData_.size();
 		
-		MLIB_REQUIRE(nSeasonalPoints == 12, "Require exactly 12 monthly seasonal data points.");
+		AQ_REQUIRE(nSeasonalPoints == 12, "Require exactly 12 monthly seasonal data points.");
 	}
 
 
@@ -327,16 +327,16 @@ namespace etrading
 		auto swapGeneratorName		= curveProperties.getCompulsoryValue( INFLATION_CURVE_PROPERTIES_KEY::SWAP_GENERATOR );
 		auto swapGenerator			= etrading::getSwapGenerator( swapGeneratorName );
 
-		MLIB_REQUIRE( annualInterpolationType_ == LOG_LINEAR_INTERPOLATION, "Only LogLinear AnnualInterpolation is supported" );
+		AQ_REQUIRE( annualInterpolationType_ == LOG_LINEAR_INTERPOLATION, "Only LogLinear AnnualInterpolation is supported" );
 
 		// Perform consistency checks between the Inflation Curve and the curveCollection
-		MLIB_REQUIRE( curveCollection_.size() > 0, "Please provide a valid CurveCollection" );
+		AQ_REQUIRE( curveCollection_.size() > 0, "Please provide a valid CurveCollection" );
 
 		const std::string curveCurrency = getCurveCurrency(curveCollection_.c_str()).getCString();
-		MLIB_REQUIRE( boost::iequals(curveCurrency, toString(currency_)), "CurveCollection currency does not match Inflation Curve currency: '" + curveCurrency + "' vs '" + toString(currency_) + ".");
+		AQ_REQUIRE( boost::iequals(curveCurrency, toString(currency_)), "CurveCollection currency does not match Inflation Curve currency: '" + curveCurrency + "' vs '" + toString(currency_) + ".");
 
 		const LADate curveAsOfDate = getCurveAsOfDate(curveCollection_.c_str());
-		MLIB_REQUIRE( curveAsOfDate == asOfDate_, "CurveCollection as-of date does not match Inflation Curve as-of date: '" + curveAsOfDate.stringWithFormat() + "' vs '" + asOfDate_.stringWithFormat() + ".");
+		AQ_REQUIRE( curveAsOfDate == asOfDate_, "CurveCollection as-of date does not match Inflation Curve as-of date: '" + curveAsOfDate.stringWithFormat() + "' vs '" + asOfDate_.stringWithFormat() + ".");
 
 		// Read the market data, sort maturities in chronological order and perform sanity checks
 		const InflationMarketDataMap marketDataMap = loadMarketDataMap( asOfDate_ );
@@ -365,7 +365,7 @@ namespace etrading
 			return;
 		}
 
-		MLIB_REQUIRE( numColumns == 2, toString(INFLATIONCURVE_CPI_FIRST_YEAR) + ": should contain 2 columns. Found " + std::to_string(static_cast<long long> (numColumns)) + " columns.");
+		AQ_REQUIRE( numColumns == 2, toString(INFLATIONCURVE_CPI_FIRST_YEAR) + ": should contain 2 columns. Found " + std::to_string(static_cast<long long> (numColumns)) + " columns.");
 
 		// Iterate through the CPI rows and for each row obtain the CPI quote.
 		const size_t numCpiFirstYearRows = cpiFirstYearMatrix[0].size();
@@ -393,7 +393,7 @@ namespace etrading
 				{
 					std::string stringValue = value.getValue<std::string>();
 					boost::trim(stringValue);
-					MLIB_REQUIRE(stringValue != "", "Missing CPI First Year quote.");
+					AQ_REQUIRE(stringValue != "", "Missing CPI First Year quote.");
 					char * pFirstNonNumber;
                     cpiQuote = strtod( stringValue.c_str(), &pFirstNonNumber );
 					break;
@@ -405,7 +405,7 @@ namespace etrading
 					cpiQuote = static_cast<double> (value.getValue<int>());
 					break;
 				default:
-					MLIB_THROW("Unexpected data type in Inflation Curve CPI First Year data" );
+					AQ_THROW("Unexpected data type in Inflation Curve CPI First Year data" );
 				}
 
 				// Store the CPI overrides in the curve as node points
@@ -451,7 +451,7 @@ namespace etrading
 			break;
 		}
 		default:
-			MLIB_THROW( "Unsupported interpolation type: " + toString( annualInterpolationType_ ) );
+			AQ_THROW( "Unsupported interpolation type: " + toString( annualInterpolationType_ ) );
 		}
 	}
 
@@ -482,8 +482,8 @@ namespace etrading
 			const ZCInflationSwapMarketData& marketData = it->second;
 
 			// Construct the calibration instrument
-			swapExpressionLVB = LabelValueBlock( swapExpressionLVB, IRS_KEY::MATURITY_DATE, MLIB_TO_STRING_FROM_INT( LADateScheduleHelpers::getExcelDate( maturityDate ) ) );
-			swapExpressionLVB = LabelValueBlock( swapExpressionLVB, SWAP_EXPRESSION_KEY::RATE_OR_SPREAD1, MLIB_TO_STRING_FROM_DOUBLE( marketData.instrumentQuote ) );
+			swapExpressionLVB = LabelValueBlock( swapExpressionLVB, IRS_KEY::MATURITY_DATE, AQ_TO_STRING_FROM_INT( LADateScheduleHelpers::getExcelDate( maturityDate ) ) );
+			swapExpressionLVB = LabelValueBlock( swapExpressionLVB, SWAP_EXPRESSION_KEY::RATE_OR_SPREAD1, AQ_TO_STRING_FROM_DOUBLE( marketData.instrumentQuote ) );
 
 			auto swapInstrument = createSwapFromGenerator( inflationIndexName_, swapGeneratorName, swapExpressionLVB, swapPropertiesLVB, isXccySwap );
 			std::shared_ptr<ZeroCouponInflationSwap> inflationSwapInstrument = std::dynamic_pointer_cast<ZeroCouponInflationSwap>( swapInstrument );
@@ -616,7 +616,7 @@ namespace etrading
 		{
 			// all the calibratedInflationPoints_ are smaller than the laggedDate we are looking for.
 			// We cannot find bracketing pillar dates.
-			MLIB_THROW( "Forward rate calculation does not allow extrapolation." );
+			AQ_THROW( "Forward rate calculation does not allow extrapolation." );
 		}
 		else
 		{
@@ -669,7 +669,7 @@ namespace etrading
 			return totalSeasonalFactor;
 		}
 
-		MLIB_REQUIRE( nSeasonalPoints == 12, "Require exactly 12 monthly seasonal data points." );
+		AQ_REQUIRE( nSeasonalPoints == 12, "Require exactly 12 monthly seasonal data points." );
 
 		for ( int month = baseMonth; month != inputMonth; month++ )
 		{
@@ -738,7 +738,7 @@ namespace etrading
 			break;
 		}
 		default:
-			MLIB_THROW( "Only an InflationResetType of 'MonthlyInterpolation' and 'DailyInterpolation' is supported" );
+			AQ_THROW( "Only an InflationResetType of 'MonthlyInterpolation' and 'DailyInterpolation' is supported" );
 
 		}
 

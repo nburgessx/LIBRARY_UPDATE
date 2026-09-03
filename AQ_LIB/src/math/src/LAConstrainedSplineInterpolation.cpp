@@ -207,7 +207,7 @@ LAConstrainedSplineInterpolation::set(const DoubleArray& index, const DoubleArra
 		{
 			thisIndex		= index[i];
 			previousIndex	= index[i-1];
-			MLIB_THROW_IF(thisIndex == previousIndex, "Invalid Interpolation Data: Duplicate data found with time value: " + MLIB_TO_STRING_FROM_DOUBLE(thisIndex) + " years" )
+			AQ_THROW_IF(thisIndex == previousIndex, "Invalid Interpolation Data: Duplicate data found with time value: " + AQ_TO_STRING_FROM_DOUBLE(thisIndex) + " years" )
 		}
 	}
 

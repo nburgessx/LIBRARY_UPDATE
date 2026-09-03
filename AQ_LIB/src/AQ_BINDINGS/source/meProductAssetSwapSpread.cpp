@@ -2,7 +2,7 @@
 #include "TypeUtilities.h"
 #include "meProductAssetSwapSpread.h"
 #include "tryMeProductAssetSwapSpread.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meProductAssetSwapSpread
@@ -15,7 +15,7 @@ double meProductAssetSwapSpread(double bondCleanPrice,
 								const std::vector<std::vector <std::string> >& assetSwapLVB, 
 								bool validateKeys)
 {
-	MLIB_API_START
+	AQ_API_START
     double ret;
 	
 	// marshall all inputs		
@@ -23,7 +23,7 @@ double meProductAssetSwapSpread(double bondCleanPrice,
 		
 	ret = validation_api::tryMeProductAssetSwapSpread(bondCleanPrice, lvb, validateKeys);
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 
 }
 
@@ -32,10 +32,10 @@ double meProductAssetSwapSpread(double bondCleanPrice,
 */
 std::vector<std::string> meProductAssetSwapSpreadLVBKeys()
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<std::string> ret;
 	
 	ret = validation_api::tryMeProductAssetSwapSpreadLVBKeys();
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }

@@ -1523,7 +1523,7 @@ StubRateAndFixingDate CurveInstrumentPricing::getStubRate( const DateVector& fix
     // Validate inputs
     //
 	// Bounds Check
-	MLIB_REQUIRE(fixingStartDates.size() == fixingEndDates.size(), "Stub Rate Error: The numbers of Fixing Date(s) and Fixing End Date(s) not matched.")
+	AQ_REQUIRE(fixingStartDates.size() == fixingEndDates.size(), "Stub Rate Error: The numbers of Fixing Date(s) and Fixing End Date(s) not matched.")
 
 	size_t nFixingDates = fixingStartDates.size();
 	for( size_t i = 0; i < nFixingDates; i++ )
@@ -1531,7 +1531,7 @@ StubRateAndFixingDate CurveInstrumentPricing::getStubRate( const DateVector& fix
 		//For libor in arrear the last dummy fixing date (fixingDates[i]) (which is the maturity date) can be the same as the last fixing date (fixingDate[i-1])
 		if(fixingStartDates[i] > fixingEndDates[i] )
 		{
-            MLIB_THROW("Stub Rate Error: Invalid Fixing Date(s)")
+            AQ_THROW("Stub Rate Error: Invalid Fixing Date(s)")
 		}
 	}
 
@@ -1540,16 +1540,16 @@ StubRateAndFixingDate CurveInstrumentPricing::getStubRate( const DateVector& fix
 	size_t nCurveTenors = curveTenors.size();
 	size_t nFixings = tenorCurveFixings.size();
 	
-    MLIB_REQUIRE( curveCount > 1, "Stub Rate Error - At least two curves are required to interpolate for stub rates." )
+    AQ_REQUIRE( curveCount > 1, "Stub Rate Error - At least two curves are required to interpolate for stub rates." )
 
     if (nCurveNames != nCurveTenors)
 	{
-        MLIB_THROW("Stub Rate Error: The number of curve index names must equal the number of curve fixing values")
+        AQ_THROW("Stub Rate Error: The number of curve index names must equal the number of curve fixing values")
 	}
 
 	if (nFixings != 0 && nFixings != nCurveNames)
 	{
-        MLIB_THROW("Stub Rate Error: If past fixings are provided, they must be provided for each curve name")
+        AQ_THROW("Stub Rate Error: If past fixings are provided, they must be provided for each curve name")
 	}
 
 	bool useGivenFixings = nFixings == 0 ? false : true;
@@ -1585,7 +1585,7 @@ StubRateAndFixingDate CurveInstrumentPricing::getStubRate( const DateVector& fix
 	floatingLegDateCount.convertFromString(DATECOUNT);	
 
     // Bounds Check
-    MLIB_REQUIRE(fixingStartDates.size() >= 1, "Stub Rate Error: Unable to calculate the swap stub rate. Invalid fixing dates" )
+    AQ_REQUIRE(fixingStartDates.size() >= 1, "Stub Rate Error: Unable to calculate the swap stub rate. Invalid fixing dates" )
 
 	// Determine the exact stub period. Must guaranteee that stub end date is after the asOf date.
 	LADate stubStart;
@@ -1601,7 +1601,7 @@ StubRateAndFixingDate CurveInstrumentPricing::getStubRate( const DateVector& fix
             // Throw an error if the stub rate is in the past, but paying in the future. Such a front stub needs to be set using the 'FirstFixing' parameter
             if ( stubEnd >= asOf )
             {
-                MLIB_THROW( "Historical Stub Rate Error: Fixing Data Required" );
+                AQ_THROW( "Historical Stub Rate Error: Fixing Data Required" );
             }
 
             // Set the Stub to Zero if it is in the past and the payment date is also in the past
@@ -1645,7 +1645,7 @@ StubRateAndFixingDate CurveInstrumentPricing::getStubRate( const DateVector& fix
 	}
 	else
 	{
-		MLIB_THROW("Invalid stub type. The Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE)");
+		AQ_THROW("Invalid stub type. The Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE)");
 	}
 
     // Leave it for reference only, this logic is covered in populateFixingStartEndDates()
@@ -1703,16 +1703,16 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 	size_t nCurveTenors = curveTenors.size();
 	size_t nFixings = tenorCurveFixings.size();
 
-	MLIB_REQUIRE(curveCount > 1, "Stub Rate Error - At least two curves are required to interpolate for stub rates.")
+	AQ_REQUIRE(curveCount > 1, "Stub Rate Error - At least two curves are required to interpolate for stub rates.")
 	
 	if (nCurveNames != nCurveTenors)
 	{
-		MLIB_THROW("Stub Rate Error: The number of curve names must equal the number of curve tenors")
+		AQ_THROW("Stub Rate Error: The number of curve names must equal the number of curve tenors")
 	}
 
 	if (nFixings != 0 && nFixings != nCurveNames)
 	{
-		MLIB_THROW("Stub Rate Error: If past fixings are provided, they must be provided for each curve name")
+		AQ_THROW("Stub Rate Error: If past fixings are provided, they must be provided for each curve name")
 	}
 
 	const bool isFixingDataProvided = nFixings == 0 ? false : true;
@@ -1736,7 +1736,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 		// Throw an error if the stub rate is in the past, but paying in the future. Such a front stub needs to be set using the 'FirstFixing' parameter
 		if (fixingEndDate > asOf)
 		{
-			MLIB_THROW("Historical Stub Rate Error: Fixing Data Required");
+			AQ_THROW("Historical Stub Rate Error: Fixing Data Required");
 		}
 
 		// Set the Stub to Zero if it is in the past and the payment date is also in the past
@@ -1792,7 +1792,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 
 		if (idx == -1)
 		{
-            MLIB_THROW("Stub Rtae Error: The 'useCurveName' column header should also be part of the curveNames list")
+            AQ_THROW("Stub Rtae Error: The 'useCurveName' column header should also be part of the curveNames list")
 		}
 
 		if (isFixingDataProvided)
@@ -1835,7 +1835,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 				LAPriceDataDayCount dc;
 				if (!etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, useCurveName, dc))
 				{
-					MLIB_THROW( "Stub Rate Error - The STD Swap Curve is invalid and has no forward rates." )
+					AQ_THROW( "Stub Rate Error - The STD Swap Curve is invalid and has no forward rates." )
 				}
 				else
 				{
@@ -1856,7 +1856,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 				}
 				else
 				{
-					MLIB_THROW( "Stub Rate Error - Back dated swaps are not supported when when interpolating on forward rates i.e. when isFwdInter is set to FALSE" )
+					AQ_THROW( "Stub Rate Error - Back dated swaps are not supported when when interpolating on forward rates i.e. when isFwdInter is set to FALSE" )
 				}
 			}
 		}
@@ -1904,7 +1904,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 					lowerCurveDate = tenorEnd;
 
                     LADate stubEndWithTolerance = etrading::LADateHelpers::getDate(stubEnd, stubToleranceTenor, sr, &cal, true  /*add tolerance tenor*/ , NULL);
-                    MLIB_REQUIRE( lowerCurveDate <= stubEndWithTolerance , "Stub Rate Extrapolation Error - Stub term is shorter than '" + curveTenor + "'. A curve with tenor less than '" + curveTenor + "' is required when setting StubIndex to 'NATURAL'." )
+                    AQ_REQUIRE( lowerCurveDate <= stubEndWithTolerance , "Stub Rate Extrapolation Error - Stub term is shorter than '" + curveTenor + "'. A curve with tenor less than '" + curveTenor + "' is required when setting StubIndex to 'NATURAL'." )
                 }
                 // b) Select the two Nearest Curves containing the Stub Date
                 else if ( i != curveCount-1 )
@@ -1933,7 +1933,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 					upperCurveDate = tenorEnd;
                     
                     LADate stubEndWithTolerance = etrading::LADateHelpers::getDate(stubEnd, stubToleranceTenor, sr, &cal, false /*subtract tolerance tenor*/, NULL);
-                    MLIB_REQUIRE( stubEndWithTolerance <= upperCurveDate, "Stub Rate Extrapolation Error - Stub term is larger than '" + curveTenor + "'. A curve with tenor larger than '" + curveTenor + "' is required when setting StubIndex to 'NATURAL'." )
+                    AQ_REQUIRE( stubEndWithTolerance <= upperCurveDate, "Stub Rate Extrapolation Error - Stub term is larger than '" + curveTenor + "'. A curve with tenor larger than '" + curveTenor + "' is required when setting StubIndex to 'NATURAL'." )
                 }
 			}		
 		}
@@ -2000,7 +2000,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 						LAPriceDataDayCount dc;
 						if (!etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, nearbyIndexCurve, dc))
 						{
-                            MLIB_THROW( "Stub Rate Error - The STD Swap Curve is invalid and has no forward rates." )
+                            AQ_THROW( "Stub Rate Error - The STD Swap Curve is invalid and has no forward rates." )
 						}
 						else
 						{
@@ -2013,7 +2013,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 					}
 					else
 					{
-                        MLIB_REQUIRE( nearbyDate >= asOf, "Stub Rate Error - Underlying curves are too short. Curve name '" + nearbyIndexCurve + " ' does not have enough calibration instruments to evaluate the stub rate.")
+                        AQ_REQUIRE( nearbyDate >= asOf, "Stub Rate Error - Underlying curves are too short. Curve name '" + nearbyIndexCurve + " ' does not have enough calibration instruments to evaluate the stub rate.")
 						
 						const double accrualFraction = floatingLegDateCount.getTerm(stubStart, nearbyDate);
 						stubRate = ( yc.getDF( dc_act.getTerm( asOf, stubStart ), &dc_act_2 ) 
@@ -2101,7 +2101,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 						LAPriceDataDayCount dc;
 						if (!etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, lowerCurveIndexCurve, dc))
 						{
-							MLIB_THROW( "Stub Rate Error - The STD Swap Curve is invalid and has no forward rates." )
+							AQ_THROW( "Stub Rate Error - The STD Swap Curve is invalid and has no forward rates." )
 						}
 						else
 						{
@@ -2122,7 +2122,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 						}
 						else
 						{
-                            MLIB_THROW( "Stub Rate Error - Back dated swaps are not supported when when interpolating on forward rates i.e. when isFwdInter is set to FALSE" )
+                            AQ_THROW( "Stub Rate Error - Back dated swaps are not supported when when interpolating on forward rates i.e. when isFwdInter is set to FALSE" )
 						}
 					}
 
@@ -2137,7 +2137,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 						LAPriceDataDayCount dc;
 						if (!etrading::LACurveForwardRateHelpers::setUpForwardDayCount(dataInstance, curveid, upperCurveIndexCurve, dc))
 						{
-							MLIB_THROW( "Stub Rate Error - Unable to interpolate the STD swap curve forward rates. The STD Swap Curve is invalid and has no forward rates." )
+							AQ_THROW( "Stub Rate Error - Unable to interpolate the STD swap curve forward rates. The STD Swap Curve is invalid and has no forward rates." )
 						}
 						else
 						{
@@ -2158,7 +2158,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const LADate& fixi
 						}
 						else
 						{
-							MLIB_THROW( "Stub Rate Error - Back dated swaps are not supported when when interpolating on forward rates i.e. when isFwdInter is set to FALSE" )
+							AQ_THROW( "Stub Rate Error - Back dated swaps are not supported when when interpolating on forward rates i.e. when isFwdInter is set to FALSE" )
 						}
 					}				
 			

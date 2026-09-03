@@ -3,11 +3,11 @@
 
 #include "TypeUtilities.h"          // Swig Marshalling Helper Methods
 #include "Variant.h"                // Variant and Variant Matrix Types
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 SWIG_STRINGMATRIX meLWOGridDisplay( const std::string& objectName, const bool& displayColumnNames  )
 {
-	MLIB_API_START
+	AQ_API_START
 	auto result = validation_api::tryMeLWOGridDisplay( objectName );
 
     auto& columnNames = std::get<1>( result );
@@ -19,5 +19,5 @@ SWIG_STRINGMATRIX meLWOGridDisplay( const std::string& objectName, const bool& d
 
     return resultsStringMatrix;
 
-    MLIB_API_END
+    AQ_API_END
 }

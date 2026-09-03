@@ -156,7 +156,7 @@ namespace etrading
     // Helper Method to get Discount Factors from the Curve Results Container
     std::shared_ptr<CurveDescription> getCurveDescriptionFromCurveResultsObject( const std::string & curveCollection, const std::string & curveIndex )
     {
-		MLIB_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
         const std::shared_ptr<CurveDescription> curveDesription = CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->curveDescription();
         return curveDesription;
     }
@@ -184,7 +184,7 @@ namespace etrading
                                                            const std::string & curveIndex,
                                                            const DateVector & paymentDates )
     {
-		MLIB_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
         const DoubleVector discountFactors = CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->discountFactorResults()->getDiscountFactors( paymentDates );
         return discountFactors;
     }
@@ -194,7 +194,7 @@ namespace etrading
                                                                              const std::string & curveIndex,
                                                                              const DoubleVector & paymentDateYearFractions )
     {
-		MLIB_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
         const DoubleVector discountFactors = CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->discountFactorResults()->getDiscountFactors( paymentDateYearFractions );
         return discountFactors;
     }
@@ -208,7 +208,7 @@ namespace etrading
 														  const bool isFwdInter,
                                                           const CompoundingFrequencyEnum & compoundFrequency )
     {
-		MLIB_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
         const DoubleVector impliedForwardRates = CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->discountFactorResults()->implyForwardRates( fixingDates, fixingBusinessDayAdj, fixingCalendar, isFwdInter, compoundFrequency );
         return impliedForwardRates;
     }
@@ -221,7 +221,7 @@ namespace etrading
 														  const bool isFwdInter,
                                                           const CompoundingFrequencyEnum & compoundFrequency)
     {
-		MLIB_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
         const DoubleVector impliedForwardRates = CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->discountFactorResults()->implyForwardRates( fromDates, toDates, isFwdInter, compoundFrequency );
         return impliedForwardRates;
     }
@@ -232,26 +232,26 @@ namespace etrading
 		{
 			case DISCOUNT_FACTOR_RISK_TYPE:
 			{
-				MLIB_REQUIRE( etrading::doesExistCurveResultsJacobianByDiscountFactor( curveCollection, curveIndex ), "Jacobian Results by DISCOUNT_FACTORS for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist"  )
+				AQ_REQUIRE( etrading::doesExistCurveResultsJacobianByDiscountFactor( curveCollection, curveIndex ), "Jacobian Results by DISCOUNT_FACTORS for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist"  )
 				return etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->jacobianResultsByDiscountFactor();
 			}
 			case FORWARD_RATE_RISK_TYPE:
 			{
-				MLIB_REQUIRE( etrading::doesExistCurveResultsJacobianByForwardRate( curveCollection, curveIndex ), "Jacobian Results by FORWARD_RATES for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist"  )
+				AQ_REQUIRE( etrading::doesExistCurveResultsJacobianByForwardRate( curveCollection, curveIndex ), "Jacobian Results by FORWARD_RATES for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist"  )
 				return etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->jacobianResultsByForwardRate();
 			}
 			case COMPOUND_RATE_RISK_TYPE:
 			{
-				MLIB_REQUIRE( etrading::doesExistCurveResultsJacobianByCompoundRate( curveCollection, curveIndex ), "Jacobian Results by COMPOUND_RATES for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist"  )
+				AQ_REQUIRE( etrading::doesExistCurveResultsJacobianByCompoundRate( curveCollection, curveIndex ), "Jacobian Results by COMPOUND_RATES for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist"  )
 				return etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection, curveIndex )->jacobianResultsByCompoundRate();
 			}
 			default:
 			{
-				MLIB_THROW("Invalid Jacobian Results: Risk Type must be 'DISCOUNT_FACTORS', 'FORWARD_RATES' or 'COMPOUND_RATES'.")
+				AQ_THROW("Invalid Jacobian Results: Risk Type must be 'DISCOUNT_FACTORS', 'FORWARD_RATES' or 'COMPOUND_RATES'.")
 			}
 		}
 
-		MLIB_THROW("Invalid Jacobian Results: Risk Type must be 'DISCOUNT_FACTORS', 'FORWARD_RATES' or 'COMPOUND_RATES'.")
+		AQ_THROW("Invalid Jacobian Results: Risk Type must be 'DISCOUNT_FACTORS', 'FORWARD_RATES' or 'COMPOUND_RATES'.")
 	}
 
     // ----------------------------- CLASS METHODS -----------------------------------------
@@ -259,14 +259,14 @@ namespace etrading
     // Method to get the Curve Results Shared Pointer
     std::shared_ptr<CurveResults> CurveResultsContainer::getCurveResults( const std::string & curveCollection, const std::string & curveIndex ) const
     {
-		MLIB_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
 
         // Mutex Required for Thread-Safety - Results can get deleted or overwritten
         boost::shared_lock<boost::shared_mutex> lock( resultsAccess_ );
 
         std::pair<std::string, std::string> searchKey( curveCollection, curveIndex );
         auto it = curveResultsContainer_.find(searchKey);
-        MLIB_REQUIRE( it != curveResultsContainer_.end(), "Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' does not exist" )
+        AQ_REQUIRE( it != curveResultsContainer_.end(), "Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' does not exist" )
         return it->second;
     }
     
@@ -295,7 +295,7 @@ namespace etrading
     // Method to add a curve results object to the curve results container/cache
     void CurveResultsContainer::addCurveResults( const std::string & curveCollection, const std::string & curveIndex, std::shared_ptr<CurveResults> curveResults )
     {
-		MLIB_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( isEnabledCurveResults(), "Curve Results have been Disabled" )
 
         // Mutex Required to Write - Exclusive Access via unique_lock
         boost::unique_lock<boost::shared_mutex> uniqueLock( resultsAccess_ );

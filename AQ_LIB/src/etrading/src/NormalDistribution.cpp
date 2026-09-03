@@ -108,18 +108,18 @@ namespace etrading
     const double standardNormalDistributionInverse( const double & phi )
     {
         // Note we include epsilon precision to manage double over- and underflow issues
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL( phi, 0.0 ), "Probability phi cannot be less than zero" );
-        MLIB_REQUIRE( MLIB_IS_LESS_THAN_OR_EQUAL( phi, 1.0 ), "Probability phi cannot be greater than one" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL( phi, 0.0 ), "Probability phi cannot be less than zero" );
+        AQ_REQUIRE( AQ_IS_LESS_THAN_OR_EQUAL( phi, 1.0 ), "Probability phi cannot be greater than one" );
         
         // Boundary Conditions
-        if ( MLIB_IS_EQUAL_ZERO( phi ) )
+        if ( AQ_IS_EQUAL_ZERO( phi ) )
         {
             // Return z = Lower Bound when probability phi = zero
             const double result = LOWER_BOUND;
             return result;
         }
 
-        if ( MLIB_IS_EQUAL( phi, 1.0 ) )
+        if ( AQ_IS_EQUAL( phi, 1.0 ) )
         {
             // Return z = Upper Bound when probability phi = zero
             const double result = UPPER_BOUND;
@@ -136,14 +136,14 @@ namespace etrading
     const double normalDistribution( const double & x, const double & mean, const double & variance )
     {
         // Note we include epsilon precision to manage double over- and underflow issues
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( variance ), "Variance cannot be negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( variance ), "Variance cannot be negative" );
 
         double z = 0.0;
 
-        if ( MLIB_IS_EQUAL_ZERO( variance ) )
+        if ( AQ_IS_EQUAL_ZERO( variance ) )
         {
             // Boundary Case: Central Limit Theorem Variance adjusted by epsilon
-            z = ( x - mean ) / ( variance + MLIB_EPSILON );
+            z = ( x - mean ) / ( variance + AQ_EPSILON );
         }
         else
         {
@@ -160,14 +160,14 @@ namespace etrading
     const double normalDistributionPDF( const double & x, const double & mean, const double & variance )
     {
         // Note we include epsilon precision to manage double over- and underflow issues
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( variance ), "Variance cannot be negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( variance ), "Variance cannot be negative" );
 
         double z = 0.0;
 
-        if ( MLIB_IS_EQUAL_ZERO( variance ) )
+        if ( AQ_IS_EQUAL_ZERO( variance ) )
         {
             // Boundary Case: Central Limit Theorem Variance adjusted by epsilon
-            z = ( x - mean ) / ( variance + MLIB_EPSILON );
+            z = ( x - mean ) / ( variance + AQ_EPSILON );
         }
         else
         {
@@ -184,19 +184,19 @@ namespace etrading
     const double normalDistributionInverse( const double & phi, const double & mean, const double & variance )
     {
         // Note we include epsilon precision to manage double over- and underflow issues
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL( phi, 0.0 ), "Probability phi cannot be less than zero" );
-        MLIB_REQUIRE( MLIB_IS_LESS_THAN_OR_EQUAL( phi, 1.0 ), "Probability phi cannot be greater than one" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( variance ), "Variance cannot be negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL( phi, 0.0 ), "Probability phi cannot be less than zero" );
+        AQ_REQUIRE( AQ_IS_LESS_THAN_OR_EQUAL( phi, 1.0 ), "Probability phi cannot be greater than one" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( variance ), "Variance cannot be negative" );
 
         // Boundary Conditions
-        if ( MLIB_IS_EQUAL_ZERO( phi ) )
+        if ( AQ_IS_EQUAL_ZERO( phi ) )
         {
             // Return z = Lower Bound when probability phi = zero
             const double result = LOWER_BOUND;
             return result;
         }
 
-        if ( MLIB_IS_EQUAL( phi, 1.0 ) )
+        if ( AQ_IS_EQUAL( phi, 1.0 ) )
         {
             // Return z = Upper Bound when probability phi = zero
             const double result = UPPER_BOUND;

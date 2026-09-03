@@ -4,7 +4,7 @@
 #include "LADate.h"
 #include "LAString.h"
 #include "tryMeCurveInterpolation.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meCurveInterpolationJoinDate
@@ -15,7 +15,7 @@
 */
 std::string meCurveInterpolationJoinDate(const std::string& curveCollection, const std::string& curveIndex, const std::string& interpolation)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::string ret;
 
 	LAString tmp_curveCollection(curveCollection.c_str());
@@ -25,5 +25,5 @@ std::string meCurveInterpolationJoinDate(const std::string& curveCollection, con
 	ret = validation_api::tryMeCurveInterpolationJoinDate(tmp_curveCollection, tmp_curveIndex, tmp_interpolation).stringWithFormat("YYYYMMDD").getCString();
 	 
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }

@@ -45,7 +45,7 @@ void LAStudentTDistribution::Set()
     mHalfNu = 0.5 * mNu;
     double g1 = exp(LAMath::gammln(mP));
     double g2 = exp(LAMath::gammln(mHalfNu));
-    mC = g1 / g2 / sqrt(MLIB_PI * mNu) / mScale;
+    mC = g1 / g2 / sqrt(AQ_PI * mNu) / mScale;
     double max = 1e20;
     SetInversionZBrent(1000, 1e-8, -max, max);
 }

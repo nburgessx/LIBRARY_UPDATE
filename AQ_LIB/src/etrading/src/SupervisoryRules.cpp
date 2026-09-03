@@ -27,16 +27,16 @@ namespace etrading
 				// the value is within tolerance of the limit
 				const double tolerance = 1.0e-10;
 				double xValue = xVariable;
-				if ( MLIB_IS_EQUAL_WITH_TOLERANCE( xValue, 0.0, tolerance ) )		// Equal to zero with tolerance
+				if ( AQ_IS_EQUAL_WITH_TOLERANCE( xValue, 0.0, tolerance ) )		// Equal to zero with tolerance
 				{
 					xValue = 0.0;
 				}
-				if (MLIB_IS_EQUAL_WITH_TOLERANCE( xValue, 1.0, tolerance  ) )		// Equal to one with tolerance
+				if (AQ_IS_EQUAL_WITH_TOLERANCE( xValue, 1.0, tolerance  ) )		// Equal to one with tolerance
 				{
 					xValue = 1.0;
 				}
-				MLIB_REQUIRE( xValue <= 1.0, "In Legacy Supervisory Rules: pbeta called with xVariable greater than 1.0: " << xVariable );
-				MLIB_REQUIRE( xValue >= 0.0, "In Legacy Supervisory Rules: pbeta called with xVariable less than 0.0: " << xVariable );
+				AQ_REQUIRE( xValue <= 1.0, "In Legacy Supervisory Rules: pbeta called with xVariable greater than 1.0: " << xVariable );
+				AQ_REQUIRE( xValue >= 0.0, "In Legacy Supervisory Rules: pbeta called with xVariable less than 0.0: " << xVariable );
 
 				boost::math::beta_distribution<> mybeta( aShape, bShape );
 				const double density = boost::math::cdf( mybeta, xValue );
@@ -75,7 +75,7 @@ namespace etrading
 		*/
 		double supervisoryFormula( const double& creditEnhancementLevel, const double& trancheThickness, const double& kirb, const double& elgd, const int& nEffectiveExposures )
 		{
-			MLIB_REQUIRE( elgd > 0.0, "ELGD must be positive." );
+			AQ_REQUIRE( elgd > 0.0, "ELGD must be positive." );
 
 			// # should be optional:
 			// 7% is default
@@ -214,7 +214,7 @@ namespace etrading
 				}
 			}
 
-			MLIB_REQUIRE( row < nParameters, "Could not find matching criteria in SecIrbaTableParameters keys");
+			AQ_REQUIRE( row < nParameters, "Could not find matching criteria in SecIrbaTableParameters keys");
 			
 			return row;
 		}

@@ -104,12 +104,12 @@ MAValuePrinter::printCF(const vector<LAString> &mainTradeVec, const vector<LAStr
 	LADataBool isDetail;
 
 	// ! Check isDataOut
-	if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) == MLIB_NO_DATA )
+	if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) == AQ_NO_DATA )
 	{
 		return SUCCESS_CODE;
 	}
 
-	const bool flag_print_compounded_rate = LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != MLIB_NO_DATA;
+	const bool flag_print_compounded_rate = LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != AQ_NO_DATA;
 
 
 	bool isvanilla = false;
@@ -133,7 +133,7 @@ MAValuePrinter::printCF(const vector<LAString> &mainTradeVec, const vector<LAStr
 		LACoreDataService::setContext(ARG_KEY_MAINTRADE, mainTradeVec[i]);
 		LACoreDataService::setContext(ARG_KEY_CURRENCY, ccyVec[i]);
 
-        if(LACoreDataService::getStaticDataManager().getStaticData().getStaticData(KEY_DEAL_FXOPT_BULK) != MLIB_NO_DATA)
+        if(LACoreDataService::getStaticDataManager().getStaticData().getStaticData(KEY_DEAL_FXOPT_BULK) != AQ_NO_DATA)
         {
             MAValuePrinter::printFxOptionMatrix(rootVec[i], fileNumVec[i]);
             continue;
@@ -156,7 +156,7 @@ MAValuePrinter::printCF(const vector<LAString> &mainTradeVec, const vector<LAStr
 			//get summary property
 			LAStaticData &irProp = LACoreDataService::getStaticDataManager().getStaticData();
 			LAString portName = mainTradeVec[i];
-			if (staticData.getStaticData(KEY_DEAL_SUMMARY_INFO + LAString(".")  + portName.toLower()) != MLIB_NO_DATA)
+			if (staticData.getStaticData(KEY_DEAL_SUMMARY_INFO + LAString(".")  + portName.toLower()) != AQ_NO_DATA)
 			{
 				LAStringVector summaryInfo = staticData.getStaticData(KEY_DEAL_SUMMARY_INFO + LAString(".")  + portName.toLower()).toToken(';');
 				LAStringVector tradeNames = irProp.getStaticData(KEY_DEAL_OUTPUT_NAME + LAString(".")  + portName.toLower()).toToken(';');
@@ -1315,7 +1315,7 @@ MAValuePrinter::printValue(const vector<LAString> &mainTradeVec, const vector<LA
 	else
 	{
 		LAString tmpstr = staticData.getStaticData(KEY_SIMULATION_ISDETAILOUTPUT);
-		if (tmpstr == MLIB_NO_DATA)
+		if (tmpstr == AQ_NO_DATA)
 			isDetail.convertFromString("FALSE");
 		else
 			isDetail.convertFromString(staticData.getStaticData(KEY_SIMULATION_ISDETAILOUTPUT));
@@ -1354,12 +1354,12 @@ MAValuePrinter::printValue(const vector<LAString> &mainTradeVec, const vector<LA
 			LAString portName = mainTradeVec[i];
 			LAStaticData &irProp = LACoreDataService::getStaticDataManager().getStaticData();
 			// to sum results
-			if (irProp.getStaticData(KEY_DEAL_OUTPUT_NAME + LAString(".") + portName.toLower()) != MLIB_NO_DATA)
+			if (irProp.getStaticData(KEY_DEAL_OUTPUT_NAME + LAString(".") + portName.toLower()) != AQ_NO_DATA)
 			{				
 				isSummary = true;
 				tradeNames = irProp.getStaticData(KEY_DEAL_OUTPUT_NAME + LAString(".")  + portName.toLower()).toToken(';');
 				//get summary information
-				if (staticData.getStaticData(KEY_DEAL_SUMMARY_INFO + LAString(".")  + portName.toLower()) == MLIB_NO_DATA)
+				if (staticData.getStaticData(KEY_DEAL_SUMMARY_INFO + LAString(".")  + portName.toLower()) == AQ_NO_DATA)
 					throw LACoreInvalidData("MAValuePrinter::printValue failed! No summary information!",__FILE__,__LINE__);
 				LAStringVector summaryInfo = staticData.getStaticData(KEY_DEAL_SUMMARY_INFO + LAString(".")  + portName.toLower()).toToken(';');
 				if (summaryInfo.size() != tradeNames.size())
@@ -2231,7 +2231,7 @@ MAValuePrinter::printRisk(const LAString &name, const LAString &riskName, const 
 	LAStaticData &rprop = LACoreDataService::getStaticDataManager().getRiskStaticData();
 	LAString digit = rprop.getStaticData(RISK_KEY_OMIT_DIGITNUMBER);
 	digit.toUpper();
-	bool isomit = (digit != MLIB_NO_DATA);
+	bool isomit = (digit != AQ_NO_DATA);
 	unsigned int digitnum = 0;
 	if (isomit)
 		digitnum = static_cast<unsigned int>(digit.getIntValue());
@@ -2840,7 +2840,7 @@ MAValuePrinter::changeSemiAnalyticResult(LADataInstance& dataInstance,const LASt
 	//KEY_SEMIANALYTIC_ OMIT_DIGITNUMBER
 	LAString digit = staticData.getStaticData(KEY_SEMIANALYTIC_OMIT_DIGITNUMBER);
 	digit.toUpper();
-	bool isomit = (digit != MLIB_NO_DATA);
+	bool isomit = (digit != AQ_NO_DATA);
 	unsigned int digitnum = 0;
 	if (isomit)
 		digitnum = static_cast<unsigned int>(digit.getIntValue());
@@ -3059,7 +3059,7 @@ int MAValuePrinter::printEntityDump(const std::vector< LAString >& fileNumVec,
     try
     {
         LAString fnameBase = LACoreDataService::getStaticDataManager().getStaticData().getStaticData(KEY_ENTITY_DUMP_FILE);
-        if(fnameBase == MLIB_NO_DATA)
+        if(fnameBase == AQ_NO_DATA)
         {
             throw LACoreInvalidData("object dump file name is not defined.", __FILE__, __LINE__);
         }
@@ -3175,7 +3175,7 @@ void MAValuePrinter::printCompoundedRates(const int leg_num,
 void MAValuePrinter::printFxOptionMatrix(LADataInstance* dataInstance, const LAString& filenum)
 {
     const LAString fname_base = LACoreDataService::getStaticDataManager().getStaticData().getStaticData(KEY_DEAL_FXOPT_BULK_OUTFILE);
-    if(fname_base == MLIB_NO_DATA) return;
+    if(fname_base == AQ_NO_DATA) return;
 
 
     const unsigned int dot_pos = fname_base.findString(".");

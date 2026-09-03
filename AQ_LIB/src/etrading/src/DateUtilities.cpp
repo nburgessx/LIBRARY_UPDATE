@@ -948,8 +948,8 @@ namespace etrading
                                                    std::vector<double> & valueOutput,
                                                    const LAStringMatrix & inputMatrix )
     {
-        MLIB_REQUIRE( inputMatrix.size() > 0, "DateValue input matrix is empty" )
-        MLIB_REQUIRE( inputMatrix[0].size() == 2, "DateValue input matrix should have exactly 2 columns; The first column should have dates and the second column values" )
+        AQ_REQUIRE( inputMatrix.size() > 0, "DateValue input matrix is empty" )
+        AQ_REQUIRE( inputMatrix[0].size() == 2, "DateValue input matrix should have exactly 2 columns; The first column should have dates and the second column values" )
         
         dateOutput.resize( inputMatrix.size() );
         valueOutput.resize( inputMatrix.size() );
@@ -967,7 +967,7 @@ namespace etrading
                 std::string currentPaymentDateAsString  = dateOutput[i].convertDateToString("DD-MM-YYYY").getCString();
                 std::string lastPaymentDateAsString     = lastPaymentDate.convertDateToString("DD-MM-YYYY").getCString();
                 std::string currentIndex                = std::to_string( static_cast<long long>(i + 1) );
-                MLIB_THROW( "Dates must be sorted in ascending order with no duplicates - Date '" + currentPaymentDateAsString + "' in position '" + currentIndex + "' is invalid and less than or equal to the previous date'" + lastPaymentDateAsString + "'" )
+                AQ_THROW( "Dates must be sorted in ascending order with no duplicates - Date '" + currentPaymentDateAsString + "' in position '" + currentIndex + "' is invalid and less than or equal to the previous date'" + lastPaymentDateAsString + "'" )
             }
 
             lastPaymentDate = dateOutput[i];            

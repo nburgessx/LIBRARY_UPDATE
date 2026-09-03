@@ -79,10 +79,10 @@ protected:
 	// LARiskConfiguration
 	//==============================================
 	// get operator1
-	virtual  LAString  getOperator1(void) const {return MLIB_NO_DATA; };
+	virtual  LAString  getOperator1(void) const {return AQ_NO_DATA; };
 	//==============================================
 	// get coefficient1
-	virtual  LAString  getCoefficient1(const LAString &fx) const {return MLIB_NO_DATA; };
+	virtual  LAString  getCoefficient1(const LAString &fx) const {return AQ_NO_DATA; };
 	//==============================================
 	// get grid term
 	virtual std::vector<LAString> getGridTerm(const LAString &fx) const;

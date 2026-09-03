@@ -289,7 +289,7 @@ LARiskConfiguration::setUpRiskEntity(LADataInstance &dataInstance, bool isRefles
 		LAStringVector riskENames = LACoreDataService::getContext(CONTEXT_KEY_RISKENTITY_NAMES).toToken(':');
 		for (int i = riskENames.size() - 1; i >= 0 ; --i)
 		{
-			if (riskENames[i] != MLIB_NO_DATA)
+			if (riskENames[i] != AQ_NO_DATA)
 			{
 				if (riskENames[i].findString(refStr) < 0)
 				{
@@ -449,7 +449,7 @@ LARiskConfiguration::createRiskEntity(LAObjectPool &objPool) const
 				//when no base shifts
 				LAString name = ccys[i].toUpper() + "_" + getRiskName() + "_" + getCurveType(ccys[i]) + "_Shift_" + LAString(shiftVals[j]);
 				LAString crosscur = getCrossBaseCurrency(ccys[i]);
-				if(crosscur != MLIB_NO_DATA)
+				if(crosscur != AQ_NO_DATA)
 					name += "_BASED_" + crosscur;
 				
 				LAObjectHolder objHolder = objPool.getObject(name, ENCHKTYPE_NOCHECK);
@@ -844,7 +844,7 @@ LARiskConfiguration::setUpOperator(const LAString &ccy, LAObject &e) const
 	e.add(PRICING_DATA_OPERATOR, new LAPriceDataFunction()).
 							convertFromString(getOperator1());
 	LAString ope2 = getOperator2();
-	if (ope2 != MLIB_NO_DATA)
+	if (ope2 != AQ_NO_DATA)
 	{
 		e.remove(PRICING_DATA_OPERATOR2);
 		e.add(PRICING_DATA_OPERATOR2, new LAPriceDataFunction()).convertFromString(ope2);
@@ -854,7 +854,7 @@ LARiskConfiguration::setUpOperator(const LAString &ccy, LAObject &e) const
 	if (isWave(ccy))
 	{
 		LAString ope_w = getWaveOperator();
-		if (ope_w != MLIB_NO_DATA)
+		if (ope_w != AQ_NO_DATA)
 		{
 			e.remove(PRICING_DATA_WAVEOPERATOR);
 			e.add(PRICING_DATA_WAVEOPERATOR, new LAPriceDataFunction()).convertFromString(ope_w);
@@ -862,7 +862,7 @@ LARiskConfiguration::setUpOperator(const LAString &ccy, LAObject &e) const
 	}
 
 	LAString ope_b = getBaseOperator();
-	if (ope_b != MLIB_NO_DATA)
+	if (ope_b != AQ_NO_DATA)
 	{
 		e.remove(PRICING_DATA_BASEOPERATOR);
 		e.add(PRICING_DATA_BASEOPERATOR, new LAPriceDataFunction()).convertFromString(ope_b);
@@ -880,7 +880,7 @@ LARiskConfiguration::setUpCoefficient(const LAString &ccy, LAObject &e, LADataIn
 {
 	e.remove(PRICING_DATA_COEFFICIENT);
 	LAString coef1 = getCoefficient1(ccy);
-	if (coef1 != MLIB_NO_DATA)
+	if (coef1 != AQ_NO_DATA)
 	{
 		LAStringVector bfadjvec1 = coef1.toToken(':');
 		double coef1ratio = getCoefficientRatio1(ccy,e,dataInstance);
@@ -894,7 +894,7 @@ LARiskConfiguration::setUpCoefficient(const LAString &ccy, LAObject &e, LADataIn
 	e.add(PRICING_DATA_COEFFICIENT, new LADataDoubles()).convertFromString(coef1);
 
 	LAString coef2 = getCoefficient2(ccy);	
-	if (coef2 != MLIB_NO_DATA)
+	if (coef2 != AQ_NO_DATA)
 	{
 		e.remove(PRICING_DATA_COEFFICIENT2);
 		LAStringVector bfadjvec2 = coef2.toToken(':');
@@ -911,7 +911,7 @@ LARiskConfiguration::setUpCoefficient(const LAString &ccy, LAObject &e, LADataIn
 	if (isWave(ccy))
 	{
 		LAString coef_w = getWaveCoefficient(ccy);
-		if (coef_w != MLIB_NO_DATA)
+		if (coef_w != AQ_NO_DATA)
 		{
 			e.remove(PRICING_DATA_WAVECOEFFICIENT);
 			e.add(PRICING_DATA_WAVECOEFFICIENT, new LADataDoubleMatrix()).convertFromString(coef_w);
@@ -919,7 +919,7 @@ LARiskConfiguration::setUpCoefficient(const LAString &ccy, LAObject &e, LADataIn
 	}
 
 	LAString coef_b = getBaseCoefficient(ccy);
-	if (coef_b != MLIB_NO_DATA)
+	if (coef_b != AQ_NO_DATA)
 	{
 		e.remove(PRICING_DATA_BASECOEFFICIENT);
 		e.add(PRICING_DATA_BASECOEFFICIENT, new LADataDoubles()).convertFromString(coef_b);
@@ -1058,7 +1058,7 @@ LARiskConfiguration::getWaveCoefficient(const LAString &ccy) const
 		
 		unsigned int gridIndex = getMaxGridIndex(ccy);
 		LAStringVector BucketGridTerm = getBucketGridTerm(ccy);		
-		if(BucketGridTerm[0] != MLIB_NO_DATA)
+		if(BucketGridTerm[0] != AQ_NO_DATA)
 		{
 			gridIndex = BucketGridTerm.size() - 1;
 		}
@@ -1082,7 +1082,7 @@ LARiskConfiguration::getWaveCoefficient(const LAString &ccy) const
 		unsigned int gridIndex = getMaxGridIndex(ccy);
 		LAString tmpccy = ccy;
 		LAStringVector BucketGridTerm = getBucketGridTerm(ccy);		
-		if(BucketGridTerm[0] != MLIB_NO_DATA)
+		if(BucketGridTerm[0] != AQ_NO_DATA)
 		{
 			gridIndex = BucketGridTerm.size() - 1;
 		}
@@ -1130,14 +1130,14 @@ LARiskConfiguration::setUpOutputName(const LAString &ccy, LAObject &e, int index
 	e.add(PRICING_DATA_OUTPUTNAME, new LADataString()).
 						convertFromString(getOutPutName1(ccy, index));
 	LAString out2 = getOutPutName2(ccy, index);
-	if (out2 != MLIB_NO_DATA)
+	if (out2 != AQ_NO_DATA)
 	{
 		e.remove(PRICING_DATA_OUTPUTNAME2);
 		e.add(PRICING_DATA_OUTPUTNAME2, new LADataString()).convertFromString(out2);
 	}
 
 	LAString out_b = getBaseOutPutName(ccy, index);
-	if (out_b != MLIB_NO_DATA)
+	if (out_b != AQ_NO_DATA)
 	{
 		e.remove(PRICING_DATA_BASEOUTPUTNAME);
 		e.add(PRICING_DATA_BASEOUTPUTNAME, new LADataString()).convertFromString(out_b);
@@ -1201,7 +1201,7 @@ LARiskConfiguration::setUpValuableEntityInfo(const LAString &ccy, LAObjectPool &
 		const bool isParallel = isParallelShift(ccy);
 		LAStringVector gridTerm;
 		LAStringVector BucketGridTerm = getBucketGridTerm(ccy);
-		if(BucketGridTerm[0] == MLIB_NO_DATA)
+		if(BucketGridTerm[0] == AQ_NO_DATA)
 		{
 			gridTerm = getGridTerm(ccy, index);
 		}
@@ -1380,7 +1380,7 @@ LARiskConfiguration::setUpValuableEntityInfo(const LAString &ccy, LAObjectPool &
 
 		e.remove(attrIsP2);
 		e.remove(attrGrid2);
-		if (outputName2 != MLIB_NO_DATA)
+		if (outputName2 != AQ_NO_DATA)
 		{
 			e.add(attrIsP2, new LADataBool(isParallel));
 			tradeSetAttr.push_back(attrIsP2);
@@ -1406,7 +1406,7 @@ LARiskConfiguration::setUpValuableEntityInfo(const LAString &ccy, LAObjectPool &
 
 			//	trade.remove(attrIsP2);
 			//	trade.remove(attrGrid2);
-			//	if (outputName2 != MLIB_NO_DATA)
+			//	if (outputName2 != AQ_NO_DATA)
 			//	{
 			//		trade.add(attrIsP2, new LADataBool(isParallel));
 			//		trade.add(attrGrid2, new LADataStrings(gridTerm));
@@ -1485,7 +1485,7 @@ LARiskConfiguration::setUpValuableEntityInfo(const LAString &ccy, LAObjectPool &
 		tradeSetAttr.push_back(attrIsP1);
 
 		e.remove(attrIsP2);
-		if (outputName2 != MLIB_NO_DATA)
+		if (outputName2 != AQ_NO_DATA)
 		{
 			e.add(attrIsP2, new LADataBool(true));
 			tradeSetAttr.push_back(attrIsP2);
@@ -1516,7 +1516,7 @@ LARiskConfiguration::setUpValuableEntityInfo(const LAString &ccy, LAObjectPool &
 	//				if (pos == termvec.size())
 	//					throw LACoreInvalidData("GridSize Error",__FILE__,__LINE__);
 	//				
-	//				if(BucketGridTerm[0] == MLIB_NO_DATA)
+	//				if(BucketGridTerm[0] == AQ_NO_DATA)
 	//				{
 	//					matuterm = gridTerm[pos];
 	//				}
@@ -1533,7 +1533,7 @@ LARiskConfiguration::setUpValuableEntityInfo(const LAString &ccy, LAObjectPool &
 	//		trade.remove(attrIsP1);
 	//		trade.add(attrIsP1, new LADataBool(true));
 	//		trade.remove(attrIsP2);
-	//		if (outputName2 != MLIB_NO_DATA)
+	//		if (outputName2 != AQ_NO_DATA)
 	//		{
 	//			trade.add(attrIsP2, new LADataBool(true));
 	//		}
@@ -1895,7 +1895,7 @@ LARiskConfiguration::setFXVolEntityParams(const LAString &ccy, const LAString &f
 	param.isCalib = true;
 	if (scenarioNum == SCENARIO_BASE)
 		param.calcType = getBaseCalcType(targetCcy, index);
-	else if (ccy == MLIB_NO_DATA)
+	else if (ccy == AQ_NO_DATA)
 		param.calcType = getCalcType(targetCcy, scenarioNum, index);
 	else
 	{
@@ -1916,13 +1916,13 @@ LARiskConfiguration::setFXVolEntityParams(const LAString &ccy, const LAString &f
 	param.refName.push_back(infoName);
 
 	// set yield and calibdata
-	if (ccy == MLIB_NO_DATA)
+	if (ccy == AQ_NO_DATA)
 	{
 		for(unsigned int i = 0; i < ccys.size(); ++i)
 		{
 			LAString ccy_tmp = ccys[i];
 			LAString FwdFXGrids = mpStaticData->getStaticData(ccy_tmp.toLower() + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_USEGRID);
-			if(FwdFXGrids.isDefined() && FwdFXGrids != MLIB_NO_DATA)
+			if(FwdFXGrids.isDefined() && FwdFXGrids != AQ_NO_DATA)
 			{
 				// extra curve is only available for fxdelta and fxshiftdelta as of Nov 2016
 				if(riskName == RISK_FRONT_FX_SHIFTDELTA ||
@@ -1948,7 +1948,7 @@ LARiskConfiguration::setFXVolEntityParams(const LAString &ccy, const LAString &f
 	}
 
 	// dataout
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		param.isOutPut = true;
 	else 
 		param.isOutPut = false;
@@ -1969,7 +1969,7 @@ LARiskConfiguration::setFXVolEntityParams(const LAString &ccy, const LAString &f
 	if (shiftType == RISK_SHIFTTYPE_RATIO)
 		param.extraParam[0] /= 100.0;
 	//set base shift value
-	if (ccy == MLIB_NO_DATA)
+	if (ccy == AQ_NO_DATA)
 	{
 		if(fx == targetCcy)
 		{
@@ -2248,7 +2248,7 @@ LARiskConfiguration::setUpDeltaType(const LAString &ccy, LAObject &e) const
 	e.remove(AP_CALIBRATION_DATA_DELTATYPE);
 
 	LAString dtype = getDeltaType(ccy).toUpper();
-	if (dtype != MLIB_NO_DATA)
+	if (dtype != AQ_NO_DATA)
 	{
 		e.add(AP_CALIBRATION_DATA_DELTATYPE, new LADataString(dtype));
 	}
@@ -2262,7 +2262,7 @@ LARiskConfiguration::setUpVegaType(const LAString &ccy, LAObject &e) const
 	e.remove(AP_CALIBRATION_DATA_VEGATYPE);
 
 	LAString vtype = getVegaType(ccy).toUpper();
-	if (vtype != MLIB_NO_DATA)
+	if (vtype != AQ_NO_DATA)
 	{
 		e.add(AP_CALIBRATION_DATA_VEGATYPE, new LADataString(vtype));
 	}
@@ -2411,7 +2411,7 @@ LARiskConfiguration::createBaseForeignIRVolEntity(const LAString& ccy, const LAS
 	param.targetCurveType = getBaseShiftCurveType(ccy);
 
 	// dataout
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		param.isOutPut = true;
 	}
@@ -2639,7 +2639,7 @@ LARiskConfiguration::createIRBaseExtraScenarioEntity(const LAString &ccy, LAData
 		{
 			param.isCalib = true;
 			// dataout
-			if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+			if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 			{
 				param.isOutPut = true;
 			}
@@ -2708,7 +2708,7 @@ LARiskConfiguration::createIRBaseExtraScenarioEntity(const LAString &ccy, LAData
 		{
 			param.isCalib = true;
 			// dataout
-			if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+			if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 			{
 				param.isOutPut = true;
 			}
@@ -2784,7 +2784,7 @@ LARiskConfiguration::createIRBaseScenarioEntity(const LAString &ccy, LADataInsta
 	LAString tmpIRCurrency = ircur;
 	tmpIRCurrency.toLower();
 	LAString oismethod = mpStaticData->getStaticData(tmpIRCurrency + STATIC_DATA_KEY_YIELD_OIS_GENERATEMETHOD + getBaseShiftCurveSuffix(ircur)).toUpper();
-	bool isoismode  = (oismethod != MLIB_NO_DATA);
+	bool isoismode  = (oismethod != AQ_NO_DATA);
 	if (!isoismode)
 	{
 		// ON and TN check
@@ -3037,7 +3037,7 @@ vector<LAObject *>
 LARiskConfiguration::createBaseFXEntity(const LAString &ccy, LADataInstance &dataInstance, int index)  const
 {
 	LAString fx = getCrossBaseCurrency(ccy);
-	if (fx == MLIB_NO_DATA) 
+	if (fx == AQ_NO_DATA) 
 		fx = ccy;
 
 	// scenario param
@@ -3135,7 +3135,7 @@ LARiskConfiguration::createBaseFXVolEntity(const LAString &fx, LADataInstance &d
 	{
 		LAString ccy_tmp = ccys[i];
 		LAString FwdFXGrids = mpStaticData->getStaticData(ccy_tmp.toLower() + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_USEGRID);
-		if(FwdFXGrids.isDefined() && FwdFXGrids != MLIB_NO_DATA)
+		if(FwdFXGrids.isDefined() && FwdFXGrids != AQ_NO_DATA)
 		{
 			// extra curve is only available for fxshiftdelta as of Nov 2016
 			if(riskName == RISK_FRONT_FX_SHIFTDELTA)
@@ -3158,7 +3158,7 @@ LARiskConfiguration::createBaseFXVolEntity(const LAString &fx, LADataInstance &d
 	}
 
 	// dataout
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		paramvol.isOutPut = true;
 	}
@@ -3207,7 +3207,7 @@ LARiskConfiguration::createFXBaseScenarioEntity(const LAString &ccy, LADataInsta
 	ret = LARiskConfiguration::createBaseFXEntity(ccy, dataInstance, index);
 
 	LAString fx = getCrossBaseCurrency(ccy);
-	if (fx == MLIB_NO_DATA) 
+	if (fx == AQ_NO_DATA) 
 		fx = ccy;
 
 	// nocalib flag
@@ -3331,7 +3331,7 @@ LARiskConfiguration::createFXBaseExtraScenarioEntity(const LAString &ccy, LAData
 		paramvol.refName.push_back(LAMarketData::getCalibDataName(KEY_PV, LAMarketData::getYieldDataName(objPool, paramvol.refName.back())));
 
 		// dataout
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			paramvol.isOutPut = true;
 		}
@@ -3370,7 +3370,7 @@ LARiskConfiguration::getFXBaseTargetNames(const LAString &ccy, LADataInstance &d
 {
 	LAString ret =  LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
 	LAString fx = getCrossBaseCurrency(ccy);
-	if (fx == MLIB_NO_DATA) 
+	if (fx == AQ_NO_DATA) 
 		fx = ccy;
 	// nocalib flag
 	LAStringVector calibfxvec = getCalibTargetFX(ccy, dataInstance);
@@ -3535,7 +3535,7 @@ LARiskConfiguration::getGridRangeTerm(const LAString &ccy) const
 {
 	LAStringVector ret;
 	LAString gridRange = LACoreDataService::getContext(ARG_KEY_GRIDRANGE).toUpper();
-	if (gridRange == MLIB_NO_DATA)
+	if (gridRange == AQ_NO_DATA)
 	{
 		return ret;
 	}

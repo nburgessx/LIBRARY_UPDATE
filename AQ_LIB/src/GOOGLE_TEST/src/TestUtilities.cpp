@@ -51,7 +51,7 @@ namespace google_test
             // OMP loop counters must be of type int and not size_t
             // Use reduction to share access to totalStringSize variable
             // #pragma omp parallel for reduction (+:totalStringSize) num_threads( omp_get_max_threads() ) 
-            #pragma MLIB_PARALLEL_FOR_WITH_REDUCTION_ADD( totalStringSize )
+            #pragma AQ_PARALLEL_FOR_WITH_REDUCTION_ADD( totalStringSize )
             for ( int i = 0; i < 100000; ++i )
             {
                 totalStringSize += sizeLAString( myString );
@@ -114,19 +114,19 @@ namespace google_test
 		const float floatVarible	= float(1.123456789);
 		const double doubleVarible	= double(1.123456789);
 
-		std::string result1 = MLIB_TO_STRING_FROM_SIZE_T( 1 );
-		std::string result2 = MLIB_TO_STRING_FROM_LONG( 2 );
-		std::string result3 = MLIB_TO_STRING_FROM_INT( 3 );
-		std::string result4 = MLIB_TO_STRING_FROM_FLOAT( floatVarible );
-		std::string result5 = MLIB_TO_STRING_FROM_DOUBLE( doubleVarible );
+		std::string result1 = AQ_TO_STRING_FROM_SIZE_T( 1 );
+		std::string result2 = AQ_TO_STRING_FROM_LONG( 2 );
+		std::string result3 = AQ_TO_STRING_FROM_INT( 3 );
+		std::string result4 = AQ_TO_STRING_FROM_FLOAT( floatVarible );
+		std::string result5 = AQ_TO_STRING_FROM_DOUBLE( doubleVarible );
 		
-		std::string result6 = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( floatVarible, 3 );		// to 3 d.p.
+		std::string result6 = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( floatVarible, 3 );		// to 3 d.p.
 		
-		std::string result7 = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( doubleVarible, 3 );	// to 3 d.p.
+		std::string result7 = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( doubleVarible, 3 );	// to 3 d.p.
 
-		std::string result8 = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION(floatVarible, 6);		// to 6 d.p.
+		std::string result8 = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION(floatVarible, 6);		// to 6 d.p.
 
-		std::string result9 = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( doubleVarible, 6 );	// to 6 d.p.
+		std::string result9 = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( doubleVarible, 6 );	// to 6 d.p.
 
 		EXPECT_EQ( "1",			result1 );
 		EXPECT_EQ( "2",			result2 );
@@ -141,16 +141,16 @@ namespace google_test
 
 	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_SIZE_T)
 	{
-		std::string result1  = MLIB_TO_STRING_FROM_SIZE_T(1);
-		std::string result2  = MLIB_TO_STRING_FROM_SIZE_T(2);
-		std::string result3  = MLIB_TO_STRING_FROM_SIZE_T(3);
-		std::string result4  = MLIB_TO_STRING_FROM_SIZE_T(4);
-		std::string result5  = MLIB_TO_STRING_FROM_SIZE_T(5);
-		std::string result6  = MLIB_TO_STRING_FROM_SIZE_T(6);
-		std::string result7  = MLIB_TO_STRING_FROM_SIZE_T(7);
-		std::string result8  = MLIB_TO_STRING_FROM_SIZE_T(8);
-		std::string result9  = MLIB_TO_STRING_FROM_SIZE_T(9);
-		std::string result10 = MLIB_TO_STRING_FROM_SIZE_T(10);
+		std::string result1  = AQ_TO_STRING_FROM_SIZE_T(1);
+		std::string result2  = AQ_TO_STRING_FROM_SIZE_T(2);
+		std::string result3  = AQ_TO_STRING_FROM_SIZE_T(3);
+		std::string result4  = AQ_TO_STRING_FROM_SIZE_T(4);
+		std::string result5  = AQ_TO_STRING_FROM_SIZE_T(5);
+		std::string result6  = AQ_TO_STRING_FROM_SIZE_T(6);
+		std::string result7  = AQ_TO_STRING_FROM_SIZE_T(7);
+		std::string result8  = AQ_TO_STRING_FROM_SIZE_T(8);
+		std::string result9  = AQ_TO_STRING_FROM_SIZE_T(9);
+		std::string result10 = AQ_TO_STRING_FROM_SIZE_T(10);
 		
 		EXPECT_EQ("1", result1);
 		EXPECT_EQ("2", result2);
@@ -166,16 +166,16 @@ namespace google_test
 
 	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_LONG)
 	{
-		std::string result1  = MLIB_TO_STRING_FROM_LONG(1);
-		std::string result2  = MLIB_TO_STRING_FROM_LONG(2);
-		std::string result3  = MLIB_TO_STRING_FROM_LONG(3);
-		std::string result4  = MLIB_TO_STRING_FROM_LONG(4);
-		std::string result5  = MLIB_TO_STRING_FROM_LONG(5);
-		std::string result6  = MLIB_TO_STRING_FROM_LONG(6);
-		std::string result7  = MLIB_TO_STRING_FROM_LONG(7);
-		std::string result8  = MLIB_TO_STRING_FROM_LONG(8);
-		std::string result9  = MLIB_TO_STRING_FROM_LONG(9);
-		std::string result10 = MLIB_TO_STRING_FROM_LONG(10);
+		std::string result1  = AQ_TO_STRING_FROM_LONG(1);
+		std::string result2  = AQ_TO_STRING_FROM_LONG(2);
+		std::string result3  = AQ_TO_STRING_FROM_LONG(3);
+		std::string result4  = AQ_TO_STRING_FROM_LONG(4);
+		std::string result5  = AQ_TO_STRING_FROM_LONG(5);
+		std::string result6  = AQ_TO_STRING_FROM_LONG(6);
+		std::string result7  = AQ_TO_STRING_FROM_LONG(7);
+		std::string result8  = AQ_TO_STRING_FROM_LONG(8);
+		std::string result9  = AQ_TO_STRING_FROM_LONG(9);
+		std::string result10 = AQ_TO_STRING_FROM_LONG(10);
 
 		EXPECT_EQ("1", result1);
 		EXPECT_EQ("2", result2);
@@ -191,16 +191,16 @@ namespace google_test
 
 	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_INT)
 	{
-		std::string result1  = MLIB_TO_STRING_FROM_INT(1);
-		std::string result2  = MLIB_TO_STRING_FROM_INT(2);
-		std::string result3  = MLIB_TO_STRING_FROM_INT(3);
-		std::string result4  = MLIB_TO_STRING_FROM_INT(4);
-		std::string result5  = MLIB_TO_STRING_FROM_INT(5);
-		std::string result6  = MLIB_TO_STRING_FROM_INT(6);
-		std::string result7  = MLIB_TO_STRING_FROM_INT(7);
-		std::string result8  = MLIB_TO_STRING_FROM_INT(8);
-		std::string result9  = MLIB_TO_STRING_FROM_INT(9);
-		std::string result10 = MLIB_TO_STRING_FROM_INT(10);
+		std::string result1  = AQ_TO_STRING_FROM_INT(1);
+		std::string result2  = AQ_TO_STRING_FROM_INT(2);
+		std::string result3  = AQ_TO_STRING_FROM_INT(3);
+		std::string result4  = AQ_TO_STRING_FROM_INT(4);
+		std::string result5  = AQ_TO_STRING_FROM_INT(5);
+		std::string result6  = AQ_TO_STRING_FROM_INT(6);
+		std::string result7  = AQ_TO_STRING_FROM_INT(7);
+		std::string result8  = AQ_TO_STRING_FROM_INT(8);
+		std::string result9  = AQ_TO_STRING_FROM_INT(9);
+		std::string result10 = AQ_TO_STRING_FROM_INT(10);
 
 		EXPECT_EQ("1", result1);
 		EXPECT_EQ("2", result2);
@@ -216,16 +216,16 @@ namespace google_test
 
 	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_FLOAT)
 	{
-		std::string result1  = MLIB_TO_STRING_FROM_FLOAT( float(1.123456789) );
-		std::string result2  = MLIB_TO_STRING_FROM_FLOAT( float(2.123456789) );
-		std::string result3  = MLIB_TO_STRING_FROM_FLOAT( float(3.123456789) );
-		std::string result4  = MLIB_TO_STRING_FROM_FLOAT( float(4.123456789) );
-		std::string result5  = MLIB_TO_STRING_FROM_FLOAT( float(5.123456789) );
-		std::string result6  = MLIB_TO_STRING_FROM_FLOAT( float(6.123456789) );
-		std::string result7  = MLIB_TO_STRING_FROM_FLOAT( float(7.123456789) );
-		std::string result8  = MLIB_TO_STRING_FROM_FLOAT( float(8.123456789) );
-		std::string result9  = MLIB_TO_STRING_FROM_FLOAT( float(9.123456789) );
-		std::string result10 = MLIB_TO_STRING_FROM_FLOAT( float(0.123456789) );
+		std::string result1  = AQ_TO_STRING_FROM_FLOAT( float(1.123456789) );
+		std::string result2  = AQ_TO_STRING_FROM_FLOAT( float(2.123456789) );
+		std::string result3  = AQ_TO_STRING_FROM_FLOAT( float(3.123456789) );
+		std::string result4  = AQ_TO_STRING_FROM_FLOAT( float(4.123456789) );
+		std::string result5  = AQ_TO_STRING_FROM_FLOAT( float(5.123456789) );
+		std::string result6  = AQ_TO_STRING_FROM_FLOAT( float(6.123456789) );
+		std::string result7  = AQ_TO_STRING_FROM_FLOAT( float(7.123456789) );
+		std::string result8  = AQ_TO_STRING_FROM_FLOAT( float(8.123456789) );
+		std::string result9  = AQ_TO_STRING_FROM_FLOAT( float(9.123456789) );
+		std::string result10 = AQ_TO_STRING_FROM_FLOAT( float(0.123456789) );
 
 		EXPECT_EQ("1.123457", result1);		// to 6 d.p. by default, rounded-up in this case
 		EXPECT_EQ("2.123457", result2);		// to 6 d.p. by default, rounded-up in this case
@@ -241,16 +241,16 @@ namespace google_test
 
 	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_DOUBLE)
 	{
-		std::string result1  = MLIB_TO_STRING_FROM_DOUBLE( double(1.123456789) );
-		std::string result2  = MLIB_TO_STRING_FROM_DOUBLE( double(2.123456789) );
-		std::string result3  = MLIB_TO_STRING_FROM_DOUBLE( double(3.123456789) );
-		std::string result4  = MLIB_TO_STRING_FROM_DOUBLE( double(4.123456789) );
-		std::string result5  = MLIB_TO_STRING_FROM_DOUBLE( double(5.123456789) );
-		std::string result6  = MLIB_TO_STRING_FROM_DOUBLE( double(6.123456789) );
-		std::string result7  = MLIB_TO_STRING_FROM_DOUBLE( double(7.123456789) );
-		std::string result8  = MLIB_TO_STRING_FROM_DOUBLE( double(8.123456789) );
-		std::string result9  = MLIB_TO_STRING_FROM_DOUBLE( double(9.123456789) );
-		std::string result10 = MLIB_TO_STRING_FROM_DOUBLE( double(0.123456789) );
+		std::string result1  = AQ_TO_STRING_FROM_DOUBLE( double(1.123456789) );
+		std::string result2  = AQ_TO_STRING_FROM_DOUBLE( double(2.123456789) );
+		std::string result3  = AQ_TO_STRING_FROM_DOUBLE( double(3.123456789) );
+		std::string result4  = AQ_TO_STRING_FROM_DOUBLE( double(4.123456789) );
+		std::string result5  = AQ_TO_STRING_FROM_DOUBLE( double(5.123456789) );
+		std::string result6  = AQ_TO_STRING_FROM_DOUBLE( double(6.123456789) );
+		std::string result7  = AQ_TO_STRING_FROM_DOUBLE( double(7.123456789) );
+		std::string result8  = AQ_TO_STRING_FROM_DOUBLE( double(8.123456789) );
+		std::string result9  = AQ_TO_STRING_FROM_DOUBLE( double(9.123456789) );
+		std::string result10 = AQ_TO_STRING_FROM_DOUBLE( double(0.123456789) );
 
 		EXPECT_EQ("1.123457", result1);		// to 6 d.p. by default, rounded-up in this case
 		EXPECT_EQ("2.123457", result2);		// to 6 d.p. by default, rounded-up in this case
@@ -266,16 +266,16 @@ namespace google_test
 
 	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION)
 	{
-		std::string result1  = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(1.123456789), 1 );
-		std::string result2  = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(2.123456789), 2 );
-		std::string result3  = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(3.123456789), 3 );
-		std::string result4  = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(4.123456789), 4 );
-		std::string result5  = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(5.123456789), 5 );
-		std::string result6  = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(6.123456789), 0 );
-		std::string result7  = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(7.123456789), 1 );
-		std::string result8  = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(8.123456789), 2 );
-		std::string result9  = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(9.123456789), 3 );
-		std::string result10 = MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(0.123456789), 4 );
+		std::string result1  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(1.123456789), 1 );
+		std::string result2  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(2.123456789), 2 );
+		std::string result3  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(3.123456789), 3 );
+		std::string result4  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(4.123456789), 4 );
+		std::string result5  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(5.123456789), 5 );
+		std::string result6  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(6.123456789), 0 );
+		std::string result7  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(7.123456789), 1 );
+		std::string result8  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(8.123456789), 2 );
+		std::string result9  = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(9.123456789), 3 );
+		std::string result10 = AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( float(0.123456789), 4 );
 
 		EXPECT_EQ("1.1", result1);
 		EXPECT_EQ("2.12", result2);
@@ -291,16 +291,16 @@ namespace google_test
 
 	TEST(TestDataUtilitiesMacro, UNIT_MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION)
 	{
-		std::string result1  = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(1.123456789), 0 );
-		std::string result2  = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(2.123456789), 1 );
-		std::string result3  = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(3.123456789), 2 );
-		std::string result4  = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(4.123456789), 3 );
-		std::string result5  = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(5.123456789), 4 );
-		std::string result6  = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(6.123456789), 5 );
-		std::string result7  = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(7.123456789), 6 );
-		std::string result8  = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(8.123456789), 7 );
-		std::string result9  = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(9.123456789), 8 );
-		std::string result10 = MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(0.123456789), 9 );
+		std::string result1  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(1.123456789), 0 );
+		std::string result2  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(2.123456789), 1 );
+		std::string result3  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(3.123456789), 2 );
+		std::string result4  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(4.123456789), 3 );
+		std::string result5  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(5.123456789), 4 );
+		std::string result6  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(6.123456789), 5 );
+		std::string result7  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(7.123456789), 6 );
+		std::string result8  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(8.123456789), 7 );
+		std::string result9  = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(9.123456789), 8 );
+		std::string result10 = AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( double(0.123456789), 9 );
 
 		EXPECT_EQ("1", result1);
 		EXPECT_EQ("2.1", result2);

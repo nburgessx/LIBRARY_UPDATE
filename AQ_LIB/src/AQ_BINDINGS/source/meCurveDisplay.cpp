@@ -3,7 +3,7 @@
 #include "InitializeMLibETrading.h"
 #include "meCurveDisplay.h"
 #include "tryMeCurveDisplay.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meCurveDisplay
@@ -13,7 +13,7 @@
 */
 std::vector<std::vector<double> > meCurveDisplay(const std::string& curveCollection, const std::string& curveIndex)
 {
-	MLIB_API_START
+	AQ_API_START
     DoubleMatrix ret;
 	
     // marshall all inputs		
@@ -59,5 +59,5 @@ std::vector<std::vector<double> > meCurveDisplay(const std::string& curveCollect
 	}
 
     return ret;
-    MLIB_API_END
+    AQ_API_END
 }

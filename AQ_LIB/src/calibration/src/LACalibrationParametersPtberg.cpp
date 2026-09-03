@@ -285,22 +285,22 @@ LACalibrationParametersPtberg::createCalibrationInfo(LAObjectPool &objPool, cons
 		// TODO merget latest version strike
 		// at merge delete literal
 		LAString tmpVal = getCalibStaticDataValue(keyFX + FX_KEY_CALIB_PTBERG_EXTRASTRIKE + LAString("25dh"), lterm);
-		if (tmpVal != MLIB_NO_DATA)
+		if (tmpVal != AQ_NO_DATA)
 		{
 			strike25DHVec[i] = tmpVal.getDoubleValue();
 		}
 		tmpVal = getCalibStaticDataValue(keyFX + FX_KEY_CALIB_PTBERG_EXTRASTRIKE + LAString("10dh"), lterm);
-		if (tmpVal != MLIB_NO_DATA)
+		if (tmpVal != AQ_NO_DATA)
 		{
 			strike10DHVec[i] = tmpVal.getDoubleValue();
 		}
 		tmpVal = getCalibStaticDataValue(keyFX + FX_KEY_CALIB_PTBERG_EXTRASTRIKE + LAString("25dl"), lterm);
-		if (tmpVal != MLIB_NO_DATA)
+		if (tmpVal != AQ_NO_DATA)
 		{
 			strike25DLVec[i] = tmpVal.getDoubleValue();
 		}
 		tmpVal = getCalibStaticDataValue(keyFX + FX_KEY_CALIB_PTBERG_EXTRASTRIKE + LAString("10dl"), lterm);
-		if (tmpVal != MLIB_NO_DATA)
+		if (tmpVal != AQ_NO_DATA)
 		{
 			strike10DLVec[i] = tmpVal.getDoubleValue();
 		}
@@ -383,7 +383,7 @@ LACalibrationParametersPtberg::getCalibStaticDataValue(const LAString &key, cons
 {
 	LAString ret = mpCalibStaticData->getStaticData(key + "." + grid);
 
-	if (ret == MLIB_NO_DATA)
+	if (ret == AQ_NO_DATA)
 	{
 		return mpCalibStaticData->getStaticData(key);
 	}

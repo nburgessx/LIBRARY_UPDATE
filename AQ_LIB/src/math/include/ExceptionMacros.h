@@ -14,46 +14,46 @@
 //
 
 // Macro to print to console
-#ifndef MLIB_PRINT
-#define MLIB_PRINT( message ) \
+#ifndef AQ_PRINT
+#define AQ_PRINT( message ) \
 	std::cout << message << std::endl;
 #endif
 
 // Macro to throw an error message
-#ifndef MLIB_THROW
-#define MLIB_THROW( error_message ) \
+#ifndef AQ_THROW
+#define AQ_THROW( error_message ) \
 { \
-	std::ostringstream MLIB_VALUE; \
-    MLIB_VALUE << "#Error: " << error_message; \
-	throw LACoreInvalidData( MLIB_VALUE.str().c_str(), __FILE__, __LINE__ ); \
+	std::ostringstream AQ_VALUE; \
+    AQ_VALUE << "#Error: " << error_message; \
+	throw LACoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
 }
 #endif
 
 // Macro to throw an error message if a given condition is not satisfied (false)
-#ifndef MLIB_REQUIRE
-#define MLIB_REQUIRE( condition, error_message ) \
+#ifndef AQ_REQUIRE
+#define AQ_REQUIRE( condition, error_message ) \
 if ( !(condition) ) \
 { \
-    std::ostringstream MLIB_VALUE; \
-    MLIB_VALUE << "#Error: " << error_message; \
-	throw LACoreInvalidData( MLIB_VALUE.str().c_str(), __FILE__, __LINE__ ); \
+    std::ostringstream AQ_VALUE; \
+    AQ_VALUE << "#Error: " << error_message; \
+	throw LACoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
 }
 #endif
 
 // Macro to throw an error message if a given condition is satisfied (true)
-#ifndef MLIB_THROW_IF
-#define MLIB_THROW_IF( condition, error_message ) \
+#ifndef AQ_THROW_IF
+#define AQ_THROW_IF( condition, error_message ) \
 if ( (condition) ) \
 { \
-    std::ostringstream MLIB_VALUE; \
-    MLIB_VALUE << "#Error: " << error_message; \
-	throw LACoreInvalidData( MLIB_VALUE.str().c_str(), __FILE__, __LINE__ ); \
+    std::ostringstream AQ_VALUE; \
+    AQ_VALUE << "#Error: " << error_message; \
+	throw LACoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
 }
 #endif
 
 // Macro to catch an error message
-#ifndef MLIB_CATCH
-#define MLIB_CATCH \
+#ifndef AQ_CATCH
+#define AQ_CATCH \
     catch(const LACoreError& e) \
     { \
         throw e; \
@@ -65,13 +65,13 @@ if ( (condition) ) \
 #endif
 
 // Macro to check the size of a matrix and throw if the minimum column size is not satisfied
-#ifndef MLIB_MATRIX_CHECK
-#define MLIB_MATRIX_CHECK( matrix, minColumnSize, error_message ) \
+#ifndef AQ_MATRIX_CHECK
+#define AQ_MATRIX_CHECK( matrix, minColumnSize, error_message ) \
 if ( !matrix.empty() && minColumnSize>0 ) \
 { \
     std::ostringstream nested_ss; \
     nested_ss << error_message << " - At least " << minColumnSize << " columns required"; \
-    MLIB_REQUIRE( matrix[0].size() >= minColumnSize, nested_ss.str().c_str() ) \
+    AQ_REQUIRE( matrix[0].size() >= minColumnSize, nested_ss.str().c_str() ) \
 }
 #endif
 
@@ -82,49 +82,49 @@ if ( !matrix.empty() ) \
 { \
     std::ostringstream nested_ss; \
     nested_ss << error_message << " - At least 2 columns required"; \
-    MLIB_REQUIRE( matrix[0].size() >= 2, nested_ss.str().c_str() )  \
+    AQ_REQUIRE( matrix[0].size() >= 2, nested_ss.str().c_str() )  \
 }
 #endif
 
 // Macro to make a function call and throw an error message if a given function call throws
-#ifndef MLIB_TRY
-#define MLIB_TRY( function_call, error_message ) \
+#ifndef AQ_TRY
+#define AQ_TRY( function_call, error_message ) \
 try \
 { \
     function_call; \
 } \
 catch(...) \
 { \
-    std::ostringstream MLIB_VALUE; \
-    MLIB_VALUE << "#Error: " << error_message; \
-    throw LACoreInvalidData( MLIB_VALUE.str().c_str(), __FILE__, __LINE__ ); \
+    std::ostringstream AQ_VALUE; \
+    AQ_VALUE << "#Error: " << error_message; \
+    throw LACoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
 }
 #endif
 
 // Macro to populate a variable using a function call or value
-#ifndef MLIB_SET_VARIABLE
-#define MLIB_SET_VARIABLE( variable, function_call ) \
+#ifndef AQ_SET_VARIABLE
+#define AQ_SET_VARIABLE( variable, function_call ) \
     variable = function_call;
 #endif
 
 // Macro to populate a variable using a function call or override the value on failure
-#ifndef MLIB_TRY_SET_VARIABLE
-#define MLIB_TRY_SET_VARIABLE( variable, function_call, error_message ) \
+#ifndef AQ_TRY_SET_VARIABLE
+#define AQ_TRY_SET_VARIABLE( variable, function_call, error_message ) \
 try \
 { \
     variable = function_call; \
 } \
 catch(...) \
 { \
-    std::ostringstream MLIB_VALUE; \
-    MLIB_VALUE << "#Error: " << error_message; \
-    throw LACoreInvalidData( MLIB_VALUE.str().c_str(), __FILE__, __LINE__ ); \
+    std::ostringstream AQ_VALUE; \
+    AQ_VALUE << "#Error: " << error_message; \
+    throw LACoreInvalidData( AQ_VALUE.str().c_str(), __FILE__, __LINE__ ); \
 }
 #endif
 
 // Macro to populate a variable using a function call or override the value on failure
-#ifndef MLIB_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE
-#define MLIB_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE( variable, function_call, error_value ) \
+#ifndef AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE
+#define AQ_SET_VARIABLE_OR_OVERRIDE_ON_FAILURE( variable, function_call, error_value ) \
 try \
 { \
     variable = function_call; \
@@ -136,124 +136,124 @@ catch(...) \
 #endif
 
 // Epsilion Precision Definition
-#ifndef MLIB_EPSILON
-#define MLIB_EPSILON 1e-14
+#ifndef AQ_EPSILON
+#define AQ_EPSILON 1e-14
 #endif
 
-// Macro to round a variable to precision MLIB_EPSILON
-#ifndef MLIB_ROUND
-#define MLIB_ROUND( variable, precision ) \
+// Macro to round a variable to precision AQ_EPSILON
+#ifndef AQ_ROUND
+#define AQ_ROUND( variable, precision ) \
     boost::math::round( variable / precision ) * precision
 #endif
 
-// Macro to test if a variable is equal to a value with precision MLIB_EPSILON
-#ifndef MLIB_IS_EQUAL
-#define MLIB_IS_EQUAL( variable, equal ) \
-	MLIB_IS_EQUAL_WITH_TOLERANCE( variable, equal, MLIB_EPSILON )
+// Macro to test if a variable is equal to a value with precision AQ_EPSILON
+#ifndef AQ_IS_EQUAL
+#define AQ_IS_EQUAL( variable, equal ) \
+	AQ_IS_EQUAL_WITH_TOLERANCE( variable, equal, AQ_EPSILON )
 #endif
 
 // Macro to test if a variable is equal to a value with precision given by tolerance
-#ifndef MLIB_IS_EQUAL_WITH_TOLERANCE
-#define MLIB_IS_EQUAL_WITH_TOLERANCE( variable, equal, tolerance ) \
+#ifndef AQ_IS_EQUAL_WITH_TOLERANCE
+#define AQ_IS_EQUAL_WITH_TOLERANCE( variable, equal, tolerance ) \
     ( variable - equal > -tolerance && variable - equal < tolerance ) ? true : false
 #endif
 
-// Macro to test if a variable is less than a value to precision MLIB_EPSILON
-#ifndef MLIB_IS_LESS_THAN
-#define MLIB_IS_LESS_THAN( variable, lessThan ) \
-    MLIB_IS_LESS_THAN_WITH_TOLERANCE( variable, lessThan, MLIB_EPSILON )
+// Macro to test if a variable is less than a value to precision AQ_EPSILON
+#ifndef AQ_IS_LESS_THAN
+#define AQ_IS_LESS_THAN( variable, lessThan ) \
+    AQ_IS_LESS_THAN_WITH_TOLERANCE( variable, lessThan, AQ_EPSILON )
 #endif
 
-#ifndef MLIB_IS_LESS_THAN_WITH_TOLERANCE
-#define MLIB_IS_LESS_THAN_WITH_TOLERANCE( variable, lessThan, tolerance ) \
+#ifndef AQ_IS_LESS_THAN_WITH_TOLERANCE
+#define AQ_IS_LESS_THAN_WITH_TOLERANCE( variable, lessThan, tolerance ) \
     ( variable - lessThan < -tolerance ) ? true : false
 #endif
 
-// Macro to test if a variable is less than a value to precision MLIB_EPSILON
-#ifndef MLIB_IS_LESS_THAN_OR_EQUAL
-#define MLIB_IS_LESS_THAN_OR_EQUAL( variable, lessThan ) \
-    MLIB_IS_LESS_THAN_OR_EQUAL_WITH_TOLERANCE( variable, lessThan, MLIB_EPSILON )
+// Macro to test if a variable is less than a value to precision AQ_EPSILON
+#ifndef AQ_IS_LESS_THAN_OR_EQUAL
+#define AQ_IS_LESS_THAN_OR_EQUAL( variable, lessThan ) \
+    AQ_IS_LESS_THAN_OR_EQUAL_WITH_TOLERANCE( variable, lessThan, AQ_EPSILON )
 #endif
 
-#ifndef MLIB_IS_LESS_THAN_OR_EQUAL_WITH_TOLERANCE
-#define MLIB_IS_LESS_THAN_OR_EQUAL_WITH_TOLERANCE( variable, lessThan, tolerance ) \
+#ifndef AQ_IS_LESS_THAN_OR_EQUAL_WITH_TOLERANCE
+#define AQ_IS_LESS_THAN_OR_EQUAL_WITH_TOLERANCE( variable, lessThan, tolerance ) \
     ( variable - lessThan <= tolerance ) ? true : false
 #endif
 
-// Macro to test if a variable is greater than a value to precision MLIB_EPSILON
-#ifndef MLIB_IS_GREATER_THAN
-#define MLIB_IS_GREATER_THAN( variable, greaterThan ) \
-    MLIB_IS_GREATER_THAN_WITH_TOLERANCE( variable, greaterThan, MLIB_EPSILON )
+// Macro to test if a variable is greater than a value to precision AQ_EPSILON
+#ifndef AQ_IS_GREATER_THAN
+#define AQ_IS_GREATER_THAN( variable, greaterThan ) \
+    AQ_IS_GREATER_THAN_WITH_TOLERANCE( variable, greaterThan, AQ_EPSILON )
 #endif
 
-#ifndef MLIB_IS_GREATER_THAN_WITH_TOLERANCE
-#define MLIB_IS_GREATER_THAN_WITH_TOLERANCE( variable, greaterThan, tolerance ) \
+#ifndef AQ_IS_GREATER_THAN_WITH_TOLERANCE
+#define AQ_IS_GREATER_THAN_WITH_TOLERANCE( variable, greaterThan, tolerance ) \
     ( variable - greaterThan > tolerance ) ? true : false
 #endif
 
-// Macro to test if a variable is greater than a value to precision MLIB_EPSILON
-#ifndef MLIB_IS_GREATER_THAN_OR_EQUAL
-#define MLIB_IS_GREATER_THAN_OR_EQUAL( variable, greaterThan ) \
-    MLIB_IS_GREATER_THAN_OR_EQUAL_WITH_TOLERANCE( variable, greaterThan, MLIB_EPSILON )
+// Macro to test if a variable is greater than a value to precision AQ_EPSILON
+#ifndef AQ_IS_GREATER_THAN_OR_EQUAL
+#define AQ_IS_GREATER_THAN_OR_EQUAL( variable, greaterThan ) \
+    AQ_IS_GREATER_THAN_OR_EQUAL_WITH_TOLERANCE( variable, greaterThan, AQ_EPSILON )
 #endif
 
-#ifndef MLIB_IS_GREATER_THAN_OR_EQUAL_WITH_TOLERANCE
-#define MLIB_IS_GREATER_THAN_OR_EQUAL_WITH_TOLERANCE( variable, greaterThan, tolerance ) \
+#ifndef AQ_IS_GREATER_THAN_OR_EQUAL_WITH_TOLERANCE
+#define AQ_IS_GREATER_THAN_OR_EQUAL_WITH_TOLERANCE( variable, greaterThan, tolerance ) \
     ( variable - greaterThan >= -tolerance ) ? true : false
 #endif
 
-// Macro to test if a variable is equal to zero to precision MLIB_EPSILON
-#ifndef MLIB_IS_EQUAL_ZERO
-#define MLIB_IS_EQUAL_ZERO( variable ) \
-    MLIB_IS_EQUAL_ZERO_WITH_TOLERANCE( variable, MLIB_EPSILON )
+// Macro to test if a variable is equal to zero to precision AQ_EPSILON
+#ifndef AQ_IS_EQUAL_ZERO
+#define AQ_IS_EQUAL_ZERO( variable ) \
+    AQ_IS_EQUAL_ZERO_WITH_TOLERANCE( variable, AQ_EPSILON )
 #endif
 
-#ifndef MLIB_IS_EQUAL_ZERO_WITH_TOLERANCE
-#define MLIB_IS_EQUAL_ZERO_WITH_TOLERANCE( variable, tolerance ) \
+#ifndef AQ_IS_EQUAL_ZERO_WITH_TOLERANCE
+#define AQ_IS_EQUAL_ZERO_WITH_TOLERANCE( variable, tolerance ) \
     ( variable > -tolerance && variable < tolerance ) ? true : false
 #endif
 
-// Macro to test if a variable is less than a value to precision MLIB_EPSILON
-#ifndef MLIB_IS_LESS_THAN_ZERO
-#define MLIB_IS_LESS_THAN_ZERO( variable ) \
-    MLIB_IS_LESS_THAN_ZERO_WITH_TOLERANCE( variable, MLIB_EPSILON )
+// Macro to test if a variable is less than a value to precision AQ_EPSILON
+#ifndef AQ_IS_LESS_THAN_ZERO
+#define AQ_IS_LESS_THAN_ZERO( variable ) \
+    AQ_IS_LESS_THAN_ZERO_WITH_TOLERANCE( variable, AQ_EPSILON )
 #endif
 
-#ifndef MLIB_IS_LESS_THAN_ZERO_WITH_TOLERANCE
-#define MLIB_IS_LESS_THAN_ZERO_WITH_TOLERANCE( variable, tolerance ) \
+#ifndef AQ_IS_LESS_THAN_ZERO_WITH_TOLERANCE
+#define AQ_IS_LESS_THAN_ZERO_WITH_TOLERANCE( variable, tolerance ) \
     ( variable < -tolerance ) ? true : false
 #endif
 
-// Macro to test if a variable is less than a value to precision MLIB_EPSILON
-#ifndef MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO
-#define MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO( variable ) \
-    MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE( variable, MLIB_EPSILON )
+// Macro to test if a variable is less than a value to precision AQ_EPSILON
+#ifndef AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO
+#define AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO( variable ) \
+    AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE( variable, AQ_EPSILON )
 #endif
 
-#ifndef MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE
-#define MLIB_IS_LESS_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE( variable, tolerance ) \
+#ifndef AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE
+#define AQ_IS_LESS_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE( variable, tolerance ) \
     ( variable <= tolerance ) ? true : false
 #endif
 
-// Macro to test if a variable is greater than a value to precision MLIB_EPSILON
-#ifndef MLIB_IS_GREATER_THAN_ZERO
-#define MLIB_IS_GREATER_THAN_ZERO( variable ) \
-    MLIB_IS_GREATER_THAN_ZERO_WITH_TOLERANCE( variable, MLIB_EPSILON )
+// Macro to test if a variable is greater than a value to precision AQ_EPSILON
+#ifndef AQ_IS_GREATER_THAN_ZERO
+#define AQ_IS_GREATER_THAN_ZERO( variable ) \
+    AQ_IS_GREATER_THAN_ZERO_WITH_TOLERANCE( variable, AQ_EPSILON )
 #endif
 
-#ifndef MLIB_IS_GREATER_THAN_ZERO_WITH_TOLERANCE
-#define MLIB_IS_GREATER_THAN_ZERO_WITH_TOLERANCE( variable, tolerance ) \
+#ifndef AQ_IS_GREATER_THAN_ZERO_WITH_TOLERANCE
+#define AQ_IS_GREATER_THAN_ZERO_WITH_TOLERANCE( variable, tolerance ) \
     ( variable > tolerance ) ? true : false
 #endif
 
-// Macro to test if a variable is greater than a value to precision MLIB_EPSILON
-#ifndef MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO
-#define MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( variable ) \
-    MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE( variable, MLIB_EPSILON )
+// Macro to test if a variable is greater than a value to precision AQ_EPSILON
+#ifndef AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO
+#define AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( variable ) \
+    AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE( variable, AQ_EPSILON )
 #endif
 
-#ifndef MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE
-#define MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE( variable, tolerance ) \
+#ifndef AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE
+#define AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO_WITH_TOLERANCE( variable, tolerance ) \
     ( variable >= -tolerance ) ? true : false
 #endif
 
@@ -272,30 +272,30 @@ namespace etrading
 }
 
 // Macros to convert from a number to a string
-#ifndef MLIB_TO_STRING_FROM_SIZE_T
-#define MLIB_TO_STRING_FROM_SIZE_T( input )											etrading::toStandardString< size_t >( input )	
+#ifndef AQ_TO_STRING_FROM_SIZE_T
+#define AQ_TO_STRING_FROM_SIZE_T( input )											etrading::toStandardString< size_t >( input )	
 #endif
 	
-#ifndef MLIB_TO_STRING_FROM_LONG
-#define MLIB_TO_STRING_FROM_LONG( input )											etrading::toStandardString< long   >( input )
+#ifndef AQ_TO_STRING_FROM_LONG
+#define AQ_TO_STRING_FROM_LONG( input )											etrading::toStandardString< long   >( input )
 #endif
 
-#ifndef MLIB_TO_STRING_FROM_INT
-#define MLIB_TO_STRING_FROM_INT( input )											etrading::toStandardString< int    >( input )
+#ifndef AQ_TO_STRING_FROM_INT
+#define AQ_TO_STRING_FROM_INT( input )											etrading::toStandardString< int    >( input )
 #endif
 
-#ifndef MLIB_TO_STRING_FROM_FLOAT
-#define MLIB_TO_STRING_FROM_FLOAT( input )											etrading::toStandardString< float  >( input )
+#ifndef AQ_TO_STRING_FROM_FLOAT
+#define AQ_TO_STRING_FROM_FLOAT( input )											etrading::toStandardString< float  >( input )
 #endif
 
-#ifndef MLIB_TO_STRING_FROM_DOUBLE
-#define MLIB_TO_STRING_FROM_DOUBLE( input )											etrading::toStandardString< double >( input )
+#ifndef AQ_TO_STRING_FROM_DOUBLE
+#define AQ_TO_STRING_FROM_DOUBLE( input )											etrading::toStandardString< double >( input )
 #endif
 	
-#ifndef MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION
-#define MLIB_TO_STRING_FROM_FLOAT_WITH_PRECISION( input, decimalPlacePrecision )	etrading::toStandardString< float  >( input, decimalPlacePrecision )
+#ifndef AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION
+#define AQ_TO_STRING_FROM_FLOAT_WITH_PRECISION( input, decimalPlacePrecision )	etrading::toStandardString< float  >( input, decimalPlacePrecision )
 #endif
 	
-#ifndef MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION
-#define MLIB_TO_STRING_FROM_DOUBLE_WITH_PRECISION( input, decimalPlacePrecision )	etrading::toStandardString< double >( input, decimalPlacePrecision )
+#ifndef AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION
+#define AQ_TO_STRING_FROM_DOUBLE_WITH_PRECISION( input, decimalPlacePrecision )	etrading::toStandardString< double >( input, decimalPlacePrecision )
 #endif

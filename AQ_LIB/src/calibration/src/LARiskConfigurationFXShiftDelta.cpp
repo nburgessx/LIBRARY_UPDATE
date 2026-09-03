@@ -303,7 +303,7 @@ LARiskConfigurationFXShiftDelta::isRiskCurrencyMode(const LAString &fx) const
 	LAString fxKey =  LAMarketData::getFXKey(ccys[0], ccys[1]);
 	LAString proprslt = mpRiskStaticData->getStaticData(fxKey + 
 													FX_KEY_RISK_FRONT_FX_FXSHIFTDELTA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);
@@ -348,7 +348,7 @@ LARiskConfigurationFXShiftDelta::createBaseExtraScenarioEntity(const LAString &f
 		LAString ccy_tmp = curs[i];
 		FwdFXGrids[curs[i]] = mpStaticData->getStaticData(ccy_tmp.toLower() + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_USEGRID);
 
-		if(FwdFXGrids[curs[i]].isDefined() && FwdFXGrids[curs[i]] != MLIB_NO_DATA)
+		if(FwdFXGrids[curs[i]].isDefined() && FwdFXGrids[curs[i]] != AQ_NO_DATA)
 		{
 			LAMathYieldCurvePro &ycPro_fCcy = dynamic_cast<LAMathYieldCurvePro &>
 				(objPool.getObject(LAMarketData::getBaseYieldProName(ccy_tmp), ENCHKTYPE_ISDEFINED).get());
@@ -361,14 +361,14 @@ LARiskConfigurationFXShiftDelta::createBaseExtraScenarioEntity(const LAString &f
 	for(int unsigned i = 0; i < curs.size(); ++i)
 	{
 		LAString ccy_tmp = curs[i];
-		if(FwdFXGrids[ccy_tmp].isDefined() && FwdFXGrids[ccy_tmp] != MLIB_NO_DATA)
+		if(FwdFXGrids[ccy_tmp].isDefined() && FwdFXGrids[ccy_tmp] != AQ_NO_DATA)
 		{
 			// XccyBasis curve
 			sce = createBaseExtraYieldEntity(fx, ccy_tmp, dataInstance, index);
 			scemap[ccy_tmp] = sce;		
 
 			// FwdFXConst curve
-			if(ColAffectedCcy[ccy_tmp].isDefined() && ColAffectedCcy[ccy_tmp] != MLIB_NO_DATA)
+			if(ColAffectedCcy[ccy_tmp].isDefined() && ColAffectedCcy[ccy_tmp] != AQ_NO_DATA)
 			{
 				sce = createBaseCollateralYieldEntity(fx, ccy_tmp, dataInstance, index);
 				scemap[ccy_tmp] = sce;
@@ -402,7 +402,7 @@ LARiskConfigurationFXShiftDelta::createBaseExtraScenarioEntity(const LAString &f
 	for(int unsigned i = 0; i < curs.size(); ++i)
 	{
 		LAString ccy_tmp = curs[i];
-		if (FwdFXGrids[ccy_tmp].isDefined() && FwdFXGrids[ccy_tmp] != MLIB_NO_DATA && isCalibTarget(ccy_tmp))
+		if (FwdFXGrids[ccy_tmp].isDefined() && FwdFXGrids[ccy_tmp] != AQ_NO_DATA && isCalibTarget(ccy_tmp))
 		{
 			sce = createExtraIRVolEntityBase(fx, ccy_tmp, dataInstance, index);
 			ret.insert(ret.end(), sce.begin(), sce.end());
@@ -425,7 +425,7 @@ LARiskConfigurationFXShiftDelta::createBaseExtraScenarioEntity(const LAString &f
 
 		for(unsigned int j = 0; j < curs.size(); ++j)
 		{
-			if(!FwdFXGrids[curs[j]].isDefined() || FwdFXGrids[curs[j]] == MLIB_NO_DATA)
+			if(!FwdFXGrids[curs[j]].isDefined() || FwdFXGrids[curs[j]] == AQ_NO_DATA)
 				continue;
 
 			if(SDEccys[i].findString(curs[j]) > 0 && isCalibTarget(SDEccys[i]))
@@ -479,7 +479,7 @@ LARiskConfigurationFXShiftDelta::getBaseExtraTargetNames(const LAString &fx, LAD
 	for (unsigned int i = 0; i < curs.size(); ++i)
 	{
 		LAString ccy_tmp = curs[i];
-		if(FwdFXGrids[ccy_tmp].isDefined() && FwdFXGrids[ccy_tmp] != MLIB_NO_DATA)
+		if(FwdFXGrids[ccy_tmp].isDefined() && FwdFXGrids[ccy_tmp] != AQ_NO_DATA)
 		{
 			const LAString yieldName = LAMarketData::getBaseYieldName(ccy_tmp);
 			ret.push_back(yieldName);
@@ -490,7 +490,7 @@ LARiskConfigurationFXShiftDelta::getBaseExtraTargetNames(const LAString &fx, LAD
 	for (unsigned int i = 0; i < curs.size(); ++i)
 	{
 		LAString ccy_tmp = curs[i];
-		if (FwdFXGrids[ccy_tmp].isDefined() && FwdFXGrids[ccy_tmp] != MLIB_NO_DATA && isCalibTarget(ccy_tmp))
+		if (FwdFXGrids[ccy_tmp].isDefined() && FwdFXGrids[ccy_tmp] != AQ_NO_DATA && isCalibTarget(ccy_tmp))
 		{
 			LAString IRVolName = LAMarketData::getBaseVolatilityName(ccy_tmp);
 			ret.push_back(IRVolName);
@@ -513,7 +513,7 @@ LARiskConfigurationFXShiftDelta::getBaseExtraTargetNames(const LAString &fx, LAD
 
 		for(unsigned int j = 0; j < curs.size(); ++j)
 		{
-			if(!FwdFXGrids[curs[j]].isDefined() || FwdFXGrids[curs[j]] == MLIB_NO_DATA)
+			if(!FwdFXGrids[curs[j]].isDefined() || FwdFXGrids[curs[j]] == AQ_NO_DATA)
 				continue;
 
 			if(SDEccys[i].findString(curs[j]) > 0 && isCalibTarget(SDEccys[i]))

@@ -41,7 +41,7 @@ public:
 	//==============================================================================
 	// print value
 	static int printValue(const std::vector<LAString> &mainTradeVec, 
-		const std::vector<LAString> &fileNumVec, const std::vector<LADataInstance *> &rootVec, const std::vector<LAString> &ccyVec, LAString calc = MLIB_NO_DATA);
+		const std::vector<LAString> &fileNumVec, const std::vector<LADataInstance *> &rootVec, const std::vector<LAString> &ccyVec, LAString calc = AQ_NO_DATA);
 
 	// print fee value
 	static int printFeeValue(const std::vector<LAString> &mainTradeVec,
@@ -52,7 +52,7 @@ public:
 						const std::vector< LAString >& fileNumVec,
 						const std::vector< LADataInstance* >& rootVec,
 						const std::vector< LAString >& ccyVec,
-						LAString calc = MLIB_NO_DATA
+						LAString calc = AQ_NO_DATA
 					  );
 	// ! print object dump
 	static int printEntityDump(const std::vector< LAString >& fileNumVec,
@@ -64,7 +64,7 @@ public:
 									const LADataInstance* dataInstance,
 									const LAString& ccy,
 									std::ostream& dest,
-									LAString calc = MLIB_NO_DATA);
+									LAString calc = AQ_NO_DATA);
 	// ! print compounded rate
 	static void printCompoundedRates(const int leg_num,
 		                             const LAObject& trade,
@@ -72,7 +72,7 @@ public:
 									 const LADataInstance* dataInstance,
 									 const LAString& ccy,
 									 std::ostream& dest,
-									 LAString calc = MLIB_NO_DATA);
+									 LAString calc = AQ_NO_DATA);
 
 
 	static void changeSemiAnalyticResult(LADataInstance& dataInstance,const LAString& infileName, std::ofstream &file);

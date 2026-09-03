@@ -75,7 +75,7 @@ LAMarketDataLMM::getCanonicalGrid(DoubleArray &tenor_30_360, DoubleArray &tenor,
 	LAString str_tenor = LACoreDataService::getContext(CONTEXT_KEY_LMM_TENOR);
 	LAString str_tenor_30_360 = LACoreDataService::getContext(CONTEXT_KEY_LMM_30_360_TENOR);
 	LAString str_deltatenor = LACoreDataService::getContext(CONTEXT_KEY_LMM_DELTATENOR);
-	if (str_tenor != MLIB_NO_DATA && str_tenor_30_360 != MLIB_NO_DATA && str_deltatenor != MLIB_NO_DATA)
+	if (str_tenor != AQ_NO_DATA && str_tenor_30_360 != AQ_NO_DATA && str_deltatenor != AQ_NO_DATA)
 	{
 		LADataDoubles data_tenor;
 		data_tenor.convertFromString(str_tenor);
@@ -393,7 +393,7 @@ LAMarketDataLMM::getGridExTenor()
 {
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	LAString isExTenorStr = staticData.getStaticData(KEY_LMM_GRID_ISEXTRATENORUSE);
-	if (isExTenorStr == MLIB_NO_DATA)
+	if (isExTenorStr == AQ_NO_DATA)
 	{
 		isExTenorStr = "FALSE";
 	}
@@ -404,7 +404,7 @@ LAMarketDataLMM::getGridExTenor()
 	if(tmp.get())
 	{
 		LAString exTenorStr = staticData.getStaticData(KEY_LMM_GRID_EXTRATENOR);
-		if (exTenorStr == MLIB_NO_DATA)
+		if (exTenorStr == AQ_NO_DATA)
 		{
 			LAString msg = LAString(KEY_LMM_GRID_EXTRATENOR) + " must be set ";
 			msg += LAString("when ") + KEY_LMM_GRID_ISEXTRATENORUSE + " = TRUE in property file!";
@@ -444,7 +444,7 @@ LAMarketDataLMM::getCanonicalGridExTenor()
 {
 	LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	LAString isExTenorStr = staticData.getStaticData(KEY_LMM_CANONICALGRID_ISEXTRATENORUSE);
-	if (isExTenorStr == MLIB_NO_DATA)
+	if (isExTenorStr == AQ_NO_DATA)
 	{
 		isExTenorStr = "FALSE";
 	}
@@ -455,7 +455,7 @@ LAMarketDataLMM::getCanonicalGridExTenor()
 	if(tmp.get())
 	{
 		LAString exTenorStr = staticData.getStaticData(KEY_LMM_CANONICALGRID_EXTRATENOR);
-		if (exTenorStr == MLIB_NO_DATA)
+		if (exTenorStr == AQ_NO_DATA)
 		{
 			LAString msg = LAString(KEY_LMM_CANONICALGRID_EXTRATENOR) + " must be set ";
 			msg += LAString("when ") + KEY_LMM_CANONICALGRID_ISEXTRATENORUSE + " = TRUE in property file!";

@@ -74,7 +74,7 @@ namespace validation_api
 				CreateDataFile file( decorateFilename( "tryMeLWOFixingTableCreate_outputs", tableName.c_str() ) );
                 file.write( "output", errString.c_str() );
             }
-            MLIB_THROW( errString );
+            AQ_THROW( errString );
         }
         
         VALID_EXCEPTION_END
@@ -108,7 +108,7 @@ namespace validation_api
 
 		// Check Object exists on the cache
 		auto ptrCachedObject = etrading::Environment::defaultEnv().accessObject<etrading::FixingTable>( tableName );
-		MLIB_REQUIRE( ptrCachedObject != nullptr, "Unable to store LWO Fixing Table named " + tableName );
+		AQ_REQUIRE( ptrCachedObject != nullptr, "Unable to store LWO Fixing Table named " + tableName );
 
 		std::string result = tableName;
 
@@ -165,7 +165,7 @@ namespace validation_api
 				CreateDataFile file( decorateFilename( "tryMeLWOFixingTableDisplaye_outputs", tableName.c_str() ) );
                 file.write( "output", errString.c_str() );
             }
-            MLIB_THROW( errString );
+            AQ_THROW( errString );
         }
         
         VALID_EXCEPTION_END
@@ -226,7 +226,7 @@ namespace validation_api
         
         // Create Pointer to the Fixing Table Object in the Cache and throw if a null pointer
         auto fixingTable = etrading::Environment::defaultEnv().accessObject<etrading::FixingTable>( tableName );
-        MLIB_REQUIRE( fixingTable != nullptr, "Fixing Table " + tableName + " does not exist" )
+        AQ_REQUIRE( fixingTable != nullptr, "Fixing Table " + tableName + " does not exist" )
 
         // Generate a Vector of Fixing Values
         DoubleVector fixingValues( fixingDates.size(), 0.0 );
@@ -309,7 +309,7 @@ namespace validation_api
 
 		// Create Pointer to the Fixing Table Object in the Cache and throw if a null pointer
 		auto fixingTable = etrading::Environment::defaultEnv().accessObject<etrading::FixingTable>( tableName );
-		MLIB_REQUIRE(fixingTable != nullptr, "Fixing Table " + tableName + " does not exist");
+		AQ_REQUIRE(fixingTable != nullptr, "Fixing Table " + tableName + " does not exist");
 
 		// Generate a Vector of Fixing Values
 		auto fixingValues = fixingTable->getFixingValues( parameterLVB, fixingDates );

@@ -61,13 +61,13 @@ namespace validation_api
         const bool noShift = ( shift.size() == 0 ) ? true : false;
 
         // Dimension Validation
-        MLIB_REQUIRE( callOrPut.size() == spot.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of spot parameters." );
-        MLIB_REQUIRE( callOrPut.size() == strike.size(),                "Invalid dimensions: Number of callOrPut parameters must equal the number of strike parameters." );
-        MLIB_REQUIRE( callOrPut.size() == vol.size(),                   "Invalid dimensions: Number of callOrPut parameters must equal the number of vol parameters." );
-        MLIB_REQUIRE( callOrPut.size() == time.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of time parameters." );
-        MLIB_REQUIRE( callOrPut.size() == rate.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of rate parameters." );
-        MLIB_REQUIRE( callOrPut.size() == carry.size(),                 "Invalid dimensions: Number of callOrPut parameters must equal the number of carry parameters." );
-        MLIB_REQUIRE( noShift || callOrPut.size() == shift.size(),      "Invalid dimensions: Number of callOrPut parameters must equal the number of shift parameters." );
+        AQ_REQUIRE( callOrPut.size() == spot.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of spot parameters." );
+        AQ_REQUIRE( callOrPut.size() == strike.size(),                "Invalid dimensions: Number of callOrPut parameters must equal the number of strike parameters." );
+        AQ_REQUIRE( callOrPut.size() == vol.size(),                   "Invalid dimensions: Number of callOrPut parameters must equal the number of vol parameters." );
+        AQ_REQUIRE( callOrPut.size() == time.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of time parameters." );
+        AQ_REQUIRE( callOrPut.size() == rate.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of rate parameters." );
+        AQ_REQUIRE( callOrPut.size() == carry.size(),                 "Invalid dimensions: Number of callOrPut parameters must equal the number of carry parameters." );
+        AQ_REQUIRE( noShift || callOrPut.size() == shift.size(),      "Invalid dimensions: Number of callOrPut parameters must equal the number of shift parameters." );
 
         // Declare Results Vector
         std::vector<double> results( callOrPut.size(), 0.0 );
@@ -147,13 +147,13 @@ namespace validation_api
         const bool noShift = ( shift.size() == 0 ) ? true : false;
 
         // Dimension Validation
-        MLIB_REQUIRE( callOrPut.size() == price.size(),                 "Invalid dimensions: Number of callOrPut parameters must equal the number of price parameters." );
-        MLIB_REQUIRE( callOrPut.size() == spot.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of spot parameters." );
-        MLIB_REQUIRE( callOrPut.size() == strike.size(),                "Invalid dimensions: Number of callOrPut parameters must equal the number of strike parameters." );
-        MLIB_REQUIRE( callOrPut.size() == time.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of time parameters." );
-        MLIB_REQUIRE( callOrPut.size() == rate.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of rate parameters." );
-        MLIB_REQUIRE( callOrPut.size() == carry.size(),                 "Invalid dimensions: Number of callOrPut parameters must equal the number of carry parameters." );
-        MLIB_REQUIRE( noShift || callOrPut.size() == shift.size(),      "Invalid dimensions: Number of callOrPut parameters must equal the number of shift parameters." );
+        AQ_REQUIRE( callOrPut.size() == price.size(),                 "Invalid dimensions: Number of callOrPut parameters must equal the number of price parameters." );
+        AQ_REQUIRE( callOrPut.size() == spot.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of spot parameters." );
+        AQ_REQUIRE( callOrPut.size() == strike.size(),                "Invalid dimensions: Number of callOrPut parameters must equal the number of strike parameters." );
+        AQ_REQUIRE( callOrPut.size() == time.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of time parameters." );
+        AQ_REQUIRE( callOrPut.size() == rate.size(),                  "Invalid dimensions: Number of callOrPut parameters must equal the number of rate parameters." );
+        AQ_REQUIRE( callOrPut.size() == carry.size(),                 "Invalid dimensions: Number of callOrPut parameters must equal the number of carry parameters." );
+        AQ_REQUIRE( noShift || callOrPut.size() == shift.size(),      "Invalid dimensions: Number of callOrPut parameters must equal the number of shift parameters." );
 
         // Declare Results Vector
         std::vector<double> results( callOrPut.size(), 0.0 );

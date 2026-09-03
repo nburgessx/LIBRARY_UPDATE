@@ -52,7 +52,7 @@ namespace etrading
 	{
 		const size_t nCoefficients = coefficients.size();
 		
-		MLIB_REQUIRE( nCoefficients > 0, "Missing polynomial coefficients vector supplied to PolynomialInterpolator. ");
+		AQ_REQUIRE( nCoefficients > 0, "Missing polynomial coefficients vector supplied to PolynomialInterpolator. ");
 
 		/*
 		* We implement HORNER'S METHOD below:
@@ -219,8 +219,8 @@ namespace etrading
 			interpolationMethod_        = curveProperties.getOptionalValue( BONDCURVE_PROPERTIES_KEY::INTERPOLATION, INTERPOLATION_KEYS::PIECEWISE_CONSTANT );
 			extrapolationMethod_        = curveProperties.getOptionalValue( BONDCURVE_PROPERTIES_KEY::EXTRAPOLATION, INTERPOLATION_KEYS::FLAT );
 
-			MLIB_REQUIRE( boost::iequals( interpolationMethod_, INTERPOLATION_KEYS::PIECEWISE_CONSTANT ), "Only PiecewiseConstant interpolation is supported." );
-			MLIB_REQUIRE( boost::iequals( extrapolationMethod_, INTERPOLATION_KEYS::FLAT ), "Only Flat extrapolation is supported." );
+			AQ_REQUIRE( boost::iequals( interpolationMethod_, INTERPOLATION_KEYS::PIECEWISE_CONSTANT ), "Only PiecewiseConstant interpolation is supported." );
+			AQ_REQUIRE( boost::iequals( extrapolationMethod_, INTERPOLATION_KEYS::FLAT ), "Only Flat extrapolation is supported." );
 
 			bondQuoteLVB                = toLabelValueBlock( toString( BONDCURVE_MARKETDATA ) );
 		}
@@ -241,7 +241,7 @@ namespace etrading
 			// Check for duplicate bond maturity dates
 			auto bondInstrument = getBond( bondId );
 			const LADate bondMaturityDate = bondInstrument->getSchedule()->getMaturityDate();
-			MLIB_REQUIRE ( marketDataBondQuotes.count( bondMaturityDate ) == 0, "Duplicate maturity date: " + bondMaturityDate.convertDateToString() + " for bond ID " + bondId.c_str() );
+			AQ_REQUIRE ( marketDataBondQuotes.count( bondMaturityDate ) == 0, "Duplicate maturity date: " + bondMaturityDate.convertDateToString() + " for bond ID " + bondId.c_str() );
 
 			marketDataBondQuotes[ bondMaturityDate ] = yieldQuoteInPercent_ ? bondYieldQuote / 100.0 : bondYieldQuote;
 			marketDataBondIds[ bondMaturityDate ] = bondId;
@@ -275,9 +275,9 @@ namespace etrading
 	*/
 	double BondCurve::getYield( const LADate& couponDate ) const
 	{
-		MLIB_REQUIRE( ! calibratedYields_.empty(), "No bond curve calibration points have been found. Check bond quotes input." );
+		AQ_REQUIRE( ! calibratedYields_.empty(), "No bond curve calibration points have been found. Check bond quotes input." );
 
-		MLIB_REQUIRE( couponDate >= settlementDate_, "Invalid couponDate '" + couponDate.stringWithFormat() + "' is earlier than bond curve settlementDate '" + settlementDate_.stringWithFormat() + "'." );
+		AQ_REQUIRE( couponDate >= settlementDate_, "Invalid couponDate '" + couponDate.stringWithFormat() + "' is earlier than bond curve settlementDate '" + settlementDate_.stringWithFormat() + "'." );
 
 		double yieldPoint = std::numeric_limits<double>::quiet_NaN();
 
@@ -343,7 +343,7 @@ namespace etrading
 			if ( discountFactorsAvailable )
 			{
 				auto dfIterator = calibratedDiscountFactors_.find( pillarDate );
-				MLIB_REQUIRE( dfIterator != calibratedDiscountFactors_.end(), "BondCurve does not contain a discountFactor for pillar date: " + pillarDate.convertDateToString() );
+				AQ_REQUIRE( dfIterator != calibratedDiscountFactors_.end(), "BondCurve does not contain a discountFactor for pillar date: " + pillarDate.convertDateToString() );
 				const double discountFactor = dfIterator->second;
 				row.push_back( discountFactor );
 			}

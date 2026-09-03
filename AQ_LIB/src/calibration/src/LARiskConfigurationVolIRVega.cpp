@@ -56,13 +56,13 @@ namespace
 	LAString getOptionalRiskStaticData(const LAString& keyL, const LAString& ccyL, const LAString& curveSuffixL)
 	{
 		LAString propValue = LAStaticDataManager::getRiskStaticData().getStaticData(ccyL + keyL + curveSuffixL);
-		return (propValue == MLIB_NO_DATA) ? "" : std::move(propValue);
+		return (propValue == AQ_NO_DATA) ? "" : std::move(propValue);
 	}
 
 	LAString getOptionalCalibStaticData(const LAString& keyL, const LAString& ccyL, const LAString& curveSuffixL)
 	{
 		LAString propValue = LAStaticDataManager::getCalibStaticData().getStaticData(ccyL + keyL + curveSuffixL);
-		return (propValue == MLIB_NO_DATA) ? "" : std::move(propValue);
+		return (propValue == AQ_NO_DATA) ? "" : std::move(propValue);
 	}
 
 	bool isTrue(const LAString& s)
@@ -238,7 +238,7 @@ LARiskConfigurationVolIRVega::createVolatilityEntity(const LAString &ccy, LAData
 	{
 		param.isCalib = true;
 		// dataout
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			param.isOutPut = true;
 		}
@@ -675,7 +675,7 @@ LARiskConfigurationVolIRVega::createExtraFXScenarioEntity(const LAString &ccy, L
 		param.targetName = LAMarketData::getBaseVolatilityName(key_fx);
 		
 		// dataout
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			param.isOutPut = true;
 		}
@@ -1052,7 +1052,7 @@ LARiskConfigurationVolIRVega::getGridTerm(const LAString &ccy) const
 		LAString tmpCurrency = ccy;
 		//LAString underlying = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + STATIC_DATA_KEY_VOL_UNDERLYING);
 
-		/*if (underlying == MLIB_NO_DATA)
+		/*if (underlying == AQ_NO_DATA)
 		{*/
 		return getMarketTerm(ccy);
 		/*}
@@ -1088,7 +1088,7 @@ LARiskConfigurationVolIRVega::getBucketGridTerm(const LAString &ccy) const
 {
 	ccy;
 	vector<LAString> ret;
-	ret.push_back(MLIB_NO_DATA);
+	ret.push_back(AQ_NO_DATA);
 	return ret;
 	
 }
@@ -1129,7 +1129,7 @@ LARiskConfigurationVolIRVega::reduceTargetGrids(const LAString &ccy, const LAStr
 	{
 		// calibration target flag
 		LAString calibTarget_str = LACoreDataService::getContext(tmpCurrency + "." CONTEXT_KEY_DEAL_IRVOL + getCurveSuffix(ccy));
-		if (calibTarget_str == MLIB_NO_DATA)
+		if (calibTarget_str == AQ_NO_DATA)
 			return  mktGrids;
 
 		LADataBoolMatrix tmp;
@@ -1402,7 +1402,7 @@ LARiskConfigurationVolIRVega::isRiskCurrencyMode(const LAString &ccy) const
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_VOL_IRVEGA_ISRISKCURRENCYMODE + getCurveSuffix(ccy));
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);
@@ -1564,7 +1564,7 @@ LARiskConfigurationVolIRVega::storeIRAdditionalInfo(LADataInstance &dataInstance
 		resForwards[i] = rate;
 
 
-		if (swaptionFile != MLIB_NO_DATA)
+		if (swaptionFile != AQ_NO_DATA)
 		{
 			resVols[i] = LAMarketData::getVolatilityVal(swaptionFile, optionMaturity, tenor);
 		}

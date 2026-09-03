@@ -77,7 +77,7 @@ namespace validation_api
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
-		MLIB_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
+		AQ_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
 
 		etrading::SwaptionPricer pricer( swaption, valuationSettingsLVB );
         auto result = pricer.pv();
@@ -103,7 +103,7 @@ namespace validation_api
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
-		MLIB_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
+		AQ_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
 
 		etrading::SwaptionPricer pricer( swaption, valuationSettingsLVB );
         auto result = pricer.impliedVol( price );
@@ -128,7 +128,7 @@ namespace validation_api
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
-		MLIB_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
+		AQ_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
 
 		etrading::SwaptionPricer pricer( swaption, valuationSettingsLVB );
         auto result = pricer.delta();
@@ -153,7 +153,7 @@ namespace validation_api
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
-		MLIB_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
+		AQ_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
 
 		etrading::SwaptionPricer pricer( swaption, valuationSettingsLVB );
         auto result = pricer.gamma();
@@ -178,7 +178,7 @@ namespace validation_api
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
-		MLIB_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
+		AQ_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
 
 		etrading::SwaptionPricer pricer( swaption, valuationSettingsLVB );
         auto result = pricer.vega();
@@ -203,7 +203,7 @@ namespace validation_api
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& swaption = std::dynamic_pointer_cast<etrading::SwaptionTrade>( option );
-		MLIB_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
+		AQ_REQUIRE( swaption != nullptr, "Swaption " + objectName + " does not exist" );
 
 		etrading::SwaptionPricer pricer( swaption, valuationSettingsLVB );
         auto result = pricer.theta();

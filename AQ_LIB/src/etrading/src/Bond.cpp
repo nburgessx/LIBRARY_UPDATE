@@ -157,20 +157,20 @@ namespace etrading
 		auto allCashflows = schedule_->getAllCashflows();
 		size_t cashflowSize = allCashflows.size();
 
-		MLIB_REQUIRE(cashflowSize != 0, "Cashflow size cannot be empty.");
+		AQ_REQUIRE(cashflowSize != 0, "Cashflow size cannot be empty.");
 
 		//-----Header-----
 		AnyTypeMatrix cashflowHeaderBlock;
 		if (showColumnHeaders)
 		{
-			MLIB_PUSH_BACK_IF(headers, toString(FIXED_RATE_HEADER), includeFixedRate);
-			MLIB_PUSH_BACK_IF(headers, toString(COUPON_HEADER), includeCoupon);
-			MLIB_PUSH_BACK_IF(headers, toString(DISCOUNT_FACTOR_HEADER), includeDF);
-			MLIB_PUSH_BACK_IF(headers, toString(COUPON_PV_HEADER), includeCouponPV);
+			AQ_PUSH_BACK_IF(headers, toString(FIXED_RATE_HEADER), includeFixedRate);
+			AQ_PUSH_BACK_IF(headers, toString(COUPON_HEADER), includeCoupon);
+			AQ_PUSH_BACK_IF(headers, toString(DISCOUNT_FACTOR_HEADER), includeDF);
+			AQ_PUSH_BACK_IF(headers, toString(COUPON_PV_HEADER), includeCouponPV);
 		}
 
 
-		MLIB_REQUIRE(cashflowSize == bodyBlock.size(), "Cashflow sizes of leg and schedule not matched.");
+		AQ_REQUIRE(cashflowSize == bodyBlock.size(), "Cashflow sizes of leg and schedule not matched.");
 
 		//-----Body-----
 		for (size_t i = 0; i < cashflowSize; ++i)
@@ -181,10 +181,10 @@ namespace etrading
 			auto cashflow = allCashflows[i];
 			auto cashflowData = dataProvider.getCashflowDataIncludingUpfront(i);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->isUpfrontCashflow() ? std::numeric_limits<double>::quiet_NaN() : cashflow->getCompoundRate(cashflowData), includeFixedRate);
-			MLIB_PUSH_BACK_IF(body, roundToNearest(cashflow->getCoupon(cashflowData), cashflowData.currency), includeCoupon);
-			MLIB_PUSH_BACK_IF(body, cashflowData.discountFactor, includeDF);
-			MLIB_PUSH_BACK_IF(body, roundToNearest(cashflow->getCouponPv(cashflowData), cashflowData.valuationCurrency), includeCouponPV);
+			AQ_PUSH_BACK_IF(body, cashflow->isUpfrontCashflow() ? std::numeric_limits<double>::quiet_NaN() : cashflow->getCompoundRate(cashflowData), includeFixedRate);
+			AQ_PUSH_BACK_IF(body, roundToNearest(cashflow->getCoupon(cashflowData), cashflowData.currency), includeCoupon);
+			AQ_PUSH_BACK_IF(body, cashflowData.discountFactor, includeDF);
+			AQ_PUSH_BACK_IF(body, roundToNearest(cashflow->getCouponPv(cashflowData), cashflowData.valuationCurrency), includeCouponPV);
 		}
 
 	}
@@ -483,7 +483,7 @@ namespace etrading
 		// coupons between settleDate and forwardSettleDate
 		std::vector< BondFwdReinvestedCoupon > reinvestedCoupons;
 
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(schedule_->getNotional()), "Bond notional cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(schedule_->getNotional()), "Bond notional cannot be zero.");
 		const double couponScalingFactor = 100.0 / std::fabs(schedule_->getNotional());
 
 		// first coupon factor FCF
@@ -555,7 +555,7 @@ namespace etrading
 			{
 				const double interest = 1.0 + repoRate * fwdYF;
 
-				MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(interest), "denominator cannot be zero.");
+				AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(interest), "denominator cannot be zero.");
 
 				// couponRate * (1+ r * yf) 
 				receivedcoupon.couponFwdValue = receivedcoupon.couponValue / interest;
@@ -676,7 +676,7 @@ namespace etrading
 			fwdCleanPrice = priceFromDirtyToClean(fwdPrice, futureSettleDate);
 		}
 
-		MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(conversionFactor), "Conversion factor cannot be zero.");
+		AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(conversionFactor), "Conversion factor cannot be zero.");
 
 		const double futPrice = fwdCleanPrice / conversionFactor;
 
@@ -852,7 +852,7 @@ namespace etrading
 
 			const double temp = 1.0 + x * 0.5;
 
-			MLIB_REQUIRE(!MLIB_IS_EQUAL_ZERO(temp), "(1.0 + x * 0.5) cannot be zero.");
+			AQ_REQUIRE(!AQ_IS_EQUAL_ZERO(temp), "(1.0 + x * 0.5) cannot be zero.");
 
 			convfactor = (a / x * (std::pow(temp, b) - 1.0) + 100.0) / (std::pow(temp, c / 6.0) * 100.0) - a *(6.0 - d) / 1200.0;
 
@@ -941,13 +941,13 @@ namespace etrading
 	}
     double Bond::cleanPriceJGBApproximation(const LADate& settlementDate, const double& inputYield) const
     {
-		MLIB_THROW("cleanPriceJGBApproximation() is not supported for this bond type");
+		AQ_THROW("cleanPriceJGBApproximation() is not supported for this bond type");
 	}
 
 
     double Bond::compoundYieldJGBApproximation( const LADate& settlementDate, const double& price) const
     {
-		MLIB_THROW("compoundYieldJGBApproximation() is not supported for this bond type");
+		AQ_THROW("compoundYieldJGBApproximation() is not supported for this bond type");
 	}
 }
 

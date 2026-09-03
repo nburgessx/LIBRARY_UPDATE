@@ -103,7 +103,7 @@ LARiskConfigurationYieldBasisDelta::createZeroBumpYieldEntity(const LAString &cc
 	// check
 	// bucket term
 	LAStringVector bucketTerm = getBucketGridTerm(ccy);
-	if (!bucketTerm.empty() && bucketTerm[0] != MLIB_NO_DATA)
+	if (!bucketTerm.empty() && bucketTerm[0] != AQ_NO_DATA)
 	{
 		throw  LACoreInvalidData("Basis delta fail. Zero rate bump does not support bucket.", __FILE__, __LINE__);
 	}
@@ -151,7 +151,7 @@ LARiskConfigurationYieldBasisDelta::createZeroBumpYieldEntity(const LAString &cc
 	tmpCurrency.toLower();
 	LAString recalc = mpRiskStaticData->getStaticData(
 		tmpCurrency + STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_RECALCBASISDFSONZERORATEBUMP + getCurveSuffix(ccy));
-	if (recalc != MLIB_NO_DATA)
+	if (recalc != AQ_NO_DATA)
 	{
 		LADataBool attrBool;
 		attrBool.convertFromString(recalc);
@@ -252,7 +252,7 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &
 		return vector<LAObject *>(0);
 	}	
 	//check bucket grid
-	if (BucketTerm[0] != MLIB_NO_DATA)
+	if (BucketTerm[0] != AQ_NO_DATA)
 	{
 		LAStringVector::iterator it;
 		for (unsigned int i = 0;i < BucketTerm.size();++i)
@@ -303,7 +303,7 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &
 	{
 		paramGrid[i] = LAMarketData::convertToMLibTerm(grid[i]);
 		//for bucket grid
-		if (BucketTerm[0] == "NONE" ||BucketTerm[0] == MLIB_NO_DATA)
+		if (BucketTerm[0] == "NONE" ||BucketTerm[0] == AQ_NO_DATA)
 		{
 			gridGroupID[i] = i;
 		}
@@ -336,7 +336,7 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &
 	tmpCcy.toLower();
 	LAString fwdFXPipsizeFactorString = mpStaticData->getStaticData(tmpCcy + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_DENOMINATOR + mktSuffix,
 																	tmpCcy + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_PIPSIZE + mktSuffix); // Alias Method: First Parameter Takes Priority
-	if (fwdFXPipsizeFactorString != MLIB_NO_DATA)
+	if (fwdFXPipsizeFactorString != AQ_NO_DATA)
 		param.fwdfxDenominator = fwdFXPipsizeFactorString.getDoubleValue();
 
 	// set targetCurveType for col-xccybasis delta
@@ -347,7 +347,7 @@ LARiskConfigurationYieldBasisDelta::createMarketBumpYieldEntity(const LAString &
 	for (int unsigned i = 0; i < fCurveCcys.size(); ++i)
 	{
 		LAStringVector tmpMarkets = mpStaticData->getStaticData(fCurveCcys[i].toLower() + STATIC_DATA_KEY_YIELD_USEMAKETS).toToken(':');
-		if (tmpMarkets[0] == MLIB_NO_DATA) continue;
+		if (tmpMarkets[0] == AQ_NO_DATA) continue;
 		for (int i = 0; i < tmpMarkets.size(); ++i)
 		{
 			const LAStringVector tmpMarket = tmpMarkets[i].toUpper().toToken('_');
@@ -443,7 +443,7 @@ LARiskConfigurationYieldBasisDelta::getIMMFwdRiskMode(const LAString &ccy) const
 	LAString tmpCurrency = ccy;
 	LAString isIMMProp = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
 											STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISIMMFWDRATEBUMP + getCurveSuffix(ccy));
-	if ((isIMMProp == MLIB_NO_DATA) || !convertBoolFromStr(isIMMProp))
+	if ((isIMMProp == AQ_NO_DATA) || !convertBoolFromStr(isIMMProp))
 	{
 		return 0;
 	}
@@ -495,7 +495,7 @@ LARiskConfigurationYieldBasisDelta::getIMMRiskYieldCurveName(const LAString &ccy
 	LAString assignedCurvePropName = ccyL + STATIC_DATA_KEY_YIELD_BASIS_ASSIGNEDCURVE + curveSuffix;
 
 	LAString assignedCurve = mpStaticData->getStaticData(assignedCurvePropName).toToken(MULTI_STATIC_DATA_DELIMITER).front().toUpper();
-	bool hasAssignedCurve = assignedCurve != MLIB_NO_DATA;
+	bool hasAssignedCurve = assignedCurve != AQ_NO_DATA;
 	LAString curveTypeL = getCurveType(ccy).toLower();
 	LAString curveTypeU = curveTypeL;
 	curveTypeU.toUpper();
@@ -521,7 +521,7 @@ LARiskConfigurationYieldBasisDelta::getIMMRiskYieldCurveName(const LAString &ccy
 				if (useGridSet.find(terms[i]) != useGridSet.end())
 				{
 					LAString frequencyFloatTerm = mpStaticData->getStaticData(ccyL + STATIC_DATA_KEY_YIELD_SWAP_FREQUENCYFLOAT + '.' + terms[i].toLower());
-					if (frequencyFloatTerm != MLIB_NO_DATA)
+					if (frequencyFloatTerm != AQ_NO_DATA)
 					{
 						if (baseFrequencyFloat != frequencyFloatTerm.toLower())
 						{
@@ -672,7 +672,7 @@ LARiskConfigurationYieldBasisDelta::getGridTerm(const LAString &ccy) const
 		// read fwdfx file
 		LAStringMatrix fwdfxDataMtx;
 		LAString fwdfxFileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FWDFX_FILE + getCurveSuffix(ccy));
-		if (fwdfxFileName != MLIB_NO_DATA)
+		if (fwdfxFileName != AQ_NO_DATA)
 		{
 			MAFileAccessor fwdfxFile(LAMarketData::getNumFileName(fwdfxFileName));
 			fwdfxFile.readAllData(MARKET_DATA_DELIMITER, fwdfxDataMtx);
@@ -681,7 +681,7 @@ LARiskConfigurationYieldBasisDelta::getGridTerm(const LAString &ccy) const
 		// read basis file
 		LAStringMatrix basisDataMtx;
 		LAString basisFileName = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + getCurveSuffix(ccy));
-		if (basisFileName != MLIB_NO_DATA)
+		if (basisFileName != AQ_NO_DATA)
 		{
 			MAFileAccessor basisFile(LAMarketData::getNumFileName(basisFileName));
 			basisFile.readAllData(MARKET_DATA_DELIMITER, basisDataMtx);
@@ -733,9 +733,9 @@ LARiskConfigurationYieldBasisDelta::getBucketGridTerm(const LAString &ccy) const
 									STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_BUCKET_GRID_TERM + getCurveSuffix(ccy));
 	LAStringVector BucketTerm = strBucketGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
 	BucketTerm[0].toUpper();
-	if (BucketTerm[0] == "NONE" ||BucketTerm[0] == MLIB_NO_DATA)
+	if (BucketTerm[0] == "NONE" ||BucketTerm[0] == AQ_NO_DATA)
 	{
-		ret.push_back(MLIB_NO_DATA);
+		ret.push_back(AQ_NO_DATA);
 		return ret;
 	}
 	else
@@ -942,7 +942,7 @@ LARiskConfigurationYieldBasisDelta::isFwdFXZeroRateBump(const LAString &ccy) con
 	LAString tmpCurrency = ccy;
 	LAString tmpIsFwdFXZeroRateBump = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
 		STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISFWDFXZERORATEBUMP + getCurveSuffix(ccy));
-	if (tmpIsFwdFXZeroRateBump == MLIB_NO_DATA) return false;
+	if (tmpIsFwdFXZeroRateBump == AQ_NO_DATA) return false;
 	return convertBoolFromStr(tmpIsFwdFXZeroRateBump);
 }
 
@@ -958,7 +958,7 @@ LARiskConfigurationYieldBasisDelta::isFwdPointBump(const LAString &ccy) const
 	LAString tmpCurrency = ccy;
 	LAString tmpIsFwdPointBump = mpRiskStaticData->getStaticData(tmpCurrency.toLower() +
 		STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISFWDPOINTBUMP + getCurveSuffix(ccy));
-	if (tmpIsFwdPointBump == MLIB_NO_DATA) return true;
+	if (tmpIsFwdPointBump == AQ_NO_DATA) return true;
 	return convertBoolFromStr(tmpIsFwdPointBump);
 }
 
@@ -1070,7 +1070,7 @@ LARiskConfigurationYieldBasisDelta::isTarget(const LAString &ccy) const
 	LAString tmpCurrency = ccy;
 	tmpCurrency.toUpper();
 
-	if (basisCurrency != MLIB_NO_DATA)
+	if (basisCurrency != AQ_NO_DATA)
 	{
 		if (basisCurrency.toUpper() == tmpCurrency)
 		{
@@ -1111,7 +1111,7 @@ LARiskConfigurationYieldBasisDelta::isRiskCurrencyMode(const LAString &ccy) cons
 	LAString tmpCurrency = ccy;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);
@@ -1131,7 +1131,7 @@ LARiskConfigurationYieldBasisDelta::isZeroBump(const LAString &ccy) const
 	LAString tmpCurrency = ccy;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_ISZERORATEBUMP + getCurveSuffix(ccy));
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);
@@ -1178,7 +1178,7 @@ LARiskConfigurationYieldBasisDelta::getBaseOutPutName(const LAString &ccy , int 
 	}
 	else
 	{
-		return MLIB_NO_DATA;
+		return AQ_NO_DATA;
 	}
 }
 
@@ -1194,7 +1194,7 @@ LARiskConfigurationYieldBasisDelta::omitNotionalExposure(const LAString &ccy) co
 	LAString tmpCcy = ccy;
 	tmpCcy.toLower();
 	LAString omitNotionalExposure = mpRiskStaticData->getStaticData(tmpCcy + STATIC_DATA_KEY_RISK_FRONT_YIELD_BASISDELTA_OMITNOTIONALEXPOSURE + getCurveSuffix(ccy));
-	if (omitNotionalExposure == MLIB_NO_DATA)
+	if (omitNotionalExposure == AQ_NO_DATA)
 	{
 		return false;
 	}

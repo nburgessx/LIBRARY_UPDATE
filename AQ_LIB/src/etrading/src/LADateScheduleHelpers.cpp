@@ -30,7 +30,7 @@
 #include "LAPriceDataConvention.h"
 #include "LADataMultiReference.h"
 #include "LAMathDateUtilities.h"	// for getStubDateAndType
-#include "ExceptionMacros.h"		// MLIB_REQUIRE, MLIB_THROW
+#include "ExceptionMacros.h"		// AQ_REQUIRE, AQ_THROW
 
 #include <cmath>
 #include <map>
@@ -307,7 +307,7 @@ namespace etrading
             }
             else if (stubTypeString == "SHORTSTART" || stubTypeString == "SS")
             {
-				MLIB_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
+				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
                 
 				stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_START_STUBTYPE );
                 
@@ -317,7 +317,7 @@ namespace etrading
             }
             else if (stubTypeString == "LONGSTART" || stubTypeString == "LS")
             {
-				MLIB_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
+				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
                 stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_START_STUBTYPE );
                 
@@ -327,7 +327,7 @@ namespace etrading
             }
             else if (stubTypeString == "SHORTEND" || stubTypeString == "SE")
             {
-				MLIB_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
+				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
                 stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_END_STUBTYPE );
 
@@ -337,7 +337,7 @@ namespace etrading
             }
             else if (stubTypeString == "LONGEND" || stubTypeString == "LE")
             {
-				MLIB_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
+				AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
                 stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_END_STUBTYPE );
 
@@ -347,7 +347,7 @@ namespace etrading
             }
             else
             {
-                MLIB_THROW("Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).")
+                AQ_THROW("Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).")
             }
         }
         // ////////////////////////////////////////////////////////////////////////////////////////////////////

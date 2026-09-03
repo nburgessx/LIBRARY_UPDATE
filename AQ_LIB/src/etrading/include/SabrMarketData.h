@@ -39,7 +39,7 @@ namespace etrading
 		//Getter
 		SabrMarketDataTypeEnum getMarketDataType() const { return marketDataType_; };
 		double getStrikeAdjustAmount() const { return strikeAdjustAmount_; };
-		double isATM() const { return MLIB_IS_EQUAL_ZERO(strikeAdjustAmount_); };
+		double isATM() const { return AQ_IS_EQUAL_ZERO(strikeAdjustAmount_); };
 		SabrMarketDataValueTypeEnum getValyeType() const { return valueType_; };
 		LAStringVector getExpiryStrVector() const { return expiryStrVector_; };
 		LAStringVector getTenorStrVector() const { return tenorStrVector_; };

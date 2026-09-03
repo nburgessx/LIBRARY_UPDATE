@@ -299,7 +299,7 @@ namespace etrading
 	/*
 	void CashflowEngine::resetExcessSpread( const size_t period, const double& excessSpreadAmount )
 	{
-		MLIB_REQUIRE( period < excessSpread_.size(), "Supplied period is outside valid range. Must be below: " << excessSpread_.size() << "; Actial value: " << period );
+		AQ_REQUIRE( period < excessSpread_.size(), "Supplied period is outside valid range. Must be below: " << excessSpread_.size() << "; Actial value: " << period );
 
 		// # reset xs spread on given month period
 		excessSpread_[ period ] = excessSpreadAmount;
@@ -310,7 +310,7 @@ namespace etrading
 	/*
 	void CashflowEngine::applySyntheticExcessSpread( const size_t period, const double& periodLoss ) const
 	{
-		MLIB_THROW( "Method applySyntheticExcessSpread() is not implemented." );
+		AQ_THROW( "Method applySyntheticExcessSpread() is not implemented." );
 	}*/
 
 
@@ -319,8 +319,8 @@ namespace etrading
 	void CashflowEngine::populateYieldCurveData()
 	{
 		// # build date schedule and bind to liability flows
-		MLIB_REQUIRE( LADateScheduleHelpers::isValidDate( effectiveDate_ ), "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
-		MLIB_REQUIRE( LADateScheduleHelpers::isValidDate( maturityDate_ ),  "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
+		AQ_REQUIRE( LADateScheduleHelpers::isValidDate( effectiveDate_ ), "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
+		AQ_REQUIRE( LADateScheduleHelpers::isValidDate( maturityDate_ ),  "Invalid EffectiveDate in CashflowEngine::populateYieldCurveData()" );
 
 		// # portfolio projection always monthly
 		// # back stub
@@ -371,7 +371,7 @@ namespace etrading
 				break;
 			
 			default:
-				MLIB_THROW("Unsupported tranche coupon frequency " << toString( frequencyEnum ) << " . Only MONTHLY, QUARTERLY, SEMI-ANNUAL, ANNUAL is supported.");
+				AQ_THROW("Unsupported tranche coupon frequency " << toString( frequencyEnum ) << " . Only MONTHLY, QUARTERLY, SEMI-ANNUAL, ANNUAL is supported.");
 				break;
 			}
 			std::string floatFrequency = toString( frequencyEnum );
@@ -429,7 +429,7 @@ namespace etrading
 	*/
 	void CashflowEngine::payInterest( const size_t period )
 	{
-		MLIB_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
+		AQ_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
 
 		// # check if this period is a coupon period
 		// # tranche in interest_waterfall
@@ -460,7 +460,7 @@ namespace etrading
 				const LADate& resetDate =  currentTrancheCouponScheduleData.resetDate_[ payCouponPeriodIdx ];
 
 				auto resetDateIter = std::find( resetDates_.begin(), resetDates_.end(), resetDate );
-				MLIB_REQUIRE( resetDateIter != resetDates_.end(), "Could not find tranche reset date in resetDates vector" );
+				AQ_REQUIRE( resetDateIter != resetDates_.end(), "Could not find tranche reset date in resetDates vector" );
 				
 				const size_t resetPeriod = std::distance( resetDates_.begin(), resetDateIter );
 
@@ -503,7 +503,7 @@ namespace etrading
 				{
 					for ( int iPeriod = startPeriod; iPeriod <= (int)period; iPeriod++ )
 					{
-						MLIB_REQUIRE( iPeriod >= 0, "Internal error during payment averaging. iPeriod is out of range" );
+						AQ_REQUIRE( iPeriod >= 0, "Internal error during payment averaging. iPeriod is out of range" );
 
 						couponPeriodBalance += currentTrancheScheduleData.balanceStart_[ iPeriod ];
 					}
@@ -543,7 +543,7 @@ namespace etrading
 	*/
 	void CashflowEngine::payLosses( const size_t period, const double& periodLoss )
 	{
-		MLIB_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
+		AQ_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
 
 		double unallocatedPeriodLoss = periodLoss;
 
@@ -588,7 +588,7 @@ namespace etrading
 	*/
 	void CashflowEngine::reinvest( const size_t period, const double& amount )
 	{
-		MLIB_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
+		AQ_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
 
 		if ( period < reinvestmentEndPeriod_ )
 		{
@@ -612,7 +612,7 @@ namespace etrading
 					}
 					else if ( boost::iequals(trigger->getName(), STRUCTURED_CREDIT_KEYS::TRIGGER_NAME_REINVEST_VALE ) )
 					{
-						MLIB_REQUIRE( trancheMonthlyScheduleData_.size() >= 3, "At least 3 tranches are required in order process " + STRUCTURED_CREDIT_KEYS::TRIGGER_NAME_REINVEST_VALE + " Trigger." );
+						AQ_REQUIRE( trancheMonthlyScheduleData_.size() >= 3, "At least 3 tranches are required in order process " + STRUCTURED_CREDIT_KEYS::TRIGGER_NAME_REINVEST_VALE + " Trigger." );
 						const TrancheScheduleData& equityTrancheScheduleData	= trancheMonthlyScheduleData_[ 0 ];
 						const TrancheScheduleData& mezzTrancheScheduleData1		= trancheMonthlyScheduleData_[ 1 ];
 						const TrancheScheduleData& mezzTrancheScheduleData2		= trancheMonthlyScheduleData_[ 2 ];
@@ -656,7 +656,7 @@ namespace etrading
 	*/
 	void CashflowEngine::payPrincipal( const size_t period, const double& initialPrincipalCollection)
 	{
-		MLIB_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
+		AQ_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
 
 		double principalCollection = initialPrincipalCollection;
 
@@ -664,7 +664,7 @@ namespace etrading
 
 		for ( auto trigger : triggers_ )
 		{
-			MLIB_REQUIRE(trancheMonthlyScheduleData_.size() >= 3, "Require three or more tranches for trigger processing.");
+			AQ_REQUIRE(trancheMonthlyScheduleData_.size() >= 3, "Require three or more tranches for trigger processing.");
 
 			const TrancheScheduleData& equityTranche	= trancheMonthlyScheduleData_[0];
 			const TrancheScheduleData& mezzTranche1		= trancheMonthlyScheduleData_[1];
@@ -731,7 +731,7 @@ namespace etrading
 
 		// Need to use ints here because we have a count-down loop
 		const int nTranches = trancheDefinitions_.size();
-		MLIB_REQUIRE( nTranches > 0, "At least one tranche must be defined" );
+		AQ_REQUIRE( nTranches > 0, "At least one tranche must be defined" );
 
 		for ( int trancheIdx = (nTranches - 1); trancheIdx >= 0; trancheIdx-- )
 		{
@@ -799,7 +799,7 @@ namespace etrading
 			}
 			else
 			{
-				MLIB_THROW( "Tranche type must be either 'sequential' or 'pro-rata'" );
+				AQ_THROW( "Tranche type must be either 'sequential' or 'pro-rata'" );
 			}
 		} // Loop over tranches
 
@@ -833,7 +833,7 @@ namespace etrading
 			const LADate& resetDate = equityTrancheCouponScheduleData.resetDate_[ payPeriodTranche ];
 
 			auto resetDateIter = std::find( resetDates_.begin(), resetDates_.end(), resetDate );
-			MLIB_REQUIRE( resetDateIter != resetDates_.end(), "Could not find tranche reset date in resetDates vector" );
+			AQ_REQUIRE( resetDateIter != resetDates_.end(), "Could not find tranche reset date in resetDates vector" );
 
 			const size_t resetPeriod = std::distance( resetDates_.begin(), resetDateIter );
 
@@ -859,7 +859,7 @@ namespace etrading
 	*/
 	void CashflowEngine::calculateAttachDetach( const size_t period )
 	{
-		MLIB_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
+		AQ_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
 
 		double reinvestedBalance = 0.0;
 		if (period < reinvestmentEndPeriod_)
@@ -894,7 +894,7 @@ namespace etrading
 	*/
 	void CashflowEngine::calculateRegulatoryCapital( const size_t period )
 	{
-		MLIB_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
+		AQ_REQUIRE( period < nPeriods_, "Supplied period is outside valid range. Must be below: " << nPeriods_ << "; Actial value: " << period );
 
 		const size_t nTranches = trancheDefinitions_.size();
 
@@ -940,7 +940,7 @@ namespace etrading
 							break;
 						}
 						default:
-							MLIB_THROW( "supervisory_type must be either 'NEW' or 'OLD'" );
+							AQ_THROW( "supervisory_type must be either 'NEW' or 'OLD'" );
 							break;
 					}
 
@@ -1187,7 +1187,7 @@ namespace etrading
 												trancheDefinitions_.end(),
 												trancheDefinition );
 
-		MLIB_REQUIRE( trancheDefinitionIter != trancheDefinitions_.end(), "Cannot find specified Tranche in the CashflowEngine." );
+		AQ_REQUIRE( trancheDefinitionIter != trancheDefinitions_.end(), "Cannot find specified Tranche in the CashflowEngine." );
 		
 		const size_t trancheIdx = std::distance(trancheDefinitions_.begin(), trancheDefinitionIter );
 

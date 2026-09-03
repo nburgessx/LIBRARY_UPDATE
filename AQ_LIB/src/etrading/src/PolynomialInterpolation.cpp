@@ -7,11 +7,11 @@ namespace etrading
 
 	PolynomialInterpolation::PolynomialInterpolation( const std::vector<double>& xValues, const std::vector<double>& yValues, const size_t& degree )
 	{
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Invalid Polynomial Data: The number of xValues and yValues must be the same" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Polynomial Data: The number of xValues and yValues must be the same" )
 		
 		// TODO: Relax this constraint. It appears that the underlying code breaks down for higher order polynomials
 		// This class breaks down around degree 12-15, subject to the number of data nodes used.
-		MLIB_REQUIRE( degree < 11, "Invalid Polynomial Degree: Currently the Max Polynomial Degree Supported is 10" )
+		AQ_REQUIRE( degree < 11, "Invalid Polynomial Degree: Currently the Max Polynomial Degree Supported is 10" )
 
 		// Boundary Condition: Max Polynomial Degree is capped at the number of data points minus one.
 		// A larger degree would lead to an overdetermined system with many solutions and no unique solution.
@@ -66,7 +66,7 @@ namespace etrading
 	double PolynomialInterpolation::interpolate( const double& x ) const
 	{
 		const size_t nCoefficients = polynomialCoefficients_.size();
-		MLIB_REQUIRE( polynomialDegree_ == nCoefficients - 1, "Invalid Interpolation Polynomial: The number of coefficients and the order of the polynomial are inconsistent" )
+		AQ_REQUIRE( polynomialDegree_ == nCoefficients - 1, "Invalid Interpolation Polynomial: The number of coefficients and the order of the polynomial are inconsistent" )
 
 		/* We implement Horner's method for evaluating the polynomial.
 		*  This approach is more efficient than naively evaluating the polynomial terms
@@ -106,7 +106,7 @@ namespace etrading
 	double PolynomialInterpolation::integrate( const double & lowerBound, const double & upperBound ) const
 	{
 		const size_t nCoefficients = polynomialCoefficients_.size();
-		MLIB_REQUIRE( polynomialDegree_ == nCoefficients - 1, "Invalid Interpolation Polynomial: The number of coefficients and the order of the polynomial are inconsistent" )
+		AQ_REQUIRE( polynomialDegree_ == nCoefficients - 1, "Invalid Interpolation Polynomial: The number of coefficients and the order of the polynomial are inconsistent" )
 
 		/* We implement Horner's method for evaluating the derivative.
 		*  This approach is more efficient than naively evaluating the polynomial terms
@@ -144,7 +144,7 @@ namespace etrading
 	std::vector<double> PolynomialInterpolation::integrate(const std::vector<double> & lowerBounds, const std::vector<double> & upperBounds) const
 	{
 		const size_t nIntegrands = lowerBounds.size();
-		MLIB_REQUIRE( nIntegrands == upperBounds.size(), "Invalid Integration Bounds: Number of lowerBounds and upperBounds must match.");
+		AQ_REQUIRE( nIntegrands == upperBounds.size(), "Invalid Integration Bounds: Number of lowerBounds and upperBounds must match.");
 		
 		// Reserve Size for Performance
 		std::vector<double> integrands( nIntegrands );
@@ -160,7 +160,7 @@ namespace etrading
 	double PolynomialInterpolation::differentiate( const double & x ) const
 	{  
 		const size_t nCoefficients = polynomialCoefficients_.size();
-		MLIB_REQUIRE( polynomialDegree_ == nCoefficients - 1, "Invalid Interpolation Polynomial: The number of coefficients and the order of the polynomial are inconsistent" )
+		AQ_REQUIRE( polynomialDegree_ == nCoefficients - 1, "Invalid Interpolation Polynomial: The number of coefficients and the order of the polynomial are inconsistent" )
 
 		/* We implement Horner's method for evaluating the derivative.
 		*  This approach is more efficient than naively evaluating the polynomial terms
@@ -208,7 +208,7 @@ namespace etrading
 	// Discrete Differentiation over a range of X values
 	double PolynomialInterpolation::differentiate( const double& fromXPoint, const double& toXPoint ) const
 	{
-		MLIB_REQUIRE( MLIB_IS_GREATER_THAN( toXPoint, fromXPoint ), "Invalid Differentiation Interval: The toXPoint must be greater than the fromXPoint" )
+		AQ_REQUIRE( AQ_IS_GREATER_THAN( toXPoint, fromXPoint ), "Invalid Differentiation Interval: The toXPoint must be greater than the fromXPoint" )
 		
 		const double fromYPoint	= interpolate( fromXPoint );
 		const double toYPoint	= interpolate( toXPoint );
@@ -223,7 +223,7 @@ namespace etrading
 	std::vector<double> PolynomialInterpolation::differentiate( const std::vector<double>& fromXPoints, const std::vector<double>& toXPoints ) const
 	{
 		const size_t nXPoints = fromXPoints.size();
-		MLIB_REQUIRE( nXPoints == toXPoints.size(), "Invalid Differentiation Intervals: The number of fromXPoints and toXPoints must match")
+		AQ_REQUIRE( nXPoints == toXPoints.size(), "Invalid Differentiation Intervals: The number of fromXPoints and toXPoints must match")
 		
 		std::vector<double> results(nXPoints, 0.0);
 		for( size_t i = 0; i < nXPoints; ++i )

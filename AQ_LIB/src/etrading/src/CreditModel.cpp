@@ -228,7 +228,7 @@ namespace etrading
 
 		if ( numMarketDataColumns != 2 )
 		{
-			MLIB_THROW( toString( marketDataEnum ) + ": should contain 2 columns. Found " + std::to_string( static_cast<long long> ( numMarketDataColumns )) + " columns.");
+			AQ_THROW( toString( marketDataEnum ) + ": should contain 2 columns. Found " + std::to_string( static_cast<long long> ( numMarketDataColumns )) + " columns.");
 		}
 
 		// Iterate through the calibration marketData rows and for each row determine the instrumentMaturityDate and instrument quote.
@@ -260,7 +260,7 @@ namespace etrading
 						break;
 					}
 					default:
-						MLIB_THROW("Only CDS_MARKETDATA or BOND_MARKETDATA supported.");
+						AQ_THROW("Only CDS_MARKETDATA or BOND_MARKETDATA supported.");
 				}
 
 				Variant value = marketData[1][i];
@@ -272,7 +272,7 @@ namespace etrading
 				{
 					std::string stringValue = value.getValue<std::string>();
 					boost::trim( stringValue );
-					MLIB_REQUIRE( stringValue != "", "Missing instrument quote." );
+					AQ_REQUIRE( stringValue != "", "Missing instrument quote." );
 					char * pFirstNonNumber;
                     instrumentQuote = strtod( stringValue.c_str(), &pFirstNonNumber );
 					break;
@@ -284,7 +284,7 @@ namespace etrading
 					instrumentQuote = static_cast<double> (value.getValue<int>() );
 					break;
 				default:
-					MLIB_THROW( "Unexpected data type in Credit Model Market Data ");
+					AQ_THROW( "Unexpected data type in Credit Model Market Data ");
 				}
 			
 				CreditMarketData marketData;
@@ -293,7 +293,7 @@ namespace etrading
 
 				if ( marketDataMap.find( instrumentMaturityDate ) != marketDataMap.end() )
 				{
-					MLIB_THROW( "Found two or more calibration instruments with the same maturity date '"
+					AQ_THROW( "Found two or more calibration instruments with the same maturity date '"
 								+ instrumentMaturityDate.stringWithFormat( "DD-MM-YYYY")
 								+ "'." );
 				}
@@ -326,7 +326,7 @@ namespace etrading
 		if ( cdsMarketDataMap.size() > 0 )
 		{
 			// If CDS Instruments have been provided for calibration, require that a CDSCurveCollection data is also present.
-			MLIB_REQUIRE( cdsCurveCollection_.size() > 0, "Please Specify a CDSCurveCollection when calibrating to CDS Instruments." );
+			AQ_REQUIRE( cdsCurveCollection_.size() > 0, "Please Specify a CDSCurveCollection when calibrating to CDS Instruments." );
 		}
 
 		// Calibrate to CDSs
@@ -335,11 +335,11 @@ namespace etrading
 			const LADate& maturityDate = it->first;
 			const CreditMarketData& creditMarketData = it->second;
 
-			MLIB_REQUIRE( accrualStartDate_ <= maturityDate, "Invalid Accrual Start Date: The Accrual Start Date cannot be greater than the CDS maturity date" )
-            MLIB_REQUIRE( immReferenceDate_ <= maturityDate, "Invalid IMM Reference Date: The IMM Reference Date cannot be greater than the CDS maturity date" )
+			AQ_REQUIRE( accrualStartDate_ <= maturityDate, "Invalid Accrual Start Date: The Accrual Start Date cannot be greater than the CDS maturity date" )
+            AQ_REQUIRE( immReferenceDate_ <= maturityDate, "Invalid IMM Reference Date: The IMM Reference Date cannot be greater than the CDS maturity date" )
 
             // Create a new swapExpressionLVB
-            swapExpressionLVB = LabelValueBlock( swapExpressionLVB,  IRS_KEY::MATURITY_DATE, MLIB_TO_STRING_FROM_INT(LADateScheduleHelpers::getExcelDate( maturityDate ) ) );
+            swapExpressionLVB = LabelValueBlock( swapExpressionLVB,  IRS_KEY::MATURITY_DATE, AQ_TO_STRING_FROM_INT(LADateScheduleHelpers::getExcelDate( maturityDate ) ) );
 			auto swapInstrument = createSwapFromGenerator( creditIndex_, cdsGeneratorName_, swapExpressionLVB, swapPropertiesLVB, isXccySwap );
 			std::shared_ptr<CreditDefaultSwap> cdsInstrument = std::dynamic_pointer_cast<CreditDefaultSwap>( swapInstrument );
 
@@ -350,7 +350,7 @@ namespace etrading
 				// This occurs if two CDs maturities are in close proximity with inconsistent prices.
 				// In order to match the CDS price the survival probability is required to increase between maturities, which is impossible.
 				const LADate& cdsMaturity = cdsInstrument->getLeg(0)->getSchedule()->getMaturityDate();
-				MLIB_THROW( "Detected two CDS instruments with clashing maturities and prices. Consider removing the CDS with maturity '"
+				AQ_THROW( "Detected two CDS instruments with clashing maturities and prices. Consider removing the CDS with maturity '"
 							+ std::string( cdsMaturity.stringWithFormat( "DD-MM-YYYY" ).getCString() )
 							+ "' or the earlier CDS." );
 			}
@@ -365,7 +365,7 @@ namespace etrading
 		if ( bondMarketDataMap.size() > 0 )
 		{
 			// If Bond Instruments have been provided for calibration, require that a BondCurveCollection data is also present.
-			MLIB_REQUIRE( bondCurveCollection_.size() > 0, "Please Specify a BondCurveCollection when calibrating to Bond Instruments." );
+			AQ_REQUIRE( bondCurveCollection_.size() > 0, "Please Specify a BondCurveCollection when calibrating to Bond Instruments." );
 		}
 
 		const LADate& settlementDate = asOfDate_;
@@ -383,7 +383,7 @@ namespace etrading
 			{
 				// This occurs if two bond maturities are in close proximity with inconsistent prices.
 				// In order to match the bond price the survival probability is required to increase between maturities, which is impossible.
-				MLIB_THROW( "Detected two bonds with clashing maturities and prices. Consider removing the bond with ISIN '" + bondInstrument->getBondISIN()
+				AQ_THROW( "Detected two bonds with clashing maturities and prices. Consider removing the bond with ISIN '" + bondInstrument->getBondISIN()
 							+ "' with maturity '" + bondInstrument->getSchedule()->getMaturityDate().stringWithFormat("DD-MM-YYYY").getCString()
 							+ "' or the earlier bond." );
 			}
@@ -420,16 +420,16 @@ namespace etrading
 		bondDiscountCurve_			= modelProperties.getOptionalValueAsString( CREDITMODEL_MODEL_PROPERTIES_KEY::BOND_DISCOUNT_CURVE, "OIS" );
 		bondHasRiskyAccruedInterest_= modelProperties.getOptionalValueAsBool( CREDITMODEL_MODEL_PROPERTIES_KEY::BOND_HAS_RISKY_ACCRUED_INTEREST, true );
 
-        MLIB_REQUIRE( accrualStartDate_ != LADate() || immReferenceDate_ != LADate(), "Accrual Start Date Required: We must specify either the AccrualStartDate or the active IMMReferenceDate" )
+        AQ_REQUIRE( accrualStartDate_ != LADate() || immReferenceDate_ != LADate(), "Accrual Start Date Required: We must specify either the AccrualStartDate or the active IMMReferenceDate" )
 
 		if ( ! boost::iequals( interpolationMethod_, "PiecewiseConstant" ))
 		{
-			MLIB_THROW( "Only PiecewiseConstant interpolation is supported.");
+			AQ_THROW( "Only PiecewiseConstant interpolation is supported.");
 		}
 
 		if ( ! boost::iequals( extrapolationMethod_, "Flat" ))
 		{
-			MLIB_THROW( "Only Flat extrapolation is supported." );
+			AQ_THROW( "Only Flat extrapolation is supported." );
 		}
 
 		// Perform consistency checks between the Credit Model and the cdsCurveCollection
@@ -438,13 +438,13 @@ namespace etrading
 			const std::string curveCurrency = getCurveCurrency( cdsCurveCollection_.c_str() ).getCString();
 			if ( ! boost::iequals( curveCurrency, toString( currency_ ) ))
 			{
-				MLIB_THROW( "CDSCurveCollection currency does not match Credit Model currency: '" + curveCurrency + "' vs '" + toString( currency_ ) + "." );
+				AQ_THROW( "CDSCurveCollection currency does not match Credit Model currency: '" + curveCurrency + "' vs '" + toString( currency_ ) + "." );
 			}
 
 			const LADate curveAsOfDate = getCurveAsOfDate( cdsCurveCollection_.c_str() );
 			if ( curveAsOfDate != asOfDate_ )
 			{
-				MLIB_THROW( "CDSCurveCollection as-of date does not match Credit Model as-of date: '" + curveAsOfDate.stringWithFormat() + "' vs '" + asOfDate_.stringWithFormat() + "." );
+				AQ_THROW( "CDSCurveCollection as-of date does not match Credit Model as-of date: '" + curveAsOfDate.stringWithFormat() + "' vs '" + asOfDate_.stringWithFormat() + "." );
 			}
 		}
 
@@ -453,7 +453,7 @@ namespace etrading
 			const LADate bondCurveAsOfDate = getCurveAsOfDate( bondCurveCollection_.c_str() );
 			if ( bondCurveAsOfDate != asOfDate_ )
 			{
-				MLIB_THROW( "BondCurveCollection as-of date does not match Credit Model as-of date: '" + bondCurveAsOfDate.stringWithFormat() + "' vs '" + asOfDate_.stringWithFormat() + "." );
+				AQ_THROW( "BondCurveCollection as-of date does not match Credit Model as-of date: '" + bondCurveAsOfDate.stringWithFormat() + "' vs '" + asOfDate_.stringWithFormat() + "." );
 			}
 		}
 
@@ -474,11 +474,11 @@ namespace etrading
 		const MarketDataMap bondMarketDataMap = loadMarketDataMap( referenceDate, BOND_MARKETDATA );
 		if ( cdsMarketDataMap.size() == 0 && bondMarketDataMap.size() == 0 )
 		{
-			MLIB_THROW("Missing calibration data: Please provide either a CDS_MARKETDATA block or BOND_MARKETDATA block.");
+			AQ_THROW("Missing calibration data: Please provide either a CDS_MARKETDATA block or BOND_MARKETDATA block.");
 		}
 		if ( cdsMarketDataMap.size() > 0 && bondMarketDataMap.size() > 0 )
 		{
-			MLIB_THROW("Conflicting calibration data: Please provide either a CDS_MARKETDATA block or BOND_MARKETDATA block, not both.");
+			AQ_THROW("Conflicting calibration data: Please provide either a CDS_MARKETDATA block or BOND_MARKETDATA block, not both.");
 		}
 
 		hazardRates_.clear();
@@ -641,7 +641,7 @@ namespace etrading
 	{
 		if ( hazardRates_.empty() )
 		{
-			MLIB_THROW( "No hazard rates have been set." );
+			AQ_THROW( "No hazard rates have been set." );
 		}
 
 		// Return iterator to first date which is not less than paymentDate
@@ -729,11 +729,11 @@ namespace etrading
 		{
 			if ( fromDate  < asOfDate_ )
 			{
-				MLIB_THROW( "Invalid fromDate '" + toDate.stringWithFormat() + "' is earlier than model asOfDate '" + asOfDate_.stringWithFormat() + "'." );
+				AQ_THROW( "Invalid fromDate '" + toDate.stringWithFormat() + "' is earlier than model asOfDate '" + asOfDate_.stringWithFormat() + "'." );
 			}
 			if ( toDate < fromDate )
 			{
-				MLIB_THROW( "Invalid toDate '" + toDate.stringWithFormat() + "' is earlier than fromDate '" + fromDate.stringWithFormat() + "'." );
+				AQ_THROW( "Invalid toDate '" + toDate.stringWithFormat() + "' is earlier than fromDate '" + fromDate.stringWithFormat() + "'." );
 			}
 		}
 	}
@@ -768,7 +768,7 @@ namespace etrading
 	{
 		if ( hazardRates_.empty() )
 		{
-			MLIB_THROW( "No hazard rates have been set." );
+			AQ_THROW( "No hazard rates have been set." );
 		}
 
 		if ( toDate < asOfDate_ )
@@ -853,7 +853,7 @@ namespace etrading
 			return asOfDate_;
 		}
 
-		MLIB_REQUIRE( survivalProbabilitiesOnCalibrationDates_.size() > 1, "Credit Model has not been correctly calibrated.");
+		AQ_REQUIRE( survivalProbabilitiesOnCalibrationDates_.size() > 1, "Credit Model has not been correctly calibrated.");
 
 		/* Find bracketing survivalProbabilty point.
 		 * i.e. find the survivalProbability greater than or equal to the targetSurvivalProbability
@@ -938,7 +938,7 @@ namespace etrading
 	*/
 	double CreditModel::getForwardSpread( const LADate& startDate, const LADate& endDate ) const
 	{
-		MLIB_REQUIRE( endDate > startDate, "End Date of forward calculation must occur after Start Date");
+		AQ_REQUIRE( endDate > startDate, "End Date of forward calculation must occur after Start Date");
 
 		double forwardSpread;
 		double riskyAnnuity;
@@ -976,7 +976,7 @@ namespace etrading
 		const double protectionPV	= cdsIndexStartingImmediately->pv( *this, protectionLegName );
 		const double parSpread		= cdsIndexStartingImmediately->parSpread( *this, premiumLegName, protectionLegName );
 
-		MLIB_REQUIRE((recoveryRate_ >= 0 && recoveryRate_ < 1.0), "Require the recovery rate to be positive and strictly less than 1.0");
+		AQ_REQUIRE((recoveryRate_ >= 0 && recoveryRate_ < 1.0), "Require the recovery rate to be positive and strictly less than 1.0");
 		const double flatHazardRate = parSpread / ( 1 - recoveryRate_ );
 
 		LabelValueBlock valuationSettingsLVB( VALUATION_SETTING_KEYS::CURVE_COLLECTION, cdsCurveCollection_.c_str() );
@@ -1070,7 +1070,7 @@ namespace etrading
 	*/
 	double CreditModel::getIndexOptionValue( const CreditOptionParameters& params, const double forwardSpread, const double volatility,  const bool applyThetaBump ) const
 	{
-		MLIB_REQUIRE( params.payerReceiverSwaptionEnum_ == PAYER_SWAPTION || params.payerReceiverSwaptionEnum_ == RECEIVER_SWAPTION, "Unsupported swaption Payer/Receiver type" + toString(params.payerReceiverSwaptionEnum_));
+		AQ_REQUIRE( params.payerReceiverSwaptionEnum_ == PAYER_SWAPTION || params.payerReceiverSwaptionEnum_ == RECEIVER_SWAPTION, "Unsupported swaption Payer/Receiver type" + toString(params.payerReceiverSwaptionEnum_));
 		const double payerReceiverIndicator = params.payerReceiverSwaptionEnum_ == PAYER_SWAPTION ? 1.0 : -1.0;
 
 		// 1. Construct underlying CDS Index instrument
@@ -1079,7 +1079,7 @@ namespace etrading
 		LAString protectionLegName	= cdsIndex->getLeg(1)->getLegName();
 
 		// 2. Calculate Risky Annuity at Strike
-		MLIB_REQUIRE ( (recoveryRate_ >=0 && recoveryRate_ < 1.0), "Require the recovery rate to be positive and strictly less than 1.0" );
+		AQ_REQUIRE ( (recoveryRate_ >=0 && recoveryRate_ < 1.0), "Require the recovery rate to be positive and strictly less than 1.0" );
 		const double hazardRateAtStrike = params.strike_ / ( 1 - recoveryRate_ );
 		LabelValueBlock valuationSettingsLVB(VALUATION_SETTING_KEYS::CURVE_COLLECTION, cdsCurveCollection_.c_str());
 		const double riskyAnnuityAtStrike = cdsIndex->riskyAnnuityFromHazardRate(valuationSettingsLVB, hazardRateAtStrike, recoveryRate_, premiumLegName, includeAccruedInterest_);

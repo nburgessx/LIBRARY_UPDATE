@@ -5,7 +5,7 @@
 #endif
 
 #include "LABasic.h"
-#include "ExceptionMacros.h"    // incl MLIB_REQUIRE, MLIB_THROW, MLIB_THROW_IF
+#include "ExceptionMacros.h"    // incl AQ_REQUIRE, AQ_THROW, AQ_THROW_IF
 #include <cstdlib>
 #include <cstdio>
 #include <cctype>

@@ -159,8 +159,8 @@ LALinearSplineInterpolation::value( const double x1 ) const
 // Differentiate the Interpolator at Point x1
 double LALinearSplineInterpolation::differentiate(const double & x1) const
 {
-	MLIB_REQUIRE( interpolationData_ != nullptr, "Linear-Spline interpolation data has not been set" )
-	MLIB_REQUIRE( interpolationData_->size_ > 0, "Linear-Spline interpolation data has not been set" )
+	AQ_REQUIRE( interpolationData_ != nullptr, "Linear-Spline interpolation data has not been set" )
+	AQ_REQUIRE( interpolationData_->size_ > 0, "Linear-Spline interpolation data has not been set" )
 	
 	// Function is flat when there is only one point, therefore slope is zero
 	if ( interpolationData_->size_ == 1 )
@@ -188,15 +188,15 @@ double LALinearSplineInterpolation::differentiate(const double & x1) const
 // Integrate the Interpolator Over the Lower- and UpperBounds
 double LALinearSplineInterpolation::integrate(const double & lowerBound, const double & upperBound ) const
 {
-	MLIB_REQUIRE( interpolationData_ != nullptr, "Linear-Spline interpolation data has not been set" )
-	MLIB_REQUIRE( interpolationData_->size_ > 0, "Linear-Spline interpolation data has not been set" )
-	MLIB_REQUIRE( lowerBound <= upperBound, "Invalid Linear-Spline Integral: The Lowerbound must not be greater than the UpperBound")
+	AQ_REQUIRE( interpolationData_ != nullptr, "Linear-Spline interpolation data has not been set" )
+	AQ_REQUIRE( interpolationData_->size_ > 0, "Linear-Spline interpolation data has not been set" )
+	AQ_REQUIRE( lowerBound <= upperBound, "Invalid Linear-Spline Integral: The Lowerbound must not be greater than the UpperBound")
 	
 	// The integral result variable
 	double integral = 0.0;
 
 	// Boundary Condition: Zero Width
-	if( MLIB_IS_EQUAL( lowerBound, upperBound ) )
+	if( AQ_IS_EQUAL( lowerBound, upperBound ) )
 	{
 		return 0.0;
 	}
@@ -207,7 +207,7 @@ double LALinearSplineInterpolation::integrate(const double & lowerBound, const d
 		return interpolationData_->yValues_[0] * ( upperBound - lowerBound );
 	}
 	
-	if( MLIB_IS_LESS_THAN( lowerBound, joinDateAsDouble_ ) )
+	if( AQ_IS_LESS_THAN( lowerBound, joinDateAsDouble_ ) )
 	{
 		// The Linear Part of the Integral
 		// From LowerBound to min( JoinDate, UpperBound )
@@ -215,7 +215,7 @@ double LALinearSplineInterpolation::integrate(const double & lowerBound, const d
 		integral += linearInterpolation_->integrate( lowerBound, linearUpperBound );
 	}
 
-	if( MLIB_IS_GREATER_THAN( upperBound, joinDateAsDouble_ ) )
+	if( AQ_IS_GREATER_THAN( upperBound, joinDateAsDouble_ ) )
 	{
 		// The Spline Part of the Integral
 		// From max( JoinDate, LowerBound ) to UpperBound
@@ -292,7 +292,7 @@ LALinearSplineInterpolation::set( const DoubleArray& index, const DoubleArray& v
 		{
 			thisIndex		= index[i];
 			previousIndex	= index[i-1];
-			MLIB_THROW_IF(thisIndex == previousIndex, "Invalid Interpolation Data: Duplicate data found with time value: " + MLIB_TO_STRING_FROM_DOUBLE(thisIndex) + " years" )
+			AQ_THROW_IF(thisIndex == previousIndex, "Invalid Interpolation Data: Duplicate data found with time value: " + AQ_TO_STRING_FROM_DOUBLE(thisIndex) + " years" )
 		}
 	}
 

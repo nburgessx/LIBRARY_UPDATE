@@ -139,42 +139,42 @@ namespace etrading
         // Important Note: Here we Deprecate LA Define Statements from Common and IR Projects
         // #define statements have been replaced as LAString with MLIBQ prefix
         //
-        extern const LAString MLIB_O_N;
-        extern const LAString MLIB_T_N;
-        extern const LAString MLIB_ON;
-        extern const LAString MLIB_TN;
-		extern const LAString MLIB_LIBOR_DATA;
-        extern const LAString MLIB_ZERO;
-		extern const LAString MLIB_SWAP_DATA;
-        extern const LAString MLIB_PARRATE;
-        extern const LAString MLIB_FWD;
-        extern const LAString MLIB_BASIS;
-        extern const LAString MLIB_MPC_SWAP;
-        extern const LAString MLIB_FOMC_SWAP;
-        extern const LAString MLIB_STD;
-        extern const LAString MLIB_FRA3M;
-        extern const LAString MLIB_FRA6M;
-        extern const LAString MLIB_TERM_3M;
-        extern const LAString MLIB_TERM_6M;
-        extern const LAString MLIB_TERM_1M;
-		extern const LAString MLIB_TERM_12M;
+        extern const LAString AQ_O_N;
+        extern const LAString AQ_T_N;
+        extern const LAString AQ_ON;
+        extern const LAString AQ_TN;
+		extern const LAString AQ_LIBOR_DATA;
+        extern const LAString AQ_ZERO;
+		extern const LAString AQ_SWAP_DATA;
+        extern const LAString AQ_PARRATE;
+        extern const LAString AQ_FWD;
+        extern const LAString AQ_BASIS;
+        extern const LAString AQ_MPC_SWAP;
+        extern const LAString AQ_FOMC_SWAP;
+        extern const LAString AQ_STD;
+        extern const LAString AQ_FRA3M;
+        extern const LAString AQ_FRA6M;
+        extern const LAString AQ_TERM_3M;
+        extern const LAString AQ_TERM_6M;
+        extern const LAString AQ_TERM_1M;
+		extern const LAString AQ_TERM_12M;
 
-        extern const LAString MLIB_SIMPLE;
-        extern const LAString MLIB_ANNUAL;
-        extern const LAString MLIB_SEMI_ANNUAL;
-        extern const LAString MLIB_QUARTERLY;
-        extern const LAString MLIB_MONTHLY;
-        extern const LAString MLIB_LUNAR;
-        extern const LAString MLIB_BUSINESS_DAYS;
+        extern const LAString AQ_SIMPLE;
+        extern const LAString AQ_ANNUAL;
+        extern const LAString AQ_SEMI_ANNUAL;
+        extern const LAString AQ_QUARTERLY;
+        extern const LAString AQ_MONTHLY;
+        extern const LAString AQ_LUNAR;
+        extern const LAString AQ_BUSINESS_DAYS;
 
-        extern const LAString MLIB_ROLLCONV_NORMAL;
-        extern const LAString MLIB_ROLLCONV_EOM;
-        extern const LAString MLIB_ROLLCONV_LUNAR;
+        extern const LAString AQ_ROLLCONV_NORMAL;
+        extern const LAString AQ_ROLLCONV_EOM;
+        extern const LAString AQ_ROLLCONV_LUNAR;
     
-        extern const LAString MLIB_LIBOR;
-        extern const LAString MLIB_FUTURE;
-        extern const LAString MLIB_FRA;
-        extern const LAString MLIB_SWAP;
+        extern const LAString AQ_LIBOR;
+        extern const LAString AQ_FUTURE;
+        extern const LAString AQ_FRA;
+        extern const LAString AQ_SWAP;
     }
 }
 

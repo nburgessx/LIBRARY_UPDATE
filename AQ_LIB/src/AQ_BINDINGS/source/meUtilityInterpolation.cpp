@@ -3,7 +3,7 @@
 
 #include "meUtilityInterpolation.h"
 #include "tryMeUtilityInterpolation.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meUtilityInterpolation
@@ -18,12 +18,12 @@ double meUtilityInterpolation(const std::vector<double>& array1,
 						double point,
 						const std::string& interpolation)
 {
-    MLIB_API_START
+    AQ_API_START
 	double ret;
 			
 	LAString interp(interpolation.c_str());
 	ret = validation_api::tryMeUtilityInterpolation(array1, array2, point, interp);
  
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }

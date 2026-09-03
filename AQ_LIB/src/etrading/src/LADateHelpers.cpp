@@ -208,7 +208,7 @@ namespace etrading
 	    }
 	    else
 		{
-		    MLIB_THROW("Invalid Roll Convention: Must be NORMAL, IMM or EOM")
+		    AQ_THROW("Invalid Roll Convention: Must be NORMAL, IMM or EOM")
 	    }
     }
 
@@ -302,7 +302,7 @@ namespace etrading
 				    }
 				    else
 				    {
-					    MLIB_THROW("Invalid Frequency: Must be Annual, Semi-Annual, Quarterly or Monthly, however '" + data_frequency + "' provided");		
+					    AQ_THROW("Invalid Frequency: Must be Annual, Semi-Annual, Quarterly or Monthly, however '" + data_frequency + "' provided");		
 				    }
 				    unadjustedDate.addDays(days);
 				    for (unsigned int i = 1; unadjustedDate < end; i++)
@@ -336,7 +336,7 @@ namespace etrading
 				    }
 				    else
 				    {
-						MLIB_THROW("Invalid Frequency: Must be Annual, Semi-Annual, Quarterly, however '" + data_frequency + "' provided")
+						AQ_THROW("Invalid Frequency: Must be Annual, Semi-Annual, Quarterly, however '" + data_frequency + "' provided")
 				    }
 				    unadjustedDate.addMonths(months);
 				    for (unsigned int i = 1; unadjustedDate < end; i++)
@@ -409,7 +409,7 @@ namespace etrading
 				    }
 				    else
 				    {
-					    MLIB_THROW("Invalid Frequency: Must be Annual, Semi-Annual, Quarterly or Monthly, however '" + data_frequency + "' provided");
+					    AQ_THROW("Invalid Frequency: Must be Annual, Semi-Annual, Quarterly or Monthly, however '" + data_frequency + "' provided");
 				    }
 				    unadjustedDate.addDays(days);
 				    for (unsigned int i = 1; unadjustedDate > start; i++)
@@ -443,7 +443,7 @@ namespace etrading
 				    }
 				    else
 				    {
-					    MLIB_THROW("Invalid Frequency: Must be Annual, Semi-Annual, Quarterly, however '" + data_frequency + "' provided")	
+					    AQ_THROW("Invalid Frequency: Must be Annual, Semi-Annual, Quarterly, however '" + data_frequency + "' provided")	
 				    }
 				    unadjustedDate.addMonths(months);
 				    for (unsigned int i = 1; unadjustedDate > start; i++)
@@ -516,7 +516,7 @@ namespace etrading
 	    LAString freq_str = data_frequency;
 	    freq_str.toUpper();
 
-		MLIB_THROW_IF( unadjustedStart > unadjustedEnd, "Invalid Schedule: Start Date '" + unadjustedStart.stringWithFormat("DD-MMM-YY") + "' cannot be after the End Date '" + unadjustedEnd.stringWithFormat("DD-MMM-YY") +"'" ) 
+		AQ_THROW_IF( unadjustedStart > unadjustedEnd, "Invalid Schedule: Start Date '" + unadjustedStart.stringWithFormat("DD-MMM-YY") + "' cannot be after the End Date '" + unadjustedEnd.stringWithFormat("DD-MMM-YY") +"'" ) 
 
 	    if (freq_str == NONE)
 	    {	
@@ -845,7 +845,7 @@ namespace etrading
     {
 	    if (srule.getSlidingRule() != SLIDING_RULE_NO_CHANGE) 
 	    {
-		    MLIB_THROW_IF(!pCal, "Missing Calendar")
+		    AQ_THROW_IF(!pCal, "Missing Calendar")
 		    return srule.getDate(date, *pCal);
 	    }
 	    return date;
@@ -1330,7 +1330,7 @@ namespace etrading
 		else if (freq_capital == DAILY || freq_capital == BUSINESS_DAYS)	frequencyInMonths = 0.0333333333;	// 1/30 of a months
 		else
 		{
-			MLIB_THROW("Invalid Frequency: Must be ANNUAL, SEMI_ANNUAL, QUARTERLY, MONTHLY, WEEKLY or DAILY");
+			AQ_THROW("Invalid Frequency: Must be ANNUAL, SEMI_ANNUAL, QUARTERLY, MONTHLY, WEEKLY or DAILY");
 		}
 
 		return frequencyInMonths;
@@ -1386,7 +1386,7 @@ namespace etrading
 	//
 	LADate LADateHelpers::getNthECBMeetingDate(const LADate& asOfDate, const int n, bool strictlyAfter)
 	{
-		MLIB_REQUIRE(n > 0, "ECB Meeting Date - Invalid Input: n must be larger than zero");
+		AQ_REQUIRE(n > 0, "ECB Meeting Date - Invalid Input: n must be larger than zero");
 		
 		// n=1 case, note strictlyAfter = false
 		LADate ecbMeetingDate = LADateHelpers::getNextECBDate(asOfDate, strictlyAfter);

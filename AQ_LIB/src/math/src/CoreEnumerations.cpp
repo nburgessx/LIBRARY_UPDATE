@@ -528,7 +528,7 @@ namespace etrading
             return "ANNUAL";
         }
 
-        MLIB_THROW("Invalid CurveTenorEnum: Must be '1D', '1M', '3M', '6M' or '12'.")
+        AQ_THROW("Invalid CurveTenorEnum: Must be '1D', '1M', '3M', '6M' or '12'.")
     }
     
      FrequencyEnum toFrequencyEnumFromCurveTenorEnum( const CurveTenorEnum curveTenorEnum )
@@ -551,7 +551,7 @@ namespace etrading
                 return ANNUAL_FREQUENCY;
                 break;
             default:
-				MLIB_THROW("Invalid CurveTenorEnum: Must be 'CURVE_TENOR_1D', 'CURVE_TENOR_1M', 'CURVE_TENOR_3M', 'CURVE_TENOR_6M' or 'CURVE_TENOR_12M'.")
+				AQ_THROW("Invalid CurveTenorEnum: Must be 'CURVE_TENOR_1D', 'CURVE_TENOR_1M', 'CURVE_TENOR_3M', 'CURVE_TENOR_6M' or 'CURVE_TENOR_12M'.")
                 break;
         }
     }
@@ -960,7 +960,7 @@ namespace etrading
 			case LOG_LINEAR_INTERPOLATION:
 				return "LOGLINEAR";
             default:
-				MLIB_THROW("Invalid Interpolation Type: Must be SPLINE, MONOTONESPLINE, LINEARSPLINE, LINEARMONOTONESPLINE, LINEAR, LINEAR_WITH_FLAT_EXTRAPOLATION, RIGHT_CONTINUOUS, LEFT_CONTINUOUS, LOGLINEAR or STEP")
+				AQ_THROW("Invalid Interpolation Type: Must be SPLINE, MONOTONESPLINE, LINEARSPLINE, LINEARMONOTONESPLINE, LINEAR, LINEAR_WITH_FLAT_EXTRAPOLATION, RIGHT_CONTINUOUS, LEFT_CONTINUOUS, LOGLINEAR or STEP")
                 break;
         }
     }
@@ -1041,7 +1041,7 @@ namespace etrading
 		{
 			return LOG_LINEAR_INTERPOLATION;
 		}
-		MLIB_THROW("Invalid Interpolation Type: Must be SPLINE, MONOTONESPLINE, LINEARSPLINE, LINEARMONOTONESPLINE, LINEAR, LINEAR_WITH_FLAT_EXTRAPOLATION, RIGHT_CONTINUOUS, LEFT_CONTINUOUS, LOGLINEAR or STEP")
+		AQ_THROW("Invalid Interpolation Type: Must be SPLINE, MONOTONESPLINE, LINEARSPLINE, LINEARMONOTONESPLINE, LINEAR, LINEAR_WITH_FLAT_EXTRAPOLATION, RIGHT_CONTINUOUS, LEFT_CONTINUOUS, LOGLINEAR or STEP")
     }
 
 	bool isHybridInterpolation( const InterpolationEnum enumValue )
@@ -3832,7 +3832,7 @@ namespace etrading
 			return "LOBASIS";
 			break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'OISLongTermInstrumentsEnum' parameter must be set to 'NONE' or 'LOBASIS'" )
+			AQ_THROW( "Invalid Input, the 'OISLongTermInstrumentsEnum' parameter must be set to 'NONE' or 'LOBASIS'" )
 			break;
 		}
 	}
@@ -3849,7 +3849,7 @@ namespace etrading
 		{
 			return LIBOROIS_OIS_LONGTERM_INSTRUMENTS;
 		}
-		MLIB_THROW( "Invalid Input, the 'OISLongTermInstrumentsEnum' parameter must be set to 'NONE' or 'LOBASIS'" )
+		AQ_THROW( "Invalid Input, the 'OISLongTermInstrumentsEnum' parameter must be set to 'NONE' or 'LOBASIS'" )
 	}
 
 
@@ -3867,7 +3867,7 @@ namespace etrading
 			 return "LIBOR";
 			 break;
 		 default:
-			 MLIB_THROW("Invalid Input, the 'OISBasisInstrumentSpreadTypeEnum' parameter must be set to 'NONE' or 'OIS' or 'LIBOR'")
+			 AQ_THROW("Invalid Input, the 'OISBasisInstrumentSpreadTypeEnum' parameter must be set to 'NONE' or 'OIS' or 'LIBOR'")
 				 break;
 		 }
 	 }
@@ -3889,7 +3889,7 @@ namespace etrading
 			 return LIBOR_OISBASIS_INSTRUMENT_SWAP_TYPE;
 		 }
 
-		 MLIB_THROW("Invalid Input, the 'OISBasisInstrumentSpreadType' parameter must be set to 'NONE' or 'OIS' or 'LIBOR'. A value of '" + enumString + "' has been provided.")
+		 AQ_THROW("Invalid Input, the 'OISBasisInstrumentSpreadType' parameter must be set to 'NONE' or 'OIS' or 'LIBOR'. A value of '" + enumString + "' has been provided.")
 	 }
 
 	 
@@ -3904,7 +3904,7 @@ namespace etrading
 			 return "DAILYAVERAGING";
 			 break;
 		 default:
-			 MLIB_THROW("Invalid Input, the 'OISLongTermCompoundingEnum' parameter must be set to 'NONE' or 'DAILYAVERAGING'")
+			 AQ_THROW("Invalid Input, the 'OISLongTermCompoundingEnum' parameter must be set to 'NONE' or 'DAILYAVERAGING'")
 			 break;
 		 }
 	 }
@@ -3921,7 +3921,7 @@ namespace etrading
 		 {
 			 return DAILY_AVERAGES_OIS_LONGTERM_COMPOUNDING;
 		 }
-		 MLIB_THROW("Invalid Input, the 'OISLongTermCompoundingEnum' parameter must be set to 'NONE' or 'DAILYAVERAGING'")
+		 AQ_THROW("Invalid Input, the 'OISLongTermCompoundingEnum' parameter must be set to 'NONE' or 'DAILYAVERAGING'")
 	 }
 
      std::string toString(const OISMidTermInstrumentsEnum enumValue)
@@ -3943,7 +3943,7 @@ namespace etrading
 			return "3MFuture";
 			break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'OISMidTermInstrumentsEnum' parameter must be set to 'CentralBankSwap', 'FedFund', '1MFuture', '3MFuture'" )
+			AQ_THROW( "Invalid Input, the 'OISMidTermInstrumentsEnum' parameter must be set to 'CentralBankSwap', 'FedFund', '1MFuture', '3MFuture'" )
 			break;
 		}
 	}
@@ -3972,7 +3972,7 @@ namespace etrading
 		 {
 			 return THREE_MONTH_FUTURE;
 		 }
-		 MLIB_THROW("Invalid Input, the 'OISMidTermInstrumentsEnum' parameter must be set to 'CentralBankSwap', 'FedFund', '1MFuture', '3MFuture'")
+		 AQ_THROW("Invalid Input, the 'OISMidTermInstrumentsEnum' parameter must be set to 'CentralBankSwap', 'FedFund', '1MFuture', '3MFuture'")
 	 }
 
 	 std::string toString(const OISCompoundingEnum enumValue)
@@ -3989,7 +3989,7 @@ namespace etrading
 			 return "GEOMETRIC";
 			 break;
 		 default:
-			 MLIB_THROW("Invalid Input, the 'OISCompoundingEnum' parameter must be set to 'ARITHMETIC', 'GEOMETRIC'")
+			 AQ_THROW("Invalid Input, the 'OISCompoundingEnum' parameter must be set to 'ARITHMETIC', 'GEOMETRIC'")
 				 break;
 		 }
 	 }
@@ -4010,7 +4010,7 @@ namespace etrading
 		{
 			return GEOMETRIC_OIS_COMPOUNDING;
 		}
-		MLIB_THROW( "Invalid Input, the 'OISCompoundingEnum' parameter must be set to 'ARITHMETIC', 'GEOMETRIC'" )
+		AQ_THROW( "Invalid Input, the 'OISCompoundingEnum' parameter must be set to 'ARITHMETIC', 'GEOMETRIC'" )
 	}
 
 
@@ -4028,7 +4028,7 @@ namespace etrading
             return "BULLET";
             break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'LoanTypeEnum' parameter must be set to 'AMORTISING', 'BULLET'" );
+			AQ_THROW( "Invalid Input, the 'LoanTypeEnum' parameter must be set to 'AMORTISING', 'BULLET'" );
 			break;
 		}
 	
@@ -4050,7 +4050,7 @@ namespace etrading
 		{
 			return BULLET_LOAN_TYPE;
 		}
-		MLIB_THROW( "Invalid Input, the 'LoanTypeEnum' parameter must be set to 'AMORTIZING', 'BULLET'" );
+		AQ_THROW( "Invalid Input, the 'LoanTypeEnum' parameter must be set to 'AMORTIZING', 'BULLET'" );
 	}
 
 	std::string toString(const SupervisoryTypeEnum enumValue)
@@ -4067,7 +4067,7 @@ namespace etrading
             return "IRBA";
             break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'SupervisoryTypeEnum' parameter must be set to 'LEGACY', 'IRBA'" );
+			AQ_THROW( "Invalid Input, the 'SupervisoryTypeEnum' parameter must be set to 'LEGACY', 'IRBA'" );
 			break;
 		}
 	}
@@ -4088,7 +4088,7 @@ namespace etrading
 		{
 			return IRBA_SUPERVISORY_TYPE;
 		}
-		MLIB_THROW( "Invalid Input, the 'SupervisoryTypeEnum' parameter must be set to 'LEGACY', 'IRBA'" );
+		AQ_THROW( "Invalid Input, the 'SupervisoryTypeEnum' parameter must be set to 'LEGACY', 'IRBA'" );
 	}
 
 	std::string toString(const PoolTypeEnum enumValue)
@@ -4105,7 +4105,7 @@ namespace etrading
             return "RETAIL";
             break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'PoolTypeEnum' parameter must be set to 'WHOLESALE', 'RETAIL'" );
+			AQ_THROW( "Invalid Input, the 'PoolTypeEnum' parameter must be set to 'WHOLESALE', 'RETAIL'" );
 			break;
 		}
 	}
@@ -4126,7 +4126,7 @@ namespace etrading
 		{
 			return RETAIL_POOL_TYPE;
 		}
-		MLIB_THROW( "Invalid Input, the 'PoolTypeEnum' parameter must be set to 'WHOLESALE', 'RETAIL'" );
+		AQ_THROW( "Invalid Input, the 'PoolTypeEnum' parameter must be set to 'WHOLESALE', 'RETAIL'" );
 	}
 
 	std::string toString(const RankTypeEnum enumValue)
@@ -4143,7 +4143,7 @@ namespace etrading
             return "NONSENIOR";
             break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'RankTypeEnum' parameter must be set to 'SENIOR', 'NONSENIOR'" );
+			AQ_THROW( "Invalid Input, the 'RankTypeEnum' parameter must be set to 'SENIOR', 'NONSENIOR'" );
 			break;
 		}
 	}
@@ -4164,7 +4164,7 @@ namespace etrading
 		{
 			return NON_SENIOR_RANK_TYPE;
 		}
-		MLIB_THROW( "Invalid Input, the 'RankTypeEnum' parameter must be set to 'SENIOR', 'NONSENIOR'" );
+		AQ_THROW( "Invalid Input, the 'RankTypeEnum' parameter must be set to 'SENIOR', 'NONSENIOR'" );
 	}
 
 	std::string toString(const TrancheTypeEnum enumValue)
@@ -4181,7 +4181,7 @@ namespace etrading
             return "SEQUENTIAL";
             break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'TramcheTypeEnum' parameter must be set to 'PRORATA', 'SEQUENTIAL'" );	
+			AQ_THROW( "Invalid Input, the 'TramcheTypeEnum' parameter must be set to 'PRORATA', 'SEQUENTIAL'" );	
 			break;
 		}
 	
@@ -4203,7 +4203,7 @@ namespace etrading
 		{
 			return SEQUENTIAL_TRANCHE_TYPE;
 		}
-		MLIB_THROW( "Invalid Input, the 'TramcheTypeEnum' parameter must be set to 'NONE', 'PRORATA', 'SEQUENTIAL'" );	
+		AQ_THROW( "Invalid Input, the 'TramcheTypeEnum' parameter must be set to 'NONE', 'PRORATA', 'SEQUENTIAL'" );	
 	}
 
 	std::string toString( const TrancheCouponTypeEnum enumValue )
@@ -4220,7 +4220,7 @@ namespace etrading
 			return "FLOAT";
 			break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'TrancheCouponTypeEnum' parameter must be set to 'NONE', 'FIXED', 'FLOAT'" );
+			AQ_THROW( "Invalid Input, the 'TrancheCouponTypeEnum' parameter must be set to 'NONE', 'FIXED', 'FLOAT'" );
 			break;
 		}
 	}
@@ -4241,7 +4241,7 @@ namespace etrading
 		{
 			return FLOAT_COUPON_TYPE;
 		}
-		MLIB_THROW("Invalid Input, the 'TrancheCouponTypeEnum' parameter must be set to 'NONE', 'FIXED', 'FLOAT'");
+		AQ_THROW("Invalid Input, the 'TrancheCouponTypeEnum' parameter must be set to 'NONE', 'FIXED', 'FLOAT'");
 	}
 
 	std::string toString(const SecIrDataProviderranularityTypeEnum enumValue)
@@ -4258,7 +4258,7 @@ namespace etrading
 			return "NONGRANULAR";
 			break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'SecIrDataProviderranularityTypeEnum' parameter must be set to 'NONGRANULAR', 'GRANULAR'" );
+			AQ_THROW( "Invalid Input, the 'SecIrDataProviderranularityTypeEnum' parameter must be set to 'NONGRANULAR', 'GRANULAR'" );
 			break;
 		}	
 	}
@@ -4279,7 +4279,7 @@ namespace etrading
 		{
 			return NON_GRANULAR_TYPE;
 		}
-		MLIB_THROW( "Invalid Input, the 'SecIrDataProviderranularityTypeEnum' parameter must be set to 'NONGRANULAR', 'GRANULAR'" );
+		AQ_THROW( "Invalid Input, the 'SecIrDataProviderranularityTypeEnum' parameter must be set to 'NONGRANULAR', 'GRANULAR'" );
 	}
 
     std::string toString( const ShiftTypeEnum enumValue )
@@ -4296,7 +4296,7 @@ namespace etrading
 			return "PERTURBED";
 			break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'ShiftTypeEnum' parameter must be set to 'NONE', 'FLAT_SHIFT' or 'PERTURBED'" );
+			AQ_THROW( "Invalid Input, the 'ShiftTypeEnum' parameter must be set to 'NONE', 'FLAT_SHIFT' or 'PERTURBED'" );
 			break;
 		}
     }
@@ -4316,7 +4316,7 @@ namespace etrading
 		{
 			return PERTURBED_SHIFT_TYPE;
 		}
-		MLIB_THROW( "Invalid Input, the 'ShiftTypeEnum' parameter must be set to 'NONE', 'FLAT_SHIFT' or 'PERTURBED'" );
+		AQ_THROW( "Invalid Input, the 'ShiftTypeEnum' parameter must be set to 'NONE', 'FLAT_SHIFT' or 'PERTURBED'" );
     }
 
     std::string toString( const RiskTypeEnum enumValue )
@@ -4336,7 +4336,7 @@ namespace etrading
 			return "COMPOUND_RATES";
 			break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'RiskTypeEnum' parameter must be set to 'NONE', 'DISCOUNT_FACTORS', 'FORWARD_RATES' or 'COMPOUND_RATES'" );
+			AQ_THROW( "Invalid Input, the 'RiskTypeEnum' parameter must be set to 'NONE', 'DISCOUNT_FACTORS', 'FORWARD_RATES' or 'COMPOUND_RATES'" );
 			break;
 		}
     }
@@ -4360,7 +4360,7 @@ namespace etrading
 		{
 			return COMPOUND_RATE_RISK_TYPE;
 		}
-		MLIB_THROW( "Invalid Input, the 'RiskTypeEnum' parameter must be set to 'NONE', 'DISCOUNT_FACTORS', 'FORWARD_RATES' or 'COMPOUND_RATES'" );
+		AQ_THROW( "Invalid Input, the 'RiskTypeEnum' parameter must be set to 'NONE', 'DISCOUNT_FACTORS', 'FORWARD_RATES' or 'COMPOUND_RATES'" );
     }
 
 
@@ -4381,7 +4381,7 @@ namespace etrading
 			return "TOLERANCE";
 			break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'BuildFrequencyEnum' parameter must be set to 'NEVER', 'ALWAYS', 'ONCE' or 'TOLERANCE'" );
+			AQ_THROW( "Invalid Input, the 'BuildFrequencyEnum' parameter must be set to 'NEVER', 'ALWAYS', 'ONCE' or 'TOLERANCE'" );
 			break;
 		}
     }
@@ -4405,7 +4405,7 @@ namespace etrading
 		{
 			return TOLERANCE_BUILD_FREQUENCY;
 		}
-		MLIB_THROW( "Invalid Input, the 'BuildFrequencyEnum' parameter must be set to 'NEVER', 'ALWAYS', 'ONCE' or 'TOLERANCE'" );
+		AQ_THROW( "Invalid Input, the 'BuildFrequencyEnum' parameter must be set to 'NEVER', 'ALWAYS', 'ONCE' or 'TOLERANCE'" );
     }
 
 	std::string toString( const TurnOfYearAdjustmentTypeEnum enumValue )
@@ -4422,7 +4422,7 @@ namespace etrading
 			return "ABSOLUTE";
 			break;
 		default:
-			MLIB_THROW( "Invalid Input, the 'TurnOfYearAdjustmentTypeEnum' parameter must be set to 'NONE', 'RELATIVE' or 'ABSOLUTE'" );
+			AQ_THROW( "Invalid Input, the 'TurnOfYearAdjustmentTypeEnum' parameter must be set to 'NONE', 'RELATIVE' or 'ABSOLUTE'" );
 			break;
 		}
     }
@@ -4442,7 +4442,7 @@ namespace etrading
 		{
 			return ABSOLUTE_TURN_ADJUSTMENT;
 		}
-		MLIB_THROW( "Invalid Input, the 'TurnOfYearAdjustmentTypeEnum' parameter must be set to 'NONE', 'RELATIVE' or 'ABSOLUTE'" );
+		AQ_THROW( "Invalid Input, the 'TurnOfYearAdjustmentTypeEnum' parameter must be set to 'NONE', 'RELATIVE' or 'ABSOLUTE'" );
     }
 
 	std::string toString(const etrading::SabrModelEnum enumValue)

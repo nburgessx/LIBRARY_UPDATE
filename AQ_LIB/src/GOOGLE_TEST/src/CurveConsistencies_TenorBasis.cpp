@@ -480,16 +480,16 @@ namespace google_test
 				{
 					if ((maturityTenor == "3M" || maturityTenor == "6M") && (startTenor.size() == 0 || startTenor == "0D"))
 					{
-						MLIB_PRINT("This test currently does not support checking the rate consistency of the Libor instrument")
+						AQ_PRINT("This test currently does not support checking the rate consistency of the Libor instrument")
 						continue;
 					}
 					else
 					{
-						MLIB_PRINT("Test curve '" + tenorBasisCurveFile + "' has error at " + maturityTenor)
-						MLIB_PRINT("Calibration Rate: " + MLIB_TO_STRING_FROM_DOUBLE(inputBasisRate))
-						MLIB_PRINT("Implied Rate	: " + MLIB_TO_STRING_FROM_DOUBLE(impliedBasisRate))
-						MLIB_PRINT("Difference		: " + MLIB_TO_STRING_FROM_DOUBLE(diff))
-						MLIB_PRINT("Tolerance		: " + MLIB_TO_STRING_FROM_DOUBLE(tolerance))
+						AQ_PRINT("Test curve '" + tenorBasisCurveFile + "' has error at " + maturityTenor)
+						AQ_PRINT("Calibration Rate: " + AQ_TO_STRING_FROM_DOUBLE(inputBasisRate))
+						AQ_PRINT("Implied Rate	: " + AQ_TO_STRING_FROM_DOUBLE(impliedBasisRate))
+						AQ_PRINT("Difference		: " + AQ_TO_STRING_FROM_DOUBLE(diff))
+						AQ_PRINT("Tolerance		: " + AQ_TO_STRING_FROM_DOUBLE(tolerance))
 					}
 				}
 			}

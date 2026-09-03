@@ -64,7 +64,7 @@ LAString LAStaticData::getStaticData(const LAString &key) const
 	}
 	else
 	{
-		return MLIB_NO_DATA;
+		return AQ_NO_DATA;
 	}
 }
 
@@ -85,7 +85,7 @@ LAString LAStaticData::getStaticData(const LAString &key, const LAString &alias)
 	// Prevent Key and Alias Keys being used at the same time
 	if( it != mProp.end() && it1 != mProp.end() )
 	{
-		MLIB_THROW("Duplicate Static Data Key: Cannot use key '" + key + "' and alias '" + alias + "' at the same time")
+		AQ_THROW("Duplicate Static Data Key: Cannot use key '" + key + "' and alias '" + alias + "' at the same time")
 	}
 
 	// First Return Primary Key if found
@@ -100,7 +100,7 @@ LAString LAStaticData::getStaticData(const LAString &key, const LAString &alias)
 		return it1->second;
 	}
 	
-	return MLIB_NO_DATA;
+	return AQ_NO_DATA;
 }
 
 

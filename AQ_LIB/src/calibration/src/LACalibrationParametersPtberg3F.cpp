@@ -115,7 +115,7 @@ LACalibrationParametersPtberg3F::createCalibrationInfo(LAObjectPool &objPool, co
 	LAStringVector ccys;
 	LAMarketData::convertToCurrency(fx, ccys);
 	const LAString curveType_d = staticData.getStaticData(ccys[0].toLower() + STATIC_DATA_KEY_YIELD_DF2);
-	if (curveType_d != MLIB_NO_DATA)
+	if (curveType_d != AQ_NO_DATA)
 	{
 		info.add(PRICING_DATA_DOMESTICCURVETYPE, new LADataString(curveType_d));
 	}
@@ -124,7 +124,7 @@ LACalibrationParametersPtberg3F::createCalibrationInfo(LAObjectPool &objPool, co
 		info.add(PRICING_DATA_DOMESTICCURVETYPE, new LADataString(STD));
 	}
 	const LAString curveType_f = staticData.getStaticData(ccys[1].toLower() + STATIC_DATA_KEY_YIELD_DF2);
-	if (curveType_f != MLIB_NO_DATA)
+	if (curveType_f != AQ_NO_DATA)
 	{
 		info.add(PRICING_DATA_FOREIGNCURVETYPE, new LADataString(curveType_f));
 	}

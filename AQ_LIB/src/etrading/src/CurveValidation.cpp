@@ -35,7 +35,7 @@ namespace etrading
         LAObjectPool& objPool = dataInstance->getObjectPool();
         if ( !objPool.getObject( curveId ).isDefined() )
         {
-            MLIB_THROW("Invalid Curve: CurveCollection '" + curveId + "' does not exist");
+            AQ_THROW("Invalid Curve: CurveCollection '" + curveId + "' does not exist");
         }
     }
 
@@ -74,7 +74,7 @@ namespace etrading
         }
         else
         {
-            MLIB_THROW("Frequency must be Annual, Semi-Annual, Quarterly, Monthly, Weekly, or Daily");
+            AQ_THROW("Frequency must be Annual, Semi-Annual, Quarterly, Monthly, Weekly, or Daily");
         }
 
         return term;
@@ -91,7 +91,7 @@ namespace etrading
             frequency = getDefaultValueForEmptyString( frequency, LAString( "SIMPLE" ) );
             if( LAString( frequency ).toUpper() != "SIMPLE" )
             {
-                MLIB_THROW("Forward interpolation may not be used with a frequency other than 'SIMPLE'");
+                AQ_THROW("Forward interpolation may not be used with a frequency other than 'SIMPLE'");
             }
         }
         else
@@ -119,12 +119,12 @@ namespace etrading
             }
             else
             {
-                MLIB_THROW("Curve collection '" + curveCollection + "' does not exist");
+                AQ_THROW("Curve collection '" + curveCollection + "' does not exist");
             }
         }
         else
         {
-            MLIB_THROW("Curve collection '" + curveCollection + "' does not exist");
+            AQ_THROW("Curve collection '" + curveCollection + "' does not exist");
         }
         return currency;
     }
@@ -167,7 +167,7 @@ namespace etrading
 
 			if (!isCurveWithFwdTable && isFwdInter)
 			{
-                MLIB_THROW("Forward Interpolation can only be used on the Standard Outright Swap Curves. Curve Index '" + staticDataTable +"' is not a STD Swap Curve.");
+                AQ_THROW("Forward Interpolation can only be used on the Standard Outright Swap Curves. Curve Index '" + staticDataTable +"' is not a STD Swap Curve.");
 			}
 
 		}
@@ -223,7 +223,7 @@ namespace etrading
         }
         else
         {
-            MLIB_THROW("Invalid Frequency or Tenor '" + frequencyTenorUpperCase + "': Only frequencies of be ANNUAL, SEMI-ANNUAL, QUARTERLY, MONTHLY, WEEKLY or DAILY are supported");
+            AQ_THROW("Invalid Frequency or Tenor '" + frequencyTenorUpperCase + "': Only frequencies of be ANNUAL, SEMI-ANNUAL, QUARTERLY, MONTHLY, WEEKLY or DAILY are supported");
         }
 
         return frequencyString;
@@ -243,7 +243,7 @@ namespace etrading
 	    else if (same(freqOrTenor, "DAILY") || same(freqOrTenor, "BUSINESS_DAYS") || same(freqOrTenor, "1D") ) return 0;
 	    else 
 	    {
-            MLIB_THROW("Invalid Curve Frequency or Tenor '" + freqOrTenor + "': Only curve frequencies of ANNUAL, SEMI-ANNUAL, QUARTERLY, MONTHLY, WEEKLY DAILY are supported");
+            AQ_THROW("Invalid Curve Frequency or Tenor '" + freqOrTenor + "': Only curve frequencies of ANNUAL, SEMI-ANNUAL, QUARTERLY, MONTHLY, WEEKLY DAILY are supported");
         }
     }
 
@@ -266,7 +266,7 @@ namespace etrading
 		case DAILY_FREQUENCY:
 			return 0;
 		default:
-			MLIB_THROW( "Unsupported frequency: " + toString( freq ) );
+			AQ_THROW( "Unsupported frequency: " + toString( freq ) );
 		}
     }
 
@@ -301,7 +301,7 @@ namespace etrading
         }
         else
         {
-            MLIB_THROW("Invalid Curve Frequency '" + toString(frequencyString) + "': Only frequencies of ANNUAL, SEMI-ANNUAL, QUARTERLY, MONTHLY, WEEKLY or DAILY are supported");
+            AQ_THROW("Invalid Curve Frequency '" + toString(frequencyString) + "': Only frequencies of ANNUAL, SEMI-ANNUAL, QUARTERLY, MONTHLY, WEEKLY or DAILY are supported");
         }
 
         return frequencyTenor;
@@ -327,7 +327,7 @@ namespace etrading
         LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
         if ( !objPool.getObject( curveCollection ).isDefined() )
         {
-            MLIB_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
+            AQ_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
         }
 
 
@@ -378,7 +378,7 @@ namespace etrading
         }
 
         // We should never reach here
-        MLIB_THROW("Invalid Curve Frequency")
+        AQ_THROW("Invalid Curve Frequency")
         return 0.0;
     }
 
@@ -438,7 +438,7 @@ namespace etrading
 
             if ( !swapEntity.isDefined() )
             {
-                MLIB_THROW("Invalid Curve: STD Swap Curve does not exist");
+                AQ_THROW("Invalid Curve: STD Swap Curve does not exist");
             }
 
             // Get the Swap Market Data
@@ -446,7 +446,7 @@ namespace etrading
 
             if ( swapMarketData == nullptr )
             {
-                MLIB_THROW("Invalid Curve: Market data for STD Swap Curve does not exist");
+                AQ_THROW("Invalid Curve: Market data for STD Swap Curve does not exist");
             }
 
             curveFrequencyString = dynamic_cast< const LADataString& >( swapMarketData->getData( IR_CALIBRATION_DATA_FREQUENCY_FLOAT, ISNOTNULL ).get() );
@@ -480,7 +480,7 @@ namespace etrading
             // Some LA functions require that we do not throw if we can't find the curve type and / or frequency
             if (enableThrow)
             {
-                MLIB_THROW("Invalid Curve Type - Unable to Retrieve the Curve Frequency")
+                AQ_THROW("Invalid Curve Type - Unable to Retrieve the Curve Frequency")
             }
         }
 
@@ -505,7 +505,7 @@ namespace etrading
         LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
         if ( !objPool.getObject( curveCollection ).isDefined() )
         {
-            MLIB_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
+            AQ_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
         }
         
         // Get the CurveCalibrationData object object
@@ -538,7 +538,7 @@ namespace etrading
 
             if ( !swapEntity.isDefined() )
             {
-                MLIB_THROW("Unable to find the STD Swap curve in the object pool cache");
+                AQ_THROW("Unable to find the STD Swap curve in the object pool cache");
             }
 
             // Get the Swap Market Data
@@ -546,7 +546,7 @@ namespace etrading
 
             if ( swapMarketData == nullptr )
             {
-                MLIB_THROW("Unable to find the market data for the STD Swap Curve");
+                AQ_THROW("Unable to find the market data for the STD Swap Curve");
             }
 
             curveDaycount =  dynamic_cast<const LAPriceDataDayCount& >( swapMarketData->getData( IR_CALIBRATION_DATA_DAYCOUNT_FLOAT, ISNOTNULL ).get() ).convertToString();
@@ -586,7 +586,7 @@ namespace etrading
 		LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
         if ( objPool.getSize() == 0 || !objPool.getObject( curveCollection ).isDefined() )
         {
-            MLIB_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
+            AQ_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
         }
 		
 		// Construct the yieldCurvePro name corresponding to this curveCollection (e.g. PRO_YIELD_EURYC)
@@ -652,12 +652,12 @@ namespace etrading
     LAString getCurveStaticDataTableName( const LAString& curveCollection, const LAString& curveIndex, const bool& uppercaseResult )
     {
 
-		MLIB_REQUIRE(curveIndex.size() != 0, "Curve index must be provided.");
+		AQ_REQUIRE(curveIndex.size() != 0, "Curve index must be provided.");
 
         LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
         if ( objPool.getSize() == 0 || !objPool.getObject( curveCollection ).isDefined() )
         {
-            MLIB_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
+            AQ_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
         }
         
         // Get Yield Curve Pro Object Object
@@ -671,7 +671,7 @@ namespace etrading
         LAString staticDataTable = curveCalibrationData->getMarketForCurve( singleIndex );
         if ( staticDataTable == IR_NO_DATA )
         {
-            MLIB_THROW("Invalid Curve: CurveIndex '" + curveIndex + "' in collection " + curveCollection + " does not exist");
+            AQ_THROW("Invalid Curve: CurveIndex '" + curveIndex + "' in collection " + curveCollection + " does not exist");
         }
 
         // For the Standard Swap Curve the Market Name is transformed from STD to SWAP, but STD is expected
@@ -739,7 +739,7 @@ namespace etrading
         }
 
         // Fail if no curve type returned
-        // MLIB_REQUIRE( curveType != "", "Invalid Curve Type - Curve Index " + upperCaseStaticDataTable + " has no corresponding Curve Type Set" )
+        // AQ_REQUIRE( curveType != "", "Invalid Curve Type - Curve Index " + upperCaseStaticDataTable + " has no corresponding Curve Type Set" )
 
         return curveType;
     }
@@ -757,7 +757,7 @@ namespace etrading
 
         if ( !objPool.getObject( curveCollection ).isDefined() )
         {
-            MLIB_THROW("Invalid Curve: CurveCollection "+ curveCollection + " does not exist");
+            AQ_THROW("Invalid Curve: CurveCollection "+ curveCollection + " does not exist");
         }
 
         //Note: CurveType suffix is always upper case
@@ -839,12 +839,12 @@ namespace etrading
 
         if ( interp == IR_NO_DATA )
         {
-            MLIB_THROW("Invalid Interpolation Method: Interpolation type '"+ keyName + "' is invalid");
+            AQ_THROW("Invalid Interpolation Method: Interpolation type '"+ keyName + "' is invalid");
         }
 
 		// Undecorate legacy interpolation names: 'fn_' + type + 'interpolation' e.g. fn_splineinterpolation
 		std::string interpString = interp.c_str();
-		MLIB_REQUIRE( interpString.size() > 3, "Invalid Interpolation Type: " + interpString )
+		AQ_REQUIRE( interpString.size() > 3, "Invalid Interpolation Type: " + interpString )
 		// Check for for 'fn_' prefix
 		if( boost::iequals( interpString.substr(0,3), "fn_" ) )
 		{
@@ -864,7 +864,7 @@ namespace etrading
     */
 	bool doesCurveExist( const LAString& curveCollection )
 	{
-		MLIB_REQUIRE(curveCollection.size() !=0, "Invalid Curve: CurveCollection not provided.");
+		AQ_REQUIRE(curveCollection.size() !=0, "Invalid Curve: CurveCollection not provided.");
         LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
 		
 		bool result = true;
@@ -883,7 +883,7 @@ namespace etrading
     {
 		if ( !doesCurveExist( curveCollection ) )
 		{
-			MLIB_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
+			AQ_THROW("Invalid Curve: CurveCollection '" + curveCollection + "' does not exist");
 		}
 
 		LAObjectPool& objPool = etrading::getDataInstance()->getObjectPool();
@@ -1065,7 +1065,7 @@ namespace etrading
 		{
 			if (throwOnError)
 			{
-				MLIB_THROW("Curve '" + formattedCurveIndex + "' does not exist in collection '" + curveCollection + "'")
+				AQ_THROW("Curve '" + formattedCurveIndex + "' does not exist in collection '" + curveCollection + "'")
 			}
 			else
 			{
@@ -1119,7 +1119,7 @@ namespace etrading
         StandardString yieldProName = "PRO_YIELD_" + curveCollection;					
         LAObjectHolder ehYieldCurveProperties = objPool.getObject( yieldProName.c_str() );				
         
-        MLIB_REQUIRE( ehYieldCurveProperties.isDefined(), "Curve '" + formattedCurveIndex + "' does not exist in collection '" + curveCollection.c_str() + "'" )
+        AQ_REQUIRE( ehYieldCurveProperties.isDefined(), "Curve '" + formattedCurveIndex + "' does not exist in collection '" + curveCollection.c_str() + "'" )
         
         CurveCalibrationData *ycProperties = &dynamic_cast<CurveCalibrationData &>( ehYieldCurveProperties.get() );
 

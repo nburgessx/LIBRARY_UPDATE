@@ -14,7 +14,7 @@ namespace etrading
 	BondCurveCostFunction::BondCurveCostFunction ( const DoubleVector& bondMaturities, const DoubleVector& bondYields )
 		: bondMaturities_( bondMaturities ), bondYields_( bondYields )
 	{
-		MLIB_REQUIRE( bondYields.size() == bondMaturities.size(), "Number of bond yields should match the number of bond maturities. ");
+		AQ_REQUIRE( bondYields.size() == bondMaturities.size(), "Number of bond yields should match the number of bond maturities. ");
 	}
 
 	/* @brief Copy constructor

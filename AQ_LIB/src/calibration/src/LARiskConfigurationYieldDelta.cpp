@@ -241,7 +241,7 @@ vector<LAString>
 LARiskConfigurationYieldDelta::getBucketGridTerm(const LAString &ccy) const
 {
 	vector<LAString> ret;
-	ret.push_back(MLIB_NO_DATA);
+	ret.push_back(AQ_NO_DATA);
 
 	return ret;
 }
@@ -347,7 +347,7 @@ LARiskConfigurationYieldDelta::getCalibTargetCurrencies() const
 {
 	if (!isRealCalib())
 	{
-		return MLIB_NO_DATA;
+		return AQ_NO_DATA;
 	}
 	return mpRiskStaticData->getStaticData(KEY_RISK_OFFICIAL_YIELD_DELTA_CALIBRATION_TARGET_CURRENCY);
 }
@@ -364,7 +364,7 @@ LARiskConfigurationYieldDelta::getCoefficientRatio1(const LAString &ccy, LAObjec
 	LAString ircur = ccy;
 	LAString isadjstr = mpRiskStaticData->getStaticData(ircur.toLower() + 
 												STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_ISCOEFFICIENTRATIO1 + getCurveSuffix(ccy));
-	if (isadjstr == MLIB_NO_DATA)
+	if (isadjstr == AQ_NO_DATA)
 		return 1.0;
 		
 	return 1.0;
@@ -383,7 +383,7 @@ LARiskConfigurationYieldDelta::getCoefficientRatio2(const LAString &ccy, LAObjec
 	LAString ircur = ccy;
 	LAString isadjstr = mpRiskStaticData->getStaticData(ircur.toLower() + 
 													STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_ISCOEFFICIENTRATIO2 + getCurveSuffix(ccy));
-	if (isadjstr == MLIB_NO_DATA)
+	if (isadjstr == AQ_NO_DATA)
 		return 1.0;
 
 	return 1.0;
@@ -402,7 +402,7 @@ LARiskConfigurationYieldDelta::isRiskCurrencyMode(const LAString &ccy) const
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_OFFICIAL_YIELD_DELTA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);

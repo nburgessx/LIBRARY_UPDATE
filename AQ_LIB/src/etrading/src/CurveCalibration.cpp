@@ -57,43 +57,43 @@ namespace etrading
 		// Important Note: Here we Deprecate LA Define Statements from Common and IR Projects
 		// #define statements have been replaced as LAString with MLIBQ prefix
 
-		const LAString MLIB_O_N				= "O_N";
-		const LAString MLIB_T_N				= "T_N";
-		const LAString MLIB_ON				= "ON";
-		const LAString MLIB_TN				= "TN";
-		const LAString MLIB_LIBOR_DATA		= "ZERORATE";	// Libor or Zero Rate
-		const LAString MLIB_ZERORATE		= "ZERORATE";	// Libor or Zero Rate
-		const LAString MLIB_SWAP_DATA		= "PARRATE";	// Swap Par Rate
-		const LAString MLIB_PARRATE			= "PARRATE";	// Swap Par Rate
-		const LAString MLIB_FWD				= "FWDRATE";
-		const LAString MLIB_BASIS			= "BASISRATE";
-		const LAString MLIB_MPC_SWAP		= "BOJRATE";	// This is meant to read Central Bank MPC Swaps not just BOJ Central Bank
-		const LAString MLIB_FOMC_SWAP		= "FFRATE";		// FED FUND MPC SWAP i.e FOMC Swap
-		const LAString MLIB_ARR_FUTURE		= "ARRFUTURE";
-		const LAString MLIB_STD				= "STD";
-		const LAString MLIB_FRA3M			= "FRA3M";
-		const LAString MLIB_FRA6M			= "FRA6M";
-		const LAString MLIB_TERM_3M			= "3M";
-		const LAString MLIB_TERM_6M			= "6M";
-		const LAString MLIB_TERM_1M			= "1M";
-		const LAString MLIB_TERM_12M		= "12M";
+		const LAString AQ_O_N				= "O_N";
+		const LAString AQ_T_N				= "T_N";
+		const LAString AQ_ON				= "ON";
+		const LAString AQ_TN				= "TN";
+		const LAString AQ_LIBOR_DATA		= "ZERORATE";	// Libor or Zero Rate
+		const LAString AQ_ZERORATE		= "ZERORATE";	// Libor or Zero Rate
+		const LAString AQ_SWAP_DATA		= "PARRATE";	// Swap Par Rate
+		const LAString AQ_PARRATE			= "PARRATE";	// Swap Par Rate
+		const LAString AQ_FWD				= "FWDRATE";
+		const LAString AQ_BASIS			= "BASISRATE";
+		const LAString AQ_MPC_SWAP		= "BOJRATE";	// This is meant to read Central Bank MPC Swaps not just BOJ Central Bank
+		const LAString AQ_FOMC_SWAP		= "FFRATE";		// FED FUND MPC SWAP i.e FOMC Swap
+		const LAString AQ_ARR_FUTURE		= "ARRFUTURE";
+		const LAString AQ_STD				= "STD";
+		const LAString AQ_FRA3M			= "FRA3M";
+		const LAString AQ_FRA6M			= "FRA6M";
+		const LAString AQ_TERM_3M			= "3M";
+		const LAString AQ_TERM_6M			= "6M";
+		const LAString AQ_TERM_1M			= "1M";
+		const LAString AQ_TERM_12M		= "12M";
 
-		const LAString MLIB_SIMPLE			= "SIMPLE";
-		const LAString MLIB_ANNUAL			= "ANNUAL";
-		const LAString MLIB_SEMI_ANNUAL		= "SEMI-ANNUAL";
-		const LAString MLIB_QUARTERLY		= "QUARTERLY";
-		const LAString MLIB_MONTHLY			= "MONTHLY";
-		const LAString MLIB_LUNAR			= "LUNAR";
-		const LAString MLIB_BUSINESS_DAYS	= "BUSINESS_DAYS";
+		const LAString AQ_SIMPLE			= "SIMPLE";
+		const LAString AQ_ANNUAL			= "ANNUAL";
+		const LAString AQ_SEMI_ANNUAL		= "SEMI-ANNUAL";
+		const LAString AQ_QUARTERLY		= "QUARTERLY";
+		const LAString AQ_MONTHLY			= "MONTHLY";
+		const LAString AQ_LUNAR			= "LUNAR";
+		const LAString AQ_BUSINESS_DAYS	= "BUSINESS_DAYS";
 
-		const LAString MLIB_ROLLCONV_NORMAL = "NORMAL";
-		const LAString MLIB_ROLLCONV_EOM	= "EOM";
-		const LAString MLIB_ROLLCONV_LUNAR	= "LUNAR";
+		const LAString AQ_ROLLCONV_NORMAL = "NORMAL";
+		const LAString AQ_ROLLCONV_EOM	= "EOM";
+		const LAString AQ_ROLLCONV_LUNAR	= "LUNAR";
 
-		const LAString MLIB_LIBOR			= "LIBOR";
-		const LAString MLIB_FUTURE			= "FUTURE";
-		const LAString MLIB_FRA				= "FRA";
-		const LAString MLIB_SWAP			= "SWAP";
+		const LAString AQ_LIBOR			= "LIBOR";
+		const LAString AQ_FUTURE			= "FUTURE";
+		const LAString AQ_FRA				= "FRA";
+		const LAString AQ_SWAP			= "SWAP";
 	}
 }
 
@@ -121,7 +121,7 @@ SwapCurveDiscountFactors initialiseSwapCurveDiscountFactors( LACurveStaticDataHo
 	{
 		// Non-STD Curves Require Curve Suffix
 		LAString suffix = "";
-		if (staticDataObj.dfCurveName_ != MLIB_STD)
+		if (staticDataObj.dfCurveName_ != AQ_STD)
 		{
 			suffix = LAString("_") + staticDataObj.dfCurveName_;
 		}
@@ -183,9 +183,9 @@ LACurveStaticDataHolder::LACurveStaticDataHolder( LAObject & curveDataObject,
 		targetCurve_ = dynamic_cast< const LADataString & >( dh->get() ).get();
 	}
 
-	if( LAString( targetCurve_ ).toUpper() == MLIB_STD )
+	if( LAString( targetCurve_ ).toUpper() == AQ_STD )
 	{
-		targetCurve_ = MLIB_STD;
+		targetCurve_ = AQ_STD;
 	}
 	else
 	{
@@ -298,7 +298,7 @@ CurveProperties::CurveProperties( CurveCalibrationData & curveData )
 		targetCurve.toUpper();
 	}
 
-	if( targetCurve != MLIB_STD )
+	if( targetCurve != AQ_STD )
 	{
 		// Non-STD Swap Curves have a market data suffix
 		targetCurveMktSuffix = LAString( "_" ) + curveData.getMarketForCurve( targetCurve );
@@ -322,7 +322,7 @@ CurveProperties::CurveProperties( CurveCalibrationData & curveData )
 	}
 	
 	// Check useFutures and useFRAs not enabled at the same time
-	MLIB_THROW_IF( useFutures_ && useFRAs_, "Invalid Calibration Settings: Calibration to both Futures and FRAs is not supported" )
+	AQ_THROW_IF( useFutures_ && useFRAs_, "Invalid Calibration Settings: Calibration to both Futures and FRAs is not supported" )
 
 	// Update 'ratePriorityStringVector_'
 	ratePriorityStringVector_ = nullptr;
@@ -375,7 +375,7 @@ void CurveProperties::updateSwapCurveStateVariables( LACurveStaticDataHolder & s
 	if (dh->isDefined() && !dh->isNull())
 	{
 		staticDataObj.curveProperties_.stateVariableSwaps_ = toStateVariableEnum(dynamic_cast<const LADataString&>(dh->get()).get().getCString());
-		MLIB_THROW_IF(stateVariableSwaps_ != STATE_VARIABLE_DF && stateVariableSwaps_ != STATE_VARIABLE_ZERO_RATE_TIMES_TIME,
+		AQ_THROW_IF(stateVariableSwaps_ != STATE_VARIABLE_DF && stateVariableSwaps_ != STATE_VARIABLE_ZERO_RATE_TIMES_TIME,
 					  "Invalid Swap Data: Swap Calibration StateVariable must be DiscountFactor or RateTime")
 	}
 
@@ -383,7 +383,7 @@ void CurveProperties::updateSwapCurveStateVariables( LACurveStaticDataHolder & s
 	if ( useTenorBasisSwaps_ && mktDataObj.mktData_.tenorswap_.size() > 0 )
 	{
 		// Access Violation Guard
-		MLIB_REQUIRE( mktDataObj.mktData_.tenorswap_.size() == mktDataObj.mktData_.swap_.size(), "Invalid Tenor Basis Data: Inconsistent number of IRS Swaps and Tenor Basis Swaps" )
+		AQ_REQUIRE( mktDataObj.mktData_.tenorswap_.size() == mktDataObj.mktData_.swap_.size(), "Invalid Tenor Basis Data: Inconsistent number of IRS Swaps and Tenor Basis Swaps" )
 		
 		bool useRateTime = false;
 		dh = &( mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_ISTIMEINTERPOLATIONSW, NOCHECK));
@@ -473,7 +473,7 @@ LADate getFirstSwapMaturityDate( const LACurveMarketData & mktData )
 {
 	LADate swapMaturity;
 
-	MLIB_REQUIRE( mktData.swap_size_ > 0, "Invalid Market Data: Missing Swap Instruments" )
+	AQ_REQUIRE( mktData.swap_size_ > 0, "Invalid Market Data: Missing Swap Instruments" )
 
 	const LADate& spotdate				= dynamic_cast<const LADataDate&> ((mktData.swap_[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 	const LAString& term_str			= dynamic_cast<const LADataString&> ((mktData.swap_[0]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
@@ -508,7 +508,7 @@ LADate getLiborSpotDate( const LACurveMarketData & mktData )
 		}
 		else if (liborSpotDate != spotdate)
 		{
-			MLIB_THROW("Calibration instruments must have the same spotdate")
+			AQ_THROW("Calibration instruments must have the same spotdate")
 		}
 	}
 	return liborSpotDate;
@@ -565,32 +565,32 @@ void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder
 		datatype_str = dynamic_cast<const LADataString&> ((rawMarketData_[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		datatype_str.toUpper();
 
-		if (datatype_str == MLIB_LIBOR_DATA)
+		if (datatype_str == AQ_LIBOR_DATA)
 		{
 			// libor case
 			mktData_.libor_.push_back(rawMarketData_[i]);
 		}
-		else if (datatype_str == MLIB_SWAP_DATA)
+		else if (datatype_str == AQ_SWAP_DATA)
 		{
 			// swap case
 			mktData_.swap_.push_back(rawMarketData_[i]);
 		}
-		else if (datatype_str == MLIB_FUTURE)
+		else if (datatype_str == AQ_FUTURE)
 		{
 			// future case
 			mktData_.future_.push_back(rawMarketData_[i]);
 		}
-		else if ( datatype_str == MLIB_MPC_SWAP || datatype_str == MLIB_FOMC_SWAP || datatype_str == MLIB_ARR_FUTURE )
+		else if ( datatype_str == AQ_MPC_SWAP || datatype_str == AQ_FOMC_SWAP || datatype_str == AQ_ARR_FUTURE )
 		{
 			// Monetary Policy Swaps (Central Bank Swaps)
 			mktData_.mpc_swaps_.push_back(rawMarketData_[i]);
 		}
-		else if (datatype_str == MLIB_FRA)
+		else if (datatype_str == AQ_FRA)
 		{
 			// fra case
 			mktData_.fra_.push_back(rawMarketData_[i]);
 		}
-		else if (datatype_str == MLIB_BASIS)
+		else if (datatype_str == AQ_BASIS)
 		{
 			// tenor basis swap
 			mktData_.tenorswap_.push_back(rawMarketData_[i]);
@@ -600,7 +600,7 @@ void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder
 			// money market case
 			const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&> ((rawMarketData_[i]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 			const LAPriceDataSlidingRule& sld = dynamic_cast<const LAPriceDataSlidingRule&> ((rawMarketData_[i]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-			if (datatype_str == MLIB_O_N)
+			if (datatype_str == AQ_O_N)
 			{
 				LADate end = asOfDate;
 				end.addDays(1);
@@ -621,7 +621,7 @@ void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder
 					dynamic_cast<LADataDates&>(rawMarketData_[i]->getData(IR_CALIBRATION_DATA_CALCDATESFORDVZERO).get()).set(depositDates);
 				}
 			}
-			else if (datatype_str == MLIB_T_N)
+			else if (datatype_str == AQ_T_N)
 			{
 				LADate start = asOfDate;
 				start.addDays(1);
@@ -698,18 +698,18 @@ void CurveMarketDataHolder::groupMarketDataByInstrument( LACurveStaticDataHolder
 	if( mktData_.isOISMarketData_ )
 	{
 		// OIS Curve Specific Validation
-		MLIB_REQUIRE(mktData_.swap_size_ > 0, "Invalid Curve Market Data: Missing Swap calibration instruments")
+		AQ_REQUIRE(mktData_.swap_size_ > 0, "Invalid Curve Market Data: Missing Swap calibration instruments")
 	}
 	else
 	{
 		// Libor Curve Specific Validation
-		MLIB_REQUIRE(mktData_.swap_size_ > 0, "Invalid Curve Market Data: Missing Libor Swap calibration instruments")
-		MLIB_REQUIRE(mktData_.libor_size_ > 0, "Invalid Curve Market Data: Missing Libor Cash Deposit calibration instruments")
-	    MLIB_THROW_IF(!mktData_.isO_N_ || !mktData_.isT_N_, "Invalid Curve Market Data: Both O_N and T_N calibration instruments are required")
+		AQ_REQUIRE(mktData_.swap_size_ > 0, "Invalid Curve Market Data: Missing Libor Swap calibration instruments")
+		AQ_REQUIRE(mktData_.libor_size_ > 0, "Invalid Curve Market Data: Missing Libor Cash Deposit calibration instruments")
+	    AQ_THROW_IF(!mktData_.isO_N_ || !mktData_.isT_N_, "Invalid Curve Market Data: Both O_N and T_N calibration instruments are required")
 	}
 	
 	// All Curve Validation
-	MLIB_THROW_IF(staticDataObj.curveProperties_.useFRAs_ && staticDataObj.curveProperties_.useFutures_, "Invalid Curve Instrument Settings: We can not use fra and futures calibration instruments at a same time!")
+	AQ_THROW_IF(staticDataObj.curveProperties_.useFRAs_ && staticDataObj.curveProperties_.useFutures_, "Invalid Curve Instrument Settings: We can not use fra and futures calibration instruments at a same time!")
 
 	// Store the first Swap Maturity Date - Can only store this once market data validated
 	mktData_.firstSwapMaturityDate_ = getFirstSwapMaturityDate( mktData_ );
@@ -765,9 +765,9 @@ bool CurveMarketDataHolder::isTargetSwapCurve( LACurveStaticDataHolder & staticD
 		* Condition 2. Is the STD curve present in the listOfCurvesAlreadyBuilt dictionary
 		* Condition 3. Is the target curve STD
 	*/
-	const bool isSwapMarketName		= staticDataObj.curveCalibrationData_.getMarketForCurve( targetCurve ) == MLIB_SWAP;
-	const bool isSwapCurveMissing	= listOfCurvesAlreadyBuilt.find( MLIB_STD ) == listOfCurvesAlreadyBuilt.end();
-	const bool isSwapTargetCurve	= ( targetCurve == MLIB_STD );
+	const bool isSwapMarketName		= staticDataObj.curveCalibrationData_.getMarketForCurve( targetCurve ) == AQ_SWAP;
+	const bool isSwapCurveMissing	= listOfCurvesAlreadyBuilt.find( AQ_STD ) == listOfCurvesAlreadyBuilt.end();
+	const bool isSwapTargetCurve	= ( targetCurve == AQ_STD );
 	
 	const bool isSwapCurve			= ( isSwapMarketName && isSwapCurveMissing ) || isSwapTargetCurve;
 	return isSwapCurve;
@@ -779,7 +779,7 @@ LiborIndex::LiborIndex( CurveMarketDataHolder & mktDataObj )
 	: daycountAct365_(ACT_365)
 {
 	// Validate Libor Index Instrument Definitions & Data
-	MLIB_REQUIRE( mktDataObj.mktData_.libor_size_ > 0, "Missing Libor Float Index Data" )
+	AQ_REQUIRE( mktDataObj.mktData_.libor_size_ > 0, "Missing Libor Float Index Data" )
 	spotDate_			= getLiborSpotDate( mktDataObj.mktData_ );
 	
 	// *** Important *** The Libor Market Data vector contains the Libor Cash Deposits for All Curves
@@ -805,7 +805,7 @@ LiborIndex::LiborIndex( CurveMarketDataHolder & mktDataObj )
 	// TODO - Remove the Libor Index Dependency on Swap Instrument Parameters
 	// **********************************************************************
 
-	MLIB_REQUIRE( mktDataObj.mktData_.swap_size_ > 0, "Missing Swaps Data: At least One Swap is Required" )
+	AQ_REQUIRE( mktDataObj.mktData_.swap_size_ > 0, "Missing Swaps Data: At least One Swap is Required" )
 
 	// Libor Index Frequency - Use Swap Float Frequency as a Proxy
 	// The Curve Frequency is a better proxy but the parameter has not been made available to the property manager and entity pool
@@ -817,29 +817,29 @@ LiborIndex::LiborIndex( CurveMarketDataHolder & mktDataObj )
 	}
 	else
 	{
-		MLIB_THROW("Invalid Swap Data: Float Leg Frequency 'FrequencyFloat' is required")
+		AQ_THROW("Invalid Swap Data: Float Leg Frequency 'FrequencyFloat' is required")
 	}
 
 	// Libor Index Tenor - Implied from the Libor Index Frequency
-	if (frequency_ == MLIB_SEMI_ANNUAL)
+	if (frequency_ == AQ_SEMI_ANNUAL)
 	{
-		tenor_ = MLIB_TERM_6M;
+		tenor_ = AQ_TERM_6M;
 	}
-	else if (frequency_ == MLIB_QUARTERLY)
+	else if (frequency_ == AQ_QUARTERLY)
 	{
-		tenor_ = MLIB_TERM_3M;
+		tenor_ = AQ_TERM_3M;
 	}
-	else if (frequency_ == MLIB_MONTHLY)
+	else if (frequency_ == AQ_MONTHLY)
 	{
-		tenor_ = MLIB_TERM_1M;
+		tenor_ = AQ_TERM_1M;
 	}
-	else if (frequency_ == MLIB_ANNUAL)
+	else if (frequency_ == AQ_ANNUAL)
 	{
-		tenor_ = MLIB_TERM_12M;
+		tenor_ = AQ_TERM_12M;
 	}
 	else
 	{
-		MLIB_THROW("Invalid Libor Index Data: Libor Index frequency must be 1M, 3M, 6M or 12M.")
+		AQ_THROW("Invalid Libor Index Data: Libor Index frequency must be 1M, 3M, 6M or 12M.")
 	}
 }
 
@@ -911,14 +911,14 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 	{
 		LAString convexityQuoteTypeStr = dynamic_cast<const LADataString &>(dh->get()).get();
 		convexityQuoteTypeStr.toUpper();
-		MLIB_REQUIRE( convexityQuoteTypeStr == "VOL" || convexityQuoteTypeStr == "PRICE", "Invalid Futures Convexity Quote Type: ConvexityQuoteType must be VOL or PRICE" )
+		AQ_REQUIRE( convexityQuoteTypeStr == "VOL" || convexityQuoteTypeStr == "PRICE", "Invalid Futures Convexity Quote Type: ConvexityQuoteType must be VOL or PRICE" )
 		isConvexityQuotedAsVol_ = ( convexityQuoteTypeStr == "VOL" ) ? true : false;
 		
 		// TODO: Property Manager does not allow us to clear parameters once set ... hence the below fails ... prioritize the convexityQuoteType parameter for now
 		// // Don't allow the legacy name and alias to be used at the same time
 		// if ( dhConvexityQuotedAsPrice->isDefined() && !dhConvexityQuotedAsPrice->isNull() )
 		// {
-		// 	MLIB_THROW("Invalid Futures Convexity Parameter: Cannot use ConvexityQuoteType and UseConvexAdjustment (ConvexityQuotedAsPrice) parameters at the same time.")
+		// 	AQ_THROW("Invalid Futures Convexity Parameter: Cannot use ConvexityQuoteType and UseConvexAdjustment (ConvexityQuotedAsPrice) parameters at the same time.")
 		// }
 	}
 	// --------------------------------------------------------------------------------------------------
@@ -933,7 +933,7 @@ FuturesInstruments::FuturesInstruments( LACurveStaticDataHolder & staticDataObj,
 
 	// Tension Gap Days
 	tensionDayGap_ = dynamic_cast<const LADataInt&> ((mktDataObj.mktData_.future_[0]->getData(IR_CALIBRATION_DATA_TENSIONGAP, ISNOTNULL)).get()).get();
-	MLIB_THROW_IF( applyTensionFutures_ && tensionDayGap_ < 1, "Invalid Futures Parameter: The TensionGap days must be greater than zero")
+	AQ_THROW_IF( applyTensionFutures_ && tensionDayGap_ < 1, "Invalid Futures Parameter: The TensionGap days must be greater than zero")
 
 	// Include Swaps Before MPC Swaps (also known as 'SmoothShortEnd')
 	includeSwapsBeforeMPCSwaps_ = true;
@@ -1098,7 +1098,7 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 	: daycountAct365_(ACT_365)
 {
 	// Validate and Set Size
-	MLIB_REQUIRE( mktDataObj.mktData_.swap_size_ > 0, "Invalid Calibration Instruments: Missing Swap Instruments" )
+	AQ_REQUIRE( mktDataObj.mktData_.swap_size_ > 0, "Invalid Calibration Instruments: Missing Swap Instruments" )
 	this->resize( mktDataObj.mktData_.swap_size_ );
 
 	const LADataHolder *dh = 0;
@@ -1113,7 +1113,7 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 		
 		if ( spotDate_[i] != spotDate_[0] )
 		{
-			MLIB_THROW("Each swap calibration instrument must have the same SpotDate")
+			AQ_THROW("Each swap calibration instrument must have the same SpotDate")
 		}
 
 		// Fixed Leg
@@ -1122,7 +1122,7 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 		// Frequency Fixed
 		frequencyFixed_[i] = dynamic_cast<const LADataString&> ((mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_FREQUENCY, ISNOTNULL)).get()).get();
 		frequencyFixed_[i].toUpper();
-		MLIB_THROW_IF(frequencyFixed_[i] == MLIB_SIMPLE, "Swap frequency 'SIMPLE' is not supported")
+		AQ_THROW_IF(frequencyFixed_[i] == AQ_SIMPLE, "Swap frequency 'SIMPLE' is not supported")
 		
 		// Daycount Fixed
 		daycountFixed_[i] = &dynamic_cast<const LAPriceDataDayCount&> ((mktDataObj.mktData_.swap_[i]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
@@ -1149,7 +1149,7 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 		}
 		else
 		{
-			MLIB_THROW("Invalid Swap Data: Float Leg Frequency 'FrequencyFloat' is required")
+			AQ_THROW("Invalid Swap Data: Float Leg Frequency 'FrequencyFloat' is required")
 		}
 
 		// Daycount Float
@@ -1160,7 +1160,7 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 		}
 		else
 		{
-			MLIB_THROW("Invalid Swap Data: Float Leg Daycount 'DaycountFloat' is required")
+			AQ_THROW("Invalid Swap Data: Float Leg Daycount 'DaycountFloat' is required")
 		}
 
 		// Compound Frequency Float - use float frequency if missing
@@ -1183,28 +1183,28 @@ SwapInstruments::SwapInstruments( LACurveStaticDataHolder & staticDataObj, Curve
 		}
 
 		// Libor Index Tenor
-		if (liborIndexFrequency_[i] == MLIB_SEMI_ANNUAL)
+		if (liborIndexFrequency_[i] == AQ_SEMI_ANNUAL)
 		{
-			liborIndexTenor_[i] = MLIB_TERM_6M;
+			liborIndexTenor_[i] = AQ_TERM_6M;
 		}
-		else if (liborIndexFrequency_[i] == MLIB_QUARTERLY)
+		else if (liborIndexFrequency_[i] == AQ_QUARTERLY)
 		{
-			liborIndexTenor_[i] = MLIB_TERM_3M;
+			liborIndexTenor_[i] = AQ_TERM_3M;
 		}
-		else if (liborIndexFrequency_[i] == MLIB_MONTHLY)
+		else if (liborIndexFrequency_[i] == AQ_MONTHLY)
 		{
-			MLIB_THROW_IF( staticDataObj.curveProperties_.useFRAs_ && mktDataObj.mktData_.fra_size_ > 0, "Invalid Swap Curve: Only 3M and 6M Swap curves are allowed to calibrate using FRAs")
-			liborIndexTenor_[i] = MLIB_TERM_1M;
+			AQ_THROW_IF( staticDataObj.curveProperties_.useFRAs_ && mktDataObj.mktData_.fra_size_ > 0, "Invalid Swap Curve: Only 3M and 6M Swap curves are allowed to calibrate using FRAs")
+			liborIndexTenor_[i] = AQ_TERM_1M;
 		}
-		else if (liborIndexFrequency_[i] == MLIB_ANNUAL)
+		else if (liborIndexFrequency_[i] == AQ_ANNUAL)
 		{
-			MLIB_THROW_IF( staticDataObj.curveProperties_.useFRAs_ && mktDataObj.mktData_.fra_size_ > 0,  "Invalid Swap Curve: Only 3M and 6M Swap curves are allowed to calibrate using FRAs")
-			MLIB_THROW_IF( staticDataObj.curveProperties_.useFutures_ && mktDataObj.mktData_.future_size_ > 0, "Invalid Swap Curve: Only 1M, 3M and 6M Swap curves are allowed to calibrate using Futures")
-			liborIndexTenor_[i] = MLIB_TERM_12M;
+			AQ_THROW_IF( staticDataObj.curveProperties_.useFRAs_ && mktDataObj.mktData_.fra_size_ > 0,  "Invalid Swap Curve: Only 3M and 6M Swap curves are allowed to calibrate using FRAs")
+			AQ_THROW_IF( staticDataObj.curveProperties_.useFutures_ && mktDataObj.mktData_.future_size_ > 0, "Invalid Swap Curve: Only 1M, 3M and 6M Swap curves are allowed to calibrate using Futures")
+			liborIndexTenor_[i] = AQ_TERM_12M;
 		}
 		else
 		{
-			MLIB_THROW("Invalid Swap Curve: Libor Index frequency must be 1M, 3M, 6M or 12M.")
+			AQ_THROW("Invalid Swap Curve: Libor Index frequency must be 1M, 3M, 6M or 12M.")
 		}
 	}
 }
@@ -1253,12 +1253,12 @@ TenorBasisInstruments::TenorBasisInstruments( LACurveStaticDataHolder & staticDa
 		const LADataHolder* dh = 0;
 
 		// Validate Data Dimensions
-		MLIB_THROW_IF( mktDataObj.mktData_.tenorswap_.size() == 0, "Invalid Tenor Basis Swap Data: Market Data is Empty" )
-		MLIB_THROW_IF( mktDataObj.mktData_.swap_.size() == 0, "Invalid Tenor Basis Swap Data: Cannot use Tenor Basis Swaps when IRS Swap Market Data is Empty" )
-		MLIB_REQUIRE( mktDataObj.mktData_.tenorswap_.size() == mktDataObj.mktData_.swap_.size(), "Invalid Tenor Basis Swap Data: Inconsistent number of IRS Swaps and Tenor Basis Swaps")
+		AQ_THROW_IF( mktDataObj.mktData_.tenorswap_.size() == 0, "Invalid Tenor Basis Swap Data: Market Data is Empty" )
+		AQ_THROW_IF( mktDataObj.mktData_.swap_.size() == 0, "Invalid Tenor Basis Swap Data: Cannot use Tenor Basis Swaps when IRS Swap Market Data is Empty" )
+		AQ_REQUIRE( mktDataObj.mktData_.tenorswap_.size() == mktDataObj.mktData_.swap_.size(), "Invalid Tenor Basis Swap Data: Inconsistent number of IRS Swaps and Tenor Basis Swaps")
 		
 		// Safety Check: Dimensions Initialized Above in Constructor Initializer List
-		MLIB_REQUIRE( spreads_.size() == mktDataObj.mktData_.tenorswap_.size(), "Invalid Tenor Basis Swap Data: Inconsistent number of Tenor Basis Swap Instruments and Market Data Quotes" )
+		AQ_REQUIRE( spreads_.size() == mktDataObj.mktData_.tenorswap_.size(), "Invalid Tenor Basis Swap Data: Inconsistent number of Tenor Basis Swap Instruments and Market Data Quotes" )
 
 		// Spread Leg	
 		applySpreadLeg2_ = dynamic_cast<const LADataBool&> ((mktDataObj.mktData_.tenorswap_[0]->getData(IR_CALIBRATION_DATA_ISAGTSPREAD, ISNOTNULL)).get()).get();
@@ -1288,7 +1288,7 @@ TenorBasisInstruments::TenorBasisInstruments( LACurveStaticDataHolder & staticDa
 		}
 		else
 		{
-			MLIB_THROW("Invalid Tenor Basis Swap. The Tenor Basis Frequency and Libor Index Frequency must match")
+			AQ_THROW("Invalid Tenor Basis Swap. The Tenor Basis Frequency and Libor Index Frequency must match")
 		}
 
 		// Daycount
@@ -1308,17 +1308,17 @@ TenorBasisInstruments::TenorBasisInstruments( LACurveStaticDataHolder & staticDa
 		}
 		
 		// Roll Convention
-		if ( againstLegFrequency_ == MLIB_LUNAR )
+		if ( againstLegFrequency_ == AQ_LUNAR )
 		{
-			rollConv_ = MLIB_ROLLCONV_LUNAR;
+			rollConv_ = AQ_ROLLCONV_LUNAR;
 		}
 		else if ( isRollEOM_ )
 		{
-			rollConv_ = MLIB_ROLLCONV_EOM;
+			rollConv_ = AQ_ROLLCONV_EOM;
 		}
 		else
 		{
-			rollConv_ = MLIB_ROLLCONV_NORMAL;
+			rollConv_ = AQ_ROLLCONV_NORMAL;
 		}
 	}
 
@@ -1375,7 +1375,7 @@ void TenorBasisInstruments::populateSpreadMarketData( LACurveStaticDataHolder & 
 				}
 				default:
 				{
-					MLIB_THROW("Invalid Tenor Basis StateVariable: Only Zero Rate or ZeroRateTimesTime Supported")
+					AQ_THROW("Invalid Tenor Basis StateVariable: Only Zero Rate or ZeroRateTimesTime Supported")
 					break;
 				}
 			}
@@ -1457,23 +1457,23 @@ void SwapCashflows::updateRatePriority( LACurveStaticDataHolder & staticDataObj,
 	{
 		if (staticDataObj.curveProperties_.useFutures_ && mktDataObj.mktData_.future_size_ != 0)
 		{
-			MLIB_REQUIRE( staticDataObj.curveProperties_.ratePriorityStringVector_->size() == 3, "Invalid Rate priority specified - Must be a size 3 colon seperated list specifying instrument priority e.g. Libor:Futures:Swap" )
+			AQ_REQUIRE( staticDataObj.curveProperties_.ratePriorityStringVector_->size() == 3, "Invalid Rate priority specified - Must be a size 3 colon seperated list specifying instrument priority e.g. Libor:Futures:Swap" )
 		}
 
 		LAString ratePriorityInstrument = (*staticDataObj.curveProperties_.ratePriorityStringVector_)[0];
 		ratePriorityInstrument.toUpper();
-		if (ratePriorityInstrument == MLIB_SWAP)
+		if (ratePriorityInstrument == AQ_SWAP)
 		{
 			ratePriority.isSwapPriority_ = true;
 			ratePriorityInstrument = (*staticDataObj.curveProperties_.ratePriorityStringVector_)[1];
 			ratePriorityInstrument.toUpper();
-			if (staticDataObj.curveProperties_.useFutures_ && mktDataObj.mktData_.future_size_ != 0 && ratePriorityInstrument == MLIB_FUTURE)
+			if (staticDataObj.curveProperties_.useFutures_ && mktDataObj.mktData_.future_size_ != 0 && ratePriorityInstrument == AQ_FUTURE)
 			{
 				// TODO: Check legacy logic - how can we have swap and future priority = true ??? Looks incorrect ???
 				ratePriority.isFuturePriority_ = true;
 			}
 		}
-		else if (staticDataObj.curveProperties_.useFutures_ && mktDataObj.mktData_.future_size_ != 0 && ratePriorityInstrument == MLIB_FUTURE)
+		else if (staticDataObj.curveProperties_.useFutures_ && mktDataObj.mktData_.future_size_ != 0 && ratePriorityInstrument == AQ_FUTURE)
 		{
 			ratePriority.isFuturePriority_ = true;
 		}
@@ -1538,7 +1538,7 @@ void SwapCashflows::updateInstrumentDatesAndRates( LACurveStaticDataHolder & sta
 				{
 					case STATE_VARIABLE_ZERO_RATE_TIMES_TIME:
 					{
-						MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( tenorSwapMaturityAsTerm ), "Invalid Tenor Basis Swap: Instrument Maturities as terms must be greater than zero" )
+						AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( tenorSwapMaturityAsTerm ), "Invalid Tenor Basis Swap: Instrument Maturities as terms must be greater than zero" )
 						tenorBasisSwaps.spreads_[i] = tenorBasisSwaps.spreadInterpolator_->value(tenorSwapMaturityAsTerm) / tenorSwapMaturityAsTerm;
 						break;
 					}
@@ -1549,7 +1549,7 @@ void SwapCashflows::updateInstrumentDatesAndRates( LACurveStaticDataHolder & sta
 					}
 					default:
 					{
-							MLIB_THROW("Invalid Tenor Basis StateVariable: Only Zero Rate or ZeroRateTimesTime Supported")
+							AQ_THROW("Invalid Tenor Basis StateVariable: Only Zero Rate or ZeroRateTimesTime Supported")
 							break;
 					}
 				}
@@ -1669,8 +1669,8 @@ void SwapCashflows::updateSwapFloatCashflows( CurveMarketDataHolder & mktDataObj
 		// 1. Update Swap Fixed Accrual Periods and Payment Dates
 		// ******************************************************************
 
-		MLIB_REQUIRE( swaps.liborIndexFrequency_[nthSwap] != "", "Invalid Float Schedule: Libor Float Index is Required" )
-		MLIB_REQUIRE( swaps.daycountFloat_[nthSwap] != NULL ,	 "Invalid Float Schedule: Float Daycount is Required" )
+		AQ_REQUIRE( swaps.liborIndexFrequency_[nthSwap] != "", "Invalid Float Schedule: Libor Float Index is Required" )
+		AQ_REQUIRE( swaps.daycountFloat_[nthSwap] != NULL ,	 "Invalid Float Schedule: Float Daycount is Required" )
 		
 		if (mktDataObj.mktData_.areSwapsForwardStarting_)
 		{
@@ -1756,7 +1756,7 @@ void SwapCashflows::updateSwapFloatCashflows( CurveMarketDataHolder & mktDataObj
 void SwapCashflows::updateTenorBasisSwapFloatCashflows( LACurveStaticDataHolder & staticDataObj, CurveMarketDataHolder & mktDataObj, SwapInstruments & swaps, TenorBasisInstruments & tenorBasisSwaps )
 {
 	// Set up swap date schedules in preparation for pricing
-	MLIB_THROW_IF( staticDataObj.curveProperties_.useTenorBasisSwaps_ &&
+	AQ_THROW_IF( staticDataObj.curveProperties_.useTenorBasisSwaps_ &&
 				   tenorBasisSwaps.spreads_.size() != mktDataObj.mktData_.swap_size_,
 				   "Invalid Tenor Basis Swap Data: Inconsistent number of IRS Swaps and Tenor Basis Swaps")
 
@@ -1848,7 +1848,7 @@ void importHybridInterpolationJoinDateDefaults( LACurveStaticDataHolder & static
 
 	if ( resultsObj.doesCurveUseHybridInterpolation_ )
 	{
-		MLIB_REQUIRE( mktDataObj.mktData_.swap_size_ > 0, "Invalid Swap Instruments: Swap Instruments are Missing" )
+		AQ_REQUIRE( mktDataObj.mktData_.swap_size_ > 0, "Invalid Swap Instruments: Swap Instruments are Missing" )
 		LADate spotDate_swap	= dynamic_cast<const LADataDate&> ((mktDataObj.mktData_.swap_[0]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
 
 		// Internal curve model daycount required to tranform a date to a double
@@ -1905,8 +1905,8 @@ void importHybridInterpolationJoinDateDefaults( LACurveStaticDataHolder & static
 					const LADate spotDate = dynamic_cast<const LADataDate&>((mktDataObj.mktData_.fra_[mktDataObj.mktData_.fra_size_ - 1]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get()).get();
 					const LAPriceDataDayCount& fraDayCount = dynamic_cast<const LAPriceDataDayCount&>((mktDataObj.mktData_.fra_[mktDataObj.mktData_.fra_size_ - 1]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 
-					MLIB_REQUIRE( liborIndex.frequency_ != "", "Invalid Libor Index: Libor Index Frequency is Missing" )
-					MLIB_REQUIRE( liborIndex.tenor_ == MLIB_TERM_3M || liborIndex.tenor_ == MLIB_TERM_6M, "Invalid Libor Index: FRA Instrument Frequency must be 3M or 6M" )
+					AQ_REQUIRE( liborIndex.frequency_ != "", "Invalid Libor Index: Libor Index Frequency is Missing" )
+					AQ_REQUIRE( liborIndex.tenor_ == AQ_TERM_3M || liborIndex.tenor_ == AQ_TERM_6M, "Invalid Libor Index: FRA Instrument Frequency must be 3M or 6M" )
 
 					LADate lastFraStartDate, lastFraEndDate;
 					calculateFraDates(lastFraStartDate, lastFraEndDate, spotDate, mktDataObj.mktData_.fra_[mktDataObj.mktData_.fra_size_ - 1], liborIndex.tenor_, liborIndex.frequency_, fraDayCount);
@@ -2854,7 +2854,7 @@ LAStringVector CurveCalibration::getGlobalEngineCurveNames( const CurveCalibrati
 	}
 
 	LAString suffix_engine = engineName;
-	suffix_engine = ( engineName == MLIB_STD ) ? "" : "_" + engineName;
+	suffix_engine = ( engineName == AQ_STD ) ? "" : "_" + engineName;
 	suffix_engine.toUpper();
 
 	LAStringVector allCurveNames;
@@ -2883,7 +2883,7 @@ void CurveCalibration::buildEngineCurves(const LADate& asOfDate, LAObject& calib
 	}
 
 	LAString suffix_engine = engineName;
-	suffix_engine = (engineName == MLIB_STD) ? "" : "_" + engineName;
+	suffix_engine = (engineName == AQ_STD) ? "" : "_" + engineName;
 	suffix_engine.toUpper();
 
 	const LADataReference& ref = curveData.getYieldData();
@@ -2914,7 +2914,7 @@ void CurveCalibration::buildEngineCurves(const LADate& asOfDate, LAObject& calib
 	const LAStringVector allCurveNames = getGlobalEngineCurveNames( curveData );
 	if (allCurveNames.size() == 0)
 	{
-		MLIB_THROW("Yield curve engine has no component curves to build.");
+		AQ_THROW("Yield curve engine has no component curves to build.");
 	}
 
 	// Loop through all the curves and create a component curve object for each one of them
@@ -2926,7 +2926,7 @@ void CurveCalibration::buildEngineCurves(const LADate& asOfDate, LAObject& calib
 	{
 		LAString curveName = allCurveNames[i];
 		LAString curveNameUppercase = LAString(curveName).toUpper();
-		LAString suffix_curve = (curveNameUppercase == MLIB_STD) ? "" : "_" + curveNameUppercase;
+		LAString suffix_curve = (curveNameUppercase == AQ_STD) ? "" : "_" + curveNameUppercase;
 
 		LAString curveType("");
 		dh = &curveData.getData(IR_CALIBRATION_DATA_GLOBALENGINECURVES_SINGLECURVETYPE + suffix_engine + suffix_curve, NOCHECK);
@@ -2936,7 +2936,7 @@ void CurveCalibration::buildEngineCurves(const LADate& asOfDate, LAObject& calib
 		}
 		else
 		{
-			MLIB_THROW("Curve '" + curveName + "' does not have a curve type.");
+			AQ_THROW("Curve '" + curveName + "' does not have a curve type.");
 		}
 
 		// Depending on the curve type initialise different component curve objects for the engine]
@@ -2958,7 +2958,7 @@ void CurveCalibration::buildEngineCurves(const LADate& asOfDate, LAObject& calib
 		}
 		else
 		{
-			MLIB_THROW("'" + curveType + "' is not a supported curve type. Currently supports: OIS, SWAP, TENORBASIS.");
+			AQ_THROW("'" + curveType + "' is not a supported curve type. Currently supports: OIS, SWAP, TENORBASIS.");
 		}
 	}
 
@@ -3009,7 +3009,7 @@ void CurveCalibration::dualbootstrap(const LADate& asOfDate, LAObject& calibrati
 	}
 
 	LAString suffix_engine = engineName;
-	suffix_engine = (engineName == MLIB_STD) ? "" : "_" + engineName;
+	suffix_engine = (engineName == AQ_STD) ? "" : "_" + engineName;
 	suffix_engine.toUpper();
 
 	const LADataReference& ref = curveData.getYieldData();
@@ -3049,7 +3049,7 @@ void CurveCalibration::dualbootstrap(const LADate& asOfDate, LAObject& calibrati
 	}
 
 	swapCurveName.toUpper();
-	LAString suffix_swap = (swapCurveName == MLIB_STD) ? "" : "_" + swapCurveName;
+	LAString suffix_swap = (swapCurveName == AQ_STD) ? "" : "_" + swapCurveName;
 
 	// Create and initialise individual curve objects
 	OISComponentCurvePtr oisComponentCurve(new OISComponentCurve(oisCurveName, curveData, asOfDate, fastRebuildRequested));
@@ -3087,7 +3087,7 @@ void CurveCalibration::getTargetCurveAndMarketDataSuffix( LAString & targetCurve
 		targetCurve.toUpper();
 	}
 
-	if( targetCurve != MLIB_STD )
+	if( targetCurve != AQ_STD )
 	{
 		// Non-STD Swap Curves have a market data suffix
 		 marketDataSuffix = LAString( "_" ) + curveData.getMarketForCurve( targetCurve );
@@ -3137,7 +3137,7 @@ void CurveCalibration::updateObjectPoolCurveBuildListForAliasCurves( LACurveStat
 		{
 			const LAString& curveName = it->first;
 			LAString suffix_curve = "";
-			if( curveName != MLIB_STD )
+			if( curveName != AQ_STD )
 			{
 				suffix_curve = "_" + curveName;
 			}
@@ -3160,13 +3160,13 @@ void CurveCalibration::updateObjectPoolCurveResults( LACurveStaticDataHolder & s
 {
 	// Check Calibration Discount Factor Dates are not in the Past
 	DoubleArray::const_iterator min_it = min_element( resultsObj.dfResults_.paymentDatesAsTerms_.begin(), resultsObj.dfResults_.paymentDatesAsTerms_.end() );
-	MLIB_THROW_IF( !resultsObj.dfResults_.paymentDatesAsTerms_.empty() && *min_it < 0.0, "Invalid calibration instrument dates - Instrument dates are in the past, Instrment Dates and 'Term' parameters must be positive" )
+	AQ_THROW_IF( !resultsObj.dfResults_.paymentDatesAsTerms_.empty() && *min_it < 0.0, "Invalid calibration instrument dates - Instrument dates are in the past, Instrment Dates and 'Term' parameters must be positive" )
 
 	// Check Calibration Forward Rate Dates are not in the Past
 	if( !resultsObj.fwdStartEndDatesAsTerms_.empty() && !resultsObj.fwdStartEndDatesAsTerms_[0].empty() )
 	{
 		min_it = min_element( resultsObj.fwdStartEndDatesAsTerms_[0].begin(), resultsObj.fwdStartEndDatesAsTerms_[0].end() );
-		MLIB_THROW_IF( *min_it < 0.0, "Invalid calibration instrument dates - Instrument dates are in the past - Forward dates and 'Fwd_term' parameters must be positive." )
+		AQ_THROW_IF( *min_it < 0.0, "Invalid calibration instrument dates - Instrument dates are in the past - Forward dates and 'Fwd_term' parameters must be positive." )
 	}
 
 	// Reset and Update Object Pool with New Curve Results
@@ -3237,7 +3237,7 @@ void CurveCalibration::updateObjectPoolCurveConventionsAndResults( LACurveStatic
 		{
 			// Get Curve Name and Suffix (if any)
 			const LAString& curveName = it->first;
-			LAString curveSuffix = ( curveName == MLIB_STD ) ? "" : "_" + curveName;
+			LAString curveSuffix = ( curveName == AQ_STD ) ? "" : "_" + curveName;
 
 			// Set Object Pool Results
 			updateObjectPoolCurveResults( staticDataObj, resultsObj, curveSuffix );
@@ -3416,10 +3416,10 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 		datatype_str = dynamic_cast<const LADataString&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		datatype_str.toUpper();
 
-		if (datatype_str == MLIB_SWAP_DATA)
+		if (datatype_str == AQ_SWAP_DATA)
 		{
 			const LAString& term = dynamic_cast<const LADataString&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_TERM, ISNOTNULL)).get()).get();
-			if (term == MLIB_ON)
+			if (term == AQ_ON)
 			{
                 // Treat O/N as a regular 1D Swap if reset lag = 0D i.e. if spotDate = asOfDate
                 const LADate& spotdate_ = dynamic_cast<const LADataDate&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
@@ -3434,11 +3434,11 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
                     data_on.push_back(mktDataObj.rawMarketData_[i]);
                 }
 			}
-			else if (term == MLIB_TN)
+			else if (term == AQ_TN)
 			{
                 // Disallow T/N Instruments when Curve SpotLag = 0D i.e. when spotDate = asOfDate
                 const LADate& spotdate_ = dynamic_cast<const LADataDate&> ((mktDataObj.rawMarketData_[i]->getData(IR_CALIBRATION_DATA_SPOTDATE, ISNOTNULL)).get());
-                MLIB_THROW_IF( spotdate_== resultsObj.asOfDate_, "Invalid Curve Instrument: T/N is not a valid instrument for curves with 0D spot lag" )
+                AQ_THROW_IF( spotdate_== resultsObj.asOfDate_, "Invalid Curve Instrument: T/N is not a valid instrument for curves with 0D spot lag" )
                 
                 // data_tn: Append T/N data, not part of swap calibration    
                 data_tn.push_back(mktDataObj.rawMarketData_[i]);
@@ -3458,7 +3458,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	unsigned int size_on = data_on.size();								// on size
 	unsigned int size_tn = data_tn.size();								// tn size
 	
-	MLIB_THROW_IF(swap_size == 0, "Invalid market data. At least one outright OIS swap must be specified")
+	AQ_THROW_IF(swap_size == 0, "Invalid market data. At least one outright OIS swap must be specified")
 
 	// Short term swaps overrule central bank swaps?
 	bool shortTermSwapOverrules = false;
@@ -3491,7 +3491,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 		}
 		else if (spotdate_ != spotdate)
 		{
-			MLIB_THROW("All market data must have same spotdate")
+			AQ_THROW("All market data must have same spotdate")
 		}
 	}
 
@@ -3501,7 +3501,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	const LAPriceDataDayCount& dc = dynamic_cast<const LAPriceDataDayCount&> ((data_swap[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
 	const LAPriceDataCalendar& cal = dynamic_cast<const LAPriceDataCalendar&> ((data_swap[0]->getData(CALIBRATION_DATA_CALENDAR, ISNOTNULL)).get());
 	const LAPriceDataSlidingRule& sld = dynamic_cast<const LAPriceDataSlidingRule&> ((data_swap[0]->getData(CALIBRATION_DATA_SLIDINGRULE, ISNOTNULL)).get());
-	RateConvention rc = LAMathYieldCurve::setRC(MLIB_SIMPLE);
+	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
 	LAPriceDataConvention conv(dc.getDayCount(), rc);
 
 	// Get shortterm_date
@@ -3542,17 +3542,17 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 
 	// set roll convention
 	LAString roll_conv("");
-	if (freq == MLIB_LUNAR)
+	if (freq == AQ_LUNAR)
 	{
-		roll_conv = MLIB_ROLLCONV_LUNAR;
+		roll_conv = AQ_ROLLCONV_LUNAR;
 	}
 	else if (isEOMRoll)
 	{
-		roll_conv = MLIB_ROLLCONV_EOM;
+		roll_conv = AQ_ROLLCONV_EOM;
 	}
 	else
 	{
-		roll_conv = MLIB_ROLLCONV_NORMAL;
+		roll_conv = AQ_ROLLCONV_NORMAL;
 	}
 
 	//-------------------------------------------------------------------------------
@@ -3683,7 +3683,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 	if (handle->isDefined() && !handle->isNull())
 	{
 		stateVariable = toStateVariableEnum(dynamic_cast<const LADataString&>(handle->get()).get().getCString());
-		MLIB_THROW_IF(stateVariable != STATE_VARIABLE_ZERO_RATE, "For OIS/ARR Curve, interpolator's StateVariable only supports ZeroRate")
+		AQ_THROW_IF(stateVariable != STATE_VARIABLE_ZERO_RATE, "For OIS/ARR Curve, interpolator's StateVariable only supports ZeroRate")
 	}
 
 	// Set the Join Date for the Linear-Spline Interpolation Method
@@ -3896,7 +3896,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 			}
 			default:
 			{
-				MLIB_THROW("Invalid ShortTermConvention - Must be 'ARITHMETIC' or 'GEOMETRIC'")
+				AQ_THROW("Invalid ShortTermConvention - Must be 'ARITHMETIC' or 'GEOMETRIC'")
 			}
 			}
 
@@ -3994,7 +3994,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 					DoubleArray thisYieldVector;
 					DoubleArray thisGridVector;
 
-					MLIB_THROW_IF(yields.size() != grid.size(), "Inconsistent Data: Inconsistent number of dates and rates in the OIS Curve")
+					AQ_THROW_IF(yields.size() != grid.size(), "Inconsistent Data: Inconsistent number of dates and rates in the OIS Curve")
 
 					// Remove all the zero rates after the first Central Bank Swaps start date
 					double yield = 0.0;
@@ -4110,7 +4110,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 		}
 	}
 
-	MLIB_THROW_IF(grid.size() < 3, "Curve calibration instrument error. There are no calibration instruments specified")
+	AQ_THROW_IF(grid.size() < 3, "Curve calibration instrument error. There are no calibration instruments specified")
 
 	// Use a map to improve performance when populating yields for terms of terms_grid, in function - getOISdiscountFactor()
 	std::unordered_map<double, double> gridYieldMap;
@@ -4143,7 +4143,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 				// O/N Instrument: from asOfDate to tomorrow
 				rate_on = dynamic_cast<const LADataDouble&> ((data_on[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 				const LAPriceDataDayCount& dc_on = dynamic_cast<const LAPriceDataDayCount&> ((data_on[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-				RateConvention rc_on = LAMathYieldCurve::setRC(MLIB_SIMPLE);
+				RateConvention rc_on = LAMathYieldCurve::setRC(AQ_SIMPLE);
 				LAPriceDataConvention conv_on(dc_on.getDayCount(), rc_on);
 
 				thisEndDate = cal.getBusinessDay(resultsObj.asOfDate_, 1);
@@ -4160,7 +4160,7 @@ void CurveCalibration::calibrateOISCurve( LACurveStaticDataHolder & staticDataOb
 				// T/N Instrument: from tomorrow to a day after
 				rate_tn = dynamic_cast<const LADataDouble&> ((data_tn[0]->getData(CALIBRATION_DATA_RATE, ISNOTNULL)).get()).get();
 				const LAPriceDataDayCount& dc_tn = dynamic_cast<const LAPriceDataDayCount&> ((data_tn[0]->getData(IR_CALIBRATION_DATA_DAYCOUNT, ISNOTNULL)).get());
-				RateConvention rc_tn = LAMathYieldCurve::setRC(MLIB_SIMPLE);
+				RateConvention rc_tn = LAMathYieldCurve::setRC(AQ_SIMPLE);
 				LAPriceDataConvention conv_tn(dc_tn.getDayCount(), rc_tn);
 
 				LADate on_EndDate;
@@ -4323,7 +4323,7 @@ double CurveCalibration::solveOISRateS(const LADate& startdate,
 		return solveOISRate(startdate, enddate, dc, cal, market_rate);
 	}
 	// calc target market rate
-	RateConvention rc = LAMathYieldCurve::setRC(MLIB_SIMPLE);
+	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
 	LAPriceDataConvention conv(dc.getDayCount(), rc);
 	double val = 1.0;
 	std::map<LADate, double>::const_iterator it = onforward_map.begin();
@@ -4399,10 +4399,10 @@ CurveCalibration::solveOISRate(const LADate& startdate,
 	}
 	catch (LACoreError &e)
 	{
-		MLIB_THROW("OIS curve calibration solver unable to find a solution with the existing precision and number of iteration settings - " + std::string( e.getMsg() ) )
+		AQ_THROW("OIS curve calibration solver unable to find a solution with the existing precision and number of iteration settings - " + std::string( e.getMsg() ) )
 	}
 
-	MLIB_THROW_IF(loopNum < 0, "OIS curve calibration solver unable to find a solution with the existing precision and number of iterations settings")
+	AQ_THROW_IF(loopNum < 0, "OIS curve calibration solver unable to find a solution with the existing precision and number of iterations settings")
 	return rate1;
 }
 
@@ -4423,7 +4423,7 @@ double CurveCalibration::calcSettleRate(const LADate& startdate,
 									    const LAPriceDataCalendar& cal,
 									    double onforward_rate)
 {
-	RateConvention rc = LAMathYieldCurve::setRC(MLIB_SIMPLE);
+	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
 	LAPriceDataConvention conv(dc.getDayCount(), rc);
 	LADate thisFwdDate = startdate;
 	LAPriceDataSlidingRule sld(SLIDING_RULE_FOLLOWING);
@@ -4463,9 +4463,9 @@ double CurveCalibration::calcSettleRates(const DateVector& startdates,
 	{
 		return 0.0;
 	}
-	MLIB_THROW_IF(size != enddates.size() || size != onforward_rates.size(), "Unable to calculate settle rates. Inconsistent number of dates and rates specified")
+	AQ_THROW_IF(size != enddates.size() || size != onforward_rates.size(), "Unable to calculate settle rates. Inconsistent number of dates and rates specified")
 
-	RateConvention rc = LAMathYieldCurve::setRC(MLIB_SIMPLE);
+	RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
 	LAPriceDataConvention conv(dc.getDayCount(), rc);
 	double val = 1.0;
 	for (unsigned int i = 0; i < size; ++i)
@@ -4561,7 +4561,7 @@ double CurveCalibration::calcEffectiveOISRate(DoubleVector& startTerms,
 		}
 		else
 		{
-			MLIB_THROW("Invalid OIS Compounding Method - Must be ARITHMETIC, GEOMETRIC, or NONE")
+			AQ_THROW("Invalid OIS Compounding Method - Must be ARITHMETIC, GEOMETRIC, or NONE")
 		}
 
 		// End of Case
@@ -4613,7 +4613,7 @@ double CurveCalibration::calcEffectiveOISRate(DoubleVector& startTerms,
 		}
 		else
 		{
-			MLIB_THROW("Invalid LongTerm.GenerateMethod - Must be set to 'DAILYAVERAGING' for compounded rates or 'NONE' for simple compounding")
+			AQ_THROW("Invalid LongTerm.GenerateMethod - Must be set to 'DAILYAVERAGING' for compounded rates or 'NONE' for simple compounding")
 		}
 
 		// End of Case
@@ -4621,7 +4621,7 @@ double CurveCalibration::calcEffectiveOISRate(DoubleVector& startTerms,
 	}
 	default:
 	{
-		MLIB_THROW("Invalid LongTermConvention; Must be either 'LOBASIS' to calibrate using Libor-OIS Basis Instruments or 'NONE' to use OIS Outright instruments only")
+		AQ_THROW("Invalid LongTermConvention; Must be either 'LOBASIS' to calibrate using Libor-OIS Basis Instruments or 'NONE' to use OIS Outright instruments only")
 	}
 	}
 
@@ -4691,7 +4691,7 @@ double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 		//
 
 		// Daily Geometric Compounding, which is the default behaviour
-		RateConvention rc = LAMathYieldCurve::setRC(MLIB_SIMPLE);
+		RateConvention rc = LAMathYieldCurve::setRC(AQ_SIMPLE);
 		LAPriceDataConvention conv(dc->getDayCount(), rc);
 
 		/* We make use of the geometric effective-rate shortcut:
@@ -4776,7 +4776,7 @@ double CurveCalibration::calcAverageRate(DoubleVector& startTerms,
 	}
 	default:
 	{
-		MLIB_THROW("Invalid CompoundingMethod - Must be ARITHMETIC, GEOMETRIC or NONE. For simple compounding set LongTerm.GenerateMethod to NONE")
+		AQ_THROW("Invalid CompoundingMethod - Must be ARITHMETIC, GEOMETRIC or NONE. For simple compounding set LongTerm.GenerateMethod to NONE")
 	}
 	}
 
@@ -4810,7 +4810,7 @@ CurveCalibration::calcArithmeticAverageRate(const DoubleVector& startterms,
 		return 0.0;
 	}
 
-	MLIB_REQUIRE(nStartTerms == nEndTerms, "Unable to calculate the Arithmetic Average rate - Inconsistent number of instrument start- and end-dates provided.")
+	AQ_REQUIRE(nStartTerms == nEndTerms, "Unable to calculate the Arithmetic Average rate - Inconsistent number of instrument start- and end-dates provided.")
 
 	// ForwardRate      = [ DF(Start) / DF(End) - 1 ] / tau
 	// tau              = yearFraction(Start, End)
@@ -4868,13 +4868,13 @@ double CurveCalibration::getAverageRateFromHistRates(const LADate& startdate,
 	dh = &(marketData->getData(IR_CALIBRATION_DATA_HISTORICALRATES, ISNOTNULL));
 	DoubleVector histrates = dynamic_cast<const LADataDoubles &>(dh->get()).get();
 
-	MLIB_THROW_IF(histdates.size() != histrates.size(), "Invalid ON fixing rates specified. The number of dates and fixings don't match")
+	AQ_THROW_IF(histdates.size() != histrates.size(), "Invalid ON fixing rates specified. The number of dates and fixings don't match")
 
 	//sort histrical datas
 	std::map<LADate, double> map_date_rate;
 	for (size_t i = 0; i < histdates.size(); ++i)
 	{
-		MLIB_THROW_IF(map_date_rate.find(histdates[i]) != map_date_rate.end(), "Duplicate dates specified in the historical ON fixing rates table")
+		AQ_THROW_IF(map_date_rate.find(histdates[i]) != map_date_rate.end(), "Duplicate dates specified in the historical ON fixing rates table")
 		map_date_rate[histdates[i]] = histrates[i];
 	}
 	sort(histdates.begin(), histdates.end());
@@ -4921,7 +4921,7 @@ double CurveCalibration::getAverageRateFromHistRates(const LADate& startdate,
 
 	int averagenum = startdate.intervalDays(enddate) + 1;
 
-	MLIB_THROW_IF(enddate <= asOfDate, "Unable to calculate the average effective rate using the fixings specified. EndDate < AsOfDate")
+	AQ_THROW_IF(enddate <= asOfDate, "Unable to calculate the average effective rate using the fixings specified. EndDate < AsOfDate")
 
 	double implyrate = (static_cast<double>(averagenum) * market_rate - val) / static_cast<double>(averagenum - realizednumber);
 	return implyrate;
@@ -4933,7 +4933,7 @@ void CurveCalibration::setCurveConvention( LAObjectHolder& objHolder, std::vecto
 	const LADataHolder *dh;
 
 	LAString suffix = "";
-	if (curveName != MLIB_STD)
+	if (curveName != AQ_STD)
 	{
 		suffix = "_" + curveName;
 	}
@@ -4951,17 +4951,17 @@ void CurveCalibration::setCurveConvention( LAObjectHolder& objHolder, std::vecto
 		LAString datatype_str = dynamic_cast<const LADataString&> ((mktData[i]->getData(IR_CALIBRATION_DATA_DATATYPE, ISNOTNULL)).get()).get();
 		datatype_str.toUpper();
 
-		if (datatype_str == MLIB_SWAP_DATA)
+		if (datatype_str == AQ_SWAP_DATA)
 		{
 			mktData_swap.push_back(mktData[i]);//swap case
 		}
-		else if (datatype_str == MLIB_LIBOR_DATA)
+		else if (datatype_str == AQ_LIBOR_DATA)
 		{
 			mktData_libor.push_back(mktData[i]);//libor case
 		}
 	}
 
-	MLIB_THROW_IF(mktData_swap.size() == 0, "Calibration instrument error. Swap instruments must be provided")
+	AQ_THROW_IF(mktData_swap.size() == 0, "Calibration instrument error. Swap instruments must be provided")
 
 	LAString freq = "";
 	dh = &mktData_swap[0]->getData(IR_CALIBRATION_DATA_BASEFREQUENCY_FLOAT, NOCHECK);
@@ -5006,13 +5006,13 @@ void CurveCalibration::setCurveConvention( LAObjectHolder& objHolder, std::vecto
 	}
 
 	LAString accessary = "";
-	if (freq == MLIB_ANNUAL) accessary = "12M";
-	else if (freq == MLIB_SEMI_ANNUAL) accessary = "6M";
-	else if (freq == MLIB_QUARTERLY) accessary = "3M";
-	else if (freq == MLIB_MONTHLY || freq == MLIB_LUNAR) accessary = "1M";
+	if (freq == AQ_ANNUAL) accessary = "12M";
+	else if (freq == AQ_SEMI_ANNUAL) accessary = "6M";
+	else if (freq == AQ_QUARTERLY) accessary = "3M";
+	else if (freq == AQ_MONTHLY || freq == AQ_LUNAR) accessary = "1M";
 	else
 	{ 
-		MLIB_THROW("Invalid curve frequency specified: Must be 1M, 3M, 6M or 12M")
+		AQ_THROW("Invalid curve frequency specified: Must be 1M, 3M, 6M or 12M")
 	}
 
 	objHolder.remove(IR_CALIBRATION_DATA_FREQUENCY + suffix);
@@ -5021,7 +5021,7 @@ void CurveCalibration::setCurveConvention( LAObjectHolder& objHolder, std::vecto
 	objHolder.remove(IR_CALIBRATION_DATA_DAYCOUNT + suffix);
 	objHolder.remove(IR_CALIBRATION_DATA_ACCESSARY + suffix);
 
-	objHolder.add(IR_CALIBRATION_DATA_FREQUENCY + suffix, new LADataString(MLIB_SIMPLE));
+	objHolder.add(IR_CALIBRATION_DATA_FREQUENCY + suffix, new LADataString(AQ_SIMPLE));
 	if (cal) objHolder.add(CALIBRATION_DATA_CALENDAR + suffix, new LAPriceDataCalendar(*cal));
 	if (sld) objHolder.add(CALIBRATION_DATA_SLIDINGRULE + suffix, new LAPriceDataSlidingRule(*sld));
 	objHolder.add(IR_CALIBRATION_DATA_DAYCOUNT + suffix, new LAPriceDataDayCount(*dc));
@@ -5149,8 +5149,8 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 	if (pDFCurveName && *pDFCurveName != ITSELF)
 	{
 		is_selfdf = false;
-		if (*pDFCurveName != MLIB_STD) suffix = LAString("_") + *pDFCurveName;
-		MLIB_THROW_IF(!objHolder.getData(CALIBRATION_DATA_TERMS + suffix).isDefined(),"Invalid Curve: Curve with name '" + *pDFCurveName + "' does not exist")
+		if (*pDFCurveName != AQ_STD) suffix = LAString("_") + *pDFCurveName;
+		AQ_THROW_IF(!objHolder.getData(CALIBRATION_DATA_TERMS + suffix).isDefined(),"Invalid Curve: Curve with name '" + *pDFCurveName + "' does not exist")
 
 		const DoubleVector &terms_ = dynamic_cast<const LADataDoubles&> ((objHolder.getData(CALIBRATION_DATA_TERMS + suffix, ISNOTNULL)).get()).get();
 		const DoubleVector &dfs_ = dynamic_cast<const LADataDoubles&> ((objHolder.getData(IR_CALIBRATION_DATA_DFS + suffix, ISNOTNULL)).get()).get();
@@ -5275,22 +5275,22 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 			}
 			else
 			{
-				MLIB_THROW("Invalid LongTermConvention - Must be set to 'LOBASIS' to calibrate to Libor-OIS Instruments or 'NONE' for OIS Outrights only")
+				AQ_THROW("Invalid LongTermConvention - Must be set to 'LOBASIS' to calibrate to Libor-OIS Instruments or 'NONE' for OIS Outrights only")
 			}
 
 			LAString roll_conv("");
 			freq.toUpper();
-			if (freq == MLIB_LUNAR)
+			if (freq == AQ_LUNAR)
 			{
-				roll_conv = MLIB_ROLLCONV_LUNAR;
+				roll_conv = AQ_ROLLCONV_LUNAR;
 			}
 			else if (isEOMRoll)
 			{
-				roll_conv = MLIB_ROLLCONV_EOM;
+				roll_conv = AQ_ROLLCONV_EOM;
 			}
 			else
 			{
-				roll_conv = MLIB_ROLLCONV_NORMAL;
+				roll_conv = AQ_ROLLCONV_NORMAL;
 			}
 
 			LADate swapEndDate = LADateHelpers::getDate(spotdate, term_str, *sld, cal, true, &roll_conv);
@@ -5312,7 +5312,7 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 			updateAccrualPeriodsAndPaymentDates(spotdate, date_unadjusted, freq, *cal, *sld, *dc, cashflowPaymentDates, terms_grid, accrualPeriod, isEOMRoll);
 
 			unsigned int size_cashlet = cashflowPaymentDates.size();
-			MLIB_THROW_IF(!size_cashlet, "Invalid calibration instruments specified with no cashflows")
+			AQ_THROW_IF(!size_cashlet, "Invalid calibration instruments specified with no cashflows")
 
 			//---------------------------------------------------------
 			// Arrange to re-use calculation resultsObj from earlier swaps
@@ -5381,9 +5381,9 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 				oldFreq_s = swapFrequencyFixed;
 
 				LAString swapRollConvention("");
-				if (freq == MLIB_LUNAR) swapRollConvention = MLIB_ROLLCONV_LUNAR;
-				else if (isEOMRoll) swapRollConvention = MLIB_ROLLCONV_EOM;
-				else swapRollConvention = MLIB_ROLLCONV_NORMAL;
+				if (freq == AQ_LUNAR) swapRollConvention = AQ_ROLLCONV_LUNAR;
+				else if (isEOMRoll) swapRollConvention = AQ_ROLLCONV_EOM;
+				else swapRollConvention = AQ_ROLLCONV_NORMAL;
 
 				// scheduling libor swap
 				const LADate date_s_unadjusted = LADateHelpers::getDate(spotdate, term_str, LAPriceDataSlidingRule(SLIDING_RULE_NO_CHANGE), NULL, true, nullptr);
@@ -5392,7 +5392,7 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 				dates_s.clear();
 				updateAccrualPeriodsAndPaymentDates(spotdate, date_s_unadjusted, swapFrequencyFixed, swapCalendar, swapBusDayAdj, swapDaycountFixed, dates_s, terms_grid_s, terms_interval_s, isEOMRoll);
 				size_cashlet_s = dates_s.size();
-				MLIB_THROW_IF(!size_cashlet_s, "Invalid swap calibration instrument specified with no cashflows.")
+				AQ_THROW_IF(!size_cashlet_s, "Invalid swap calibration instrument specified with no cashflows.")
 				size_calc_s = size_cashlet_s - calced_swap_size;
 
 				// Compute fixing schedule dates
@@ -5404,34 +5404,34 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 				}
 
 				LAString indexTenor;
-				if (freq == MLIB_SEMI_ANNUAL)
+				if (freq == AQ_SEMI_ANNUAL)
 				{
-					indexTenor = MLIB_TERM_6M;
+					indexTenor = AQ_TERM_6M;
 				}
-				else if (freq == MLIB_QUARTERLY)
+				else if (freq == AQ_QUARTERLY)
 				{
-					indexTenor = MLIB_TERM_3M;
+					indexTenor = AQ_TERM_3M;
 				}
-				else if (freq == MLIB_MONTHLY)
+				else if (freq == AQ_MONTHLY)
 				{
-					indexTenor = MLIB_TERM_1M;
+					indexTenor = AQ_TERM_1M;
 				}
-				else if (freq == MLIB_ANNUAL)
+				else if (freq == AQ_ANNUAL)
 				{
 					indexTenor = "1Y";
 				}
-				else if (freq == MLIB_BUSINESS_DAYS)
+				else if (freq == AQ_BUSINESS_DAYS)
 				{
 					indexTenor = "1D";
 				}
 				else
 				{
-					MLIB_THROW("Invalid Swap Floating Frequency: Only 1D, 1M, 3M, 6M and 12M frequencies are supported")
+					AQ_THROW("Invalid Swap Floating Frequency: Only 1D, 1M, 3M, 6M and 12M frequencies are supported")
 				}
 
 				// fixing end dates are always a fixed term after the corresponding fixing start dates
 				DateVector thisFixingEndDates;
-				if (freq == MLIB_ANNUAL && (term_str == "18M" || term_str == "1Y6M") && cashflowPaymentDates.size() == 2)
+				if (freq == AQ_ANNUAL && (term_str == "18M" || term_str == "1Y6M") && cashflowPaymentDates.size() == 2)
 				{
 					// Special case. Swap with 6M front stub.
 					thisFixingEndDates.push_back(cashflowPaymentDates[0]);
@@ -5483,7 +5483,7 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 			}
 			else
 			{
-				MLIB_THROW("Invalid LongTermConvention - Must be set to 'LOBASIS' to calibrate to Libor-OIS Instruments or 'NONE' for OIS Outrights only")
+				AQ_THROW("Invalid LongTermConvention - Must be set to 'LOBASIS' to calibrate to Libor-OIS Instruments or 'NONE' for OIS Outrights only")
 			}
 
 			lastSwapEndDate = cashflowPaymentDates[size_cashlet - 1];
@@ -5665,6 +5665,6 @@ void CurveCalibration::calcOISDFBySwapRates(DoubleArray& yields,
 		}
 
 		delete interpolationForDiscountFactors_;
-		MLIB_REQUIRE(solutionFound, "OIS curve optimisation failed to converge to a solution")
+		AQ_REQUIRE(solutionFound, "OIS curve optimisation failed to converge to a solution")
 	}
 }

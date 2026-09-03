@@ -96,7 +96,7 @@ LARiskConfigurationVolParallel::createVolatilityEntity(const LAString &ccy, LADa
 	param.targetCurveType.toLower();
 	if (param.isCalib)
 	{
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			param.isOutPut = true;
 		}
@@ -109,7 +109,7 @@ LARiskConfigurationVolParallel::createVolatilityEntity(const LAString &ccy, LADa
 		param.bumpType = RISK_MARKET_BUMP;
 		param.paraShiftVec.push_back(getParallelShiftVal(ccy));
 		LAString paraShiftTerm = getParallelShiftTerm(ccy);
-		if (paraShiftTerm != MLIB_NO_DATA)
+		if (paraShiftTerm != AQ_NO_DATA)
 		{ 
 			param.paraTerm.push_back(paraShiftTerm);
 		}
@@ -184,7 +184,7 @@ LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, L
 //LAString
 //LARiskConfigurationVolParallel::getOperator2(void) const
 //{
-//	return MLIB_NO_DATA;
+//	return AQ_NO_DATA;
 //}
 //
 //
@@ -198,7 +198,7 @@ LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, L
 //LARiskConfigurationVolParallel::getCoefficient2(const LAString &ccy) const
 //{
 //	ccy;
-//	return MLIB_NO_DATA;
+//	return AQ_NO_DATA;
 //}
 //
 ///*!
@@ -211,7 +211,7 @@ LARiskConfigurationVolParallel::createVolatilityEntityOld(const LAString &ccy, L
 //LARiskConfigurationVolParallel::getOutPutName2(const LAString &ccy) const
 //{
 //	ccy;
-//	return MLIB_NO_DATA;
+//	return AQ_NO_DATA;
 //}
 
 /*!

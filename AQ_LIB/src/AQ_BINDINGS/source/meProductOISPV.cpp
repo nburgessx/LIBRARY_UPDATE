@@ -3,7 +3,7 @@
 
 #include "meProductOISPV.h"
 #include "tryMeProductOISPV.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meProductOISPV
@@ -14,7 +14,7 @@
 double meProductOISPV(const std::vector<std::vector <std::string> >& oisSwapLVB, 
 						bool validateKeys)
 {
-    MLIB_API_START
+    AQ_API_START
 	double ret;
 	
 	// marshall all inputs		
@@ -22,7 +22,7 @@ double meProductOISPV(const std::vector<std::vector <std::string> >& oisSwapLVB,
 		
 	ret = validation_api::tryMeProductOISPV(lvb, validateKeys);
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			return a set of expected keys for swap pv label value block
@@ -30,9 +30,9 @@ double meProductOISPV(const std::vector<std::vector <std::string> >& oisSwapLVB,
 */
 std::vector<std::string> meProductOISPVLVBKeys()
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<std::string> ret;
 	ret = validation_api::tryMeProductOISPVLVBKeys();
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }

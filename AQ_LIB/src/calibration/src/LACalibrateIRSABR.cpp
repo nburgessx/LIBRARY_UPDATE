@@ -410,7 +410,7 @@ LACalibrateIRSABR::setUp(LAObjectPool &objPool, const MAScenarioParam &param, MA
 		//set calibration target flag
 		LAString calibTarget_str = LACoreDataService::getContext(ccy + "." CONTEXT_KEY_DEAL_IRVOL + "." + underlying);
 		mcalibflgmat[underlying].clear();
-		if (calibTarget_str != MLIB_NO_DATA)
+		if (calibTarget_str != AQ_NO_DATA)
 		{
 			LADataBoolMatrix tmp;
 			tmp.convertFromString(calibTarget_str);
@@ -799,7 +799,7 @@ LACalibrateIRSABR::doCalibrate()
 			}
 		}
 
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			LAStringVector sabrParamsID(4);
 			sabrParamsID[0] = malphaid[mUnderlyings[i_under]]; 

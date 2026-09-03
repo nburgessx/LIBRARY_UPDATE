@@ -13,7 +13,7 @@
 #include "LACoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "tryMeLWOBond.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meLWOBondPrice function
@@ -28,7 +28,7 @@ const std::vector<double> meLWOBondPrice( const std::string& bondObjectName,
                                           const std::vector<double>& yields,
                                           const std::string& yieldCalculationType )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Inputs
 	DateVector settlementDatesAsDateVector;
@@ -38,7 +38,7 @@ const std::vector<double> meLWOBondPrice( const std::string& bondObjectName,
     const std::vector<double> results = validation_api::tryMeLWOBondPrice( bondObjectName, settlementDatesAsDateVector, yields, yieldCalculationType );
     return results;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meLWOBondCleanPrice function
@@ -53,7 +53,7 @@ const std::vector<double> meLWOBondCleanPrice( const std::string& bondObjectName
                                                const std::vector<double>& yields,
                                                const std::string& yieldCalculationType )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Inputs
 	DateVector settlementDatesAsDateVector;
@@ -63,7 +63,7 @@ const std::vector<double> meLWOBondCleanPrice( const std::string& bondObjectName
     const std::vector<double> results = validation_api::tryMeLWOBondCleanPrice( bondObjectName, settlementDatesAsDateVector, yields, yieldCalculationType );
     return results;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meLWOBondDirtyPrice function
@@ -78,7 +78,7 @@ const std::vector<double> meLWOBondDirtyPrice( const std::string& bondObjectName
                                                const std::vector<double>& yields,
                                                const std::string& yieldCalculationType )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Inputs
 	DateVector settlementDatesAsDateVector;
@@ -88,7 +88,7 @@ const std::vector<double> meLWOBondDirtyPrice( const std::string& bondObjectName
     const std::vector<double> results = validation_api::tryMeLWOBondDirtyPrice( bondObjectName, settlementDatesAsDateVector, yields, yieldCalculationType );
     return results;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -106,7 +106,7 @@ const std::vector<double> meLWOBondYield( const std::string& bondObjectName,
                                           const std::string& yieldCalculationType,
                                           const bool& optimizePerformance )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Inputs
 	DateVector settlementDatesAsDateVector;
@@ -116,7 +116,7 @@ const std::vector<double> meLWOBondYield( const std::string& bondObjectName,
     const std::vector<double> results = validation_api::tryMeLWOBondYield( bondObjectName, settlementDatesAsDateVector, quotedPrices, yieldCalculationType, optimizePerformance );
     return results;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -136,7 +136,7 @@ double meLWOBondForwardPrice( const std::string& bondObjectName,
                               const double& repoRate,
                               const std::string& repoDayCount )
 {
-	MLIB_API_START
+	AQ_API_START
         
     // Marshall Inputs
     LADate settleDate_          = swig::fromStringToLADate( settleDate );
@@ -146,6 +146,6 @@ double meLWOBondForwardPrice( const std::string& bondObjectName,
     const double result = validation_api::tryMeLWOBondForwardPrice( bondObjectName, settleDate_, forwardSettleDate_, price, repoRate, repoDayCount );
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 

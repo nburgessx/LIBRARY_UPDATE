@@ -13,7 +13,7 @@ namespace etrading
 		// Validate Object Type
         const std::string inputLVB = "CapFloorTradeLVB";
         CachedObjectEnum objectType = toCachedObjectEnum( dealLVB.getCompulsoryValueAsString( OBJECT_KEY::OBJECT_TYPE, inputLVB ) );
-        MLIB_REQUIRE( objectType == OPTION, "Invalid Object Type - 'OPTION' type required" )
+        AQ_REQUIRE( objectType == OPTION, "Invalid Object Type - 'OPTION' type required" )
 
 		inputParameters_ = dealLVB;
 

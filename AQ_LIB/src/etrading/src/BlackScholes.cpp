@@ -23,15 +23,15 @@ namespace etrading
                                 const double & shift ) // Shift Parameter: This is to support Shifted-Lognormal / Displaced Diffusion processes
         : callOrPut_( callOrPut ), spot_( spot + shift ), strike_( strike + shift ), vol_( vol ), time_( time ), rate_( rate ), carry_( carry ), shift_( shift )
     {
-        MLIB_REQUIRE( ( callOrPut == CALL_OPTION || callOrPut == PUT_OPTION ), 
+        AQ_REQUIRE( ( callOrPut == CALL_OPTION || callOrPut == PUT_OPTION ), 
                     "Black-Scholes CallOrPut parameter must be 'Call' or 'Put'" );
 
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( spot_  ),    "Black-Scholes spot parameter cannot be negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( strike_  ),  "Black-Scholes strike parameter cannot be negative" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( time_ ),    "Black-Scholes time to expiry parameter cannot be negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( spot_  ),    "Black-Scholes spot parameter cannot be negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( strike_  ),  "Black-Scholes strike parameter cannot be negative" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( time_ ),    "Black-Scholes time to expiry parameter cannot be negative" );
         
         // We allow negative volatility to test for Put-Call Super-Symmetry
-        //MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( vol_ ),     "Black-Scholes volatility parameter cannot be negative" );
+        //AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( vol_ ),     "Black-Scholes volatility parameter cannot be negative" );
 	}
 
     // Copy Constructor
@@ -138,10 +138,10 @@ namespace etrading
 		// -----------------------------------
 
 		// Manage the Black-Scholes zero value Boundaries by adding a small precision epsilon value to the underlying parameter
-        if ( MLIB_IS_EQUAL_ZERO( spot ) )       spot    += MLIB_EPSILON;
-        if ( MLIB_IS_EQUAL_ZERO( strike ) )     strike  += MLIB_EPSILON;
-        if ( MLIB_IS_EQUAL_ZERO( vol ) )        vol     += MLIB_EPSILON;
-        if ( MLIB_IS_EQUAL_ZERO( time ) )       time    += MLIB_EPSILON;
+        if ( AQ_IS_EQUAL_ZERO( spot ) )       spot    += AQ_EPSILON;
+        if ( AQ_IS_EQUAL_ZERO( strike ) )     strike  += AQ_EPSILON;
+        if ( AQ_IS_EQUAL_ZERO( vol ) )        vol     += AQ_EPSILON;
+        if ( AQ_IS_EQUAL_ZERO( time ) )       time    += AQ_EPSILON;
 
 		// Black-Scholes Calculation Parameters
         // ------------------------------------
@@ -272,7 +272,7 @@ namespace etrading
         try
         {
             // We allow negative prices to test for Put-Call Super-Symmetry
-            //MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( price ), "Black-Scholes price parameter cannot be negative" );
+            //AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( price ), "Black-Scholes price parameter cannot be negative" );
 
             // Solver Settings
             const double targetPrice                = price;
@@ -319,7 +319,7 @@ namespace etrading
         }
         catch(...)
         {
-            MLIB_THROW( "Unable to solve for the Implied Volatility" )
+            AQ_THROW( "Unable to solve for the Implied Volatility" )
         }
     }
 
@@ -330,7 +330,7 @@ namespace etrading
 
         try
         {
-            if ( !MLIB_IS_EQUAL_ZERO(strike+shift) )
+            if ( !AQ_IS_EQUAL_ZERO(strike+shift) )
             {
                 // Manaster and Koehler Seed Value
                 result = std::sqrt( std::fabs( std::log( (spot + shift) / (strike + shift) ) + rate * time ) * 2.0 / time );
@@ -338,7 +338,7 @@ namespace etrading
             else
             {
                 // Divide by Zero Case
-                result = std::sqrt( std::fabs( std::log( (spot + shift) / MLIB_EPSILON ) + rate * time ) * 2.0 / time );
+                result = std::sqrt( std::fabs( std::log( (spot + shift) / AQ_EPSILON ) + rate * time ) * 2.0 / time );
             }
         }
         catch ( ... )

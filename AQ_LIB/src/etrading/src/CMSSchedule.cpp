@@ -3,7 +3,7 @@
 #include "SwapValidation.h"
 #include "LWOUtilities.h"
 #include "LADateScheduleHelpers.h"
-#include "DataUtilities.h"          // For MLIB_TO_STRING Macros
+#include "DataUtilities.h"          // For AQ_TO_STRING Macros
 
 namespace etrading
 {
@@ -107,9 +107,9 @@ namespace etrading
         addKeys[1] = IRS_KEY::MATURITY_DATE;
 
         StandardStringVector addValues(2);
-        addValues[0] = MLIB_TO_STRING_FROM_INT( LADateScheduleHelpers::getExcelDate( underlyingEffectiveDate ) );
+        addValues[0] = AQ_TO_STRING_FROM_INT( LADateScheduleHelpers::getExcelDate( underlyingEffectiveDate ) );
         const LADate irsMaturityDate = validateMaturityDate( underlyingEffectiveDate, underlyingMaturity );
-        addValues[1] = MLIB_TO_STRING_FROM_INT(LADateScheduleHelpers::getExcelDate( irsMaturityDate ) );
+        addValues[1] = AQ_TO_STRING_FROM_INT(LADateScheduleHelpers::getExcelDate( irsMaturityDate ) );
 
         LabelValueBlock swapExpressionLVB( setupSwapExpressionLVBForCMS(), addKeys, addValues );
 
@@ -141,7 +141,7 @@ namespace etrading
 		{
 			CashflowPtr curCashflow = cashflows_[i];
 			std::shared_ptr<CMSCashflow> cmsCashflow = std::dynamic_pointer_cast<CMSCashflow>( curCashflow );
-			MLIB_REQUIRE( cmsCashflow != nullptr,  "Found a non CMS cashflow in the CMS Schedule! ");
+			AQ_REQUIRE( cmsCashflow != nullptr,  "Found a non CMS cashflow in the CMS Schedule! ");
 
 			const LADate& irsEffectiveDate = cmsCashflow->getAccrualStartDate();	
 

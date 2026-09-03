@@ -84,7 +84,7 @@ namespace etrading
             notionalResetLegName_ = "";
         }
 
-        MLIB_REQUIRE( valuationCurrency_ != NO_CCY, "Missing Valuation Currency - For Xccy Swap valuation currency is required" )
+        AQ_REQUIRE( valuationCurrency_ != NO_CCY, "Missing Valuation Currency - For Xccy Swap valuation currency is required" )
 
         if ( (valuationCurrency_ != leg1->getStaticData()->getCurrency()) 
                     && (valuationCurrency_ != leg2->getStaticData()->getCurrency()))

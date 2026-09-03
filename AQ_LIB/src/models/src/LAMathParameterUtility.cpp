@@ -56,11 +56,11 @@ void LAMathParameterObject::SetParameterMatrix(LADataInstance* dataInstance, con
         e->add(CALIBRATION_DATA_ASOFDATE, new LADataDate(asOfDate));
         e->add(CALIBRATION_DATA_CALENDAR, new LAPriceDataCalendar(cal));
         e->add(CALIBRATION_DATA_SLIDINGRULE, new LAPriceDataSlidingRule(sr));
-        e->add(MLIB_DATAMATRIX, new LADataDoubleMatrix(mat_per));
-        e->add(MLIB_EXPIRYTERMS, new LADataStrings(expiryTerms));
-        e->add(MLIB_EXPIRYDATES, new LADataDates(expiryDates));
-        e->add(MLIB_EXPIRYVECTOR, new LADataDoubles(expiryVec));
-        e->add(MLIB_INDEXVECTOR, new LADataStrings(indexVec));
+        e->add(AQ_DATAMATRIX, new LADataDoubleMatrix(mat_per));
+        e->add(AQ_EXPIRYTERMS, new LADataStrings(expiryTerms));
+        e->add(AQ_EXPIRYDATES, new LADataDates(expiryDates));
+        e->add(AQ_EXPIRYVECTOR, new LADataDoubles(expiryVec));
+        e->add(AQ_INDEXVECTOR, new LADataStrings(indexVec));
         objPool.set(matID , e);
     }
     else if(objHolder.isDefined())
@@ -79,23 +79,23 @@ void LAMathParameterObject::SetParameterMatrix(LADataInstance* dataInstance, con
         LAPriceDataSlidingRule& sr_att = dynamic_cast<LAPriceDataSlidingRule &>(dh->get());
         sr_att = sr;
 
-        dh = &objHolder.getData(MLIB_DATAMATRIX, ISDEFINED);
+        dh = &objHolder.getData(AQ_DATAMATRIX, ISDEFINED);
         LADataDoubleMatrix& mat_att = dynamic_cast<LADataDoubleMatrix &>(dh->get());
         mat_att.set(mat_per);
 
-        dh = &objHolder.getData(MLIB_EXPIRYTERMS, ISDEFINED);
+        dh = &objHolder.getData(AQ_EXPIRYTERMS, ISDEFINED);
         LADataStrings& expiryTerms_att = dynamic_cast<LADataStrings &>(dh->get());
         expiryTerms_att.set(expiryTerms);
 
-        dh = &objHolder.getData(MLIB_EXPIRYDATES, ISDEFINED);
+        dh = &objHolder.getData(AQ_EXPIRYDATES, ISDEFINED);
         LADataDates& expiryDates_att = dynamic_cast<LADataDates &>(dh->get());
         expiryDates_att.set(expiryDates);
 
-        dh = &objHolder.getData(MLIB_EXPIRYVECTOR, ISDEFINED);
+        dh = &objHolder.getData(AQ_EXPIRYVECTOR, ISDEFINED);
         LADataDoubles& expiryVec_att = dynamic_cast<LADataDoubles &>(dh->get());
         expiryVec_att.set(expiryVec);
 
-        dh = &objHolder.getData(MLIB_INDEXVECTOR, ISDEFINED);
+        dh = &objHolder.getData(AQ_INDEXVECTOR, ISDEFINED);
         LADataStrings& tenorVec_att = dynamic_cast<LADataStrings &>(dh->get());
         tenorVec_att.set(indexVec);
     }
@@ -105,11 +105,11 @@ LAStringMatrix LAMathParameterObject::ParameterMatrix(LADataInstance* dataInstan
 {
     LAObjectPool& objPool = dataInstance->getObjectPool();
     const DoubleMatrix& dataMatrix = dynamic_cast<LADataDoubleMatrix& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_DATAMATRIX, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_DATAMATRIX, ISDEFINED).get()).get();
     const LAStringVector& expiryVec = dynamic_cast<const LADataStrings& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_EXPIRYTERMS, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_EXPIRYTERMS, ISDEFINED).get()).get();
     const LAStringVector& indexVec = dynamic_cast<const LADataStrings& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_INDEXVECTOR, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_INDEXVECTOR, ISDEFINED).get()).get();
 
     // Reconstruct matrix
     size_t nExpiries = expiryVec.size();
@@ -142,11 +142,11 @@ double LAMathParameterObject::LookUpParameterMatrix(LADataInstance* dataInstance
 {
     LAObjectPool& objPool = dataInstance->getObjectPool();
     const DoubleMatrix& dataMatrix = dynamic_cast<LADataDoubleMatrix& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_DATAMATRIX, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_DATAMATRIX, ISDEFINED).get()).get();
     const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_EXPIRYVECTOR, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_EXPIRYVECTOR, ISDEFINED).get()).get();
     const LAStringVector& indexVec = dynamic_cast<const LADataStrings& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_INDEXVECTOR, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_INDEXVECTOR, ISDEFINED).get()).get();
     const LAPriceDataSlidingRule& paySlr = dynamic_cast<const LAPriceDataSlidingRule& >(objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).
         get().getData(CALIBRATION_DATA_SLIDINGRULE, ISDEFINED).get());
     const LAPriceDataCalendar& fixCal = dynamic_cast<const LAPriceDataCalendar& >(objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().
@@ -163,11 +163,11 @@ double LAMathParameterObject::LookUpParameterMatrix(LADataInstance* dataInstance
 {
     LAObjectPool& objPool = dataInstance->getObjectPool();
     const DoubleMatrix& dataMatrix = dynamic_cast<LADataDoubleMatrix& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_DATAMATRIX, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_DATAMATRIX, ISDEFINED).get()).get();
     const DoubleVector& expiryVec = dynamic_cast<const LADataDoubles& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_EXPIRYVECTOR, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_EXPIRYVECTOR, ISDEFINED).get()).get();
     const LAStringVector& indexVec = dynamic_cast<const LADataStrings& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_INDEXVECTOR, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_INDEXVECTOR, ISDEFINED).get()).get();
     const LADate& asOfDate = dynamic_cast<const LADataDate& >(dataInstance->getObjectPool().getObject(matID, ENCHKTYPE_ISDEFINED).
         get().getData(CALIBRATION_DATA_ASOFDATE, ISNOTNULL).get()).get();
 
@@ -178,7 +178,7 @@ LAStringVector LAMathParameterObject::ParameterMatrixTerms(LADataInstance* dataI
 {
     LAObjectPool& objPool = dataInstance->getObjectPool();
     const LAStringVector& terms = dynamic_cast<const LADataStrings& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_EXPIRYTERMS, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_EXPIRYTERMS, ISDEFINED).get()).get();
     return terms;
 }
 
@@ -186,7 +186,7 @@ LAStringVector LAMathParameterObject::ParameterMatrixIndexes(LADataInstance* dat
 {
     LAObjectPool& objPool = dataInstance->getObjectPool();
     const LAStringVector& indexes = dynamic_cast<const LADataStrings& >
-        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(MLIB_INDEXVECTOR, ISDEFINED).get()).get();
+        (objPool.getObject(matID, ENCHKTYPE_ISDEFINED ).get().getData(AQ_INDEXVECTOR, ISDEFINED).get()).get();
     return indexes;
 }
 

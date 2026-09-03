@@ -32,7 +32,7 @@ namespace etrading
         
         if( curveCollection != "" && curveObjectName != "" )
         {
-            MLIB_THROW( "Invalid Valuation Settings: Must not provide both a CurveCollection and a CurveObject in the Valuation Settings Label Value Block" )
+            AQ_THROW( "Invalid Valuation Settings: Must not provide both a CurveCollection and a CurveObject in the Valuation Settings Label Value Block" )
         }
 
         if( curveCollection == "" && curveObjectName == "" )
@@ -40,11 +40,11 @@ namespace etrading
 			// Throw the most appropriate error message
 			if (legName == "")
 			{
-				MLIB_THROW("Invalid Valuation Settings: Curve Collection not specified")
+				AQ_THROW("Invalid Valuation Settings: Curve Collection not specified")
 			}
 			else
 			{
-				MLIB_THROW("Invalid Valuation Settings: Curve Collection for leg '" + legName + "' not specified")
+				AQ_THROW("Invalid Valuation Settings: Curve Collection for leg '" + legName + "' not specified")
 			}
         }
 
@@ -71,7 +71,7 @@ namespace etrading
                 
         // Check Curve AsOf Date Matches the ValuationDate Specified in the Valuation Settings
         const LADate valuationDate = getValuationDateFromValuationSettings( valuationSettingsLVB );
-        MLIB_REQUIRE( curveAsOfDate <= valuationDate, "Invalid Curve Build Date: Curve build date cannot be greater than the valuation date in validation settings" );
+        AQ_REQUIRE( curveAsOfDate <= valuationDate, "Invalid Curve Build Date: Curve build date cannot be greater than the valuation date in validation settings" );
         
         // Return Result if the Curve AsOf Date is Consistent with the ValuationSettings ValuationDate
         return curveCollection;
@@ -94,7 +94,7 @@ namespace etrading
     */
     LAString getCurveCollectionFromValuationSettings( const LabelValueBlock& valuationSettingsLVB, const LAString legName, const bool throwIfMissing )
     {
-        MLIB_REQUIRE( valuationSettingsLVB.size() > 0, "Invalid 'ValuationSettings' - The ValuationSettings Label Value Block is empty" )
+        AQ_REQUIRE( valuationSettingsLVB.size() > 0, "Invalid 'ValuationSettings' - The ValuationSettings Label Value Block is empty" )
 
 		// For Backwards Compatibility 
         // =============================================================================================
@@ -131,7 +131,7 @@ namespace etrading
         // Option 3: Curve Collection Specified by Leg Name
         if ( throwIfMissing )
         {
-            MLIB_REQUIRE( throwIfMissing && legName.size() != 0, "Invalid 'ValuationSettings' Specified - We must specify the trade LegName and corresponding CurveCollection" )
+            AQ_REQUIRE( throwIfMissing && legName.size() != 0, "Invalid 'ValuationSettings' Specified - We must specify the trade LegName and corresponding CurveCollection" )
         }
 
         LAString uppperLegName = legName;
@@ -141,7 +141,7 @@ namespace etrading
 
         if ( throwIfMissing )
         {
-            MLIB_REQUIRE( throwIfMissing && !result.empty(), "Invalid LegName in 'ValuationSettings' - Missing LegName " + uppperLegName + " - We must specify the trade LegName(s) and corresponding CurveCollection" )
+            AQ_REQUIRE( throwIfMissing && !result.empty(), "Invalid LegName in 'ValuationSettings' - Missing LegName " + uppperLegName + " - We must specify the trade LegName(s) and corresponding CurveCollection" )
         }
 		
         return result.c_str();
@@ -161,7 +161,7 @@ namespace etrading
                 
         // Check Curve AsOf Date Matches the ValuationDate Specified in the Valuation Settings
         const LADate valuationDate = getValuationDateFromValuationSettings( valuationSettingsLVB );
-        MLIB_REQUIRE( curveAsOfDate <= valuationDate, "Invalid Curve Build Date: Curve build date cannot be greater than the valuation date in validation settings" );
+        AQ_REQUIRE( curveAsOfDate <= valuationDate, "Invalid Curve Build Date: Curve build date cannot be greater than the valuation date in validation settings" );
         
         // Return Result if the Curve AsOf Date is Consistent with the ValuationSettings ValuationDate
         return curveCollection;
@@ -241,7 +241,7 @@ namespace etrading
             return fxSpot;
         }
 
-        MLIB_TRY_SET_VARIABLE( fxSpot, std::stod(fxSpotAsString), "Invalid FX Spot Rate in Valuation Settings" )
+        AQ_TRY_SET_VARIABLE( fxSpot, std::stod(fxSpotAsString), "Invalid FX Spot Rate in Valuation Settings" )
         return fxSpot;        
     }
 
@@ -262,7 +262,7 @@ namespace etrading
 			return fxAsOfDate;
 		}
 
-		MLIB_TRY_SET_VARIABLE(fxAsOfDate, std::stod(fxAsOfDateAsString), "Invalid FX AsOfDate Rate in Valuation Settings")
+		AQ_TRY_SET_VARIABLE(fxAsOfDate, std::stod(fxAsOfDateAsString), "Invalid FX AsOfDate Rate in Valuation Settings")
 		return fxAsOfDate;
 	}
 
@@ -301,7 +301,7 @@ namespace etrading
 				const std::string settlementDateStr = valuationSettingKeys[0];
 				if ( settlementDateStr.size() == 0 )
 				{
-					MLIB_THROW( "Missing SettlementDate.");
+					AQ_THROW( "Missing SettlementDate.");
 				}
 				const LADate settlementDate = stringToDate(settlementDateStr.c_str(), "Missing SettlementDate.");
 				return settlementDate;
@@ -332,7 +332,7 @@ namespace etrading
 			return floatBondCurrentCoupon;
 		}
 
-		MLIB_TRY_SET_VARIABLE(floatBondCurrentCoupon, std::stod(floatBondCurrentCouponStr), "Invalid FloatBondCurrentCoupon in Valuation Settings")
+		AQ_TRY_SET_VARIABLE(floatBondCurrentCoupon, std::stod(floatBondCurrentCouponStr), "Invalid FloatBondCurrentCoupon in Valuation Settings")
 
 		return floatBondCurrentCoupon;
 	}
@@ -353,7 +353,7 @@ namespace etrading
 			return floatBondAssumedRate;
 		}
 
-		MLIB_TRY_SET_VARIABLE(floatBondAssumedRate, std::stod(floatBondAssumedRateStr), "Invalid FloatBondAssumedRate in Valuation Settings")
+		AQ_TRY_SET_VARIABLE(floatBondAssumedRate, std::stod(floatBondAssumedRateStr), "Invalid FloatBondAssumedRate in Valuation Settings")
 
 		return floatBondAssumedRate;
 	}
@@ -374,7 +374,7 @@ namespace etrading
 			return floatBondIndexToNextCoupon;
 		}
 
-		MLIB_TRY_SET_VARIABLE(floatBondIndexToNextCoupon, std::stod(floatBondIndexToNextCouponStr), "Invalid FloatBondIndexToNextCoupon in Valuation Settings")
+		AQ_TRY_SET_VARIABLE(floatBondIndexToNextCoupon, std::stod(floatBondIndexToNextCouponStr), "Invalid FloatBondIndexToNextCoupon in Valuation Settings")
 
 		return floatBondIndexToNextCoupon;
 	}
@@ -395,7 +395,7 @@ namespace etrading
 			return floatBondQuotedMargin;
 		}
 
-		MLIB_TRY_SET_VARIABLE(floatBondQuotedMargin, std::stod(floatBondQuotedMarginStr), "Invalid FloatBondQuotedMargin in Valuation Settings")
+		AQ_TRY_SET_VARIABLE(floatBondQuotedMargin, std::stod(floatBondQuotedMarginStr), "Invalid FloatBondQuotedMargin in Valuation Settings")
 
 		return floatBondQuotedMargin;
 	}
@@ -409,8 +409,8 @@ namespace etrading
 	*/
 	LAString getKeyFromValuationSettings( const std::string& searchKey, const LabelValueBlock& valuationSettingsLVB, const LAString legName, const bool throwIfMissing )
     {
-        MLIB_REQUIRE( valuationSettingsLVB.size() != 0, "Invalid 'ValuationSettings' - The ValuationSettings Label Value Block is empty" )
-        MLIB_REQUIRE( !searchKey.empty(), "Invalid ValuationSettings - Unable to search the ValuationSettings LVB as the searchKey is missing" )
+        AQ_REQUIRE( valuationSettingsLVB.size() != 0, "Invalid 'ValuationSettings' - The ValuationSettings Label Value Block is empty" )
+        AQ_REQUIRE( !searchKey.empty(), "Invalid ValuationSettings - Unable to search the ValuationSettings LVB as the searchKey is missing" )
 
         // Curve Collection Searches are different since they need to preserve backwards compatibility, for now at least.
         if ( searchKey == VALUATION_SETTING_KEYS::CURVE_COLLECTION  )
@@ -463,7 +463,7 @@ namespace etrading
 		//More than one fixingTableNames
 		else
 		{
-			MLIB_REQUIRE(legName.size() != 0, "Invalid Fixing Table Specified - We must specify the trade LegName and corresponding FixingTable")
+			AQ_REQUIRE(legName.size() != 0, "Invalid Fixing Table Specified - We must specify the trade LegName and corresponding FixingTable")
 
 				auto lvbValues = fixingTableNames.getValues();
 			for (size_t i = 0; i < expectedSize; ++i)

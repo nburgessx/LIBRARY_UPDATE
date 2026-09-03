@@ -23,7 +23,7 @@ namespace validation_api
 
 		RECORD_INPUTS( curveCollection, curveIndex, interpolation )
 		
-		MLIB_REQUIRE( etrading::isHybridInterpolation( interpolation.c_str() ), "Invalid Interpolation Method: '" + interpolation + "' is not a hybrid/mixed interpolation method" )
+		AQ_REQUIRE( etrading::isHybridInterpolation( interpolation.c_str() ), "Invalid Interpolation Method: '" + interpolation + "' is not a hybrid/mixed interpolation method" )
 		
 		const LADate joinDate = etrading::getLinearSplineJoinDate(curveCollection, curveIndex);
 

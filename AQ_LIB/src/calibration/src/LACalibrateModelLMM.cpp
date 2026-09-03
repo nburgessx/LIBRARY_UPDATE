@@ -109,7 +109,7 @@ LACalibrateModelLMM::setUp(void)
 		freq = FREQ_QUARTERLY;
 	}
 	LAStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
-	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA);
+	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA);
 	LAMarketDataLMM::getCanonicalGrid(mTenor_30_360, mTenor, mDeltatenor, mExtraTenorFlag, asOfDate, dayCount, freq, term, exTenor, isDataOut);
 }
 
@@ -518,7 +518,7 @@ LACalibrateModelLMM::setUpCorFactor(const LAString &currency, LAMathCorrelation 
 	DoubleMatrix loading(canonicSize);
 
 	LAString isExTUseStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_ISEXTRATENORUSE);
-	if (isExTUseStr == MLIB_NO_DATA)
+	if (isExTUseStr == AQ_NO_DATA)
 	{
 		isExTUseStr = "FALSE";
 	}
@@ -528,7 +528,7 @@ LACalibrateModelLMM::setUpCorFactor(const LAString &currency, LAMathCorrelation 
 	if (!isExTUse.get())
 	{
 		LAString exTenorStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_EXTRATENOR);
-		if (exTenorStr != MLIB_NO_DATA)
+		if (exTenorStr != AQ_NO_DATA)
 		{
 			truncateSize = exTenorStr.toToken(MULTI_STATIC_DATA_DELIMITER).size();
 		}
@@ -633,7 +633,7 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 
 		// mExoCalibLMMSetOptCorr
 		LAString isExTUseStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_ISEXTRATENORUSE);
-		if (isExTUseStr == MLIB_NO_DATA)
+		if (isExTUseStr == AQ_NO_DATA)
 		{
 			isExTUseStr = "FALSE";
 		}
@@ -643,7 +643,7 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 		if (isExTUse.get())
 		{
 			LAString exTenorStr = mpStaticData->getStaticData(KEY_LMM_CANONICALGRID_EXTRATENOR);
-			if (exTenorStr != MLIB_NO_DATA)
+			if (exTenorStr != AQ_NO_DATA)
 			{
 				extraSize = exTenorStr.toToken(MULTI_STATIC_DATA_DELIMITER).size();
 			}
@@ -829,7 +829,7 @@ LACalibrateModelLMM::setUpCorFunc(const LAString &currency, LAMathCorrelation &c
 				}
 			}
 
-			if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+			if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 			{
 				const LAString fileSuffix = LACoreDataService::getContext(ARG_KEY_FILENUM);
 				const LAString dirName = LACoreDataService::getOutputDirectory(); 
@@ -1001,7 +1001,7 @@ LACalibrateModelLMM::setUpVolFunc(const LAString &currency, LAMathVolatility &vo
         // first element set calib info
 		param.refName.push_back(cInfoName);
 
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			param.isOutPut = true;
 		}
@@ -1016,7 +1016,7 @@ LACalibrateModelLMM::setUpVolFunc(const LAString &currency, LAMathVolatility &vo
 	else
 	{
 		LAString AdjParamInter = mpStaticData->getStaticData(key_ccy + STATIC_DATA_KEY_LMM_VOLATILITY_FUNC_ADJ_INTERPOLATION);
-		if (AdjParamInter == MLIB_NO_DATA)
+		if (AdjParamInter == AQ_NO_DATA)
 		{
 				AdjParamInter = "fn_stepinterpolation";
 		}

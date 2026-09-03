@@ -32,7 +32,7 @@ namespace etrading
                                             const VolatilityTypeEnum & volatilityType )
         : payerReceiver_( payerReceiver ), annuity_( annuity ), swapRate_( swapRate ), strike_( strike ), vol_( vol ), timeToExpiry_( timeToExpiry ), shift_( shift ), volatilityType_( volatilityType )
     {
-        MLIB_REQUIRE( ( payerReceiver_ == PAYER_SWAPTION || payerReceiver_ == RECEIVER_SWAPTION ),
+        AQ_REQUIRE( ( payerReceiver_ == PAYER_SWAPTION || payerReceiver_ == RECEIVER_SWAPTION ),
             "European Swaption PayerReceiverSwaption parameter must be 'Payer' or 'Receiver'" );
     }
 
@@ -87,13 +87,13 @@ namespace etrading
     double EuropeanIRSwaption::normalPrice( const PayerReceiverSwaptionEnum & payerReceiver, const double & annuity, const double & swapRate, const double & strike, const double & vol, const double & timeToExpiry )
     {
         // Validation
-         MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( timeToExpiry ), "Swaption time to expiry must be greater than zero" );
+         AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( timeToExpiry ), "Swaption time to expiry must be greater than zero" );
          
         // Normal Pricing Variables
         const double phi = ( payerReceiver == PAYER_SWAPTION ) ? 1.0 : -1.0;
         
         double volSqrtTime = vol * std::sqrt( timeToExpiry );
-        if ( MLIB_IS_EQUAL_ZERO( volSqrtTime ) ) volSqrtTime = MLIB_EPSILON;    // Don't allow divide by zero
+        if ( AQ_IS_EQUAL_ZERO( volSqrtTime ) ) volSqrtTime = AQ_EPSILON;    // Don't allow divide by zero
         
         const double d1 = ( swapRate - strike ) / ( volSqrtTime );
         const double Nd1 = standardNormalDistribution( phi * d1 );              // Standard Normal CDF i.e. N(phi.d1)
@@ -141,7 +141,7 @@ namespace etrading
             default:
 
                 // Should never reach here
-                MLIB_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
+                AQ_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
                 break;
         }
         
@@ -164,7 +164,7 @@ namespace etrading
         try
         {
             // We allow negative prices to test for Put-Call Super-Symmetry
-            //MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( price ), "Black-Scholes price parameter cannot be negative" );
+            //AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( price ), "Black-Scholes price parameter cannot be negative" );
 
             // Solver Settings
             const double targetPrice = price;
@@ -214,7 +214,7 @@ namespace etrading
         }
         catch(...)
         {
-            MLIB_THROW( "Unable to solve for the Implied Volatility" )
+            AQ_THROW( "Unable to solve for the Implied Volatility" )
         }
     }
 
@@ -222,8 +222,8 @@ namespace etrading
     // Static Helper Method to Calculate the Cash Annuity - we assume constant notional here
     double EuropeanIRSwaption::cashAnnuity( const double & notional, const double & swapRate, const unsigned int & nCouponsPerYear, const double & tenorInYears, const StubTypeEnum & stubType )
     {
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( tenorInYears ), "Cash Annuity tenor must be greater than zero" );
-        MLIB_REQUIRE( MLIB_IS_GREATER_THAN_ZERO( nCouponsPerYear ), "Cash Annuity number of coupon payments per year must be greater than zero" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( tenorInYears ), "Cash Annuity tenor must be greater than zero" );
+        AQ_REQUIRE( AQ_IS_GREATER_THAN_ZERO( nCouponsPerYear ), "Cash Annuity number of coupon payments per year must be greater than zero" );
 
         double          cashAnnuity                     = 0.0;
         double          shortStartStubDiscountFactor    = 1.0;
@@ -234,13 +234,13 @@ namespace etrading
         double          shortStubYearFraction           = tenorInYears - ( nWholeCoupons * couponYearFraction );
         bool            hasStartStub                    = false;
         bool            hasEndStub                      = false;
-        bool            isSingleCashflowStub            = MLIB_IS_EQUAL( shortStubYearFraction, tenorInYears );
+        bool            isSingleCashflowStub            = AQ_IS_EQUAL( shortStubYearFraction, tenorInYears );
 
         // Check for Stub Coupons
         // -------------------
-        if ( !MLIB_IS_EQUAL_ZERO( std::fmod( tenorInYears, couponYearFraction ) ) )  // fmod is floating modulus
+        if ( !AQ_IS_EQUAL_ZERO( std::fmod( tenorInYears, couponYearFraction ) ) )  // fmod is floating modulus
         {
-            MLIB_REQUIRE( stubType!=NONE_STUBTYPE, "Cash Annuity has a stub in which case the stub type must be specified and cannot be 'NONE'." )
+            AQ_REQUIRE( stubType!=NONE_STUBTYPE, "Cash Annuity has a stub in which case the stub type must be specified and cannot be 'NONE'." )
             
             if ( stubType == SHORT_START_STUBTYPE || stubType == LONG_START_STUBTYPE )
             {
@@ -377,7 +377,7 @@ namespace etrading
     // Calculate the Normal Delta
     double EuropeanIRSwaption::normalDelta( const PayerReceiverSwaptionEnum & payerReceiver, const double & annuity, const double & swapRate, const double & strike, const double & vol, const double & timeToExpiry )
     {
-        MLIB_THROW("EuropeanIRSwaption Delta using 'Normal' volatility not yet supported.")
+        AQ_THROW("EuropeanIRSwaption Delta using 'Normal' volatility not yet supported.")
         return 0.0;
     }
 
@@ -413,7 +413,7 @@ namespace etrading
             default:
 
                 // Should never reach here
-                MLIB_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
+                AQ_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
                 break;
         }
         
@@ -443,7 +443,7 @@ namespace etrading
     // Calculate the Normal Gamma
     double EuropeanIRSwaption::normalGamma( const PayerReceiverSwaptionEnum & payerReceiver, const double & annuity, const double & swapRate, const double & strike, const double & vol, const double & timeToExpiry )
     {
-        MLIB_THROW("EuropeanIRSwaption Gamma using 'Normal' volatility not yet supported.")
+        AQ_THROW("EuropeanIRSwaption Gamma using 'Normal' volatility not yet supported.")
         return 0.0;
     }
 
@@ -478,7 +478,7 @@ namespace etrading
             default:
 
                 // Should never reach here
-                MLIB_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
+                AQ_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
                 break;
         }
         
@@ -508,7 +508,7 @@ namespace etrading
     // Calculate the Normal Vega
     double EuropeanIRSwaption::normalVega( const PayerReceiverSwaptionEnum & payerReceiver, const double & annuity, const double & swapRate, const double & strike, const double & vol, const double & timeToExpiry )
     {
-        MLIB_THROW("EuropeanIRSwaption Vega using 'Normal' volatility not yet supported.")
+        AQ_THROW("EuropeanIRSwaption Vega using 'Normal' volatility not yet supported.")
         return 0.0;
     }
 
@@ -543,7 +543,7 @@ namespace etrading
             default:
 
                 // Should never reach here
-                MLIB_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
+                AQ_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
                 break;
         }
         
@@ -573,7 +573,7 @@ namespace etrading
     // Calculate the Normal Theta
     double EuropeanIRSwaption::normalTheta( const PayerReceiverSwaptionEnum & payerReceiver, const double & annuity, const double & swapRate, const double & strike, const double & vol, const double & timeToExpiry )
     {
-        MLIB_THROW("EuropeanIRSwaption Theta using 'Normal' volatility not yet supported.")
+        AQ_THROW("EuropeanIRSwaption Theta using 'Normal' volatility not yet supported.")
         return 0.0;
     }
 
@@ -608,7 +608,7 @@ namespace etrading
             default:
 
                 // Should never reach here
-                MLIB_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
+                AQ_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
                 break;
         }
         

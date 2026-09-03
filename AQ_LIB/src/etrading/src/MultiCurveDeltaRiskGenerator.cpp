@@ -14,7 +14,7 @@
 #include "InitializeMLibETrading.h"
 #include "CurveCalibrationData.h"
 #include "SettingsValidation.h"
-#include "DataUtilities.h"      // for MLIB_TO_STRING macros
+#include "DataUtilities.h"      // for AQ_TO_STRING macros
 #include "RiskUtilities.h"		// includes utilities to manage curve lists where we have multiple forecast curves
 #include <iterator>
 #include <numeric>
@@ -47,7 +47,7 @@ namespace etrading
 			{
 				if( isForecastCurveFromEngine != isDiscountCurveFromEngine )
 				{
-					MLIB_THROW( "Both forecast curve and discount curve must be consistently calibrated by either using yield curve engine or using single-curve calibration methods" )
+					AQ_THROW( "Both forecast curve and discount curve must be consistently calibrated by either using yield curve engine or using single-curve calibration methods" )
 				}
 			}
 		}
@@ -142,20 +142,20 @@ namespace etrading
 																useGlobalCurveEngine_(false)
 	{
 		// At minimum a curveCollection should be provided for each swap
-		MLIB_REQUIRE( swapNames.size() == curveCollectionNames.size(), "Inconsistent Data: The number of Swap Trades and Curve Collections does not match" )
+		AQ_REQUIRE( swapNames.size() == curveCollectionNames.size(), "Inconsistent Data: The number of Swap Trades and Curve Collections does not match" )
         
 		// Fixing tables are optional, but if present the range should be the same size as the number of swaps
 		const bool usingFixingTables = ( fixingTableNames.size() > 0 ) ? true : false;
         if ( usingFixingTables )
 		{
-            MLIB_REQUIRE( swapNames.size() == fixingTableNames.size(), "Inconsistent Data: The number of Swap Trades and Fixing Tables does not match" )
+            AQ_REQUIRE( swapNames.size() == fixingTableNames.size(), "Inconsistent Data: The number of Swap Trades and Fixing Tables does not match" )
 		}
         
         // Xccy FX Spot Rates are also optional, but if present the range should be the same size as the number of swaps
         const bool usingXccyFXSpotRates = ( xccyFXSpotRates.size() > 0 ) ? true : false;
         if ( usingXccyFXSpotRates )
         {
-            MLIB_REQUIRE( swapNames.size() == xccyFXSpotRates.size(), "Inconsistent Data: The number of Swap Trades and Xccy FX Spot Rates does not match" )
+            AQ_REQUIRE( swapNames.size() == xccyFXSpotRates.size(), "Inconsistent Data: The number of Swap Trades and Xccy FX Spot Rates does not match" )
         }
 
 		std::vector<double> asOfDateFxRates(swapNames.size());
@@ -257,19 +257,19 @@ namespace etrading
 			if ( collectionCount > 1 && !swap->isSingleCurrency() )
 			{
                 // Access Violation & Pricing Consistency Check
-                MLIB_REQUIRE( xccyFXSpotRates.size() > 0, "Xccy FX Spot Rates Required for Xccy Swaps & trades with multiple curve collections" )
+                AQ_REQUIRE( xccyFXSpotRates.size() > 0, "Xccy FX Spot Rates Required for Xccy Swaps & trades with multiple curve collections" )
                 
                 // Xccy Swaps Require FXSpot Rate from Valuation Settings - Only add one FX_SPOT per trade
                 fxSpotKey    = VALUATION_SETTING_KEYS::FX_SPOT;
 
                 // Use index i, since Swap Name Count = Xccy FX Spot Rate Count
-                fxSpotValue  = MLIB_TO_STRING_FROM_DOUBLE( xccyFXSpotRates[i] ); 
+                fxSpotValue  = AQ_TO_STRING_FROM_DOUBLE( xccyFXSpotRates[i] ); 
             }
             else
             {
                 // Non-Xccy Swaps Do Not Require FXSpot Rate from Valuation Settings, so we default set the FXSpot to 1.0
                 fxSpotKey    = VALUATION_SETTING_KEYS::FX_SPOT;
-                fxSpotValue  = MLIB_TO_STRING_FROM_DOUBLE( 1.0 );
+                fxSpotValue  = AQ_TO_STRING_FROM_DOUBLE( 1.0 );
             }
 
             // Update Valuation Settings LVB member variable

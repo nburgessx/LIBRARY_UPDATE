@@ -170,7 +170,7 @@ LASplineInterpolation::value(const double x1) const
 
 	// Set h and h_inverse
 	h = index_khi - index_klo;
-	MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( h ), "Invalid Spline Interpolation Data: Unable to Calculate Spline Value" )
+	AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( h ), "Invalid Spline Interpolation Data: Unable to Calculate Spline Value" )
 	const double inverse_h = 1.0/h;
 
 	//Numerical Recipes in C
@@ -186,8 +186,8 @@ LASplineInterpolation::value(const double x1) const
 // Differentiate the Interpolator at Point x1
 double LASplineInterpolation::differentiate(const double & x1) const
 {
-	MLIB_REQUIRE( interpolationData_ != nullptr, "Spline interpolation data has not been set" )
-	MLIB_REQUIRE( interpolationData_->size_ > 0, "Spline interpolation data has not been set" )
+	AQ_REQUIRE( interpolationData_ != nullptr, "Spline interpolation data has not been set" )
+	AQ_REQUIRE( interpolationData_->size_ > 0, "Spline interpolation data has not been set" )
 	
 	// Function is flat when there is only one point, therefore slope is zero
 	if ( interpolationData_->size_ == 1 )
@@ -207,15 +207,15 @@ double LASplineInterpolation::differentiate(const double & x1) const
 // Integrate the Interpolator Over the Lower- and UpperBounds
 double LASplineInterpolation::integrate(const double & lowerBound, const double & upperBound ) const
 {
-	MLIB_REQUIRE( interpolationData_ != nullptr, "Spline interpolation data has not been set" )
-	MLIB_REQUIRE( interpolationData_->size_ > 0, "Spline interpolation data has not been set" )
-	MLIB_REQUIRE( lowerBound <= upperBound, "Invalid Spline Interpolation Integrand: The Lowerbound must not be greater than the UpperBound")
+	AQ_REQUIRE( interpolationData_ != nullptr, "Spline interpolation data has not been set" )
+	AQ_REQUIRE( interpolationData_->size_ > 0, "Spline interpolation data has not been set" )
+	AQ_REQUIRE( lowerBound <= upperBound, "Invalid Spline Interpolation Integrand: The Lowerbound must not be greater than the UpperBound")
 	
 	// The integral result variable
 	double integral = 0.0;
 
 	// Boundary Condition: Zero Width
-	if( MLIB_IS_EQUAL( lowerBound, upperBound ) )
+	if( AQ_IS_EQUAL( lowerBound, upperBound ) )
 	{
 		return 0.0;
 	}
@@ -275,7 +275,7 @@ LASplineInterpolation::set( const DoubleArray& index, const DoubleArray& value )
 		{
 			thisIndex		= index[i];
 			previousIndex	= index[i-1];
-			MLIB_THROW_IF(thisIndex == previousIndex, "Invalid Interpolation Data: Duplicate data found with time value: " + MLIB_TO_STRING_FROM_DOUBLE(thisIndex) + " years" )
+			AQ_THROW_IF(thisIndex == previousIndex, "Invalid Interpolation Data: Duplicate data found with time value: " + AQ_TO_STRING_FROM_DOUBLE(thisIndex) + " years" )
 		}
 	}
 
@@ -379,7 +379,7 @@ double LASplineInterpolation::intervalSlope( const Interval& interval, const dou
 	khi = interval.endIndex_;
 
 	h = mpDataProvider->index[khi] - mpDataProvider->index[klo];
-	MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( h ), "Invalid Spline Interpolation Data: Unable to Calculate Spline Inteval Slope" )
+	AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( h ), "Invalid Spline Interpolation Data: Unable to Calculate Spline Inteval Slope" )
 	const double inverse_h = 1.0/h;
 
 	a = mpDataProvider->index[khi] - x1;
@@ -400,7 +400,7 @@ double LASplineInterpolation::intervalArea( const size_t & endIndex, const doubl
 
 	h = mpDataProvider->index[intervalEnd] - mpDataProvider->index[intervalStart];
 
-	MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( h ), "Invalid Spline Interpolation Data: Unable to Calculate Spline Interval Area" )
+	AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( h ), "Invalid Spline Interpolation Data: Unable to Calculate Spline Interval Area" )
 	const double inverse_h = 1.0/h;
 	const double inverse_four_h_cubed = 0.25 * inverse_h * inverse_h * inverse_h; // = 1.0/(4.0*h*h*h);
 

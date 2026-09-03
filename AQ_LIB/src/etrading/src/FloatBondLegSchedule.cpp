@@ -69,7 +69,7 @@ namespace etrading
 		{
 			//Derive from libor first fixing rate
 			auto firstCashflowData = dataProvider.getCashflowDataExcludingUpfront(0);
-			MLIB_REQUIRE(!boost::math::isnan(firstCashflowData.floatRateData.resetRate), "Float leg's reset rate has not been populated.");
+			AQ_REQUIRE(!boost::math::isnan(firstCashflowData.floatRateData.resetRate), "Float leg's reset rate has not been populated.");
 
 			//Quote margin is in bps
 			floatingBondAnnualizedCouponRate = firstCashflowData.floatRateData.resetRate + quotedMargin_ * 0.0001;
@@ -78,7 +78,7 @@ namespace etrading
 		double accruedInterest = 0.0;
 
 		// If it's negative couponRate, accrued interest is zero
-		if (MLIB_IS_GREATER_THAN_ZERO(floatingBondAnnualizedCouponRate))
+		if (AQ_IS_GREATER_THAN_ZERO(floatingBondAnnualizedCouponRate))
 		{
 			DataProvider dataProviderToUse = dataProvider;
 			dataProviderToUse.setCompoundRateOverride(floatingBondAnnualizedCouponRate);

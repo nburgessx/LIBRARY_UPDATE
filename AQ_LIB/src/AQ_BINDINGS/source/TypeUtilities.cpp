@@ -245,7 +245,7 @@ namespace swig
 
 		if ( checkForEmptyMatrix )
 		{
-			MLIB_REQUIRE( rowSize > 0, "There are no rows to display." );
+			AQ_REQUIRE( rowSize > 0, "There are no rows to display." );
 		}
 
 		//Column size, check the column size of each row and get the max column size
@@ -260,7 +260,7 @@ namespace swig
 
 		if ( checkForEmptyMatrix )
 		{
-			MLIB_REQUIRE( maxColumnSize > 0, "There are no columns to display." );
+			AQ_REQUIRE( maxColumnSize > 0, "There are no columns to display." );
 		}
 		
 		return maxColumnSize;
@@ -332,8 +332,8 @@ namespace swig
 	SWIG_STRINGMATRIX fromAnyTypeMatrixToMatrixOfString(const AnyTypeMatrix& anyMatrix )
 	{
 		// Access Violation Guards
-		MLIB_REQUIRE(anyMatrix.size() > 0, "Results Matrix is empty")
-		MLIB_REQUIRE(anyMatrix[0].size() > 0, "Results Matrix is empty")
+		AQ_REQUIRE(anyMatrix.size() > 0, "Results Matrix is empty")
+		AQ_REQUIRE(anyMatrix[0].size() > 0, "Results Matrix is empty")
 
 		// 1) Get Results Dimensions and Max Sizes, since the vectors of variantMatrix may not have the same
 		// dimensions. In Step 2 below we pad any spaces with blank strings.
@@ -482,8 +482,8 @@ namespace swig
 	SWIG_STRINGMATRIX fromVariantMatrixToMatrixOfString( const etrading::VariantMatrix& variantMatrix )
     {
 		// Access Violation Guards
-		MLIB_REQUIRE(variantMatrix.size() > 0, "Results Matrix is empty")
-		MLIB_REQUIRE(variantMatrix[0].size() > 0, "Results Matrix is empty")
+		AQ_REQUIRE(variantMatrix.size() > 0, "Results Matrix is empty")
+		AQ_REQUIRE(variantMatrix[0].size() > 0, "Results Matrix is empty")
 
 		// 1) Get Results Dimensions and Max Sizes, since the vectors of variantMatrix may not have the same
 		// dimensions. In Step 2 below we pad any spaces with blank strings.

@@ -70,7 +70,7 @@ LARiskConfigurationCreditSpreadDelta::createRiskEntity(LAObjectPool &objPool) co
 	}
 	e->add(CALIBRATION_DATA_NAME, new LADataString()).convertFromString(name);
 	vector<LAObject *> eVec(1, e);
-	ret.push_back(make_pair(MLIB_NO_DATA, eVec));
+	ret.push_back(make_pair(AQ_NO_DATA, eVec));
 	
 	//for yieldcredit spread delta we must set befor SetUpTargetNames
 	objPool.set(name, e);
@@ -101,7 +101,7 @@ LARiskConfigurationCreditSpreadDelta::setUpTargetNames(const LAString &ccy, LAOb
 
 	bool isLookUpAttr = false;
 	LAString isLookUpAttr_str = mpRiskStaticData->getStaticData(RISK_OFFICIAL_YIELD_CREDITSPREADDELTA_ISLOOKUPFNDNGSPDATT);
-	if (isLookUpAttr_str != MLIB_NO_DATA)
+	if (isLookUpAttr_str != AQ_NO_DATA)
 	{
 		isLookUpAttr = convertBoolFromStr(isLookUpAttr_str);
 	}
@@ -305,7 +305,7 @@ LARiskConfigurationCreditSpreadDelta::createCreditSpreadDeltaEntity(const LAStri
 	// get time ratio property
 	bool isTimeRatio = true;
 	LAString strIsTimeRatio = mpRiskStaticData->getStaticData(RISK_OFFICIAL_YIELD_CREDITSPREADDELTA_SHIFTVAL_ISTIMERATIO);
-	if (strIsTimeRatio != MLIB_NO_DATA)
+	if (strIsTimeRatio != AQ_NO_DATA)
 	{
 		isTimeRatio = convertBoolFromStr(strIsTimeRatio);
 	}

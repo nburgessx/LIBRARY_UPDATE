@@ -54,8 +54,8 @@ namespace etrading
                                    const DoubleVector& forwardRates,
                                    const bool setCorrespondingDiscountFactors )
     {
-        MLIB_REQUIRE( curveCollection.size() != 0, "Missing Curve Collection" )
-        MLIB_REQUIRE( curveIndex.size() != 0, "Missing Curve Index" )
+        AQ_REQUIRE( curveCollection.size() != 0, "Missing Curve Collection" )
+        AQ_REQUIRE( curveIndex.size() != 0, "Missing Curve Index" )
 
 		LAString result;
 		
@@ -121,7 +121,7 @@ namespace etrading
 				// Set Discount Factors in the Curve Results Object
 				if( etrading::isEnabledCurveResults() && etrading::doesExistCurveResultsDiscountFactors( curveCollection.c_str(), curveIndex.c_str() ) )
 				{
-					MLIB_REQUIRE( termEnds.size() == dummyDiscountFactors.size(), "Invalid Discount Factors, The number of payment dates and discount factors do not match." )
+					AQ_REQUIRE( termEnds.size() == dummyDiscountFactors.size(), "Invalid Discount Factors, The number of payment dates and discount factors do not match." )
 					for( LAString thisIndex : curveIndices )
 					{
 						etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection.c_str(), thisIndex.c_str() )->discountFactorResults()->setDiscountFactorsUsingTerms( termEnds, dummyDiscountFactors );
@@ -167,17 +167,17 @@ namespace etrading
         dfInputTable.terms_             = convertCurveDatesToTerms( curveCollection, paymentDates ); 
         dfInputTable.discountFactors_   = discountFactors;
        
-        MLIB_REQUIRE( dfInputTable.paymentDates_.size() ==  dfInputTable.terms_.size(),     "Invalid Curve Inputs - Inconsistent number of dates and terms" );
-        MLIB_REQUIRE( dfInputTable.terms_.size() ==  dfInputTable.discountFactors_.size(),  "Invalid Curve Inputs - Inconsistent number of terms and discount factors" );
-        MLIB_REQUIRE( !dfInputTable.discountFactors_.empty(),                               "Invalid Curve Inputs - Missing Discount Factors, there are no discount factors to set" )
+        AQ_REQUIRE( dfInputTable.paymentDates_.size() ==  dfInputTable.terms_.size(),     "Invalid Curve Inputs - Inconsistent number of dates and terms" );
+        AQ_REQUIRE( dfInputTable.terms_.size() ==  dfInputTable.discountFactors_.size(),  "Invalid Curve Inputs - Inconsistent number of terms and discount factors" );
+        AQ_REQUIRE( !dfInputTable.discountFactors_.empty(),                               "Invalid Curve Inputs - Missing Discount Factors, there are no discount factors to set" )
 
         // Check Terms Data is sorted with no duplicates
-        MLIB_REQUIRE( isTermsDataSortedWithNoDuplicates( dfInputTable.terms_ ), "Invalid Payment Dates - Payment Dates must be sorted in ascending order with no duplicates" )
+        AQ_REQUIRE( isTermsDataSortedWithNoDuplicates( dfInputTable.terms_ ), "Invalid Payment Dates - Payment Dates must be sorted in ascending order with no duplicates" )
 
         // Check that we have no negative terms date year fractions
         for( size_t i=0; i < dfInputTable.terms_.size(); ++i )
         {
-            MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( dfInputTable.terms_[i] ), "Invalid Discount Factors - Cannot set discount factors that are in the past, before the curve 'AsOfDate'." )
+            AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( dfInputTable.terms_[i] ), "Invalid Discount Factors - Cannot set discount factors that are in the past, before the curve 'AsOfDate'." )
         }
 
         // Set the Discount Factors to the Curve - No dates are used here, just terms and discount factors.
@@ -265,8 +265,8 @@ namespace etrading
     */
     DoubleVector approximateDiscountFactorsByIntegratingForwards( const DoubleVector & terms, const DoubleVector & forwards, const size_t & nSteps, const InterpolationEnum & interpolationMethod )
     {
-        MLIB_REQUIRE( forwards.size()>0, "Inconsistent number of terms and forward values.")
-        MLIB_REQUIRE( terms.size() == forwards.size(), "Missing terms and forward data")
+        AQ_REQUIRE( forwards.size()>0, "Inconsistent number of terms and forward values.")
+        AQ_REQUIRE( terms.size() == forwards.size(), "Missing terms and forward data")
         
         size_t nResults = forwards.size();
         DoubleVector discFactorResults( nResults );
@@ -314,18 +314,18 @@ namespace etrading
         {
             discountFactors[i] = std::exp( logDiscountFactors[i] );
             
-            const bool isGreaterThanZero = MLIB_IS_GREATER_THAN_ZERO( discountFactors[i] );
+            const bool isGreaterThanZero = AQ_IS_GREATER_THAN_ZERO( discountFactors[i] );
 
             // Apply the zero floor or throw if discount factors are negative or zero
             if ( !isGreaterThanZero )
             {
                 if ( applyZeroFloor )
                 {
-                    discountFactors[i] = MLIB_EPSILON;
+                    discountFactors[i] = AQ_EPSILON;
                 }
                 else
                 {
-                    MLIB_THROW( "Unable to solve for Discount Factors. Discount Factor results cannot be less than or equal to zero" )
+                    AQ_THROW( "Unable to solve for Discount Factors. Discount Factor results cannot be less than or equal to zero" )
                 }
             }
             
@@ -352,18 +352,18 @@ namespace etrading
         {
             discountFactors[i] = std::exp( -1.0 * zeroRates[i] * terms[i] );
             
-            const bool isGreaterThanZero = MLIB_IS_GREATER_THAN_ZERO( discountFactors[i] );
+            const bool isGreaterThanZero = AQ_IS_GREATER_THAN_ZERO( discountFactors[i] );
 
             // Apply the zero floor or throw if discount factors are negative or zero
             if ( !isGreaterThanZero )
             {
                 if ( applyZeroFloor )
                 {
-                    discountFactors[i] = MLIB_EPSILON;
+                    discountFactors[i] = AQ_EPSILON;
                 }
                 else
                 {
-                    MLIB_THROW( "Unable to solve for Discount Factors. Discount Factor results cannot be less than or equal to zero" )
+                    AQ_THROW( "Unable to solve for Discount Factors. Discount Factor results cannot be less than or equal to zero" )
                 }
             }
             
@@ -395,7 +395,7 @@ namespace etrading
         for( size_t i = 1; i<terms.size(); ++i )
         {
             // Note: Base index i = 1 required
-            if ( MLIB_IS_LESS_THAN_OR_EQUAL( terms[i], terms[i-1] ) )
+            if ( AQ_IS_LESS_THAN_OR_EQUAL( terms[i], terms[i-1] ) )
             {
                 return false;
             }
@@ -415,9 +415,9 @@ namespace etrading
     EquivalentDiscountFactors::SolverResults setForwardRateEquivalentDiscountFactors( const DateVector & fixingDates, const DoubleVector & targetForwardRates, const LAString & curveCollection, const LAString & curveIndex )
     {
         // Validate Input Dimensions
-        MLIB_REQUIRE( fixingDates.size() == targetForwardRates.size(), "Convert Forwards to Discount Factors: Invalid Input - Inconsistent number of fixing dates and forward rates" )
-        MLIB_REQUIRE( targetForwardRates.size() > 0, "Convert Forwards to Discount Factors - No forward rates provided" )
-        MLIB_REQUIRE( targetForwardRates.size() >= 3, "Convert Forwards to Discount Factors - At least 3 forward rates are required" )
+        AQ_REQUIRE( fixingDates.size() == targetForwardRates.size(), "Convert Forwards to Discount Factors: Invalid Input - Inconsistent number of fixing dates and forward rates" )
+        AQ_REQUIRE( targetForwardRates.size() > 0, "Convert Forwards to Discount Factors - No forward rates provided" )
+        AQ_REQUIRE( targetForwardRates.size() >= 3, "Convert Forwards to Discount Factors - At least 3 forward rates are required" )
 
         // Check Curve Exists
         getCurveStaticDataTableName( curveCollection, curveIndex );
@@ -426,10 +426,10 @@ namespace etrading
         DoubleVector fixingTerms = etrading::convertCurveDatesToTerms( curveCollection, fixingDates );
         DoubleVector paymentTerms( fixingTerms.size() ); 
 
-        MLIB_REQUIRE( fixingDates.size() == fixingTerms.size(), "Convert Forwards to Discount Factors: Invalid Input - Inconsistent fixing dates and fixing terms date year fractions" )
-        MLIB_REQUIRE( fixingTerms.size() == paymentTerms.size(), "Convert Forwards to Discount Factors: Invalid Input - Inconsistent fixing- and payment termss date year fractions" )
+        AQ_REQUIRE( fixingDates.size() == fixingTerms.size(), "Convert Forwards to Discount Factors: Invalid Input - Inconsistent fixing dates and fixing terms date year fractions" )
+        AQ_REQUIRE( fixingTerms.size() == paymentTerms.size(), "Convert Forwards to Discount Factors: Invalid Input - Inconsistent fixing- and payment termss date year fractions" )
         
-		MLIB_REQUIRE( fixingTerms[0] >= 0.0, "Invalid Curve Forward Dates: Curve forward dates cannot be in the past, before the curve 'AsOfDate'. Forwards in the past should be in the fixing table instead.")
+		AQ_REQUIRE( fixingTerms[0] >= 0.0, "Invalid Curve Forward Dates: Curve forward dates cannot be in the past, before the curve 'AsOfDate'. Forwards in the past should be in the fixing table instead.")
 
         const double curveFrequency = etrading::getCurveFrequencyAsYearFraction( curveCollection, curveIndex );
         for( size_t i = 0; i < paymentTerms.size(); ++i )
@@ -439,12 +439,12 @@ namespace etrading
         
         // Check Payment Terms Data is sorted with no duplicates
         // Derived Data from Fixing Dates
-        MLIB_REQUIRE( isTermsDataSortedWithNoDuplicates( paymentTerms ), "Invalid Fixing Dates - Fixing Dates must be sorted in ascending order with no duplicates" )
+        AQ_REQUIRE( isTermsDataSortedWithNoDuplicates( paymentTerms ), "Invalid Fixing Dates - Fixing Dates must be sorted in ascending order with no duplicates" )
 
         // Calculate a good initial guess for discount factors
         const size_t numberOfNumericalIntegrationSteps = 100;
         DoubleVector initialGuessDiscFactors = approximateDiscountFactorsByIntegratingForwards( paymentTerms, targetForwardRates, numberOfNumericalIntegrationSteps, etrading::SPLINE_INTERPOLATION );
-        MLIB_REQUIRE ( fixingTerms.size() == initialGuessDiscFactors.size(), "Unable to solve for Discount Factors. Invalid solver initial guess" )
+        AQ_REQUIRE ( fixingTerms.size() == initialGuessDiscFactors.size(), "Unable to solve for Discount Factors. Invalid solver initial guess" )
         
         // Initialize Solver Discount Factor State Variable
         // This is used to store our initial guess of DFs and to store the solution result
@@ -490,8 +490,8 @@ namespace etrading
             const size_t nForwards = impliedForwardRates.size();
             DoubleVector residuals( nForwards );
 
-            MLIB_REQUIRE( impliedForwardRates.size() == targetForwardRates.size(), "Unable to convert forwards to discount factors - Solver result has inconsistent dimensions" )
-            MLIB_REQUIRE( nForwards > 0, "Unable to convert forwards to discount factors - Solver results are empty" )
+            AQ_REQUIRE( impliedForwardRates.size() == targetForwardRates.size(), "Unable to convert forwards to discount factors - Solver result has inconsistent dimensions" )
+            AQ_REQUIRE( nForwards > 0, "Unable to convert forwards to discount factors - Solver results are empty" )
 
             for ( size_t i=0; i < nForwards; ++i )
             {
@@ -547,7 +547,7 @@ namespace etrading
 				etrading::CurveResultsContainer::getInstance().getCurveResults( curveCollection.c_str(), curveIndex.c_str() )->discountFactorResults()->setDiscountFactorsUsingTerms( originalDFs.terms_, originalDFs.discountFactors_ );
 			}
 
-            MLIB_THROW("Unable to Set Curve - Solver failed to converge or find a solution")
+            AQ_THROW("Unable to Set Curve - Solver failed to converge or find a solution")
         }
 
 		// Set the results for the entire curve index alias list
@@ -583,7 +583,7 @@ namespace etrading
 	*/
     void implyAndSetForwardRatesFromDiscountFactors( const LAString& curveCollection, const LAString& curveIndex, const DateVector& paymentDates, const DoubleVector& discountFactors )
     {
-		MLIB_REQUIRE( discountFactors.size() >= 3, "Invalid Discount Factors - At least 3 discount factors required" )
+		AQ_REQUIRE( discountFactors.size() >= 3, "Invalid Discount Factors - At least 3 discount factors required" )
         
         // Build the ForwardRatesTable Struct
         DoubleVector termEnds = convertCurveDatesToTerms( curveCollection, paymentDates ); 

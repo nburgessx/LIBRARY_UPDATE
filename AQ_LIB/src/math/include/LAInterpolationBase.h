@@ -50,7 +50,7 @@ struct InterpolationData
 	InterpolationData( const std::vector<double> & xValues, const std::vector<double> & yValues )
 		: xValues_( xValues ), yValues_( yValues ), size_( xValues.size() )
 	{
-		MLIB_REQUIRE( xValues.size() == yValues.size(), "Invalid Interpolation Data: Must have the same number of xValues and yValues" )
+		AQ_REQUIRE( xValues.size() == yValues.size(), "Invalid Interpolation Data: Must have the same number of xValues and yValues" )
 	}
 
 	std::vector<double> xValues_;

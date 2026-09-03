@@ -528,7 +528,7 @@ LARiskConfigurationYieldIRShiftFXDelta::createVolatilityEntity(const LAString &f
 	}
 
 	// dataout
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		param.isOutPut = true;
 	}
@@ -621,7 +621,7 @@ LARiskConfigurationYieldIRShiftFXDelta::isRiskCurrencyMode(const LAString &fx) c
 	
 	LAString proprslt = mpRiskStaticData->getStaticData(fxKey.toLower() + 
 													FX_KEY_RISK_FRONT_FX_IRSHIFTFXDELTA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 
 	return convertBoolFromStr(proprslt);

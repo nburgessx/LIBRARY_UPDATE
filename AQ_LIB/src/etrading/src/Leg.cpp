@@ -219,7 +219,7 @@ namespace etrading
 		auto allCashflows = schedule_->getAllCashflows();
 		size_t cashflowSize = allCashflows.size();
 
-		MLIB_REQUIRE(cashflowSize != 0, "Cashflow size cannot be empty.");
+		AQ_REQUIRE(cashflowSize != 0, "Cashflow size cannot be empty.");
 
 		//Get the first non-upfront cashflow
 		bool isNotionalReset = (schedule_->getCashflow(0)->getFxFixingDate() != LADate());
@@ -230,32 +230,32 @@ namespace etrading
 		AnyTypeMatrix cashflowHeaderBlock;
 		if (showColumnHeaders)
 		{
-			MLIB_PUSH_BACK_IF(headers, toString(FLOAT_RATE_HEADER), includeFloatRate);
-			MLIB_PUSH_BACK_IF(headers, toString(CONVEXITY_HEADER), includeConvexity);
-			MLIB_PUSH_BACK_IF(headers, toString(UNADJUSTED_FLOAT_RATE_HEADER), includeUnadjustedFloatRate);
+			AQ_PUSH_BACK_IF(headers, toString(FLOAT_RATE_HEADER), includeFloatRate);
+			AQ_PUSH_BACK_IF(headers, toString(CONVEXITY_HEADER), includeConvexity);
+			AQ_PUSH_BACK_IF(headers, toString(UNADJUSTED_FLOAT_RATE_HEADER), includeUnadjustedFloatRate);
 
-			MLIB_PUSH_BACK_IF(headers, toString(FX_FIXING_DATE_HEADER), includeFxFixingDate);
-			MLIB_PUSH_BACK_IF(headers, toString(FX_RATE_HEADER), includeFxRate);
+			AQ_PUSH_BACK_IF(headers, toString(FX_FIXING_DATE_HEADER), includeFxFixingDate);
+			AQ_PUSH_BACK_IF(headers, toString(FX_RATE_HEADER), includeFxRate);
 
 			// For Float leg, Premium leg
-			MLIB_PUSH_BACK_IF(headers, toString(SURVIVAL_PROBABILITY_HEADER), includeSurvivalProbability);
-			MLIB_PUSH_BACK_IF(headers, toString(MARGINAL_DEFAULT_PROBABILITY_HEADER), includeMarginalDefaultProbability);
+			AQ_PUSH_BACK_IF(headers, toString(SURVIVAL_PROBABILITY_HEADER), includeSurvivalProbability);
+			AQ_PUSH_BACK_IF(headers, toString(MARGINAL_DEFAULT_PROBABILITY_HEADER), includeMarginalDefaultProbability);
 
-			MLIB_PUSH_BACK_IF(headers, toString(COUPON_HEADER), includeCoupon);
+			AQ_PUSH_BACK_IF(headers, toString(COUPON_HEADER), includeCoupon);
 
 			// For Premium leg
-			MLIB_PUSH_BACK_IF(headers, toString(PREMIUM_COUPON_HEADER), includePremiumCoupon);
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_ON_DEFAULT_COUPON_HEADER), includeAccrualOnDefaultCoupon);
+			AQ_PUSH_BACK_IF(headers, toString(PREMIUM_COUPON_HEADER), includePremiumCoupon);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_ON_DEFAULT_COUPON_HEADER), includeAccrualOnDefaultCoupon);
 
 			// For Float leg, Premium leg
-			MLIB_PUSH_BACK_IF(headers, toString(RISKY_COUPON_HEADER), includeRiskyCoupon);
+			AQ_PUSH_BACK_IF(headers, toString(RISKY_COUPON_HEADER), includeRiskyCoupon);
 
-			MLIB_PUSH_BACK_IF(headers, toString(DISCOUNT_FACTOR_HEADER), includeDF);
-			MLIB_PUSH_BACK_IF(headers, toString(COUPON_PV_HEADER), includeCouponPV);
+			AQ_PUSH_BACK_IF(headers, toString(DISCOUNT_FACTOR_HEADER), includeDF);
+			AQ_PUSH_BACK_IF(headers, toString(COUPON_PV_HEADER), includeCouponPV);
 		}
 
 
-		MLIB_REQUIRE(cashflowSize == bodyBlock.size(), "Cashflow sizes of leg and schedule not matched.");
+		AQ_REQUIRE(cashflowSize == bodyBlock.size(), "Cashflow sizes of leg and schedule not matched.");
 
 		//-----Body-----
 		for (size_t i = 0; i < cashflowSize; ++i)
@@ -267,29 +267,29 @@ namespace etrading
 
 			auto cashflowData = dataProvider.getCashflowDataIncludingUpfront(i);
 
-			MLIB_PUSH_BACK_IF(body, cashflowData.floatRateData.resetRate, includeFloatRate);
-			MLIB_PUSH_BACK_IF(body, cashflowData.floatRateData.convexity, includeConvexity);
-			MLIB_PUSH_BACK_IF(body, cashflowData.floatRateData.unadjustedResetRate, includeUnadjustedFloatRate);
+			AQ_PUSH_BACK_IF(body, cashflowData.floatRateData.resetRate, includeFloatRate);
+			AQ_PUSH_BACK_IF(body, cashflowData.floatRateData.convexity, includeConvexity);
+			AQ_PUSH_BACK_IF(body, cashflowData.floatRateData.unadjustedResetRate, includeUnadjustedFloatRate);
 
-			MLIB_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getFxFixingDate()), includeFxFixingDate);
-			MLIB_PUSH_BACK_IF(body, cashflow->getFwdFxRate(), includeFxRate);
+			AQ_PUSH_BACK_IF(body, fromLADateToDouble(cashflow->getFxFixingDate()), includeFxFixingDate);
+			AQ_PUSH_BACK_IF(body, cashflow->getFwdFxRate(), includeFxRate);
 
-			MLIB_PUSH_BACK_IF(body, roundToNearest(cashflow->getSurvivalProbability(), cashflowData.currency), includeSurvivalProbability);
+			AQ_PUSH_BACK_IF(body, roundToNearest(cashflow->getSurvivalProbability(), cashflowData.currency), includeSurvivalProbability);
 
-			MLIB_PUSH_BACK_IF(body, roundToNearest(cashflow->getMarginalDefaultProbability(), cashflowData.currency), includeMarginalDefaultProbability);
+			AQ_PUSH_BACK_IF(body, roundToNearest(cashflow->getMarginalDefaultProbability(), cashflowData.currency), includeMarginalDefaultProbability);
 
-			MLIB_PUSH_BACK_IF(body, roundToNearest(cashflow->getPremiumCoupon(), cashflowData.currency), includePremiumCoupon);
+			AQ_PUSH_BACK_IF(body, roundToNearest(cashflow->getPremiumCoupon(), cashflowData.currency), includePremiumCoupon);
 
-			MLIB_PUSH_BACK_IF(body, roundToNearest(cashflow->getAccrualOnDefaultCoupon(), cashflowData.currency), includeAccrualOnDefaultCoupon);
+			AQ_PUSH_BACK_IF(body, roundToNearest(cashflow->getAccrualOnDefaultCoupon(), cashflowData.currency), includeAccrualOnDefaultCoupon);
 
-			MLIB_PUSH_BACK_IF(body, roundToNearest(cashflow->getCoupon(cashflowData), cashflowData.currency), includeCoupon);
+			AQ_PUSH_BACK_IF(body, roundToNearest(cashflow->getCoupon(cashflowData), cashflowData.currency), includeCoupon);
 
 			// Display coupon with survivalProbability factor
-			MLIB_PUSH_BACK_IF(body, roundToNearest(cashflow->getCoupon(cashflowData), cashflowData.currency), includeRiskyCoupon);
+			AQ_PUSH_BACK_IF(body, roundToNearest(cashflow->getCoupon(cashflowData), cashflowData.currency), includeRiskyCoupon);
 
-			MLIB_PUSH_BACK_IF(body, cashflowData.discountFactor, includeDF);
+			AQ_PUSH_BACK_IF(body, cashflowData.discountFactor, includeDF);
 
-			MLIB_PUSH_BACK_IF(body, roundToNearest(cashflow->getCouponPv(cashflowData), cashflowData.valuationCurrency), includeCouponPV);
+			AQ_PUSH_BACK_IF(body, roundToNearest(cashflow->getCouponPv(cashflowData), cashflowData.valuationCurrency), includeCouponPV);
 
 		}
 

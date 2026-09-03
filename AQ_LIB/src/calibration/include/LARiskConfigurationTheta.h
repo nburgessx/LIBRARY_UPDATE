@@ -70,7 +70,7 @@ protected:
 	virtual  LAString  getOutPutName1(const LAString &ccy) const;
 	//==============================================
 	// get target names 
-	virtual  LAString getTargetNames(const LAString &ccy, LADataInstance &dataInstance)  const {ccy; return MLIB_NO_DATA;};
+	virtual  LAString getTargetNames(const LAString &ccy, LADataInstance &dataInstance)  const {ccy; return AQ_NO_DATA;};
 	//==============================================
 	// isgridsensitivity
 	virtual  bool isGridSensitivity(const LAString &ccy) const  {ccy; return false;};
@@ -82,7 +82,7 @@ protected:
 	virtual std::vector<LAString> getGridTerm(const LAString &ccy) const { ccy;  std::vector<LAString> ret; return ret; };
 	//==============================================
 	// get bucket grid term
-	virtual std::vector<LAString> getBucketGridTerm(const LAString &ccy) const { ccy; std::vector<LAString> ret; ret.push_back(MLIB_NO_DATA); return ret; };
+	virtual std::vector<LAString> getBucketGridTerm(const LAString &ccy) const { ccy; std::vector<LAString> ret; ret.push_back(AQ_NO_DATA); return ret; };
 	// isSavePastFixing
 	virtual bool isSavePastFixing() const { return true; };
 	//==============================================

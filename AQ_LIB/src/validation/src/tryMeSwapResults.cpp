@@ -96,7 +96,7 @@ namespace validation_api
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk, trimmedForwardRisk )
 		
 		// Check if Swap Results Enabled
-		MLIB_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
+		AQ_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
 
         // Marshall Data
 		DateVector paymentDates;
@@ -144,7 +144,7 @@ namespace validation_api
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedDiscountRisk )
 		
 		// Check if Swap Results Enabled
-		MLIB_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
+		AQ_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
 
         // Marshall Data
 		DateVector paymentDates;
@@ -187,7 +187,7 @@ namespace validation_api
         RECORD_INPUTS( swapHandleUpperCase, asOfDate, trimmedForwardRisk )
 		
 		// Check if Swap Results Enabled
-		MLIB_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
+		AQ_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
 
 		// Marshall Data
         DateVector fixingDates;
@@ -277,12 +277,12 @@ namespace validation_api
         RECORD_INPUTS( swapHandleUpperCase, riskType )
 
 		// Check if Swap Results Enabled
-		MLIB_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
+		AQ_REQUIRE( etrading::SwapResultsContainer::getInstance().isEnabled(), "Swap Results have been Disabled" )
 
         // Check if Swap Risk Results Exist
         if ( !etrading::doesExistSwapRiskResults( swapHandleUpperCase ) )
         {
-            MLIB_THROW( "Swap Risk Results for Swap '" + swapHandleUpperCase + "' do not exist" );
+            AQ_THROW( "Swap Risk Results for Swap '" + swapHandleUpperCase + "' do not exist" );
         }
 
         // Get Swap Results
@@ -293,19 +293,19 @@ namespace validation_api
 			{
 				// DISCOUNT_FACTOR RISK: Return Coupon Parameters
 				results = etrading::SwapResultsContainer::getInstance().getSwapResults( swapHandleUpperCase )->swapRiskResults()->coupons();
-				MLIB_REQUIRE( results.size() > 0, "Discount Factor Risks Do Not Exist for Swap Handle: " + swapHandleUpperCase )
+				AQ_REQUIRE( results.size() > 0, "Discount Factor Risks Do Not Exist for Swap Handle: " + swapHandleUpperCase )
 				break;
 			}
 			case etrading::FORWARD_RATE_RISK_TYPE:
 			{
 				// FORWARD_RATE RISK: Return Annuity Parameters
 				results = etrading::SwapResultsContainer::getInstance().getSwapResults( swapHandleUpperCase )->swapRiskResults()->annuities();
-				MLIB_REQUIRE( results.size() > 0, "Forward Rate Risks Do Not Exist for Swap Handle: " + swapHandleUpperCase )
+				AQ_REQUIRE( results.size() > 0, "Forward Rate Risks Do Not Exist for Swap Handle: " + swapHandleUpperCase )
 				break;
 			}
 			default:
 			{
-				MLIB_THROW("Invalid RiskType: Only DISCOUNT_FACTOR and FORWARD_RATE risk types supported")
+				AQ_THROW("Invalid RiskType: Only DISCOUNT_FACTOR and FORWARD_RATE risk types supported")
 			}
 		}
         
@@ -326,7 +326,7 @@ namespace validation_api
 		// Record Inputs
         RECORD_INPUTS( swapHandleUpperCase )
 
-		MLIB_THROW("Not Implemented")
+		AQ_THROW("Not Implemented")
 		etrading::VariantMatrix results;
 
 		RECORD_OUTPUTS_AND_RETURN_RESULT( results )

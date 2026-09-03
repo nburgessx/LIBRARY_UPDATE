@@ -77,7 +77,7 @@ namespace etrading
                                                        const bool enforceVariantDataType )
     {
         // Access Violation Guard
-        MLIB_REQUIRE( infoBlockNames.size() == infoBlocks.size(), "Invalid JSON Data InfoBlock - Inconsistent number of data block names and data blocks." )
+        AQ_REQUIRE( infoBlockNames.size() == infoBlocks.size(), "Invalid JSON Data InfoBlock - Inconsistent number of data block names and data blocks." )
         
         // Clean Market Data - Remove Blanks
         JSONInfoBlockTuples cleansedInfoBlocks = infoBlocks;
@@ -150,8 +150,8 @@ namespace etrading
     
     JSONInfoBlockTuple JSONInfoBlock::createInfoBlock( const VariantMatrix & dataMatrix, const bool enforceVariantDataType )
     {
-        MLIB_REQUIRE( dataMatrix.size() > 0,    "Invalid Data: InfoBlock Data Matrix is Empty" )
-        MLIB_REQUIRE( dataMatrix[0].size() > 0, "Invalid Data: InfoBlock Data Matrix is Empty" )
+        AQ_REQUIRE( dataMatrix.size() > 0,    "Invalid Data: InfoBlock Data Matrix is Empty" )
+        AQ_REQUIRE( dataMatrix[0].size() > 0, "Invalid Data: InfoBlock Data Matrix is Empty" )
         
         const size_t nRows = dataMatrix.size();
         const size_t nColumns = dataMatrix[0].size();

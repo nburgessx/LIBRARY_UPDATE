@@ -2,7 +2,7 @@
 #include "tryMeCurveResults.h"
 #include "TypeUtilities.h"          // Swig Marshalling Helper Methods
 #include "Variant.h"                // Variant and Variant Matrix Types
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 /* @brief			swig interface for meCurveDisplay
 *  @param [in]		curveCollection		ID of the curve set
@@ -11,7 +11,7 @@
 */
 SWIG_STRINGMATRIX meCurveResultsDisplayDiscountFactors (const std::string& curveCollection, const std::string& curveIndex )
 {
-	MLIB_API_START
+	AQ_API_START
     
 	etrading::VariantMatrix results = validation_api::tryMeCurveResultsDiscountFactorsDisplayAll(curveCollection, curveIndex);
 
@@ -20,5 +20,5 @@ SWIG_STRINGMATRIX meCurveResultsDisplayDiscountFactors (const std::string& curve
 
     return resultsStringMatrix;
 
-    MLIB_API_END
+    AQ_API_END
 }

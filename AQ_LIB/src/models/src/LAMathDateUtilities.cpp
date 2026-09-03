@@ -76,7 +76,7 @@ StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjust
 {
 	// Validation
 	upper( term );
-	MLIB_REQUIRE( unadjustedStartDate <= unadjustedEndDate, "Invalid Cashflow Date: The Start Date '" + unadjustedStartDate.stringWithFormat("DD-MMM-YY") + "' must be before the End Date '" + unadjustedEndDate.stringWithFormat("DD-MMM-YY") + "'" )
+	AQ_REQUIRE( unadjustedStartDate <= unadjustedEndDate, "Invalid Cashflow Date: The Start Date '" + unadjustedStartDate.stringWithFormat("DD-MMM-YY") + "' must be before the End Date '" + unadjustedEndDate.stringWithFormat("DD-MMM-YY") + "'" )
 
 
 	// 1.	Initialize Result - Default to Short Start if Missing
@@ -167,7 +167,7 @@ StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjust
 
 			// Counter Guard
 			counter++;
-			MLIB_REQUIRE( counter < maxCount, "Unable to find the stub date for the stub type provided." )
+			AQ_REQUIRE( counter < maxCount, "Unable to find the stub date for the stub type provided." )
 		}
 
 		// Adjust For Holidays and Update Stub Date
@@ -251,7 +251,7 @@ StubDateAndType LAMathDateUtilities::getStubDateAndType( const LADate & unadjust
 
 			// Counter Guard
 			counter++;
-			MLIB_REQUIRE( counter < maxCount, "Unable to find the stub date for the stub type provided." )
+			AQ_REQUIRE( counter < maxCount, "Unable to find the stub date for the stub type provided." )
 		}
 
 		// Adjust For Holidays and Update Stub Date
@@ -522,7 +522,7 @@ DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
         }
         else if (stubTypeString == "SHORTSTART" || stubTypeString == "SS")
         {
-			MLIB_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
+			AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
             stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_START_STUBTYPE );
                 
@@ -532,7 +532,7 @@ DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
         }
         else if (stubTypeString == "LONGSTART" || stubTypeString == "LS")
         {
-			MLIB_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
+			AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
             stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_START_STUBTYPE );
                 
@@ -542,7 +542,7 @@ DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
         }
         else if (stubTypeString == "SHORTEND" || stubTypeString == "SE")
         {
-			MLIB_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
+			AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
             stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::SHORT_END_STUBTYPE );
 
@@ -552,7 +552,7 @@ DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
         }
         else if (stubTypeString == "LONGEND" || stubTypeString == "LE")
         {
-			MLIB_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
+			AQ_THROW_IF(firstStubDate != NULL || lastStubDate != NULL, "Must not specifiy 'StubType' with 'FirstStubDate' or 'LastStubDate'." )
 
             stubInfo = LAMathDateUtilities::getStubDateAndType(unadjustedStart, unadjustedEnd, term, slidingRule, calendar, rollConvention, etrading::LONG_END_STUBTYPE );
 
@@ -562,7 +562,7 @@ DateVector LAMathDateUtilities::generateSchedule(const LADate& unadjustedStart,
         }
         else
         {
-            MLIB_THROW("Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).")
+            AQ_THROW("Stub Type must be None, ShortStart (SS), LongStart (LS), ShortEnd (SE) or LongEnd (LE).")
         }
     }
     // ////////////////////////////////////////////////////////////////////////////////////////////////////

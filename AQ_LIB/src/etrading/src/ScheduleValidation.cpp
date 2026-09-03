@@ -53,7 +53,7 @@ namespace etrading
         // We also check if the final character of the string is consistent with a tenor string ending with (D)ay, (W)eek, (M)onth, (Y)ear.
 
         const unsigned int dateStringSize = dateString.size();
-        MLIB_REQUIRE( dateStringSize > 0, "Invalid Date: Empty Date Parameter")
+        AQ_REQUIRE( dateStringSize > 0, "Invalid Date: Empty Date Parameter")
 
         bool isTenorFormat = false;
 
@@ -94,11 +94,11 @@ namespace etrading
         if( !isInDateFormat )
         {
             // DateString is in Tenor Format
-            MLIB_REQUIRE( LADateScheduleHelpers::isValidDate( asOfDate ), "Invalid Date: Unable to convert DateTenor to a date" )
+            AQ_REQUIRE( LADateScheduleHelpers::isValidDate( asOfDate ), "Invalid Date: Unable to convert DateTenor to a date" )
             resultDate = LADateScheduleHelpers::getDate( asOfDate, dateOrTenor, businessDayAdjustment, calendar );
         }
 
-        MLIB_REQUIRE( LADateScheduleHelpers::isValidDate( resultDate ), "Invalid Date " + dateOrTenor )
+        AQ_REQUIRE( LADateScheduleHelpers::isValidDate( resultDate ), "Invalid Date " + dateOrTenor )
         return resultDate;
     }
 
@@ -1320,7 +1320,7 @@ namespace etrading
         size_t columnSize = input[0].size();
         for (size_t i = 1; i < rowSize; ++i) // Start from base 1 not 0
         {
-            MLIB_REQUIRE( columnSize == input[i].size(), "#Error: Data Validation - only rectangular matrices supported. Data rows and columns must be of the same size." );
+            AQ_REQUIRE( columnSize == input[i].size(), "#Error: Data Validation - only rectangular matrices supported. Data rows and columns must be of the same size." );
         }
         
         DoubleMatrix output( columnSize, DoubleVector( rowSize, 0.0 ) );
@@ -1480,7 +1480,7 @@ namespace etrading
         size_t columnSize = input[0].size();
         for (size_t i = 1; i < rowSize; ++i) // Start from base 1 not 0
         {
-            MLIB_REQUIRE( columnSize == input[i].size(), "#Error: Data Validation - only rectangular matrices supported. Data rows and columns must be of the same size." );
+            AQ_REQUIRE( columnSize == input[i].size(), "#Error: Data Validation - only rectangular matrices supported. Data rows and columns must be of the same size." );
         }
         std::vector< std::vector<T> > output( columnSize, std::vector<T>( rowSize ) );
 
@@ -1730,7 +1730,7 @@ namespace etrading
         LAString NO_ROLLCONVENTION("");
 		
 		const LAString liborTenor = etrading::fromFrequencyToTerm(frequency);
-		MLIB_THROW_IF( liborTenor == LAString(), "Invalid Stub Rate or Unknown Libor Tenor in Float Schedule" )
+		AQ_THROW_IF( liborTenor == LAString(), "Invalid Stub Rate or Unknown Libor Tenor in Float Schedule" )
 
 		// If Libor Tenor is 1D or 1W then such a rate is a stub rate, since we don't build 1D or 1W curves
 		// Note: OIS rates are Annualized Compounded 1D rates not 1D
@@ -1745,8 +1745,8 @@ namespace etrading
             useRollConvention = false;
         }
 
-        MLIB_REQUIRE( ( useRollConvention && rollDay == 0 ) || !useRollConvention, "Invalid Swap Schedule - Inconsistent roll day and roll convention settings" )
-        MLIB_REQUIRE( rollDay >=0, "Invalid Swap Schedule - RollDay cannot be negative" )
+        AQ_REQUIRE( ( useRollConvention && rollDay == 0 ) || !useRollConvention, "Invalid Swap Schedule - Inconsistent roll day and roll convention settings" )
+        AQ_REQUIRE( rollDay >=0, "Invalid Swap Schedule - RollDay cannot be negative" )
         
         // All Maturity Dates must be adjusted to compare with an adjusted regular swap end date.
         if ( !isMaturityAdjusted )
@@ -1971,8 +1971,8 @@ namespace etrading
 		// Initialize to false
 		bool isIrregularStub = false;
 
-		MLIB_REQUIRE(!schParams.accrualStartDate().empty(), "ScheduleParameters Error - No accrualStartDate is provided.")
-		MLIB_REQUIRE(!schParams.accrualEndDateOrTenor().empty(), "ScheduleParameters Error - No accrualEndDateOrTenor is provided.")
+		AQ_REQUIRE(!schParams.accrualStartDate().empty(), "ScheduleParameters Error - No accrualStartDate is provided.")
+		AQ_REQUIRE(!schParams.accrualEndDateOrTenor().empty(), "ScheduleParameters Error - No accrualEndDateOrTenor is provided.")
 
 		if (schParams.firstStub().size() != 0 || schParams.lastStub().size() != 0)
 		{

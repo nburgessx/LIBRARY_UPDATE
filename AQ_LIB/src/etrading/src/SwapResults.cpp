@@ -58,7 +58,7 @@ namespace etrading
     // Accessors
     std::shared_ptr<SwapRiskResults> SwapResults::swapRiskResults() const
     { 
-		MLIB_REQUIRE( swapRiskResults_ != nullptr, "Invalid Swap Results: Swap Risk Results do not exist" )
+		AQ_REQUIRE( swapRiskResults_ != nullptr, "Invalid Swap Results: Swap Risk Results do not exist" )
         return swapRiskResults_;
     }
 

@@ -48,7 +48,7 @@ namespace etrading
         size_t columnSize = input[0].size();
         for (size_t i = 1; i < rowSize; ++i) // Start from base 1 not 0
         {
-            MLIB_REQUIRE( columnSize == input[i].size(), "Invalid Data - Transpose of jagged matrices is not supported" );
+            AQ_REQUIRE( columnSize == input[i].size(), "Invalid Data - Transpose of jagged matrices is not supported" );
         }
         
         // Transpose Data
@@ -67,8 +67,8 @@ namespace etrading
     // Converts an LAStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
     VariantMatrix toVariantMatrixFromLAStringMatrix( const LAStringMatrix & laStringMatrix, const bool & transpose )
     {
-        MLIB_REQUIRE( !laStringMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
-        MLIB_REQUIRE( !laStringMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
+        AQ_REQUIRE( !laStringMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
+        AQ_REQUIRE( !laStringMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
         
         if ( transpose )
         {
@@ -103,8 +103,8 @@ namespace etrading
     // Converts a StandardStringMatrix to a JSON VariantMatrix, note transposes by default to match the default JSON schema convention
     VariantMatrix toVariantMatrixFromStandardStringMatrix( const StandardStringMatrix & standardStringMatrix, const bool & transpose )
     {
-        MLIB_REQUIRE( !standardStringMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
-        MLIB_REQUIRE( !standardStringMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
+        AQ_REQUIRE( !standardStringMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
+        AQ_REQUIRE( !standardStringMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
         
         if ( transpose )
         {
@@ -139,8 +139,8 @@ namespace etrading
     // Converts a VariantMatrix to LAStringMatrix, note transposes by default to match the default JSON schema convention
     LAStringMatrix toLAStringMatrixFromVariantMatrix( const VariantMatrix & variantMatrix, const bool & transpose )
     {
-        MLIB_REQUIRE( !variantMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
-        MLIB_REQUIRE( !variantMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
+        AQ_REQUIRE( !variantMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
+        AQ_REQUIRE( !variantMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
        
         if ( transpose )
         {
@@ -175,8 +175,8 @@ namespace etrading
     // Converts a VariantMatrix to StandardStringMatrix, note transposes by default to match the default JSON schema convention
     StandardStringMatrix toStandardStringMatrixFromVariantMatrix( const VariantMatrix & variantMatrix, const bool & transpose )
     {
-        MLIB_REQUIRE( !variantMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
-        MLIB_REQUIRE( !variantMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
+        AQ_REQUIRE( !variantMatrix.empty(),      "Invalid Data: Data Matrix is Empty" )
+        AQ_REQUIRE( !variantMatrix[0].empty(),   "Invalid Data: Data Matrix is Empty" )
        
         if ( transpose )
         {
@@ -270,7 +270,7 @@ namespace etrading
                 break;
 
             default:
-                MLIB_THROW( "Invalid Variant Data Type" );
+                AQ_THROW( "Invalid Variant Data Type" );
                 break;
         }
 
@@ -751,14 +751,14 @@ namespace etrading
                 break;
 
             default:
-                MLIB_THROW( "Invalid variant type" );
+                AQ_THROW( "Invalid variant type" );
                 // We should never reach here
                 return true;
                 break;
         }
             
         // We should never reach here
-        MLIB_THROW("Variant '==' operator failure")
+        AQ_THROW("Variant '==' operator failure")
         return true;
     }
 
@@ -799,14 +799,14 @@ namespace etrading
                 break;
 
             default:
-                MLIB_THROW( "Invalid variant type" );
+                AQ_THROW( "Invalid variant type" );
                 // We should never reach here
                 return true;
                 break;
         }
             
         // We should never reach here
-        MLIB_THROW("Variant '<' operator failure")
+        AQ_THROW("Variant '<' operator failure")
         return true;
     }
 
@@ -847,14 +847,14 @@ namespace etrading
                 break;
 
             default:
-                MLIB_THROW( "Invalid variant type" );
+                AQ_THROW( "Invalid variant type" );
                 // We should never reach here
                 return true;
                 break;
         }
             
         // We should never reach here
-        MLIB_THROW("Variant '>' operator failure")
+        AQ_THROW("Variant '>' operator failure")
         return true;
     }
 
@@ -895,14 +895,14 @@ namespace etrading
                 break;
 
             default:
-                MLIB_THROW( "Invalid variant type" );
+                AQ_THROW( "Invalid variant type" );
                 // We should never reach here
                 return true;
                 break;
         }
             
         // We should never reach here
-        MLIB_THROW("Variant '<=' operator failure")
+        AQ_THROW("Variant '<=' operator failure")
         return true;
     }
 
@@ -943,14 +943,14 @@ namespace etrading
                 break;
 
             default:
-                MLIB_THROW( "Invalid variant type" );
+                AQ_THROW( "Invalid variant type" );
                 // We should never reach here
                 return true;
                 break;
         }
             
         // We should never reach here
-        MLIB_THROW("Variant '>=' operator failure")
+        AQ_THROW("Variant '>=' operator failure")
         return true;
     }
 }

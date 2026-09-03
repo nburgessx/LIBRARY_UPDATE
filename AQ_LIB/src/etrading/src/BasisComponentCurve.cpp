@@ -177,7 +177,7 @@ BasisComponentCurve::BasisComponentCurve(const LAString& curveName,
 			}
 			else
 			{
-				MLIB_THROW("Interpolation can't be properly initialised for curve '" + curveName_ + "'");
+				AQ_THROW("Interpolation can't be properly initialised for curve '" + curveName_ + "'");
 			}
 		}
 	}
@@ -1646,7 +1646,7 @@ void BasisComponentCurve::initialise()
 		i_termMatVec_.size() != swapCount_ ||
 		refCurve_logDF_.size() != swapCount_)
 	{
-		MLIB_THROW("Inconsistent data sizes encountered when trying to construct internal basis swap instrument for basis curve calibration");
+		AQ_THROW("Inconsistent data sizes encountered when trying to construct internal basis swap instrument for basis curve calibration");
 	}
 
 	for (unsigned int i = 0; i < swapCount_; ++i)
@@ -1656,7 +1656,7 @@ void BasisComponentCurve::initialise()
 			tauVec_[i].size() != gridSize ||
 			refCurve_logDF_[i].size() != gridSize)
 		{
-			MLIB_THROW("Inconsistent data sizes encountered when trying to construct internal basis swap instrument for basis curve calibration");
+			AQ_THROW("Inconsistent data sizes encountered when trying to construct internal basis swap instrument for basis curve calibration");
 		}
 	}
 }
@@ -1858,7 +1858,7 @@ double BasisComponentCurve::calcAgainstPV(const double spread,
 			if (isFWDInter_)
 			{
 				//rate = fwd_inter->value(i_gridMat[j].front());
-				MLIB_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
+				AQ_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
 			}
 			else
 			{
@@ -1890,7 +1890,7 @@ double BasisComponentCurve::calcAgainstPV(const double spread,
 			if (isFWDInter_)
 			{
 				//rate = fwd_inter->value(i_gridMat[j].front());
-				MLIB_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
+				AQ_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
 			}
 			else
 			{
@@ -1974,7 +1974,7 @@ double BasisComponentCurve::calcAgainstPV_MTM(
 			if (isFWDInter_)
 			{
 				//rate = fwd_inter->value(i_gridMat[j].front());
-				MLIB_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
+				AQ_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
 			}
 			else
 			{
@@ -2014,7 +2014,7 @@ double BasisComponentCurve::calcAgainstPV_MTM(
 			if (isFWDInter_)
 			{
 				//rate = fwd_inter->value(i_gridMat[j].front());
-				MLIB_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
+				AQ_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
 			}
 			else
 			{
@@ -2095,7 +2095,7 @@ double BasisComponentCurve::calcTargetPV_calibDfCurve(const double spread,
 			if (isFWDInter_)
 			{
 				//rate = fwd_inter->value(i_gridMat[j].front());
-				MLIB_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
+				AQ_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
 			}
 			else
 			{
@@ -2121,7 +2121,7 @@ double BasisComponentCurve::calcTargetPV_calibDfCurve(const double spread,
 			if (isFWDInter_)
 			{
 				//rate = fwd_inter->value(i_gridMat[j].front());
-				MLIB_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
+				AQ_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
 			}
 			else
 			{
@@ -2200,7 +2200,7 @@ double BasisComponentCurve::calcTargetPV_calibDfCurve_MTM(const double spread,
 			if (isFWDInter_)
 			{
 				//rate = fwd_inter->value(i_gridMat[j].front());
-				MLIB_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
+				AQ_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
 			}
 			else
 			{
@@ -2242,7 +2242,7 @@ double BasisComponentCurve::calcTargetPV_calibDfCurve_MTM(const double spread,
 			if (isFWDInter_)
 			{
 				//rate = fwd_inter->value(i_gridMat[j].front());
-				MLIB_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
+				AQ_THROW("Global curve engine does not support the usage of forward rate interpolation when calibrating basis curves");
 			}
 			else
 			{
@@ -2739,7 +2739,7 @@ void BasisComponentCurve::postProcessing(LAObject& yieldCurveProEntity)
 		//--------------------------------------------------------------------
 		// Developer's note on 20 June 2018:
 		// Global yield curve engine does not support isYieldSpreadCalc == TRUE for now
-		MLIB_THROW("Global yield curve engine does not support isYieldSpreadCalc == TRUE");
+		AQ_THROW("Global yield curve engine does not support isYieldSpreadCalc == TRUE");
 	}
 	else
 	{

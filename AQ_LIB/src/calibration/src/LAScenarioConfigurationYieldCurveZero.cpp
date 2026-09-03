@@ -280,7 +280,7 @@ LAScenarioConfigurationYieldCurveZero::createScenario(LADataInstance &dataInstan
 		LAPriceDataCalendar cal;
 		if (param.isBusinessDayRoll)
 		{
-			if (param.calendar == MLIB_NO_DATA)
+			if (param.calendar == AQ_NO_DATA)
 			{
 				throw LACoreInvalidData("BusinessDayRoll must set calendar.", __FILE__, __LINE__); 
 			}
@@ -461,7 +461,7 @@ LAScenarioConfigurationYieldCurveZero::createScenario(LADataInstance &dataInstan
 	// set original yield data to yield pro
 	bYieldPro.getYieldData().convertFromString(bYieldDataName);
 	// hirayake data out
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataoutCurve(dataInstance, bYieldPro, ret);
 		/*dataInstance.getReferencePool().completeDependency();

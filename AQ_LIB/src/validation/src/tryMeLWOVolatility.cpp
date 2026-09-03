@@ -58,8 +58,8 @@ namespace validation_api
 		size_t nColumnHeaders = dataBlockNames.size();
 		size_t nDataColumns = infoBlocks.size();
 
-		MLIB_REQUIRE(nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided")
-			MLIB_REQUIRE(nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " + std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " + std::to_string(static_cast<long long>(nDataColumns)))
+		AQ_REQUIRE(nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided")
+			AQ_REQUIRE(nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " + std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " + std::to_string(static_cast<long long>(nDataColumns)))
 
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled())
@@ -85,7 +85,7 @@ namespace validation_api
 			return (dataBlockName.empty() || dataBlockName == "");
 		});
 
-		MLIB_REQUIRE(!hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString(dataBlockNames))
+		AQ_REQUIRE(!hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString(dataBlockNames))
 
 		etrading::SabrMarketData sabrMarketData(objectName, dataBlockNames, infoBlocks);
 
@@ -116,8 +116,8 @@ namespace validation_api
 		size_t nColumnHeaders = dataBlockNames.size();
 		size_t nDataColumns = infoBlocks.size();
 
-		MLIB_REQUIRE(nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided")
-		MLIB_REQUIRE(nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " + std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " + std::to_string(static_cast<long long>(nDataColumns)))
+		AQ_REQUIRE(nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided")
+		AQ_REQUIRE(nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " + std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " + std::to_string(static_cast<long long>(nDataColumns)))
 
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled())
@@ -143,7 +143,7 @@ namespace validation_api
 			return (dataBlockName.empty() || dataBlockName == "");
 		});
 
-		MLIB_REQUIRE(!hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString(dataBlockNames))
+		AQ_REQUIRE(!hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString(dataBlockNames))
 
 		// Create the Credit Model object
 		etrading::SabrModel sabrModel(objectName, dataBlockNames, infoBlocks);

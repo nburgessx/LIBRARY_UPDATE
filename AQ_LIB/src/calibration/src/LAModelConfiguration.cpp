@@ -144,7 +144,7 @@ LAModelConfiguration::createSDEGenerator(const LAString &model) const
 	{
 		LAString is3FStr = staticData.getStaticData(KEY_HW_IS3F);
 		LADataBool is3F;
-		if (is3FStr == MLIB_NO_DATA)
+		if (is3FStr == AQ_NO_DATA)
 		{
 			is3F.set(false);
 		}
@@ -166,7 +166,7 @@ LAModelConfiguration::createSDEGenerator(const LAString &model) const
 		// check 3F
 		LAString is3FStr = staticData.getStaticData(KEY_PTBERG_IS3F);
 		LADataBool is3F;
-		if (is3FStr == MLIB_NO_DATA)
+		if (is3FStr == AQ_NO_DATA)
 		{
 			is3F.set(false);
 		}

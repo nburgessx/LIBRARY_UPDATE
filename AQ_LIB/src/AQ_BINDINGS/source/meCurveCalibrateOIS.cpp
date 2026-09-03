@@ -2,7 +2,7 @@
 #include "LACoreTemplateType.h"
 #include "meCurveCalibrateOIS.h"
 #include "tryMeCurveCalibrateOIS.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 /* @brief			swig interface for meCurveCalibrateOIS
 *  @param [in]		curveCollection		The curve collection ID
@@ -29,7 +29,7 @@ const std::string meCurveCalibrateOIS(const std::string& curveCollection,
 								const SWIG_STRINGMATRIX & swapConv, 
 								const SWIG_STRINGMATRIX & swapRates) 
 {
-	MLIB_API_START
+	AQ_API_START
     LAString ret;
 	
 	// marshall all inputs
@@ -74,5 +74,5 @@ const std::string meCurveCalibrateOIS(const std::string& curveCollection,
                                         tmp_swapConv,
                                         tmp_swapRates);
 	return ret.getCString();
-    MLIB_API_END
+    AQ_API_END
 }

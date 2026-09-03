@@ -243,7 +243,7 @@ namespace etrading
 		calendar_ = modelProperties.getCompulsoryValue(SABR_MODEL_PROPERTIES_KEY::CALENDAR);
 
 		approxMethod_ = toSABRApproxMethodEnum(modelProperties.getCompulsoryValueAsLAString(SABR_MODEL_PROPERTIES_KEY::APPROX_METHOD).getCString());
-		MLIB_REQUIRE(approxMethod_ == HAGAN_APPROX_METHOD, "Approximation Method only support 'HAGAN' at the moment.");
+		AQ_REQUIRE(approxMethod_ == HAGAN_APPROX_METHOD, "Approximation Method only support 'HAGAN' at the moment.");
 
 		auto calibMethod = modelProperties.getCompulsoryValueAsLAString(SABR_MODEL_PROPERTIES_KEY::CALIBRATION_METHOD);
 
@@ -262,7 +262,7 @@ namespace etrading
 		}
 
 		auto calibrationTarget = toSABRCalibrationTargetEnum(modelProperties.getCompulsoryValueAsString(SABR_MODEL_PROPERTIES_KEY::TARGET));
-		MLIB_REQUIRE(calibrationTarget == SABR_CALIB_VOLATILITY, "Calibration Target only support 'Volatility' at the moment.");
+		AQ_REQUIRE(calibrationTarget == SABR_CALIB_VOLATILITY, "Calibration Target only support 'Volatility' at the moment.");
 
 		bool alphaFromAtmVol = modelProperties.getOptionalValueAsBool(SABR_MODEL_PROPERTIES_KEY::ALPHA_FROM_ATM_VOL, true);
 			
@@ -271,11 +271,11 @@ namespace etrading
 
 		if (calibrationTarget == SABR_CALIB_VOLATILITY)
 		{
-			MLIB_REQUIRE(volMarketDataBlock.size() > 0 && volMarketDataBlock[0].size() >= 2, "volMarketDataBlock should have at least 2 columns: volObjectName, weight.")
+			AQ_REQUIRE(volMarketDataBlock.size() > 0 && volMarketDataBlock[0].size() >= 2, "volMarketDataBlock should have at least 2 columns: volObjectName, weight.")
 		}
 		else
 		{
-			MLIB_REQUIRE(volMarketDataBlock.size() > 0 && volMarketDataBlock[0].size() == 3, "volMarketDataBlock should have 3 columns: volObjectName, weight, sign.")
+			AQ_REQUIRE(volMarketDataBlock.size() > 0 && volMarketDataBlock[0].size() == 3, "volMarketDataBlock should have 3 columns: volObjectName, weight, sign.")
 		}
 
 		//find ATM vol market data
@@ -290,7 +290,7 @@ namespace etrading
 				break;
 			}
 		}
-		MLIB_REQUIRE(volObjectAtmName.size() > 0, "ATM VOL Market Data Name is required.")
+		AQ_REQUIRE(volObjectAtmName.size() > 0, "ATM VOL Market Data Name is required.")
 
 		auto volAtmObject = getSabrMarketData(volObjectAtmName);
 
@@ -340,7 +340,7 @@ namespace etrading
 			}
 
 			//Check size
-			MLIB_REQUIRE(strikeAtmMat.size() == annuityMat.size() && strikeAtmMat[0].size() == annuityMat[0].size(), "strike matrix and annuity matrix are inconsistent!");
+			AQ_REQUIRE(strikeAtmMat.size() == annuityMat.size() && strikeAtmMat[0].size() == annuityMat[0].size(), "strike matrix and annuity matrix are inconsistent!");
 		}
 
 		DoubleVector weights;
@@ -365,7 +365,7 @@ namespace etrading
 			DoubleMatrix volMatrix = volObject->getInstrumentQuoteMatrix();
 
 			//Check size
-			MLIB_REQUIRE(rowSize == volMatrix.size() && columnSize == volMatrix[0].size(), "The sizes of vol matrix and ATM vol matrix are inconsistent!");
+			AQ_REQUIRE(rowSize == volMatrix.size() && columnSize == volMatrix[0].size(), "The sizes of vol matrix and ATM vol matrix are inconsistent!");
 
 			// If the vol matrix is relative, then change the value to absolute by adding the spread to ATM VOL
 			if (volObject->getValyeType() == RELATIVE_SABR_VALUETYPE)
@@ -401,7 +401,7 @@ namespace etrading
 
 			// If the weight is zero, don't include the instruments to the calibration
 			double weight = StringToNumber<double>(volMarketDataBlock[i][1].getCString());
-			if (MLIB_IS_EQUAL_ZERO(weight))
+			if (AQ_IS_EQUAL_ZERO(weight))
 			{
 				continue;
 			}
@@ -418,11 +418,11 @@ namespace etrading
 			signs.push_back(signValue);
 		}
 
-		//MLIB_REQUIRE(MLIB_IS_LESS_THAN_OR_EQUAL(totalWeight, 1.0), "Total weights cannot be greater than 100%")
+		//AQ_REQUIRE(AQ_IS_LESS_THAN_OR_EQUAL(totalWeight, 1.0), "Total weights cannot be greater than 100%")
 
 		//Model parameter block: alpha, beta, nu, rho - first column true to calibrate this paramter; second column - initial values.
 		std::vector<LabelValueBlock> modelParametersMatrix = etrading::buildMultiLabelValueBlock(getLAStringMatrixFromFreeObject(freeObject_, toString(SABR_MODEL_PARAMETERS)));
-		MLIB_REQUIRE(modelParametersMatrix.size() == 2, "modelParametersMatrix should have two columns for values.")
+		AQ_REQUIRE(modelParametersMatrix.size() == 2, "modelParametersMatrix should have two columns for values.")
 
 		std::vector<bool> calibFlag_bool(4);
 
@@ -488,7 +488,7 @@ namespace etrading
 				isLognormal_);
 
 			//Throw error if there is any
-			MLIB_REQUIRE(erroMsg.size() == 0, erroMsg.getCString());
+			AQ_REQUIRE(erroMsg.size() == 0, erroMsg.getCString());
 		}
 		
 		//Save calibrated paramters
@@ -522,7 +522,7 @@ namespace etrading
 			case SABR_MODEL_PARAMETERS:
 			{
 				std::vector<LabelValueBlock> modelParametersMatrix = etrading::buildMultiLabelValueBlock(getLAStringMatrixFromFreeObject(freeObject_, propertyName));
-				MLIB_REQUIRE(modelParametersMatrix.size() == 2, "modelParametersMatrix should have two columns for values.")
+				AQ_REQUIRE(modelParametersMatrix.size() == 2, "modelParametersMatrix should have two columns for values.")
 				validateKeysForLVB(model_parameters_lvbKeys(), modelParametersMatrix[0].getKeys(), validateKeys, propertyName);
 				break;
 			}
@@ -631,7 +631,7 @@ namespace etrading
 		case NU_SABR:
 			return LAMathSwaptionVolUtility::calcSABRParam(nuMatrix_, expiryTerm, tenorTerm, expiryTermVector_, tenorTermVector_);
 		default:
-			MLIB_THROW("Only suport parameters: ALPHA, BETA, RHO, NU.");
+			AQ_THROW("Only suport parameters: ALPHA, BETA, RHO, NU.");
 		}
 
 		return 0;

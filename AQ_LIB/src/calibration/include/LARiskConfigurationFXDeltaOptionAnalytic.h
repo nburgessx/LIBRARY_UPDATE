@@ -39,7 +39,7 @@ public:
 protected:
 	//==============================================
 	// get target names 
-	virtual  LAString getTargetNames(const LAString &fx, LADataInstance &dataInstance)  const {fx; return MLIB_NO_DATA;};
+	virtual  LAString getTargetNames(const LAString &fx, LADataInstance &dataInstance)  const {fx; return AQ_NO_DATA;};
 	//==============================================
 	// create risk object
 	virtual std::vector<std::pair<LAString, std::vector<LAObject *> > > createRiskEntity(LAObjectPool &objPool) const;

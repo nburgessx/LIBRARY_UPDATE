@@ -69,7 +69,7 @@ LAObjectConfigurationLMM::getSDETimeGrid(DoubleArray &timeGrid) const
 		freq = FREQ_QUARTERLY;
 	}
 	LAStringVector exTenor = LAMarketDataLMM::getCanonicalGridExTenor();
-	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA);
+	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA);
  	LAMarketDataLMM::getCanonicalGrid(tmp1, timeGrid, tmp2, tmp3, asOfDate, dayCount, freq, maxTerm, exTenor, isDataOut);
 
 	timeGrid.pop_back();
@@ -101,7 +101,7 @@ LAObjectConfigurationLMM::getSDEIntegralTimeGrid(DoubleArray &timeGrid) const
 		freq = FREQ_QUARTERLY;
 	}
 	LAStringVector exTenor = LAMarketDataLMM::getGridExTenor();
-	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA);
+	const bool isDataOut = (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA);
  	LAMarketDataLMM::getCanonicalGrid(tmp1, timeGrid, tmp2, tmp3, asOfDate, dayCount, freq, maxTerm, exTenor, isDataOut);
 	timeGrid.pop_back();
 

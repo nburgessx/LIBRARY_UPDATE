@@ -82,7 +82,7 @@ namespace etrading
 
 		if ( nCreditModelColumns != 2 )
 		{
-			MLIB_THROW( "CREDIT_MODELS should contain 2 columns. Found " + std::to_string( static_cast<long long> ( nCreditModelColumns )) + " columns.");
+			AQ_THROW( "CREDIT_MODELS should contain 2 columns. Found " + std::to_string( static_cast<long long> ( nCreditModelColumns )) + " columns.");
 		}
 
 		const size_t nCreditModelRows = creditModelConfigs[0].size();
@@ -95,7 +95,7 @@ namespace etrading
 				// Verify that the credit model actually exists
 				auto creditModel = getCreditModel( creditModelName );
 				LADate creditModelAsOfDate = creditModel->getAsOfDate();
-				MLIB_REQUIRE( creditModelAsOfDate == asOfDate_, "Credit Model: " + creditModelName + " has different asOf date to credit basket" );
+				AQ_REQUIRE( creditModelAsOfDate == asOfDate_, "Credit Model: " + creditModelName + " has different asOf date to credit basket" );
 				
 				// Extract the correlation beta
 				Variant value = creditModelConfigs[1][i];
@@ -107,7 +107,7 @@ namespace etrading
 				{
 					std::string stringValue = value.getValue<std::string>();
 					boost::trim( stringValue );
-					MLIB_REQUIRE( stringValue != "", "Missing correlationBeta for credit model: " + creditModelName );
+					AQ_REQUIRE( stringValue != "", "Missing correlationBeta for credit model: " + creditModelName );
 					char * pFirstNonNumber;
                     correlationBeta = strtod( stringValue.c_str(), &pFirstNonNumber );
 					break;
@@ -119,16 +119,16 @@ namespace etrading
 					correlationBeta = static_cast<double> (value.getValue<int>() );
 					break;
 				default:
-					MLIB_THROW( "Unexpected data type in Credit Basket Model CREDIT_MODELS Correlation Beta column ");
+					AQ_THROW( "Unexpected data type in Credit Basket Model CREDIT_MODELS Correlation Beta column ");
 				}
 				
-				MLIB_REQUIRE( std::fabs( correlationBeta ) <= 1.0, "Correlation Beta must be in the range +/- 100%" );
+				AQ_REQUIRE( std::fabs( correlationBeta ) <= 1.0, "Correlation Beta must be in the range +/- 100%" );
 
 				creditModelNames_.push_back( creditModelName );
 				correlationBetas_.push_back( correlationBeta );
 			}
 		}
-		MLIB_REQUIRE( creditModelNames_.size() > 0, "The credit basket should contain at least one credit model.");
+		AQ_REQUIRE( creditModelNames_.size() > 0, "The credit basket should contain at least one credit model.");
 	}
 
 	// @brief	Called by constructors to calibrate hazard rates from the provided market data
@@ -140,8 +140,8 @@ namespace etrading
 		basketType_   = toCreditBasketTypeEnum( modelProperties.getCompulsoryValueAsLAString( CREDITBASKETMODEL_MODEL_PROPERTIES_KEY::BASKET_TYPE ).getCString() );
 		nthToDefault_ = (int) modelProperties.getCompulsoryValueAsDouble( CREDITBASKETMODEL_MODEL_PROPERTIES_KEY::NTH_TO_DEFAULT );
 
-		MLIB_REQUIRE( basketType_ == HOMOGENEOUS_LOSS, "Only HomogeneousLoss baskets are currently supported." );
-		MLIB_REQUIRE( nthToDefault_ == 1, "Only First to default ( NthToDefault=1 ) baskets are currently supported.");
+		AQ_REQUIRE( basketType_ == HOMOGENEOUS_LOSS, "Only HomogeneousLoss baskets are currently supported." );
+		AQ_REQUIRE( nthToDefault_ == 1, "Only First to default ( NthToDefault=1 ) baskets are currently supported.");
 
 		validateUnderlyingCreditModels();
 	}
@@ -169,11 +169,11 @@ namespace etrading
 		{
 			if ( fromDate  < asOfDate_ )
 			{
-				MLIB_THROW( "Invalid fromDate '" + toDate.stringWithFormat() + "' is earlier than model asOfDate '" + asOfDate_.stringWithFormat() + "'." );
+				AQ_THROW( "Invalid fromDate '" + toDate.stringWithFormat() + "' is earlier than model asOfDate '" + asOfDate_.stringWithFormat() + "'." );
 			}
 			if ( toDate < fromDate )
 			{
-				MLIB_THROW( "Invalid toDate '" + toDate.stringWithFormat() + "' is earlier than fromDate '" + fromDate.stringWithFormat() + "'." );
+				AQ_THROW( "Invalid toDate '" + toDate.stringWithFormat() + "' is earlier than fromDate '" + fromDate.stringWithFormat() + "'." );
 			}
 		}
 	}
@@ -222,7 +222,7 @@ namespace etrading
 			const double divisor = sqrt( 1.0 - correlationBeta * correlationBeta );
 
 			double correlationFactor = 0.0;
-			if ( MLIB_IS_EQUAL_ZERO( divisor ) )
+			if ( AQ_IS_EQUAL_ZERO( divisor ) )
 			{
 				if ( numerator > 0.0 )
 				{
@@ -260,7 +260,7 @@ namespace etrading
 		std::vector<double> defaultFrontier = calibrateDefaultFrontier( toDate );
 
 		const size_t nCorrelationBetas = correlationBetas_.size();
-		MLIB_REQUIRE( nCorrelationBetas == defaultFrontier.size(), "Length of correlation vector does not match numberof credit basket xassets" );
+		AQ_REQUIRE( nCorrelationBetas == defaultFrontier.size(), "Length of correlation vector does not match numberof credit basket xassets" );
 		
 		// Transform the integration limits from minLimit / maxLimit to +/-1 used by Gauss-Legendre integration routine.
 		const double minLimit = -10.0;
@@ -288,8 +288,8 @@ namespace etrading
 		// Integrate over the market factor Z
 		const double survivalProbability = integrator( integrandFunction );
 
-		MLIB_REQUIRE( MLIB_IS_LESS_THAN_OR_EQUAL(survivalProbability, 1.0) , "Problem with credit basket integration: Survival Probability value is greater than 1.0");
-		MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL(survivalProbability, 0.0), "Problem with credit basket integration: Survival Probability value is less than 0.0");
+		AQ_REQUIRE( AQ_IS_LESS_THAN_OR_EQUAL(survivalProbability, 1.0) , "Problem with credit basket integration: Survival Probability value is greater than 1.0");
+		AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL(survivalProbability, 0.0), "Problem with credit basket integration: Survival Probability value is less than 0.0");
 
 		return survivalProbability;
 	}

@@ -90,7 +90,7 @@ namespace validation_api
         RECORD_INPUTS( curveLVB, parameterLVB, trimmedDiscountFactors ) // forwardAdjustments // TODO: Fix me! - Record Inputs does not support StandardStringMatrix
 		
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
         // Create the Discount Factors and Curve Results Object
         // -------------------------------------------------------------------------------
@@ -125,12 +125,12 @@ namespace validation_api
         RECORD_INPUTS( curveCollection, curveIndex )
 
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
         // Check if Curve Results Exist
         if ( !etrading::doesExistCurveResultsDiscountFactors( curveCollection, curveIndex ) )
         {
-            MLIB_THROW( "Discount Factor Results for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist" );
+            AQ_THROW( "Discount Factor Results for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist" );
         }
 
         // Get Curve Results
@@ -150,12 +150,12 @@ namespace validation_api
         RECORD_INPUTS( curveCollection, curveIndex, paymentDates )
 
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
         // Check if Curve Results Exist
         if ( !etrading::doesExistCurveResultsDiscountFactors( curveCollection, curveIndex ) )
         {
-            MLIB_THROW( "Discount Factors Results for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist" );
+            AQ_THROW( "Discount Factors Results for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist" );
         }
 
         // Get Curve Results
@@ -228,12 +228,12 @@ namespace validation_api
         RECORD_INPUTS( curveCollection, curveIndex, fixingDates, isFwdInter )
 
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
         // Check if Curve Results Exist
         if ( !etrading::doesExistCurveResultsDiscountFactors( curveCollection, curveIndex ) )
         {
-            MLIB_THROW( "Forward Rate Results for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist" )
+            AQ_THROW( "Forward Rate Results for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist" )
         }
 
         // Get Curve Results
@@ -263,24 +263,24 @@ namespace validation_api
         RECORD_INPUTS( curveLVB, discountFactorParameterLVB, discountFactors, jacobianParameterLVB, marketDataShiftSizeInPercent, trimmedJacobian );
         
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
         // Input Validation
         if ( !curveLVB.empty() && curveLVB[0].size() != 2 )
         {
-            MLIB_THROW("Invalid Data: CurveLVB data cannot be empty and must have column size 2")
+            AQ_THROW("Invalid Data: CurveLVB data cannot be empty and must have column size 2")
         }
 
         if ( !jacobianParameterLVB.empty() && jacobianParameterLVB[0].size() != 2 )
         {
-            MLIB_THROW("Invalid Data: JacobianParameterLVB data cannot be empty and must have column size 2")
+            AQ_THROW("Invalid Data: JacobianParameterLVB data cannot be empty and must have column size 2")
         }
 
-        MLIB_REQUIRE( !marketDataShiftSizeInPercent.empty(),    "Invalid Data: MarketDataShiftSize parameter is empty" )
-        MLIB_REQUIRE( !trimmedJacobian.empty(),                 "Invalid Data: Jacobian cannot be empty" )
+        AQ_REQUIRE( !marketDataShiftSizeInPercent.empty(),    "Invalid Data: MarketDataShiftSize parameter is empty" )
+        AQ_REQUIRE( !trimmedJacobian.empty(),                 "Invalid Data: Jacobian cannot be empty" )
         
         // Shift Size should match trimmed Jacobian column size less the first column of dates    
-        MLIB_REQUIRE( marketDataShiftSizeInPercent.size() == trimmedJacobian[0].size() - 1, "Invalid Data: The number of marketDataShiftSize parameters must match the number of Jacobian columns" )
+        AQ_REQUIRE( marketDataShiftSizeInPercent.size() == trimmedJacobian[0].size() - 1, "Invalid Data: The number of marketDataShiftSize parameters must match the number of Jacobian columns" )
         
         // Create the Discount Factors and Curve Results Object
         // -------------------------------------------------------------------------------
@@ -304,7 +304,7 @@ namespace validation_api
         const etrading::ShiftTypeEnum shiftType                 = etrading::toShiftTypeEnum( jacobianParameterLVB_.getCompulsoryValue("SHIFTTYPE") );
         const double gradientShiftSize                          = jacobianParameterLVB_.getCompulsoryValueAsDouble("GRADIENTSHIFTSIZE");
         
-        MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Data: GradientShiftSize cannot be zero or less than 1.0e-14 in absolute terms" )
+        AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Data: GradientShiftSize cannot be zero or less than 1.0e-14 in absolute terms" )
 
         // Create Curve Result Object
         // -------------------------------------------------------------------------------
@@ -313,7 +313,7 @@ namespace validation_api
         std::shared_ptr<etrading::JacobianResults> jacobianResults;
         if ( shiftType == etrading::FLAT_SHIFT_TYPE )
         {
-            MLIB_REQUIRE( marketDataShiftSizeInPercent.size() == 1, "Invalid Data: When using Flat-Shift Jacobians only a single MarketDataShiftSize parameter should be provided." )
+            AQ_REQUIRE( marketDataShiftSizeInPercent.size() == 1, "Invalid Data: When using Flat-Shift Jacobians only a single MarketDataShiftSize parameter should be provided." )
             const double flatShiftMarketDataShiftSize = marketDataShiftSizeInPercent[0];
             
             // Jacobian Data
@@ -353,7 +353,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW( "Invalid Data: ShiftType must be FLAT_SHIFT or PERTURBED" )
+            AQ_THROW( "Invalid Data: ShiftType must be FLAT_SHIFT or PERTURBED" )
         }
 
 		// Update the Curve Results
@@ -380,7 +380,7 @@ namespace validation_api
 			}
 			default:
 			{
-				MLIB_THROW("Invalid Risk Type: The risk type must be 'DISCOUNT_FACTORS', 'FORWARD_RATES' or 'COMPOUND_RATES'.")
+				AQ_THROW("Invalid Risk Type: The risk type must be 'DISCOUNT_FACTORS', 'FORWARD_RATES' or 'COMPOUND_RATES'.")
 			}
 		}
 		
@@ -412,7 +412,7 @@ namespace validation_api
         RECORD_INPUTS( curveCollection, curveIndex );
 
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
 		// Get the Jacobian Results
 		std::shared_ptr<etrading::JacobianResults> jacobianResults = etrading::getJacobianResults( curveCollection, curveIndex, riskType );
@@ -430,7 +430,7 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW("Invalid Jacobian: ShiftType must be 'FLAT-SHIFT' or 'PERTURBED'.")
+            AQ_THROW("Invalid Jacobian: ShiftType must be 'FLAT-SHIFT' or 'PERTURBED'.")
         }
         
         RECORD_OUTPUTS_AND_RETURN_RESULT( displayResults )
@@ -447,7 +447,7 @@ namespace validation_api
         RECORD_INPUTS( curveCollection, curveIndex )
 
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
         // Get the Jacobian Results by DISCOUNT FACTOR
 		std::shared_ptr<etrading::JacobianResults> jacobianResults = etrading::getJacobianResults( curveCollection, curveIndex, etrading::DISCOUNT_FACTOR_RISK_TYPE );
@@ -459,8 +459,8 @@ namespace validation_api
 			const DoubleVector flatShiftJacobian = jacobianResults->flatShiftJacobian();
 			const double gradientShiftSize = jacobianResults->gradientShiftSize();
 
-			MLIB_REQUIRE( riskDates.size() == flatShiftJacobian.size(), "Invalid Risk Jacobian: Number of Risk Dates must match the number of Discount Factor Deltas" )
-			MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Risk Jacobian: Gradient Shift Size must not be zero" )
+			AQ_REQUIRE( riskDates.size() == flatShiftJacobian.size(), "Invalid Risk Jacobian: Number of Risk Dates must match the number of Discount Factor Deltas" )
+			AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Risk Jacobian: Gradient Shift Size must not be zero" )
 
 			// Populate Results Matrix
 			etrading::VariantMatrix ResultsMatrix( flatShiftJacobian.size() ); // Row Size
@@ -479,8 +479,8 @@ namespace validation_api
 			const DoubleMatrix perturbedJacobian = jacobianResults->perturbedJacobian();
 			const double gradientShiftSize = jacobianResults->gradientShiftSize();
 
-			MLIB_REQUIRE( riskDates.size() == perturbedJacobian.size(), "Invalid Risk Jacobian: Number of Risk ates must match the number of Discount Factor Deltas" )
-			MLIB_REQUIRE( !MLIB_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Risk Jacobian: Gradient Shift Size must not be zero" )
+			AQ_REQUIRE( riskDates.size() == perturbedJacobian.size(), "Invalid Risk Jacobian: Number of Risk ates must match the number of Discount Factor Deltas" )
+			AQ_REQUIRE( !AQ_IS_EQUAL_ZERO( gradientShiftSize ), "Invalid Risk Jacobian: Gradient Shift Size must not be zero" )
 
 			// Populate Results Matrix
 			etrading::VariantMatrix ResultsMatrix( perturbedJacobian.size() ); // Row Size
@@ -500,7 +500,7 @@ namespace validation_api
 			RECORD_OUTPUTS_AND_RETURN_RESULT( ResultsMatrix )
         }
 
-		MLIB_THROW("Invalid Jacobian: ShiftType must be 'FLAT-SHIFT' or 'PERTURBED'.")
+		AQ_THROW("Invalid Jacobian: ShiftType must be 'FLAT-SHIFT' or 'PERTURBED'.")
         
         VALID_EXCEPTION_END
 	}
@@ -514,7 +514,7 @@ namespace validation_api
         RECORD_INPUTS( curveCollection, curveIndex )
 
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
         // Get the Jacobian Results
 		std::shared_ptr<etrading::JacobianResults> jacobianResults = etrading::getJacobianResults( curveCollection, curveIndex, riskType );
@@ -533,10 +533,10 @@ namespace validation_api
         }
         else
         {
-            MLIB_THROW("Invalid Jacobian: ShiftType must be 'FLAT-SHIFT' or 'PERTURBED'.")
+            AQ_THROW("Invalid Jacobian: ShiftType must be 'FLAT-SHIFT' or 'PERTURBED'.")
         }
         
-        MLIB_REQUIRE( riskDates.size() == riskTotals.size(), "Invalid Risk Jacobian: Number of Risk Dates must match the number of Risk Totals" )
+        AQ_REQUIRE( riskDates.size() == riskTotals.size(), "Invalid Risk Jacobian: Number of Risk Dates must match the number of Risk Totals" )
 
         // Populate Results Matrix
         etrading::VariantMatrix ResultsMatrix( riskTotals.size() );
@@ -562,12 +562,12 @@ namespace validation_api
         RECORD_INPUTS( curveCollection, curveIndex )
 		
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
         // Check if Curve Results Exist
         if( !etrading::doesExistCurveResultsDiscountFactors( curveCollection, curveIndex ) )
         {
-            MLIB_THROW( "Discount Factors for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist" )
+            AQ_THROW( "Discount Factors for Curve Collection '" + curveCollection + "' and/or Curve Index '" + curveIndex + "' do not exist" )
         }
 
         // Get Jacobian Results - This method also checks if the results exist
@@ -577,7 +577,7 @@ namespace validation_api
         etrading::DateVector riskDates              = jacobianResults->riskDateVector();
         etrading::DoubleVector newDiscountFactors   = jacobianResults->implyNewDiscountFactors();
         
-        MLIB_REQUIRE( riskDates.size() == newDiscountFactors.size(), "Invalid Risk Jacobian: Number of Risk Dates must match the number of New Discount Factors" )
+        AQ_REQUIRE( riskDates.size() == newDiscountFactors.size(), "Invalid Risk Jacobian: Number of Risk Dates must match the number of New Discount Factors" )
 
         // Populate Results Matrix
         etrading::VariantMatrix ResultsMatrix( newDiscountFactors.size() );
@@ -607,7 +607,7 @@ namespace validation_api
         RECORD_INPUTS( groupNameUppercase, curveHandles )
 		
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
         // Create the Curve Collection Object
         // -------------------------------------------------------------------------------
@@ -637,12 +637,12 @@ namespace validation_api
         RECORD_INPUTS( groupNameUppercase )
 		
 		// Check if Curve Results Enabled
-		MLIB_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
+		AQ_REQUIRE( etrading::CurveResultsContainer::getInstance().isEnabled(), "Curve Results have been Disabled" )
 
         // Check if Curve Results Exist
         if ( !etrading::doesExistCurveGroup( groupNameUppercase ) )
         {
-            MLIB_THROW( "Curve Group '" + groupNameUppercase + "' does not exist" );
+            AQ_THROW( "Curve Group '" + groupNameUppercase + "' does not exist" );
         }
 
         // Get the Curve Collection

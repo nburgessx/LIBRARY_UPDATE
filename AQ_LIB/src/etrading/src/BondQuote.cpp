@@ -35,7 +35,7 @@ namespace etrading
                 quote = std::round(rawPrice*100000)/100000.0;
                 break;
             default:
-                MLIB_THROW("Invalid QuoteConvention Specified")
+                AQ_THROW("Invalid QuoteConvention Specified")
                 break;
         }
 
@@ -45,7 +45,7 @@ namespace etrading
     // Function to convert a Raw Bond Prices to Formatted Bond Quotes
     std::vector<double> convertPricesToQuotes( const std::vector<double>& rawPrices, const BondQuoteConventionEnum& quoteConvention )
     {
-        MLIB_REQUIRE( rawPrices.size() > 0, "Unable to Convert Prices to Quotes: No Prices Provided." )
+        AQ_REQUIRE( rawPrices.size() > 0, "Unable to Convert Prices to Quotes: No Prices Provided." )
 
         std::vector<double> quotes( rawPrices.size() );
         for ( size_t i = 0; i < rawPrices.size(); ++i )

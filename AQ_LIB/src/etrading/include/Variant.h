@@ -111,13 +111,13 @@ namespace etrading
                     ss >> std::setprecision(20) >> resultAsTypeS; // Precision 20 digits
                     if ( ss.fail() )
                     {
-                        MLIB_THROW("Invalid Variant Data: Unable to cast '" + valueAsString  + "' to " + typeid(S).name() )
+                        AQ_THROW("Invalid Variant Data: Unable to cast '" + valueAsString  + "' to " + typeid(S).name() )
                     }
                     return resultAsTypeS;
                 }
                 catch(...)
                 {
-                    MLIB_THROW("Invalid Variant Data: Unable to cast '" + valueAsString  + "' to " + typeid(S).name() )
+                    AQ_THROW("Invalid Variant Data: Unable to cast '" + valueAsString  + "' to " + typeid(S).name() )
                 }
             }
         }

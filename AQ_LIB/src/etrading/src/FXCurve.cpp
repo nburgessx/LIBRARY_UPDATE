@@ -70,7 +70,7 @@ namespace etrading
 
 		const std::string delimiter = ",";
 
-		MLIB_REQUIRE( discountCurves.find(delimiter) != std::string::npos, "DfCurveName format should be 'BaseDFCurve,TermDFCurve'" );
+		AQ_REQUIRE( discountCurves.find(delimiter) != std::string::npos, "DfCurveName format should be 'BaseDFCurve,TermDFCurve'" );
 
 		std::string baseDiscountCurve = discountCurves.substr(0, discountCurves.find(delimiter));
 		std::string termDiscountCurve = discountCurves.substr(discountCurves.find(delimiter) + 1);
@@ -152,12 +152,12 @@ namespace etrading
             if ( useFXForwardBidAsk )
             {
                 //*** Expected input Columns: Bid, Ask
-                MLIB_REQUIRE( spotFxRateMatrix[i].size() == 2, "Spot FX Bid-Ask market data must have 2 columns: Bid, Ask" );
+                AQ_REQUIRE( spotFxRateMatrix[i].size() == 2, "Spot FX Bid-Ask market data must have 2 columns: Bid, Ask" );
             }
             else
             {
                 //*** Expected input Columns: Foreign Currency, Domestic Currency, Mid
-                MLIB_REQUIRE( spotFxRateMatrix[i].size() == 3, "Spot FX Mid market data must have 3 columns: Foreign Currency, Domestic Currency, Mid" );
+                AQ_REQUIRE( spotFxRateMatrix[i].size() == 3, "Spot FX Mid market data must have 3 columns: Foreign Currency, Domestic Currency, Mid" );
             }
 
 			spotFxBidRate = spotFxRateMatrix[i][bidDataColumn].getDoubleValue();
@@ -206,12 +206,12 @@ namespace etrading
             if (useFXForwardBidAsk)
             {
                 //*** Expected input Columns: Term, Bid, Ask, Use (Optional)
-                MLIB_REQUIRE(fwdFxRateMatrix[i].size() == 3 || fwdFxRateMatrix[i].size() == 4, "Forward FX market data matrix must have 3-4 columns: Term, Bid, Ask, Use (Optional)");
+                AQ_REQUIRE(fwdFxRateMatrix[i].size() == 3 || fwdFxRateMatrix[i].size() == 4, "Forward FX market data matrix must have 3-4 columns: Term, Bid, Ask, Use (Optional)");
             }
             else
             {
                 //*** Expected input Columns: Term, Mid, Use (Optional)
-                MLIB_REQUIRE(fwdFxRateMatrix[i].size() == 2 || fwdFxRateMatrix[i].size() == 3, "Forward FX market data matrix must have 2-3 columns: Term, Mid, Use (Optional)");
+                AQ_REQUIRE(fwdFxRateMatrix[i].size() == 2 || fwdFxRateMatrix[i].size() == 3, "Forward FX market data matrix must have 2-3 columns: Term, Mid, Use (Optional)");
             }
 
 			std::string tenor = fwdFxRateMatrix[i][tenorDataColumn].getCString();

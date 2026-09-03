@@ -69,7 +69,7 @@ template <typename T1=double, typename T2=double>
 class EqualityOperator
 {
 public:
-    explicit EqualityOperator(double eps_ = 10.0 * MLIB_MACHINE_EPSILON) : eps(eps_){}
+    explicit EqualityOperator(double eps_ = 10.0 * AQ_MACHINE_EPSILON) : eps(eps_){}
     bool operator()(const T1& x, const T2& y) const { return eq(x, y, eps); }
 
 private:

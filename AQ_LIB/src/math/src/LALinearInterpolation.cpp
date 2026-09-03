@@ -92,8 +92,8 @@ function_t LALinearInterpolation::getType() const
 // Interpolation Value
 double LALinearInterpolation::value(const double x1) const
 {
-	MLIB_REQUIRE( mpDataProvider != nullptr, "Linear interpolation data has not been set" )
-	MLIB_REQUIRE( mpDataProvider->size1 > 0, "Linear interpolation data has not been set" )
+	AQ_REQUIRE( mpDataProvider != nullptr, "Linear interpolation data has not been set" )
+	AQ_REQUIRE( mpDataProvider->size1 > 0, "Linear interpolation data has not been set" )
 	
 	if ( mpDataProvider->size1 == 1 )
 	{
@@ -143,8 +143,8 @@ double LALinearInterpolation::value(const double x1) const
 // Differentiate the Interpolator at Point x1
 double LALinearInterpolation::differentiate(const double & x1) const
 {
-	MLIB_REQUIRE( mpDataProvider != nullptr, "Linear interpolation data has not been set" )
-	MLIB_REQUIRE( mpDataProvider->size1 > 0, "Linear interpolation data has not been set" )
+	AQ_REQUIRE( mpDataProvider != nullptr, "Linear interpolation data has not been set" )
+	AQ_REQUIRE( mpDataProvider->size1 > 0, "Linear interpolation data has not been set" )
 	
 	// Function is flat when there is only one point, therefore slope is zero
 	if ( mpDataProvider->size1 == 1 )
@@ -168,7 +168,7 @@ double LALinearInterpolation::differentiate(const double & x1) const
 	
 	// UPPER BOUND
 	const double maxIndex = mpDataProvider->index1[mpDataProvider->size1-1];
-	if( MLIB_IS_GREATER_THAN_OR_EQUAL( x1, maxIndex ) )
+	if( AQ_IS_GREATER_THAN_OR_EQUAL( x1, maxIndex ) )
 	{
 		if (mExtrapolationType == FLAT_EXTRAPOLATION_TYPE)
 		{
@@ -185,15 +185,15 @@ double LALinearInterpolation::differentiate(const double & x1) const
 // Integrate the Interpolator Over the Lower- and UpperBounds
 double LALinearInterpolation::integrate(const double & lowerBound, const double & upperBound ) const
 {
-	MLIB_REQUIRE( mpDataProvider != nullptr, "Linear interpolation data has not been set" )
-	MLIB_REQUIRE( mpDataProvider->size1 > 0, "Linear interpolation data has not been set" )
-	MLIB_REQUIRE( lowerBound <= upperBound, "Invalid Linear Interpolation Integrand: The Lowerbound must not be greater than the UpperBound")
+	AQ_REQUIRE( mpDataProvider != nullptr, "Linear interpolation data has not been set" )
+	AQ_REQUIRE( mpDataProvider->size1 > 0, "Linear interpolation data has not been set" )
+	AQ_REQUIRE( lowerBound <= upperBound, "Invalid Linear Interpolation Integrand: The Lowerbound must not be greater than the UpperBound")
 	
 	// The integral result variable
 	double integral = 0.0;
 
 	// Boundary Condition: Zero Width
-	if( MLIB_IS_EQUAL( lowerBound, upperBound ) )
+	if( AQ_IS_EQUAL( lowerBound, upperBound ) )
 	{
 		return 0.0;
 	}
@@ -227,12 +227,12 @@ double LALinearInterpolation::integrate(const double & lowerBound, const double 
 */
 void LALinearInterpolation::set(const DoubleArray& index, const DoubleArray& value)
 {
-	MLIB_REQUIRE(index.size() == value.size(), "Invalid Linear Interpolation Data: The number of x and y points must be the same")
+	AQ_REQUIRE(index.size() == value.size(), "Invalid Linear Interpolation Data: The number of x and y points must be the same")
 
 	// Require data is sorted, start at index 1
 	for( size_t i = 1; i < index.size(); ++i )
 	{
-		MLIB_REQUIRE( index[i] > index[i-1], "Invalid Linear Interpolation Data: The x values must be must in ascending order with no duplicates")
+		AQ_REQUIRE( index[i] > index[i-1], "Invalid Linear Interpolation Data: The x values must be must in ascending order with no duplicates")
 	}
 
 	if (mpDataProvider != NULL)

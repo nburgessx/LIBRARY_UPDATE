@@ -168,15 +168,15 @@ double LAStepInterpolation::differentiate(const double & x1) const
 // Integrate the Interpolator Over the Lower- and UpperBounds
 double LAStepInterpolation::integrate(const double & lowerBound, const double & upperBound ) const
 {
-	MLIB_REQUIRE( mpDataProvider != nullptr, "Step interpolation data has not been set" )
-	MLIB_REQUIRE( mpDataProvider->size1 > 0, "Step interpolation data has not been set" )
-	MLIB_REQUIRE( lowerBound <= upperBound, "Invalid Step Interpolation Integrand: The Lowerbound must not be greater than the UpperBound")
+	AQ_REQUIRE( mpDataProvider != nullptr, "Step interpolation data has not been set" )
+	AQ_REQUIRE( mpDataProvider->size1 > 0, "Step interpolation data has not been set" )
+	AQ_REQUIRE( lowerBound <= upperBound, "Invalid Step Interpolation Integrand: The Lowerbound must not be greater than the UpperBound")
 	
 	// The integral result variable
 	double integral = 0.0;
 
 	// Boundary Condition: Zero Width
-	if( MLIB_IS_EQUAL( lowerBound, upperBound ) )
+	if( AQ_IS_EQUAL( lowerBound, upperBound ) )
 	{
 		return 0.0;
 	}
@@ -229,7 +229,7 @@ void LAStepInterpolation::set(const DoubleArray& index,const DoubleArray& value)
 		{
 			thisIndex		= index[i];
 			previousIndex	= index[i-1];
-			MLIB_THROW_IF(thisIndex == previousIndex, "Invalid Interpolation Data: Duplicate data found with time value: " + MLIB_TO_STRING_FROM_DOUBLE(thisIndex) + " years" )
+			AQ_THROW_IF(thisIndex == previousIndex, "Invalid Interpolation Data: Duplicate data found with time value: " + AQ_TO_STRING_FROM_DOUBLE(thisIndex) + " years" )
 		}
 	}
 
@@ -275,7 +275,7 @@ double LAStepInterpolation::intervalArea( const size_t & endIndex, const double 
 		}
 		default:
 		{
-			MLIB_THROW( "Invalid Step Interpolation: Piecewise constant interpolation must be specified as LEFT_CONTINUOUS or RIGHT_CONTINUOUS")
+			AQ_THROW( "Invalid Step Interpolation: Piecewise constant interpolation must be specified as LEFT_CONTINUOUS or RIGHT_CONTINUOUS")
 		}
 
 	}

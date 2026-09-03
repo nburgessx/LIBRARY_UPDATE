@@ -45,7 +45,7 @@ namespace etrading
 				break;
 
 			default:
-				MLIB_THROW( "Unsupported CDS leg type " + toString( legType ));
+				AQ_THROW( "Unsupported CDS leg type " + toString( legType ));
 			}
 		}
 
@@ -155,8 +155,8 @@ namespace etrading
 				auto leg = legs_.get(i);
 				identifyCdsLeg( leg, premiumLeg, protectionLeg );
 			}
-			MLIB_REQUIRE( premiumLeg != nullptr, "Missing Premium Leg." );
-			MLIB_REQUIRE( protectionLeg != nullptr, "Missing Protection Leg." );
+			AQ_REQUIRE( premiumLeg != nullptr, "Missing Premium Leg." );
+			AQ_REQUIRE( protectionLeg != nullptr, "Missing Protection Leg." );
 		}
 		else
 		{
@@ -170,7 +170,7 @@ namespace etrading
 				}
 			}
 			// Require at least one of premiumLeg or protectionLeg to be set
-			MLIB_REQUIRE( premiumLeg != nullptr || protectionLeg != nullptr, "Specified legName '" + legName + "' does not exist in the CreditDefaultSwap.");
+			AQ_REQUIRE( premiumLeg != nullptr || protectionLeg != nullptr, "Specified legName '" + legName + "' does not exist in the CreditDefaultSwap.");
 		}
 	}
 
@@ -179,13 +179,13 @@ namespace etrading
 		auto cdsLeg1 = std::dynamic_pointer_cast<CDSLeg>( leg1 );
 		if ( cdsLeg1 == nullptr )
 		{
-			MLIB_THROW( "Swap leg 1 '" + leg1->getLegName() + "' is not a CDS Leg. ");
+			AQ_THROW( "Swap leg 1 '" + leg1->getLegName() + "' is not a CDS Leg. ");
 		}
 
 		auto cdsLeg2 = std::dynamic_pointer_cast<CDSLeg>( leg2 );
 		if ( cdsLeg2 == nullptr )
 		{
-			MLIB_THROW( "Swap leg 2 '" + leg1->getLegName() + "' is not a CDS Leg. ");
+			AQ_THROW( "Swap leg 2 '" + leg1->getLegName() + "' is not a CDS Leg. ");
 		}
 		
 		validateLegs(leg1, leg2);
@@ -193,12 +193,12 @@ namespace etrading
         //Single Currency
         if ( leg1->getStaticData()->getCurrency() != leg2->getStaticData()->getCurrency() )
         {
-  		    MLIB_THROW( "It is not a single currency Swap" );
+  		    AQ_THROW( "It is not a single currency Swap" );
         }
 
         if (boost::math::isnan(leg1->getSchedule()->getNotional()) || boost::math::isnan(leg2->getSchedule()->getNotional()))
         {
-    		MLIB_THROW( "Please provide Notional" );
+    		AQ_THROW( "Please provide Notional" );
         }
 
         inputParameters_ = swapPropertiesLVB;
@@ -224,7 +224,7 @@ namespace etrading
 
 		if ( firstLegCurrency != creditModel.getCurrency() )
 		{
-			MLIB_THROW( "Leg currency '" + toString( firstLegCurrency ) + "' does not match Credit Model currency '" + toString( creditModel.getCurrency() ) + "'." );
+			AQ_THROW( "Leg currency '" + toString( firstLegCurrency ) + "' does not match Credit Model currency '" + toString( creditModel.getCurrency() ) + "'." );
 		}		
 	}
 
@@ -277,7 +277,7 @@ namespace etrading
 			}
 			if ( ! legFound )
 			{
-				MLIB_THROW("Specified legName '" + legName + "' does not exist in the CreditDefaultSwap." );
+				AQ_THROW("Specified legName '" + legName + "' does not exist in the CreditDefaultSwap." );
 			}
 		}
 
@@ -353,7 +353,7 @@ namespace etrading
 			}
 			if ( ! legFound )
 			{
-				MLIB_THROW("Specified legName '" + legName + "' does not exist in the CreditDefaultSwap." );
+				AQ_THROW("Specified legName '" + legName + "' does not exist in the CreditDefaultSwap." );
 			}
 		}
 
@@ -497,7 +497,7 @@ namespace etrading
 		const DistributionEnum distributionEnum	= generator.getDistribution();
 		if ( distributionEnum != UNIFORM_DISTRIBUTION )
 		{
-			MLIB_THROW( "CreditDefaultSwap Pricing requires a UNIFORM random number generator");
+			AQ_THROW( "CreditDefaultSwap Pricing requires a UNIFORM random number generator");
 		}
 
 		const int numberOfSamples			= generator.getNumberOfSamples();
@@ -582,7 +582,7 @@ namespace etrading
 		if ( assumeFlatCurve )
 		{
 			const double recoveryRate = creditModel.getRecoveryRate();
-			MLIB_REQUIRE((recoveryRate >= 0 && recoveryRate < 1.0), "Require the recovery rate to be positive and strictly less than 1.0");
+			AQ_REQUIRE((recoveryRate >= 0 && recoveryRate < 1.0), "Require the recovery rate to be positive and strictly less than 1.0");
 
 			const double hazardRateAtFlatSpread = parSpread / (1.0 - recoveryRate );
 
@@ -698,7 +698,7 @@ namespace etrading
 		auto premiumLeg = std::dynamic_pointer_cast<PremiumLeg>( leg );
 		if ( premiumLeg == nullptr )
 		{
-			MLIB_THROW( "Specified leg '" + validatedPremiumLegName + "' is not a CDS Premium Leg." );
+			AQ_THROW( "Specified leg '" + validatedPremiumLegName + "' is not a CDS Premium Leg." );
 		}
 
 		DataProvider dataProvider(ValuationSettings(valuationSettingsLVB, {}, premiumLeg->getLegName()));
@@ -728,7 +728,7 @@ namespace etrading
 		auto premiumLeg = std::dynamic_pointer_cast<PremiumLeg>( leg );
 		if ( premiumLeg == nullptr )
 		{
-			MLIB_THROW( "Specified leg '" + validatedPremiumLegName + "' is not a CDS Premium Leg." );
+			AQ_THROW( "Specified leg '" + validatedPremiumLegName + "' is not a CDS Premium Leg." );
 		}
 		
 		riskyAnnuity = premiumLeg->RiskyAnnuityWithNotional( creditModel );
@@ -758,7 +758,7 @@ namespace etrading
 		auto premiumLeg = std::dynamic_pointer_cast<PremiumLeg>(leg);
 		if (premiumLeg == nullptr)
 		{
-			MLIB_THROW("Specified leg '" + validatedPremiumLegName + "' is not a CDS Premium Leg.");
+			AQ_THROW("Specified leg '" + validatedPremiumLegName + "' is not a CDS Premium Leg.");
 		}
 
 		accruedYearFraction = premiumLeg->accruedYearFraction( creditModel, toDate );
@@ -788,7 +788,7 @@ namespace etrading
 		auto premiumLeg = std::dynamic_pointer_cast<PremiumLeg>(leg);
 		if (premiumLeg == nullptr)
 		{
-			MLIB_THROW("Specified leg '" + validatedPremiumLegName + "' is not a CDS Premium Leg.");
+			AQ_THROW("Specified leg '" + validatedPremiumLegName + "' is not a CDS Premium Leg.");
 		}
 
 		accruedInterest = premiumLeg->accruedInterest(creditModel, toDate );

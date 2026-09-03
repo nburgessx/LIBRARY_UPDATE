@@ -121,7 +121,7 @@ namespace etrading
 
 	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	    if (useMarkets == MLIB_NO_DATA) useMarkets = "";
+	    if (useMarkets == AQ_NO_DATA) useMarkets = "";
 	    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),SWAP)) 
 	    {
 		    if (useMarkets == "") useMarkets = SWAP;
@@ -233,7 +233,7 @@ namespace etrading
 
 	    //set Libor Object;
 	    LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE);
-	    if (liborfile == MLIB_NO_DATA)
+	    if (liborfile == AQ_NO_DATA)
 	    {
 		    liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE, liborfile);
@@ -258,7 +258,7 @@ namespace etrading
 
 	    //set Swap Object;
 	    LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE);
-	    if (swapfile == MLIB_NO_DATA)
+	    if (swapfile == AQ_NO_DATA)
 	    {
 		    swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE, swapfile);
@@ -285,7 +285,7 @@ namespace etrading
 	    bool isFRAUse = false;
 	    LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE);
 	    LADataBool tmpAttrB;
-	    if (isFRAUse_str != MLIB_NO_DATA)
+	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
 		    isFRAUse = tmpAttrB.get();
@@ -294,11 +294,11 @@ namespace etrading
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE);
 	    if (isFRAUse)
 	    {
-            MLIB_REQUIRE( fraConv.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
-            MLIB_REQUIRE( fra3mRates.size() > 0 || fra6mRates.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
+            AQ_REQUIRE( fraConv.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
+            AQ_REQUIRE( fra3mRates.size() > 0 || fra6mRates.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
 
 		    LAString fra3mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE);
-		    if (fra3mfile == MLIB_NO_DATA)
+		    if (fra3mfile == AQ_NO_DATA)
 		    {
 			    fra3mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_3mfra.csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_3MFRA_FILE, fra3mfile);
@@ -323,7 +323,7 @@ namespace etrading
 
 		    //set fra6m Object;
 		    LAString fra6mfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE);
-		    if (fra6mfile == MLIB_NO_DATA)
+		    if (fra6mfile == AQ_NO_DATA)
 		    {
 			    fra6mfile = LAString("data/in/") + tmpCurrency + LAString("_yield_6mfra.csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_6MFRA_FILE, fra6mfile);
@@ -349,7 +349,7 @@ namespace etrading
 
 	    ///Xccy Basis Rate
 	    LAString xccyBasisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis");
-	    if (xccyBasisFile == MLIB_NO_DATA)
+	    if (xccyBasisFile == AQ_NO_DATA)
 	    {
 		    xccyBasisFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_xccybasis.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "xccybasis", xccyBasisFile);
@@ -374,7 +374,7 @@ namespace etrading
 
 	    ///36 Basis Rate
 	    LAString threeSixFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis");
-	    if (threeSixFile == MLIB_NO_DATA)
+	    if (threeSixFile == AQ_NO_DATA)
 	    {
 		    threeSixFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_3m6mbasis.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + "3m6mbasis", threeSixFile);
@@ -405,7 +405,7 @@ namespace etrading
 	    //set future Object;
 	    bool isFutureUse = false;
 	    LAString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE);
-	    if (tmpFutureStr != MLIB_NO_DATA)
+	    if (tmpFutureStr != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(tmpFutureStr);
 		    isFutureUse = tmpAttrB.get();
@@ -413,11 +413,11 @@ namespace etrading
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE);
 	    if (isFutureUse)
 	    {
-            MLIB_REQUIRE( futureConv.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
-            MLIB_REQUIRE( futureRates.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
+            AQ_REQUIRE( futureConv.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
+            AQ_REQUIRE( futureRates.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
 
 		    LAString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE);
-		    if (futureFile == MLIB_NO_DATA)
+		    if (futureFile == AQ_NO_DATA)
 		    {
 			    futureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_future") + LAString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE, futureFile);
@@ -427,7 +427,7 @@ namespace etrading
 	
 	    //set Adjust Data Object;
 	    LAString adjustValueFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis");
-	    if (adjustValueFile == MLIB_NO_DATA)
+	    if (adjustValueFile == AQ_NO_DATA)
 	    {
 		    adjustValueFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisadjust.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + "xccybasis", adjustValueFile);
@@ -667,7 +667,7 @@ namespace etrading
 
 		    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 		    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-		    if (useMarkets == MLIB_NO_DATA) useMarkets = "";
+		    if (useMarkets == AQ_NO_DATA) useMarkets = "";
 		    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),XCCYBASIS)) 
 		    {
 			    if (useMarkets == "") useMarkets = XCCYBASIS;
@@ -679,7 +679,7 @@ namespace etrading
 		    tmpBasisCurveName.toLower();
 
 		    LAString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName);
-		    if (basisfile == MLIB_NO_DATA)
+		    if (basisfile == AQ_NO_DATA)
 		    {
 			    basisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap_xccybasis.csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + tmpBasisCurveName, basisfile);
@@ -721,7 +721,7 @@ namespace etrading
 		    {
 			    LAString adjustValueFile = irStaticData.getStaticData(tmpCurrency + 
 				    STATIC_DATA_KEY_YIELD_BASIS_ADJUSTVALUE_FILE + "." + tmpBasisCurveName);
-			    if (adjustValueFile == MLIB_NO_DATA)
+			    if (adjustValueFile == AQ_NO_DATA)
 			    {
 				    adjustValueFile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisadjust.csv");
 				    irStaticData.setStaticData(tmpCurrency + 
@@ -842,7 +842,7 @@ namespace etrading
 	    staticDataSuffix.toLower();
 	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	    if (useMarkets == MLIB_NO_DATA) useMarkets = "";
+	    if (useMarkets == AQ_NO_DATA) useMarkets = "";
 	    LAString tmpCurveName = marketName; tmpCurveName.toUpper();
 	    if (tmpUseMarkets.end() == std::find(tmpUseMarkets.begin(),tmpUseMarkets.end(),tmpCurveName)) 
 	    {
@@ -867,7 +867,7 @@ namespace etrading
 		if (LAFunctionUtilities::findRowsNumber(tmpInfo, CURVEINPUT_CURVETYPE) >= 0)
 		{
 			curveType = chgrow(tmpInfo, CURVEINPUT_CURVETYPE, 1);
-			MLIB_REQUIRE(curveType == CURVETYPE_OIS || curveType == CURVETYPE_ARR, "CurveType can only be OIS or ARR.");
+			AQ_REQUIRE(curveType == CURVETYPE_OIS || curveType == CURVETYPE_ARR, "CurveType can only be OIS or ARR.");
 		}
 
 	    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_CURVETYPE + staticDataSuffix, curveType);
@@ -920,21 +920,21 @@ namespace etrading
 	    }	
 
 	    LAString oisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + staticDataSuffix);
-	    if (oisFile == MLIB_NO_DATA)
+	    if (oisFile == AQ_NO_DATA)
 	    {
 		    oisFile = LAString("data/in/") + tmpCurrency + LAString("_yield_ois_oiscurve.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + staticDataSuffix, oisFile);
 	    }
 
 	    LAString fedFundFutureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + staticDataSuffix);
-	    if (fedFundFutureFile == MLIB_NO_DATA)
+	    if (fedFundFutureFile == AQ_NO_DATA)
 	    {
 		    fedFundFutureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fffuture.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + staticDataSuffix, fedFundFutureFile);
 	    }
 
 	    LAString histFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + staticDataSuffix);
-	    if (histFile == MLIB_NO_DATA)
+	    if (histFile == AQ_NO_DATA)
 	    {
 		    histFile = LAString("data/in/") + tmpCurrency + LAString("_yield_historical_ois_oiscurve.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + staticDataSuffix, histFile);
@@ -1100,7 +1100,7 @@ namespace etrading
         // Check if Libor-OIS and Swap Data is Required
         if ( requireLiborOisAndSwapData )
         {
-            MLIB_REQUIRE( lobasisConv.size() > 0, "Missing Static Data: Libor-OIS Basis Conventions are Required when the OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
+            AQ_REQUIRE( lobasisConv.size() > 0, "Missing Static Data: Libor-OIS Basis Conventions are Required when the OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
         }
 
         MLIB_2D_MATRIX_CHECK( lobasisConv, "Invalid Libor-OIS Basis Conventions")
@@ -1113,7 +1113,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }	
 	    LAString lobasisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + staticDataSuffix);
-	    if (lobasisfile == MLIB_NO_DATA)
+	    if (lobasisfile == AQ_NO_DATA)
 	    {
 		    lobasisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_lobasis") + staticDataSuffix + LAString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + staticDataSuffix, lobasisfile);
@@ -1122,7 +1122,7 @@ namespace etrading
         // Check if Libor-OIS and Swap Data is Required
         if ( requireLiborOisAndSwapData )
         {
-            MLIB_REQUIRE( lobasisRates.size() > 0, "Missing Market Data: Libor-OIS Basis Rates are Required when the OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
+            AQ_REQUIRE( lobasisRates.size() > 0, "Missing Market Data: Libor-OIS Basis Rates are Required when the OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
         }
 
 	    LAString lobasisstream;
@@ -1158,7 +1158,7 @@ namespace etrading
         // Check if Libor-OIS and Swap Data is Required
         if ( requireLiborOisAndSwapData )
         {
-            MLIB_REQUIRE( swapConv.size() > 0, "Missing Static Data: Swap Conventions are Required when the OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
+            AQ_REQUIRE( swapConv.size() > 0, "Missing Static Data: Swap Conventions are Required when the OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
         }
 
 	    MLIB_2D_MATRIX_CHECK( swapConv, "Invalid Swap Conventions")
@@ -1171,7 +1171,7 @@ namespace etrading
 		    irStaticData.setStaticData(key, data);
 	    }	
 	    LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
-	    if (swapfile == MLIB_NO_DATA)
+	    if (swapfile == AQ_NO_DATA)
 	    {
 		    swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap") + staticDataSuffix + LAString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix, swapfile);
@@ -1180,7 +1180,7 @@ namespace etrading
         // Check if Libor-OIS and Swap Data is Required
         if ( requireLiborOisAndSwapData )
         {
-            MLIB_REQUIRE( swapRates.size() > 0, "Missing Market Data: Swap Rates are Required when OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
+            AQ_REQUIRE( swapRates.size() > 0, "Missing Market Data: Swap Rates are Required when OIS 'LongTermConvention' parameter is set to use 'LOBASIS'" )
         }
 
 	    LAString swapstream;
@@ -1350,7 +1350,7 @@ namespace etrading
 	    // of '1M3MBasis:3M6MBasis:SWAP:XCCYBasis' for example. This is loaded directly from the ir.properties file
 	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	    if (useMarkets == MLIB_NO_DATA) 
+	    if (useMarkets == AQ_NO_DATA) 
 	    {
 		    useMarkets = "";
 	    }
@@ -1502,8 +1502,8 @@ namespace etrading
 	    LAString tmpBasisCurveName;
 	    if (isswaptenoradjust)
 	    {
-            MLIB_REQUIRE( adjustSwapConv.size() > 0, "Adjustment Basis Swap Conventions Block Missing - Must provide Basis Swap convention settings when isSwapTenorAdjust = True" )
-            MLIB_REQUIRE( adjustSwapRates.size() > 0, "Adjustment Basis Swap Rates Block Missing - Must provide Basis Swap rates when isSwapTenorAdjust = True" )
+            AQ_REQUIRE( adjustSwapConv.size() > 0, "Adjustment Basis Swap Conventions Block Missing - Must provide Basis Swap convention settings when isSwapTenorAdjust = True" )
+            AQ_REQUIRE( adjustSwapRates.size() > 0, "Adjustment Basis Swap Rates Block Missing - Must provide Basis Swap rates when isSwapTenorAdjust = True" )
         
 		    tmpBasisCurveName = THREESIXBASIS;
 		    LAString adjsuffix_prop;
@@ -1534,7 +1534,7 @@ namespace etrading
 
 		    //swapfile
 		    LAString adjfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
-		    if (adjfile == MLIB_NO_DATA)
+		    if (adjfile == AQ_NO_DATA)
 		    {
 			    adjfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + adjsuffix_data + LAString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + adjsuffix_prop, adjfile);
@@ -1586,7 +1586,7 @@ namespace etrading
 	    LAString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
 
 	    LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
-	    if (liborfile == MLIB_NO_DATA)
+	    if (liborfile == AQ_NO_DATA)
 	    {
 		    liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor") + suffix_data + LAString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
@@ -1619,7 +1619,7 @@ namespace etrading
 	    bool areSwapsForwardStarting = false;
 	    LAString isFwdSwap_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
 	    LADataBool tmpAttrB;
-	    if (isFwdSwap_str != MLIB_NO_DATA)
+	    if (isFwdSwap_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFwdSwap_str);
 		    areSwapsForwardStarting = tmpAttrB.get();
@@ -1627,7 +1627,7 @@ namespace etrading
 
 	    //set Swap Object;
 	    LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix);
-	    if (swapfile == MLIB_NO_DATA)
+	    if (swapfile == AQ_NO_DATA)
 	    {
 		    swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap") + suffix_data + LAString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + staticDataSuffix, swapfile);
@@ -1700,7 +1700,7 @@ namespace etrading
 	    //set FRA Object;
 	    bool isFRAUse = false;
 	    LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
-	    if (isFRAUse_str != MLIB_NO_DATA)
+	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
 		    isFRAUse = tmpAttrB.get();
@@ -1710,11 +1710,11 @@ namespace etrading
 
 	    if (isFRAUse)
 	    {
-            MLIB_REQUIRE( fraConv.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
-            MLIB_REQUIRE( fra3mRates.size() > 0 || fra6mRates.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
+            AQ_REQUIRE( fraConv.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
+            AQ_REQUIRE( fra3mRates.size() > 0 || fra6mRates.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
 
 		    LAString fraFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
-		    if (fraFile == MLIB_NO_DATA)
+		    if (fraFile == AQ_NO_DATA)
 		    {
 			    fraFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fra") + suffix_data + LAString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix, fraFile);
@@ -1743,7 +1743,7 @@ namespace etrading
 	    //set future Object;
 	    bool isFutureUse = false;
 	    LAString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + staticDataSuffix);
-	    if (tmpFutureStr != MLIB_NO_DATA)
+	    if (tmpFutureStr != AQ_NO_DATA)
 	    {
 		    LADataBool tmpAttrB;
 		    tmpAttrB.convertFromString(tmpFutureStr);
@@ -1752,11 +1752,11 @@ namespace etrading
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix);
 	    if (isFutureUse)
 	    {
-            MLIB_REQUIRE( futureConv.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
-            MLIB_REQUIRE( futureRates.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
+            AQ_REQUIRE( futureConv.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
+            AQ_REQUIRE( futureRates.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
 
 		    LAString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix);
-		    if (futureFile == MLIB_NO_DATA)
+		    if (futureFile == AQ_NO_DATA)
 		    {
 			    futureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_future") + suffix_data + LAString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + staticDataSuffix, futureFile);
@@ -1993,7 +1993,7 @@ namespace etrading
 
 	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	    if (useMarkets == MLIB_NO_DATA) 
+	    if (useMarkets == AQ_NO_DATA) 
 	    {
 		    useMarkets = "";
 	    }
@@ -2102,14 +2102,14 @@ namespace etrading
 	    //set Libor data file
 	    LAString liborUseGrid = "";
 	    LAString isLiborProvided_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_FIXINGSOURCE + staticDataSuffix);
-	    if (isLiborProvided_str != MLIB_NO_DATA)
+	    if (isLiborProvided_str != AQ_NO_DATA)
 	    {
 		    if (isLiborProvided_str.toUpper() == ITSELF)
 		    {
 			    LAString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
 
 			    LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
-			    if (liborfile == MLIB_NO_DATA)
+			    if (liborfile == AQ_NO_DATA)
 			    {
 				    liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor") + suffix_data + LAString(".csv");
 				    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
@@ -2145,7 +2145,7 @@ namespace etrading
 	    LAString fraUseGrid = "";
 	    LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
 	    LADataBool tmpAttrB;
-	    if (isFRAUse_str != MLIB_NO_DATA)
+	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
 		    isFRAUse = tmpAttrB.get();
@@ -2154,20 +2154,20 @@ namespace etrading
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
 	    if (isFRAUse)
 	    {
-            MLIB_REQUIRE( fraConv.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
-            MLIB_REQUIRE( fraRates.size() > 0, "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
+            AQ_REQUIRE( fraConv.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
+            AQ_REQUIRE( fraRates.size() > 0, "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
 
 		    //set fwd swap
 		    bool areSwapsForwardStarting = false;
 		    LAString isFwdSwap_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
-		    if (isFwdSwap_str != MLIB_NO_DATA)
+		    if (isFwdSwap_str != AQ_NO_DATA)
 		    {
 			    tmpAttrB.convertFromString(isFwdSwap_str);
 			    areSwapsForwardStarting = tmpAttrB.get();
 		    }
 
 		    LAString fraFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
-		    if (fraFile == MLIB_NO_DATA)
+		    if (fraFile == AQ_NO_DATA)
 		    {
 			    fraFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fra") + suffix_data + LAString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix, fraFile);
@@ -2188,7 +2188,7 @@ namespace etrading
 
 	    //basis file
 	    LAString basisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix);
-	    if (basisfile == MLIB_NO_DATA)
+	    if (basisfile == AQ_NO_DATA)
 	    {
 		    basisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + suffix_data + LAString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix, basisfile);
@@ -2819,8 +2819,8 @@ namespace etrading
 	    LAString tmpBasisCurveName;
 	    if (isswaptenoradjust)
 	    {
-            MLIB_REQUIRE( adjustSwapConv_swap.size() > 0, "Adjustment Basis Swap Conventions Block Missing - Must provide Basis Swap convention settings when isSwapTenorAdjust = True" )
-            MLIB_REQUIRE( adjustSwapRates_swap.size() > 0, "Adjustment Basis Swap Rates Block Missing - Must provide Basis Swap rates when isSwapTenorAdjust = True" )
+            AQ_REQUIRE( adjustSwapConv_swap.size() > 0, "Adjustment Basis Swap Conventions Block Missing - Must provide Basis Swap convention settings when isSwapTenorAdjust = True" )
+            AQ_REQUIRE( adjustSwapRates_swap.size() > 0, "Adjustment Basis Swap Rates Block Missing - Must provide Basis Swap rates when isSwapTenorAdjust = True" )
 
 		    tmpBasisCurveName = THREESIXBASIS;
 		    LAString adjsuffix_prop;
@@ -2851,7 +2851,7 @@ namespace etrading
 
 		    //swapfile
 		    LAString adjfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
-		    if (adjfile == MLIB_NO_DATA)
+		    if (adjfile == AQ_NO_DATA)
 		    {
 			    adjfile = LAString("data/in/") + currency + LAString("_yield_basisswap") + adjsuffix_data + LAString(".csv");
 			    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + adjsuffix_prop, adjfile);
@@ -2901,7 +2901,7 @@ namespace etrading
 	    LAString liborEntityName = currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap;
 
 	    LAString liborfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap);
-	    if (liborfile == MLIB_NO_DATA)
+	    if (liborfile == AQ_NO_DATA)
 	    {
 		    liborfile = LAString("data/in/") + currency + LAString("_yield_libor") + suffix_data_swap + LAString(".csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap, liborfile);
@@ -2934,7 +2934,7 @@ namespace etrading
 	    bool areSwapsForwardStarting = false;
 	    LAString isFwdSwap_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + suffix_prop_swap);
 	    LADataBool tmpAttrB;
-	    if (isFwdSwap_str != MLIB_NO_DATA)
+	    if (isFwdSwap_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFwdSwap_str);
 		    areSwapsForwardStarting = tmpAttrB.get();
@@ -2942,7 +2942,7 @@ namespace etrading
 
 	    //set Swap Object;
 	    LAString swapfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap);
-	    if (swapfile == MLIB_NO_DATA)
+	    if (swapfile == AQ_NO_DATA)
 	    {
 		    swapfile = LAString("data/in/") + currency + LAString("_yield_swap") + suffix_data_swap + LAString(".csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap, swapfile);
@@ -3015,7 +3015,7 @@ namespace etrading
 	    //set FRA Object;
 	    bool isFRAUse = false;
 	    LAString isFRAUse_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + suffix_prop_swap);
-	    if (isFRAUse_str != MLIB_NO_DATA)
+	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
 		    isFRAUse = tmpAttrB.get();
@@ -3025,11 +3025,11 @@ namespace etrading
 
 	    if (isFRAUse)
 	    {
-            MLIB_REQUIRE( fraConv_swap.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
-            MLIB_REQUIRE( fra3mRates_swap.size() > 0 || fra6mRates_swap.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
+            AQ_REQUIRE( fraConv_swap.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
+            AQ_REQUIRE( fra3mRates_swap.size() > 0 || fra6mRates_swap.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
 
 		    LAString fraFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + suffix_prop_swap);
-		    if (fraFile == MLIB_NO_DATA)
+		    if (fraFile == AQ_NO_DATA)
 		    {
 			    fraFile = LAString("data/in/") + currency + LAString("_yield_fra") + suffix_data_swap + LAString(".csv");
 			    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + suffix_prop_swap, fraFile);
@@ -3058,7 +3058,7 @@ namespace etrading
 	    //set future Object;
 	    bool isFutureUse = false;
 	    LAString tmpFutureStr = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + suffix_prop_swap);
-	    if (tmpFutureStr != MLIB_NO_DATA)
+	    if (tmpFutureStr != AQ_NO_DATA)
 	    {
 		    LADataBool tmpAttrB;
 		    tmpAttrB.convertFromString(tmpFutureStr);
@@ -3067,11 +3067,11 @@ namespace etrading
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap);
 	    if (isFutureUse)
 	    {
-            MLIB_REQUIRE( futureConv_swap.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
-            MLIB_REQUIRE( futureRates_swap.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
+            AQ_REQUIRE( futureConv_swap.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
+            AQ_REQUIRE( futureRates_swap.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
 
 		    LAString futureFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap);
-		    if (futureFile == MLIB_NO_DATA)
+		    if (futureFile == AQ_NO_DATA)
 		    {
 			    futureFile = LAString("data/in/") + currency + LAString("_yield_future") + suffix_data_swap + LAString(".csv");
 			    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap, futureFile);
@@ -3259,21 +3259,21 @@ namespace etrading
 	    }
 
 	    LAString oisFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffix_prop_OIS);
-	    if (oisFile == MLIB_NO_DATA)
+	    if (oisFile == AQ_NO_DATA)
 	    {
 		    oisFile = LAString("data/in/") + currency + LAString("_yield_ois_oiscurve.csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffix_prop_OIS, oisFile);
 	    }
 
 	    LAString fedFundFutureFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffix_prop_OIS);
-	    if (fedFundFutureFile == MLIB_NO_DATA)
+	    if (fedFundFutureFile == AQ_NO_DATA)
 	    {
 		    fedFundFutureFile = LAString("data/in/") + currency + LAString("_yield_fffuture.csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffix_prop_OIS, fedFundFutureFile);
 	    }
 
 	    LAString histFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffix_prop_OIS);
-	    if (histFile == MLIB_NO_DATA)
+	    if (histFile == AQ_NO_DATA)
 	    {
 		    histFile = LAString("data/in/") + currency + LAString("_yield_historical_ois_oiscurve.csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffix_prop_OIS, histFile);
@@ -3418,7 +3418,7 @@ namespace etrading
 	    }
 
 	    LAString lobasisfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS);
-	    if (lobasisfile == MLIB_NO_DATA)
+	    if (lobasisfile == AQ_NO_DATA)
 	    {
 		    lobasisfile = LAString("data/in/") + currency + LAString("_yield_lobasis") + suffix_prop_OIS + LAString(".csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS, lobasisfile);
@@ -3508,7 +3508,7 @@ namespace etrading
 
 	    LAString useMarkets = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	    LAStringVector tmpUseMarkets = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	    if (useMarkets == MLIB_NO_DATA)
+	    if (useMarkets == AQ_NO_DATA)
 	    {
 		    useMarkets = "";
 	    }
@@ -3617,14 +3617,14 @@ namespace etrading
 	    //set Libor data file
 	    LAString liborUseGrid = "";
 	    LAString isLiborProvided_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_FIXINGSOURCE + staticDataSuffix);
-	    if (isLiborProvided_str != MLIB_NO_DATA)
+	    if (isLiborProvided_str != AQ_NO_DATA)
 	    {
 		    if (isLiborProvided_str.toUpper() == ITSELF)
 		    {
 			    LAString liborEntityName = currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix;
 
 			    LAString liborfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix);
-			    if (liborfile == MLIB_NO_DATA)
+			    if (liborfile == AQ_NO_DATA)
 			    {
 				    liborfile = LAString("data/in/") + currency + LAString("_yield_libor") + suffix_data + LAString(".csv");
 				    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + staticDataSuffix, liborfile);
@@ -3660,7 +3660,7 @@ namespace etrading
 	    LAString fraUseGrid = "";
 	    LAString isFRAUse_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + staticDataSuffix);
 	    LADataBool tmpAttrB;
-	    if (isFRAUse_str != MLIB_NO_DATA)
+	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
 		    isFRAUse = tmpAttrB.get();
@@ -3669,20 +3669,20 @@ namespace etrading
 	    irStaticData.removeStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
 	    if (isFRAUse)
 	    {
-            MLIB_REQUIRE( fraConv.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
-            MLIB_REQUIRE( fraRates.size() > 0, "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
+            AQ_REQUIRE( fraConv.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
+            AQ_REQUIRE( fraRates.size() > 0, "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
 
 		    //set fwd swap
 		    bool areSwapsForwardStarting = false;
 		    LAString isFwdSwap_str = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + staticDataSuffix);
-		    if (isFwdSwap_str != MLIB_NO_DATA)
+		    if (isFwdSwap_str != AQ_NO_DATA)
 		    {
 			    tmpAttrB.convertFromString(isFwdSwap_str);
 			    areSwapsForwardStarting = tmpAttrB.get();
 		    }
 
 		    LAString fraFile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix);
-		    if (fraFile == MLIB_NO_DATA)
+		    if (fraFile == AQ_NO_DATA)
 		    {
 			    fraFile = LAString("data/in/") + currency + LAString("_yield_fra") + suffix_data + LAString(".csv");
 			    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_FRA_FILE + staticDataSuffix, fraFile);
@@ -3703,7 +3703,7 @@ namespace etrading
 
 	    //basis file
 	    LAString basisfile = irStaticData.getStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix);
-	    if (basisfile == MLIB_NO_DATA)
+	    if (basisfile == AQ_NO_DATA)
 	    {
 		    basisfile = LAString("data/in/") + currency + LAString("_yield_basisswap") + suffix_data + LAString(".csv");
 		    irStaticData.setStaticData(currency + STATIC_DATA_KEY_YIELD_BASIS_FILE + staticDataSuffix, basisfile);
@@ -3892,7 +3892,7 @@ namespace etrading
 
 	    //======================================================
 	    // Get currency
-        MLIB_REQUIRE( curveDataCollection.size() > 0, "Unable to set-up Global Engine Curves - No Curve Data has been provided" )
+        AQ_REQUIRE( curveDataCollection.size() > 0, "Unable to set-up Global Engine Curves - No Curve Data has been provided" )
 	    LAStringMatrix tmpInfo = curveDataCollection[0]->curveConvLVB_.toLAStringMatrix(); // Conventions are stored as LVBs
 	    upper(tmpInfo);
 	    LAString currency;
@@ -3949,7 +3949,7 @@ namespace etrading
 	    // of '1M3MBasis:3M6MBasis:SWAP:XCCYBasis' for example. This is loaded directly from the ir.properties file
 	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	    LAStringVector useMarkets_vector = useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	    if (useMarkets == MLIB_NO_DATA)
+	    if (useMarkets == AQ_NO_DATA)
 	    {
 		    useMarkets = "";
 	    }
@@ -4092,7 +4092,7 @@ namespace etrading
 		    }
 		    else
 		    {
-			    MLIB_THROW("Un-supported curve type is detected in multi-curve solving engine. Only support OIS, Swap and Tenor Basis curves.");
+			    AQ_THROW("Un-supported curve type is detected in multi-curve solving engine. Only support OIS, Swap and Tenor Basis curves.");
 		    }		
 	    }
 
@@ -4219,7 +4219,7 @@ namespace etrading
 	    // of '1M3MBasis:3M6MBasis:SWAP:XCCYBasis' for example. This is loaded directly from the ir.properties file
 	    LAString useMarkets = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_USEMAKETS).toUpper();
 	    LAStringVector tmpUseMarkets =  useMarkets.toToken(MULTI_STATIC_DATA_DELIMITER);
-	    if (useMarkets == MLIB_NO_DATA) 
+	    if (useMarkets == AQ_NO_DATA) 
 	    {
 		    useMarkets = "";
 	    }
@@ -4389,8 +4389,8 @@ namespace etrading
 	    LAString tmpBasisCurveName;
 	    if (isswaptenoradjust)
 	    {
-            MLIB_REQUIRE( adjustSwapConv_swap.size() > 0, "Adjustment Basis Swap Conventions Block Missing - Must provide Basis Swap convention settings when isSwapTenorAdjust = True" )
-            MLIB_REQUIRE( adjustSwapRates_swap.size() > 0, "Adjustment Basis Swap Rates Block Missing - Must provide Basis Swap rates when isSwapTenorAdjust = True" )
+            AQ_REQUIRE( adjustSwapConv_swap.size() > 0, "Adjustment Basis Swap Conventions Block Missing - Must provide Basis Swap convention settings when isSwapTenorAdjust = True" )
+            AQ_REQUIRE( adjustSwapRates_swap.size() > 0, "Adjustment Basis Swap Rates Block Missing - Must provide Basis Swap rates when isSwapTenorAdjust = True" )
 
 		    tmpBasisCurveName = THREESIXBASIS;
 		    LAString adjsuffix_prop;
@@ -4421,7 +4421,7 @@ namespace etrading
 
 		    //swapfile
 		    LAString adjfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + adjsuffix_prop);
-		    if (adjfile == MLIB_NO_DATA)
+		    if (adjfile == AQ_NO_DATA)
 		    {
 			    adjfile = LAString("data/in/") + tmpCurrency + LAString("_yield_basisswap") + adjsuffix_data + LAString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_BASIS_FILE + "." + adjsuffix_prop, adjfile);
@@ -4471,7 +4471,7 @@ namespace etrading
 	    LAString liborEntityName = tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap;
 
 	    LAString liborfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap);
-	    if (liborfile == MLIB_NO_DATA)
+	    if (liborfile == AQ_NO_DATA)
 	    {
 		    liborfile = LAString("data/in/") + tmpCurrency + LAString("_yield_libor") + suffix_data_swap + LAString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LIBOR_FILE + suffix_prop_swap, liborfile);
@@ -4504,7 +4504,7 @@ namespace etrading
 	    bool areSwapsForwardStarting = false;
 	    LAString isFwdSwap_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFWDSWAP + suffix_prop_swap);
 	    LADataBool tmpAttrB;
-	    if (isFwdSwap_str != MLIB_NO_DATA)
+	    if (isFwdSwap_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFwdSwap_str);
 		    areSwapsForwardStarting = tmpAttrB.get();
@@ -4512,7 +4512,7 @@ namespace etrading
 
 	    //set Swap Object;
 	    LAString swapfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap);
-	    if (swapfile == MLIB_NO_DATA)
+	    if (swapfile == AQ_NO_DATA)
 	    {
 		    swapfile = LAString("data/in/") + tmpCurrency + LAString("_yield_swap") + suffix_data_swap + LAString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_SWAP_FILE + suffix_prop_swap, swapfile);
@@ -4585,7 +4585,7 @@ namespace etrading
 	    //set FRA Object;
 	    bool isFRAUse = false;
 	    LAString isFRAUse_str = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFRAUSE + suffix_prop_swap);
-	    if (isFRAUse_str != MLIB_NO_DATA)
+	    if (isFRAUse_str != AQ_NO_DATA)
 	    {
 		    tmpAttrB.convertFromString(isFRAUse_str);
 		    isFRAUse = tmpAttrB.get();
@@ -4595,11 +4595,11 @@ namespace etrading
 
 	    if (isFRAUse)
 	    {
-            MLIB_REQUIRE( fraConv_swap.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
-            MLIB_REQUIRE( fra3mRates_swap.size() > 0 || fra6mRates_swap.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
+            AQ_REQUIRE( fraConv_swap.size() > 0, "FRA Conventions Block Missing - Must provide FRA convention settings when IsFRAUse = True" )
+            AQ_REQUIRE( fra3mRates_swap.size() > 0 || fra6mRates_swap.size() > 0 , "FRA Rates Block Missing - Must provide FRA instrument data when IsFRAUse = True" )
 
 		    LAString fraFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + suffix_prop_swap);
-		    if (fraFile == MLIB_NO_DATA)
+		    if (fraFile == AQ_NO_DATA)
 		    {
 			    fraFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fra") + suffix_data_swap + LAString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FRA_FILE + suffix_prop_swap, fraFile);
@@ -4628,7 +4628,7 @@ namespace etrading
 	    //set future Object;
 	    bool isFutureUse = false;
 	    LAString tmpFutureStr = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_GENERATOR_ISFUTUREUSE + suffix_prop_swap);
-	    if (tmpFutureStr != MLIB_NO_DATA)
+	    if (tmpFutureStr != AQ_NO_DATA)
 	    {
 		    LADataBool tmpAttrB;
 		    tmpAttrB.convertFromString(tmpFutureStr);
@@ -4637,11 +4637,11 @@ namespace etrading
 	    irStaticData.removeStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap);
 	    if (isFutureUse)
 	    {
-            MLIB_REQUIRE( futureConv_swap.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
-            MLIB_REQUIRE( futureRates_swap.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
+            AQ_REQUIRE( futureConv_swap.size() > 0, "Futures Conventions Block Missing - Must provide futures convention settings when IsFutureUse = True" )
+            AQ_REQUIRE( futureRates_swap.size() > 0, "Futures Rates Block Missing - Must provide futures instrument data when IsFutureUse = True" )
 
 		    LAString futureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap);
-		    if (futureFile == MLIB_NO_DATA)
+		    if (futureFile == AQ_NO_DATA)
 		    {
 			    futureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_future") + suffix_data_swap + LAString(".csv");
 			    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FUTURE_FILE + suffix_prop_swap, futureFile);
@@ -4821,21 +4821,21 @@ namespace etrading
 	    }	
     
 	    LAString oisFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffix_prop_OIS);
-	    if (oisFile == MLIB_NO_DATA)
+	    if (oisFile == AQ_NO_DATA)
 	    {
 		    oisFile = LAString("data/in/") + tmpCurrency + LAString("_yield_ois_oiscurve.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_OIS_FILE + suffix_prop_OIS, oisFile);
 	    }
 
 	    LAString fedFundFutureFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffix_prop_OIS);
-	    if (fedFundFutureFile == MLIB_NO_DATA)
+	    if (fedFundFutureFile == AQ_NO_DATA)
 	    {
 		    fedFundFutureFile = LAString("data/in/") + tmpCurrency + LAString("_yield_fffuture.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_FFFUTURE_FILE + suffix_prop_OIS, fedFundFutureFile);
 	    }
 
 	    LAString histFile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffix_prop_OIS);
-	    if (histFile == MLIB_NO_DATA)
+	    if (histFile == AQ_NO_DATA)
 	    {
 		    histFile = LAString("data/in/") + tmpCurrency + LAString("_yield_historical_ois_oiscurve.csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_HISTORICAL_OIS_FILE + suffix_prop_OIS, histFile);
@@ -4982,7 +4982,7 @@ namespace etrading
 	    }	
 	
 	    LAString lobasisfile = irStaticData.getStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS);
-	    if (lobasisfile == MLIB_NO_DATA)
+	    if (lobasisfile == AQ_NO_DATA)
 	    {
 		    lobasisfile = LAString("data/in/") + tmpCurrency + LAString("_yield_lobasis") + suffix_prop_OIS + LAString(".csv");
 		    irStaticData.setStaticData(tmpCurrency + STATIC_DATA_KEY_YIELD_LOBASIS_FILE + suffix_prop_OIS, lobasisfile);
@@ -5087,7 +5087,7 @@ namespace etrading
 	    // set polynomial dimension
 	    staticData.setStaticData(KEY_SIMULATION_LSMC_BASEFUNCDIM, "2");
 	    //set calib prop
-	    //this is for avoiding LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == MLIB_NO_DATA
+	    //this is for avoiding LACoreDataService::getContext(ARG_KEY_NOCALIBTHREAD) == AQ_NO_DATA
 	    LACoreDataService::setContext(ARG_KEY_NOCALIBTHREAD, "tmp");
 	    staticData.setStaticData(KEY_CALIB_SCENARIO_FILE, "calib.properties"); 
 	    LACoreDataService::setIStringStream(LAMarketData::getNumFileName("calib.properties"), pCprofSf);
@@ -5257,7 +5257,7 @@ namespace etrading
     {
         LAString futureStream;
         size_t adjustDataMinimumColumns = 3;
-        MLIB_MATRIX_CHECK( future_rates, adjustDataMinimumColumns, "Invalid Futures Data" )
+        AQ_MATRIX_CHECK( future_rates, adjustDataMinimumColumns, "Invalid Futures Data" )
         for(size_t i=0; i<future_rates.size(); i++)
         {
             if (future_rates[i].size() <= 4)
@@ -5342,7 +5342,7 @@ namespace etrading
 	    else
 	    {
 		    const LAString orig = staticData.getStaticData(key);
-		    if (orig == MLIB_NO_DATA)
+		    if (orig == AQ_NO_DATA)
 		    {
 			    staticData.setStaticData(key , val);
 		    }

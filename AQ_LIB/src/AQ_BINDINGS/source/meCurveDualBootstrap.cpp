@@ -2,7 +2,7 @@
 #include "TypeUtilities.h"
 #include "LACoreTemplateType.h"
 #include "tryMeCurveDualBootstrap.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			Swig interface to for curve calibration method using dual-bootstrapping
@@ -62,7 +62,7 @@ const std::string meCurveDualBootstrap(const std::string& curveCollection,
 										const SWIG_STRINGMATRIX & tenorBasisConv_swap,
 										const SWIG_STRINGMATRIX & tenorBasisRates_swap)
 {
-    MLIB_API_START
+    AQ_API_START
 	LAString ret;
 	
 	// marshall all inputs
@@ -165,5 +165,5 @@ const std::string meCurveDualBootstrap(const std::string& curveCollection,
 													tmp_tenorBasisRates_swap);
 	
     return ret.getCString();
-    MLIB_API_END
+    AQ_API_END
 }

@@ -81,7 +81,7 @@ namespace validation_api
 		const auto& option = etrading::getOption(objectName);
 		const auto& bondOption = std::dynamic_pointer_cast<etrading::BondOption>( option );
 
-		MLIB_REQUIRE(bondOption != nullptr, "Could not find specified Bond Option: " + objectName );
+		AQ_REQUIRE(bondOption != nullptr, "Could not find specified Bond Option: " + objectName );
 
 		etrading::BondOptionPricer pricer(bondOption, valuationSettings, discountRate, etrading::toDayCountEnum(discountDayCount));
 
@@ -111,7 +111,7 @@ namespace validation_api
 		const auto& option = etrading::getOption(objectName);
 		const auto& bondOption = std::dynamic_pointer_cast<etrading::BondOption>(option);
 
-		MLIB_REQUIRE(bondOption != nullptr, "Could not find specified Bond Option: " + objectName);
+		AQ_REQUIRE(bondOption != nullptr, "Could not find specified Bond Option: " + objectName);
 
 		etrading::BondOptionPricer pricer(bondOption, valuationSettings, discountRate, etrading::toDayCountEnum(discountDayCount));
 
@@ -147,7 +147,7 @@ namespace validation_api
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& bondOption = std::dynamic_pointer_cast<etrading::BondOption>(option);
-		MLIB_REQUIRE(bondOption != nullptr, "Could not find specified Bond Option: " + objectName);
+		AQ_REQUIRE(bondOption != nullptr, "Could not find specified Bond Option: " + objectName);
 
 		etrading::BondOptionPricer pricer(bondOption, valuationSettings, discountRate, etrading::toDayCountEnum(discountDayCount));
 
@@ -194,7 +194,7 @@ namespace validation_api
 
 		const auto& option = etrading::getOption(objectName);
 		const auto& bondOption = std::dynamic_pointer_cast<etrading::BondOption>(option);
-		MLIB_REQUIRE(bondOption != nullptr, "Could not find specified Bond Option: " + objectName);
+		AQ_REQUIRE(bondOption != nullptr, "Could not find specified Bond Option: " + objectName);
 
 		etrading::BondOptionPricer pricer(bondOption, valuationSettings, discountRate, etrading::toDayCountEnum(discountDayCount));
 

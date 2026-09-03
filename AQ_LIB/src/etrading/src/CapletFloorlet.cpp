@@ -20,7 +20,7 @@ namespace etrading
                                     const VolatilityTypeEnum & volatilityType )
         : capletOrFloorlet_(capletOrFloorlet), annuityFactor_(annuityFactor), liborRate_(liborRate), strike_(strike), vol_(vol), timeToExpiry_(timeToExpiry), shift_(shift), volatilityType_(volatilityType)
 	{
-		MLIB_REQUIRE( ( capletOrFloorlet_ == CAPLET_OPTION || capletOrFloorlet_ == FLOORLET_OPTION ),
+		AQ_REQUIRE( ( capletOrFloorlet_ == CAPLET_OPTION || capletOrFloorlet_ == FLOORLET_OPTION ),
             "capletOrFloorlet parameter must be 'CAPLET' or 'FLOORLET'" );
 	}
 
@@ -82,7 +82,7 @@ namespace etrading
     double CapletFloorlet::calculateImpliedVol( const double & price ) const
     {
         // We allow negative prices to test for Put-Call Super-Symmetry
-        //MLIB_REQUIRE( MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( price ), "Black-Scholes price parameter cannot be negative" );
+        //AQ_REQUIRE( AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO( price ), "Black-Scholes price parameter cannot be negative" );
 
         // Solver Settings
         const double targetPrice = price;

@@ -17,7 +17,7 @@
 #include "CoreEnumerations.h"
 
 // Macro to cler Credit Results Container
-#define MLIB_CLEAR_CREDIT_RESULTS_CACHE etrading::CreditResultsContainer::getInstance().deleteAllCreditResults(); 
+#define AQ_CLEAR_CREDIT_RESULTS_CACHE etrading::CreditResultsContainer::getInstance().deleteAllCreditResults(); 
 
 namespace etrading
 {

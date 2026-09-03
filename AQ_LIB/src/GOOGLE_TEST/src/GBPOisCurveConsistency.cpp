@@ -22,7 +22,7 @@
 #include "tryMeLWOSwapPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
-#include "DataUtilities.h" // MLIB_TO_STRING macros
+#include "DataUtilities.h" // AQ_TO_STRING macros
 
 // Define Test Folder Path(s)
 // *** The Google Test DataInstance folder is defined within etrading project, GoogleTest Folder, GetGoogleTestFolder.h ***
@@ -55,7 +55,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    oisSwapTerms    = curveCalibrationOisSwapTenors( curveObjectGBPOIS_ ); 
         std::vector<double>         oisSwapParRates = curveCalibrationOisSwapParRates( curveObjectGBPOIS_ );
-        MLIB_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
+        AQ_REQUIRE( oisSwapTerms.size() == oisSwapParRates.size(), "Inconsistent Calibration Data: Inconsistent Number of OIS Swap Terms and Par Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-6;
@@ -76,7 +76,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "GBPOIS_Swap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "GBPOIS_Swap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "GBP_OIS";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("GBPYC");
 
@@ -96,7 +96,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    liborOisTerms    = curveCalibrationLiborOisTenors( curveObjectGBPOIS_ ); 
         std::vector<double>         liborOisSpreads  = curveCalibrationLiborOisSpreads( curveObjectGBPOIS_ );
-        MLIB_REQUIRE( liborOisTerms.size() == liborOisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Libor OIS Terms and Spreads" )
+        AQ_REQUIRE( liborOisTerms.size() == liborOisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Libor OIS Terms and Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-4; // <---- Not a great tolerance number, need to investigate the single calibration instrument discrepency
@@ -118,7 +118,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "GBPOIS_LiborOISSwap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "GBPOIS_LiborOISSwap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "GBP_BASIS_LIBOROIS";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("GBPYC");
 

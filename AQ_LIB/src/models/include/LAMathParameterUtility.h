@@ -8,20 +8,20 @@
 #include <LADataInstance.h>
 #include "LAPriceDataSlidingRule.h"
 
-#ifndef MLIB_DATAMATRIX
-#define MLIB_DATAMATRIX "DataMatrix"
+#ifndef AQ_DATAMATRIX
+#define AQ_DATAMATRIX "DataMatrix"
 #endif
-#ifndef MLIB_EXPIRYTERMS
-#define MLIB_EXPIRYTERMS "ExpiryTerms"
+#ifndef AQ_EXPIRYTERMS
+#define AQ_EXPIRYTERMS "ExpiryTerms"
 #endif
-#ifndef MLIB_EXPIRYDATES
-#define MLIB_EXPIRYDATES "ExpiryDates"
+#ifndef AQ_EXPIRYDATES
+#define AQ_EXPIRYDATES "ExpiryDates"
 #endif
-#ifndef MLIB_EXPIRYVECTOR
-#define MLIB_EXPIRYVECTOR "ExpiryVector"
+#ifndef AQ_EXPIRYVECTOR
+#define AQ_EXPIRYVECTOR "ExpiryVector"
 #endif
-#ifndef MLIB_INDEXVECTOR
-#define MLIB_INDEXVECTOR "IndexVector"
+#ifndef AQ_INDEXVECTOR
+#define AQ_INDEXVECTOR "IndexVector"
 #endif
 
 using namespace std;

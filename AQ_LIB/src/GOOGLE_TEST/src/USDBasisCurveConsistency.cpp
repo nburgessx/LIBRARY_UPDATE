@@ -22,7 +22,7 @@
 #include "tryMeLWOSwapPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
-#include "DataUtilities.h" // MLIB_TO_STRING macros
+#include "DataUtilities.h" // AQ_TO_STRING macros
 
 // Define Test Folder Path(s)
 // *** The Google Test DataInstance folder is defined within etrading project, GoogleTest Folder, GetGoogleTestFolder.h ***
@@ -60,7 +60,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    basisTerms   = curveCalibrationBasisSwapTenors( curveObjectUSD6ML_ ); 
         std::vector<double>         basisSpreads = curveCalibrationBasisSwapSpreads( curveObjectUSD6ML_ );
-        MLIB_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
+        AQ_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-6;
@@ -81,7 +81,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "USD6ML_BasisSwap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "USD6ML_BasisSwap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "USD_BASIS_3X6";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("USDYC");
 
@@ -101,7 +101,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    basisTerms   = curveCalibrationBasisSwapTenors( curveObjectUSD1ML_ ); 
         std::vector<double>         basisSpreads = curveCalibrationBasisSwapSpreads( curveObjectUSD1ML_ );
-        MLIB_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
+        AQ_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-6;
@@ -122,7 +122,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "USD1ML_BasisSwap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "USD1ML_BasisSwap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "USD_BASIS_1X3";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("USDYC");
 
@@ -142,7 +142,7 @@ namespace google_test
          // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    basisTerms   = curveCalibrationBasisSwapTenors( curveObjectUSD12ML_ ); 
         std::vector<double>         basisSpreads = curveCalibrationBasisSwapSpreads( curveObjectUSD12ML_ );
-        MLIB_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
+        AQ_REQUIRE( basisTerms.size() == basisSpreads.size(), "Inconsistent Calibration Data: Inconsistent Number of Basis Swap Terms and Par Spreads" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-6;
@@ -164,7 +164,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "USD12ML_BasisSwap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "USD12ML_BasisSwap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "USD_BASIS_3X12";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("USDYC");
 

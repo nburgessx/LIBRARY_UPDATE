@@ -196,7 +196,7 @@ namespace etrading
     */
     LADate nthIMMDate( const LADate& valuationDate, const int& nthIMM, const bool includeToday, const std::string& calendar, const std::string businessDayAdjustment )
     {
-        MLIB_REQUIRE( nthIMM >= 0 && nthIMM <= 1000, "Invalid IMM Futures Contract - nthIMM must be between 0 and 1,000")
+        AQ_REQUIRE( nthIMM >= 0 && nthIMM <= 1000, "Invalid IMM Futures Contract - nthIMM must be between 0 and 1,000")
 
         // Imply the Nth IMM Month and Year from the Current IMM Month Year
         const LADate currentIMMReferenceDate = currentIMMDate( valuationDate, includeToday, calendar, businessDayAdjustment );
@@ -292,7 +292,7 @@ namespace etrading
     */
     std::string nthIMMFuturesTicker( const LADate& valuationDate, const int& nthIMM, const bool includeToday, const std::string& calendar, const std::string businessDayAdjustment, const bool showYearWithTwoDigits  )
     {
-        MLIB_REQUIRE( nthIMM >= 0 && nthIMM <= 1000, "Invalid IMM Futures Contract - nthIMM must be between 0 and 1,000")
+        AQ_REQUIRE( nthIMM >= 0 && nthIMM <= 1000, "Invalid IMM Futures Contract - nthIMM must be between 0 and 1,000")
         const LADate futuresStartDate = nthIMMDate( valuationDate, nthIMM, includeToday, calendar, businessDayAdjustment );
         std::string futuresTicker = convertDateToFuturesTicker( futuresStartDate, showYearWithTwoDigits );
         return futuresTicker;
@@ -344,7 +344,7 @@ namespace etrading
         const int month     = futuresStartDate.monthOfYear();
         const int year      = futuresStartDate.yearOfEra() % yearModulus;
 
-        MLIB_REQUIRE( month > 0 && month <= 12, "Invalid Futures Start Date: The futures month must be a number in the range 1-12" )
+        AQ_REQUIRE( month > 0 && month <= 12, "Invalid Futures Start Date: The futures month must be a number in the range 1-12" )
         const std::string monthString = monthCode[ month -1 ]; // note: base zero
         const std::string yearString = std::to_string( static_cast<long long>( year ) );
 

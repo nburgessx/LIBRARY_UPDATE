@@ -93,7 +93,7 @@ LARiskConfigurationYield::getTargetNames(const LAString &ccy, LADataInstance &da
 	if (isGridSensitivity(ccy))
 	{
 		LAStringVector bucketterm = getBucketGridTerm(ccy);
-		if (bucketterm[0] != MLIB_NO_DATA)
+		if (bucketterm[0] != AQ_NO_DATA)
 			gridIndex = bucketterm.size() - 1;
 		for (unsigned int i = 0; i <= gridIndex; ++i)
 		{
@@ -570,7 +570,7 @@ LARiskConfigurationYield::createExtraScenarioEntityOld(const LAString &ccy, LADa
 			unsigned int refAddIndex = 0;
 
 			LAStringVector BucketTerm = getBucketGridTerm(ccy);
-			if (BucketTerm[0] != MLIB_NO_DATA)
+			if (BucketTerm[0] != AQ_NO_DATA)
 			{
 				gridSize = BucketTerm.size();
 			}
@@ -766,7 +766,7 @@ LARiskConfigurationYield::createIRVolEntity(const LAString& ccy, LADataInstance 
 	param.targetName = LAMarketData::getBaseVolatilityName(ccy);
 
 	// dataout
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		param.isOutPut = true;
 	}
@@ -800,7 +800,7 @@ LARiskConfigurationYield::createIRVolEntity(const LAString& ccy, LADataInstance 
 		unsigned int gridSize = marketGridTerm.size();
 
 		LAStringVector BucketTerm = getBucketGridTerm(ccy);
-		if (BucketTerm[0] != MLIB_NO_DATA)
+		if (BucketTerm[0] != AQ_NO_DATA)
 		{
 			gridSize = BucketTerm.size();
 		}
@@ -857,7 +857,7 @@ LARiskConfigurationYield::createForeignIRVolEntity(const LAString& ccy, const LA
 	param.targetName = LAMarketData::getBaseVolatilityName(fCcy);
 
 	// dataout
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		param.isOutPut = true;
 	}
@@ -891,7 +891,7 @@ LARiskConfigurationYield::createForeignIRVolEntity(const LAString& ccy, const LA
 		unsigned int gridSize = marketGridTerm.size();
 
 		LAStringVector BucketTerm = getBucketGridTerm(ccy);
-		if (BucketTerm[0] != MLIB_NO_DATA)
+		if (BucketTerm[0] != AQ_NO_DATA)
 		{
 			gridSize = BucketTerm.size();
 		}
@@ -987,7 +987,7 @@ LARiskConfigurationYield::createForeignYieldEntity(const LAString &ccy, const LA
 		unsigned int gridSize = marketGridTerm.size();
 
 		LAStringVector BucketTerm = getBucketGridTerm(ccy);
-		if (BucketTerm[0] != MLIB_NO_DATA)
+		if (BucketTerm[0] != AQ_NO_DATA)
 		{
 			gridSize = BucketTerm.size();
 		}
@@ -1086,7 +1086,7 @@ LARiskConfigurationYield::createCollateralYieldEntity(const LAString &ccy, const
 		unsigned int gridSize = marketGridTerm.size();
 
 		LAStringVector BucketTerm = getBucketGridTerm(ccy);
-		if (BucketTerm[0] != MLIB_NO_DATA)
+		if (BucketTerm[0] != AQ_NO_DATA)
 		{
 			gridSize = BucketTerm.size();
 		}
@@ -1172,7 +1172,7 @@ LARiskConfigurationYield::createFXVolEntity(const LAString& ccy, const LAString&
 		unsigned int gridSize = gridTerm.size();
 
 		LAStringVector bucketGridTerm = getBucketGridTerm(ccy);
-		if (bucketGridTerm[0] != MLIB_NO_DATA)
+		if (bucketGridTerm[0] != AQ_NO_DATA)
 		{
 			gridSize = bucketGridTerm.size();
 		}

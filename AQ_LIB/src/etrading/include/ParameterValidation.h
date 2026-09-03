@@ -12,14 +12,14 @@
 using etrading::LabelValueBlock;
 
 // Macro to push back to a vector when the condition is true
-#define MLIB_PUSH_BACK_IF(vectorToChange, value, predicate)	\
+#define AQ_PUSH_BACK_IF(vectorToChange, value, predicate)	\
 if (predicate)											\
 {														\
 	vectorToChange.push_back(value);					\
 }														\
 
 
-#define MLIB_PUSH_BACK_DATE_IF(vectorToChange, date, predicate, convertDatesToExcelFormat)	\
+#define AQ_PUSH_BACK_DATE_IF(vectorToChange, date, predicate, convertDatesToExcelFormat)	\
 if (predicate)													\
 {																\
 	if (convertDatesToExcelFormat)								\

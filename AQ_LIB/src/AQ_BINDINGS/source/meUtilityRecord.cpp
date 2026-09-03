@@ -3,7 +3,7 @@
 
 #include "meUtilityRecord.h"
 #include "tryMeUtilityRecord.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			validation interface for the meUtilityVersion function
@@ -20,7 +20,7 @@ std::string meUtilityRecord( bool enable,
                              int startIndex,
                              int maxIndex )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Input Marshalling 
     LAString myFolder( folder.c_str() );
@@ -31,5 +31,5 @@ std::string meUtilityRecord( bool enable,
     // Return as std::string
     return result.getCString();
     
-    MLIB_API_END
+    AQ_API_END
 }

@@ -51,7 +51,7 @@
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_1( D1 ) \
+    #define AQ_DEBUG_VALUE_1( D1 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE_NO_TRAILING_COMMA( ss, D1 ) \
@@ -59,14 +59,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_1( D1 )
+    #define AQ_DEBUG_VALUE_1( D1 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_2( D1, D2 ) \
+    #define AQ_DEBUG_VALUE_2( D1, D2 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -75,14 +75,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_2( D1, D2 )
+    #define AQ_DEBUG_VALUE_2( D1, D2 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_3( D1, D2, D3 ) \
+    #define AQ_DEBUG_VALUE_3( D1, D2, D3 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -92,14 +92,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_3( D1, D2, D3 )
+    #define AQ_DEBUG_VALUE_3( D1, D2, D3 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_4( D1, D2, D3, D4 ) \
+    #define AQ_DEBUG_VALUE_4( D1, D2, D3, D4 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -110,14 +110,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_4( D1, D2, D3, D4 )
+    #define AQ_DEBUG_VALUE_4( D1, D2, D3, D4 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_5( D1, D2, D3, D4, D5 ) \
+    #define AQ_DEBUG_VALUE_5( D1, D2, D3, D4, D5 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -129,14 +129,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_5( D1, D2, D3, D4, D5 )
+    #define AQ_DEBUG_VALUE_5( D1, D2, D3, D4, D5 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_6( D1, D2, D3, D4, D5, D6 ) \
+    #define AQ_DEBUG_VALUE_6( D1, D2, D3, D4, D5, D6 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -149,14 +149,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_6( D1, D2, D3, D4, D5, D6 )
+    #define AQ_DEBUG_VALUE_6( D1, D2, D3, D4, D5, D6 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_7( D1, D2, D3, D4, D5, D6, D7 ) \
+    #define AQ_DEBUG_VALUE_7( D1, D2, D3, D4, D5, D6, D7 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -170,14 +170,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_7( D1, D2, D3, D4, D5, D6, D7 )
+    #define AQ_DEBUG_VALUE_7( D1, D2, D3, D4, D5, D6, D7 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_8( D1, D2, D3, D4, D5, D6, D7, D8 ) \
+    #define AQ_DEBUG_VALUE_8( D1, D2, D3, D4, D5, D6, D7, D8 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -192,14 +192,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_8( D1, D2, D3, D4, D5, D6, D7, D8 )
+    #define AQ_DEBUG_VALUE_8( D1, D2, D3, D4, D5, D6, D7, D8 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_9( D1, D2, D3, D4, D5, D6, D7, D8, D9 ) \
+    #define AQ_DEBUG_VALUE_9( D1, D2, D3, D4, D5, D6, D7, D8, D9 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -215,14 +215,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_9( D1, D2, D3, D4, D5, D6, D7, D8, D9 )
+    #define AQ_DEBUG_VALUE_9( D1, D2, D3, D4, D5, D6, D7, D8, D9 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_10( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 ) \
+    #define AQ_DEBUG_VALUE_10( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -239,14 +239,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_10( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 )
+    #define AQ_DEBUG_VALUE_10( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_11( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 ) \
+    #define AQ_DEBUG_VALUE_11( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -264,14 +264,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_11( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 )
+    #define AQ_DEBUG_VALUE_11( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_12( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 ) \
+    #define AQ_DEBUG_VALUE_12( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -290,14 +290,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_12( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 )
+    #define AQ_DEBUG_VALUE_12( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_13( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 ) \
+    #define AQ_DEBUG_VALUE_13( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -317,14 +317,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_13( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 )
+    #define AQ_DEBUG_VALUE_13( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_14( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 ) \
+    #define AQ_DEBUG_VALUE_14( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -345,14 +345,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_14( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 )
+    #define AQ_DEBUG_VALUE_14( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_15( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 ) \
+    #define AQ_DEBUG_VALUE_15( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -374,13 +374,13 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_15( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 )
+    #define AQ_DEBUG_VALUE_15( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 )
 #endif
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_16( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 ) \
+    #define AQ_DEBUG_VALUE_16( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -403,13 +403,13 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_16( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 )
+    #define AQ_DEBUG_VALUE_16( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 )
 #endif
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_17( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17 ) \
+    #define AQ_DEBUG_VALUE_17( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -433,13 +433,13 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_17( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17 )
+    #define AQ_DEBUG_VALUE_17( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17 )
 #endif
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_18( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18 ) \
+    #define AQ_DEBUG_VALUE_18( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -464,13 +464,13 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_18( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18 )
+    #define AQ_DEBUG_VALUE_18( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18 )
 #endif
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_19( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19 ) \
+    #define AQ_DEBUG_VALUE_19( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -496,13 +496,13 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_19( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19 )
+    #define AQ_DEBUG_VALUE_19( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19 )
 #endif
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_VALUE_20( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19, D20 ) \
+    #define AQ_DEBUG_VALUE_20( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19, D20 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_VALUE( ss, D1 ) \
@@ -529,32 +529,32 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_VALUE_20( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19, D20 )
+    #define AQ_DEBUG_VALUE_20( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19, D20 )
 #endif
 
 // Define a macro to record a functions's input parameters to a file
 // This macro dynamically records up to 15 input parameters.
-#define MLIB_DEBUG_VALUE(...) EXPAND( GET_MACRO_NAME( __VA_ARGS__,    \
-                                                      MLIB_DEBUG_VALUE_20,  \
-                                                      MLIB_DEBUG_VALUE_19,  \
-                                                      MLIB_DEBUG_VALUE_18,  \
-                                                      MLIB_DEBUG_VALUE_17,  \
-                                                      MLIB_DEBUG_VALUE_16,  \
-                                                      MLIB_DEBUG_VALUE_15,  \
-                                                      MLIB_DEBUG_VALUE_14,  \
-                                                      MLIB_DEBUG_VALUE_13,  \
-                                                      MLIB_DEBUG_VALUE_12,  \
-                                                      MLIB_DEBUG_VALUE_11,  \
-                                                      MLIB_DEBUG_VALUE_10,  \
-                                                      MLIB_DEBUG_VALUE_9,   \
-                                                      MLIB_DEBUG_VALUE_8,   \
-                                                      MLIB_DEBUG_VALUE_7,   \
-                                                      MLIB_DEBUG_VALUE_6,   \
-                                                      MLIB_DEBUG_VALUE_5,   \
-                                                      MLIB_DEBUG_VALUE_4,   \
-                                                      MLIB_DEBUG_VALUE_3,   \
-                                                      MLIB_DEBUG_VALUE_2,   \
-                                                      MLIB_DEBUG_VALUE_1 )( __VA_ARGS__ ) )
+#define AQ_DEBUG_VALUE(...) EXPAND( GET_MACRO_NAME( __VA_ARGS__,    \
+                                                      AQ_DEBUG_VALUE_20,  \
+                                                      AQ_DEBUG_VALUE_19,  \
+                                                      AQ_DEBUG_VALUE_18,  \
+                                                      AQ_DEBUG_VALUE_17,  \
+                                                      AQ_DEBUG_VALUE_16,  \
+                                                      AQ_DEBUG_VALUE_15,  \
+                                                      AQ_DEBUG_VALUE_14,  \
+                                                      AQ_DEBUG_VALUE_13,  \
+                                                      AQ_DEBUG_VALUE_12,  \
+                                                      AQ_DEBUG_VALUE_11,  \
+                                                      AQ_DEBUG_VALUE_10,  \
+                                                      AQ_DEBUG_VALUE_9,   \
+                                                      AQ_DEBUG_VALUE_8,   \
+                                                      AQ_DEBUG_VALUE_7,   \
+                                                      AQ_DEBUG_VALUE_6,   \
+                                                      AQ_DEBUG_VALUE_5,   \
+                                                      AQ_DEBUG_VALUE_4,   \
+                                                      AQ_DEBUG_VALUE_3,   \
+                                                      AQ_DEBUG_VALUE_2,   \
+                                                      AQ_DEBUG_VALUE_1 )( __VA_ARGS__ ) )
 
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -563,7 +563,7 @@
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_1( D1 ) \
+    #define AQ_DEBUG_PARAMETER_1( D1 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME_NO_TRAILING_COMMA( ss, D1 ) \
@@ -571,14 +571,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_1( D1 )
+    #define AQ_DEBUG_PARAMETER_1( D1 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_2( D1, D2 ) \
+    #define AQ_DEBUG_PARAMETER_2( D1, D2 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -587,14 +587,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_2( D1, D2 )
+    #define AQ_DEBUG_PARAMETER_2( D1, D2 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_3( D1, D2, D3 ) \
+    #define AQ_DEBUG_PARAMETER_3( D1, D2, D3 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -604,14 +604,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_3( D1, D2, D3 )
+    #define AQ_DEBUG_PARAMETER_3( D1, D2, D3 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_4( D1, D2, D3, D4 ) \
+    #define AQ_DEBUG_PARAMETER_4( D1, D2, D3, D4 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -622,14 +622,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_4( D1, D2, D3, D4 )
+    #define AQ_DEBUG_PARAMETER_4( D1, D2, D3, D4 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_5( D1, D2, D3, D4, D5 ) \
+    #define AQ_DEBUG_PARAMETER_5( D1, D2, D3, D4, D5 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -641,14 +641,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_5( D1, D2, D3, D4, D5 )
+    #define AQ_DEBUG_PARAMETER_5( D1, D2, D3, D4, D5 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_6( D1, D2, D3, D4, D5, D6 ) \
+    #define AQ_DEBUG_PARAMETER_6( D1, D2, D3, D4, D5, D6 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -661,14 +661,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_6( D1, D2, D3, D4, D5, D6 )
+    #define AQ_DEBUG_PARAMETER_6( D1, D2, D3, D4, D5, D6 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_7( D1, D2, D3, D4, D5, D6, D7 ) \
+    #define AQ_DEBUG_PARAMETER_7( D1, D2, D3, D4, D5, D6, D7 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -682,14 +682,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_7( D1, D2, D3, D4, D5, D6, D7 )
+    #define AQ_DEBUG_PARAMETER_7( D1, D2, D3, D4, D5, D6, D7 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_8( D1, D2, D3, D4, D5, D6, D7, D8 ) \
+    #define AQ_DEBUG_PARAMETER_8( D1, D2, D3, D4, D5, D6, D7, D8 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -704,14 +704,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_8( D1, D2, D3, D4, D5, D6, D7, D8 )
+    #define AQ_DEBUG_PARAMETER_8( D1, D2, D3, D4, D5, D6, D7, D8 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_9( D1, D2, D3, D4, D5, D6, D7, D8, D9 ) \
+    #define AQ_DEBUG_PARAMETER_9( D1, D2, D3, D4, D5, D6, D7, D8, D9 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -727,14 +727,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_9( D1, D2, D3, D4, D5, D6, D7, D8, D9 )
+    #define AQ_DEBUG_PARAMETER_9( D1, D2, D3, D4, D5, D6, D7, D8, D9 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_10( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 ) \
+    #define AQ_DEBUG_PARAMETER_10( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -751,14 +751,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_10( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 )
+    #define AQ_DEBUG_PARAMETER_10( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_11( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 ) \
+    #define AQ_DEBUG_PARAMETER_11( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -776,14 +776,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_11( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 )
+    #define AQ_DEBUG_PARAMETER_11( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_12( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 ) \
+    #define AQ_DEBUG_PARAMETER_12( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -802,14 +802,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_12( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 )
+    #define AQ_DEBUG_PARAMETER_12( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_13( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 ) \
+    #define AQ_DEBUG_PARAMETER_13( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -829,14 +829,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_13( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 )
+    #define AQ_DEBUG_PARAMETER_13( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_14( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 ) \
+    #define AQ_DEBUG_PARAMETER_14( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -857,14 +857,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_14( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 )
+    #define AQ_DEBUG_PARAMETER_14( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_15( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 ) \
+    #define AQ_DEBUG_PARAMETER_15( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -886,13 +886,13 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_15( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 )
+    #define AQ_DEBUG_PARAMETER_15( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 )
 #endif
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_16( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 ) \
+    #define AQ_DEBUG_PARAMETER_16( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -915,14 +915,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_16( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 )
+    #define AQ_DEBUG_PARAMETER_16( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_17( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17 ) \
+    #define AQ_DEBUG_PARAMETER_17( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -946,14 +946,14 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_17( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17 )
+    #define AQ_DEBUG_PARAMETER_17( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17 )
 #endif
 
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_18( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18 ) \
+    #define AQ_DEBUG_PARAMETER_18( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -978,13 +978,13 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_18( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18 )
+    #define AQ_DEBUG_PARAMETER_18( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18 )
 #endif
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_19( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19 ) \
+    #define AQ_DEBUG_PARAMETER_19( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -1010,13 +1010,13 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_19( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19 )
+    #define AQ_DEBUG_PARAMETER_19( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19 )
 #endif
 
 // Macro to write a debug variable to the visual studio output screen
 // Expand macro to nothing when using release configuration(s)
 #if defined(_DEBUG)
-    #define MLIB_DEBUG_PARAMETER_20( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19, D20 ) \
+    #define AQ_DEBUG_PARAMETER_20( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19, D20 ) \
     { \
         std::ostringstream ss; \
         DEBUG_PARAMETER_NAME( ss, D1 ) \
@@ -1043,30 +1043,30 @@
         OutputDebugStringA( ss.str().c_str() ); \
     } 
 #else
-    #define MLIB_DEBUG_PARAMETER_20( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19, D20 )
+    #define AQ_DEBUG_PARAMETER_20( D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16, D17, D18, D19, D20 )
 #endif
 
 // Define a macro to record a functions's input parameters to a file
 // This macro dynamically records up to 15 input parameters.
-#define MLIB_DEBUG_PARAMETER(...) EXPAND( GET_MACRO_NAME( __VA_ARGS__,    \
-                                                          MLIB_DEBUG_PARAMETER_20,  \
-                                                          MLIB_DEBUG_PARAMETER_19,  \
-                                                          MLIB_DEBUG_PARAMETER_18,  \
-                                                          MLIB_DEBUG_PARAMETER_17,  \
-                                                          MLIB_DEBUG_PARAMETER_16,  \
-                                                          MLIB_DEBUG_PARAMETER_15,  \
-                                                          MLIB_DEBUG_PARAMETER_14,  \
-                                                          MLIB_DEBUG_PARAMETER_13,  \
-                                                          MLIB_DEBUG_PARAMETER_12,  \
-                                                          MLIB_DEBUG_PARAMETER_11,  \
-                                                          MLIB_DEBUG_PARAMETER_10,  \
-                                                          MLIB_DEBUG_PARAMETER_9,   \
-                                                          MLIB_DEBUG_PARAMETER_8,   \
-                                                          MLIB_DEBUG_PARAMETER_7,   \
-                                                          MLIB_DEBUG_PARAMETER_6,   \
-                                                          MLIB_DEBUG_PARAMETER_5,   \
-                                                          MLIB_DEBUG_PARAMETER_4,   \
-                                                          MLIB_DEBUG_PARAMETER_3,   \
-                                                          MLIB_DEBUG_PARAMETER_2,   \
-                                                          MLIB_DEBUG_PARAMETER_1 )( __VA_ARGS__ ) )
+#define AQ_DEBUG_PARAMETER(...) EXPAND( GET_MACRO_NAME( __VA_ARGS__,    \
+                                                          AQ_DEBUG_PARAMETER_20,  \
+                                                          AQ_DEBUG_PARAMETER_19,  \
+                                                          AQ_DEBUG_PARAMETER_18,  \
+                                                          AQ_DEBUG_PARAMETER_17,  \
+                                                          AQ_DEBUG_PARAMETER_16,  \
+                                                          AQ_DEBUG_PARAMETER_15,  \
+                                                          AQ_DEBUG_PARAMETER_14,  \
+                                                          AQ_DEBUG_PARAMETER_13,  \
+                                                          AQ_DEBUG_PARAMETER_12,  \
+                                                          AQ_DEBUG_PARAMETER_11,  \
+                                                          AQ_DEBUG_PARAMETER_10,  \
+                                                          AQ_DEBUG_PARAMETER_9,   \
+                                                          AQ_DEBUG_PARAMETER_8,   \
+                                                          AQ_DEBUG_PARAMETER_7,   \
+                                                          AQ_DEBUG_PARAMETER_6,   \
+                                                          AQ_DEBUG_PARAMETER_5,   \
+                                                          AQ_DEBUG_PARAMETER_4,   \
+                                                          AQ_DEBUG_PARAMETER_3,   \
+                                                          AQ_DEBUG_PARAMETER_2,   \
+                                                          AQ_DEBUG_PARAMETER_1 )( __VA_ARGS__ ) )
 

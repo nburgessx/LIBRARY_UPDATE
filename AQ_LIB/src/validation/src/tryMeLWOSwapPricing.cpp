@@ -93,17 +93,17 @@ namespace validation_api
         // Validate Input Vector Sizes
         // --------------------------------------------------
         const size_t nSwaps = swapNames.size();
-        MLIB_REQUIRE( valuationSettingsLVB.size() == nSwaps, "The number of curve collections must match the number of swaps" );
+        AQ_REQUIRE( valuationSettingsLVB.size() == nSwaps, "The number of curve collections must match the number of swaps" );
 
         // Default leg names to blank if missing or if only 1 leg name is provided use that for all swaps
         if ( legNames.empty() )     legNames.resize( nSwaps, "" );
         if ( legNames.size() == 1 ) legNames.resize( nSwaps, legNames[0] );
-        MLIB_REQUIRE( legNames.size() == nSwaps, "The number of leg names must match the number of swaps" );
+        AQ_REQUIRE( legNames.size() == nSwaps, "The number of leg names must match the number of swaps" );
 
         // Default fixing table names to blank if missing or if only 1 fixing table is provided use that for all swaps
         if ( fixingTableNames.empty() ) fixingTableNames.resize( nSwaps, LabelValueBlock() );
         if ( fixingTableNames.size() == 1 ) fixingTableNames.resize( nSwaps, fixingTableNames[0] );
-        MLIB_REQUIRE( fixingTableNames.size() == nSwaps, "The number of fixing tables must match the number of swaps" );
+        AQ_REQUIRE( fixingTableNames.size() == nSwaps, "The number of fixing tables must match the number of swaps" );
         // --------------------------------------------------
         
         std::vector< double > results(swapNames.size(), 0.0);
@@ -213,7 +213,7 @@ namespace validation_api
             const double annuityTargetLeg           = swap->annuity( valuationLVBusingCurveCollection, legName, true ); // true = include sign
             const double pvSwapWithoutTargetLeg     = pvSwap - pvTargetLeg;
 
-            MLIB_REQUIRE( ! MLIB_IS_EQUAL_ZERO( annuityTargetLeg ), "Invalid Par Rate, Target Leg cannot have a zero annuity" )
+            AQ_REQUIRE( ! AQ_IS_EQUAL_ZERO( annuityTargetLeg ), "Invalid Par Rate, Target Leg cannot have a zero annuity" )
             
             // Negative sign required so that target leg offsets swap value to bring to par.                
             result = -pvSwapWithoutTargetLeg / annuityTargetLeg;
@@ -386,12 +386,12 @@ namespace validation_api
 
 		if (swap->getSwapType() != etrading::CREDIT_DEFAULT_SWAP )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a credit default swap." );
 		}
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 		
 		double result = cds->pvFromHazardRate( valuationSettingsLVB, hazardRate, recoveryRate, legName, includeAccruedInterest );
@@ -421,12 +421,12 @@ namespace validation_api
 
 		if (swap->getSwapType() != etrading::CREDIT_DEFAULT_SWAP )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a credit default swap." );
 		}
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 		
 		auto creditModel = etrading::getCreditModel( creditModelName );
@@ -464,12 +464,12 @@ namespace validation_api
 
 		if (swap->getSwapType() != etrading::CREDIT_DEFAULT_SWAP )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a credit default swap." );
 		}
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 		
 		auto creditModel = etrading::getCreditModel( creditModelName );
@@ -507,12 +507,12 @@ namespace validation_api
 
 		if (swap->getSwapType() != etrading::CREDIT_DEFAULT_SWAP )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a credit default swap." );
 		}
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 		
 		auto creditModel = etrading::getCreditModel( creditModelName );
@@ -547,7 +547,7 @@ namespace validation_api
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 
 		double result = cds->riskyAnnuityFromHazardRate(valuationSettingsLVB, hazardRate, recoveryRate, legName, includeAccruedInterest );
@@ -577,7 +577,7 @@ namespace validation_api
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 		
 		auto creditModel = etrading::getCreditModel( creditModelName );
@@ -611,7 +611,7 @@ namespace validation_api
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>(swap);
 		if (cds == nullptr)
 		{
-			MLIB_THROW("Swap '" + swapName + "' is not a credit default swap.");
+			AQ_THROW("Swap '" + swapName + "' is not a credit default swap.");
 		}
 
 		auto creditModel = etrading::getCreditModel(creditModelName);
@@ -643,7 +643,7 @@ namespace validation_api
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 		
 		auto creditModel = etrading::getCreditModel( creditModelName );
@@ -680,7 +680,7 @@ namespace validation_api
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 		
 		double result = cds->parSpreadFromHazardRate( valuationSettingsLVB, hazardRate, recoveryRate, premiumLegName, protectionLegName, includeAccruedInterest );
@@ -711,7 +711,7 @@ namespace validation_api
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 		
 		auto creditModel = etrading::getCreditModel( creditModelName );
@@ -747,7 +747,7 @@ namespace validation_api
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 		
 		double result = cds->hazardRateFromParSpread( valuationSettingsLVB, parSpread, recoveryRate, premiumLegName, protectionLegName, includeAccruedInterest );
@@ -778,7 +778,7 @@ namespace validation_api
 		auto cds = std::dynamic_pointer_cast<etrading::CreditDefaultSwap>( swap );
 		if ( cds == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a credit default swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a credit default swap." );
 		}
 		
 		auto creditModel = etrading::getCreditModel( creditModelName );
@@ -808,8 +808,8 @@ namespace validation_api
         size_t nColumnHeaders   = dataBlockNames.size();
         size_t nDataColumns     = infoBlocks.size();
 		
-        MLIB_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided" )
-        MLIB_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " +  std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " +  std::to_string(static_cast<long long>(nDataColumns)) )
+        AQ_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided" )
+        AQ_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " +  std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " +  std::to_string(static_cast<long long>(nDataColumns)) )
 
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
@@ -835,7 +835,7 @@ namespace validation_api
             return ( dataBlockName.empty() || dataBlockName == "" );
         } );
 
-        MLIB_REQUIRE( !hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString( dataBlockNames ) )
+        AQ_REQUIRE( !hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString( dataBlockNames ) )
 
 		// Verify that the supplied propertyNames match the CreditModelEnum
 		std::set<etrading::CreditModelEnum> enumSet;
@@ -929,7 +929,7 @@ namespace validation_api
 		// User must specify a valid 'toDate'.
 		if ( toDate == LADate() )
 		{
-			MLIB_THROW( "Please specify a valid toDate.");
+			AQ_THROW( "Please specify a valid toDate.");
 		}
 
 		double result = creditModel->getSurvivalProbability( toDate, fromDate );
@@ -952,7 +952,7 @@ namespace validation_api
 		// User must specify a valid 'toDate'.
 		if ( toDate == LADate() )
 		{
-			MLIB_THROW( "Please specify a valid toDate.");
+			AQ_THROW( "Please specify a valid toDate.");
 		}
 
 		double result = creditBasketModel->getFirstToDefaultHomogeneousBasketSurvivalProbability( toDate, fromDate );
@@ -975,7 +975,7 @@ namespace validation_api
 		// User must specify a valid 'toDate'.
 		if ( toDate == LADate() )
 		{
-			MLIB_THROW( "Please specify a valid toDate.");
+			AQ_THROW( "Please specify a valid toDate.");
 		}
 
 		double result = creditModel->getDefaultProbability( toDate, fromDate );
@@ -1022,7 +1022,7 @@ namespace validation_api
         RECORD_INPUTS( creditModelName, paymentDates )
 
         // Validate PaymentDate vector Size
-        MLIB_REQUIRE( paymentDates.size() > 0, "No payment dates specified.")
+        AQ_REQUIRE( paymentDates.size() > 0, "No payment dates specified.")
 
         // Load the Credit Model and Discount Curve
         auto creditModel                    = etrading::getCreditModel( creditModelName );
@@ -1042,8 +1042,8 @@ namespace validation_api
 
         // Get the Spot Discount Factors
         DoubleVector discountFactors = etrading::LACurveForwardRateHelpers::getMultiSpotDiscountFactors( paymentDates, etrading::getDataInstance(), curveCollectionAsLAString, getDayCount(), busdayAdj, calendar, interp, isBasisFlag(), curveIndex );
-        MLIB_REQUIRE( discountFactors.size() > 0, "No discount factors have been returned" );
-        MLIB_REQUIRE( discountFactors.size() == paymentDates.size(), "Number of discount factors and payment dates do not match." )
+        AQ_REQUIRE( discountFactors.size() > 0, "No discount factors have been returned" );
+        AQ_REQUIRE( discountFactors.size() == paymentDates.size(), "Number of discount factors and payment dates do not match." )
 
 
         // Risky Discount Factor Calculation
@@ -1053,14 +1053,14 @@ namespace validation_api
 
         DoubleVector riskyDiscountFactors( discountFactors.size(), 0.0 );
 
-        MLIB_REQUIRE( discountFactors.size() == riskyDiscountFactors.size(), "Number of DiscountFactors and RiskyDiscountFactors do not match." )
+        AQ_REQUIRE( discountFactors.size() == riskyDiscountFactors.size(), "Number of DiscountFactors and RiskyDiscountFactors do not match." )
         for( size_t i = 0; i < riskyDiscountFactors.size(); ++i )
         {
             // We must cast from gregorian date to LADate here
             LADate paymentDate = paymentDates[i]; 
             
             // User must specify a valid 'paymentDates'.
-		    MLIB_REQUIRE( paymentDates[i] != LADate(), "Invalid Payment Date(s)" );
+		    AQ_REQUIRE( paymentDates[i] != LADate(), "Invalid Payment Date(s)" );
         
             // Calculate survival probability from credit model 'asOfDate' to 'paymentDate'
             // Note the credit model checks that the asOfDate in the yieldCurve and creditModel is the same
@@ -1393,8 +1393,8 @@ namespace validation_api
         size_t nColumnHeaders   = dataBlockNames.size();
         size_t nDataColumns     = infoBlocks.size();
 		
-        MLIB_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided" )
-        MLIB_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " +  std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " +  std::to_string(static_cast<long long>(nDataColumns)) )
+        AQ_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided" )
+        AQ_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " +  std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " +  std::to_string(static_cast<long long>(nDataColumns)) )
 
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
@@ -1420,7 +1420,7 @@ namespace validation_api
             return ( dataBlockName.empty() || dataBlockName == "" );
         } );
 
-        MLIB_REQUIRE( !hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString( dataBlockNames ) )
+        AQ_REQUIRE( !hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString( dataBlockNames ) )
 
 		// Verify that the supplied propertyNames match the CreditModelEnum
 		std::set<etrading::CreditModelEnum> enumSet;
@@ -1471,12 +1471,12 @@ namespace validation_api
 
 		if (swap->getSwapType() != etrading::CONSTANT_MATURITY_SWAP )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a constant maturity swap." );
+			AQ_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a constant maturity swap." );
 		}
 		auto cms = std::dynamic_pointer_cast<etrading::ConstantMaturitySwap>( swap );
 		if ( cms == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a constant maturity swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a constant maturity swap." );
 		}
 
 		double result = cms->pvUsingConvexityAdjustment( valuationSettingsLVB, convexityAdjustment, fixingTableNames, legName);
@@ -1507,12 +1507,12 @@ namespace validation_api
 
 		if (swap->getSwapType() != etrading::CONSTANT_MATURITY_SWAP )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a constant maturity swap." );
+			AQ_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a constant maturity swap." );
 		}
 		auto cms = std::dynamic_pointer_cast<etrading::ConstantMaturitySwap>( swap );
 		if ( cms == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a constant maturity swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a constant maturity swap." );
 		}
 
 		double result = cms->parRateUsingConvexityAdjustment( valuationSettingsLVB, convexityAdjustment, fixingTableNames);
@@ -1544,12 +1544,12 @@ namespace validation_api
 
 		if (swap->getSwapType() != etrading::TOTAL_RETURN_SWAP )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a total return swap." );
+			AQ_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a total return swap." );
 		}
 		auto trs = std::dynamic_pointer_cast<etrading::TotalReturnSwap>( swap );
 		if ( trs == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a total return swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a total return swap." );
 		}
 
 		double result = trs->pv( creditModelName, fixingTableNames, legName);
@@ -1578,12 +1578,12 @@ namespace validation_api
 
 		if (swap->getSwapType() != etrading::TOTAL_RETURN_SWAP )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a total return swap." );
+			AQ_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a total return swap." );
 		}
 		auto trs = std::dynamic_pointer_cast<etrading::TotalReturnSwap>( swap );
 		if ( trs == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a total return swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a total return swap." );
 		}
 
 		double result = trs->parRate( creditModelName, fixingTableNames);
@@ -1612,12 +1612,12 @@ namespace validation_api
 
 		if (swap->getSwapType() != etrading::TOTAL_RETURN_SWAP )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a total return swap." );
+			AQ_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a total return swap." );
 		}
 		auto trs = std::dynamic_pointer_cast<etrading::TotalReturnSwap>( swap );
 		if ( trs == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a total return swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a total return swap." );
 		}
 
 		double result = trs->spread( creditModelName, fixingTableNames);
@@ -1647,12 +1647,12 @@ namespace validation_api
 
 		if (swap->getSwapType() != etrading::TOTAL_RETURN_SWAP )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a total return swap." );
+			AQ_THROW( "Swap '" + swapName + "' has incorrect Swap Type of '" + toString( swap->getSwapType() ) + "'. It is not a total return swap." );
 		}
 		auto trs = std::dynamic_pointer_cast<etrading::TotalReturnSwap>( swap );
 		if ( trs == nullptr )
 		{
-			MLIB_THROW( "Swap '" + swapName + "' is not a total return swap." );
+			AQ_THROW( "Swap '" + swapName + "' is not a total return swap." );
 		}
 
 		double result = trs->annuity( creditModelName, legName );

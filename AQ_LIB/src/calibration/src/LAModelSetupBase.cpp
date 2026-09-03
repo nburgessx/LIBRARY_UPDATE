@@ -305,13 +305,13 @@ LAModelSetupBase::registFunctionMaster(LADataInstance &dataInstance)
 	const LAStaticData &staticData = LACoreDataService::getStaticDataManager().getStaticData();
 	const LAString strLambda = staticData.getStaticData(KEY_MONOTONECONVEX_LAMBDA);
 	const LAString strIsAllowedNegative = staticData.getStaticData(KEY_MONOTONECONVEX_ISALLOWEDNEGATIVE);
-	if (strLambda != MLIB_NO_DATA && strIsAllowedNegative != MLIB_NO_DATA)
+	if (strLambda != AQ_NO_DATA && strIsAllowedNegative != AQ_NO_DATA)
 	{
 		LADataBool isAllowedNegative;
 		isAllowedNegative.convertFromString(strIsAllowedNegative);
 		const LAString strInputMode = staticData.getStaticData(KEY_MONOTONECONVEX_INPUTMODE);
 		const LAString strOutputMode = staticData.getStaticData(KEY_MONOTONECONVEX_OUTPUTMODE);
-		if (strInputMode != MLIB_NO_DATA && strOutputMode != MLIB_NO_DATA)
+		if (strInputMode != AQ_NO_DATA && strOutputMode != AQ_NO_DATA)
 		{
 			fm.setFunction(new LAMonotoneConvexInterpolation(strLambda.getDoubleValue(), isAllowedNegative.get(),
 				strInputMode.getIntValue(), strOutputMode.getIntValue()), FN_MONOTONECONVEXINTERPOLATION_STR);

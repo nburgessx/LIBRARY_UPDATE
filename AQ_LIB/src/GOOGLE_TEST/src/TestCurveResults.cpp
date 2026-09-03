@@ -158,7 +158,7 @@ namespace google_test
             // Helper Function to Create a DiscountFactorTable of type LAStringMatrix from a vector of paymentDates and discountFactors of type LAString
             LAStringMatrix createDiscountFactorTable( const std::vector<LAString> & paymentDates, const std::vector<LAString> & discountFactors )
             {
-                MLIB_REQUIRE( paymentDates.size() == discountFactors.size(), "The number of paymentDates and discountFactors does not match" );
+                AQ_REQUIRE( paymentDates.size() == discountFactors.size(), "The number of paymentDates and discountFactors does not match" );
                 LAStringMatrix discountFactorTable( discountFactorsIn_.size() );
                 for ( size_t i = 0; i < discountFactorsIn_.size(); ++i )
                 {

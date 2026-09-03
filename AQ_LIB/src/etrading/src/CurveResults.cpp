@@ -41,22 +41,22 @@ namespace etrading
         // Input Validation
         if ( !curveLVB.empty() && curveLVB[0].size() != 2 )
         {
-            MLIB_THROW("Invalid Data: CurveLVB data cannot be empty and must have column size 2")
+            AQ_THROW("Invalid Data: CurveLVB data cannot be empty and must have column size 2")
         }
 
         if ( !discFactorParameterLVB.empty() && discFactorParameterLVB[0].size() != 2 )
         {
-            MLIB_THROW("Invalid Data: ParameterLVB data cannot be empty and must have column size 2")
+            AQ_THROW("Invalid Data: ParameterLVB data cannot be empty and must have column size 2")
         }
 
         if ( !discountFactors.empty() && discountFactors[0].size() != 2 )
         {
-            MLIB_THROW("Invalid Data: DiscountFactorLVB data cannot be empty and must have column size 2")
+            AQ_THROW("Invalid Data: DiscountFactorLVB data cannot be empty and must have column size 2")
         }
 
 		if ( !forwardAdjustments.empty() )
         {
-			MLIB_REQUIRE( forwardAdjustments[0].size() == 4, "Invalid Data: Forward adjustment tables must have 4 columns:- AdjustmentType, StartDate, EndDate, RateOrSpread ");
+			AQ_REQUIRE( forwardAdjustments[0].size() == 4, "Invalid Data: Forward adjustment tables must have 4 columns:- AdjustmentType, StartDate, EndDate, RateOrSpread ");
         }
 
         // Extract Curve LVB Values
@@ -193,43 +193,43 @@ namespace etrading
     // Accessors
 	std::shared_ptr<CurveGroup> CurveResults::curveGroup() const
     { 
-		MLIB_REQUIRE( curveGroup_ != nullptr, "CurveGroup does not exist" )
+		AQ_REQUIRE( curveGroup_ != nullptr, "CurveGroup does not exist" )
         return curveGroup_;
     }
 
     std::shared_ptr<CurveDescription> CurveResults::curveDescription() const
     { 
-		MLIB_REQUIRE( curveDescription_ != nullptr, "Invalid Curve Results: CurveDescription does not exist" )
+		AQ_REQUIRE( curveDescription_ != nullptr, "Invalid Curve Results: CurveDescription does not exist" )
         return curveDescription_;
     }
 
 	std::shared_ptr<CurveConventionsAndMarketData> CurveResults::curveConventionsAndMarketData() const
 	{
-		MLIB_REQUIRE( curveConventionsAndMarketData_ != nullptr, "Invalid Curve Results: CurveConventionsAndMarketData does not exist" )
+		AQ_REQUIRE( curveConventionsAndMarketData_ != nullptr, "Invalid Curve Results: CurveConventionsAndMarketData does not exist" )
 			return curveConventionsAndMarketData_;
 	}
 
     std::shared_ptr<DiscountFactorResults> CurveResults::discountFactorResults() const
     { 
-        MLIB_REQUIRE( discountFactorResults_ != nullptr, "Invalid Curve Results: DiscountFactorResults do not exist" )
+        AQ_REQUIRE( discountFactorResults_ != nullptr, "Invalid Curve Results: DiscountFactorResults do not exist" )
         return discountFactorResults_;
     }
     
     std::shared_ptr<JacobianResults> CurveResults::jacobianResultsByDiscountFactor() const
     {
-        MLIB_REQUIRE( jacobianResultsByDiscountFactor_ != nullptr, "Invalid Curve Results: JacobianResultsByDiscountFactor does not exist" )
+        AQ_REQUIRE( jacobianResultsByDiscountFactor_ != nullptr, "Invalid Curve Results: JacobianResultsByDiscountFactor does not exist" )
         return jacobianResultsByDiscountFactor_;
     }
 
 	std::shared_ptr<JacobianResults> CurveResults::jacobianResultsByForwardRate() const
     {
-        MLIB_REQUIRE( jacobianResultsByForwardRate_ != nullptr, "Invalid Curve Results: JacobianResultsByForwardRate does not exist" )
+        AQ_REQUIRE( jacobianResultsByForwardRate_ != nullptr, "Invalid Curve Results: JacobianResultsByForwardRate does not exist" )
         return jacobianResultsByForwardRate_;
     }
 
 	std::shared_ptr<JacobianResults> CurveResults::jacobianResultsByCompoundRate() const
     {
-        MLIB_REQUIRE( jacobianResultsByCompoundRate_ != nullptr, "Invalid Curve Results: JacobianResultsByCompoundRate does not exist" )
+        AQ_REQUIRE( jacobianResultsByCompoundRate_ != nullptr, "Invalid Curve Results: JacobianResultsByCompoundRate does not exist" )
         return jacobianResultsByCompoundRate_;
     }
 

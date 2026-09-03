@@ -43,7 +43,7 @@ std::vector<double> LAMathInterpolationUtilities::interpolate( const DoubleArray
 std::vector<double> LAMathInterpolationUtilities::interpolate( const DoubleArray& xValues, const DoubleArray& yValues, const std::vector<double> & xPoints, const etrading::InterpolationEnum& interpolationEnum, const double & joinXValue )
 {
 	const size_t nPoints = xPoints.size();
-	MLIB_REQUIRE( nPoints != 0 , "Unable to Interpolate: No interpolation search points were requested, Interpolation xPoints parameter is empty" )
+	AQ_REQUIRE( nPoints != 0 , "Unable to Interpolate: No interpolation search points were requested, Interpolation xPoints parameter is empty" )
 	
 	// Build the interpolator object	
 	std::shared_ptr<LAInterpolationBase> interpolator = buildInterpolator( xValues, yValues, interpolationEnum, joinXValue );
@@ -61,8 +61,8 @@ std::vector<double> LAMathInterpolationUtilities::interpolate( const DoubleArray
 std::shared_ptr<LAInterpolationBase> LAMathInterpolationUtilities::buildInterpolator( const DoubleArray& xValues, const DoubleArray& yValues, const etrading::InterpolationEnum& interpolationEnum, const double & joinXValue )
 {
 	const size_t nPoints = xValues.size();
-	MLIB_REQUIRE( nPoints != 0 , "Unable to Interpolate: No interpolation data provided" )
-	MLIB_REQUIRE( xValues.size() == yValues.size(), "Unable to Interpolate: xValues and yValues must be the same size" )
+	AQ_REQUIRE( nPoints != 0 , "Unable to Interpolate: No interpolation data provided" )
+	AQ_REQUIRE( xValues.size() == yValues.size(), "Unable to Interpolate: xValues and yValues must be the same size" )
 	std::vector<double> results( nPoints, 0.0 );
 
 	switch( interpolationEnum )
@@ -168,7 +168,7 @@ std::shared_ptr<LAInterpolationBase> LAMathInterpolationUtilities::buildInterpol
 		}
 		default:
 		{
-			MLIB_THROW("Invalid Interpolation Scheme: Must be 'LinearSpline', 'MonotoneSpline', 'LinearMonotoneSpline', 'LinearMonotoneParabolic', 'Spline', 'Linear', 'LinearWithFlatExtrapolation' 'RightContinuous', 'LeftContinuous' or 'Step'");
+			AQ_THROW("Invalid Interpolation Scheme: Must be 'LinearSpline', 'MonotoneSpline', 'LinearMonotoneSpline', 'LinearMonotoneParabolic', 'Spline', 'Linear', 'LinearWithFlatExtrapolation' 'RightContinuous', 'LeftContinuous' or 'Step'");
 		}
 	}
 	
@@ -197,8 +197,8 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArray& xValues, const DoubleArray& yValues, const std::vector<double> & xPoints, const etrading::InterpolationEnum& interpolationEnum, const double & joinXValue )
 {
 	const size_t nPoints = xPoints.size();
-	MLIB_REQUIRE( xValues.size() == yValues.size(), "Unable to Differentiate: xValues and yValues must be the same size" )
-	MLIB_REQUIRE( nPoints != 0 , "Unable to Differentiate: No interpolation search points were requested, differentiation xPoints parameter is empty" )
+	AQ_REQUIRE( xValues.size() == yValues.size(), "Unable to Differentiate: xValues and yValues must be the same size" )
+	AQ_REQUIRE( nPoints != 0 , "Unable to Differentiate: No interpolation search points were requested, differentiation xPoints parameter is empty" )
 	std::vector<double> results( nPoints, 0.0 );
 
 	switch( interpolationEnum )
@@ -368,7 +368,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		default:
 		{
-			MLIB_THROW("Invalid Interpolation Scheme: Must be 'LinearSpline', 'MonotoneSpline', 'LinearMonotoneSpline', 'LinearMonotoneParabolic', 'Spline', 'Linear', 'LinearWithFlatExtrapolation' 'RightContinuous', 'LeftContinuous' or 'Step'");
+			AQ_THROW("Invalid Interpolation Scheme: Must be 'LinearSpline', 'MonotoneSpline', 'LinearMonotoneSpline', 'LinearMonotoneParabolic', 'Spline', 'Linear', 'LinearWithFlatExtrapolation' 'RightContinuous', 'LeftContinuous' or 'Step'");
 		}
 	}
 	
@@ -397,9 +397,9 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArray& xValues, const DoubleArray& yValues, const std::vector<double> & fromXPoints, const std::vector<double> & toXPoints, const etrading::InterpolationEnum& interpolationEnum, const double & joinXValue )
 {
 	const size_t nPoints = fromXPoints.size();
-	MLIB_REQUIRE( fromXPoints.size() == toXPoints.size(), "Invalid Discrete Differentiation Parameters: number of differentiation from and toPoints must match" )
-	MLIB_REQUIRE( xValues.size() == yValues.size(), "Unable to Differentiate: xValues and yValues must be the same size" )
-	MLIB_REQUIRE( nPoints != 0 , "Unable to Differentiate: No interpolation search points were requested, differentiation xPoints parameter is empty" )
+	AQ_REQUIRE( fromXPoints.size() == toXPoints.size(), "Invalid Discrete Differentiation Parameters: number of differentiation from and toPoints must match" )
+	AQ_REQUIRE( xValues.size() == yValues.size(), "Unable to Differentiate: xValues and yValues must be the same size" )
+	AQ_REQUIRE( nPoints != 0 , "Unable to Differentiate: No interpolation search points were requested, differentiation xPoints parameter is empty" )
 	std::vector<double> results( nPoints, 0.0 );
 
 	switch( interpolationEnum )
@@ -569,7 +569,7 @@ std::vector<double> LAMathInterpolationUtilities::differentiate( const DoubleArr
 		}
 		default:
 		{
-			MLIB_THROW("Invalid Interpolation Scheme: Must be 'LinearSpline', 'MonotoneSpline', 'LinearMonotoneSpline', 'LinearMonotoneParabolic', 'Spline', 'Linear', 'LinearWithFlatExtrapolation' 'RightContinuous', 'LeftContinuous' or 'Step'");
+			AQ_THROW("Invalid Interpolation Scheme: Must be 'LinearSpline', 'MonotoneSpline', 'LinearMonotoneSpline', 'LinearMonotoneParabolic', 'Spline', 'Linear', 'LinearWithFlatExtrapolation' 'RightContinuous', 'LeftContinuous' or 'Step'");
 		}
 	}
 	
@@ -597,10 +597,10 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 {
 	const size_t nPoints = xValues.size();
 	const size_t nBounds = lowerBounds.size();
-	MLIB_REQUIRE( nPoints == yValues.size(), "Unable to Integrate: xValues and yValues must be the same size" )
-	MLIB_REQUIRE( nPoints != 0 , "Unable to Integrate: Interpolation data is empty" )
-	MLIB_REQUIRE( nBounds == upperBounds.size(), "Unable to Integrate: The number of lowerBounds and upperBounds must be the same" )
-	MLIB_REQUIRE( nBounds != 0 , "Unable to Integrate: No integration abscissae were requested, integration boundary parameters are empty" )
+	AQ_REQUIRE( nPoints == yValues.size(), "Unable to Integrate: xValues and yValues must be the same size" )
+	AQ_REQUIRE( nPoints != 0 , "Unable to Integrate: Interpolation data is empty" )
+	AQ_REQUIRE( nBounds == upperBounds.size(), "Unable to Integrate: The number of lowerBounds and upperBounds must be the same" )
+	AQ_REQUIRE( nBounds != 0 , "Unable to Integrate: No integration abscissae were requested, integration boundary parameters are empty" )
 
 	std::vector<double> results( nBounds, 0.0 );
 
@@ -612,8 +612,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -630,8 +630,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -648,8 +648,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -666,8 +666,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -684,8 +684,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -702,8 +702,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -720,8 +720,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -738,8 +738,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -756,8 +756,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -774,8 +774,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -792,8 +792,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -810,8 +810,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues, yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -828,8 +828,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -847,8 +847,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -866,8 +866,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -885,8 +885,8 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 			interpolator.set(xValues,yValues);
 			for( size_t i = 0; i < nBounds; ++i )
 			{
-				MLIB_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
-				if( MLIB_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
+				AQ_REQUIRE( lowerBounds[i] <= upperBounds[i], "Unable to Integrate: the LowerBound must be less than or equal to the UpperBound" )
+				if( AQ_IS_EQUAL( lowerBounds[i], upperBounds[i] ) )
 				{ 
 					results[i] = 0.0;
 				}
@@ -899,7 +899,7 @@ std::vector<double> LAMathInterpolationUtilities::integrate( const DoubleArray& 
 		}
 		default:
 		{
-			MLIB_THROW("Invalid Interpolation Scheme: Must be 'LinearSpline', 'MonotoneSpline', 'LinearMonotoneSpline', 'LinearMonotoneParabolic', 'Spline', 'Linear', 'LinearWithFlatExtrapolation' 'RightContinuous', 'LeftContinuous' or 'Step'");
+			AQ_THROW("Invalid Interpolation Scheme: Must be 'LinearSpline', 'MonotoneSpline', 'LinearMonotoneSpline', 'LinearMonotoneParabolic', 'Spline', 'Linear', 'LinearWithFlatExtrapolation' 'RightContinuous', 'LeftContinuous' or 'Step'");
 		}
 	}
 	

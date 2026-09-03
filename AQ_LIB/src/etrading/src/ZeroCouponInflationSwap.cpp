@@ -30,8 +30,8 @@ namespace etrading
 				? std::dynamic_pointer_cast<InflationLeg>(leg1)
 				: std::dynamic_pointer_cast<InflationLeg>(leg2);
 
-			MLIB_REQUIRE(fixedLeg != nullptr, "A Fixed leg has not been provided.");
-			MLIB_REQUIRE(inflationLeg != nullptr, "An Inflation leg has not been provided.");
+			AQ_REQUIRE(fixedLeg != nullptr, "A Fixed leg has not been provided.");
+			AQ_REQUIRE(inflationLeg != nullptr, "An Inflation leg has not been provided.");
 		}
 
 	}
@@ -44,7 +44,7 @@ namespace etrading
 	*/
 	void ZeroCouponInflationSwap::identifyLegs( std::shared_ptr<FixedLeg>& fixedLeg, std::shared_ptr<InflationLeg>& inflationLeg ) const
 	{
-		MLIB_REQUIRE(legs_.size() == 2, "Zero Coupon Swap must have two legs.");
+		AQ_REQUIRE(legs_.size() == 2, "Zero Coupon Swap must have two legs.");
 
 		auto leg1 = legs_.get(0);
 		auto leg2 = legs_.get(1);
@@ -62,8 +62,8 @@ namespace etrading
 		identifyLegs_impl( leg1, leg2, fixedLeg, inflationLeg );
 
         // Require Single Currency and notional to be specified
-		MLIB_REQUIRE( leg1->getStaticData()->getCurrency() == leg2->getStaticData()->getCurrency(),  "ZeroCouponInflationSwap must be configured as a single currency Swap" );
-		MLIB_REQUIRE( ( ! boost::math::isnan(leg1->getSchedule()->getNotional() ) ) && ( ! boost::math::isnan(leg2->getSchedule()->getNotional() )  ), "Please provide Notional" );
+		AQ_REQUIRE( leg1->getStaticData()->getCurrency() == leg2->getStaticData()->getCurrency(),  "ZeroCouponInflationSwap must be configured as a single currency Swap" );
+		AQ_REQUIRE( ( ! boost::math::isnan(leg1->getSchedule()->getNotional() ) ) && ( ! boost::math::isnan(leg2->getSchedule()->getNotional() )  ), "Please provide Notional" );
 
         inputParameters_ = swapPropertiesLVB;
         
@@ -147,7 +147,7 @@ namespace etrading
 			}
 			if ( ! legFound )
 			{
-				MLIB_THROW("Specified legName '" + legName + "' does not exist in the ZeroCouponInflationSwap." );
+				AQ_THROW("Specified legName '" + legName + "' does not exist in the ZeroCouponInflationSwap." );
 			}
 		}
 
@@ -214,7 +214,7 @@ namespace etrading
 			}
 			if ( ! legFound)
 			{
-				MLIB_THROW("Specified legName '" + legName + "' does not exist in the ZeroCouponInflationSwap.");
+				AQ_THROW("Specified legName '" + legName + "' does not exist in the ZeroCouponInflationSwap.");
 			}
 		}
 
@@ -288,7 +288,7 @@ namespace etrading
 		// ------------------------------------------------------
 		auto result = solveSpread( fixedLegDataProvider, pv, inflationLegPV, deltaPV, parRateEstimate, epsilonForPv, fixedLeg );
 		bool solutionFound = result.first;
-		MLIB_REQUIRE( solutionFound, "Unable to calculate the swap spread. Solver failed to converge to a solution.")
+		AQ_REQUIRE( solutionFound, "Unable to calculate the swap spread. Solver failed to converge to a solution.")
 		const double spread = result.second;
 		// ------------------------------------------------------
 

@@ -296,7 +296,7 @@ namespace
 		
         if( enableThrow )
         {
-            MLIB_REQUIRE( fname != NULL, "Calendar file not loaded; invalid filepath provided" );
+            AQ_REQUIRE( fname != NULL, "Calendar file not loaded; invalid filepath provided" );
         }
         else
         {
@@ -338,7 +338,7 @@ namespace
 		
         if( enableThrow )
         {
-            MLIB_REQUIRE( fname != NULL, "Central Bank Calendar file not loaded; invalid filepath provided" );
+            AQ_REQUIRE( fname != NULL, "Central Bank Calendar file not loaded; invalid filepath provided" );
         }
         else
         {

@@ -1,6 +1,6 @@
 #include "DataFrame.h"
 #include "ExceptionMacros.h"
-#include "DataUtilities.h"			// For MLIB_TO_STRING macros
+#include "DataUtilities.h"			// For AQ_TO_STRING macros
 #include "LADateScheduleHelpers.h"	// isValidDate()
 
 #include "Variant.h"
@@ -76,7 +76,7 @@ namespace etrading
 		std::ifstream infile( csvFilename.c_str() );
 		if ( !infile )
 		{
-			MLIB_THROW( "Unable to open file: " + csvFilename );
+			AQ_THROW( "Unable to open file: " + csvFilename );
 		}
 
 		std::string line;
@@ -97,7 +97,7 @@ namespace etrading
 			std::vector<std::string> tokens = parseCSVLine( line );
 			VariantVector values = extractRowValues( tokens );
 
-			MLIB_REQUIRE(values.size() == numColumns, "Inconsistent number of columns in file " << csvFilename << " at row " << row);
+			AQ_REQUIRE(values.size() == numColumns, "Inconsistent number of columns in file " << csvFilename << " at row " << row);
 			variantMatrix_.push_back( values );
 			row++;
 		}
@@ -112,11 +112,11 @@ namespace etrading
 	{
 		// Perform sanity checking of the input values
 		const size_t dataRows = dataBlock.size();
-		MLIB_REQUIRE( dataRows > 0, "Require at least 1 row of data to create a DataFrame" );
+		AQ_REQUIRE( dataRows > 0, "Require at least 1 row of data to create a DataFrame" );
 
 		const size_t nCols = columnHeadings.size();
 		const size_t dataCols = dataBlock[0].size();
-		MLIB_REQUIRE( nCols == dataCols, "Number of column headings and data columns should match" );
+		AQ_REQUIRE( nCols == dataCols, "Number of column headings and data columns should match" );
 	}
 
 
@@ -138,7 +138,7 @@ namespace etrading
 				variantMatrix_.resize( nRowsInNewColumn );
 			}
 
-			MLIB_REQUIRE( nRowsInNewColumn == variantMatrix_.size(), "Incorrect number of rows in the input column" );
+			AQ_REQUIRE( nRowsInNewColumn == variantMatrix_.size(), "Incorrect number of rows in the input column" );
 
 			// Note that row below is intentionally a reference in order to update the variantMatrix.
 			size_t rowIdx = 0;
@@ -153,7 +153,7 @@ namespace etrading
 		{
 			// Column already exists. Update the existing column
 
-			MLIB_REQUIRE( nRowsInNewColumn == variantMatrix_.size(), "Incorrect number of rows in the input column" );
+			AQ_REQUIRE( nRowsInNewColumn == variantMatrix_.size(), "Incorrect number of rows in the input column" );
 
 			size_t rowIdx = 0;
 			size_t columnIdx = std::distance( columnNames_.begin(), iter );
@@ -292,7 +292,7 @@ namespace etrading
 	VariantVector DataFrame::getColumn( const std::string& columnName ) const
 	{
 		auto iter = std::find( columnNames_.begin(), columnNames_.end(), columnName);
-		MLIB_REQUIRE(iter != columnNames_.end(), "Column name '" << columnName << "' not found within data block." );
+		AQ_REQUIRE(iter != columnNames_.end(), "Column name '" << columnName << "' not found within data block." );
 
 		size_t columnIdx = std::distance(columnNames_.begin(), iter);
 

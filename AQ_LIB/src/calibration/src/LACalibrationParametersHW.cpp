@@ -200,7 +200,7 @@ LACalibrationParametersHW::createCalibrationInfo(LAObjectPool &objPool, const LA
 	// zero volatility flag
 	bool isZeroVol = false;
 	LAString strIsZeroVol = mpCalibStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_CALIB_HW_ISZEROVOL);
-	if (strIsZeroVol != MLIB_NO_DATA)
+	if (strIsZeroVol != AQ_NO_DATA)
 	{
 		LADataBool tmpBool;
 		tmpBool.convertFromString(strIsZeroVol);
@@ -209,7 +209,7 @@ LACalibrationParametersHW::createCalibrationInfo(LAObjectPool &objPool, const LA
 
 	bool isZeroVolIR = false;
 	LAString strIsZeroVolIR = mpStaticData->getStaticData(tmpCurrency + STATIC_DATA_KEY_HW_ISZEROVOL);
-	if (strIsZeroVolIR != MLIB_NO_DATA)
+	if (strIsZeroVolIR != AQ_NO_DATA)
 	{
 		LADataBool tmpBool;
 		tmpBool.convertFromString(strIsZeroVolIR);
@@ -285,7 +285,7 @@ LACalibrationParametersHW::getCalibStaticDataValue(const LAString &key, const LA
 {
 	LAString ret = mpCalibStaticData->getStaticData(key + "." + grid);
 
-	if (ret == MLIB_NO_DATA)
+	if (ret == AQ_NO_DATA)
 	{
 		return mpCalibStaticData->getStaticData(key);
 	}

@@ -1,6 +1,6 @@
 #include "meDateCentralBank.h"
 #include "tryMeDateCentralBank.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 #include "ParameterValidation.h"
 
 /* @brief			swig interface for the meDateCentralBank method
@@ -13,7 +13,7 @@ std::string meDateCentralBank(const std::string& centralBankId,
 							const std::string& date,
 							bool strictlyAfter)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::string ret("");
 
     // Input marshalling
@@ -25,7 +25,7 @@ std::string meDateCentralBank(const std::string& centralBankId,
 	ret = date.stringWithFormat("YYYYMMDD").getCString();
 	
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for the meDateECB method
@@ -35,7 +35,7 @@ std::string meDateCentralBank(const std::string& centralBankId,
 */
 std::string meDateECB(const std::string& date, bool strictlyAfter)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::string ret("");
 	
 	// Input marshalling
@@ -45,7 +45,7 @@ std::string meDateECB(const std::string& date, bool strictlyAfter)
 		
 	ret = date.stringWithFormat("YYYYMMDD").getCString();
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -55,7 +55,7 @@ std::string meDateECB(const std::string& date, bool strictlyAfter)
 */
 std::string meDateECBSwapStart(const std::string& date)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::string ret("");
 
     // Input marshalling
@@ -64,7 +64,7 @@ std::string meDateECBSwapStart(const std::string& date)
 	
     ret = date.stringWithFormat("YYYYMMDD").getCString();
     return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interfac for the meDateECBSwapEnd method
@@ -73,7 +73,7 @@ std::string meDateECBSwapStart(const std::string& date)
 */
 std::string meDateECBSwapEnd(const std::string& date)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::string ret("");
 
     // Input marshalling
@@ -82,5 +82,5 @@ std::string meDateECBSwapEnd(const std::string& date)
 
 	ret = date.stringWithFormat("YYYYMMDD").getCString();
     return ret;
-    MLIB_API_END
+    AQ_API_END
 }

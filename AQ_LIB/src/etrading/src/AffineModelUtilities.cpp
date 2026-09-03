@@ -19,7 +19,7 @@ namespace etrading
 		// Get ts and Ts of the forward rates:
 
 		size_t expectedSize = fixingDates.size();
-        MLIB_REQUIRE( expectedSize >= 1, "The input fixing dates cannot be empty" );
+        AQ_REQUIRE( expectedSize >= 1, "The input fixing dates cannot be empty" );
 
 		const LAString curveId (curveCollection.c_str()); 
 		const LAString curveIndx (curveIndex.c_str()); 

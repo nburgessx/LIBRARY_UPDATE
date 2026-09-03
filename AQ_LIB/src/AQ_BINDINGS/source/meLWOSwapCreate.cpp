@@ -13,7 +13,7 @@
 #include "LACoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "tryMeLWOSwapCreation.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meLWOSwapCreate function
@@ -30,7 +30,7 @@ const std::string meLWOSwapCreate( const std::string& swapObjectName,
                                    const bool isXccySwap,
                                    const bool validateKeys )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Marshall Inputs
 	LAStringMatrix swapLVBAsStringMatrix;
@@ -43,7 +43,7 @@ const std::string meLWOSwapCreate( const std::string& swapObjectName,
     std::string result = validation_api::tryMeLWOSwapCreate( swapObjectName, swapLVBAsStringMatrix, xccyPropertiesLVBAsStringMatrix, isXccySwap, validateKeys );
     return result;
 
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meLWOSwapCreateFromGenerator function
@@ -62,7 +62,7 @@ const std::string meLWOSwapCreateFromGenerator( const std::string& swapObjectNam
                                                 const bool isXccySwap,
                                                 const bool validateKeys )
 {
-    MLIB_API_START
+    AQ_API_START
     
     // Marshall Inputs
 	LAStringMatrix swapLVBAsStringMatrix;
@@ -75,5 +75,5 @@ const std::string meLWOSwapCreateFromGenerator( const std::string& swapObjectNam
     std::string result = validation_api::tryMeLWOSwapCreateFromGenerator( swapObjectName, swapGeneratorName, swapLVBAsStringMatrix, xccyPropertiesLVBAsStringMatrix, isXccySwap, validateKeys );
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }

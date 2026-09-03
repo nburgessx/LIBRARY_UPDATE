@@ -151,9 +151,9 @@ LARiskConfigurationFXShiftYieldBasisDelta::getBucketGridTerm(const LAString &ccy
 									STATIC_DATA_KEY_RISK_FRONT_YIELD_FXSHIFTBASISDELTA_BUCKET_TERM + getCurveSuffix(ccy));
 	LAStringVector BucketTerm = strBucketGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
 	BucketTerm[0].toUpper();
-	if (BucketTerm[0] == "NONE" || BucketTerm[0] == MLIB_NO_DATA)
+	if (BucketTerm[0] == "NONE" || BucketTerm[0] == AQ_NO_DATA)
 	{
-		ret.push_back(MLIB_NO_DATA);
+		ret.push_back(AQ_NO_DATA);
 		return ret;
 	}
 	else
@@ -556,7 +556,7 @@ LARiskConfigurationFXShiftYieldBasisDelta::isRiskCurrencyMode(const LAString &cc
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													STATIC_DATA_KEY_RISK_FRONT_YIELD_FXSHIFTBASISDELTA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);

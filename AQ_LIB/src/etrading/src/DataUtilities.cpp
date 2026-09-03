@@ -62,8 +62,8 @@ namespace etrading
         if ( onlyCheckColumnNumber != 0 )
         {
             // Note: Column Index as input is Base 1 and internal Column Index is Base 0
-            MLIB_REQUIRE( size_t( onlyCheckColumnNumber ) <= inputMatrix[0].size(), "Invalid column number. Column number is larger than total number of columns" )
-            MLIB_REQUIRE( onlyCheckColumnNumber > 0, "Invalid Column Number. Column number cannot be negative" )
+            AQ_REQUIRE( size_t( onlyCheckColumnNumber ) <= inputMatrix[0].size(), "Invalid column number. Column number is larger than total number of columns" )
+            AQ_REQUIRE( onlyCheckColumnNumber > 0, "Invalid Column Number. Column number cannot be negative" )
         }
 
         VariantMatrix result;
@@ -164,8 +164,8 @@ namespace etrading
         if ( onlyCheckRowNumber != 0 )
         {
             // Note: Column Index as input is Base 1 and internal Column Index is Base 0
-            MLIB_REQUIRE( size_t( onlyCheckRowNumber ) <= inputMatrix.size(), "Invalid row number. Row number is larger than total number of rows" )
-            MLIB_REQUIRE( onlyCheckRowNumber > 0, "Invalid Row Number. Row number cannot be negative" )
+            AQ_REQUIRE( size_t( onlyCheckRowNumber ) <= inputMatrix.size(), "Invalid row number. Row number is larger than total number of rows" )
+            AQ_REQUIRE( onlyCheckRowNumber > 0, "Invalid Row Number. Row number cannot be negative" )
         }
 
         VariantMatrix result;
@@ -278,7 +278,7 @@ namespace etrading
         {
             for ( unsigned int j = 0; j<inputMatrix[i].size(); ++j )
             {
-                MLIB_REQUIRE( isError( inputMatrix[i][j], true /* CheckForErrors*/ ) == false /* Require No Errors*/, "Invalid Data: " + blockName + " Data Contains Errors" )
+                AQ_REQUIRE( isError( inputMatrix[i][j], true /* CheckForErrors*/ ) == false /* Require No Errors*/, "Invalid Data: " + blockName + " Data Contains Errors" )
             }
         }
         return;
@@ -295,8 +295,8 @@ namespace etrading
         // No need to append matrix 2 if it is empty
         if ( matrix2.empty() || matrix2.size() == 0 ) return matrix1;
         
-        MLIB_REQUIRE( matrix1.size()>0,  "Matrices must contain the same number of Columns. Only regular rectangular matrices supported" )
-        MLIB_REQUIRE( matrix1[0].size() == matrix2[0].size(), "Matrices must contain the same number of Columns. Only regular rectangular matrices supported" )
+        AQ_REQUIRE( matrix1.size()>0,  "Matrices must contain the same number of Columns. Only regular rectangular matrices supported" )
+        AQ_REQUIRE( matrix1[0].size() == matrix2[0].size(), "Matrices must contain the same number of Columns. Only regular rectangular matrices supported" )
 
         for ( size_t i = 0; i < matrix2.size(); ++i )
         {
@@ -359,8 +359,8 @@ namespace etrading
         // No need to append matrix 2 if it is empty
         if ( matrix2.empty() || matrix2.size() == 0 ) return matrix1;
 
-        MLIB_REQUIRE( matrix1.size()>0, "Matrices must contain the same number of rows. Only regular rectangular matrices supported" )
-        MLIB_REQUIRE( matrix1.size() == matrix2.size(), "Matrices must contain the same number of rows. Only regular rectangular matrices supported" )
+        AQ_REQUIRE( matrix1.size()>0, "Matrices must contain the same number of rows. Only regular rectangular matrices supported" )
+        AQ_REQUIRE( matrix1.size() == matrix2.size(), "Matrices must contain the same number of rows. Only regular rectangular matrices supported" )
 
         for ( size_t i = 0; i < matrix2.size(); ++i )
         {
@@ -487,7 +487,7 @@ namespace etrading
 			// The freeObject does not contain propertyKey
 			if ( throwIfMissing )
 			{
-				MLIB_THROW( "PropertyKey '" + propertyKey + "' not found in input data." );
+				AQ_THROW( "PropertyKey '" + propertyKey + "' not found in input data." );
 			}
 		}
 

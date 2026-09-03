@@ -34,7 +34,7 @@ struct MAScenarioParam
 	// constructor
 	MAScenarioParam(void)
 		:bumpType(""), isParallel(false), isGrid(false), isLJ(false), isDDL(false), isWave(false), isCalib(false), isOutPut(false),
-		isAdjustDF(false), isAudExtra(true), isBusinessDayRoll(false), maxIndex(0), extraBaseParam(0.0), extraBaseVolParam(0.0), calendar(MLIB_NO_DATA),
+		isAdjustDF(false), isAudExtra(true), isBusinessDayRoll(false), maxIndex(0), extraBaseParam(0.0), extraBaseVolParam(0.0), calendar(AQ_NO_DATA),
 		isForeignCcy(false), isCollateralCcy(false), isFirst(true), fwdfxDenominator(10000.0), isExtraXccyCurveForFXDelta(false), isExtraFwdFXConstCurveForFXDelta(false), isFwdFXZeroRateBump(false), isFwdPointBump(true)
 	{
 		LAMarketData::setUpScenario(*this);

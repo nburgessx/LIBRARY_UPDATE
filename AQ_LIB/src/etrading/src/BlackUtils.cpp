@@ -14,11 +14,11 @@ namespace etrading
 		ProbabilityFactors<double> normalBlackProbabilityFactors(const double& phi, const double& fwd, const double& strike, const double& vol, const double& time)
 		{
 			// Validation
-			MLIB_REQUIRE(MLIB_IS_GREATER_THAN_OR_EQUAL_TO_ZERO(time), "Option time to expiry must be greater than zero");
+			AQ_REQUIRE(AQ_IS_GREATER_THAN_OR_EQUAL_TO_ZERO(time), "Option time to expiry must be greater than zero");
 
 			double volSqrtTime = vol * std::sqrt(time);
 
-			if (MLIB_IS_EQUAL_ZERO(volSqrtTime)) volSqrtTime = MLIB_EPSILON;    // Don't allow divide by zero
+			if (AQ_IS_EQUAL_ZERO(volSqrtTime)) volSqrtTime = AQ_EPSILON;    // Don't allow divide by zero
 
 			const double d1 = (fwd - strike) / volSqrtTime;
 
@@ -40,10 +40,10 @@ namespace etrading
 			// -----------------------------------
 
 			// Manage the Option zero value Boundaries by adding a small precision epsilon value to the underlying parameter
-			if (MLIB_IS_EQUAL_ZERO(fwd))       fwd += MLIB_EPSILON;
-			if (MLIB_IS_EQUAL_ZERO(strike))     strike += MLIB_EPSILON;
-			if (MLIB_IS_EQUAL_ZERO(vol))        vol += MLIB_EPSILON;
-			if (MLIB_IS_EQUAL_ZERO(time))       time += MLIB_EPSILON;
+			if (AQ_IS_EQUAL_ZERO(fwd))       fwd += AQ_EPSILON;
+			if (AQ_IS_EQUAL_ZERO(strike))     strike += AQ_EPSILON;
+			if (AQ_IS_EQUAL_ZERO(vol))        vol += AQ_EPSILON;
+			if (AQ_IS_EQUAL_ZERO(time))       time += AQ_EPSILON;
 
 			// Calculation Parameters
 			// ------------------------------------
@@ -103,7 +103,7 @@ namespace etrading
 
 			default:
 				// Should never reach here
-				MLIB_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
+				AQ_THROW("Invalid volatility type. Must be 'LOGNORMAL', 'SHIFTED_LOGNORMAL' or 'NORMAL'");
 				break;
 			}
 
@@ -275,7 +275,7 @@ namespace etrading
 		double blackNumericalDelta(const VolatilityTypeEnum & volatilityType, const CallOrPutEnum& callOrPut, const double& fwd, const double& strike, const double& vol, const double& time, const double&  shift, const AnnuityTerm& annuityTerm, const double& bump, const bool& constantDF)
 		{
 
-			if (MLIB_IS_EQUAL_ZERO(bump))
+			if (AQ_IS_EQUAL_ZERO(bump))
 			{
 				return 0.0;
 			}
@@ -299,7 +299,7 @@ namespace etrading
 		double blackNumericalGamma(const VolatilityTypeEnum & volatilityType, const CallOrPutEnum& callOrPut, const double& fwd, const double& strike, const double& vol, const double& time, const double&  shift, const AnnuityTerm& annuityTerm, const double& bump, const bool& constantDF)
 		{
 
-			if (MLIB_IS_EQUAL_ZERO(bump))
+			if (AQ_IS_EQUAL_ZERO(bump))
 			{
 				return 0.0;
 			}
@@ -324,7 +324,7 @@ namespace etrading
 		// Calculate the Numerical Vega based on volatility type
 		double blackNumericalVega(const VolatilityTypeEnum & volatilityType, const CallOrPutEnum& callOrPut, const double& fwd, const double& strike, const double& vol, const double& time, const double&  shift, const AnnuityTerm& annuityTerm, const double& bump)
 		{
-			if (MLIB_IS_EQUAL_ZERO(bump))
+			if (AQ_IS_EQUAL_ZERO(bump))
 			{
 				return 0.0;
 			}
@@ -345,7 +345,7 @@ namespace etrading
 		// Calculate the Numerical Theta based on volatility type
 		double blackNumericalTheta(const VolatilityTypeEnum & volatilityType, const CallOrPutEnum& callOrPut, const double& fwd, const double& strike, const double& vol, const double& time, const double&  shift, const AnnuityTerm& annuityTerm, const double& bump, const bool& constantDF)
 		{
-			if (MLIB_IS_EQUAL_ZERO(bump))
+			if (AQ_IS_EQUAL_ZERO(bump))
 			{
 				return 0.0;
 			}
@@ -373,7 +373,7 @@ namespace etrading
 
 		double blackNumericalRho(const VolatilityTypeEnum & volatilityType, const CallOrPutEnum& callOrPut, const double& fwd, const double& strike, const double& vol, const double& time, const double&  shift, const AnnuityTerm& annuityTerm, const double& bump)
 		{
-			if (MLIB_IS_EQUAL_ZERO(bump))
+			if (AQ_IS_EQUAL_ZERO(bump))
 			{
 				return 0.0;
 			}

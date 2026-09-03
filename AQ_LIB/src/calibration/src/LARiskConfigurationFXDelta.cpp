@@ -208,7 +208,7 @@ LARiskConfigurationFXDelta::getCoefficientRatio1(const LAString &fx, LAObject& e
 	
 	LAString isadjstr = mpRiskStaticData->getStaticData(fxKey.toLower() + 
 													FX_KEY_RISK_OFFICIAL_FX_DELTA_ISCOEFFICIENTRATIO1);
-	if (isadjstr == MLIB_NO_DATA)
+	if (isadjstr == AQ_NO_DATA)
 		return 1.0;
 
 	bool isadj = convertBoolFromStr(isadjstr);
@@ -265,7 +265,7 @@ LARiskConfigurationFXDelta::getCoefficientRatio2(const LAString &fx, LAObject& e
 	
 	LAString isadjstr = mpRiskStaticData->getStaticData(fxKey.toLower() + 
 													FX_KEY_RISK_OFFICIAL_FX_DELTA_ISCOEFFICIENTRATIO2);
-	if (isadjstr == MLIB_NO_DATA)
+	if (isadjstr == AQ_NO_DATA)
 		return 1.0;
 
 	bool isadj = convertBoolFromStr(isadjstr);
@@ -276,7 +276,7 @@ LARiskConfigurationFXDelta::getCoefficientRatio2(const LAString &fx, LAObject& e
 		
 		LAString isspotadjustmodestr = mpRiskStaticData->getStaticData(fxKey.toLower() + 
 													FX_KEY_RISK_OFFICIAL_FX_DELTA_ISSPOTADJUSTMODEFORGAMMA);
-		if (isspotadjustmodestr == MLIB_NO_DATA)
+		if (isspotadjustmodestr == AQ_NO_DATA)
 			throw LACoreInvalidData("No input of IsSpotAdjustMode", __FILE__,__LINE__);
 
 		bool isspotadj = convertBoolFromStr(isspotadjustmodestr);
@@ -319,7 +319,7 @@ LARiskConfigurationFXDelta::isRiskCurrencyMode(const LAString &fx) const
 	LAString tmpCurrency = fx;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													FX_KEY_RISK_OFFICIAL_FX_DELTA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);

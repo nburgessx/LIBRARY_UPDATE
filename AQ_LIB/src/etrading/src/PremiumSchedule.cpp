@@ -86,7 +86,7 @@ namespace etrading
 
 		// Total Return Swap performance attributes
 		assetPerformanceEnum_ = toTRSAssetPerformanceEnum( scheduleLVB.getOptionalValueAsString( TRS_KEY::ASSET_PERFORMANCE ) );
-		MLIB_REQUIRE( assetPerformanceEnum_ == NO_PERFORMANCE || assetPerformanceEnum_ == PAY_AT_MATURITY_PERFORMANCE, "TRS currently only supports an AssetPerformance value of 'None' or'PayAtMaturity'." );
+		AQ_REQUIRE( assetPerformanceEnum_ == NO_PERFORMANCE || assetPerformanceEnum_ == PAY_AT_MATURITY_PERFORMANCE, "TRS currently only supports an AssetPerformance value of 'None' or'PayAtMaturity'." );
 		if ( assetPerformanceEnum_ != NO_PERFORMANCE )
 		{
 			bondBaseDirtyPriceFixing_ = scheduleLVB.getCompulsoryValueAsDouble( IRS_KEY::FIRSTFIXING );
@@ -98,9 +98,9 @@ namespace etrading
 			// Check that bond does not mature before the swap leg schedule.
 			// Note that we cannot invoke getMaturityDate() because the schedule is not yet fully initialized
 			const size_t nAccrualEndDates = accrualEndDates_.size();
-			MLIB_REQUIRE( nAccrualEndDates > 0, "TRS premium leg does not contain any accrual periods.");
+			AQ_REQUIRE( nAccrualEndDates > 0, "TRS premium leg does not contain any accrual periods.");
 			const LADate scheduleEndDate = accrualEndDates_[ nAccrualEndDates - 1];
-			MLIB_REQUIRE( bondMaturityDate >= scheduleEndDate, "Bond " + bondName_ + " has a maturity earlier than the TRS premium leg maturity." );
+			AQ_REQUIRE( bondMaturityDate >= scheduleEndDate, "Bond " + bondName_ + " has a maturity earlier than the TRS premium leg maturity." );
 
 			const std::string cdsSpreadAsString = scheduleLVB.getOptionalValueAsString( CDS_KEY::CDS_SPREAD );
 			if ( cdsSpreadAsString == "" )
@@ -339,7 +339,7 @@ namespace etrading
 								break;
 							}
 							default:
-								MLIB_THROW( "Unsupported PaymentTrigger type: " + toString( paymentTrigger ));
+								AQ_THROW( "Unsupported PaymentTrigger type: " + toString( paymentTrigger ));
 								break;
 						}
 						
@@ -364,7 +364,7 @@ namespace etrading
 				break;
 			}
 			default:
-				MLIB_THROW( "Unsupported TRS Performance type: " + toString( assetPerformanceEnum_ ));
+				AQ_THROW( "Unsupported TRS Performance type: " + toString( assetPerformanceEnum_ ));
 		}
 	}
 

@@ -19,7 +19,7 @@
 #include "GetGoogleTestFolder.h"
 #include "ResultsProcessor.h"
 #include "CoreEnumerations.h"
-#include "DataUtilities.h"		// MLIB_TO_STRING macros
+#include "DataUtilities.h"		// AQ_TO_STRING macros
 
 // Curves and Swap Pricing
 #include "tryMeLWO.h"
@@ -122,7 +122,7 @@ namespace google_test
 		
 		for( size_t j = 0; j < expectedForwardRates.size(); ++j )
 		{
-			EXPECT_NEAR( actualForwardRates[j], expectedForwardRates[j], forwardRateTolerance ) << "Inconsistent Forward Rates, See forward rate number : " << MLIB_TO_STRING_FROM_SIZE_T( j );
+			EXPECT_NEAR( actualForwardRates[j], expectedForwardRates[j], forwardRateTolerance ) << "Inconsistent Forward Rates, See forward rate number : " << AQ_TO_STRING_FROM_SIZE_T( j );
 		}
     }
     
@@ -177,7 +177,7 @@ namespace google_test
 		
 		for( size_t j = 0; j < expectedForwardRates.size(); ++j )
 		{
-			EXPECT_NEAR( actualForwardRates[j], expectedForwardRates[j], forwardRateTolerance ) << "Inconsistent Forward Rates, See forward rate number : " << MLIB_TO_STRING_FROM_SIZE_T( j );
+			EXPECT_NEAR( actualForwardRates[j], expectedForwardRates[j], forwardRateTolerance ) << "Inconsistent Forward Rates, See forward rate number : " << AQ_TO_STRING_FROM_SIZE_T( j );
 		}
     }
 
@@ -232,7 +232,7 @@ namespace google_test
 		
 		for( size_t j = 0; j < expectedForwardRates.size(); ++j )
 		{
-			EXPECT_NEAR( actualForwardRates[j], expectedForwardRates[j], forwardRateTolerance ) << "Inconsistent Forward Rates, See forward rate number : " << MLIB_TO_STRING_FROM_SIZE_T( j );
+			EXPECT_NEAR( actualForwardRates[j], expectedForwardRates[j], forwardRateTolerance ) << "Inconsistent Forward Rates, See forward rate number : " << AQ_TO_STRING_FROM_SIZE_T( j );
 		}
     }
 	

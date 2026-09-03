@@ -44,7 +44,7 @@ namespace etrading
 
         if (provideBoth || (mandatoryField && provideNone))
         {
-            MLIB_THROW( "#Error: Please provide either: key '" + key + "' for both legs, or '" + key + "1'/'" + key + "2' for leg1/leg2");
+            AQ_THROW( "#Error: Please provide either: key '" + key + "' for both legs, or '" + key + "1'/'" + key + "2' for leg1/leg2");
         } 
         
         else if (value.size() != 0)
@@ -206,7 +206,7 @@ namespace etrading
 			}
 			else
 			{
-				MLIB_THROW( "Error: Only Fixed Leg Zero Coupon Inflation Swaps are supported." );
+				AQ_THROW( "Error: Only Fixed Leg Zero Coupon Inflation Swaps are supported." );
 			}
 		}
 		else
@@ -735,8 +735,8 @@ namespace etrading
 	std::shared_ptr<Schedule> createScheduleBespoke(const std::string& scheduleName, const LabelValueBlock& bespokeScheduleProperties, const std::vector<LabelValueBlock>& cashflowLVBs, const BespokeScheduleTypeEnum& bespokeScheduleType)
 	{
 
-		MLIB_REQUIRE(bespokeScheduleProperties.size() > 0, "BespokeScheduleProperties cannot be empty");
-		MLIB_REQUIRE(cashflowLVBs.size() > 0, "BespokeSchedule Cashflow LVB cannot be empty");
+		AQ_REQUIRE(bespokeScheduleProperties.size() > 0, "BespokeScheduleProperties cannot be empty");
+		AQ_REQUIRE(cashflowLVBs.size() > 0, "BespokeSchedule Cashflow LVB cannot be empty");
 
 		const std::string inputLVB = "bespokeScheduleProperties";
 
@@ -1337,7 +1337,7 @@ namespace etrading
 			auto leg = legs.findLegByName( legName );
 			if ( leg == nullptr )
 			{
-				MLIB_THROW( "Leg name '" + legName + "' does not exist." );
+				AQ_THROW( "Leg name '" + legName + "' does not exist." );
 			}
 			if ( leg->getType() == legType )
 			{
@@ -1346,7 +1346,7 @@ namespace etrading
 			}
 			else
 			{
-				MLIB_THROW( "Leg name '" + legName + "' does not have the required leg type '" + toString( legType ).c_str() + "'." );
+				AQ_THROW( "Leg name '" + legName + "' does not have the required leg type '" + toString( legType ).c_str() + "'." );
 			}
         }
 		else
@@ -1365,11 +1365,11 @@ namespace etrading
 
 			if ( numMatches == 0 )
 			{
-				MLIB_THROW( "Credit Default Swap does not contain any legs of type '" + toString( legType ) + "'." );
+				AQ_THROW( "Credit Default Swap does not contain any legs of type '" + toString( legType ) + "'." );
 			}
 			if ( numMatches > 1 )
 			{
-				MLIB_THROW( "CreditDefaultSwap contains more than one leg of type '" + toString( legType ) + "'. Please specify the leg name to use." );
+				AQ_THROW( "CreditDefaultSwap contains more than one leg of type '" + toString( legType ) + "'. Please specify the leg name to use." );
 			}
 		}
 
@@ -1434,14 +1434,14 @@ namespace etrading
 
 	LegPtr getFixedLeg(const SwapPtr& swap)
 	{
-		MLIB_REQUIRE(isFixedFloatSwap(swap), "The Swap must be a Fixed Float Swap.");
+		AQ_REQUIRE(isFixedFloatSwap(swap), "The Swap must be a Fixed Float Swap.");
 
 		return isFixedLeg(swap->getLeg(0)->getType()) ? swap->getLeg(0) : swap->getLeg(1);
 	}
 
 	LegPtr getFloatLeg(const SwapPtr& swap)
 	{
-		MLIB_REQUIRE(isFixedFloatSwap(swap), "The Swap must be a Fixed Float Swap.");
+		AQ_REQUIRE(isFixedFloatSwap(swap), "The Swap must be a Fixed Float Swap.");
 
 		return isFloatLeg(swap->getLeg(0)->getType()) ? swap->getLeg(0) : swap->getLeg(1);
 	}

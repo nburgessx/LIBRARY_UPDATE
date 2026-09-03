@@ -38,13 +38,13 @@ function_t LAInterpolationBase::getType() const
 // Method to differentiate the interpolation function - Must implement this separately in every derived interpolation class
 double LAInterpolationBase::differentiate( const double xPoint ) const
 {
-	MLIB_THROW( "Mathematical Differentiation Not Supported for this Interpolation Type" );
+	AQ_THROW( "Mathematical Differentiation Not Supported for this Interpolation Type" );
 }
 
 // Method to discretely differentiate the interpolation function between two points
 double LAInterpolationBase::differentiateOverRange( const double fromXPoint, const double toXPoint ) const
 {
-	MLIB_REQUIRE( MLIB_IS_GREATER_THAN( toXPoint, fromXPoint ), "Invalid Differentiation Interval: The toXPoint must be greater than the fromXPoint" )
+	AQ_REQUIRE( AQ_IS_GREATER_THAN( toXPoint, fromXPoint ), "Invalid Differentiation Interval: The toXPoint must be greater than the fromXPoint" )
 	
 	const double fromYPoint	= value( fromXPoint );
 	const double toYPoint	= value( toXPoint );
@@ -58,14 +58,14 @@ double LAInterpolationBase::differentiateOverRange( const double fromXPoint, con
 // Method to integrate the interpolation function - Must implement this separately in every derived interpolation class
 double LAInterpolationBase::integrate( const double lowerBound, const double upperBound ) const
 { 
-	MLIB_THROW( "Mathematical Integration Not Supported for this Interpolation Type" );
+	AQ_THROW( "Mathematical Integration Not Supported for this Interpolation Type" );
 }
 
 // Function to Calculate the Position of the Supremum i.e. the position of the first node point greater than or equal to a given value
 size_t LAInterpolationBase::supremum( const double & value ) const
 {
-	MLIB_REQUIRE( interpolationData_ != nullptr, "Invalid Data: Interpolation data has not been set");
-	MLIB_REQUIRE( interpolationData_->size_ >= 2, "Invalid Data: At least two data points are required");
+	AQ_REQUIRE( interpolationData_ != nullptr, "Invalid Data: Interpolation data has not been set");
+	AQ_REQUIRE( interpolationData_->size_ >= 2, "Invalid Data: At least two data points are required");
 
 	// Find upperBound Supremum i.e. the next node point relative to the integration upperBound variable
 	// Note we floor at position 1 and disallow 0, since end index cannot be the start index point 
@@ -141,11 +141,11 @@ double LAInterpolationBase::intervalWidth( const Interval& interval, const doubl
 // Function to calculate the slope between two consecutive points
 double LAInterpolationBase::intervalSlope( const Interval& interval ) const
 {
-	MLIB_THROW( "Mathematical Differentiation Not Supported for this Interpolation Type" );
+	AQ_THROW( "Mathematical Differentiation Not Supported for this Interpolation Type" );
 }
 
 // Function to calculate the area for a given interval given the integral lower- and upper bounds to evaluate partial interval and allow for extrapolation
 double LAInterpolationBase::intervalArea( const size_t & endIndex, const double & lowerBound, const double & upperBound ) const
 {
-	MLIB_THROW( "Mathematical Integration Not Supported for this Interpolation Type" );
+	AQ_THROW( "Mathematical Integration Not Supported for this Interpolation Type" );
 }

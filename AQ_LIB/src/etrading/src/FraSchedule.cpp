@@ -52,7 +52,7 @@ namespace etrading
 
 		notional_= scheduleLVB.getCompulsoryValueAsDouble(IRS_KEY::NOTIONAL);
         notionalExchangeEnum_	= toNotionalExchangeEnum(scheduleLVB.getOptionalValueAsLAString(IRS_KEY::NOTIONAL_EXCHANGE, "NONE").getCString());
-        MLIB_REQUIRE( notionalExchangeEnum_ == NONE_NE,    "FRA's NotionalExchange has to be 'NONE'" );
+        AQ_REQUIRE( notionalExchangeEnum_ == NONE_NE,    "FRA's NotionalExchange has to be 'NONE'" );
 
 		fixingbusinessDayAdj_   = toBusinessDayAdjustmentEnum(scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXINGBUSINESSDAYADJUSTMENT,		IRS_KEY::FLOAT_FIXINGBUSINESSDAYADJUSTMENT, toString(accrualbusinessDayAdj_).c_str() ).getCString());
         fixingCalendar_         = scheduleLVB.getOptionalValueAsLAStringFromKeys(IRS_KEY::FIXINGCALENDAR,					IRS_KEY::FLOAT_FIXINGCALENDAR, accrualCalendar_);
@@ -71,9 +71,9 @@ namespace etrading
 
         populateAccrualStartDates(scheduleLVB);
 
-		MLIB_REQUIRE(firstStub_.size() == 0, "User cannot set FirstStubDate for FRA");
-		MLIB_REQUIRE(lastStub_.size() == 0, "User cannot set LastStubDate for FRA");
-		MLIB_REQUIRE(stubType_ == NONE_STUBTYPE, "User cannot set StubType for FRA");
+		AQ_REQUIRE(firstStub_.size() == 0, "User cannot set FirstStubDate for FRA");
+		AQ_REQUIRE(lastStub_.size() == 0, "User cannot set LastStubDate for FRA");
+		AQ_REQUIRE(stubType_ == NONE_STUBTYPE, "User cannot set StubType for FRA");
 
 		// 'lastStub_' is set to be the same as effectiveDate
 		lastStub_ = accrualStartDate_;

@@ -69,13 +69,13 @@ namespace validation_api
         const bool noShift = ( shift.size() == 0 ) ? true : false;
         
         // Dimension Validation
-        MLIB_REQUIRE( capletOrFloorlet.size() == annuityFactor.size(),       "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of annuityFactor parameters." );
-		MLIB_REQUIRE( capletOrFloorlet.size() == liborRate.size(),			 "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of liborRate parameters.");
-		MLIB_REQUIRE( capletOrFloorlet.size() == strike.size(),              "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of strike parameters." );
-        MLIB_REQUIRE( capletOrFloorlet.size() == vol.size(),                 "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of vol parameters." );
-        MLIB_REQUIRE( capletOrFloorlet.size() == time.size(),                "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of time parameters." );
-        MLIB_REQUIRE( noShift || capletOrFloorlet.size() == shift.size(),    "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of shift parameters." );
-        MLIB_REQUIRE( noVolType || capletOrFloorlet.size() == volatilityType.size(), "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of volatilityType parameters." );
+        AQ_REQUIRE( capletOrFloorlet.size() == annuityFactor.size(),       "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of annuityFactor parameters." );
+		AQ_REQUIRE( capletOrFloorlet.size() == liborRate.size(),			 "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of liborRate parameters.");
+		AQ_REQUIRE( capletOrFloorlet.size() == strike.size(),              "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of strike parameters." );
+        AQ_REQUIRE( capletOrFloorlet.size() == vol.size(),                 "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of vol parameters." );
+        AQ_REQUIRE( capletOrFloorlet.size() == time.size(),                "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of time parameters." );
+        AQ_REQUIRE( noShift || capletOrFloorlet.size() == shift.size(),    "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of shift parameters." );
+        AQ_REQUIRE( noVolType || capletOrFloorlet.size() == volatilityType.size(), "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of volatilityType parameters." );
 
         // Declare Results Vector
         std::vector<double> results(capletOrFloorlet.size(), 0.0 );
@@ -165,13 +165,13 @@ namespace validation_api
         const bool noShift = ( shift.size() == 0 ) ? true : false;
 
         // Dimension Validation
-        MLIB_REQUIRE( capletOrFloorlet.size() == price.size(),                 "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of price parameters." );
-		MLIB_REQUIRE( capletOrFloorlet.size() == annuityFactor.size(),		   "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of annuityFactor parameters.");
-		MLIB_REQUIRE( capletOrFloorlet.size() == liborRate.size(),             "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of liborRate parameters." );
-        MLIB_REQUIRE( capletOrFloorlet.size() == strike.size(),                "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of strike parameters." );
-        MLIB_REQUIRE( capletOrFloorlet.size() == time.size(),                  "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of time parameters." );
-		MLIB_REQUIRE( noShift || capletOrFloorlet.size() == shift.size(),      "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of shift parameters." );
-        MLIB_REQUIRE( noVolType || capletOrFloorlet.size() == volatilityType.size(), "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of volatilityType parameters." );
+        AQ_REQUIRE( capletOrFloorlet.size() == price.size(),                 "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of price parameters." );
+		AQ_REQUIRE( capletOrFloorlet.size() == annuityFactor.size(),		   "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of annuityFactor parameters.");
+		AQ_REQUIRE( capletOrFloorlet.size() == liborRate.size(),             "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of liborRate parameters." );
+        AQ_REQUIRE( capletOrFloorlet.size() == strike.size(),                "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of strike parameters." );
+        AQ_REQUIRE( capletOrFloorlet.size() == time.size(),                  "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of time parameters." );
+		AQ_REQUIRE( noShift || capletOrFloorlet.size() == shift.size(),      "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of shift parameters." );
+        AQ_REQUIRE( noVolType || capletOrFloorlet.size() == volatilityType.size(), "Invalid dimensions: Number of capletOrFloorlet parameters must equal the number of volatilityType parameters." );
 
         // Declare Results Vector
         std::vector<double> results(capletOrFloorlet.size(), 0.0 );

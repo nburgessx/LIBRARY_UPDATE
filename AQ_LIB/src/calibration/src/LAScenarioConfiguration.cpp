@@ -192,7 +192,7 @@ LAScenarioConfiguration::createScenarioForeignYield(LADataInstance &dataInstance
 	}
 
 	// hirayake data out
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataoutCurve(dataInstance, bYieldPro, ret);
 	}
@@ -301,7 +301,7 @@ LAScenarioConfiguration::createScenarioCollateralYield(LADataInstance &dataInsta
 	}
 
 	// hirayake data out
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataoutCurve(dataInstance, bYieldPro, ret);
 	}
@@ -498,7 +498,7 @@ LAScenarioConfiguration::createScenarioExtraFwdFXConstCurveForFXDelta(LADataInst
 	}
 
 	// data out
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataoutCurve(dataInstance, bYieldPro, ret);
 	}
@@ -588,7 +588,7 @@ LAScenarioConfiguration::createScenarioExtraXccyCurveForFXDelta(LADataInstance &
 		ret.push_back(cYield);
 	}
 
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataoutCurve(dataInstance, bYieldPro, ret);
 	}

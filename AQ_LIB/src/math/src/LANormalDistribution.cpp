@@ -45,9 +45,9 @@ double LANormalDistribution::Cumulative(double x)
 double LANormalDistribution::CumulativeInverse(double y)
 {
     if (eq(y, 0.0))
-        return -MLIB_MACHINE_MAX;
+        return -AQ_MACHINE_MAX;
     else if (eq(y, 1.0))
-        return MLIB_MACHINE_MAX;
+        return AQ_MACHINE_MAX;
     else if (y < 0.0 || y > 1.0)
         throw LACoreInvalidData("0 < y || y > 1 in Normal cumulative inverse", __FILE__, __LINE__);
     else

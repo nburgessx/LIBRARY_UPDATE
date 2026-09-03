@@ -661,7 +661,7 @@ LAScenarioConfigurationYieldCurve::createScenario(LADataInstance &dataInstance, 
 	bYieldPro.LAObject::remove(IR_CALIBRATION_DATA_GENTARGETDF);
 
 	// hirayake data out
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
     {
 		dataoutCurve(dataInstance, bYieldPro, ret);
 	}

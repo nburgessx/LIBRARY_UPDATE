@@ -1,6 +1,6 @@
 #include "LoanCalculations.h"
 #include "ExceptionMacros.h"
-#include "DataUtilities.h"	// For MLIB_TO_STRING macros
+#include "DataUtilities.h"	// For AQ_TO_STRING macros
 #include <cmath>
 
 
@@ -214,7 +214,7 @@ namespace etrading
 			payment = 0.0;
 			break;
 		default:
-			MLIB_THROW( "Unsupported loanType: " + toString( loanTypeEnum ));
+			AQ_THROW( "Unsupported loanType: " + toString( loanTypeEnum ));
 			break;
 		}
 		
@@ -251,7 +251,7 @@ namespace etrading
 			break;
 			
 		default:
-			MLIB_THROW( "Unsupported loanType: " + toString( loanTypeEnum ));
+			AQ_THROW( "Unsupported loanType: " + toString( loanTypeEnum ));
 			break;
 		}
 		
@@ -286,7 +286,7 @@ namespace etrading
 			}
 			break;
 		default:
-			MLIB_THROW( "Unsupported loanType: " + toString( loanTypeEnum ));
+			AQ_THROW( "Unsupported loanType: " + toString( loanTypeEnum ));
 			break;
 		}
 		
@@ -332,11 +332,11 @@ namespace etrading
 		const double monthsInPeriod = 1.;
 		const double periodsInYear = 12.;
 
-		MLIB_REQUIRE( term == defaultVector.size(), "Size of defaultVector (" + MLIB_TO_STRING_FROM_SIZE_T(defaultVector.size()) + ") is inconsistent with the specified loan term (" + MLIB_TO_STRING_FROM_INT(term) + ").");
-		MLIB_REQUIRE( term == severityVector.size(), "Size of severityVector (" + MLIB_TO_STRING_FROM_SIZE_T(severityVector.size()) + ") is inconsistent with the specified loan term (" + MLIB_TO_STRING_FROM_INT(term) + ").");
-		MLIB_REQUIRE( term == prepaymentVector.size(), "Size of prepaymentVector (" + MLIB_TO_STRING_FROM_SIZE_T(prepaymentVector.size()) + ") is inconsistent with the specified loan term (" + MLIB_TO_STRING_FROM_INT(term) + ").");
-		MLIB_REQUIRE( term == riskWeightVector.size(), "Size of riskWeightVector (" + MLIB_TO_STRING_FROM_SIZE_T(riskWeightVector.size()) + ") is inconsistent with the specified loan term (" + MLIB_TO_STRING_FROM_INT(term) + ").");
-		MLIB_REQUIRE( term == kirbVector.size(), "Size of kirbVector (" + MLIB_TO_STRING_FROM_SIZE_T(kirbVector.size()) + ") is inconsistent with the specified loan term (" + MLIB_TO_STRING_FROM_INT(term) + ").");
+		AQ_REQUIRE( term == defaultVector.size(), "Size of defaultVector (" + AQ_TO_STRING_FROM_SIZE_T(defaultVector.size()) + ") is inconsistent with the specified loan term (" + AQ_TO_STRING_FROM_INT(term) + ").");
+		AQ_REQUIRE( term == severityVector.size(), "Size of severityVector (" + AQ_TO_STRING_FROM_SIZE_T(severityVector.size()) + ") is inconsistent with the specified loan term (" + AQ_TO_STRING_FROM_INT(term) + ").");
+		AQ_REQUIRE( term == prepaymentVector.size(), "Size of prepaymentVector (" + AQ_TO_STRING_FROM_SIZE_T(prepaymentVector.size()) + ") is inconsistent with the specified loan term (" + AQ_TO_STRING_FROM_INT(term) + ").");
+		AQ_REQUIRE( term == riskWeightVector.size(), "Size of riskWeightVector (" + AQ_TO_STRING_FROM_SIZE_T(riskWeightVector.size()) + ") is inconsistent with the specified loan term (" + AQ_TO_STRING_FROM_INT(term) + ").");
+		AQ_REQUIRE( term == kirbVector.size(), "Size of kirbVector (" + AQ_TO_STRING_FROM_SIZE_T(kirbVector.size()) + ") is inconsistent with the specified loan term (" + AQ_TO_STRING_FROM_INT(term) + ").");
 
 		const int stubMonths = term % loanPaymentsPerYear;
 
@@ -497,18 +497,18 @@ namespace etrading
 												const int recoveryLagInMonths,
 												const bool keepPostTermRecoveries)
 	{
-		MLIB_REQUIRE( loanTerm >= 0, "Loan term must be zero or positive." );
-		MLIB_REQUIRE( resultRows >= (size_t) (loanTerm + recoveryLagInMonths ), "Results vector is not large enough to store projected loan. LoanTerm is: " << loanTerm << ", recoveryLag = " << recoveryLagInMonths );
+		AQ_REQUIRE( loanTerm >= 0, "Loan term must be zero or positive." );
+		AQ_REQUIRE( resultRows >= (size_t) (loanTerm + recoveryLagInMonths ), "Results vector is not large enough to store projected loan. LoanTerm is: " << loanTerm << ", recoveryLag = " << recoveryLagInMonths );
 
 		std::vector<LoanCashflowBreakdown> loanCashflows( resultRows );
 
 		const double monthsInPeriod = 1.;
 		const double periodsInYear = 12.;
 
-		MLIB_REQUIRE( loanTerm == loanRateInEachMonth.size(), "Size of loanRate vector (" + MLIB_TO_STRING_FROM_SIZE_T(loanRateInEachMonth.size()) + ") is inconsistent with the specified loan term (" + MLIB_TO_STRING_FROM_INT(loanTerm) + ")." );
-		MLIB_REQUIRE( loanTerm == defaultRateInEachMonth.size(), "Size of defaultRate vector (" + MLIB_TO_STRING_FROM_SIZE_T(defaultRateInEachMonth.size()) + ") is inconsistent with the specified loan term (" + MLIB_TO_STRING_FROM_INT(loanTerm) + ").");
-		MLIB_REQUIRE( loanTerm == severityRateInEachMonth.size(), "Size of severity vector (" + MLIB_TO_STRING_FROM_SIZE_T(severityRateInEachMonth.size()) + ") is inconsistent with the specified loan term (" + MLIB_TO_STRING_FROM_INT(loanTerm) + ").");
-		MLIB_REQUIRE( loanTerm == prepaymentInEachMonth.size(), "Size of prepayment vector (" + MLIB_TO_STRING_FROM_SIZE_T(prepaymentInEachMonth.size()) + ") is inconsistent with the specified loan term (" + MLIB_TO_STRING_FROM_INT(loanTerm) + ").");
+		AQ_REQUIRE( loanTerm == loanRateInEachMonth.size(), "Size of loanRate vector (" + AQ_TO_STRING_FROM_SIZE_T(loanRateInEachMonth.size()) + ") is inconsistent with the specified loan term (" + AQ_TO_STRING_FROM_INT(loanTerm) + ")." );
+		AQ_REQUIRE( loanTerm == defaultRateInEachMonth.size(), "Size of defaultRate vector (" + AQ_TO_STRING_FROM_SIZE_T(defaultRateInEachMonth.size()) + ") is inconsistent with the specified loan term (" + AQ_TO_STRING_FROM_INT(loanTerm) + ").");
+		AQ_REQUIRE( loanTerm == severityRateInEachMonth.size(), "Size of severity vector (" + AQ_TO_STRING_FROM_SIZE_T(severityRateInEachMonth.size()) + ") is inconsistent with the specified loan term (" + AQ_TO_STRING_FROM_INT(loanTerm) + ").");
+		AQ_REQUIRE( loanTerm == prepaymentInEachMonth.size(), "Size of prepayment vector (" + AQ_TO_STRING_FROM_SIZE_T(prepaymentInEachMonth.size()) + ") is inconsistent with the specified loan term (" + AQ_TO_STRING_FROM_INT(loanTerm) + ").");
 
 		for (int monthIdx = 0; monthIdx < loanTerm; monthIdx++)
 		{
@@ -645,7 +645,7 @@ namespace etrading
 					break;
 				}
 				default:
-					MLIB_THROW("Unsupported LoanType: " + toString(loanType));
+					AQ_THROW("Unsupported LoanType: " + toString(loanType));
 			}
 
 			// Scheduled interest

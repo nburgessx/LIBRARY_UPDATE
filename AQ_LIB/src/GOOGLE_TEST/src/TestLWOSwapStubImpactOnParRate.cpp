@@ -102,7 +102,7 @@ namespace google_test
 		}
 		else
 		{
-			MLIB_THROW("Unsupported test type");
+			AQ_THROW("Unsupported test type");
 		}
 
 		try

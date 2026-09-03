@@ -63,6 +63,6 @@ protected:
 	virtual bool isAnalyticMode(const LAString& ccy) const { (void)ccy; return true; };
 	//==============================================
 	// not calculate gamma in analytical case
-	virtual  LAString  getOutPutName2(const LAString &ccy) const { (void)ccy; return MLIB_NO_DATA; };
+	virtual  LAString  getOutPutName2(const LAString &ccy) const { (void)ccy; return AQ_NO_DATA; };
 };
 #endif

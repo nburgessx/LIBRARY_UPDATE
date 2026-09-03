@@ -58,7 +58,7 @@ namespace validation_api
 		// Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
 		RECORD_DECORATED_INPUTS(swapName, std::string(), swapName, legObjectNames, swapPropertiesLVB, isXccySwap, validateKeys)
 	
-		MLIB_REQUIRE(legObjectNames.size() >= 2, "The swap should have at least two legs.")
+		AQ_REQUIRE(legObjectNames.size() >= 2, "The swap should have at least two legs.")
 
 		auto leg1 = etrading::getLeg(legObjectNames[0]);
 		auto leg2 = etrading::getLeg(legObjectNames[1]);
@@ -153,7 +153,7 @@ namespace validation_api
 	{
 		VALID_EXCEPTION_START
         
-        MLIB_REQUIRE( !swapLVB.empty(), "The swap label Value Block is empty or contains errors" )
+        AQ_REQUIRE( !swapLVB.empty(), "The swap label Value Block is empty or contains errors" )
 
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
@@ -170,7 +170,7 @@ namespace validation_api
 		std::vector<LabelValueBlock> legsLVB = etrading::buildMultiLabelValueBlock(swapLVB);
 
         // Access Violation Guard
-        MLIB_REQUIRE( legsLVB.size() >= 2, "Invalid Swap Input: Swap trades require at least 2 trade legs." )
+        AQ_REQUIRE( legsLVB.size() >= 2, "Invalid Swap Input: Swap trades require at least 2 trade legs." )
 
  		if (validateKeys)
 		{
@@ -436,7 +436,7 @@ namespace validation_api
 	{
 		VALID_EXCEPTION_START
         
-        MLIB_REQUIRE( !swapGeneratorLVB.empty(), "The swap generator label Value Block is empty or contains errors" )
+        AQ_REQUIRE( !swapGeneratorLVB.empty(), "The swap generator label Value Block is empty or contains errors" )
 
 		// Recording of inputs for playback
 		if (CreateDataFile::recordEnabled()) 
@@ -521,7 +521,7 @@ namespace validation_api
 	{
 		VALID_EXCEPTION_START
         
-        MLIB_REQUIRE( expressionLVB.size() != 0, "The swap expression label Value Block is empty or contains errors" )
+        AQ_REQUIRE( expressionLVB.size() != 0, "The swap expression label Value Block is empty or contains errors" )
 
         // Recording of inputs for testing and playback - Note we decorate the file with the swap name prefix. The prefix is argument 1 and the suffix argument 2.
         RECORD_DECORATED_INPUTS(swapName, std::string(), swapName, swapGeneratorName, expressionLVB, swapPropertiesLVB, isXccySwap, validateKeys)

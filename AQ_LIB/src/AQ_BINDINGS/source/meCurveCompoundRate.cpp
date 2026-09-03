@@ -2,7 +2,7 @@
 #include "TypeUtilities.h"
 #include "meCurveCompoundRate.h"
 #include "tryMeCurveCompoundRate.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 #include "ParameterValidation.h"
 
 /* @brief swig interface for meCurveCompoundRate method
@@ -39,7 +39,7 @@ std::vector<double> meCurveCompoundRate(const std::vector<std::string>& startDat
 									const std::string& firstStubDate,
 									const std::string& lastStubDate)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::vector<double> ret;
 		
     // Input marshalling
@@ -78,7 +78,7 @@ std::vector<double> meCurveCompoundRate(const std::vector<std::string>& startDat
 								tmp_firstStubDate,
 								tmp_lastStubDate);
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief swig interface for meCurveCompoundRate method
@@ -115,7 +115,7 @@ double meCurveCompoundRate(const std::string& startDate,
 							const std::string& firstStubDate,
 							const std::string& lastStubDate)
 {
-    MLIB_API_START
+    AQ_API_START
 	double ret;
 
     // Input marshalling
@@ -151,5 +151,5 @@ double meCurveCompoundRate(const std::string& startDate,
 							tmp_firstStubDate,
 							tmp_lastStubDate);
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }

@@ -91,7 +91,7 @@ LAPriceDataSlidingRule::convertToString(void) const
 			ret = "MOD_PRECEDING";
 			break;
 		default:
-			MLIB_THROW("Invalid Business Day Adjustment")
+			AQ_THROW("Invalid Business Day Adjustment")
 			break;
 	}
 	return ret;

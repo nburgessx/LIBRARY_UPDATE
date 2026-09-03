@@ -14,7 +14,7 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
-#include "ExceptionMacros.h"	// include: MLIB_REQUIRE, MLIB_THROW
+#include "ExceptionMacros.h"	// include: AQ_REQUIRE, AQ_THROW
 
 
 // Function to round a double to the nearest integer
@@ -651,7 +651,7 @@ LAPriceDataDayCount::dayCountEnum( const DayCount & daycount )
 		}
 		default:
 		{
-			MLIB_THROW("Invalid Daycount: Daycount not supported in LAPriceDataDayCount class")
+			AQ_THROW("Invalid Daycount: Daycount not supported in LAPriceDataDayCount class")
 			break;
 		}
 	}

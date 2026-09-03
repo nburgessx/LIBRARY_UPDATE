@@ -285,7 +285,7 @@ namespace validation_api
     */
     STDStringMatrix tryMeUtilityLVBCreate( const STDStringVector& keys, const STDStringVector& values )
     {
-        MLIB_REQUIRE( keys.size() == values.size(), "Invalid Label Value Block Dimensions: The number of keys and values must match" )
+        AQ_REQUIRE( keys.size() == values.size(), "Invalid Label Value Block Dimensions: The number of keys and values must match" )
         
         STDStringMatrix results( keys.size() );
         STDStringVector keyValuePair( 2 ); // Size 2
@@ -311,8 +311,8 @@ namespace validation_api
     */
     STDStringMatrix tryMeUtilityLVBCreate( const STDStringVector& keys, const STDStringVector& values1, const STDStringVector& values2 )
     {
-        MLIB_REQUIRE( keys.size() == values1.size(), "Invalid Label Value Block Dimensions: The number of keys and values1 must match" )
-        MLIB_REQUIRE( values1.size() == values2.size(), "Invalid Label Value Block Dimensions: The number of values1 and values2 must match" )
+        AQ_REQUIRE( keys.size() == values1.size(), "Invalid Label Value Block Dimensions: The number of keys and values1 must match" )
+        AQ_REQUIRE( values1.size() == values2.size(), "Invalid Label Value Block Dimensions: The number of values1 and values2 must match" )
         
         STDStringMatrix results( keys.size() );
         STDStringVector keyValuePair( 3 ); // Size 3
@@ -343,7 +343,7 @@ namespace validation_api
         if ( LVB.size() > 0 )
         {
             // Ensure input LVB has exactly 2 columns
-            MLIB_REQUIRE( LVB[0].size() == 2, "Invalid Label Value Block: Input LVB must have exactly 2 columns" )
+            AQ_REQUIRE( LVB[0].size() == 2, "Invalid Label Value Block: Input LVB must have exactly 2 columns" )
         }
 
         // Append the key value pair to the Label Value Block
@@ -366,7 +366,7 @@ namespace validation_api
         if ( LVB.size() > 0 )
         {
             // Ensure input LVB has exactly 3 columns
-            MLIB_REQUIRE( LVB[0].size() == 3, "Invalid Label Value Block: Input LVB must have exactly 3 columns" )
+            AQ_REQUIRE( LVB[0].size() == 3, "Invalid Label Value Block: Input LVB must have exactly 3 columns" )
         }
 
         // Append the key value pair to the Label Value Block

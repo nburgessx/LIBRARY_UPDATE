@@ -97,7 +97,7 @@ LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
 	LAString IsAddFwdPremPV = mpStaticData->getStaticData(KEY_SDE_PV_ADDITION_FWDPREMIUM);
  
     LAString zeroCalc = LACoreDataService::getContext(ARG_KEY_ZEROCALC);
-    if (zeroCalc == MLIB_NO_DATA) {
+    if (zeroCalc == AQ_NO_DATA) {
         zeroCalc = "FALSE";
     }
 
@@ -106,7 +106,7 @@ LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
 	vector<const LAObject *> riskEVec;
 	for (unsigned int i = 0; i < riskENames.size(); ++i)
 	{
-		if (riskENames[i] != MLIB_NO_DATA)
+		if (riskENames[i] != AQ_NO_DATA)
 		{
 			riskEVec.push_back(&objPool.getObject(riskENames[i], ENCHKTYPE_ISDEFINED).get());
 		}
@@ -118,7 +118,7 @@ LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
 	{
 		//for risk currency mode
 		LAString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
-		if (fxName != MLIB_NO_DATA)
+		if (fxName != AQ_NO_DATA)
 		{
 			objHolder.get().remove(PRICING_DATA_FXRATE);
 			objHolder.get().add(PRICING_DATA_FXRATE, new LADataReference()).convertFromString(fxName);
@@ -134,13 +134,13 @@ LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
 			LAObjectHolder &trade = unders.get(i);
 			
 			// ! Set isResultOut
-			if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) != MLIB_NO_DATA )
+			if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) != AQ_NO_DATA )
 			{
 				trade.remove( PRICING_DATA_ISRESULTOUTPUT );
 				trade.add( PRICING_DATA_ISRESULTOUTPUT, new LADataBool( true ) );
 			}
 
-			if(LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != MLIB_NO_DATA)
+			if(LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != AQ_NO_DATA)
 			{
 				trade.remove(PRICING_DATA_COMPOUNDED_RATE_OUT);
 				trade.add(PRICING_DATA_COMPOUNDED_RATE_OUT, new LADataBool(true));
@@ -162,7 +162,7 @@ LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
 			setUpRiskInfo(riskEVec, trade.get());
 
 			// set flag for adding fwdpremium to PV
-			if (IsAddFwdPremPV != MLIB_NO_DATA)
+			if (IsAddFwdPremPV != AQ_NO_DATA)
 			{	
 				trade.remove(PRICING_DATA_ISADDFWDPREMPV);
 				trade.add(PRICING_DATA_ISADDFWDPREMPV, new LADataBool()).convertFromString(IsAddFwdPremPV);
@@ -183,13 +183,13 @@ LAObjectConfigurationVanilla::setUpValuableEntity( LAObjectPool& objPool ) const
 	{
 
 		// ! Set isResultOut
-		if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) != MLIB_NO_DATA )
+		if ( LACoreDataService::getContext( ARG_KEY_RESULTOUT ) != AQ_NO_DATA )
 		{
 			objHolder.remove( PRICING_DATA_ISRESULTOUTPUT );
 			objHolder.add( PRICING_DATA_ISRESULTOUTPUT, new LADataBool( true ) );
 		}
 
-        if(LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != MLIB_NO_DATA)
+        if(LACoreDataService::getContext(ARG_KEY_COMPOUNDEDRATEOUT) != AQ_NO_DATA)
         {
             objHolder.remove(PRICING_DATA_COMPOUNDED_RATE_OUT);
             objHolder.add(PRICING_DATA_COMPOUNDED_RATE_OUT, new LADataBool(true));
@@ -263,7 +263,7 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 	LAString initialValue =  PREFIX_YIELD + sdeName;
 	// set main path curve
 	LAString pathCurve = mpStaticData->getStaticData(ircurs[0] + STATIC_DATA_KEY_YIELD_PATHCURVE);
-	if (pathCurve == MLIB_NO_DATA)
+	if (pathCurve == AQ_NO_DATA)
 	{
 		pvanilla->getIRCurveTypes().push_back(STD);
 	}
@@ -282,7 +282,7 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 		initialValue += LAString(":") + PREFIX_YIELD + sdeName;
 		// set main path curve
 		pathCurve = mpStaticData->getStaticData(ircurs[i] + STATIC_DATA_KEY_YIELD_PATHCURVE);
-		if (pathCurve == MLIB_NO_DATA)
+		if (pathCurve == AQ_NO_DATA)
 		{
 			pvanilla->getIRCurveTypes().push_back(STD);
 		}
@@ -333,7 +333,7 @@ LAObjectConfigurationVanilla::setUpPathEntity(LAObjectPool &objPool, const LAStr
 	{
 		pvanilla->getFXCurrencys().set(fxcurs);
 		LAString fxName = LACoreDataService::getContext(CONTEXT_KEY_FXENTIY_NAME_FORWARD);
-		if (fxName == MLIB_NO_DATA)
+		if (fxName == AQ_NO_DATA)
 		{
 			throw LACoreInvalidData("Forward FX Object is not set.", __FILE__, __LINE__);
 		}
@@ -400,7 +400,7 @@ LAObjectConfigurationVanilla::setUpExtraEntity(LAObjectPool &objPool) const
 				
 			}
 
-			if (temp==MLIB_NO_DATA)
+			if (temp==AQ_NO_DATA)
 			{
 				setUpRecalcTrade(objPool, dynamic_cast<LAMathObjectValue &>(unders.get(i).get()));
             }
@@ -441,7 +441,7 @@ LAObjectConfigurationVanilla::setUpExtraEntity(LAObjectPool &objPool) const
 			objHolder.get().add(PRICING_DATA_ISCALCPAYOFFAFTERMATURITY, new LADataBool(iscalcpayoffaftermatu));
 		}
 
-		if (temp==MLIB_NO_DATA)
+		if (temp==AQ_NO_DATA)
 		{
 			setUpRecalcTrade(objPool, dynamic_cast<LAMathObjectValue &>(objHolder.get()));
         }
@@ -1010,7 +1010,7 @@ LAObjectConfigurationVanilla::setUpRenotionalFXInfo(LAObjectPool &objPool, LAMat
 		//get renotional FX information
 		bool isRenAdj = false;
 		LAString tmpRenAdj_str = staticData.getStaticData(ccy + STATIC_DATA_KEY_YIELD_GENERATOR_ISRENOTIONALADJUST).toUpper();
-		if (tmpRenAdj_str != MLIB_NO_DATA)
+		if (tmpRenAdj_str != AQ_NO_DATA)
 		{
 			LADataBool tmpAttrB;
 			tmpAttrB.convertFromString(tmpRenAdj_str);
@@ -1160,7 +1160,7 @@ LAObjectConfigurationVanilla::setUpConvexityAdjustInfo(LAObjectPool &objPool, LA
 											indexInfos.get(l).add(PRICING_DATA_CFCALCENDDATES, new LADataDates(cfcalc_endDate));
 											// swaption premium integral step
 											tmp_prop = staticData.getStaticData(ccy + STATIC_DATA_KEY_YIELD_CONVEXITYADJUST_PREMIUMINTEGRALSTEPS).toUpper(); 
-											if (tmp_prop != MLIB_NO_DATA)
+											if (tmp_prop != AQ_NO_DATA)
 											{
 												int integralStep = tmp_prop.getIntValue();
 												indexInfos.get(l).add(PRICING_DATA_CAPREMIUMINTEGRALSTEP, new LADataInt(integralStep));
@@ -1212,7 +1212,7 @@ LAObjectConfigurationVanilla::setUpSpotRateRatioMethod(LAObjectPool &objPool, LA
 
 				LAString currency = dynamic_cast<const LADataString &>(couponinfos.get(k).getData(PRICING_DATA_CURRENCY, ISNOTNULL).get()).get();
 				LAString tolerance = staticData.getStaticData(currency.toLower() + STATIC_DATA_KEY_YIELD_SPOTRATERATIOMETHOD_TOLERANCE);
-				if(tolerance != MLIB_NO_DATA)
+				if(tolerance != AQ_NO_DATA)
 					couponinfos.get(k).add(PRICING_DATA_TOLERANCEFORSPOTRATERATIOMETHOD, new LADataDouble()).convertFromString(tolerance);
 			}
 		}

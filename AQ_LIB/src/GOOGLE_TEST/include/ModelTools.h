@@ -5,10 +5,10 @@
 #include <gTest/gTest.h>
 #include "InitializeMLibGoogleTest.h"
 
-#define MLIB_CURVE_DIR           "Vanilla/Models/"
-#define MLIB_SABR_DIR            "Vanilla/Models/SABR/"
-#define MLIB_TOTEM_DIR           "Vanilla/Models/Totem/"
-#define MLIB_COPULA_DIR          "Vanilla/Models/Copula/"
+#define AQ_CURVE_DIR           "Vanilla/Models/"
+#define AQ_SABR_DIR            "Vanilla/Models/SABR/"
+#define AQ_TOTEM_DIR           "Vanilla/Models/Totem/"
+#define AQ_COPULA_DIR          "Vanilla/Models/Copula/"
 
 namespace google_test
 {

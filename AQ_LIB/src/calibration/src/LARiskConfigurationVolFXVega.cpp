@@ -120,7 +120,7 @@ LARiskConfigurationVolFXVega::createVolatilityEntity(const LAString &fx, LADataI
 		shiftVal = getScenario2ShiftValue(key_fx);
 	}
 	// dataout
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		param.isOutPut = true;
 	}
@@ -330,7 +330,7 @@ LARiskConfigurationVolFXVega::getTargetNames(const LAString &fx, LADataInstance 
 	{
 		unsigned int num = getGridTerm(fx).size();
 		LAStringVector bucketterm = getBucketGridTerm(fx);
-		if (bucketterm[0] != MLIB_NO_DATA)
+		if (bucketterm[0] != AQ_NO_DATA)
 			num = bucketterm.size();
 		for (unsigned int i = 0; i < num; ++i)
 		{
@@ -397,9 +397,9 @@ LARiskConfigurationVolFXVega::getBucketGridTerm(const LAString &fx) const
 	LAString strBucketGrid = mpRiskStaticData->getStaticData(tmpfx.toLower() + FX_KEY_RISK_FRONT_VOL_FXVEGA_BUCKET_GRID_TERM);
 	LAStringVector BucketTerm = strBucketGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
 	BucketTerm[0].toUpper();
-	if (BucketTerm[0] == "NONE" || BucketTerm[0] == MLIB_NO_DATA)
+	if (BucketTerm[0] == "NONE" || BucketTerm[0] == AQ_NO_DATA)
 	{
-		ret.push_back(MLIB_NO_DATA);
+		ret.push_back(AQ_NO_DATA);
 		return ret;
 	}
 	else
@@ -616,7 +616,7 @@ LARiskConfigurationVolFXVega::isRiskCurrencyMode(const LAString &fx) const
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(fxKey + 
 													FX_KEY_RISK_FRONT_VOL_FXVEGA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);

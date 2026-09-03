@@ -1,7 +1,7 @@
 #include "TypeUtilities.h"
 #include "meDateIMM.h"
 #include "tryMeDateIMM.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 #include "ParameterValidation.h"
 
 
@@ -17,7 +17,7 @@ std::string meDateIMMFromMonth(int year,
 							const std::string& calendar, 
 							const std::string& businessDayAdj)
 {
-	MLIB_API_START
+	AQ_API_START
     std::string ret;
 	
 	LAString tmp_calendar(calendar.c_str());
@@ -25,7 +25,7 @@ std::string meDateIMMFromMonth(int year,
 
 	ret = validation_api::tryMeDateIMMFromMonth(year, month, tmp_calendar, tmp_businessDayAdj).stringWithFormat("YYYYMMDD").getCString();
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -41,7 +41,7 @@ std::string meDateNthIMM(int year,
 						const std::string& calendar, 
 						const std::string& businessDayAdj)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::string ret;
 	
 	LAString tmp_calendar(calendar.c_str());
@@ -49,7 +49,7 @@ std::string meDateNthIMM(int year,
 
 	ret = validation_api::tryMeDateNthIMM(year, nth, tmp_calendar, tmp_businessDayAdj).stringWithFormat("YYYYMMDD").getCString();
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }
 
 
@@ -65,7 +65,7 @@ std::string meDateNthIMMFromStartDate(const std::string& startDate,
 									const std::string& calendar, 
 									const std::string& businessDayAdj)
 {
-    MLIB_API_START
+    AQ_API_START
 	std::string ret;
 
 	LADate tmp_startDate( etrading::stringToDate( startDate ) );
@@ -74,5 +74,5 @@ std::string meDateNthIMMFromStartDate(const std::string& startDate,
 
 	ret = validation_api::tryMeDateNthIMMFromStartDate(tmp_startDate, nth, tmp_calendar, tmp_businessDayAdj).stringWithFormat("YYYYMMDD").getCString();
 	return ret;
-    MLIB_API_END
+    AQ_API_END
 }

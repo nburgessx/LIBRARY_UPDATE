@@ -22,7 +22,7 @@
 #include "tryMeLWOSwapPricing.h"
 #include "BuildSwapTradeFromGenerator.h"
 #include "ExtractCurveCalibrationData.h"
-#include "DataUtilities.h" // MLIB_TO_STRING macros
+#include "DataUtilities.h" // AQ_TO_STRING macros
 
 // Define Test Folder Path(s)
 // *** The Google Test DataInstance folder is defined within etrading project, GoogleTest Folder, GetGoogleTestFolder.h ***
@@ -55,7 +55,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    swapTerms   = curveCalibrationSwapTenors( curveObjectAUD3ML_ ); 
         std::vector<double>         parRates    = curveCalibrationSwapParRates( curveObjectAUD3ML_ );
-        MLIB_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )
+        AQ_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-6;
@@ -76,7 +76,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "AUD3ML_Swap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "AUD3ML_Swap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "AUD_3ML";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("AUDYC");
 
@@ -96,7 +96,7 @@ namespace google_test
         // Extract the Swap Terms & Par Rates from the LWO Curve Object
         std::vector<std::string>    swapTerms   = curveCalibrationSwapTenors( curveObjectAUD6ML_ ); 
         std::vector<double>         parRates    = curveCalibrationSwapParRates( curveObjectAUD6ML_ );
-        MLIB_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )
+        AQ_REQUIRE( swapTerms.size() == parRates.size(), "Inconsistent Calibration Data: Inconsistent Number of Swap Terms and Par Rates" )
 
         // Reprice Calibration Instruments
         const double tolerance = 1e-6;
@@ -116,7 +116,7 @@ namespace google_test
             }
             
             // Use the BuildSwaptradeFromGenerator Helpers to Create the Swap from the Generator
-            const std::string swapName                  = "AUD6ML_Swap" + MLIB_TO_STRING_FROM_SIZE_T( i );
+            const std::string swapName                  = "AUD6ML_Swap" + AQ_TO_STRING_FROM_SIZE_T( i );
             const std::string swapGenerator             = "AUD_6ML";
             const etrading::LabelValueBlock curveLVB    = etrading::fromStringToLVB("AUDYC");
 

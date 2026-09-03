@@ -691,7 +691,7 @@ const int SOME_ERROR_CODE = 2;
 #define STD  "STD"
 
 // NODATA
-#define MLIB_NO_DATA  "NO_DATA"
+#define AQ_NO_DATA  "NO_DATA"
 
 struct MAIndexData
 {

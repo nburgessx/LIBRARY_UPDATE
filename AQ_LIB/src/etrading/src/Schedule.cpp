@@ -203,8 +203,8 @@ namespace etrading
 
   		const std::string inputLVB = "bespokeScheduleProperties";
 
-		MLIB_REQUIRE(bespokeScheduleProperties.size() > 0, "bespokeScheduleProperties cannot be empty.");
-		MLIB_REQUIRE(cashflowLVBs.size() > 0, "Cashflows cannot be empty.");
+		AQ_REQUIRE(bespokeScheduleProperties.size() > 0, "bespokeScheduleProperties cannot be empty.");
+		AQ_REQUIRE(cashflowLVBs.size() > 0, "Cashflows cannot be empty.");
 
 		switch (bespokeScheduleType)
 		{
@@ -266,11 +266,11 @@ namespace etrading
 		{
 			// fixingbusinessDayAdj_ is required to get the floatRates
 			auto fixingbusinessDayAdjStr = bespokeScheduleProperties.getOptionalValueAsString(IRS_KEY::FIXINGBUSINESSDAYADJUSTMENT, toString(accrualbusinessDayAdj_));
-			MLIB_REQUIRE(!fixingbusinessDayAdjStr.empty(), "FixingBusinessDayAdjustment cannot be empty.");
+			AQ_REQUIRE(!fixingbusinessDayAdjStr.empty(), "FixingBusinessDayAdjustment cannot be empty.");
 			fixingbusinessDayAdj_ = toBusinessDayAdjustmentEnum(fixingbusinessDayAdjStr);
 
 			fixingCalendar_ = bespokeScheduleProperties.getOptionalValueAsLAString(IRS_KEY::FIXINGCALENDAR, accrualCalendar_.getCString());
-			MLIB_REQUIRE(fixingCalendar_.size() > 0, "FixingCalendar cannot be empty.");
+			AQ_REQUIRE(fixingCalendar_.size() > 0, "FixingCalendar cannot be empty.");
 
 			defaultFxFixingbusinessDayAdj = fixingbusinessDayAdj_;
 			defaultFxFixingCalendar = fixingCalendar_;
@@ -286,7 +286,7 @@ namespace etrading
 
 		//Get first notional as the schedule initial notional, so that the notional exchange can have the correct value
 		notional_ = cashflowLVBs.at(0).getOptionalValueAsDouble(IRS_KEY::NOTIONAL, std::numeric_limits<double>::quiet_NaN());
-		MLIB_REQUIRE(!boost::math::isnan(notional_), "Notional cannot be empty.");
+		AQ_REQUIRE(!boost::math::isnan(notional_), "Notional cannot be empty.");
 
 		populateNotionalAndPaymentFreqEnum();
 
@@ -729,7 +729,7 @@ namespace etrading
 		// For bespoke schedule, the accrualStartDate_ is not provided
 		if (accrualStartDate_.size() == 0)
 		{
-			MLIB_REQUIRE(cashflows_.size() > 0, "Must have at least one cashflow.");
+			AQ_REQUIRE(cashflows_.size() > 0, "Must have at least one cashflow.");
 			LADate effectiveDt = cashflows_.front()->getAccrualStartDate();
 
 			return effectiveDt;
@@ -751,7 +751,7 @@ namespace etrading
 		// For bespoke schedule, the accrualEndDateOrTenor_ is not provided
 		if (accrualEndDateOrTenor_.size() == 0)
 		{
-			MLIB_REQUIRE(cashflows_.size() > 0, "Must have at least one cashflow.");
+			AQ_REQUIRE(cashflows_.size() > 0, "Must have at least one cashflow.");
 			const LADate maturityDt = cashflows_.back()->getAccrualEndDate();
 
 			return maturityDt;
@@ -1052,7 +1052,7 @@ namespace etrading
 
     bool Schedule::isAccrualFreqLessThanPaymentFreq() const
     {
-		MLIB_REQUIRE( (accrualFrequency_ != NONE_FREQUENCY && paymentFrequency_ != NONE_FREQUENCY), "accrualFreq and paymentFreq cannot be empty.");
+		AQ_REQUIRE( (accrualFrequency_ != NONE_FREQUENCY && paymentFrequency_ != NONE_FREQUENCY), "accrualFreq and paymentFreq cannot be empty.");
 
         auto smaller = getFrequencyNumber(accrualFrequency_) < getFrequencyNumber(paymentFrequency_);
         return smaller;
@@ -1242,41 +1242,41 @@ namespace etrading
 		auto allCashflows = getAllCashflows();
 		size_t cashflowSize = allCashflows.size();
 
-		MLIB_REQUIRE(cashflowSize != 0, "Cashflows cannot be empty.");
+		AQ_REQUIRE(cashflowSize != 0, "Cashflows cannot be empty.");
 
 		//1) Headers
 		if (showColumnHeaders)
 		{
 			//Float Schedule
-			MLIB_PUSH_BACK_IF(headers, toString(FIXING_DATE_HEADER), includeFixingDate);
-			MLIB_PUSH_BACK_IF(headers, toString(FIXING_END_DATE_HEADER), includeFixingEndDate);
+			AQ_PUSH_BACK_IF(headers, toString(FIXING_DATE_HEADER), includeFixingDate);
+			AQ_PUSH_BACK_IF(headers, toString(FIXING_END_DATE_HEADER), includeFixingEndDate);
 
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_START_HEADER), includeAccrualStart);
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_END_HEADER), includeAccrualEnd);
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_DAYS_HEADER), includeAccrualDays);
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_YEAR_FRACTIONS_HEADER), includeAccrualYearFraction);
-			MLIB_PUSH_BACK_IF(headers, toString(PAYMENT_DATE_HEADER), includePaymentDate);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_START_HEADER), includeAccrualStart);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_END_HEADER), includeAccrualEnd);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_DAYS_HEADER), includeAccrualDays);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_YEAR_FRACTIONS_HEADER), includeAccrualYearFraction);
+			AQ_PUSH_BACK_IF(headers, toString(PAYMENT_DATE_HEADER), includePaymentDate);
 
-			MLIB_PUSH_BACK_IF(headers, toString(AMOUNT_HEADER), includeAmount);
-			MLIB_PUSH_BACK_IF(headers, toString(PAY_RECEIVE_HEADER), includePayReceive);
+			AQ_PUSH_BACK_IF(headers, toString(AMOUNT_HEADER), includeAmount);
+			AQ_PUSH_BACK_IF(headers, toString(PAY_RECEIVE_HEADER), includePayReceive);
 
-			MLIB_PUSH_BACK_IF(headers, toString(NOTIONAL_HEADER), includeNotional);
+			AQ_PUSH_BACK_IF(headers, toString(NOTIONAL_HEADER), includeNotional);
 			
 			// For FRA Schedule
-			MLIB_PUSH_BACK_IF(headers, toString(STRIKE_RATE_HEADER), includeSrikeRate);
+			AQ_PUSH_BACK_IF(headers, toString(STRIKE_RATE_HEADER), includeSrikeRate);
 
-			MLIB_PUSH_BACK_IF(headers, toString(NOTIONAL_EXCHANGE_HEADER), includeNotionalExchange);
-			MLIB_PUSH_BACK_IF(headers, toString(LEVERAGE_HEADER), includeLeverage);
+			AQ_PUSH_BACK_IF(headers, toString(NOTIONAL_EXCHANGE_HEADER), includeNotionalExchange);
+			AQ_PUSH_BACK_IF(headers, toString(LEVERAGE_HEADER), includeLeverage);
 
 			//For Premium Schedule
-			MLIB_PUSH_BACK_IF(headers, toString(CDS_SPREAD_HEADER), includeCdsSpread);
+			AQ_PUSH_BACK_IF(headers, toString(CDS_SPREAD_HEADER), includeCdsSpread);
 
-			MLIB_PUSH_BACK_IF(headers, toString(FIXED_RATE_HEADER), includeFixedRate);
+			AQ_PUSH_BACK_IF(headers, toString(FIXED_RATE_HEADER), includeFixedRate);
 
-			MLIB_PUSH_BACK_IF(headers, toString(COUPON_MULTIPLIER_HEADER), includeCouponMultiplier);
-			MLIB_PUSH_BACK_IF(headers, toString(FLOAT_SPREAD_HEADER), includeSpread);
-			MLIB_PUSH_BACK_IF(headers, toString(ACCRUAL_DAYCOUNT_HEADER), includeAccrualDaycount);
-			MLIB_PUSH_BACK_IF(headers, toString(FORECAST_CURVE_HEADER), includeForecastCurve);
+			AQ_PUSH_BACK_IF(headers, toString(COUPON_MULTIPLIER_HEADER), includeCouponMultiplier);
+			AQ_PUSH_BACK_IF(headers, toString(FLOAT_SPREAD_HEADER), includeSpread);
+			AQ_PUSH_BACK_IF(headers, toString(ACCRUAL_DAYCOUNT_HEADER), includeAccrualDaycount);
+			AQ_PUSH_BACK_IF(headers, toString(FORECAST_CURVE_HEADER), includeForecastCurve);
 
 		}
 
@@ -1293,42 +1293,42 @@ namespace etrading
 
 			auto cashflow = allCashflows[i];
 
-			MLIB_PUSH_BACK_DATE_IF(body, cashflow->getFixingDate(), includeFixingDate, convertDatesToExcelFormat);
-			MLIB_PUSH_BACK_DATE_IF(body, cashflow->getFixingEndDate(), includeFixingEndDate, convertDatesToExcelFormat);
+			AQ_PUSH_BACK_DATE_IF(body, cashflow->getFixingDate(), includeFixingDate, convertDatesToExcelFormat);
+			AQ_PUSH_BACK_DATE_IF(body, cashflow->getFixingEndDate(), includeFixingEndDate, convertDatesToExcelFormat);
 
-			MLIB_PUSH_BACK_DATE_IF(body, cashflow->getAccrualStartDate(), includeAccrualStart, convertDatesToExcelFormat);
-			MLIB_PUSH_BACK_DATE_IF(body, cashflow->getAccrualEndDate(), includeAccrualEnd, convertDatesToExcelFormat);
+			AQ_PUSH_BACK_DATE_IF(body, cashflow->getAccrualStartDate(), includeAccrualStart, convertDatesToExcelFormat);
+			AQ_PUSH_BACK_DATE_IF(body, cashflow->getAccrualEndDate(), includeAccrualEnd, convertDatesToExcelFormat);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->isUpfrontCashflow() ? std::numeric_limits<double>::quiet_NaN() : cashflow->getAccrualDays(), includeAccrualDays);
+			AQ_PUSH_BACK_IF(body, cashflow->isUpfrontCashflow() ? std::numeric_limits<double>::quiet_NaN() : cashflow->getAccrualDays(), includeAccrualDays);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->getAccrualYearFraction(), includeAccrualYearFraction);
+			AQ_PUSH_BACK_IF(body, cashflow->getAccrualYearFraction(), includeAccrualYearFraction);
 
-			MLIB_PUSH_BACK_DATE_IF(body, cashflow->getPaymentDate(), includePaymentDate, convertDatesToExcelFormat);
+			AQ_PUSH_BACK_DATE_IF(body, cashflow->getPaymentDate(), includePaymentDate, convertDatesToExcelFormat);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->getAmount(), includeAmount);
-			MLIB_PUSH_BACK_IF(body, toString(cashflow->getPayReceive()), includePayReceive);
+			AQ_PUSH_BACK_IF(body, cashflow->getAmount(), includeAmount);
+			AQ_PUSH_BACK_IF(body, toString(cashflow->getPayReceive()), includePayReceive);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->getNotional(), includeNotional);
+			AQ_PUSH_BACK_IF(body, cashflow->getNotional(), includeNotional);
 
 			// For FRA
-			MLIB_PUSH_BACK_IF(body, cashflow->getFixedRate(), includeSrikeRate);
+			AQ_PUSH_BACK_IF(body, cashflow->getFixedRate(), includeSrikeRate);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->getNotionalExchange(), includeNotionalExchange);
-			MLIB_PUSH_BACK_IF(body, cashflow->getLeverage(), includeLeverage);
+			AQ_PUSH_BACK_IF(body, cashflow->getNotionalExchange(), includeNotionalExchange);
+			AQ_PUSH_BACK_IF(body, cashflow->getLeverage(), includeLeverage);
 
 			//For Premium Schedule
-			MLIB_PUSH_BACK_IF(body, cashflow->getCdsSpread(), includeCdsSpread);
+			AQ_PUSH_BACK_IF(body, cashflow->getCdsSpread(), includeCdsSpread);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->getFixedRate(), includeFixedRate);
+			AQ_PUSH_BACK_IF(body, cashflow->getFixedRate(), includeFixedRate);
 
-			MLIB_PUSH_BACK_IF(body, cashflow->getCouponMultiplier(), includeCouponMultiplier);
-			MLIB_PUSH_BACK_IF(body, cashflow->getSpread(), includeSpread);
+			AQ_PUSH_BACK_IF(body, cashflow->getCouponMultiplier(), includeCouponMultiplier);
+			AQ_PUSH_BACK_IF(body, cashflow->getSpread(), includeSpread);
 
 			// Bespoked cashflow fields
 
 			auto bespokeInfo = cashflow->bespokeInfo();
-			MLIB_PUSH_BACK_IF(body, toString(bespokeInfo.accrualDaycount), includeAccrualDaycount);
-			MLIB_PUSH_BACK_IF(body, bespokeInfo.forecastCurve, includeForecastCurve);
+			AQ_PUSH_BACK_IF(body, toString(bespokeInfo.accrualDaycount), includeAccrualDaycount);
+			AQ_PUSH_BACK_IF(body, bespokeInfo.forecastCurve, includeForecastCurve);
 
 			bodyBlock.push_back(body);
 		}
@@ -1540,7 +1540,7 @@ namespace etrading
         // Initialize to false
         isIrregularStub_ = false;
 
-        MLIB_REQUIRE( !cashflows_.empty(), "Schedule Error - No cashflows to evaluate." )
+        AQ_REQUIRE( !cashflows_.empty(), "Schedule Error - No cashflows to evaluate." )
 
         if (firstStub_.size() != 0 || lastStub_.size() != 0)
         {

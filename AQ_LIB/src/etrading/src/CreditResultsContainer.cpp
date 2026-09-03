@@ -90,21 +90,21 @@ namespace etrading
     // Method to get the Credit Results Shared Pointer
     std::shared_ptr<CreditResults> CreditResultsContainer::getCreditResults( const std::string & creditHandle ) const
     {
-		MLIB_REQUIRE( isEnabledCreditResults(), "Credit Results have been Disabled" )
+		AQ_REQUIRE( isEnabledCreditResults(), "Credit Results have been Disabled" )
 
         // Mutex Required for Thread-Safety - Results can get deleted or overwritten
         boost::shared_lock<boost::shared_mutex> lock( resultsAccess_ );
 
         std::string searchKey( creditHandle );
         auto it = creditResultsContainer_.find( searchKey );
-        MLIB_REQUIRE( it != creditResultsContainer_.end(), "Credit Handle '" + creditHandle + "' does not exist" )
+        AQ_REQUIRE( it != creditResultsContainer_.end(), "Credit Handle '" + creditHandle + "' does not exist" )
         return it->second;
     }
     
     // Method to add a credit results object to the credit results container/cache
     void CreditResultsContainer::addCreditResults( const std::string & creditHandle, std::shared_ptr<CreditResults> creditResults )
     {
-		MLIB_REQUIRE( isEnabledCreditResults(), "Credit Results have been Disabled" )
+		AQ_REQUIRE( isEnabledCreditResults(), "Credit Results have been Disabled" )
 
         // Mutex Required to Write - Exclusive Access via unique_lock
         boost::unique_lock<boost::shared_mutex> uniqueLock( resultsAccess_ );

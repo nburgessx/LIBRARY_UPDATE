@@ -55,21 +55,21 @@ namespace etrading
     // Method to get the Swap Results Shared Pointer
     std::shared_ptr<SwapResults> SwapResultsContainer::getSwapResults( const std::string & swapHandle ) const
     {
-		MLIB_REQUIRE( isEnabledSwapResults(), "Swap Results have been Disabled" )
+		AQ_REQUIRE( isEnabledSwapResults(), "Swap Results have been Disabled" )
 
         // Mutex Required for Thread-Safety - Results can get deleted or overwritten
         boost::shared_lock<boost::shared_mutex> lock( resultsAccess_ );
 
         std::string searchKey( swapHandle );
         auto it = swapResultsContainer_.find(searchKey);
-        MLIB_REQUIRE( it != swapResultsContainer_.end(), "Swap Handle '" + swapHandle + "' does not exist" )
+        AQ_REQUIRE( it != swapResultsContainer_.end(), "Swap Handle '" + swapHandle + "' does not exist" )
         return it->second;
     }
     
     // Method to add a swap results object to the swap results container/cache
     void SwapResultsContainer::addSwapResults( const std::string & swapHandle, std::shared_ptr<SwapResults> swapResults )
     {
-		MLIB_REQUIRE( isEnabledSwapResults(), "Swap Results have been Disabled" )
+		AQ_REQUIRE( isEnabledSwapResults(), "Swap Results have been Disabled" )
 
         // Mutex Required to Write - Exclusive Access via unique_lock
         boost::unique_lock<boost::shared_mutex> uniqueLock( resultsAccess_ );

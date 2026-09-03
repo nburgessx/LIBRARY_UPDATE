@@ -8,7 +8,7 @@
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"
 #include "ResultsProcessor.h"
-#include "DataUtilities.h"	// For MLIB_TO_STRING macros
+#include "DataUtilities.h"	// For AQ_TO_STRING macros
 
 #include <sstream>
 #include <boost/range/irange.hpp>
@@ -613,7 +613,7 @@ namespace google_test
 		const size_t nRows = cdsMarketData.size();
 		for (size_t row = 0; row < nRows; row++ )
 		{
-			std::string filename = std::string( CDS_REPRICE_PREFIX )  + MLIB_TO_STRING_FROM_SIZE_T(row) + ".csv";
+			std::string filename = std::string( CDS_REPRICE_PREFIX )  + AQ_TO_STRING_FROM_SIZE_T(row) + ".csv";
 			std::string cdsName = createLWOCreditDefaultSwapFromFileName( filename.c_str() );
 
 			LAString premiumLegName;

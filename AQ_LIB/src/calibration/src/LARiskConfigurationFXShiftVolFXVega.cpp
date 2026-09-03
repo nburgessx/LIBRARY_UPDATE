@@ -119,7 +119,7 @@ LARiskConfigurationFXShiftVolFXVega::createVolatilityEntity(const LAString &fx, 
 		shiftVal = getScenario2ShiftValue(key_fx);
 	}
 	// dataout
-	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	{
 		param.isOutPut = true;
 	}
@@ -276,9 +276,9 @@ LARiskConfigurationFXShiftVolFXVega::getBucketGridTerm(const LAString &fx) const
 								FX_KEY_RISK_FRONT_VOL_FXSHIFTFXVEGA_BUCKET_GRID_TERM);
 	LAStringVector BucketTerm = strBucketGrid.toToken(MULTI_STATIC_DATA_DELIMITER);
 	BucketTerm[0].toUpper();
-	if (BucketTerm[0] == "NONE" || BucketTerm[0] == MLIB_NO_DATA)
+	if (BucketTerm[0] == "NONE" || BucketTerm[0] == AQ_NO_DATA)
 	{
-		ret.push_back(MLIB_NO_DATA);
+		ret.push_back(AQ_NO_DATA);
 		return ret;
 	}
 	else
@@ -665,7 +665,7 @@ LARiskConfigurationFXShiftVolFXVega::getBaseCoefficient(const LAString &ccy) con
 //	if(isGridSensitivity(ccy))
 //	{
 //		LAStringVector bucketterm = getBucketGridTerm(ccy);
-//		if (bucketterm[0] != MLIB_NO_DATA)
+//		if (bucketterm[0] != AQ_NO_DATA)
 //			num += bucketterm.size();
 //		else
 //			num += getGridTerm(ccy).size();
@@ -783,7 +783,7 @@ LARiskConfigurationFXShiftVolFXVega::createBaseScenarioEntity(const LAString &cc
 	//paramvol.refName.push_back(LAMarketData::getCalibDataName(PV, LAMarketData::getYieldDataName(objPool, paramvol.refName.back())));
 
 	//// dataout
-	//if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+	//if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 	//{
 	//	paramvol.isOutPut = true;
 	//}
@@ -826,7 +826,7 @@ LARiskConfigurationFXShiftVolFXVega::isRiskCurrencyMode(const LAString &fx) cons
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(fxKey.toLower() + 
 													FX_KEY_RISK_FRONT_VOL_FXSHIFTFXVEGA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);

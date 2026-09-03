@@ -31,7 +31,7 @@ namespace etrading
         currency_ = toCCYEnum( marketDataLVB.getOptionalValueAsLAString( IRS_KEY::CURRENCY ).getCString() );
 		if ( currency_ == NO_CCY )
         {
-            MLIB_THROW( "No currency specified for swap leg" );
+            AQ_THROW( "No currency specified for swap leg" );
         }
 
         valuationCurrency_ = toCCYEnum( marketDataLVB.getOptionalValueAsLAString( IRS_KEY::VALUATION_CURRENCY).getCString() );
@@ -59,11 +59,11 @@ namespace etrading
 
         if ( currency_ == NO_CCY )
         {
-            MLIB_THROW( "No currency specified for swap leg" );
+            AQ_THROW( "No currency specified for swap leg" );
         }
         else if ( curveCurrency != currency_ )
         {
-    	    MLIB_THROW( "Invalid curve currency: Trade currency is " + toString( currency_ ) + ", curve currency is " + toString( curveCurrency) );
+    	    AQ_THROW( "Invalid curve currency: Trade currency is " + toString( currency_ ) + ", curve currency is " + toString( curveCurrency) );
         }
 
         if (valuationCurrency_ == NO_CCY)

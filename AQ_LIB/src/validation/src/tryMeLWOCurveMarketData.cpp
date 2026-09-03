@@ -35,8 +35,8 @@ namespace validation_api
 		size_t nColumnHeaders   = marketDataKeys.size();
         size_t nDataColumns     = infoBlocks.size();
 		
-        MLIB_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided" )
-        MLIB_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " +  std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " +  std::to_string(static_cast<long long>(nDataColumns)) )
+        AQ_REQUIRE( nDataColumns > 0, "Invalid InfoBlock Data: Empty InfoBlock - No data provided" )
+        AQ_REQUIRE( nColumnHeaders == nDataColumns, "Invalid InfoBlock Data: Number of Data Column Headers " +  std::to_string(static_cast<long long>(nColumnHeaders)) + " does not match the actual number of Data Columns " +  std::to_string(static_cast<long long>(nDataColumns)) )
         
         // TODO: JSONInfoBlocks should not be here move below the valiation_api
         // Clean Data - Remove Blanks
@@ -67,7 +67,7 @@ namespace validation_api
             return ( marketDataKey.empty() || marketDataKey == "" );
         } );
 
-        MLIB_REQUIRE( !hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString( marketDataKeys ) )
+        AQ_REQUIRE( !hasAnEmptyName, "Invalid InfoBlock: Invalid Data Column Header - One of the Column Names is empty or invalid " + etrading::containerAsString( marketDataKeys ) )
 
 		// Verify that the supplied marketDataTypes match the CurveMarketDataEnum
 		std::set<etrading::CurveMarketDataEnum> enumSet;
@@ -155,7 +155,7 @@ namespace validation_api
         
         auto& env = etrading::Environment::defaultEnv();
         auto curveObject = env.accessObject<etrading::SingleCurveObject>( objectName );
-        MLIB_REQUIRE( curveObject, "Curve " + objectName + " does not exist" )
+        AQ_REQUIRE( curveObject, "Curve " + objectName + " does not exist" )
 
         // Get Market Data, Clear Existing Bumps then Apply New Bump
 		auto curveMarketData = curveObject->getCurveMarketDataObj();
@@ -210,7 +210,7 @@ namespace validation_api
         
         auto& env = etrading::Environment::defaultEnv();
         auto curveObject = env.accessObject<etrading::SingleCurveObject>( objectName );
-        MLIB_REQUIRE( curveObject, "Curve " + objectName + " does not exist" )
+        AQ_REQUIRE( curveObject, "Curve " + objectName + " does not exist" )
 
         // Bump Market Data
 		auto curveMarketData = curveObject->getCurveMarketDataObj();
@@ -265,7 +265,7 @@ namespace validation_api
 
         auto& env = etrading::Environment::defaultEnv();
         auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( curveObjectName );
-        MLIB_REQUIRE( singleCurveObject, "LWO Curve " + curveObjectName + " does not exist" )
+        AQ_REQUIRE( singleCurveObject, "LWO Curve " + curveObjectName + " does not exist" )
 
 		// Attempt to retrieve LWOCurveMarketData object from the LWO Cache
 		auto curveMarketData = singleCurveObject->getCurveMarketDataObj();
@@ -295,7 +295,7 @@ namespace validation_api
 
         auto& env = etrading::Environment::defaultEnv();
         auto singleCurveObject = env.accessObject<etrading::SingleCurveObject>( curveObjectName );
-        MLIB_REQUIRE( singleCurveObject, "LWO Curve " + curveObjectName + " does not exist" )
+        AQ_REQUIRE( singleCurveObject, "LWO Curve " + curveObjectName + " does not exist" )
 
 		// Attempt to retrieve LWOCurveMarketData object from the LWO Cache
 		auto curveMarketData = singleCurveObject->getCurveMarketDataObj();

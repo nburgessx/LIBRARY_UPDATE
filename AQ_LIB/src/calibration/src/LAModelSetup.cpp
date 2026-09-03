@@ -413,7 +413,7 @@ setUpCalibPreparation(LADataInstance &dataInstance, const LAString& fx)
 	tmpFX.toLower();
 	// set asof
 	LAString asofStr = LACoreDataService::getContext(CONTEXT_KEY_ASOFDATE);
-	if (asofStr == MLIB_NO_DATA)
+	if (asofStr == AQ_NO_DATA)
 	{
 		LACoreDataService::setContext(CONTEXT_KEY_ASOFDATE, "19000101");
 	}

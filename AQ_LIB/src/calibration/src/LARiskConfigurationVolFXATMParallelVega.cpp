@@ -112,7 +112,7 @@ LARiskConfigurationVolFXATMParallelVega::createVolatilityEntity(const LAString &
 		}
 
 		// dataout
-		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != MLIB_NO_DATA)
+		if (LACoreDataService::getContext(ARG_KEY_DATAOUT) != AQ_NO_DATA)
 		{
 			param.isOutPut = true;
 		}
@@ -274,7 +274,7 @@ LARiskConfigurationVolFXATMParallelVega::isRiskCurrencyMode(const LAString &fx) 
 	//if MA_NODATA return false;
 	LAString proprslt = mpRiskStaticData->getStaticData(tmpCurrency.toLower() + 
 													FX_KEY_RISK_OFFICIAL_VOL_ATMPARALLELVEGA_ISRISKCURRENCYMODE);
-	if (proprslt == MLIB_NO_DATA)
+	if (proprslt == AQ_NO_DATA)
 		return false;
 	
 	return convertBoolFromStr(proprslt);

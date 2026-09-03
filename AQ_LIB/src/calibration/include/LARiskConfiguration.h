@@ -137,13 +137,13 @@ protected:
 	virtual  LAString  getOperator1(void) const;	
 	//==============================================
 	// get operator2
-	virtual  LAString  getOperator2(void) const { return MLIB_NO_DATA; };
+	virtual  LAString  getOperator2(void) const { return AQ_NO_DATA; };
 	//==============================================
 	// get coefficient1
 	virtual  LAString  getCoefficient1(const LAString &ccy) const;
 	//==============================================
 	// get coefficient2
-	virtual  LAString  getCoefficient2(const LAString &ccy) const { (void)ccy; return MLIB_NO_DATA; };	
+	virtual  LAString  getCoefficient2(const LAString &ccy) const { (void)ccy; return AQ_NO_DATA; };	
 	//==============================================
 	// get outputname1
 	virtual  LAString  getOutPutName1(const LAString &ccy, int index) const { (void)index; return getOutPutName1(ccy);}
@@ -155,7 +155,7 @@ protected:
 	virtual  LAString  getOutPutName1(const LAString &ccy) const = 0;
 	//==============================================
 	// get outputname2
-	virtual  LAString  getOutPutName2(const LAString &ccy) const { (void)ccy; return MLIB_NO_DATA; };
+	virtual  LAString  getOutPutName2(const LAString &ccy) const { (void)ccy; return AQ_NO_DATA; };
 	//==============================================
 	// isgridsensitivity
 	virtual  bool isGridSensitivity(const LAString &ccy) const = 0;
@@ -203,10 +203,10 @@ protected:
 	virtual  LAString  getRiskName(void) const = 0;
 	//==============================================
 	// get deltatype
-	virtual LAString getDeltaType(const LAString &ccy) const { (void)ccy; return MLIB_NO_DATA; };
+	virtual LAString getDeltaType(const LAString &ccy) const { (void)ccy; return AQ_NO_DATA; };
 	//==============================================
 	// get vegatype
-	virtual LAString getVegaType(const LAString &ccy) const { (void)ccy; return MLIB_NO_DATA; };
+	virtual LAString getVegaType(const LAString &ccy) const { (void)ccy; return AQ_NO_DATA; };
 	//==============================================
 	// get grid term
 	virtual std::vector<LAString> getGridTerm(const LAString &ccy) const = 0;
@@ -224,7 +224,7 @@ protected:
 	virtual std::vector<LAString> getGridRangeTerm(const LAString &ccy) const;
 	//==============================================
 	// get property bucket grid term
-	virtual LAString getPropertyBucketGridTerm(const LAString &ccy) const { (void) ccy; return MLIB_NO_DATA;};
+	virtual LAString getPropertyBucketGridTerm(const LAString &ccy) const { (void) ccy; return AQ_NO_DATA;};
 	//==============================================
 	// get waveoperator
 	virtual  LAString  getWaveOperator(void) const;	
@@ -248,7 +248,7 @@ protected:
 	virtual  LAString  getBaseCoefficient(const LAString &ccy) const;
 	//==============================================
 	// get baseshift string
-	virtual  LAString  getBaseShiftStr(const LAString &ccy, int index) const  { (void)ccy, (void)index; return MLIB_NO_DATA; }
+	virtual  LAString  getBaseShiftStr(const LAString &ccy, int index) const  { (void)ccy, (void)index; return AQ_NO_DATA; }
 	//==============================================
 	// get extra target names1
 	virtual  LAStringVector getExtraTargetNames1(const LAString &ccy, LADataInstance &dataInstance) const { (void)ccy; (void)dataInstance; return LAStringVector(0); }
@@ -269,7 +269,7 @@ protected:
 	virtual  std::vector<LAObject *> createBaseExtraScenarioEntity(const LAString &ccy, LADataInstance &dataInstance, int index) const { (void)ccy, (void)dataInstance, (void)index; return std::vector<LAObject *>(0); }
 	//==============================================
 	// get baseoutputname
-	virtual  LAString  getBaseOutPutName(const LAString &ccy, int index) const  { (void)ccy, (void)index; return MLIB_NO_DATA; }
+	virtual  LAString  getBaseOutPutName(const LAString &ccy, int index) const  { (void)ccy, (void)index; return AQ_NO_DATA; }
 	//==============================================
 	// convert str to bool
 	bool convertBoolFromStr(const LAString &str) const;
@@ -290,7 +290,7 @@ protected:
 	bool isRealCalib()  const;
 	//==============================================
 	// get cross base currency
-	virtual  LAString  getCrossBaseCurrency(const LAString &ccy) const{(void)ccy; return MLIB_NO_DATA;}
+	virtual  LAString  getCrossBaseCurrency(const LAString &ccy) const{(void)ccy; return AQ_NO_DATA;}
 	//============================================== 
 	// get get FX shift vals
 	virtual  DoubleArray  getBaseShiftVals(const LAString &ccy) const {(void)ccy; return DoubleArray(1, 0.0);};
@@ -323,7 +323,7 @@ protected:
 	void setUpOptionAnalyticTargetNames(const LAString &ccy, LAObject &e) const;
 	//==============================================
 	// get shift type
-	virtual  LAString  getShiftType(const LAString &fx) const {(void)fx; return MLIB_NO_DATA;};
+	virtual  LAString  getShiftType(const LAString &fx) const {(void)fx; return AQ_NO_DATA;};
 	//==============================================
 	// getShiftValForOptionAnalytic
 	virtual double getShiftValForOptionAnalytic(const LAString &fx) const {(void)fx;return 0.0;};
@@ -407,7 +407,7 @@ protected:
 	virtual  LAStringVector getFXBaseExtraTargetNames(const LAString &ccy, LADataInstance &dataInstance) const;
 	//==============================================
 	// get basis type
-	virtual  LAString getBasisType(const LAString &ccy) const{ (void)ccy; return MLIB_NO_DATA; };
+	virtual  LAString getBasisType(const LAString &ccy) const{ (void)ccy; return AQ_NO_DATA; };
 	//==============================================
 	// get calc type
 	virtual LAString getCalcType(const LAString &ccy, SCENARIONUM scenarioNum, int index) const;

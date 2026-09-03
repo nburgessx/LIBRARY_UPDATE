@@ -39,7 +39,7 @@ double LABivariatePowerCopula::Value(double x, double y)
 double LABivariatePowerCopula::Diff(double x, double y, DiffDimension d)
 {
     double xt1 = pow(x, mTheta1), yt2 = pow(y, mTheta2), term1, term2;
-    double eps = MLIB_MACHINE_EPSILON * 100.0;
+    double eps = AQ_MACHINE_EPSILON * 100.0;
     if (xt1 < eps || yt2 < eps)
     {
         term1 = term2 = 0.0;

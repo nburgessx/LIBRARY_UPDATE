@@ -167,12 +167,12 @@ namespace etrading
 			{
 				if (! boost::iequals(curveCollection, curveCollection_temp) )
 				{ 
-					MLIB_THROW("Curve '" + curveName_temp + "' and curve '" + curveName + "' are from different curve collections.");
+					AQ_THROW("Curve '" + curveName_temp + "' and curve '" + curveName + "' are from different curve collections.");
 				}
 
 				if (! boost::iequals(marketDataAsOfDate.c_str(), marketDataAsOfDate_temp.c_str()) )
 				{
-					MLIB_THROW("Curve '" + curveName_temp + "' and curve '" + curveName + "' have different asof dates.");
+					AQ_THROW("Curve '" + curveName_temp + "' and curve '" + curveName + "' have different asof dates.");
 				}
 			}
 
@@ -204,7 +204,7 @@ namespace etrading
 			}
 			else
 			{
-				MLIB_THROW("'" + curveType + "' is not a valid curve type.Use either OIS, SWAP, or BASIS.");
+				AQ_THROW("'" + curveType + "' is not a valid curve type.Use either OIS, SWAP, or BASIS.");
 			}
 		}
 

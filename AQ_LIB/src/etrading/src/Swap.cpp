@@ -114,7 +114,7 @@ namespace etrading
                 return leg;
             }
         }
-        MLIB_THROW("Swap leg with name '" + legName + "' not found");
+        AQ_THROW("Swap leg with name '" + legName + "' not found");
     }
 
 	LegPtr Swap::getLeg(size_t i) const
@@ -150,7 +150,7 @@ namespace etrading
    
 	double Swap::getFxAsOfDateRate(const LabelValueBlock& valuationSettingsLVB)
 	{
-		MLIB_THROW("getFxAsOfDateRate() not supported.");
+		AQ_THROW("getFxAsOfDateRate() not supported.");
 	}
 
 	double Swap::pv(const LabelValueBlock& valuationSettingsLVB, const LabelValueBlock& fixingTableNames, const LAString& legName)

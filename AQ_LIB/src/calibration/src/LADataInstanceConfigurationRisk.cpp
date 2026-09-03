@@ -70,7 +70,7 @@ LADataInstanceConfigurationRisk::setUpEntityes(LADataInstance &dataInstance) con
 //////////////////////////////////////////////////////////////// for XLL plus
 ///*
 //	LAString riskName = LACoreDataService::getContext(ARG_KEY_OFFICIALRISK);
-//	if (riskName != MLIB_NO_DATA)
+//	if (riskName != AQ_NO_DATA)
 //	{
 //		riskSetUpper = LARiskConfigurationManager::getInstance()->createRiskSetUpper(riskName, true);
 //	}
@@ -87,7 +87,7 @@ LADataInstanceConfigurationRisk::setUpEntityes(LADataInstance &dataInstance) con
 //
 //	bool isOfficial = true;
 //	LAString riskName = LACoreDataService::getContext(ARG_KEY_OFFICIALRISK);
-//	if (riskName == MLIB_NO_DATA)
+//	if (riskName == AQ_NO_DATA)
 //	{
 //		// front risk
 //		isOfficial = false;
@@ -106,7 +106,7 @@ LADataInstanceConfigurationRisk::setUpEntityes(LADataInstance &dataInstance) con
 //	if ( riskSetUpper == NULL )
 //		throw LACoreInvalidData( "riskName is odd! LADataInstanceConfigurationRisk::setUpEntityes", __FILE__, __LINE__ );
 //
-//	if (curveType != MLIB_NO_DATA && curveTypes[0] != "")
+//	if (curveType != AQ_NO_DATA && curveTypes[0] != "")
 //	{
 //		LAStringVector ccyCurves = curveTypes[0].toToken(':');
 //		for (unsigned int i = 0; i < ccyCurves.size(); ++i)
@@ -116,7 +116,7 @@ LADataInstanceConfigurationRisk::setUpEntityes(LADataInstance &dataInstance) con
 //		}
 //	}
 //
-//	if (baseSceNum != MLIB_NO_DATA && baseSceNums[0] != "")
+//	if (baseSceNum != AQ_NO_DATA && baseSceNums[0] != "")
 //	{
 //		LAStringVector ccyBaseSceNums = baseSceNums[0].toToken(':');
 //		for (unsigned int i = 0; i < ccyBaseSceNums.size(); ++i)
@@ -133,7 +133,7 @@ LADataInstanceConfigurationRisk::setUpEntityes(LADataInstance &dataInstance) con
 //	{
 //		risk = risks[i];
 //		riskSetUpper = LARiskConfigurationManager::getInstance()->createRiskSetUpper(risk, isOfficial);
-//		if (curveType != MLIB_NO_DATA && curveTypes.size() > i  && curveTypes[i] != "")
+//		if (curveType != AQ_NO_DATA && curveTypes.size() > i  && curveTypes[i] != "")
 //		{
 //			LAStringVector ccyCurves = curveTypes[i].toToken(':');
 //			for (unsigned int j = 0; j < ccyCurves.size(); ++j)
@@ -143,7 +143,7 @@ LADataInstanceConfigurationRisk::setUpEntityes(LADataInstance &dataInstance) con
 //			}
 //		}
 //
-//		if (baseSceNum != MLIB_NO_DATA && baseSceNums.size() > i && baseSceNums[i] != "")
+//		if (baseSceNum != AQ_NO_DATA && baseSceNums.size() > i && baseSceNums[i] != "")
 //		{
 //			LAStringVector ccyBaseSceNums = baseSceNums[i].toToken(':');
 //			for (unsigned int j = 0; j < ccyBaseSceNums.size(); ++j)
@@ -172,7 +172,7 @@ LADataInstanceConfigurationRisk::setUpRiskEntityes(LADataInstance &dataInstance)
 	LARiskConfiguration *riskSetUpper = 0;
 	bool isOfficial = true;
 	LAString riskName = LACoreDataService::getContext(ARG_KEY_OFFICIALRISK);
-	if (riskName == MLIB_NO_DATA)
+	if (riskName == AQ_NO_DATA)
 	{
 		// front risk
 		isOfficial = false;
@@ -191,7 +191,7 @@ LADataInstanceConfigurationRisk::setUpRiskEntityes(LADataInstance &dataInstance)
 	if ( riskSetUpper == NULL )
 		throw LACoreInvalidData( "riskName is odd! LADataInstanceConfigurationRisk::setUpEntityes", __FILE__, __LINE__ );
 
-	if (curveType != MLIB_NO_DATA && curveTypes[0] != "")
+	if (curveType != AQ_NO_DATA && curveTypes[0] != "")
 	{
 		LAStringVector ccyCurves = curveTypes[0].toToken(':');
 		for (unsigned int i = 0; i < ccyCurves.size(); ++i)
@@ -201,7 +201,7 @@ LADataInstanceConfigurationRisk::setUpRiskEntityes(LADataInstance &dataInstance)
 		}
 	}
 
-	if (baseSceNum != MLIB_NO_DATA && baseSceNums[0] != "")
+	if (baseSceNum != AQ_NO_DATA && baseSceNums[0] != "")
 	{
 		LAStringVector ccyBaseSceNums = baseSceNums[0].toToken(':');
 		for (unsigned int i = 0; i < ccyBaseSceNums.size(); ++i)
@@ -218,7 +218,7 @@ LADataInstanceConfigurationRisk::setUpRiskEntityes(LADataInstance &dataInstance)
 	{
 		risk = risks[i];
 		riskSetUpper = LARiskConfigurationManager::getInstance()->createRiskSetUpper(risk, isOfficial);
-		if (curveType != MLIB_NO_DATA && curveTypes.size() > i  && curveTypes[i] != "")
+		if (curveType != AQ_NO_DATA && curveTypes.size() > i  && curveTypes[i] != "")
 		{
 			LAStringVector ccyCurves = curveTypes[i].toToken(':');
 			for (unsigned int j = 0; j < ccyCurves.size(); ++j)
@@ -228,7 +228,7 @@ LADataInstanceConfigurationRisk::setUpRiskEntityes(LADataInstance &dataInstance)
 			}
 		}
 
-		if (baseSceNum != MLIB_NO_DATA && baseSceNums.size() > i && baseSceNums[i] != "")
+		if (baseSceNum != AQ_NO_DATA && baseSceNums.size() > i && baseSceNums[i] != "")
 		{
 			LAStringVector ccyBaseSceNums = baseSceNums[i].toToken(':');
 			for (unsigned int j = 0; j < ccyBaseSceNums.size(); ++j)

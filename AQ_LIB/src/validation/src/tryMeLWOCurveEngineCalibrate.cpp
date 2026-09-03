@@ -38,14 +38,14 @@ namespace validation_api
 		VALID_EXCEPTION_START
 	
         // LWO Single Curves Populate Curve Results Objects that Conflict with Other Curve Types, so we must clear the Curve Results Cache
-        MLIB_CLEAR_CURVE_RESULTS_CACHE
+        AQ_CLEAR_CURVE_RESULTS_CACHE
 
 		if (curveGeneratorNames.size() != marketDataObjects.size())
 		{
 			std::string error = (boost::format("#Error: Number of curve generators (%i) does not match number of market data objects (%i).")
 				% curveGeneratorNames.size()
 				% marketDataObjects.size()).str();
-			MLIB_THROW(error);
+			AQ_THROW(error);
 		}
 
 		// Recording of inputs for playback
@@ -64,7 +64,7 @@ namespace validation_api
 		
 		if (curveGeneratorNames.size() == 0 || marketDataObjects.size() == 0)
 		{
-			MLIB_THROW("Please provide at least one set of curve generator and market data to the yield curve engine");
+			AQ_THROW("Please provide at least one set of curve generator and market data to the yield curve engine");
 		}
 
 		// Create the Curve object and store in the cache

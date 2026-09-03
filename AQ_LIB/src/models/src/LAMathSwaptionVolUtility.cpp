@@ -1298,14 +1298,14 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 	auto swapVolSize = marketVol.size();
 
 	//tenor size is the column size of marketVol
-	MLIB_REQUIRE(marketVol.size() > 0 && marketVol[0].size() > 0, "Market Vol Matrix cannot be empty");
+	AQ_REQUIRE(marketVol.size() > 0 && marketVol[0].size() > 0, "Market Vol Matrix cannot be empty");
 	auto tenorSize = marketVol[0][0].size();
 
 	auto expirySize = expiryTerm.size();
 
-	MLIB_REQUIRE(swapVolSize == weight.size(), "Inconsistent Market Data: The number of Swap Vol Objects and Weights must match")
+	AQ_REQUIRE(swapVolSize == weight.size(), "Inconsistent Market Data: The number of Swap Vol Objects and Weights must match")
 
-	MLIB_REQUIRE(swapVolSize == sgn.size(), "Inconsistent Market Data: The number of Swap Vol Objects and Call/Put Sign Indicators must match")
+	AQ_REQUIRE(swapVolSize == sgn.size(), "Inconsistent Market Data: The number of Swap Vol Objects and Call/Put Sign Indicators must match")
 	
 	LAString tmp_approxMethod = approxMethod;
 	LAStringVector stmpvec(tenorSize, tmp_approxMethod.toUpper());
@@ -1315,7 +1315,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 	{
 		if (calibFlgMtx->size() != expirySize || (*calibFlgMtx)[0].size() != tenorSize)
 		{
-			MLIB_THROW("Inconsistent Market Data: The dimension of the calibration and volatility matrices must match")
+			AQ_THROW("Inconsistent Market Data: The dimension of the calibration and volatility matrices must match")
 		}
 	}
 
@@ -1367,10 +1367,10 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 			initValue[2] = nuMat[i][j];
 			initValue[3] = rhoMat[i][j];
 
-			MLIB_THROW_IF( initValue[0] < min_alpha || initValue[0] > max_alpha, "Invalid Alpha Parameter: Must be between " + MLIB_TO_STRING_FROM_DOUBLE(min_alpha) +" and " +  MLIB_TO_STRING_FROM_DOUBLE(max_alpha) )
-			MLIB_THROW_IF( initValue[1] < min_beta || initValue[1] > max_beta, "Invalid Beta Parameter: Must be between " + MLIB_TO_STRING_FROM_DOUBLE(min_beta) +" and " +  MLIB_TO_STRING_FROM_DOUBLE(max_beta) )
-			MLIB_THROW_IF( initValue[2] < min_nu || initValue[2] > max_nu,	"Invalid Alpha Parameter: Must be between " + MLIB_TO_STRING_FROM_DOUBLE(min_nu) +" and " +  MLIB_TO_STRING_FROM_DOUBLE(max_nu) )
-			MLIB_THROW_IF( initValue[3] < min_rho || initValue[3] > max_rho, "Invalid Alpha Parameter: Must be between " + MLIB_TO_STRING_FROM_DOUBLE(min_rho) +" and " +  MLIB_TO_STRING_FROM_DOUBLE(max_rho) )
+			AQ_THROW_IF( initValue[0] < min_alpha || initValue[0] > max_alpha, "Invalid Alpha Parameter: Must be between " + AQ_TO_STRING_FROM_DOUBLE(min_alpha) +" and " +  AQ_TO_STRING_FROM_DOUBLE(max_alpha) )
+			AQ_THROW_IF( initValue[1] < min_beta || initValue[1] > max_beta, "Invalid Beta Parameter: Must be between " + AQ_TO_STRING_FROM_DOUBLE(min_beta) +" and " +  AQ_TO_STRING_FROM_DOUBLE(max_beta) )
+			AQ_THROW_IF( initValue[2] < min_nu || initValue[2] > max_nu,	"Invalid Alpha Parameter: Must be between " + AQ_TO_STRING_FROM_DOUBLE(min_nu) +" and " +  AQ_TO_STRING_FROM_DOUBLE(max_nu) )
+			AQ_THROW_IF( initValue[3] < min_rho || initValue[3] > max_rho, "Invalid Alpha Parameter: Must be between " + AQ_TO_STRING_FROM_DOUBLE(min_rho) +" and " +  AQ_TO_STRING_FROM_DOUBLE(max_rho) )
 				
 			//calibration
 			LAMathSABR* sabr = createSABR(gridApproxMethodMtx[i][j], alphaMat[i][j], betaMat[i][j], nuMat[i][j], rhoMat[i][j], isLognormal);
@@ -1432,7 +1432,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 					{
 						if (!calibFlg[3])
 						{
-							MLIB_THROW("Invalid Market Data: All calibration flags are set to false")
+							AQ_THROW("Invalid Market Data: All calibration flags are set to false")
 						}
 						else x_.push_back(rhoMat[i][j]);
 					}
@@ -1533,7 +1533,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 				delete costfunc;
 				delete sabr;
 
-				MLIB_THROW("Invalid Optimization Method: " + calibMethod + " is not supported. Must be non-linear conjugate gradient, steepest decent, simplex or levenberg-marquardt method")
+				AQ_THROW("Invalid Optimization Method: " + calibMethod + " is not supported. Must be non-linear conjugate gradient, steepest decent, simplex or levenberg-marquardt method")
 			}
 
 			// Set EndCriteria
@@ -1553,7 +1553,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix(DoubleMatrix& alphaMat, DoubleMatr
 				delete costfunc;
 				delete sabr;
 
-				MLIB_THROW ("Solver Failed to Converge to a Solution")
+				AQ_THROW ("Solver Failed to Converge to a Solution")
 			}
 
 			LAQuantLibEndCriteria* endCriteria = new LAQuantLibEndCriteria(maxIteration,
@@ -1627,7 +1627,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrix
 
     LAMathSABRLimiter limiter(sabrLimiter);
 
-    MLIB_THROW_IF(swapVolID.size() != weight.size(), "Invalid Market Data: Number of Swap Vol Objects and Weights does not match")
+    AQ_THROW_IF(swapVolID.size() != weight.size(), "Invalid Market Data: Number of Swap Vol Objects and Weights does not match")
 
 	matirixCheck(dataInstance, alphaID, betaID);
 	matirixCheck(dataInstance, alphaID, nuID);
@@ -1771,15 +1771,15 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 {
 	LAString tmp_target = target;
 	tmp_target.toUpper();
-	MLIB_THROW_IF(tmp_target != "PREMIUM", "Only premium is allowed as a calibration target.")
+	AQ_THROW_IF(tmp_target != "PREMIUM", "Only premium is allowed as a calibration target.")
 	
-	MLIB_THROW_IF(swapVolID.size() != weight.size(), "Invalid Market Data: Number of swap volobjects and weights does not match")
+	AQ_THROW_IF(swapVolID.size() != weight.size(), "Invalid Market Data: Number of swap volobjects and weights does not match")
 
 	IntVector sgn(swapVolID.size(), static_cast<int>(OPTION_SIGN_DUMMY));
 	if (sgn_in.size() > 0)
 	{
 		sgn = sgn_in;
-		MLIB_THROW_IF(swapVolID.size() != sgn.size() ,"Invalid Market Data: Number of swap volobjects and call/put sign indicators do not match")
+		AQ_THROW_IF(swapVolID.size() != sgn.size() ,"Invalid Market Data: Number of swap volobjects and call/put sign indicators do not match")
 	}
 
 	matirixCheck(dataInstance, alphaID, betaID);
@@ -1865,7 +1865,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 		}
 		else
 		{
-			MLIB_THROW("CapletFloorlet Frequency must be 3M (Quarterly) or 6M (Semi-Annual)")
+			AQ_THROW("CapletFloorlet Frequency must be 3M (Quarterly) or 6M (Semi-Annual)")
 		}
 
 		// Set up LAMathYieldCurve for fwdrate, numeraire
@@ -1916,8 +1916,8 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 			}
 			else
 			{
-				MLIB_THROW_IF(expiry[i] != premiumTerms[0][i - num_diffterm], "Terms of SABR parameters must be same as terms of premiums after the minimum premium term.")
-				MLIB_THROW_IF(paramsterm % tenor_num != 0, "Terms of SABR parameters should be multiples of " + tenorPoint )
+				AQ_THROW_IF(expiry[i] != premiumTerms[0][i - num_diffterm], "Terms of SABR parameters must be same as terms of premiums after the minimum premium term.")
+				AQ_THROW_IF(paramsterm % tenor_num != 0, "Terms of SABR parameters should be multiples of " + tenorPoint )
 				paramsterm_calib = 12 * y + m - tenor_num;
 			}
 			paramsterm_month_calib.push_back(LAString(paramsterm_calib) + "M");
@@ -1940,7 +1940,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 				}
 				else
 				{
-					MLIB_THROW("Inconsistent Data: SABR terms data and premium data are inconsistent")
+					AQ_THROW("Inconsistent Data: SABR terms data and premium data are inconsistent")
 				}
 			}
 		}
@@ -2268,7 +2268,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 				delete constraint;
 				delete costfunc;
 
-				MLIB_THROW("Optimization Method: " + calibMethod + " not supported")
+				AQ_THROW("Optimization Method: " + calibMethod + " not supported")
 			}
 
 			// Set EndCriteria
@@ -2284,7 +2284,7 @@ LAMathSwaptionVolUtility::calibrateSABRMatrixCapFloor
 				delete constraint;
 				delete costfunc;
 
-				MLIB_THROW("Solver failed to converge to a solution")
+				AQ_THROW("Solver failed to converge to a solution")
 			}
 			LAQuantLibEndCriteria* endCriteria = new LAQuantLibEndCriteria(maxIteration,
 				maxStationaryStateIteration,
@@ -2395,7 +2395,7 @@ LAMathSwaptionVolUtility::calibrateSABR
 
 	double expiry = LAMathSwaptionVolUtility::getTenorPoint(expiryPoint);
 	
-	MLIB_THROW_IF( vols.size() != weight.size() || vols.size() != strikes.size(), "Inconsistent Market Data: Number of Vols, Weights and Strike must match")
+	AQ_THROW_IF( vols.size() != weight.size() || vols.size() != strikes.size(), "Inconsistent Market Data: Number of Vols, Weights and Strike must match")
 
 	forward = (std::fabs(forward) < eps_SABR) ? eps_SABR : forward;
 	double max_alpha = fabs(forward) < 0.01 ? 0.01 /  fabs(forward) * 5. : 5.;
@@ -2413,10 +2413,10 @@ LAMathSwaptionVolUtility::calibrateSABR
 	initValue[2] = nu;
 	initValue[3] = rho;
 
-	MLIB_THROW_IF( alpha < min_alpha || alpha > max_alpha, "Invalid Alpha Parameter: Must be between " + MLIB_TO_STRING_FROM_DOUBLE(min_alpha) +" and " +  MLIB_TO_STRING_FROM_DOUBLE(max_alpha) )
-	MLIB_THROW_IF( beta < min_beta || beta > max_beta, "Invalid Beta Parameter: Must be between " + MLIB_TO_STRING_FROM_DOUBLE(min_beta) +" and " +  MLIB_TO_STRING_FROM_DOUBLE(max_beta) )
-	MLIB_THROW_IF( nu < min_nu || nu > max_nu,	"Invalid Alpha Parameter: Must be between " + MLIB_TO_STRING_FROM_DOUBLE(min_nu) +" and " +  MLIB_TO_STRING_FROM_DOUBLE(max_nu) )
-	MLIB_THROW_IF( rho < min_rho || rho > max_rho, "Invalid Alpha Parameter: Must be between " + MLIB_TO_STRING_FROM_DOUBLE(min_rho) +" and " +  MLIB_TO_STRING_FROM_DOUBLE(max_rho) )
+	AQ_THROW_IF( alpha < min_alpha || alpha > max_alpha, "Invalid Alpha Parameter: Must be between " + AQ_TO_STRING_FROM_DOUBLE(min_alpha) +" and " +  AQ_TO_STRING_FROM_DOUBLE(max_alpha) )
+	AQ_THROW_IF( beta < min_beta || beta > max_beta, "Invalid Beta Parameter: Must be between " + AQ_TO_STRING_FROM_DOUBLE(min_beta) +" and " +  AQ_TO_STRING_FROM_DOUBLE(max_beta) )
+	AQ_THROW_IF( nu < min_nu || nu > max_nu,	"Invalid Alpha Parameter: Must be between " + AQ_TO_STRING_FROM_DOUBLE(min_nu) +" and " +  AQ_TO_STRING_FROM_DOUBLE(max_nu) )
+	AQ_THROW_IF( rho < min_rho || rho > max_rho, "Invalid Alpha Parameter: Must be between " + AQ_TO_STRING_FROM_DOUBLE(min_rho) +" and " +  AQ_TO_STRING_FROM_DOUBLE(max_rho) )
 
 	const double ATM_VOL = std::numeric_limits<double>::quiet_NaN();
 
@@ -2477,7 +2477,7 @@ LAMathSwaptionVolUtility::calibrateSABR
 			{
 				if(!calibFlg[3])
 				{
-					MLIB_THROW("Invalid Calibration Data: All calibration flags have been set to false")
+					AQ_THROW("Invalid Calibration Data: All calibration flags have been set to false")
 				}
 				else x_.push_back(rho);
 			}
@@ -2577,7 +2577,7 @@ LAMathSwaptionVolUtility::calibrateSABR
 		delete costfunc;
 		delete sabr;
 
-		MLIB_THROW(" Optimization Method: " + calibMethod + " not supported")
+		AQ_THROW(" Optimization Method: " + calibMethod + " not supported")
 	}
 
 	// Set EndCriteria
@@ -2595,7 +2595,7 @@ LAMathSwaptionVolUtility::calibrateSABR
 		delete costfunc;
 		delete sabr;
 
-		MLIB_THROW("Solver Failed to Converge to a Solution")
+		AQ_THROW("Solver Failed to Converge to a Solution")
 	}
 
 	LAQuantLibEndCriteria* endCriteria = new LAQuantLibEndCriteria(maxIteration, 
@@ -2656,7 +2656,7 @@ LAMathSwaptionVolUtility::calibrateSABR
     size_t calibSize = vols.size();
     if( calibSize != weight.size() || calibSize != strikes.size() || limiter.getParamNum() == 0 )
 	{
-        MLIB_THROW("Invalid Market Data: Number of Volatilities, Strikes and Parameters must match")
+        AQ_THROW("Invalid Market Data: Number of Volatilities, Strikes and Parameters must match")
 	}
 
     DoubleArray forward_calib, numeraire_calib, expiry_calib, x(limiter.getParamNum());
@@ -2723,7 +2723,7 @@ LAMathSwaptionVolUtility::calibrateSABRATMFix
 		isCalib = dynamic_cast<const LADataBoolMatrix &>(dh->get()).get();
 		if (isCalib.size() != atmVol.size() || isCalib[0].size() != atmVol[0].size())
 		{
-			MLIB_THROW("Inconsistent Data: Enable Calibration table size does not match ATM Vol table size")
+			AQ_THROW("Inconsistent Data: Enable Calibration table size does not match ATM Vol table size")
 		}
 	}
 
@@ -2745,7 +2745,7 @@ LAMathSwaptionVolUtility::calibrateSABRATMFix
     sabrLimiter[row][1] = "NO";
     LAMathSABRLimiter limiter(sabrLimiter);
 
-    MLIB_THROW_IF( swapVolID.size() != weight.size(), "Inconsistent Data: Number of Vol Objects and Weights must match")
+    AQ_THROW_IF( swapVolID.size() != weight.size(), "Inconsistent Data: Number of Vol Objects and Weights must match")
 
 	matirixCheck(dataInstance, betaID, alphaID);
 	matirixCheck(dataInstance, betaID, nuID);
@@ -3070,7 +3070,7 @@ double LAMathSwaptionVolUtility::calcSABRVol(const double alpha, const double be
 
 double LAMathSwaptionVolUtility::calcSABRParam(const DoubleMatrix& paramMat, const double expiryTerm, const double tenorTerm, const DoubleVector& expiryVec, const DoubleVector& tenorVec)
 {
-	MLIB_REQUIRE(paramMat.size() == expiryVec.size() && paramMat[0].size() == tenorVec.size(), "Size not matched.");
+	AQ_REQUIRE(paramMat.size() == expiryVec.size() && paramMat[0].size() == tenorVec.size(), "Size not matched.");
 
 	LAMathSwaptionMatrix paramMat_(paramMat, expiryVec, tenorVec);
 
@@ -3662,7 +3662,7 @@ LAMathSwaptionVolUtility::createSABR(const LAString& approxMethod, double alpha,
 	}
 	else
 	{
-		MLIB_THROW("Lognormal Vol Calibration Only SUpports Hagan, Antonov and Chaos Displaced Diffusion methods : Method " + approxMethod + " is not supported")
+		AQ_THROW("Lognormal Vol Calibration Only SUpports Hagan, Antonov and Chaos Displaced Diffusion methods : Method " + approxMethod + " is not supported")
 	}
 	return sabr;
 }

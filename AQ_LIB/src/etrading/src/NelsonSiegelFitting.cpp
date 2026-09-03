@@ -18,7 +18,7 @@ namespace etrading
 	{
 		if ( interpolationType_ != NELSON_SIEGEL_INTERPOLATION && interpolationType_ != SVENSSON_INTERPOLATION )
 		{
-			MLIB_THROW( "Incorrect interpolationType. Only NELSONSIEGEL and SVENSSON interpolations are supported. ");
+			AQ_THROW( "Incorrect interpolationType. Only NELSONSIEGEL and SVENSSON interpolations are supported. ");
 		}
 	}
 
@@ -40,7 +40,7 @@ namespace etrading
 		switch ( interpolationType_ )
 		{
 		case NELSON_SIEGEL_INTERPOLATION:
-			MLIB_REQUIRE( modelParams.size() == 4,  "Nelson-Siegel interpolation should have FOUR fitting parameters: Beta0, Beta1, Beta2, Lambda" );
+			AQ_REQUIRE( modelParams.size() == 4,  "Nelson-Siegel interpolation should have FOUR fitting parameters: Beta0, Beta1, Beta2, Lambda" );
 			parameters.beta0_  = modelParams[0];
 			parameters.beta1_  = modelParams[1];
 			parameters.beta2_  = modelParams[2];
@@ -48,7 +48,7 @@ namespace etrading
 			break;
 
 		case SVENSSON_INTERPOLATION:
-			MLIB_REQUIRE( modelParams.size() == 6,  "Svensson interpolation should have SIX fitting parameters: Beta0, Beta1, Beta2, Beta3, Lambda1, Lambda2" );
+			AQ_REQUIRE( modelParams.size() == 6,  "Svensson interpolation should have SIX fitting parameters: Beta0, Beta1, Beta2, Beta3, Lambda1, Lambda2" );
 			parameters.beta0_  = modelParams[0];
 			parameters.beta1_  = modelParams[1];
 			parameters.beta2_  = modelParams[2];
@@ -58,7 +58,7 @@ namespace etrading
 			break;
 
 		default:
-			MLIB_THROW( "Incorrect interpolationType. Only NELSONSIEGEL and SVENSSON interpolations are supported. ");
+			AQ_THROW( "Incorrect interpolationType. Only NELSONSIEGEL and SVENSSON interpolations are supported. ");
 		}
 		
 		const size_t nBonds = bondMaturities_.size();
@@ -109,7 +109,7 @@ namespace etrading
 
 		if ( interpolationType != NELSON_SIEGEL_INTERPOLATION && interpolationType != SVENSSON_INTERPOLATION )
 		{
-			MLIB_THROW( "Incorrect interpolationType. Only NELSONSIEGEL and SVENSSON interpolations are supported. ");
+			AQ_THROW( "Incorrect interpolationType. Only NELSONSIEGEL and SVENSSON interpolations are supported. ");
 		}
 
 		//Set up Cost Function
@@ -117,8 +117,8 @@ namespace etrading
 
 		//Set up Boundary Constraint
 		size_t nExpectedParameters = interpolationType == NELSON_SIEGEL_INTERPOLATION ? 4 : 6;
-		MLIB_REQUIRE( lowerBounds.size() == nExpectedParameters, "Invalid Lower bounds vector size. Require size 4 for Nelson-Siegel and size 6 for Svensson Method.");
-		MLIB_REQUIRE( upperBounds.size() == nExpectedParameters, "Invalid Upper bounds vector size. Require size 4 for Nelson-Siegel and size 6 for Svensson Method.");
+		AQ_REQUIRE( lowerBounds.size() == nExpectedParameters, "Invalid Lower bounds vector size. Require size 4 for Nelson-Siegel and size 6 for Svensson Method.");
+		AQ_REQUIRE( upperBounds.size() == nExpectedParameters, "Invalid Upper bounds vector size. Require size 4 for Nelson-Siegel and size 6 for Svensson Method.");
 
 		// Initialize boundary constraint
 		QuantLib::Array low( nExpectedParameters );
@@ -171,7 +171,7 @@ namespace etrading
 			break;
 
 		default:
-			MLIB_THROW( "Incorrect interpolationType. Only NELSONSIEGEL and SVENSSON interpolations are supported. ");
+			AQ_THROW( "Incorrect interpolationType. Only NELSONSIEGEL and SVENSSON interpolations are supported. ");
 			
 		}
 
@@ -205,7 +205,7 @@ namespace etrading
 			break;
 
 		default:
-			MLIB_THROW( "Incorrect interpolationType. Only NELSONSIEGEL and SVENSSON interpolations are supported. ");
+			AQ_THROW( "Incorrect interpolationType. Only NELSONSIEGEL and SVENSSON interpolations are supported. ");
 			
 		}
 

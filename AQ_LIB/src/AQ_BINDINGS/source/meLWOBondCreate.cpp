@@ -13,7 +13,7 @@
 #include "LACoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "tryMeLWOBond.h"
-#include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros
+#include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
 
 
 /* @brief			swig interface for meLWOBondCreate function
@@ -28,7 +28,7 @@ const std::string meLWOBondCreate( const std::string& bondObjectName,
                                    const SWIG_STRINGMATRIX & scheduleLVB,
                                    const bool validateKeys )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Inputs
 	LAStringMatrix bondLVBAsStringMatrix;
@@ -41,7 +41,7 @@ const std::string meLWOBondCreate( const std::string& bondObjectName,
     std::string result = validation_api::tryMeLWOBondCreate( bondObjectName, bondLVBAsStringMatrix, scheduleLVBAsStringMatrix, validateKeys );
     return result;
     
-    MLIB_API_END
+    AQ_API_END
 }
 
 /* @brief			swig interface for meLWOBondCreateFromGenerator function
@@ -56,7 +56,7 @@ const std::string meLWOBondCreateFromGenerator( const std::string& bondObjectNam
                                                 const SWIG_STRINGMATRIX & bondExpressionLVB,
                                                 const bool validateKeys )
 {
-    MLIB_API_START
+    AQ_API_START
 
     // Marshall Inputs
     LAStringMatrix bondExpressionLVBAsStringMatrix;
@@ -66,5 +66,5 @@ const std::string meLWOBondCreateFromGenerator( const std::string& bondObjectNam
     std::string result = validation_api::tryMeLWOBondCreateFromGenerator( bondObjectName, bondGeneratorName, bondExpressionLVBAsStringMatrix, validateKeys );
     return result;
 
-    MLIB_API_END
+    AQ_API_END
 }

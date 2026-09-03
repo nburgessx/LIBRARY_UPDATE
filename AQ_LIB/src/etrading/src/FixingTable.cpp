@@ -69,7 +69,7 @@ namespace etrading
 			break;
 		}
 		default:
-			MLIB_THROW( "Unsupported FixingTableType" + toString( fixingTableType ) );
+			AQ_THROW( "Unsupported FixingTableType" + toString( fixingTableType ) );
 		}
 
 	};
@@ -258,13 +258,13 @@ namespace etrading
 		auto keysInput = parameterLVB.getKeys();
 		auto keys = parameterLVB_.getKeys();
 
-		MLIB_REQUIRE( keysInput.size() == keys.size(), "The specified parameterLVB does not match the parameterLVB in the Fixing Table: Different number of keys." );
+		AQ_REQUIRE( keysInput.size() == keys.size(), "The specified parameterLVB does not match the parameterLVB in the Fixing Table: Different number of keys." );
 
 		for (auto key : keys)
 		{
 			auto valueInternal	= parameterLVB_.getCompulsoryValueAsString( key );
 			auto valueInput		= parameterLVB.getCompulsoryValueAsString( key );
-			MLIB_REQUIRE( valueInput == valueInternal, "Invalid parameterLVB. Parameter '" + key + "' does not match" );
+			AQ_REQUIRE( valueInput == valueInternal, "Invalid parameterLVB. Parameter '" + key + "' does not match" );
 		}
 
 		std::vector<double> results;

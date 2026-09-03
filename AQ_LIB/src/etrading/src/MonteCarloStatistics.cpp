@@ -41,9 +41,9 @@ namespace etrading
 		}
 		else
 		{
-			MLIB_REQUIRE( numThreads_ > 0, "MonteCarloStatistics object has not been initialized ");
+			AQ_REQUIRE( numThreads_ > 0, "MonteCarloStatistics object has not been initialized ");
 
-			MLIB_THROW( "Invalid threadId passed into MonteCarloStatistics::addOneResult()" );
+			AQ_THROW( "Invalid threadId passed into MonteCarloStatistics::addOneResult()" );
 		}
 	}
 
@@ -53,7 +53,7 @@ namespace etrading
 	*/
 	double MonteCarloStatistics::getMean() const
 	{
-		MLIB_REQUIRE( numThreads_ > 0, "MonteCarloStatistics object has not been initialized ");
+		AQ_REQUIRE( numThreads_ > 0, "MonteCarloStatistics object has not been initialized ");
 
 		size_t numResults = 0;
 		double sum = 0.0;
