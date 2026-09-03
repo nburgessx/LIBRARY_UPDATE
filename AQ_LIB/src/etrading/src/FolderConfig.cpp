@@ -14,11 +14,11 @@ namespace
     // ====================================================================================================================
 
 	// 	note that Path here is set to mean Path + File Name
-    const LAString CONFIG_FILE_PATH( "D:\\appl\\irsvr_excel.conf" );
-    const LAString DEFAULT_CBSCHEDULE_PATH( "S:\\mizuho\\fig\\fi_rstac\\mlibir\\configration\\CBSchedule.csv" );
-    const LAString DEFAULT_CALENDAR_PATH( "S:\\mizuho\\fig\\fi_rstac\\mlibir\\configration\\Calendar.csv" );
-    const LAString DEFAULT_IRPROP_PATH( "S:\\mizuho\\fig\\fi_rstac\\mlibir\\configration\\ir.properties" );
-    const LAString DEFAULT_CALIBPROP_PATH( "S:\\mizuho\\fig\\fi_rstac\\mlibir\\configration\\calib.properties" );
+    const LAString CONFIG_FILE_PATH( ".\\config\\irsvr_excel.conf" );
+    const LAString DEFAULT_CBSCHEDULE_PATH( ".\\config\\CBSchedule.csv" );
+    const LAString DEFAULT_CALENDAR_PATH( ".\\config\\Calendar.csv" );
+    const LAString DEFAULT_IRPROP_PATH( ".\\config\\ir.properties" );
+    const LAString DEFAULT_CALIBPROP_PATH( ".\\config\\calib.properties" );
 
     // #2. Initialize the library for Quants - This is only required and done if item #1 is not successful
     // ====================================================================================================================

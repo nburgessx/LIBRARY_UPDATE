@@ -12,10 +12,10 @@ std::shared_ptr<LAString> LACurveProperties::calendar_path_;
 
 namespace
 {
-    const LAString CONFIG_FILE_PATH("d:\\appl\\irsvr_excel.conf");
-    const LAString DEFAULT_CALENDAR_PATH("M:\\02_Project\\5858_mlibir\\configration\\Calendar.csv");
-    const LAString DEFAULT_IRPROP_PATH("M:\\02_Project\\5858_mlibir\\configration\\ir.properties");
-	const LAString DEFAULT_CALIBPROP_PATH("M:\\02_Project\\5858_mlibir\\configration\\calib.properties");
+    const LAString CONFIG_FILE_PATH(".\\config\\irsvr_excel.conf");
+    const LAString DEFAULT_CALENDAR_PATH(".\\config\\Calendar.csv");
+    const LAString DEFAULT_IRPROP_PATH(".\\config\\ir.properties");
+	const LAString DEFAULT_CALIBPROP_PATH(".\\config\\calib.properties");
 }
 
 
