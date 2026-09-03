@@ -40,7 +40,12 @@ dropped) and `GOOGLE_TEST` has no references — clean.
 | `PremiumLeg`, `PremiumSchedule`, `PremiumCashflow`, `ProtectionLeg`, `ProtectionSchedule`, `CDSLeg`, `CreditDefaultSwap`, `CreditModel`, `CreditResults`, `CreditResultsContainer` | **CDS infrastructure** → `Credit` category |
 | `CMSCashflow`, `CMSLeg`, `CMSSchedule`, `CMSStaticData` | **CMS (constant-maturity swap)** → `Rates` / `Swaps` |
 
-## VERIFY before deleting — flagged
+## VERIFY before deleting — flagged  ⚠ KEEP FOR NOW
+
+**Nicholas's call (this session): keep these for now; revisit at Phase 1.4a.**
+Do not delete any row below without an explicit go-ahead — the Phase 1.4a
+checklist has a STOP gate for it.
+
 
 | Item | Question | Suggested check |
 |---|---|---|

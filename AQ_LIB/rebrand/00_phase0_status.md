@@ -5,16 +5,30 @@ is transient — it does not ship and is not carried into the clean repo.
 
 | # | Item | Status | Artefact |
 |---|---|---|---|
-| 0.1 | All 12 build configs green | **Nicholas** — needs a build | — |
+| 0.1 | All 12 build configs green | **Nicholas — build needed now** (see below) | — |
 | 0.2 | `AQ_EXTERNAL_LIB_PATH` resolves | drafted (see below) | this file |
-| 0.3 | Pre-rebrand test baseline recording | **Nicholas** — needs a build | see below |
-| 0.4 | Git commit + tag `baseline` | **Nicholas** (or say the word) | — |
-| 0.5 | `mir` call-graph | ☑ drafted | `callgraph_mir.md` |
-| 0.6 | Client-specific removal map | ☑ drafted | `removal_map_client_specific.md` |
-| 0.7 | 653-function XLL inventory | ☑ extracted | `xll_function_inventory.csv` |
-| 0.8 | Calendar-centre delimiter sites | ☑ drafted | `calendar_delimiter_sites.md` |
-| 0.9 | `LICENSE` + `THIRD_PARTY_LICENSES.md` | ☑ done | `../LICENSE`, `../THIRD_PARTY_LICENSES.md` |
-| 0.10 | Config & generator inventory | ☑ drafted | `inventory_config_generators.md` |
+| 0.3 | Pre-rebrand test baseline recording | **Nicholas — needs a build** | see below |
+| 0.4 | Git `baseline` tag | ☑ done — tag `baseline` on `36bffcc` (pristine pre-rebrand code) | `git tag` |
+| 0.5 | `mir` call-graph | ☑ | `callgraph_mir.md` |
+| 0.6 | Client-specific removal map | ☑ (ambiguous rows: KEEP, review at 1.4a) | `removal_map_client_specific.md` |
+| 0.7 | 653-function XLL inventory | ☑ | `xll_function_inventory.csv` |
+| 0.8 | Calendar-centre delimiter sites | ☑ (D12 = `+` only) | `calendar_delimiter_sites.md` |
+| 0.9 | `LICENSE` + `THIRD_PARTY_LICENSES.md` | ☑ | `../LICENSE`, `../THIRD_PARTY_LICENSES.md` |
+| 0.10 | Config & generator inventory | ☑ | `inventory_config_generators.md` |
+
+## Already applied (commits on top of `baseline`)
+
+`git reset --hard baseline` reverts everything below.
+
+| Commit | Change | Risk |
+|---|---|---|
+| `6c262aa` | planning docs, inventories, `LICENSE`; `Mizuho`/`MHI`/`MHSC` → `AlgoQuantHub` in `src` comments; `etrading.nuspec` rebranded | comments/docs only |
+| `50cad24` | removed 733 contractor header blocks; 90 Shift-JIS files → UTF-8; ~4,800 Japanese chars stripped from comments; 129 full-width punct → ASCII; **2 string-literal fixes** (`LEVENBERG-MARQUARDT_METHOD` hyphen — behavioural; `Grid_T` error text) | comments/encoding + 2 flagged lines |
+| `767aa4e` | client drive paths (`M:\…5858_mlibir`, `S:\mizuho\…`) → `.\config\…` | dead fallback strings |
+
+No code identifiers renamed. **You need to build now** to confirm these
+comment/encoding changes didn't disturb anything (esp. the 90 UTF-8 re-encodes
+and the `LEVENBERG` branch), *before* the Phase 1 identifier rename starts.
 
 ---
 

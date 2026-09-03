@@ -45,6 +45,20 @@ Status legend: ☐ not started · ◐ in progress · ☑ done
 All open questions from the first draft are now answered. Nothing in the plan is
 blocked on a decision; Phase 4 still waits on the xlOil worked examples.
 
+### Pulled forward (done ahead of sequence, at Nicholas's request)
+
+Commits on top of the `baseline` tag — `git reset --hard baseline` reverts all:
+
+| Commit | What |
+|---|---|
+| `6c262aa` | Planning docs + Phase 0 inventories + `LICENSE`/`THIRD_PARTY_LICENSES.md`; `Mizuho International`/`MHI`/`MHSC` → `AlgoQuantHub` in `src` comments (1359 files); `etrading.nuspec` rebranded. |
+| `50cad24` | Removed 733 contractor file-header blocks (`@Author`/`@Department`/`ISD Front Office Development` + copyright) from `src/**/*.{cpp,h}`; re-encoded 90 Shift-JIS files to UTF-8; stripped ~4,800 Japanese chars from comments; 129 full-width punctuation → ASCII. **Two string-literal fixes — verify on first build:** `LAPriceSZCalibration.cpp:330` `"LEVENBERG-MARQUARDT_METHOD"` (was a full-width minus → the branch never matched; now it can — behavioural), and `LAMathCorrelation.cpp:1102` error text (full-width space → space). |
+| `767aa4e` | Neutralised hard-coded client config paths in `LACurveProperties.cpp` / `FolderConfig.cpp` (`M:\…5858_mlibir\…`, `S:\mizuho\…`, `D:\appl\…` → `.\config\…`). |
+
+**None of the above touched a code identifier** (comments/encoding/dead-path
+strings only, plus the two flagged lines). The systematic `MLIB*`/`me*`/`LA*`
+identifier rename is still Phase 1–3 and still needs the baseline build + diff.
+
 ---
 
 ## Phase 0 — Baseline & safety net  ☐
@@ -142,22 +156,27 @@ each numbered item.
   deps). Delete the 58 `AQ_API\mir*` files, ~35 `validation\tryMir*` files, and
   the `mir*` lines in `swig_*.i` / `swig_R_wrap.cpp`. Build clean.
 - ☐ **1.4a Remove client-specific modules** — per the 0.6 map: `LoanCalculations`,
-  `SupervisoryRules`, `CashflowClient`, and the securitisation cluster in
-  `etrading` (confirmed-dead members only; keep anything the `Credit` category
-  needs — flagged items get a decision first). Their `validation\tryMe*` wrappers
-  and `GOOGLE_TEST` cases go too.
+  `SupervisoryRules`, `CashflowClient`, and the confirmed-dead securitisation
+  cluster in `etrading`. Their `validation\tryMe*` wrappers and `GOOGLE_TEST`
+  cases go too. **STOP-gate:** the "VERIFY — KEEP FOR NOW" rows in
+  `rebrand\removal_map_client_specific.md` (Serialize*/SchemaObject,
+  CreditResultsContainer include, DataFrame) — Nicholas has asked to keep these
+  for now and review them at this step. Do not delete them without his explicit
+  go-ahead; if in doubt, keep and move on.
 - ☐ **1.5 Delete `msc*`** (D2) — per the 0.6 map. Add-in files, downstream
   symbols, resources, tests. Build clean with them gone.
 - ☐ **1.6 Namespaces** `validation_api → validation`. Single mechanical rename;
   update the friend/using declarations and the bindings + XLL call sites (the
   POC `AQ_XLL\src\math.cpp` already calls `validation_api::tryMe…`).
-- ☐ **1.7 Hard-coded client paths** — replace the `DEFAULT_*_PATH` constants in
-  `calibration\src\LACurveProperties.cpp` (`M:\02_Project\5858_mlibir\…`) and
-  `etrading\src\FolderConfig.cpp` (`S:\mizuho\fig\fi_rstac\mlibir\…`) — fallbacks
-  for `Calendar.csv` / `ir.properties` / `calib.properties` / `CBSchedule.csv` —
-  with paths resolved **relative to the loaded module / add-in**, pointing at the
-  shipped `config` folder. Functional, not cosmetic. Delete
-  `resources\config\MLIBQ_ADDIN.xll`.
+- ◐ **1.7 Config path resolution.** Client absolute paths in
+  `LACurveProperties.cpp` / `FolderConfig.cpp` already neutralised → `.\config\…`
+  (commit `767aa4e`). **Still to do, needs a build:** the `MLIBQ` env-var name
+  (read via `getenv("MLIBQ")` / `toPath("MLIBQ", …)` in both files, and named in
+  `exposed_functions.cpp` error text) — rename to `AQ` or a dedicated
+  `AQ_CONFIG`, and reconcile the two path conventions (`\resource\config\…` in
+  `FolderConfig` vs `\config\…` / bare filename elsewhere). Also delete the
+  stale `resources\config\MLIBQ_ADDIN.xll`. `LACurveProperties` and
+  `FolderConfig` are near-duplicates — consider collapsing to one.
 - ☐ **1.8 `.clang-format`** — add one at the `AQ_LIB` root, tuned to the *current*
   style (derive from a sample so a future reformat is minimal). Retire the old
   `resources\utilities\ArtisticStyle` (AStyle) setup. **Config only now — do not
