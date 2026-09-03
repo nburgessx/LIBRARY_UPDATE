@@ -1,5 +1,5 @@
 /*! @file
-    @brief 確率分布に関する関数定義の宣言
+    @brief 
             Only static functions are implemented on this class.
 */
 
@@ -20,9 +20,9 @@
 using namespace std;
 
 /*! 
-    @brief コレスキー分解をする関数 \n 
+    @brief  \n 
 	@
-   　
+    
 */
 LAMatrix
 LACholeskyDecompSC::choleskyDecompositionSC(const LAMatrix& mat)

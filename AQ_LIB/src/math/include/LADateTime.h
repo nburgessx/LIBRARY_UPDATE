@@ -86,7 +86,7 @@ protected:
 
 private:
 
-    unsigned short     mHour;      // hour(0Å`23)
-    unsigned short     mMinute;    // minute(0Å`59)
-    unsigned short     mSecond;    // second(0Å`59)
+    unsigned short     mHour;      // hour(023)
+    unsigned short     mMinute;    // minute(059)
+    unsigned short     mSecond;    // second(059)
 };

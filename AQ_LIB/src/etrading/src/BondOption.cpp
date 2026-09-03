@@ -1,12 +1,3 @@
-/*
-* @brief			Class the defines the BondOption Trade
-* @Created:			30 July 2018
-* @Author:			Yongyan Zheng
-* @Department:		Quant Research & Analytics
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "BondOption.h"
 #include "ParameterValidation.h"
 #include "LWOUtilities.h"

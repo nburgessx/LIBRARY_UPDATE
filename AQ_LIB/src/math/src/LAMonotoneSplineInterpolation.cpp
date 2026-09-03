@@ -1,13 +1,3 @@
-/*
- * @brief			Class which defines a 1D MonotoneCubic interpolator
- *
- * @Created:		19 Sept 2019
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "LAMonotoneSplineInterpolation.h"
 
 

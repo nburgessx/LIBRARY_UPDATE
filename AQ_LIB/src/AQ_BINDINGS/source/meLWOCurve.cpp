@@ -1,12 +1,3 @@
-/* 
- * @brief			Swig interface for function meLWOCurve methods ...
- * @Created:		20th May 2019
- * @Author:			Nicholas Burgess
- * @Department:		Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "meCurveResults.h"
 #include "tryMeLWOCurveDiscountFactor.h"
 #include "tryMeLWOCurveDisplay.h"

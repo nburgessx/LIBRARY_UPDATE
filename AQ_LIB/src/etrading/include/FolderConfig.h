@@ -1,13 +1,3 @@
-/*
- * @brief			Configuration methods that assist in addin setup
- *					It was ported over from LACurveProperties.h/.cpp	
- * @Created:		14 November 2016
- * @Author:			
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include <boost/filesystem.hpp>

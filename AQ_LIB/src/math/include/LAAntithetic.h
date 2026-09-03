@@ -62,7 +62,7 @@ public:
                                 // function to generate uniform random numbers
     virtual void                getUniforms(DoubleArray& variates);
 								//======================================
-								// function to set dimension information(first element should be the number of dimensionÅj
+								// function to set dimension information(first element should be the number of dimension)
 	virtual void                setDim(const UintArray& dimValue);
                                 //======================================
                                 // function to set seed

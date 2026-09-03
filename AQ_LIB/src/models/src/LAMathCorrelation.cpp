@@ -1099,7 +1099,7 @@ LAMathCorrelation::calcCorrelationFromCorrelation() const
 			if (grid_T.size() != bi)
 			{
 				//error
-				throw LACoreInvalidData("Grid_TÅ@is something wrong", __FILE__, __LINE__);
+				throw LACoreInvalidData("Grid_T is something wrong", __FILE__, __LINE__);
 			}
 			DoubleArray tmp(3);
 			for (unsigned int i = 0; i < bi; i++)

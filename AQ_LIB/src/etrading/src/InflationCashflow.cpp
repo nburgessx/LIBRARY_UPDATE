@@ -1,12 +1,3 @@
-/*
- * @brief			Class the defines the Inflation Cashflow of an Inflation Leg
- * @Created:		21 May 2020
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "InflationCashflow.h"
 #include "LADateScheduleHelpers.h"
 

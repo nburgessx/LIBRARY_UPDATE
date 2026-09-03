@@ -131,7 +131,7 @@ LAPriceAccruedInterest::calcAccruedInterest(const LADate& basedate, unsigned int
 void	            
 LAPriceAccruedInterest::setUp(const LADate& basedate, LAObject& trade, const LADataValuation& att) 
 {
-	(void)basedate; (void)trade; (void)att; //20070411--Nagase--Œxíœ‚ğgcc‚É‚à‘Î‰
+	(void)basedate; (void)trade; (void)att; //20070411--Nagase--gcc
 	if (att.isNullDataProvider())
 	{
 		//error

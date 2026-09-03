@@ -1,17 +1,3 @@
-/*
- * @brief			A consistency check on OIS curves to make sure that building the curve using "ME" functions
- *					and "CurveGenerator" functions all produce the same set of forward rates.
- *
- *					These tests should never need to be rebased. i.e. the forward rates obtained from the
- *                  different curve build APIs should always match.
- *
- * @Created:		13 July 2017
- * @Author:			Ian Castleton
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "Variant.h"
 #include "LabelValueBlock.h"
 #include "Dependency.h"

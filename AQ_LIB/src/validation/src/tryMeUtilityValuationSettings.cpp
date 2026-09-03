@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the meUtilityValuationSettings
- * @Created:		5th February 2020
- * @Author:			Nicholas Burgess
- * @Department:		Quant Research
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeUtilityValuationSettings.h"
 
 #include "CreateDataFile.h"

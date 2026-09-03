@@ -1,12 +1,3 @@
-/*
- * @brief			Methods that are related to calculating numerical delta risks for trades
- * @Created:		11 April 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 #include "BaseInstrument.h"
 #include "Swap.h"

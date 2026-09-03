@@ -1,12 +1,3 @@
-/*
- * @brief			MLIBQ Solver Framework
- * @Created:		1st June 2017
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include <functional>

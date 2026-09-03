@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for meDateIsRegularSwapSchedule method(s)
- * @Created:		30th May 2018
- * @Author:			Nicholas Burgess
- * @Department:		ISD Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 #include "LACoreTemplateType.h"
 

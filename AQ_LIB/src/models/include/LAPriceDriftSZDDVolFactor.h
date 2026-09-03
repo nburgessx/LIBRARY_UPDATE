@@ -70,7 +70,7 @@ public:
                                 // operator()
     virtual double              operator()(const DoubleArray& x) const;
                                 //======================================
- //Å@OPERATION
+ // OPERATION
 								//======================================
 								// transform from string representaion
     void				        convertFromString(const LAString& str);

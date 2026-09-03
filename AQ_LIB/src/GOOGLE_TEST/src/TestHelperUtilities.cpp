@@ -1,12 +1,3 @@
-/*
- * @brief			Methods that assist in carrying out MLib tests
- * @Created:		23 Feb 2017
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "TestHelperUtilities.h"
 
 namespace google_test

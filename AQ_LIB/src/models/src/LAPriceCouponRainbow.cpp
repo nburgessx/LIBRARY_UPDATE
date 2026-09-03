@@ -4,7 +4,7 @@
 */
 // Copyright (C) 2006, AlgoQuantHub..
 //////////////////////////////////////////////////////////
-//いくかのパターンでテスト実施ずみ
+//
 //////////////////////////////////////////////////////////
 #ifdef __GNUG__
 #pragma implementation
@@ -111,7 +111,7 @@ LAPriceCouponRainbow::registerData(LAPriceDataManager& dm) const
 void
 LAPriceCouponRainbow::setUp(const LADate& basedate, const LAObject& trade, unsigned int legNo, const LAObject& cashlet) 
 {
-	(void)basedate;	(void)legNo; //20070411--Nagase--警告削除をgccにも対応
+	(void)basedate;	(void)legNo; //20070411--Nagase--gcc
 	mpFX_for_Notional = NULL;
 	mpFX_for_Coupons.clear();
 	mCouponsCur.clear();

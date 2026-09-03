@@ -1,12 +1,3 @@
-/*
- * @brief			Numerical Integration - Simpsons Rule
- * @Created:		6th May 2018
- * @Author:			Nicholas Burgess
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 #include "LACoreTemplateType.h"
 #include "CoreEnumerations.h"

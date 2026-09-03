@@ -104,7 +104,7 @@ public:
 
 	                            //==========================================
 								// check x is in domain of this function or not.
-	virtual	bool				isInDomain(const DoubleArray& x) const { (void)x; //20061017--David--Remove warning:C4100 20070411--Nagase--Œxíœ‚ğgcc‚É‚à‘Î‰
+	virtual	bool				isInDomain(const DoubleArray& x) const { (void)x; //20061017--David--Remove warning:C4100 20070411--Nagase--gcc
 												return true;};
 								//==========================================
 	                            // check derivable or not.

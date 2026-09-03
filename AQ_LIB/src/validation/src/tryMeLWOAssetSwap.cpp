@@ -1,12 +1,3 @@
-/* 
- * @brief			validation interface for the meLWOAssetSwap methods
- * @Created:		17 August 2017 
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeLWOAssetSwap.h"
 
 #include "CreateDataFile.h"

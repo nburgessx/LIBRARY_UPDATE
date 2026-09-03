@@ -1,13 +1,3 @@
-/*
- * @brief			swap utils for the LWO Swap object related classes
- * @Created:		22 July 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 #include "SwapUtilities.h"
 #include "LADefinitions.h"
 #include "VanillaIRSwap.h"

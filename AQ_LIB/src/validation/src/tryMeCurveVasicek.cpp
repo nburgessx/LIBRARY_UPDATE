@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for Hull White Curve Fitting method(s)
- * @Created:		17 Oct 2017
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeCurveVasicek.h"
 #include "AffineModelUtilities.h"
 #include "VasicekFitting.h"

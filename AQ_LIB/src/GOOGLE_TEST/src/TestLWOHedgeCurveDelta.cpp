@@ -1,13 +1,3 @@
-/*
- * @brief			Regression tests on the hedge curve build and associated risk
- * @Created:		6 Nov 2017
- * @Author:			Ian Castleton
- * @Department:		AlgoQuantHub Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 // Curves
 #include "tryMeLWOCurveMarketData.h"
 #include "tryMeLWOCurveCalibrate.h"

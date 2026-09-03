@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the meLWOCurveMarketData method
- * @Created:		29 Nov 2016
- * @Author:			Ian Castleton
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeLWOCurveMarketData.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"

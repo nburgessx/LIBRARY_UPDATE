@@ -1,11 +1,3 @@
-/*
- * @brief			validation interface for meCurveDisplay method(s)
- * @Created:		19 April 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
 #include "tryMeCurveDisplay.h"
 #include "LACurveCalibrationHelpers.h"
 #include "CreateDataFile.h"

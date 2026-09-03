@@ -93,7 +93,7 @@ LARatesPathElementScalar::clone() const
 LARatesPathElementScalar&
 LARatesPathElementScalar::operator = (const LARatesPathElementScalar& a)
 {
-	// 自分自身のコピーはしない
+	// 
 	if (this == &a) return *this;
 	
 	set(a);
@@ -108,13 +108,13 @@ LARatesPathElementScalar::set(const LARatesPathElementBase& a)
 {
 	if (a.getType() != PE_SCALAR) 
 	{	
-		// タイプチェックの際おかしいことが起こったら
-		// 例外発生
+		// 
+		// 
 		LAString err = "set error for LARatesPathElementScalar : from ";
 		err += LAString(a.getType());
 		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
-	// コピー。
+	// 
 	mValue = dynamic_cast<const LARatesPathElementScalar&>(a).mValue;
 }
 

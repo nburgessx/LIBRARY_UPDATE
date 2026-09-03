@@ -1,17 +1,3 @@
-/*
- * @brief			Structured Credit CashflowModel.
- *					The Cashflow Model contains functions to project the input loan-cashflows through a capital structure
- *
- *					This code was ported from MGEN AlgoQuantHub R analytics library
- *					Author Andrew Friend
- *
- * @Created:		20th March 2019
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- */
-
-
 #include "CashflowModel.h"
 #include "LoanCalculations.h"
 #include "SupervisoryRules.h"

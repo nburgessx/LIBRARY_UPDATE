@@ -1,12 +1,3 @@
-/*
-* @brief			validation interface for the future/fra product methods
-* @Created:		08 Dec 2017
-* @Author:			Yongyan Zheng
-* @Department:		ISD Front Office Development
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "tryMeCurveEuroDollarConvexityAdjustment.h"
 #include "StructuredExceptionHandler.h"
 #include "CreateDataFile.h"

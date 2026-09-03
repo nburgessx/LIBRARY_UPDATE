@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the meLWOCurveCalibrate method
- * @Created:		5 May 2017
- * @Author:			Ian Castleton
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "Variant.h"

@@ -1,12 +1,3 @@
-/*
- * @brief			Regression tests on the xccy swap DV01. This version tests using different CSA. i.e. it uses FXFWDCONST curves
- * @Created:		24 May 2017
- * @Author:			Ian Castleton
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 // Curves
 #include "TryMeCurveOis.h"
 #include "TryMeCurveStd.h"

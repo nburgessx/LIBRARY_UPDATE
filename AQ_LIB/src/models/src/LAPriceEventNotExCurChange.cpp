@@ -5,7 +5,7 @@
 //  2006, AlgoQuantHub..
 ///
 //////////////////////////////////////////////////////////
-//いくかのパターンでテスト実施ずみ 
+// 
 //////////////////////////////////////////////////////////
 #ifdef __GNUG__
 #pragma implementation
@@ -105,7 +105,7 @@ LAPriceEventNotExCurChange::doAction(const LADate& actiondate,
 										vector<LAPriceEventHolder*>& pastaction,
 										vector<PayOffToolHolderIter>& iter)
 {
-	(void)actiontime; (void)pastaction; (void)futureaction; //20070411--Nagase--警告削除をgccにも対応
+	(void)actiontime; (void)pastaction; (void)futureaction; //20070411--Nagase--gcc
 	PayOffToolHolderIter it;
 	LADate fixingdate;
 	if (mIsFixingDate)

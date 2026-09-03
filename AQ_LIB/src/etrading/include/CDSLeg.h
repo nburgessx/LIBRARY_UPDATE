@@ -1,12 +1,3 @@
-/*
- * @brief			Abstract class which defines the CDS Leg
- * @Created:		15 Feb 2018
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "Leg.h"

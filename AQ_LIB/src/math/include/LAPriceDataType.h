@@ -60,7 +60,7 @@ public:
 	// make a comparison of the Data ID. If the same ID, it returns 0.
     /*!
         @param[in] objectHolder Data to be compared
-        @return (Data ID of the object) Å| (Data ID to be compared)
+        @return (Data ID of the object) - (Data ID to be compared)
     */
     int					cmpType(const LAPriceDataType& objectHolder) const 
 							{return mAttributeType - objectHolder.mAttributeType;} 

@@ -85,7 +85,7 @@ LARandBase::getGaussians(DoubleArray& variates)
 }
 
 /*!
-    @brief function to set dimension information(first element should be the number of dimensionÅj
+    @brief function to set dimension information(first element should be the number of dimension)
     @param[in] dimValue dimension information
 
 */

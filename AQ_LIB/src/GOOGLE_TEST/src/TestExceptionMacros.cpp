@@ -1,12 +1,3 @@
-/*
- * @brief			Test on MLIBQ Error Macros
- * @Created:		29th June 2017
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 #include "ExceptionMacros.h"
 

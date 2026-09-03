@@ -134,7 +134,7 @@ public:
 	std::vector<std::vector<LAFunctionBase*> >
 						getCorrelationFunc() const;
 
-	// get FactorLoading(iÅ~jÅ~t)
+	// get FactorLoading(ijt)
 	std::vector<DoubleMatrix>
 						getFactorLoading(const DoubleArray& grid_t) const;
 

@@ -1,5 +1,5 @@
 /*! @file
-    @brief Generalized Faure数列を作るクラスの定義
+    @brief Generalized Faure
 */
 
 ////X///////////////////X///////////////////////////////X///////////////////
@@ -19,10 +19,10 @@
 
 using namespace std;
 
-//データ保持クラスの関数を定義---------------------------------------------------
+//---------------------------------------------------
 /*!
-    @brief データ保持クラスのdefault constructor。
-    (1×1)の領域だけを確保する。
+    @brief default constructor
+    (11)
 */
 LAFTQuasiRandGF::LAMatrixData::LAMatrixData(void)
 :mpData(NULL),mRow(1),mCol(1)
@@ -43,7 +43,7 @@ LAFTQuasiRandGF::LAMatrixData::LAMatrixData(void)
      }
 }
 /*! 
-    @brief データ保持クラスのdestructor
+    @brief destructor
 */
 LAFTQuasiRandGF::LAMatrixData::~LAMatrixData()
 {
@@ -53,8 +53,8 @@ LAFTQuasiRandGF::LAMatrixData::~LAMatrixData()
     }
 }
 /*! 
-    @brief コピー・constructor
-    @param[in] m マトリックスクラスm
+    @brief constructor
+    @param[in] m m
 */
 LAFTQuasiRandGF::LAMatrixData::LAMatrixData(const LAMatrixData& m) 
 :mpData(NULL),mRow(0),mCol(0)
@@ -83,15 +83,15 @@ LAFTQuasiRandGF::LAMatrixData::LAMatrixData(const LAMatrixData& m)
 }
 
 /*! 
-    @brief データ保持クラスのサイズを変更する為の関数（変更後の行数・列数指定、private）\n
-    変更前のデータが失われ全て0になる。
-    @param[in] row 変更後の行数row
-    @param[in] col 変更後の列数coL
+    @brief (private)\n
+    0
+    @param[in] row row
+    @param[in] col coL
 */
 void
 LAFTQuasiRandGF::LAMatrixData::resize(unsigned int row, unsigned int col)
 {
-    // 0のケースも考えよう。
+    // 0
     if (row == 0 || col == 0)
     {
         if (mpData != NULL) {
@@ -102,38 +102,38 @@ LAFTQuasiRandGF::LAMatrixData::resize(unsigned int row, unsigned int col)
         mRow = mCol = 0;
         return;
     }
-    // データサイズが大きくなる場合
+    // 
     unsigned int size = col * row;
     int** newData;
 // unused.    int*  oldData = (mpData == NULL) ? NULL : mpData[0];
     if (size > mCol*mRow)
-    { // 新しいデータ領域が必要
-        // Rowサイズでの比較
+    { // 
+        // Row
         if (row > mRow)
             newData = new int*[row];
         else
             newData = mpData;
-        // データ領域の割り当て
+        // 
         newData[0] = new int[size];
     } 
     else
-    { // 既存の領域でOK。
-        // Rowサイズでの比較
+    { // OK
+        // Row
         if (row > mRow)
             newData = new int*[row];
         else
             newData = mpData;
-        // データ領域の割り当て
+        // 
         newData[0] = mpData[0];
     }
 
-    // Indexの再構成
+    // Index
     unsigned int i;
     for (i=1;i<row;++i) 
     {
         newData[i]=newData[i - 1]+col;
     }
-    // Resizeすると、データの中身は0になる。
+    // Resize0
     unsigned int j;
     for (i=0;i<row;++i) 
     {
@@ -143,23 +143,23 @@ LAFTQuasiRandGF::LAMatrixData::resize(unsigned int row, unsigned int col)
             newData[i][j]= 0;
         }
     }
-    // 古いデータ領域の解放
+    // 
     if (mpData != NULL)
     {
         if (newData[0] != mpData[0]) delete mpData[0];
         if (newData != mpData) delete mpData;
     }
-    // 設定しなおし
+    // 
     mpData = newData;
     mRow = row;
     mCol = col;
 }
 
 /*! 
-    @brief データを取得する為の関数
-    @param[in] i 変更後の行数row（-1した場所を指定）
-    @param[in] j 変更後の列数coL（-1した場所を指定）
-    @return 取得値
+    @brief 
+    @param[in] i row(-1)
+    @param[in] j coL(-1)
+    @return 
 */
 
 int 
@@ -171,8 +171,8 @@ LAFTQuasiRandGF::LAMatrixData::getValue(unsigned int i, unsigned int j) const
 }
 
 /*! 
-    @brief 代入（void）
-    @param[in] other 右オペランド
+    @brief (void)
+    @param[in] other 
 */
 void
 LAFTQuasiRandGF::LAMatrixData::operator =(const LAMatrixData& other)
@@ -188,9 +188,9 @@ LAFTQuasiRandGF::LAMatrixData::operator =(const LAMatrixData& other)
 }
 
 /*! 
-    @brief 行列の積（baseで余りをとる）
-    @param[in] other 右オペランド
-    @param[in] base 余りを取る基底
+    @brief (base)
+    @param[in] other 
+    @param[in] base 
 */
 LAFTQuasiRandGF::LAMatrixData 
 LAFTQuasiRandGF::LAMatrixData::matMult(const LAMatrixData& other,int base) const
@@ -240,10 +240,10 @@ LAFTQuasiRandGF::LAMatrixData::print(void)
     fclose(fp);
 } 
 
-//乱数発生クラスの関数を定義---------------------------------------------------
+//---------------------------------------------------
 /*!
-    @brief FTQuasiRandGFのdefault constructor
-    パラメータのセット情報と、Rand()関数のデフォルトシード値を設定する
+    @brief FTQuasiRandGFdefault constructor
+    Rand()
 
 */
 
@@ -295,8 +295,8 @@ LAFTQuasiRandGF::getType() const
     return FN_RAND_QUASIGF;
 }
 /*!
-    @brief 一様乱数を発生する関数
-    @param[in] variates 発生した一様乱数を返すValarray型のVector
+    @brief 
+    @param[in] variates ValarrayVector
 */
 void
 LAFTQuasiRandGF::getUniforms(DoubleArray& variates)
@@ -313,14 +313,14 @@ LAFTQuasiRandGF::getUniforms(DoubleArray& variates)
         return;
     }
 
-    //計算用
+    //
     unsigned int i,j,k;
     double xx(0);
 
-    //Sizeを取得
+    //Size
     unsigned int size=(this->mGeneMat.col());
     
-    //Digit　Expansion
+    //Digit Expansion
     unsigned long statetmp = (this->mState);
     for (i=0;i<size;i++){
         mDigitVector.setValue(i,0,statetmp % mBase);
@@ -328,8 +328,8 @@ LAFTQuasiRandGF::getUniforms(DoubleArray& variates)
     }
 //  mDigitVector.print();//test 
 //  mGeneMat.print();//test
-    //Dim=1の分
-    //乱数行列を作成
+    //Dim=1
+    //
     this->ftsrand(this->mMSeed);
     for (i=0;i<size;i++)
     {
@@ -352,7 +352,7 @@ LAFTQuasiRandGF::getUniforms(DoubleArray& variates)
     variates[0]=xx;
     xx=0;
 
-//Dim=2以降
+//Dim=2
     for (k=1; k<(this->getDim()[1]); k++)
     {
         for (i=0;i<size;i++)
@@ -392,7 +392,7 @@ LAFTQuasiRandGF::getUniforms(DoubleArray& variates)
         }
     }
 
-    //カウンタを一つ増やす
+    //
     this->mState = this->mState + 1;
     
     // counter increments it by one, if exceeds the Max, back to the first
@@ -404,10 +404,10 @@ LAFTQuasiRandGF::getUniforms(DoubleArray& variates)
 }
 
 /*!
-    @brief Seedを設定する関数
-    @param[in] seed Seedに関する情報を設定する為のValarray型のVector。\n
-    ただし、    seed[0]=開始数,\n
-            seed[1]=必要Sequence数,\n
+    @brief Seed
+    @param[in] seed SeedValarrayVector\n
+        seed[0]=,\n
+            seed[1]=Sequence,\n
             seed[2]=Seed For Generator Matrix,\n
             seed[3]=Seed For Mersennne Twister
 */
@@ -424,7 +424,7 @@ LAFTQuasiRandGF::setSeed(const UlongArray& seed)
     mState=seed[0];
     mSeedSet=true;
 
-    //保有するMersennne Twisterにseedをセット
+    //Mersennne Twisterseed
     UlongArray seedtmp(1);
 
     seedtmp[0]=seed[3];
@@ -434,12 +434,12 @@ LAFTQuasiRandGF::setSeed(const UlongArray& seed)
     return;
 }
 /*!
-    @brief  次元を設定する関数\n
-            （次元の設定にあわせて一部計算を行う為、基底クラスをオーバーライド）
+    @brief  \n
+            ()
 
-    @param[in] dimValue 次元に関する情報を設定する為のValarray型のVector。\n
-    ただし、    dimValue[0]=全次元,\n
-            dimValue[1]=準乱数次元
+    @param[in] dimValue ValarrayVector\n
+        dimValue[0]=,\n
+            dimValue[1]=
 */
 void
 LAFTQuasiRandGF::setDim(const UintArray& dimValue)
@@ -452,12 +452,12 @@ LAFTQuasiRandGF::setDim(const UintArray& dimValue)
     LARandBase::setDim(dimValue);
     mDimSet=true;
     
-    //保有するMersennne TwisterにDimをセット
+    //Mersennne TwisterDim
     UintArray dimtmp(1);
     if ((dimValue[0]-dimValue[1])<0){
         LAString msg =  "TotalDim<QuasiRandDim Error";
         throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
-        //エラー　全次元と準乱数の次元の関係が変
+        // 
     }
     dimtmp[0]=dimValue[0]-dimValue[1];
 
@@ -468,13 +468,13 @@ LAFTQuasiRandGF::setDim(const UintArray& dimValue)
 }
 
 /*!
-    @brief  設定された次元情報・Seed情報から必要パラメータを算出する関数
+    @brief  Seed
 */
 void
 LAFTQuasiRandGF::paraCalc()
 {
 
-//mBaseを求める
+//mBase
     if (this->getDim()[1]!=0)
     {
         if (this->getDim()[1]==600)
@@ -529,7 +529,7 @@ LAFTQuasiRandGF::paraCalc()
         }
     }
 
-    //Generator行列のサイズ算出（最大で(n番目のパスの時)）
+    //Generator((n))
     unsigned long ntmp=mMax;
     unsigned int size = 1;
     if (getSeed()[1]!=0){
@@ -540,19 +540,19 @@ LAFTQuasiRandGF::paraCalc()
         }
     }
 
-    //上記で取得したSizeを使って、使用するデータ領域のサイズを調整
+    //Size
     mGeneMat.resize(size,size);
     mRandMat.resize(size,size);
     mDigitVector.resize(size,1);
     mDigitVectortmp.resize(size,1);
     mqvec.resize(getDim()[1],1);
 
-    //Generalization Matrixの素1
+    //Generalization Matrix1
     if ((this->getDim()[0])!=0){
         getmqvec();
     }
 
-    //Faure行列を作成
+    //Faure
     for (unsigned i=0;i<size;i++)
     {
         for (unsigned j=i;j<size;j++)
@@ -561,7 +561,7 @@ LAFTQuasiRandGF::paraCalc()
         }
     }
 
-    //MersenneTwisterに、シード、次元をセット
+    //MersenneTwister
     UlongArray tmp(1);
     tmp[0]=mSeed[3];
     mInner.setSeed(tmp);

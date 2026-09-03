@@ -1,13 +1,3 @@
-
-/*
- * @brief: This class represents the market data object used to build a SABR Market Data
- * @Created:		19 Aug 2020
- * @Author:			Yongyan Zheng
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "SabrMarketData.h"
 #include "ObjectUtilities.h"
 #include "DataUtilities.h"

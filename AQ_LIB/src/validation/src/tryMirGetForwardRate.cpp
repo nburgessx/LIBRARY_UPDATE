@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for mirGetForwardRate method(s)
- * @Created:		24 March 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMirGetForwardRate.h"
 #include "LACurveForwardRateHelpers.h"
 #include "CreateDataFile.h"

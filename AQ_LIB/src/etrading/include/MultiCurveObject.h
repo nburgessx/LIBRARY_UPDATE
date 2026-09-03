@@ -1,12 +1,3 @@
-/*
- * @brief			LWO curve class that builds multiple yield curves 
- * @Created:		18 Sep 2017
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "CurveObject.h"

@@ -1,12 +1,3 @@
-/*
- * @brief			Class which defines a Random Number Generator, used in Monte-Carlo pricing.
- * @Created:		14 Jan 2019
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "RandomNumberGenerator.h"
 #include "ExceptionMacros.h"
 #include "LabelValueBlockValidation.h"

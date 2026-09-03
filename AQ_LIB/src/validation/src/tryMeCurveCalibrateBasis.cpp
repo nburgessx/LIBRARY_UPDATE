@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the meCurveCalibrateBasis method
- * @Created:		19 April 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include <memory>
 
 #include "tryMeCurveCalibrateBasis.h"

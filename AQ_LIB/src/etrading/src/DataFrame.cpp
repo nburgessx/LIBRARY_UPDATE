@@ -1,16 +1,3 @@
-/*
- * @brief			Structured Credit DataFrame class
- *					Represents an "R" DataFrame, which consists of a matrix with column names
- *
- *					This code was ported from MGEN AlgoQuantHub R analytics library
- *					Author Andrew Friend
- *
- * @Created:		28th Nov 2019
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- */
-
 #include "DataFrame.h"
 #include "ExceptionMacros.h"
 #include "DataUtilities.h"			// For MLIB_TO_STRING macros

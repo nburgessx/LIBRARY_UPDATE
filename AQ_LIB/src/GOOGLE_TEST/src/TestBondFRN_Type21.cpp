@@ -1,12 +1,3 @@
-/*
- * @brief			Test File for Bond Floating Rate Notes, with CalcType 21
- * @Created:		9th July 2018
- * @Author:			Ian Castleton
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 // Include: Google Test Library
 #include <gTest/gTest.h>
 #include "InitializeMLibGoogleTest.h"

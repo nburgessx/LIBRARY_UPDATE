@@ -1,12 +1,3 @@
-/*
-* @File:			This file tests the swap sub rate functionality for interest rate swpas
-* @Created:			08 Mar 2016
-* @Author:			Joseph Ye
-* @Department:		ISD Front Office Development
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "InterestRateSwap.h"
 #include "Dependency.h"
 #include "ReadDataFile.h"

@@ -1,12 +1,3 @@
-/*
- * @brief			Class that Defines a Floating Coupon Bond
- * @Created:		27th June 2018
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "Bond.h"

@@ -34,7 +34,7 @@
 class LADist {
 
 public:
-	// ó›êœñßìxä÷êî
+	// 
 							// Cumulative density function that represents the standard normal distribution. 
 							//To calculate the probability to achieve the following values: less that x
 	static double			normsdist(double x)

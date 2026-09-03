@@ -1,12 +1,3 @@
-/*
-* @brief			Class the defines the Bond Option Pricer
-*					Given a Swaption Trade and market data, allows the calculation of Bond Option PV and greeks
-* @Created:			07 Aug 2018
-* @Author:			Yongyan Zheng
-* @Department:		Quant Research & Analytics
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
 #pragma once
 
 #include "BondOption.h"

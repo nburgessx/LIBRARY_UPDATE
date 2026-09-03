@@ -1,12 +1,3 @@
-/*
-* @brief			validation interface for meSABRGetPrem
-* @Created:			30 October 2018
-* @Author:			Joseph Ye
-* @Department:		ISD Front Office Development
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "tryMeSABRGetPrem.h"
 
 #include "CreateDataFile.h"

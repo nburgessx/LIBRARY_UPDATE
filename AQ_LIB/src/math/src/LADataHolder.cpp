@@ -40,7 +40,7 @@ LADataHolder::LADataHolder(LAPriceDataType* attr)
 LADataHolder::LADataHolder(const LADataHolder& attr)
 : mpData(NULL), mpParent(NULL)
 {
-    // Data‚ÌƒRƒs[
+    // Data
     if (attr.mpData != NULL)
     {
         mpData = attr.mpData->clone();
@@ -84,7 +84,7 @@ LADataHolder::setData(LAPriceDataType* attr)
         {
             // set this pointer to setHolder() of Data object
             mpData->setHolder(this);
-            // NO_AUTO_UPDATE is reflected by calling update() of AttributeAttribute‚Ìupdate()
+            // NO_AUTO_UPDATE is reflected by calling update() of AttributeAttributeupdate()
             mpData->update();
         }
         else
@@ -116,7 +116,7 @@ LADataHolder::copy(const LADataHolder& attr)
         if (mpParent != NULL)
         {
             mpData->setHolder(this);
-           // NO_AUTO_UPDATE is reflected by calling update() of AttributeAttribute‚Ìupdate()
+           // NO_AUTO_UPDATE is reflected by calling update() of AttributeAttributeupdate()
             mpData->update(); 
         }
         else

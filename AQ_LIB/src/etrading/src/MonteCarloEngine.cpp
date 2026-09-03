@@ -1,13 +1,3 @@
-/*
- * @brief			Class which defines the Monte Carlo Engine.
- * @Created:		14 Jan 2019
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 #include "MonteCarloEngine.h"
 #include "MonteCarloPath.h"
 #include "SurvivalPath.h"

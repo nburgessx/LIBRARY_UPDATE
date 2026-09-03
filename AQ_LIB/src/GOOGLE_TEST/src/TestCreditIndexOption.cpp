@@ -1,15 +1,3 @@
-/*
- * @brief			Tests of the Credit Index Option calculation methods.
- *
- * @Created:		7 Oct 2020
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- *
- */
-
-
  // Curves
 #include "tryMeLWO.h"
 

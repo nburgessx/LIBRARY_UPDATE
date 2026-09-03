@@ -1,14 +1,3 @@
-/*
- * @brief			Class which represents a Monte Carlo Path for a credit risky asset which defaults on the stopping date.
- *					It contains the simulated stopping date, and the corresponding discount factor for
- *					any payouts which occur on default.
- * @Created:		24 Jan 2019
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "SurvivalPath.h"
 #include <limits>
 

@@ -261,12 +261,12 @@ LAMathAttrSDE::setSDE(const LAString& name, SDEPATH_TYPE type, const LAString& c
     int pos = name.findString('(');
     if(pos == (int)name.size() - 1 || pos == 0)
     {
-        //ó·äO
+        //
         throw LACoreInvalidData(name.getCString(), __FILE__, __LINE__);      
     }
 
-    //Å@ì‡óeÇÃê›íË
-    if(pos == -1) //'('Ç™Ç»Ç¢ 
+    // 
+    if(pos == -1) //'(' 
     {
 		mName = name;
 //		mParamStr = "";

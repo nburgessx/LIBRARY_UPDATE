@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the meProductSwapDelta method
- * @Created:		11 April 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeProductSwapDelta.h"
 
 #include "CreateDataFile.h"

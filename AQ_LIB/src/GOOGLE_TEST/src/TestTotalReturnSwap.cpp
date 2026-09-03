@@ -1,14 +1,3 @@
-/*
- * @brief			Tests of the TotalReturnSwap functionality.
- *
- * @Created:		10 Apr 2018
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- *
- */
-
 #include "Variant.h"
 #include "LabelValueBlock.h"
 #include "Dependency.h"

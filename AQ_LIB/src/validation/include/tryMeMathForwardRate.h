@@ -1,12 +1,3 @@
-/*
- * @brief			Interface for curve interpolation methods
- * @Created:		18th February 2020
- * @Author:			Nicholas Burgess
- * @Department:		Quant Research
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 #include "vector"
 #include "CurveInterpolation.h" // CurveInterpolation Class & Core Enumerations

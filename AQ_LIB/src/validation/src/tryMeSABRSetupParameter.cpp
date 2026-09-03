@@ -1,12 +1,3 @@
-/*
-* @brief			validation interface for meSABRSetupParameter
-* @Created:			22 October 2018
-* @Author:			Joseph Ye
-* @Department:		ISD Front Office Development
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include <boost/date_time.hpp>
 
 #include "tryMeSABRSetupParameter.h"

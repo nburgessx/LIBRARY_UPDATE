@@ -1,12 +1,3 @@
-/*
-* @brief			Class the defines the Swaption Trade
-* @Created:			18 July 2018
-* @Author:			Ian Castleton
-* @Department:		Quant Research & Analytics
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "SwaptionTrade.h"
 
 #include "ExceptionMacros.h"

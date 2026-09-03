@@ -1,13 +1,3 @@
-/*
- * @brief			Regression tests on the swap delta ladder
- * @Created:		10 Feb 2017
- * @Author:			Ian Castleton
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 // Curves
 #include "TryMeCurveOis.h"
 #include "TryMeCurveStd.h"

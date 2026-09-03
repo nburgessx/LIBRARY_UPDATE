@@ -142,10 +142,10 @@ LARatesPathElementHW1FCurve::clone() const
 LARatesPathElementHW1FCurve&
 LARatesPathElementHW1FCurve::operator = (const LARatesPathElementHW1FCurve& rhs)
 {
-	// 自分自身のコピーはしない
+	// 
 	if (this == &rhs) return *this;
 
-	// コピー。
+	// 
 	//clear();
     LARatesPathElementAFFCurve::operator = (rhs);
 	mpInitialCurve= rhs.mpInitialCurve != 0 ? dynamic_cast<LARatesPathElementCurve*>(rhs.mpInitialCurve->clone()) : 0;

@@ -1,11 +1,3 @@
-/*
- * @brief			validation interface for mirGetBusinessDays method(s)
- * @Created:		04 April 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
 #include "tryMirGetBusinessDays.h"
 #include "LAPriceDataCalendar.h"
 #include "CreateDataFile.h"

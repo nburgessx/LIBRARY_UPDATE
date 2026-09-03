@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for mirGetDateFromTerm method(s)
- * @Created:		17 March 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMirGetParRate.h"
 
 #include "LADateScheduleHelpers.h"

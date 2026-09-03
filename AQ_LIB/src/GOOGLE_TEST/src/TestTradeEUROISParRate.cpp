@@ -1,12 +1,3 @@
-/*
-* @File:			This file tests the par rate and PV methods for OIS swaps
-* @Created:			09 March 2016
-* @Author:			Joseph Ye
-* @Department:		ISD Front Office Development
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"

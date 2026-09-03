@@ -1,12 +1,3 @@
-/*
- * @brief			Regression tests on calibrating tenor basis curves using FRAs
- * @Created:		05 Jan 2017
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"

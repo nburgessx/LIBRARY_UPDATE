@@ -1,14 +1,3 @@
-
-/*
- * @File: CurveMarketData.cpp
- * @brief: This class represents the market data object used to build a curve
- * @Created: 8 Dec 2016
- * @Author: Ian Castleton
- * @Department: ISO Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "CurveMarketData.h"
 #include "ParameterValidation.h"
 #include "ObjectUtilities.h"

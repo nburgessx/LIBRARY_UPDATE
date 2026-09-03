@@ -25,7 +25,7 @@ class LAObjectConfiguration;
 
 //===================== Class Declare LAObjectConfigurationManager==================================
 /*! 
-    @brief LAObjectConfigurationManagerÅ@Factory class
+    @brief LAObjectConfigurationManager Factory class
 
     This class is singleton
 */

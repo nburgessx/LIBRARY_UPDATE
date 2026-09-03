@@ -1,14 +1,3 @@
-/*
- * @brief			Structured Credit Loan validation and amortization calculations
- *					Contains functions to validate a portfolio of loans and perform various amortization calculations.
- *					Based on the MGEN file "loan_amortization.R"
- * 
- * @Created:		28th Nov 2019
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- */
-
 #pragma once
 
 #include "LoanCalculations.h"

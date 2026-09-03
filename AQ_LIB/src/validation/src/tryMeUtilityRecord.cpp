@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the meUtilityRecord function
- * @Created:		27 April 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeUtilityRecord.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveValidation.h"

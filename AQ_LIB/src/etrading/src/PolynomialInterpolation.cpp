@@ -1,12 +1,3 @@
-/*
-* @brief			Polynomial Interpolation
-* @Created:		    December 18 2019
-* @Author:			Khalid Shafiq
-* @Department:	    Quantitative Strategies, New York
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "PolynomialInterpolation.h"
 #include "ExceptionMacros.h"
 #include <string>

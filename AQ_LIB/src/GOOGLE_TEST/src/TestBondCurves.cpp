@@ -1,12 +1,3 @@
-/*
- * @brief			Test File for BondPrices.cpp
- * @Created:		13th June 2018
- * @Author:			Ian Castleton
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 // Include: Google Test Library
 #include "Dependency.h"
 #include "ReadDataFile.h"

@@ -1,12 +1,3 @@
-/*
- * @brief			Class that defines a vanilla interest rate swap instrument
- * @Created:		21 May 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "VanillaInterestRateSwap.h"
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"

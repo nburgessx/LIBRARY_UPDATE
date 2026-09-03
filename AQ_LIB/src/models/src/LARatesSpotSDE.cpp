@@ -336,7 +336,7 @@ LARatesSpotSDE::calcPath(unsigned int pos)
 #endif
 			}
 
-			// set curve to numeraire //スポットレートの金利モデルの場合
+			// set curve to numeraire //
 			if (mpNumeraire != 0 && mpTemplate->isTypeOf(PE_CURVE))
 				mpNumeraire->setCurve(mTimeGrid[j], dynamic_cast<const LARatesPathElementCurve*>(mPath[j]));
 			j++;

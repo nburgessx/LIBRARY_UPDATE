@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the tryMeUtility setup related functions
- * @Created:		27 April 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "LADataInstance.h"
 #include "InitializeMLibETrading.h"
 #include "LibSetUpETrading.h"

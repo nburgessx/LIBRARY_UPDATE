@@ -1,12 +1,3 @@
-/*
- * @brief			Regression tests on the short end of EUR OIS curve
- * @Created:		23 May 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "ResultsProcessor.h"

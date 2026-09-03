@@ -1,12 +1,3 @@
-/* 
- * @brief			Swig interface to Java for function mirGetDateFromTerm
- * @Created:		15 March 2016 
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "mirGetDateFromTerm.h"
 #include "LADate.h"
 #include "LAString.h"

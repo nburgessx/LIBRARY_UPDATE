@@ -1,16 +1,3 @@
-/*
- * @brief			Structured Credit API functions
- *					Contains functions to expose the structured credit loan cashflow breakdown calculations
- *
- *					This code was ported from MGEN AlgoQuantHub R analytics library
- *					Author Andrew Friend
- *
- * @Created:		20th March 2019
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- */
-
 #include "tryMeCashflowClient.h"
 #include "CashflowModel.h"
 #include "LoanCalculations.h"

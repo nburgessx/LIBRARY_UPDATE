@@ -1,11 +1,3 @@
-/*
-* @brief			Class the defines the Date Cashflow
-* @Created:			05 Feb 2018
-* @Author:			Yongyan Zheng
-* @Department:		ISD Front Office Development
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
 #include "CoreCashflow.h"
 
 namespace etrading

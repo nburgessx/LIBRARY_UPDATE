@@ -6,7 +6,7 @@
 
 #ifdef __GNUG__
 #pragma implementation
-#else // VC++óp
+#else // VC++
 #pragma warning(disable:4786)
 #endif
 
@@ -176,7 +176,7 @@ MDFile::getItem(
 
     @param[in] rec number of records
     @param[in] del delimiter
-    @return Itemêî
+    @return Item
 */
 unsigned int            
 MDFile::getItemsize(

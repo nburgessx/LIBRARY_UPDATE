@@ -1,12 +1,3 @@
-/*
- * @brief			Class the defines the Constant Maturity Swap Leg
- * @Created:		14 March 2018
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "CMSLeg.h"
 #include "CMSSchedule.h"
 #include "LACurveForwardRateHelpers.h"

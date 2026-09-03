@@ -1,13 +1,3 @@
-/*
- * @brief			Class that deals with library initialization
- *					It was ported over from InitializeMLibVanilla.h/.cpp.
- * @Created:		14 November 2016
- * @Author:			
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "InitializeMLibETrading.h"
 #include "FolderConfig.h"
 #include "LibSetUpETrading.h"

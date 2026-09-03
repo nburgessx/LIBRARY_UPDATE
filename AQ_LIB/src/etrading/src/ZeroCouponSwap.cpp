@@ -1,12 +1,3 @@
-/*
- * @brief			Class the defines the fixed float interest rate swap instrument
- * @Created:		05 July 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "ZeroCouponSwap.h"
 #include "LACurvePricingObject.h"
 #include "CurveValidation.h"

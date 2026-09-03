@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for meCurve - Access and retrieve methods
- * @Created:		19 April 2016
- * @Author:			Hans Roggeman
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include <vector>

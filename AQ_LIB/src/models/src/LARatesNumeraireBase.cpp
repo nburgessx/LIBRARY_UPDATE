@@ -33,7 +33,7 @@
 
 #include <limits>
 
-//#ifdef _MSC_VER 	//20070409--Nagase--g++エラー修正(g++ではstdextでは実装されていない)
+//#ifdef _MSC_VER 	//20070409--Nagase--g++(g++stdext)
 //using namespace stdext;
 //#else
 using namespace std;
@@ -237,7 +237,7 @@ LARatesNumeraireBase::clear()
 	mUpdateFlag = true;
 }
 
-//20070406--Nagase--g++エラー修正(ヘッダ内でインスタンス化されるというエラーメッセージが大量に出るのでcppソース内に移動した)
+//20070406--Nagase--g++(cpp)
 //======================================
 // set curve
 /*!
@@ -253,7 +253,7 @@ LARatesNumeraireBase::setCurve(double t, const LARatesPathElementCurve* pcurve)
 }
 
 
-//20070406--Nagase--g++エラー修正(ヘッダ内でインスタンス化されるというエラーメッセージが大量に出るのでcppソース内に移動した)
+//20070406--Nagase--g++(cpp)
 //==========================================
 // set interpolation class
 /*!

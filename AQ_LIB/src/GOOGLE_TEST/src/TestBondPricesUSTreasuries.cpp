@@ -1,12 +1,3 @@
-/*
- * @brief			Test File for BondPrices.cpp
- * @Created:		18th April 2017
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 // Include: Google Test Library
 #include <gTest/gTest.h>
 #include "InitializeMLibGoogleTest.h"

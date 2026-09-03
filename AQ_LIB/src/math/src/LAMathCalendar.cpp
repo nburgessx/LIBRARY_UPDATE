@@ -38,8 +38,8 @@ static LADate MIMIMUM_DATE("19500101");
 */
 struct MFFlowDate
 {
-    int                 mFMonth;  // month(1Å`12)
-    int                 mFWeek;   // week(1Å`5)
+    int                 mFMonth;  // month(112)
+    int                 mFWeek;   // week(15)
     LADayOfWeekEnum              mFWeekly; // day of the week(Sum=0, Mon=1, ..., Sat=6)
     // relational operator
     bool operator <(const MFFlowDate& d) const
@@ -578,7 +578,7 @@ LAMathCalendarData::createHolidayData(
     LADate def;
     if (mStart != def && mStart <= startDate && mEnd >= endDate) return;
 #ifdef __MDEBUG__
-    // ç≈è¨ì˙ïtÇ∆ÇÃî‰är
+    // 
     if (startDate < MIMIMUM_DATE)
     {
         LAString msg("Input date[");

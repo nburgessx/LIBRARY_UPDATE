@@ -1,12 +1,3 @@
-/* 
- * @brief			Swig interface to Java for meProductOISSwapPV method
- * @Created:		03 June 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include <string>

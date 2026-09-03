@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for meForwardRate methods
- * @Created:		19 April 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeLWOCurveForwardRate.h"
 #include "tryMeCurveForwardRate.h" // needed for the utility functions
 #include "tryMeDate.h"

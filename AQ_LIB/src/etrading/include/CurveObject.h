@@ -1,12 +1,3 @@
-/*
- * @brief			Base class for all LWO curve object classes
- * @Created:		18 Sep 2017
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "IsLWOObject.h"

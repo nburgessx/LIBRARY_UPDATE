@@ -1,11 +1,3 @@
-/*
- * @brief			Helper methods used for Schedule
- * @Created:		17 March 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
 #include "CurveUtilities.h"
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
@@ -2736,7 +2728,7 @@ namespace etrading
 
 		if (approximation)
 		{
-			// covAdj Hull Lognormal(f* theta * vol ^ 2 * t), which is the first order taylor formula in HULL’s book , same as BB's lognormal & Hull
+			// covAdj Hull Lognormal(f* theta * vol ^ 2 * t), which is the first order taylor formula in HULL book , same as BB's lognormal & Hull
 			convexity = forwardRate * theta * lognormalVol * lognormalVol * ts;
 		}
 		else

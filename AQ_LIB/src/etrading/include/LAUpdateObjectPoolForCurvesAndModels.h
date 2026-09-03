@@ -1,13 +1,3 @@
-/*
- * @brief			Implementation body of vanilla Yield Curve analytics
- *					It was ported over from LACalibrateModelIRVanilla.h/.cpp.
- * @Created:		14 November 2016
- * @Author:			
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #ifdef __GNUG__

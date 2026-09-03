@@ -1,12 +1,3 @@
-/*
- * @brief			Regression tests on the swap delta: This test calculates DV01 risk for a portfolio of IRS on the LCH6M curve.
- * @Created:		7 June 2017
- * @Author:			Ian Castleton
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include <string>
 #include <sstream>
 

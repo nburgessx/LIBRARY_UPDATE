@@ -146,7 +146,7 @@ public:
     vector<int>       mLines;      // fle line number that the error occurred (new information is added sequentially)
 };
 
-//////////////////// STATIC VARIABLES‚ÌDEFINE /////////////////////////////
+//////////////////// STATIC VARIABLESDEFINE /////////////////////////////
 bool
 LACoreErrorInfo::msIsDefault = true;    // default or not
 FILE* 

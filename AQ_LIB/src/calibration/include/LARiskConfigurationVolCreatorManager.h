@@ -27,7 +27,7 @@
 class LACoreDataService;
 //===================== Class Declare LARiskConfigurationVolCreatorManager==================================
 /*! 
-    @brief LARiskConfigurationVolCreatorManagerÅ@Factory class
+    @brief LARiskConfigurationVolCreatorManager Factory class
 
     This class is singleton
 */

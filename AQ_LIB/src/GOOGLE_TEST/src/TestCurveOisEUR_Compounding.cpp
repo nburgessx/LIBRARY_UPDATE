@@ -1,12 +1,3 @@
-/*
- * @brief			Regression tests on different compounding methods employed in building OIS curves
- * @Created:		03 AUG 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "CurveOis.h"
 #include "CurveStd.h"
 

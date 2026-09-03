@@ -1,12 +1,3 @@
-/*
- * @brief			A suite of consistency checks on STD curve to ensure STD curves can reprice input swaps
- * @Created:		21 Feb 2017
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"

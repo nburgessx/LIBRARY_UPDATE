@@ -1,12 +1,3 @@
-/*
- * @brief			Validation interface for the Hedge Curve Engine methods
- * @Created:		3 November 2017
- * @Author:			Ian Castleton
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeLWOCurveCalibrateHedge.h"
 
 #include "CreateDataFile.h"

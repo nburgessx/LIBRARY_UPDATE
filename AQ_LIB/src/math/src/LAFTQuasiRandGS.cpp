@@ -1,9 +1,9 @@
 /*! @file
-    @brief Generalized Sobol'数列を作るクラスの定義
+    @brief Generalized Sobol'
 */
 //#define __MUTEST_DEBUG__
 
-//64bitの整数型を定義
+//64bit
 #ifdef __GNUG__					
 	typedef unsigned long long LONG_Integer;	
 #endif							
@@ -183,10 +183,10 @@ unsigned long LAFTQuasiRandGS::mIrreduciblePoly[1500]  = {
 
 using namespace std;
 
-//乱数発生クラスの関数を定義---------------------------------------------------
+//---------------------------------------------------
 /*!
-	@brief FTQuasiRandGSのdefault constructor
-	パラメータのセット情報と、Rand()関数のデフォルトシード値を設定する
+	@brief FTQuasiRandGSdefault constructor
+	Rand()
 
 */
 
@@ -199,7 +199,7 @@ LAFTQuasiRandGS::LAFTQuasiRandGS()
 }
 
 /*!
-	@brief FTQuasiRandGSのdestructor
+	@brief FTQuasiRandGSdestructor
 
 */
 LAFTQuasiRandGS::~LAFTQuasiRandGS()
@@ -243,56 +243,56 @@ LAFTQuasiRandGS::getType() const
 	return FN_RAND_QUASIGS;
 }
 /*!
-	@brief 一様乱数を発生する関数 \n
-	次元回、生成行列×パス数を計算し、整数から実数に2進逆変換する
-	@param[in] variates 発生した一様乱数を返すValarray型のVector
+	@brief  \n
+	2
+	@param[in] variates ValarrayVector
 */
 void
 LAFTQuasiRandGS::getUniforms(DoubleArray& variates)
 {
 
-	/*!	変数の定義	*/	
-	unsigned int valRow;					//行数を格納する変数
-	unsigned int valDim;					//次元数を格納する変数
-	unsigned int valCount;					//カウンタを格納する変数
-	unsigned int sDim = getDim().size() == 2 ? getDim()[1] : getDim()[0];				//準乱数次元を格納する変数	
-	unsigned int tDim=getDim()[0];				//総次元を格納する変数
-	unsigned long multMtrx;					//生成行列の行×シークエンス数を格納
-	unsigned int cnt;						//生成行列の行×シークエンス数の1の個数(mod2)を格納
+	/*!		*/	
+	unsigned int valRow;					//
+	unsigned int valDim;					//
+	unsigned int valCount;					//
+	unsigned int sDim = getDim().size() == 2 ? getDim()[1] : getDim()[0];				//	
+	unsigned int tDim=getDim()[0];				//
+	unsigned long multMtrx;					//
+	unsigned int cnt;						//1(mod2)
 
-	//出力配列variatesに初期値0を設定
+	//variates0
 	for (valDim=0;valDim<sDim;valDim++)
 	{
 		variates[valDim]=0;
 	}
 
 
-	//次元ごとに計算
+	//
 	for (valDim=0;valDim<sDim;valDim++)
 	{
-		//行ごとに計算
+		//
 		for (valRow=0;valRow<mMaxDigit;valRow++)
 		{
 	
-			//行列とパス数の積を算出（行とパス数を2進表示で一致する部分を取得）
-			multMtrx=mGeneMatrix[valDim*mMaxDigit+valRow]&mState;	//&演算
+			//(2)
+			multMtrx=mGeneMatrix[valDim*mMaxDigit+valRow]&mState;	//&
 			cnt=0;
 			
-			//行列とパス数の積の和を算出（上記の1の個数が奇数ならば1,偶数ならば0を取得）
+			//(11,0)
 			for (valCount=0;valCount<mMaxDigit;valCount++)
 			{
 				if ((multMtrx>>valCount)==0)break;
 				cnt=cnt^(unsigned int)((multMtrx>>valCount)&0x01);
 			}
 
-			//2進逆変換
+			//2
 			variates[valDim]=variates[valDim]*2+cnt;
 		}
 		variates[valDim]=variates[valDim]/LAMath::pow(2,mMaxDigit);		
 		if (variates[valDim]==0)variates[valDim]=1/LAMath::pow(2,mMaxDigit+1);	
 	}
 
-	//メルセンヌツイスターで補完
+	//
 	if ((tDim-sDim)!=0){
 		DoubleArray variatesTmp(tDim-sDim);
 		mInner.getUniforms(variatesTmp);
@@ -314,7 +314,7 @@ LAFTQuasiRandGS::getUniforms(DoubleArray& variates)
 		fclose(fp_GS);
 #endif
 
-	//カウンタを一つ増やす
+	//
 	mState = mState + 1;
 	
 	// counter increments it by one, if exceeds the Max, back to the first
@@ -327,10 +327,10 @@ LAFTQuasiRandGS::getUniforms(DoubleArray& variates)
 }
 
 /*!
-	@brief Seedを設定する関数
-	@param[in] seed Seedに関する情報を設定する為のValarray型のVector。\n
-	ただし、	seed[0]=開始数,\n
-			seed[1]=必要Sequence数,\n
+	@brief Seed
+	@param[in] seed SeedValarrayVector\n
+		seed[0]=,\n
+			seed[1]=Sequence,\n
 			seed[2]=Seed For Generator Matrix,\n
 			seed[3]=Seed For Mersennne Twister
 */
@@ -359,7 +359,7 @@ LAFTQuasiRandGS::setSeed(const UlongArray& _seed)
 	mMSeed=seed[2];
 	mSeedSet=true;
 
-	//保有するMersennne Twisterにseedをセット
+	//Mersennne Twisterseed
 	UlongArray seedtmp(1);
 	seedtmp[0]=seed[3];
 	(mInner).setSeed(seedtmp);
@@ -368,12 +368,12 @@ LAFTQuasiRandGS::setSeed(const UlongArray& _seed)
 	return;
 }
 /*!
-	@brief  次元を設定する関数\n
-			（次元の設定にあわせて一部計算を行う為、基底クラスをオーバーライド）
+	@brief  \n
+			()
 
-	@param[in] dimValue 次元に関する情報を設定する為のValarray型のVector。\n
-	ただし、	dimValue[0]=全次元,\n
-	dimValue[1]=準乱数次元
+	@param[in] dimValue ValarrayVector\n
+		dimValue[0]=,\n
+	dimValue[1]=
 */
 void
 LAFTQuasiRandGS::setDim(const UintArray& _dimValue)
@@ -394,22 +394,22 @@ LAFTQuasiRandGS::setDim(const UintArray& _dimValue)
 		//error. wrong Dim setting
 	}
 	LARandBase::setDim(dimValue);
-//    mDimSet=true;//20051220(A)下に移動
+//    mDimSet=true;//20051220(A)
 	
-	//保有するMersennne TwisterにDimをセット
+	//Mersennne TwisterDim
 	UintArray dimtmp(1);
 	if (dimValue.size() == 2)
 	{
 		if ((dimValue[0]-dimValue[1])<0){
 			LAString msg =  "TotalDim<QuasiRandDim Error";
 			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
-		//エラー　全次元と準乱数の次元の関係が変
+		// 
 		}
 		dimtmp[0]=dimValue[0]-dimValue[1];
 		if (dimValue[1]>1500){
 			LAString msg =  "QuasiRandDim>1500 Error";
 			throw LACoreInvalidData(msg.getCString(), __FILE__, __LINE__);
-			//エラー　M-Libraryでは、準乱数次元は最大1500まで対応
+			// M-Library1500
 		}
 	}
 	mDimSet=true;
@@ -433,35 +433,35 @@ LAFTQuasiRandGS::setDim(const UintArray& _dimValue)
 void
 LAFTQuasiRandGS::getGM(void)
 {
-	unsigned int valDim;					//次元数を格納する変数
-	unsigned int valRow;					//行数を格納する変数
-	unsigned int sDim = getDim().size() == 2 ? getDim()[1] : getDim()[0];				//準乱数次元を格納する変数	
-	unsigned long powerIPoly;				//既約多項式の累乗を格納する変数
-	unsigned int digitIPoly;				//既約多項式の桁数を格納する変数
-	unsigned int Power;						//累乗数を格納する変数
-	unsigned int randShift;					//ランダム多項式のシフト数を格納する変数
+	unsigned int valDim;					//
+	unsigned int valRow;					//
+	unsigned int sDim = getDim().size() == 2 ? getDim()[1] : getDim()[0];				//	
+	unsigned long powerIPoly;				//
+	unsigned int digitIPoly;				//
+	unsigned int Power;						//
+	unsigned int randShift;					//
 
-	mGeneMatrix.resize(sDim*mMaxDigit);	//mGeneMatrixのサイズを定義
+	mGeneMatrix.resize(sDim*mMaxDigit);	//mGeneMatrix
 
-	//乱数の初期設定
+	//
 	ftsrand(mMSeed);
 
 	for (valDim=0;valDim<sDim;valDim++)
 	{
-		//既約多項式の桁数取得
+		//
 		digitIPoly=culcFig(mIrreduciblePoly[valDim])-1;
 		for (valRow=0;valRow<mMaxDigit;valRow++)
 		{
-			//累乗数取得
+			//
 			Power=valRow/digitIPoly+1;				
 
-			//シフト数取得
+			//
 			randShift=digitIPoly-1-valRow%digitIPoly;	
 
-			//既約多項式のべき乗取得
+			//
 			powerIPoly=IPPower(mIrreduciblePoly[valDim],Power);
 
-			//既約多項式のべき乗とランダム多項式を乗算して行列成分取得
+			//
 			mGeneMatrix[valDim*mMaxDigit+valRow]=getEG(powerIPoly,randShift);
 		}
 	}
@@ -492,39 +492,39 @@ LAFTQuasiRandGS::getGM(void)
 unsigned long
 LAFTQuasiRandGS::IPPower(unsigned long IPoly,unsigned int Power)
 {
-	/*!	変数の定義	*/
-	unsigned long out_polynomial;				//累乗多項式の格納変数
-	unsigned long temp_polynomial;				//一時的多項式の変数
-	unsigned int val_power;						//累乗数の変数
-	unsigned int val_digit;						//桁数の変数
-	unsigned int	digit;						//累乗の対象となる多項式の桁数を格納する変数
+	/*!		*/
+	unsigned long out_polynomial;				//
+	unsigned long temp_polynomial;				//
+	unsigned int val_power;						//
+	unsigned int val_digit;						//
+	unsigned int	digit;						//
 
-	//桁数の取得
+	//
 	digit=culcFig(IPoly);
 
-	//初期設定
+	//
 	out_polynomial=IPoly;
 
-	/*!	多項式の累乗	*/
-	//累乗数ごとに算出
+	/*!		*/
+	//
 	for (val_power=1;val_power<Power;val_power++)
 	{
-		//初期設定
+		//
 		temp_polynomial=0;
-		//桁数ごとに算出
+		//
 		for (val_digit=digit;val_digit>=1;val_digit--)
 		{
-			//累乗の対象となる多項式の各桁が1かどうか判定
+			//1
 			if (((IPoly>>(val_digit-1))&0x00000001)==1)
 			{
-				//各桁が1の場合は,桁数分シフトしてXOR
+				//1,XOR
 				temp_polynomial=temp_polynomial^(out_polynomial<<(val_digit-1));
 			}
 		}
 		out_polynomial=temp_polynomial;
 	}
 
-	//返値
+	//
 	return out_polynomial;
 }
 
@@ -536,31 +536,31 @@ LAFTQuasiRandGS::IPPower(unsigned long IPoly,unsigned int Power)
 unsigned long
 LAFTQuasiRandGS::getEG(unsigned long IPoly,unsigned int randShift)
 {
-	/*!	変数の定義	*/
-	unsigned int degreeLaurent;						//ローラン展開の次数を格納する変数
-	unsigned int digitIPoly=culcFig(IPoly);			//既約多項式の次数を格納する変数
-	LONG_Integer laurent;							//ローラン展開した式を格納する変数
-	LONG_Integer temp_polynomial;					//途中式を格納する変数
-	LONG_Integer elementGeneratorMtrx;				//生成行列の要素を格納する変数
-	unsigned int val_number,val_digit,val_shift;	//変数達
-	unsigned long rand_polynomial;					//ランダム多項式を格納する変数
-	unsigned long min_rand;							//ランダム多項式に必要とされるサイズを格納する変数
+	/*!		*/
+	unsigned int degreeLaurent;						//
+	unsigned int digitIPoly=culcFig(IPoly);			//
+	LONG_Integer laurent;							//
+	LONG_Integer temp_polynomial;					//
+	LONG_Integer elementGeneratorMtrx;				//
+	unsigned int val_number,val_digit,val_shift;	//
+	unsigned long rand_polynomial;					//
+	unsigned long min_rand;							//
 
 	/*!*******************/
-	/*!	ローラン展開		*/
+	/*!			*/
 	/*!*******************/
 
-	//ローラン展開の必要桁数
-	//	=行列の桁数(n_digit)+ランダム多項式の桁数の最大(shift)
+	//
+	//	=(n_digit)+(shift)
 	degreeLaurent=digitIPoly+mMaxDigit;
 
-	//初期値
+	//
 	laurent=(unsigned long)LAMath::pow(2,digitIPoly-2);
 
-	//桁数に限界値を適用
+	//
 	if (degreeLaurent>64)degreeLaurent=64;
 
-	/*!	ローラン展開	*/
+	/*!		*/
     for (val_number=digitIPoly;val_number<degreeLaurent;val_number++)
     {
         temp_polynomial=0x00;
@@ -568,34 +568,34 @@ LAFTQuasiRandGS::getEG(unsigned long IPoly,unsigned int randShift)
         {
             if (((IPoly>>val_digit)&0x0001)==1)
             {
-                //laurent*polynomialの余りを取得
+                //laurent*polynomial
                 temp_polynomial=temp_polynomial^(laurent>>val_digit);       
             }
         }
-        //laurent*polynomialの余りの桁を落とすためにlaurentを修正
+        //laurent*polynomiallaurent
         laurent=laurent^(temp_polynomial<<(digitIPoly-1));
     }
 
 	/*!*******************************/
-	/*!		ランダム多項式の生成		*/
+	/*!				*/
 	/*!*******************************/
 
-	/*!	digit桁を持つランダムな数を算出する	*/
-	//最小値を取得
+	/*!	digit	*/
+	//
 	min_rand=(0x00000001<<randShift);
 	
-	//digit桁以下の乱数を取得
+	//digit
 	rand_polynomial=ftrand()&(min_rand-1);
 
-	//最小値とdigit桁以下の乱数を接合
+	//digit
 	rand_polynomial=rand_polynomial|min_rand;
 
 
 	/*!***************************************/
-	/*!		ローラン展開×ランダム多項式		*/
+	/*!				*/
 	/*!***************************************/
 	
-	//ローラン展開×ランダム多項式
+	//
 	elementGeneratorMtrx=0;
 	for (val_shift=0;val_shift<degreeLaurent;val_shift++)
 	{
@@ -618,20 +618,20 @@ unsigned int
 LAFTQuasiRandGS::culcFig(unsigned long IPoly)
 {
 
-	/*!	変数の定義	*/
-	int digit;	//桁数の格納変数
+	/*!		*/
+	int digit;	//
 
-	/*!	初期値の設定	*/
+	/*!		*/
 	digit=0;
 
-	/*!	桁数算出	*/
+	/*!		*/
 	while(((IPoly>>digit)!=0))
     {
         //digit=digit++;
 		digit++;
     }
 
-    //返値
+    //
 	return digit;
 }
 

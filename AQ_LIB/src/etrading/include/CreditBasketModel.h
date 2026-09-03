@@ -1,14 +1,3 @@
-/*
- * @brief			Class which defines the Credit Basket Model.
- *                  The basket is constructed from underlying Credit Models.
- *                  Currently an implementation of the Gaussian Latent Variable Model.
- * @Created:		27 Feb 2019
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "LADate.h"

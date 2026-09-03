@@ -1,15 +1,3 @@
-/*
- * @brief			Structured Credit Trigger specification. Used in the Capital Structure
- *					A trigger controls whether capital reinvestment is allowed to take place
- *
- *					This code was ported from MGEN AlgoQuantHub R analytics library
- *					Author Andrew Friend
- *
- * @Created:		12th Dec 2019
- * @Author:			Ian Castleton
- *
- */
-
 #pragma once
 
 #include "LoanCalculations.h"

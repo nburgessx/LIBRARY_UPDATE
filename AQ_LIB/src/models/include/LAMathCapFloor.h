@@ -1,13 +1,3 @@
-/*!
-    @file LAMathCapFloor.h
-    @brief Declares LAMathCapFloor class.
-    @author
-    @date 2008/10
-    @version 1.0
-
-     2008, AlgoQuantHub. All rights reserved.
-*/
-
 #ifndef LAMathCapFloor_h
 #define LAMathCapFloor_h
 

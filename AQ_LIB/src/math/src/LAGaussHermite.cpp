@@ -96,7 +96,7 @@ LAGaussHermite::get(DoubleArray& abscissas,
 					double a,
 					double b)const
 {
-	//‘ÎÌs—ñ‚Ìê‡“™‚ÉÏ•ª”ÍˆÍ‚ª”¼•ª‚É‚È‚é‚±‚Æ‚ğl—¶‚·‚é‚×‚«
+	//
 	//In fact, a or b can be 0 for Symmetric function
 	if (!((a == POSITIVE_INFINITY && b == NEGATIVE_INFINITY) ||
 		(a == NEGATIVE_INFINITY && b == POSITIVE_INFINITY)))

@@ -1,15 +1,3 @@
-
-/*
- * @brief			Tests of the CreditBasketModel calibration
- *
- * @Created:		27 Feb 2019
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- *
- */
-
 #include "Variant.h"
 #include "LabelValueBlock.h"
 #include "Dependency.h"

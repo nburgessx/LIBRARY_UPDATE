@@ -1,15 +1,3 @@
-
-/*
- * @brief			Tests of the Monte Carlo RandomNumberGenerator class.
- *
- * @Created:		18 Feb 2019
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- *
- */
-
 #include "RandomNumberGenerator.h"
 
 // Include: Google Test Library

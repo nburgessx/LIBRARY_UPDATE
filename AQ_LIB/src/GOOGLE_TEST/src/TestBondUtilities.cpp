@@ -1,12 +1,3 @@
-/*
- * @brief			Test File for BondUtilities.cpp
- * @Created:		22nd February 2017
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include <gTest/gTest.h>    // Include: Google Test Library
 
 #include "BondUtilities.h"

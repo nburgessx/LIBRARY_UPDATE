@@ -10,7 +10,7 @@
 
 
 #ifdef _MSC_VER
-#undef max    // not VC++ÅH
+#undef max    // not VC++?
 #undef min
 #endif
 

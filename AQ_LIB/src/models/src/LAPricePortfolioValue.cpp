@@ -1076,7 +1076,7 @@ double
 LAPricePortfolioValue::value(const LADate& basedate, LAObject& object,
 					const LADataValuation& att) const
 {
-	(void)att; //20061018--David--Fix warning:C4100 20070411--Nagase--Œxíœ‚ğgcc‚É‚à‘Î‰
+	(void)att; //20061018--David--Fix warning:C4100 20070411--Nagase--gcc
 
 	LADataHolder* dh;
 	//value type

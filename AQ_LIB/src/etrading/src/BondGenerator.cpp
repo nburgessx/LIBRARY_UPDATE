@@ -1,13 +1,3 @@
-/*
- * @brief			Class which holds the Bond Static Data, used to build a Bond object
- * @Created:		18th January 2018
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 #include "BondGenerator.h"
 #include "ObjectUtilities.h"
 #include "DataUtilities.h"

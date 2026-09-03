@@ -1,12 +1,3 @@
-/*
- * @brief			Class which defines the SABR Model class.
- * @Created:		15 Jul 2020
- * @Author:			Yongyan Zheng
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "SabrModel.h"
 #include "TypeHelpers.h"
 #include "Swap.h"

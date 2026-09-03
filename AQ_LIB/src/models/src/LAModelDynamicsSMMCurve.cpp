@@ -123,9 +123,9 @@ LARatesPathElementSMMCurve::clone() const
 LARatesPathElementSMMCurve&
 LARatesPathElementSMMCurve::operator = (const LARatesPathElementSMMCurve& a)
 {
-	// 自分自身のコピーはしない
+	// 
 	if (this == &a) return *this;
-	// コピー。
+	// 
 	clear();
 	mValue = dynamic_cast<const LARatesPathElementSMMCurve&>(a).mValue;
 	mpInitialData_S = dynamic_cast<const LARatesPathElementSMMCurve&>(a).mpInitialData_S;
@@ -250,7 +250,7 @@ LARatesPathElementSMMCurve::set_t(void)
 	}
 	else
 	{
-		//文字列変換等で値が少しずれるかもしれないので厳密にテナー上にのっていないくても可とする。
+		//
 		double diff;
 		if ((*mpTenor)[pos] - m_t > m_t - (*mpTenor)[pos - 1])
 		{
@@ -370,7 +370,7 @@ LARatesPathElementSMMCurve::set(const LARatesPathElementBase& a)
 	DoubleArray deltatenor = *mpDeltaTenor;
 	
 	int i, j;
-	if (curve.get_t() == 0.0)//aが0スタートのカーブのときは初期カーブとみなす
+	if (curve.get_t() == 0.0)//a0
 	{
 		DoubleArray* p = mpTenor;
 		mpTenor = new DoubleArray(*p);
@@ -412,7 +412,7 @@ LARatesPathElementSMMCurve::set(const LARatesPathElementBase& a)
 		}
 	
 	}
-	else //それ以外は単にSデータをセット
+	else //S
 	{
 		for (i = mValue.size() - mpDeltaTenor->size(), j = 0; j <= mpDeltaTenor->size() - 1;
 			 i++, j++, tenor.erase(tenor.begin()), deltatenor.erase(deltatenor.begin()))
@@ -428,7 +428,7 @@ LARatesPathElementSMMCurve::set(const LARatesPathElementBase& a)
 			mData_L[i] = getL(ts, te, (*mpDeltaTenor)[j], curve);
 		}	
 	
-		// mData_LにLiborをセット
+		// mData_LLibor
 		//mData_L.resize(mValue.size());
 	/*	for (int i = mValue.size(); i >= 0; i--)
 		{

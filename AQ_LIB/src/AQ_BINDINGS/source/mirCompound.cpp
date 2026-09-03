@@ -1,12 +1,3 @@
-/* 
- * @brief			Swig interface to Java for mirCompound3 methods
- * @Created:		04 April 2016 
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "InitializeMLibETrading.h"
 #include "mirCompound.h"
 #include "TypeUtilities.h"

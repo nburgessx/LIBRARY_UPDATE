@@ -5,7 +5,7 @@
 //  2006, AlgoQuantHub..
 ///
 //////////////////////////////////////////////////////////
-//いくかのパターンでテスト実施ずみ
+//
 //////////////////////////////////////////////////////////
 #ifdef __GNUG__
 #pragma implementation
@@ -521,7 +521,7 @@ LAPriceEventExtraCF::calcExtraCF(const LADate& actiondate,
 								   vector<PayOffToolHolderIter>& iter,
 								   LAPricePayOffToolHolder& ph) const
 {
-	(void)actiontime; (void)pastaction; (void)futureaction; //20070411--Nagase--警告削除をgccにも対応
+	(void)actiontime; (void)pastaction; (void)futureaction; //20070411--Nagase--gcc
 	double extracf = 0;
 	////product index
 	//std::map<LADate, std::vector<LAPriceIndexToolBase*> >::const_iterator it = mIndexMap.begin();

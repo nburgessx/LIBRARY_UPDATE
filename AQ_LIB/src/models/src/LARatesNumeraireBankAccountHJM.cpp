@@ -31,7 +31,7 @@
 #include "LAGaussLegendre.h"
 
 
-//#ifdef _MSC_VER 	//20070409--Nagase--g++ƒGƒ‰[C³(g++‚Å‚Ístdext‚Å‚ÍÀ‘•‚³‚ê‚Ä‚¢‚È‚¢)
+//#ifdef _MSC_VER 	//20070409--Nagase--g++(g++stdext)
 //using namespace stdext;
 //#else
 using namespace std;

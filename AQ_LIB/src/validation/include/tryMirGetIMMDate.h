@@ -1,13 +1,3 @@
-/*
- * @brief			validation interface for mirGetIMMDate method(s)
- * @Created:		18 March 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 #pragma once
 
 #include "LACoreTemplateType.h"

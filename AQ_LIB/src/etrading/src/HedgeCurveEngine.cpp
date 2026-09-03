@@ -1,12 +1,3 @@
-/*
- * @brief			Methods that are related to calculating hedge delta risks
- * @Created:		19 Oct 2017
- * @Author:			Ian Castleton
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include <string>
 #include <boost/algorithm/string.hpp>
 

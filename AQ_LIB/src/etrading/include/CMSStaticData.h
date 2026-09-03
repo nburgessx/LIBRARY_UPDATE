@@ -1,13 +1,3 @@
-/*
- * @brief			Class the defines the Constant Maturity Swap configuration parameters
- *					The purpose of this class is to store the CMS underlying SwapIndex parameters.
- * @Created:		14 March 2018
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include <string>

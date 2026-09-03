@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the mirAssetSwapSpread method
- * @Created:		13 April 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMirAssetSwapSpread.h"
 
 #include "CurveInstrumentPricing.h"

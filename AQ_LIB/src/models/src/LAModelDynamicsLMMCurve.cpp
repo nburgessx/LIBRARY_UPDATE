@@ -73,7 +73,7 @@ LARatesPathElementLMMCurve::LARatesPathElementLMMCurve(const DoubleArray& tenor,
 	}
 	else
 	{
-		//文字列変換等で値が少しずれるかもしれないので厳密にテナー上にのっていないくても可とする。
+		//
 		double diff;
 		if ((*mpTenor)[pos] - m_t > m_t - (*mpTenor)[pos - 1])
 		{
@@ -166,18 +166,18 @@ LARatesPathElementLMMCurve::clone() const
 LARatesPathElementLMMCurve&
 LARatesPathElementLMMCurve::operator = (const LARatesPathElementLMMCurve& a)
 {
-	// 自分自身のコピーはしない
+	// 
 	if (this == &a) return *this;
 
 /*	if (!a.isTypeOf(PE_LMMCURVE)) 
-	{	// タイプチェックの際おかしいことが起こったら
-		// 例外発生
+	{	// 
+		// 
 		LAString err = "Assignment error for LARatesPathElementLMMCurve : from ";
 		err += LAString(a.getType());
 		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}*/
 
-	// コピー。
+	// 
 	clear();
 	
 	mValue = dynamic_cast<const LARatesPathElementLMMCurve&>(a).mValue;
@@ -312,7 +312,7 @@ LARatesPathElementLMMCurve::set_t (double t)
 	}
 	else
 	{
-		//文字列変換等で値が少しずれるかもしれないので厳密にテナー上にのっていないくても可とする。
+		//
 		double diff;
 		if ((*mpTenor)[pos] - m_t > m_t - (*mpTenor)[pos - 1])
 		{
@@ -371,7 +371,7 @@ LARatesPathElementLMMCurve::set(const LARatesPathElementBase& a)
 	
 	
 
-	if (curve.get_t() == 0.0)//aが0スタートのカーブのときは初期カーブとみなす
+	if (curve.get_t() == 0.0)//a0
 	{
 		DoubleArray* p = mpTenor;
 		mpTenor = new DoubleArray(*p);
@@ -405,7 +405,7 @@ LARatesPathElementLMMCurve::set(const LARatesPathElementBase& a)
 			if (i >= 0) mValue[i] = (*mpInitialData_L)[j];
 		}
 	}
-	else //それ以外は単にLデータをセット
+	else //L
 	{
 		int i, j;
 		for (i = mValue.size() - 1, j = mpDeltaTenor->size() - 1; i >= 0; i--, j--)

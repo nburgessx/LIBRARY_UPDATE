@@ -1,13 +1,3 @@
-/*
- * @brief			Snapshot tests on the swap DV01 - These test IRS and XCCY DV01 on ZAR
- * @Created:		16 Apr 2020
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 // Curves
 #include "tryMeLWO.h"
 

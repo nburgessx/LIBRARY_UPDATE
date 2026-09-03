@@ -413,7 +413,7 @@ double LAMathSABR_Hagan::getSABRLognormalVol(double T, double F, double K)
 // NORMAL Vol
 double LAMathSABR_Hagan::getSABRNormalVol(double T, double F, double K)
 {
-	// Normal analytical  formula from Hagan's paper 'Managing Smile Risk’ 
+	// Normal analytical  formula from Hagan's paper 'Managing Smile Risk 
 
 	double F_mid = (fabs(F - K) < eps_SABR) ? F : ((F + K) * 0.5);
 

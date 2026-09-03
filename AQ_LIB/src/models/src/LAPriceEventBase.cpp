@@ -5,7 +5,7 @@
 //  2006, AlgoQuantHub..
 ///
 //////////////////////////////////////////////////////////
-//いくかのパターンでテスト実施ずみ 
+// 
 //////////////////////////////////////////////////////////
 #ifdef __GNUG__
 #pragma implementation
@@ -99,7 +99,7 @@ LAPriceEventBase::setUp(const LADate& basedate,
 	if (isCall) return;
 
 
-	(void)payoff; (void)basedate; //20070411--Nagase--警告削除をgccにも対応
+	(void)payoff; (void)basedate; //20070411--Nagase--gcc
 	const LADataHolder* dh;
 	//leg object
 	dh = &(trade.getData(CALIBRATION_DATA_UNDERLYINGS, ISNOTNULL));

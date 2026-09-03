@@ -74,7 +74,7 @@ public:
 	// function to set seed
     void				        setSeed(const UlongArray& seedValue);
 								
-	// function to set dimension information(first element should be the number of dimensionÅj
+	// function to set dimension information(first element should be the number of dimension)
     void                        setDim(const UintArray& dimValue);
 	// function to set parameters
     void						setParam(const DoubleMatrix& param);

@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the meCurveFrequency method
- * @Created:		20 June 2016
- * @Author:			Nicholas Burgess
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeCurveFrequency.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"

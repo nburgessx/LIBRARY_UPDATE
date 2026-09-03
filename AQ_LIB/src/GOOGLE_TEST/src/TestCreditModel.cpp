@@ -1,14 +1,3 @@
-/*
- * @brief			Tests of the CreditModel calibration and reprice functionality.
- *
- * @Created:		12 Mar 2018
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- *
- */
-
 #include "Variant.h"
 #include "LabelValueBlock.h"
 #include "Dependency.h"

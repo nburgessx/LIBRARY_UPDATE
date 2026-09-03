@@ -60,7 +60,7 @@ static const double MAXIMUM = DBL_MAX;//FLT_MAX;
 ///////////////// Auxiliary function /////////////////////////////
 /*!
     @brief gcf function related with Incomplete Gamma Function\n
-    （See "Numerical recipes in C"）
+    (See "Numerical recipes in C")
 
 */
 static inline void 
@@ -102,7 +102,7 @@ gcf(double& gammcf, double a, double x, double& gln)
 }
 /*!
     @brief gser function related with Incomplete Gamma Function\n
-    （See "Numerical recipes in C"）
+    (See "Numerical recipes in C")
 
 */
 static inline void 
@@ -146,7 +146,7 @@ gser(double& gamser, double a, double x, double& gln)
 }
 /*!
     @brief betacf function related with IncompleteBeta Function\n
-    （See "Numerical recipes in C"）
+    (See "Numerical recipes in C")
 
 */
 static inline double 
@@ -328,7 +328,7 @@ LAMath::tpf(double x1, double x2, int m)
 }
 
 
-/*!　Operations on the absolute value */
+/*! Operations on the absolute value */
 /*!
     @brief function that returns the absolute value(double)
     @param[in] a value in double
@@ -350,7 +350,7 @@ LAMath::abs(int a)
     return ::abs(a);
 }
 
-/*! special function　*/
+/*! special function */
 /*!
     @brief function that returns the square dataInstance
     @param[in] a value in double

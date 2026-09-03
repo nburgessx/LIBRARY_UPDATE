@@ -1,12 +1,3 @@
-/*
- * @brief			This test checks the consistency of swap pricing using the IsFwdInter flag when using STD curve
- * @Created:		21 March 2017
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "CreateDataFile.h"

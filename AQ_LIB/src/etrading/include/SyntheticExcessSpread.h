@@ -1,17 +1,3 @@
-/*
- * @brief			Structured Credit Synthetic Excess Spread (SXS). Used in the Capital Structure.
- *					The SXS is used as a synthetic tranxhe below equity which can absorb losses.
- *					The SXS can be periodically replenished.
- *
- *					This code was ported from MGEN AlgoQuantHub R analytics library
- *					Author Andrew Friend
- *
- * @Created:		17th Dec 2019
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- */
-
 #pragma once
 
 #include "LoanCalculations.h"

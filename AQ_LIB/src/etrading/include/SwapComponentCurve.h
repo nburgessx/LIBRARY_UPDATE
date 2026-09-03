@@ -1,12 +1,3 @@
-/*
- * @brief			Swap component curve used in the global curve calibration engine
- * @Created:		16 Jan 2018
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "GlobalCalibrationComponentCurve.h"

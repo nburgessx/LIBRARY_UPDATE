@@ -1,16 +1,3 @@
-/*
- * @brief			Structured Credit API functions
- *					Contains functions to expose the structured credit regulatory supervisory formulas
- *
- *					This code was ported from MGEN AlgoQuantHub R analytics library
- *					Author Andrew Friend
- *
- * @Created:		27th March 2019
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- */
-
 #pragma once
 
 

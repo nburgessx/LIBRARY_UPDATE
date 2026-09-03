@@ -428,7 +428,7 @@ InterpolationDataHolder::InterpolationDataHolder( LACurveStaticDataHolder & stat
 	// Target Curve Market Suffix
 	LAString targetCurveMktSuffix = staticDataObj.targetCurveMktSuffix_;
 
-	// Initialize Discount Factor Interpolation
+	// Initialize Discount Factor Interpolation
 	const LADataHolder *dh = &staticDataObj.curveCalibrationData_.getData( CALIBRATION_DATA_INTERPOLATION + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
@@ -438,7 +438,7 @@ InterpolationDataHolder::InterpolationDataHolder( LACurveStaticDataHolder & stat
 		fh_DiscountFactors_.set( interpolatorForDiscountFactors_, true );
 	}
 
-	// Initialize Swap Instrument Interpolation
+	// Initialize Swap Instrument Interpolation
 	dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_INTERPOLATIONYG + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{
@@ -448,7 +448,7 @@ InterpolationDataHolder::InterpolationDataHolder( LACurveStaticDataHolder & stat
 		fh_Swaps_.set( interpolatorForSwaps_, true );
 	}
 
-	// Initialize Futures and FRA Instrument Interpolation
+	// Initialize Futures and FRA Instrument Interpolation
 	dh = &staticDataObj.curveCalibrationData_.getData( IR_CALIBRATION_DATA_INTERPOLATIONFW + targetCurveMktSuffix, NOCHECK );
 	if( dh->isDefined() && !dh->isNull() )
 	{

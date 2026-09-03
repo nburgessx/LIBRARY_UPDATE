@@ -1,12 +1,3 @@
-/*
- * @brief			Hull White Model
- * @Created:		13th Octt 2017
- * @Author:			Yongyan Zheng
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "VasicekModel.h"
 #include "CurveUtilities.h"
 #include "ExceptionMacros.h"

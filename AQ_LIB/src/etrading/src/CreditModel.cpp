@@ -1,13 +1,3 @@
-/*
- * @brief			Class which defines the Credit Model class.
- * @Created:		26 Feb 2018
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 #include "CreditModel.h"
 #include "CreditDefaultSwap.h"
 #include "EuropeanIRSwaption.h"  // To price option on CDS

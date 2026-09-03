@@ -1,12 +1,3 @@
-/*
- * @brief			Class acting as an engine that provides simultaneous global yield curve calibration capabilities
- * @Created:		22 Jan 2018
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "GlobalCalibrationComponentCurve.h"

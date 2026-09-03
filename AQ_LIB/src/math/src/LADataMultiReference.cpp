@@ -115,7 +115,7 @@ LADataMultiReference::setReferencer(void)
     // must be cleared
 	if (mReferences.size() != 0) return;
     LAObject* e = getObject();
-    // is this data a part of ObjectÅH
+    // is this data a part of Object?
     if (e != NULL)
     {
         //LACoreError ex("MultiReference Error", __FILE__,__LINE__);
@@ -151,7 +151,7 @@ void
 LADataMultiReference::delReferencer(void)
 {
     LAObject* e = getObject();  // original Object
-    // is this data a part of ObjectÅH
+    // is this data a part of Object?
     if (e != NULL)
     {
         vector<LAObjectHolder*>::iterator it;
@@ -334,7 +334,7 @@ LADataMultiReference::assignment(const LAPriceDataType& a)
     // not copy when a == this
     if (this == &a) return *this;
 
-    // is the same typeÅH
+    // is the same type?
     if (a.getType() != DATA_MULTIREFERENCE) 
     {
         LAString err = "Assignment error for LADataMultiReference : from ";
@@ -359,7 +359,7 @@ LADataMultiReference::assignment(const LAPriceDataType& a)
 
     @param[in] a LADataMultiReference object to be compared
 
-    @return (Object reference number of the Data) Å| (Object reference number of Data to be compared)
+    @return (Object reference number of the Data) - (Object reference number of Data to be compared)
 */
 int
 LADataMultiReference::compare(const LAPriceDataType& a) const

@@ -52,7 +52,7 @@ public:
     virtual void                getUniforms(DoubleArray& variates); 
 
                                 //==========================================
-                                // function to set dimension information(override the base class to match the setting of the dimension）
+                                // function to set dimension information(override the base class to match the setting of the dimension)
 								//dimValue[0] total dimension
 								//dimValue[1] dimension for quasi-random number
 	virtual void				setDim(const UintArray& dimValue);
@@ -60,11 +60,11 @@ public:
 
 	
                                 //==========================================
-                                // function to set seed(override the base class to match the setting of the dimension）
-								//Seed[0]：start number
-								//Seed[1]：necessary Sequence number
-								//Seed[2]：Seed For Generator Matrix
-								//Seed[3]：Seed For Mersennne Twister
+                                // function to set seed(override the base class to match the setting of the dimension)
+								//Seed[0]:start number
+								//Seed[1]:necessary Sequence number
+								//Seed[2]:Seed For Generator Matrix
+								//Seed[3]:Seed For Mersennne Twister
 	virtual void                setSeed(const UlongArray& seed);
 
 
@@ -73,7 +73,7 @@ private:
 	// area to memorize Generator Matrix
 	UlongArray mGeneMatrix;
 
-	// flag to judge the setting of mSeed、mDim
+	// flag to judge the setting of mSeedmDim
 	bool			mSeedSet,mDimSet;
 
 	// seed of Generalization

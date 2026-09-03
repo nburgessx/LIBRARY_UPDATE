@@ -21,7 +21,7 @@ using namespace std;
 
 /*!
 	@brief default constructor
-	@param[in] tÅ@spot time
+	@param[in] t spot time
     @param[in] r  short rate
 */
 LARatesPathElementSRCurve::LARatesPathElementSRCurve( double t) : LARatesPathElementCurve( t )

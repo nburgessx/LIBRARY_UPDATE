@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for curve calibration method using dual-bootstrapping
- * @Created:		01 March 2018 
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeCurveDualBootstrap.h"
 #include "LAUpdateStaticDataManager.h"
 #include "CreateDataFile.h"

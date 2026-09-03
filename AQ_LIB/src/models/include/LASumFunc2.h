@@ -59,7 +59,7 @@ public:
 								}
 
 
-	// 20060929 基本クラスの仮想関数をオーバーライド
+	// 20060929 
 	virtual	LAFunctionBase&		operator()(unsigned int pos, const DoubleArray& x)
 								{
 									return LAFunctionBase::operator()(pos, x);
@@ -79,7 +79,7 @@ public:
 									return LAFunctionBase::integral(xl, xu);
 								}
 	
-	// 20060929 基本クラスの仮想関数をオーバーライド
+	// 20060929 
 	virtual double				integral(const std::vector<std::pair<double,double> >& x,
 										const LAIntegralBase* pIntegral) const
 								{
@@ -104,16 +104,16 @@ public:
 
 	                            //==========================================
 								// check x is in domain of this function or not.
-	virtual	bool				isInDomain(const DoubleArray& x) const { (void)x; //20061017--David--Remove warning:C4100 20070411--Nagase--警告削除をgccにも対応
+	virtual	bool				isInDomain(const DoubleArray& x) const { (void)x; //20061017--David--Remove warning:C4100 20070411--Nagase--gcc
 												return true;};
 								//==========================================
 	                            // check derivable or not.
                             // check derivable or not.
-	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int pos) const { (void)x; (void)pos; //20061017--David--Remove warning:C4100 20070411--Nagase--警告削除をgccにも対応
+	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int pos) const { (void)x; (void)pos; //20061017--David--Remove warning:C4100 20070411--Nagase--gcc
 												return true;};
 								//==========================================
 	                            // check double derivable or not.	
-	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi, unsigned int posj) const { (void)x; (void)posi; (void)posj; //20061017--David--Remove warning:C4100 20070411--Nagase--警告削除をgccにも対応
+	virtual	bool				isDifferentiable(const DoubleArray& x, unsigned int posi, unsigned int posj) const { (void)x; (void)posi; (void)posj; //20061017--David--Remove warning:C4100 20070411--Nagase--gcc
 												return true;};
 //  OPERATION
 

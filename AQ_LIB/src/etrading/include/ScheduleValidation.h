@@ -1,12 +1,3 @@
-/*
- * @brief			schedule validation methods used within validation_api
- * @Created:		29th June 2016
- * @Author:			Nicholas Burgess
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "LACoreTemplateType.h"

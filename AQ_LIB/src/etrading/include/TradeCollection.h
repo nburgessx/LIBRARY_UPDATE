@@ -1,12 +1,3 @@
-/*
- * @brief			Class that carries multiple trades
- * @Created:		21 May 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "LabelValueBlock.h"

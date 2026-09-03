@@ -1,12 +1,3 @@
-/*
- * @brief			Class that calculates swap delta risk against multiple yield curves
- * @Created:		11 April 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 #include "Swap.h"
 #include "BaseInstrument.h"

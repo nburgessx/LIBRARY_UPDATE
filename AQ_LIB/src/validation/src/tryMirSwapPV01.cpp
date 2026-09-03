@@ -1,11 +1,3 @@
-/*
- * @brief			validation interface for swap PV01 method(s)
- * @Created:		30 March 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
 #include "tryMirSwapPV01.h"
 #include "LACurveForwardRateHelpers.h"
 #include "CreateDataFile.h"

@@ -1,13 +1,3 @@
-/* 
- * @brief			Swig interface for meLWO... functions
- * @Created:		17 May 2018
- * @Author:			Nicholas Burgess
- * @Department:		Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 #include "LACoreTemplateType.h"
 #include "TypeUtilities.h"
 #include "meLWO.h"

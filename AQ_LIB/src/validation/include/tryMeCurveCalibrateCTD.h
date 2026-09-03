@@ -1,13 +1,3 @@
-/*
- * @brief			validation interface for the meCurveCalibrateCTD method
- * @Created:		10 July 2017
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 #pragma once
 
 #include "LACoreTemplateType.h"

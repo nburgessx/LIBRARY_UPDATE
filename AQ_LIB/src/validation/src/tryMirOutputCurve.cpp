@@ -1,11 +1,3 @@
-/*
- * @brief			validation interface for output curve method(s)
- * @Created:		31 March 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
 #include "tryMirOutputCurve.h"
 #include "LACurveCalibrationHelpers.h"
 #include "CreateDataFile.h"

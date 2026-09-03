@@ -5,7 +5,7 @@
 //  2006, AlgoQuantHub..
 ///
 //beta vesion
-//いくかのパターンでテスト実施ずみ
+//
 //
 #ifdef __GNUG__
 #pragma implementation
@@ -101,7 +101,7 @@ LAPriceEventCpnChange::doAction(const LADate& actiondate,
 									 vector<LAPriceEventHolder*>& pastaction,
 									 vector<PayOffToolHolderIter>& iter)
 {
-	(void)pastaction; (void)futureaction; (void)extrapayoff; (void)actiontime; //20070411--Nagase--警告削除をgccにも対応
+	(void)pastaction; (void)futureaction; (void)extrapayoff; (void)actiontime; //20070411--Nagase--gcc
 	PayOffToolHolderIter it;
 	for(unsigned int i = 0; i < mTargetLegNo.size(); i++)
 	{

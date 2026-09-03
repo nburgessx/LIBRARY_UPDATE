@@ -1,13 +1,3 @@
-/*!
-    @file LAMathAnalyticalFormula2.h
-    @brief Black formula.
-    @author
-    @date 2008/25
-    @version 1.0
-
-     2008, AlgoQuantHub. All rights reserved.
-*/
-
 #ifndef LAMathAnalyticalFormula2_h
 #define LAMathAnalyticalFormula2_h
 

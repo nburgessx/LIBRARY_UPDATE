@@ -80,7 +80,7 @@ public:
 			for(unsigned int i=0;i<n;i++)
 			{
 				logrec.push_back(mdf.getRecord(logrow-n+i));
-			}//set the newer n data to the stringD
+			}//set the newer n data to the string.
 
 			mdf.closeFile();
 

@@ -5,7 +5,7 @@
 //  2006, AlgoQuantHub..
 ///
 //////////////////////////////////////////////////////////
-//いくかのパターンでテスト実施ずみ 
+// 
 //////////////////////////////////////////////////////////
 #ifdef __GNUG__
 #pragma implementation
@@ -103,7 +103,7 @@ LAPriceEventNotionalChange::doAction(const LADate& actiondate,
 										vector<LAPriceEventHolder*>& pastaction,
 										vector<PayOffToolHolderIter>& iter)
 {
-	(void)pastaction; (void)futureaction; //20070411--Nagase--警告削除をgccにも対応
+	(void)pastaction; (void)futureaction; //20070411--Nagase--gcc
 	PayOffToolHolderIter it;
 	for(unsigned int i = 0; i < mTargetLegNo.size(); i++)
 	{	
@@ -173,7 +173,7 @@ LAPriceEventNotionalChange::doAction(const LADate& actiondate,
 					payofftool.mNotionalCF = notional * (1.0 - mChangeRatio);
 					payofftool.mpFX_for_PayOff = it->getPayOff().mpFX_for_PayOff;
 					payofftool.calcPayOff();
-					//元本償還通貨の変更アクションを実施
+					//
 					if (_action != NULL)
 					{
 						vector<PayOffToolHolderVector> dummy(payoff.size());
@@ -235,7 +235,7 @@ LAPriceEventNotionalChange::doAction(const LADate& actiondate,
 						payofftool.mNotionalCF = notional1st - notionalarray[0];
 						payofftool.mpFX_for_PayOff = it->getPayOff().mpFX_for_PayOff;
 						payofftool.calcPayOff();						
-						//元本償還通貨の変更アクションを実施
+						//
 						if (_action != NULL)
 						{
 							vector<PayOffToolHolderVector> dummy(payoff.size());

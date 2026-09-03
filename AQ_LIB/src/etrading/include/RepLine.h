@@ -1,20 +1,3 @@
-/*
- * @brief			Structured Credit Representative Line (Rep Line) Item
- *					In Rep Line analysis, a large portfolio of loans is represented
- *					by a small number of hypothetical loans. Each Rep Line represents
- *					a subset of the portfolio with the statistical characteristics of that group.
- *					Each loan within the group is assumed to be homogeneous and to have the
- *					same behaviour as the Rep Line.
- *
- *					This code was ported from MGEN AlgoQuantHub R analytics library
- *					Author Andrew Friend
- *
- * @Created:		3rd Dec 2019
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- */
-
 #pragma once
 
 

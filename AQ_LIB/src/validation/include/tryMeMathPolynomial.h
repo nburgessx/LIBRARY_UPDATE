@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for Polynomial Interpolation Method(s)
- * @Created:		8th January 2020
- * @Author:			Nicholas Burgess
- * @Department:		Quant Research
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include <vector>

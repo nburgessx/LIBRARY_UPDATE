@@ -1,12 +1,3 @@
-/*
- * @brief			Class which defines a simple statistics-gathering class, used by the Monte Carlo engine.
- * @Created:		14 Jan 2019
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "MonteCarloStatistics.h"
 #include "ExceptionMacros.h"
 

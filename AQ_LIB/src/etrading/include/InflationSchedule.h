@@ -1,12 +1,3 @@
-/*
- * @brief			Class the defines the Inflation Leg Schedule of a Zero Coupon Inflation Swap
- * @Created:		21 May 2020
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "Schedule.h"

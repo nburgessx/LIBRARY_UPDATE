@@ -1,13 +1,3 @@
-/*
- * @brief			Class which defines a 1D split-interpolator which has a Linear front section
- *					followed by a MonotoneCubic section. A joinDate specifies the join between the two.
- * @Created:		19 Sept 2019
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "LAInterpolationBase.h"

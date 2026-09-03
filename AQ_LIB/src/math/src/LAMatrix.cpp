@@ -125,7 +125,7 @@ LAMatrix::LAMatrixData::resize(unsigned int row, unsigned int col)
         if (newData[0] != mpData[0]) delete mpData[0];
         if (newData != mpData) delete mpData;
     }
-    // 設定しなおし
+    // 
     mpData = newData;
     mRow = row;
     mCol = col;
@@ -415,8 +415,8 @@ LAMatrix::subMatrix(unsigned int rs, unsigned int re, unsigned int cs, unsigned 
     return ret;
 }
 /*! 
-    @brief 逆行列を返す関数（正方行列以外では例外となる）
-    @return 逆行列のデータをもつLAMatrixクラス
+    @brief ()
+    @return LAMatrix
 */
 LAMatrix 
 LAMatrix::inverseMatrix(void) const
@@ -455,7 +455,7 @@ LAMatrix::inverseMatrix(void) const
 
 /*! 
     @brief Function to return the calc result for Matrix calcuration
-    @return calc result（double type）
+    @return calc result(double type)
 */
 double 
 LAMatrix::determinant(void) const

@@ -1,13 +1,3 @@
-/*!
-    @file LAMathSwaptionVolLMM.h
-    @brief Declares Swaption_LMM class.
-    @author
-    @date 2008/10
-    @version 1.0
-
-     2008, AlgoQuantHub. All rights reserved.
-*/
-
 #ifndef LAMathSwaptionVolLMM_h
 #define LAMathSwaptionVolLMM_h
 

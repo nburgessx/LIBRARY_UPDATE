@@ -84,7 +84,7 @@ LAConstrainedSplineInterpolation::clone() const
 
 /*!
     @brief check whether the class is a class of ID 
-	@param[in] id the type of class（function_t type）
+	@param[in] id the type of class(function_t type)
 	@return True or false
 */
 bool
@@ -106,7 +106,7 @@ LAConstrainedSplineInterpolation::getType() const
 /*!
     @brief return a one-dimensional interpolated value
 	@param[in] x1  point to interpolate
-	@return a interpolated value（one-dimension）
+	@return a interpolated value(one-dimension)
 */
 double
 LAConstrainedSplineInterpolation::value(const double x1) const

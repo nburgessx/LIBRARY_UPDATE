@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for meProductBondSchedule method
- * @Created:		7 Dec 2016
- * @Author:			Ian Castleton
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "LabelValueBlock.h"

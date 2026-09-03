@@ -1,13 +1,3 @@
-/*
- * @brief			Nelson Siegel Model Fitting
- *					This is used to fit Bond Yields to a Nelson-Siegel / Svensson curve
- * @Created:		5th June 2018
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "BondCurveCostFunction.h"

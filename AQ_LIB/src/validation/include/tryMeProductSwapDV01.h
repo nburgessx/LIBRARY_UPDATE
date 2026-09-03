@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the meProductSwapDV01 method
- * @Created:		26 May 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "LACoreTemplateType.h"

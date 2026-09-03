@@ -74,7 +74,7 @@ public:
 	const LAMathHWFuncSigma&		getHWSigma(void) const {return  *mpHWtool->getHWSigma();}
 	
                                 //======================================
- //Å@OPERATION
+ // OPERATION
 								//======================================
 								// transform from string representaion
     void				        convertFromString(const LAString& str);

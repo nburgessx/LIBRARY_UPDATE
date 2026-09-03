@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the tryMeCurveGetInterpolationJoinDate function
- * @Created:		18 Nov 2017
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeCurveGetInterpolationJoinDate.h"
 #include "StructuredExceptionHandler.h"
 #include "CurveUtilities.h"

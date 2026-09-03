@@ -1,12 +1,3 @@
-/*
- * @brief			Normal Distribution
- * @Created:		10th August 2017
- * @Author:			Nicholas Burgess
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "NormalDistribution.h"
 #include "LADist.h"
 #include "ExceptionMacros.h"

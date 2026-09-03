@@ -1,12 +1,3 @@
-/*
-* @brief			Cap Floor
-* @Created:		    28 December 2017
-* @Author:			Yongyan Zheng
-* @Department:	    Quant Research & Analytics
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "CapletFloorlet.h"
 #include "NormalDistribution.h"
 #include "ExceptionMacros.h"

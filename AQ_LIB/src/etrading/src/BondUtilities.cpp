@@ -1,13 +1,3 @@
-/*
- * @brief			Bond Utilities for the LWO Swap object related classes
- * @Created:		24th January 2017
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 #include "BondUtilities.h"
 #include "CommonConstants.h"
 #include "LabelValueBlockValidation.h"

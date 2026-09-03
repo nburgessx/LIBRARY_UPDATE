@@ -1,13 +1,3 @@
-/*
-* @brief			Class the defines the Cashflow DataProvider, which contains the dynamic cashflow data
-*					such as discount factors and float rates
-* @Created:		2 May 2018
-* @Author:			Ian Castleton
-* @Department:		Quant Research & Analytics
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "ValuationSettings.h"
 #include "SettingsValidation.h"
 #include "LWOUtilities.h"					// Undecorate Handle Method & Curve Object Accessors for Single, Dual and Globally Calibrate Curves

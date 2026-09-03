@@ -147,7 +147,7 @@ LAAntithetic::getUniforms(DoubleArray& variates)
 
 
 /*!
-	@brief function to set dimension information(first element should be the number of dimensionÅj
+	@brief function to set dimension information(first element should be the number of dimension)
 	@param [in] dimValue information necessary for dimension setting\n
 		    dimValue[0]=total dimension,\n
             dimValue[1]=quasi-random number dimension

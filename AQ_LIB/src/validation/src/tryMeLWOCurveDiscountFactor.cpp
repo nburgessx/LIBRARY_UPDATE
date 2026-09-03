@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for meDiscountFactor method(s)
- * @Created:		19 April 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeLWOCurveDiscountFactor.h"
 
 #include "CreateDataFile.h"

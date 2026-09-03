@@ -1,16 +1,3 @@
-/*
- * @brief			Structured Credit Loan Portfolio
- *					Class to represent a portfolio of loans.
- *
- *					This code was ported from MGEN AlgoQuantHub R analytics library
- *					Author Andrew Friend
- *
- * @Created:		19th Nov 2019
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- */
-
 #include "LoanPortfolio.h"
 #include "LoanValidation.h"
 

@@ -1,13 +1,3 @@
-/*!
-    @file MMAnalyticalBlack2.h
-    @brief
-    @author
-    @date 2008/25
-    @version 1.0
-
-     2008, AlgoQuantHub. All rights reserved.
-*/
-
 #ifndef LAMathAnalyticalBlack2_h
 #define LAMathAnalyticalBlack2_h
 

@@ -69,7 +69,7 @@ private:
 	std::map<object_t, LADataHolder>	mObjectCollection; // pair pf Data ID and Data Holder
 
 	// copy constructor
-    // impossible to copy Master ObjectÅH
+    // impossible to copy Master Object?
     LAPriceDataManager(const LAPriceDataManager& a);
 
 	// Null Data Holder used when (Holder) has not been set yet Data corresponding to the name of the Data.

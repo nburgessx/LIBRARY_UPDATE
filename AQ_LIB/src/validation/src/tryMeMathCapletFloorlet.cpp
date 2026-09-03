@@ -1,12 +1,3 @@
-/*
-* @brief			validation interface for CapletFloorlet method(s)
-* @Created:		    28 December 2017
-* @Author:			Yongyan Zheng
-* @Department:		ISD Front Office Development
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "tryMeMathCapletFloorlet.h"
 #include "CapletFloorlet.h"
 

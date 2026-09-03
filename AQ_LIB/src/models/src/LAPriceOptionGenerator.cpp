@@ -188,7 +188,7 @@ LAPriceOptionGenerator::calibrateModel(const LADate& basedate,
 										const LADataProcedure& att) const
 {
 
-	(void)basedate; (void)att; //20070411--Nagase--Œxíœ‚ğgcc‚É‚à‘Î‰
+	(void)basedate; (void)att; //20070411--Nagase--gcc
 	//setup leg maturity
 	setUpLegMaturity(object);
 

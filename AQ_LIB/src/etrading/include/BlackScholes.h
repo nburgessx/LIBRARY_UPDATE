@@ -1,12 +1,3 @@
-/*
- * @brief			Generalized Black-Scholes
- * @Created:		11th August 2017
- * @Author:			Nicholas Burgess
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 #include "CoreEnumerations.h"
 

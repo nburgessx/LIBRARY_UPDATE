@@ -1,15 +1,3 @@
-/*
- * @brief			Structured Credit Cashflow Engine.
- *					Computes the cashflows as a function of time within a Capital Structure
- *
- *					This code was ported from MGEN AlgoQuantHub R analytics library
- *					Author Andrew Friend
- *
- * @Created:		10th Dec 2019
- * @Author:			Ian Castleton
- *
- */
-
 #pragma once
 
 #include "SyntheticExcessSpread.h"

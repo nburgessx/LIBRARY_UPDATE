@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the mirSetUpBasisSwapCurve method
- * @Created:		16 March 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMirSetUpBasisSwapCurve.h"
 
 #include "LAUpdateStaticDataManager.h"

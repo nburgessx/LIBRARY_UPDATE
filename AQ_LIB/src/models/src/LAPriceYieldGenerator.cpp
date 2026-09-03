@@ -275,7 +275,7 @@ LAPriceYieldGenerator::~LAPriceYieldGenerator()
 /*!
     @brief  Check function for this class ID
 
-    @param[in] id type of class（function_t）
+    @param[in] id type of class(function_t)
     @return true or false
 */
 bool
@@ -332,7 +332,7 @@ LAPriceYieldGenerator::registerData(LAPriceDataManager& dm) const
 
 /*!
     @brief  Return this class type
-    @return Function Type（FN_IRYIELDGENERATOR）
+    @return Function Type(FN_IRYIELDGENERATOR)
 */
 function_t          
 LAPriceYieldGenerator::getType() const
@@ -387,7 +387,7 @@ LAPriceYieldGenerator::calibrateModel( const LADate& basedate,
 	const bool f_use = dynamic_cast<const LADataBool&>(yg.getIsFutureUse()).get();
 	// get IsFRAUse
 	const bool fra_use = dynamic_cast<const LADataBool&>(yg.getIsFRAUse()).get();
-    //　get Interpolation (make new instance by clone method)
+    // get Interpolation (make new instance by clone method)
     LAInterpolationBase* pInter = 
         dynamic_cast<LAInterpolationBase*>(yg.getInterpolation().getMethod().clone());
 	LACoreFunctionHolder fh(pInter, true);
@@ -686,7 +686,7 @@ LAPriceYieldGenerator::calibrateModel( const LADate& basedate,
 				}
 			}
 
-			//　get Interpolation
+			// get Interpolation
 			LAInterpolationBase *pInter_ = pInter;
 			dh = &yg.getData(CALIBRATION_DATA_INTERPOLATION + suffix_mkt, NOCHECK);
 			LACoreFunctionHolder fh_;

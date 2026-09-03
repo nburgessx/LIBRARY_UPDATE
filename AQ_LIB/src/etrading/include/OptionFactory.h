@@ -1,11 +1,3 @@
-/*
-* @brief			Factory Class to create options
-* @Created:			05 Feb 2018
-* @Author:			Yongyan Zheng
-* @Department:		ISD Front Office Development
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
 #pragma once
 
 #include <string>

@@ -1,12 +1,3 @@
-/*
- * @brief			Class which defines the Inflation Leg of a Zero Coupon Inflation Swap
- * @Created:		19 May 2030
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "Leg.h"

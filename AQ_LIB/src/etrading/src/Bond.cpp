@@ -1,13 +1,4 @@
-﻿/*
- * @brief			Base Class for the Bond Analytics
- * @Created:		17th January 2017
- * @Author:			Nicholas Burgess
- * @Department:	    Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-#include "Bond.h"
+﻿#include "Bond.h"
 #include "SwapValidation.h"
 #include "SwapUtilities.h"
 #include <iomanip>
@@ -710,9 +701,9 @@ namespace etrading
 		case TYPE1_STREET_CONVENTION:
 		case TYPE102_STREET_CONVENTION:
 		{
-			// A bond’s conversion factor is defined as :
-			// factor = a x[(coupon / 2) + c + d] – b, where factor is rounded to 4 decimal places,
-			// coupon is the bond’s annual coupon in decimals.
+			// A bond's conversion factor is defined as :
+			// factor = a x[(coupon / 2) + c + d] - b, where factor is rounded to 4 decimal places,
+			// coupon is the bond's annual coupon in decimals.
 			//	n is the number of whole years from the first day of the delivery month to the maturity(or call) date of the bond or note.
 			//	z is the number of whole months between n and the maturity(or call) date rounded down to the nearest quarter for the 10 - Year U.S.Treasury Note
 			//	and 30 - Year U.S.Treasury Bond futures contracts, and to the nearest month for the 2 - Year, 3 - Year and 5 - Year U.S.Treasury Note futures contracts.
@@ -721,9 +712,9 @@ namespace etrading
 			//     -- v = 3, if z >= 7 for 10Y, 30Y bonds; 
 			//     -- v = z-6,  if z >= 7 for 2Y, 3Y, 5Y bonds;
 			//	a = (1 / 1.03)^(v / 6)
-			//	b = (coupon / 2) x(6 – v) / 6
-			//	c = { 1 / 1.03^(2n)..…… if z < 7 or { 1 / 1.03^(2n + 1)..…… if otherwise
-			//	d = (coupon / 0.06) x(1 – c)
+			//	b = (coupon / 2) x(6 - v) / 6
+			//	c = { 1 / 1.03^(2n)........ if z < 7 or { 1 / 1.03^(2n + 1)........ if otherwise
+			//	d = (coupon / 0.06) x(1 - c)
 			// Formula ref: https://www.cmegroup.com/trading/interest-rates/files/Calculating_U.S.Treasury_Futures_Conversion_Factors.pdf
 			// --- 1) n Calculation ---
 
@@ -782,11 +773,11 @@ namespace etrading
 			// a = (1 / 1.03)^(v / 6)
 			const double a = std::pow(1.0 / 1.03, v * 1.0 / 6.0);
 
-			//	b = (coupon / 2) x(6 – v) / 6
+			//	b = (coupon / 2) x(6 - v) / 6
 			const double coupon = schedule_->getFixedRate();
 			const double b = (coupon / 2.0) * (6.0 - v) / 6.0;
 
-			//	c = { 1 / 1.03^(2n)..…… if z < 7 or { 1 / 1.03^(2n + 1)..…… if otherwise
+			//	c = { 1 / 1.03^(2n)........ if z < 7 or { 1 / 1.03^(2n + 1)........ if otherwise
 			double c = 0.0;
 			if (z < 7)
 			{
@@ -797,11 +788,11 @@ namespace etrading
 				c = std::pow(1.03, -(2.0 * n + 1));
 			}
 
-			//	d = (coupon / 0.06) x(1 – c)
+			//	d = (coupon / 0.06) x(1 - c)
 			const double d = coupon / 0.06 * (1.0 - c);
 
 			//	--- 5) factor calculation --- 
-			// factor = a x[(coupon / 2) + c + d] – b, where factor is rounded to 4 decimal places.
+			// factor = a x[(coupon / 2) + c + d] - b, where factor is rounded to 4 decimal places.
 			convfactor = a * (coupon / 2.0 + c + d) - b;
 
 			convfactor = roundToDecimal(convfactor, 4);
@@ -812,11 +803,11 @@ namespace etrading
 		case TYPE235_JAPANESE_GOVERNMENT_BONDS:
 		{
 			// ConversionFactor = (a/x * ((1 + x/2)^b - 1) + 100) / ((1 + x/2)^(c/6)*100) - a*(6-d)/1200
-			// a ＝ amount of interest payable per year
-			// b ＝ number of payment from delivery day to the redemption date
-			// c ＝ number of months from delivery day to the redemption date
-			// d ＝ number of months from delivery day to the next coupon payment date
-			// X ＝(i) 0.03 (5 - year JGB Futures & 20 - year JGB Futures), (ii) 0.06 (10 - year JGB Futures)
+			// a = amount of interest payable per year
+			// b = number of payment from delivery day to the redemption date
+			// c = number of months from delivery day to the redemption date
+			// d = number of months from delivery day to the next coupon payment date
+			// X =(i) 0.03 (5 - year JGB Futures & 20 - year JGB Futures), (ii) 0.06 (10 - year JGB Futures)
 			// Formula ref: https://www.jpx.co.jp/english/derivatives/products/jgb/jgb-futures/tvdivq0000003ncd-att/formula.pdf
 
 			//  Special case: The above b & d shall be changed to the following calculation, if the bond to the delivered for the settlement of 10Y/20Y JGB Futures has maturity of more than 10/20 years and yet to have the first coupon payment on the delivery date.

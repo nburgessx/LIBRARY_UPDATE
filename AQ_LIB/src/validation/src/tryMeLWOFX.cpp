@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the meLWOFX methods
- * @Created:		20 June 2017
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeLWOFX.h"
 #include "FXCurve.h"
 

@@ -1,12 +1,3 @@
-/*
- * @brief			Class the defines the schedule for floating rate notes
- * @Created:		26 Feb 2018
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "FloatBondSchedule.h"
 #include "ParameterValidation.h"
 #include "SwapValidation.h"

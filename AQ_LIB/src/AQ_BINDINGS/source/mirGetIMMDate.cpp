@@ -1,12 +1,3 @@
-/* 
- * @brief			Swig interface to Java for function mirGetIMMDateX
- * @Created:		16 March 2016 
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "mirGetIMMDate.h"
 #include "TypeUtilities.h"
 #include "LADate.h"

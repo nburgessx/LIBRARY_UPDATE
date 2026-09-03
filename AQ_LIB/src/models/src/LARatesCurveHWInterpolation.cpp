@@ -59,7 +59,7 @@ LARatesCurveHWInterpolation::~LARatesCurveHWInterpolation()
 */
 LACoreFunctionBase*	
 LARatesCurveHWInterpolation::clone() const
-		//20070410--Nagase--g++エラー修正 宣言にthrowを追加
+		//20070410--Nagase--g++ throw
 {
     try 
 	{
@@ -183,7 +183,7 @@ LARatesCurveHWInterpolation::LARatesCurveForHWInterpolation::getType() const
 */
 LARatesPathElementBase*	
 LARatesCurveHWInterpolation::LARatesCurveForHWInterpolation::clone() const
-		//20070410--Nagase--g++エラー修正 宣言にthrowを追加
+		//20070410--Nagase--g++ throw
 {
     try 
 	{
@@ -204,18 +204,18 @@ LARatesCurveHWInterpolation::LARatesCurveForHWInterpolation::clone() const
 LARatesCurveHWInterpolation::LARatesCurveForHWInterpolation&
 LARatesCurveHWInterpolation::LARatesCurveForHWInterpolation::operator = (const LARatesCurveHWInterpolation::LARatesCurveForHWInterpolation& a)
 {
-	// 自分自身のコピーはしない
+	// 
 	if (this == &a) return *this;
 
 	if (!a.isTypeOf(PE_CURVEFORHW)) 
-	{	// タイプチェックの際おかしいことが起こったら
-		// 例外発生
+	{	// 
+		// 
 		LAString err = "Assignment error for LARatesCurveForHWInterpolation : from ";
 		err += LAString(a.getType());
 		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
-	// コピー。	
+	// 	
 	mpCurve1 = dynamic_cast<const LARatesCurveForHWInterpolation&>(a).mpCurve1;
 	mpCurve2 = dynamic_cast<const LARatesCurveForHWInterpolation&>(a).mpCurve2;
 

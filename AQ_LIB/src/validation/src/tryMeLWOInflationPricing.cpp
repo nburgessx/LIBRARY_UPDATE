@@ -1,12 +1,3 @@
-/*
- * @brief			Vallidation API functions for Inflation
- * @Created:		22 May 2020
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeLWOInflationPricing.h"
 
 #include "CreateDataFile.h"

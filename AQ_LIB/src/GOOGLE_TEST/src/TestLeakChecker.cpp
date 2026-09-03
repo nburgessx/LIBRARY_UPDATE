@@ -1,12 +1,3 @@
-/*
-* @brief			Test on MLIBQ Visual Leak Detector setup
-* @Created:			12th December 2017
-* @Author:			Ian Castleton
-* @Department:		AlgoQuantHub Quant Research and Analytics
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #pragma once
 
 

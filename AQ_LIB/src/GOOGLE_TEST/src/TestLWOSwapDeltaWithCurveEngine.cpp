@@ -1,13 +1,3 @@
-/*
- * @brief			Regression tests on the swap delta ladder using global yield curve engine
- * @Created:		18 Aug 2018
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 // Curves
 #include "tryMeLWOCurveEngineCalibrate.h"
 

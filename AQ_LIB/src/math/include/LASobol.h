@@ -25,7 +25,7 @@
  * Should you need more, get the original version of primitivepolynomial.c
  * as provided ready for compilation in the directory
  * "PrimitivePolynomialsModuloTwo" on the CD accompanying the book
- * "Monte Carlo Methods in Finance" by Peter Jäckel.
+ * "Monte Carlo Methods in Finance" by Peter Jkel.
  * The file provides polynomials up to degree 27
  * for a grand total of 8129334 dimensions.
  * Since 8129334 longs compile into an object file of at least 32517336 byte

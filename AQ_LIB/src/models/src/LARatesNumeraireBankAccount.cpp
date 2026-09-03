@@ -27,7 +27,7 @@
 #include "LAModelDynamicsCurve.h"
 #include "LAAlgorithm.h"
 
-//#ifdef _MSC_VER 	//20070409--Nagase--g++エラー修正(g++ではstdextでは実装されていない)
+//#ifdef _MSC_VER 	//20070409--Nagase--g++(g++stdext)
 //using namespace stdext;
 //#else
 using namespace std;
@@ -204,7 +204,7 @@ LARatesNumeraireBankAccount::calcNumeraire(void) const
 	//mTimeGrid.clear();
 	mNumeraireArray.resize(mCurves.size());
 	//mTimeGrid.resize(mCurves.size());
-//#ifdef _MSC_VER 	//20070409--Nagase--g++エラー修正(g++ではstdextでは実装されていない)
+//#ifdef _MSC_VER 	//20070409--Nagase--g++(g++stdext)
 //	hash_map<double, const LARatesPathElementCurve*>::const_iterator it = mCurves.begin();
 //	hash_map<double, const LARatesPathElementCurve*>::const_iterator it2;
 //#else

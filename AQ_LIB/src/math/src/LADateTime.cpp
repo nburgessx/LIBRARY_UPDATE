@@ -281,7 +281,7 @@ LADateTime::addSeconds(const int secs)
 /*!
     @brief return hour
     
-    @return hour(0Å`23)
+    @return hour(023)
 */
 int 
 LADateTime::getHour(void) const
@@ -292,7 +292,7 @@ LADateTime::getHour(void) const
 /*!
     @brief return minute
     
-    @return minute(0Å`59)
+    @return minute(059)
 */
 int 
 LADateTime::getMinute(void) const
@@ -303,7 +303,7 @@ LADateTime::getMinute(void) const
 /*!
     @brief return second
     
-    @return second(0Å`59)
+    @return second(059)
 */
 int 
 LADateTime::getSecond(void) const

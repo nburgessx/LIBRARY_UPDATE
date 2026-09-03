@@ -1,12 +1,3 @@
-/*
- * @brief			Class the defines the fixed leg schedule 
- * @Created:		05 July 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "FixedSchedule.h"
 #include "FixedCashflow.h"
 #include "CurveUtilities.h"

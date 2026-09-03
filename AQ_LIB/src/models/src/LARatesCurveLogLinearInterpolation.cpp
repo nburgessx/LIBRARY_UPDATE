@@ -62,7 +62,7 @@ LARatesCurveLogLinearInterpolation::~LARatesCurveLogLinearInterpolation()
 */
 LACoreFunctionBase*	
 LARatesCurveLogLinearInterpolation::clone() const
-		//20070410--Nagase--g++エラー修正 宣言にthrowを追加
+		//20070410--Nagase--g++ throw
 {
     try 
 	{
@@ -198,7 +198,7 @@ LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::getTy
 */
 LARatesPathElementBase*	
 LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::clone() const
-		//20070410--Nagase--g++エラー修正 宣言にthrowを追加
+		//20070410--Nagase--g++ throw
 {
     try 
 	{
@@ -219,19 +219,19 @@ LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::clone
 LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation&
 LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation::operator = (const LARatesCurveLogLinearInterpolation::LARatesCurveForLogLinearInterpolation& a)
 {
-	// 自分自身のコピーはしない
+	// 
 	if (this == &a) return *this;
 
 	if (!a.isTypeOf(PE_CURVEFORLOGLINEARINTER)) 
-	{	// タイプチェックの際おかしいことが起こったら
-		// 例外発生
+	{	// 
+		// 
 		LAString err = "Assignment error for LARatesCurveForLinearInterpolation : from ";
 		err += LAString(a.getType());
 		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 	
 	delete mpDiscount1for;
-	// コピー。	
+	// 	
 	LARatesPathElementCurve::operator = (a);
 	mpCurve1 = dynamic_cast<const LARatesCurveForLogLinearInterpolation&>(a).mpCurve1;
 	mpCurve2 = dynamic_cast<const LARatesCurveForLogLinearInterpolation&>(a).mpCurve2;

@@ -1,12 +1,3 @@
-/* 
- * @brief			Swig interface to Java for function mirSwapPV01
- * @Created:		31 March 2016 
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "InitializeMLibETrading.h"
 #include "mirSwapPV01.h"
 #include "TypeUtilities.h"

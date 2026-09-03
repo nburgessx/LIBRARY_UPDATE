@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the meLWOCurveGenerator method
- * @Created:		24 Nov 2016
- * @Author:			Ian Castleton
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeLWOCurveGenerator.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"

@@ -1,13 +1,3 @@
-/*
- * @brief			Tests that check JPY curves can be grouped into 3 independent
- *					categories for JSCC, LCH and Tibor
- * @Created:		09 AUG 2017
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "TryMeCurveOis.h"
 #include "TryMeCurveStd.h"
 #include "TryMeCurveFwdFxConst.h"

@@ -1,12 +1,3 @@
-/*
- * @brief			Base class for component curves used in global yield curve calibration
- * @Created:		22 Jan 2018
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #pragma once
 
 #include "LAObject.h"

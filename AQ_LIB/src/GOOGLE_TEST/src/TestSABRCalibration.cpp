@@ -1,12 +1,3 @@
-/*
-* @brief			Regression tests on SABR parameter calibrations
-* @Created:			28 September 2018
-* @Author:			Joseph Ye
-* @Department:		ISD Front Office Development
-*
-* The copyright to the computer program(s) herein is the property of AlgoQuantHub.
-*/
-
 #include "Dependency.h"
 #include "InitializeMLibGoogleTest.h"
 #include "ParameterValidation.h"

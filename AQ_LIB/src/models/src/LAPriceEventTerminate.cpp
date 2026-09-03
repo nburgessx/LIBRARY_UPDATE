@@ -5,7 +5,7 @@
 //  2006, AlgoQuantHub..
 ///
 //beta vesion
-//いくかのパターンでテスト実施ずみ
+//
 ///
 #ifdef __GNUG__
 #pragma implementation
@@ -100,7 +100,7 @@ LAPriceEventTerminate::doAction(const LADate& actiondate,
 									 vector<LAPriceEventHolder*>& pastaction,
 									 vector<PayOffToolHolderIter>& iter)
 {
-	(void)pastaction; //20070411--Nagase--警告削除をgccにも対応
+	(void)pastaction; //20070411--Nagase--gcc
 	for (unsigned int i = 0; i < payoff.size(); i++)
 	{
 	/*	for (; iter[i] != payoff[i].end() && iter[i]->getPayOff().getPaymentDate() <= actiondate; iter[i]++)
@@ -221,7 +221,7 @@ LAPriceEventTerminate::doAction(const LADate& actiondate,
 	}
 
 //	futureaction.clear();
-	LADate backdate = actiondate;//直近のaction日
+	LADate backdate = actiondate;//action
 	vector<LAPriceEventHolder*>::iterator pItr =  futureaction.begin();
 	while (pItr != futureaction.end())
 	{
@@ -481,7 +481,7 @@ LAPriceEventTerminate::calcNotionalExchange(const LADate& actiondate,
 		}
 
 
-		//元本ChangeでNotionalCFが建っているケースもある
+		//ChangeNotionalCF
 		PayOffToolHolderIter it;
 		for (it = extrapayoff[legno].begin(); it != extrapayoff[legno].end(); it++)
 		{
@@ -514,7 +514,7 @@ LAPriceEventTerminate::calcNotionalExchange(const LADate& actiondate,
 				notionalex += ph.getPayOff().mNotionalCF;
 			}	
 		}
-		//元本償還通貨の変更アクションを実施
+		//
 		if (flag && _action != NULL)
 		{
 			vector<PayOffToolHolderVector> dummy(payoff.size());

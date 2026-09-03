@@ -1,14 +1,3 @@
-/*
- * @brief			Tests of the Inflation Curve calibration and reprice functionality.
- *
- * @Created:		9 July 2020
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- *
- */
-
  // Curves
 #include "tryMeLWO.h"
 

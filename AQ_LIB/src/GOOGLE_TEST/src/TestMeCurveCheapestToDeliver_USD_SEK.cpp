@@ -1,12 +1,3 @@
-/*
- * @brief			Tests that check the consistency of calibrated cheapest to deliver curves
- * @Created:		08 AUG 2017
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "TryMeCurveCTD.h"
 #include "TryMeCurveOis.h"
 #include "TryMeCurveStd.h"

@@ -1,13 +1,3 @@
-/*
- * @brief			Class which defines the Inflation Curve class.
- * @Created:		26 May 2020
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 #include "InflationCurve.h"
 #include "ZeroCouponInflationSwap.h"
 #include "CoreEnumerations.h"

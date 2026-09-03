@@ -32,11 +32,11 @@ using namespace std;
    modulo two up to degree 27. Both are slightly edited versions of
    PrimitivePolynomialsModuloTwoUpToDegree27.c
 
-   © 2002 "Monte Carlo Methods in Finance"
+    2002 "Monte Carlo Methods in Finance"
 
 
    =========================================================================
-    2002 Peter Jäckel "Monte Carlo Methods in Finance".
+    2002 Peter Jkel "Monte Carlo Methods in Finance".
    All rights reserved.
 
    Permission to use, copy, modify, and distribute this software is freely
@@ -21678,7 +21678,7 @@ namespace {
     };
 
     /* coefficients of the free direction integers as given in
-        "Monte Carlo Methods in Finance", by Peter Jäckel, section 8.3
+        "Monte Carlo Methods in Finance", by Peter Jkel, section 8.3
     */
     const unsigned int dim09initializers[] = {
         1U, 3U, 7U, 7U, 21U, 0U };
@@ -61490,7 +61490,7 @@ LASobol::initialize(void)
         unsigned int gk = degree[k];
         for (int l = gk; l < mBits; l++) 
 		{
-            // eq. 8.19 "Monte Carlo Methods in Finance" by P. Jäckel
+            // eq. 8.19 "Monte Carlo Methods in Finance" by P. Jkel
             unsigned int n = (mDirectionIntegers[k][l - gk] >> gk);
             // a[k][j] are the coefficients of the monomials in ppmt[k]
             // The highest order coefficient a[k][0] is not actually

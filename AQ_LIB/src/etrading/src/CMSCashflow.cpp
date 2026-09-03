@@ -1,13 +1,3 @@
-/*
- * @brief			Class the defines the Constant Maturity Swap Cashflow 
- *
- * @Created:		27 March 2018
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "CMSCashflow.h"
 #include "LADateScheduleHelpers.h"
 

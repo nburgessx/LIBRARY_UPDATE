@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for mirInterpolation method
- * @Created:		24 March 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMirInterpolation.h"
 #include "LAMathInterpolationUtilities.h"
 #include "CreateDataFile.h"

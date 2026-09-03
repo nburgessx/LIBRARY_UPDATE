@@ -1,12 +1,3 @@
-/* 
- * @brief			Swig interface to Java for meDate CentralBank and ECB related methods
- * @Created:		03 June 2016
- * @Author:			Yongyan Zheng
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "meDateCentralBank.h"
 #include "tryMeDateCentralBank.h"
 #include "APISetUp.h"               // MLIB_API_START and MLIB_API_END Macros

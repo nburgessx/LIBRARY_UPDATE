@@ -1,13 +1,3 @@
-/*
- * @brief			Class the defines the Constant Maturity Swap Leg Schedule 
- *					The main reason for requiring the CMS Schedule class is to calculate and update the CMS cashflow float rate
- *					using par-rates calculated from an underlying swap index.
- * @Created:		14 March 2018
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
 #pragma once
 
 #include "FloatSchedule.h"

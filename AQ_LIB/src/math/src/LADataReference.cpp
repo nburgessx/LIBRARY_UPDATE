@@ -95,7 +95,7 @@ LADataReference::delReferencer(void)
 	if (mpRef != NULL)
 	{
 		LAObject* e = getObject();
-		// is this data a part of ObjectH
+		// is this data a part of Object?
 		if (e != NULL)
 		{
 			e->delReferencee(mpRef);

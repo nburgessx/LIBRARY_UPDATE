@@ -59,7 +59,7 @@ LADist::normsdist2(double x, double y, double rho)
         return (x+y>0 ? normsdist(x)-normsdist(-y):0);
 
     }else if (LAMath::abs(rho) < wk){
-        //rho=0Cnormsdist2(x,y,0)=normsdist(x)*normsdist(y)
+        //rho=0,normsdist2(x,y,0)=normsdist(x)*normsdist(y)
         return (normsdist(x)*normsdist(y));
 
     }else{

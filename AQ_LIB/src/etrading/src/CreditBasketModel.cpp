@@ -1,15 +1,3 @@
-/*
- * @brief			Class which defines the Credit Basket Model.
- *                  The basket is constructed from underlying Credit Models.
- *                  Currently an implementation of the Gaussian Latent Variable Model.
- * @Created:		27 Feb 2019
- * @Author:			Ian Castleton
- * @Department:		Quant Research & Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
-
 #include "ql/math/integrals/gaussianquadratures.hpp"
 
 #include <boost/math/distributions/normal.hpp>
@@ -215,7 +203,7 @@ namespace etrading
 	}
 
 	/* @brief	This method implements First-To-Default baskets with homogeneous-loss from the book
-	*           "Modelling Single-name and Multi-name Credit Derivatives" by Dominic O’Kane p285.
+	*           "Modelling Single-name and Multi-name Credit Derivatives" by Dominic Oane p285.
 	*			In particular this method computes the product term in the homogeneous basket integral.
 	*  @param[in]	zMarketFactor	The common market factor ( the integration parameter )
 	*  @param[in]	defaultFrontier	The calibrated defaultFrontier. This is the "C-parameter" in the
@@ -263,7 +251,7 @@ namespace etrading
 
 	/* @brief	Given a future date, calculates the probability of survival to that date.
 	*			This method implements First-To-Default baskets with homogeneous-loss from the book
-	*           "Modelling Single-name and Multi-name Credit Derivatives" by Dominic O’Kane p285
+	*           "Modelling Single-name and Multi-name Credit Derivatives" by Dominic Oane p285
 	*  @param[in]	toDate	The future date to use in the calculation. Must occur after the model as-of date.
 	*  @returns	The survival probability
 	*/

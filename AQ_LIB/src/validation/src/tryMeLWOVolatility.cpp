@@ -1,12 +1,3 @@
-/*
- * @brief			validation interface for the Bond analytics 
- * @Created:		18th January 2017
- * @Author:			Nicholas Burgess
- * @Department:		Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeLWOVolatility.h"
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"

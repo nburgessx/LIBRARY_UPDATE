@@ -327,7 +327,7 @@ LAPriceSZCalibration::calibSZ(const LADate& basedate,
 	{
 		opt_method = std::shared_ptr<LAQuantLibOptimizationMethod>(new LAQuantLibSimplex(0.1));
 	}
-	else if (type == "LEVENBERGÅ|MARQUARDT_METHOD")
+	else if (type == "LEVENBERG-MARQUARDT_METHOD")
 	{
 		double levenbergMarquardtEpsfcn = 0.001;
 		double levenbergMarquardtXtol = 0.001;

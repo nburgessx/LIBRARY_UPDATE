@@ -1,12 +1,3 @@
-/*
- * @brief			Utility methods addressing issues to do with object pool
- * @Created:		09 August 2016
- * @Author:			Joseph Ye
- * @Department:		ISD Front Office Development
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "EntityPoolUtilities.h"
 
 #include "ParameterValidation.h"

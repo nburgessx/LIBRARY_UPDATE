@@ -58,7 +58,7 @@ LARatesCurveStepLinearInterpolation::~LARatesCurveStepLinearInterpolation()
 */
 LACoreFunctionBase*	
 LARatesCurveStepLinearInterpolation::clone() const
-		//20070410--Nagase--g++エラー修正 宣言にthrowを追加
+		//20070410--Nagase--g++ throw
 {
     try 
 	{
@@ -161,7 +161,7 @@ LARatesCurveStepLinearInterpolation::LARatesCurveForStepLinearInterpolation::get
 */
 LARatesPathElementBase*	
 LARatesCurveStepLinearInterpolation::LARatesCurveForStepLinearInterpolation::clone() const
-		//20070410--Nagase--g++エラー修正 宣言にthrowを追加
+		//20070410--Nagase--g++ throw
 {
     try 
 	{
@@ -182,19 +182,19 @@ LARatesCurveStepLinearInterpolation::LARatesCurveForStepLinearInterpolation::clo
 LARatesCurveStepLinearInterpolation::LARatesCurveForStepLinearInterpolation&
 LARatesCurveStepLinearInterpolation::LARatesCurveForStepLinearInterpolation::operator = (const LARatesCurveStepLinearInterpolation::LARatesCurveForStepLinearInterpolation& a)
 {
-	// 自分自身のコピーはしない
+	// 
 	if (this == &a) return *this;
 
 	if (!a.isTypeOf(PE_CURVEFORSTEPLINEARINTER)) 
-	{	// タイプチェックの際おかしいことが起こったら
-		// 例外発生
+	{	// 
+		// 
 		LAString err = "Assignment error for LARatesCurveForStepLinearInterpolation : from ";
 		err += LAString(a.getType());
 		throw LACoreInvalidData(err.getCString(), __FILE__, __LINE__);
 	}
 
 	LARatesPathElementCurve::operator = (a);
-	// コピー。	
+	// 	
 	mpCurve1 = dynamic_cast<const LARatesCurveForStepLinearInterpolation&>(a).mpCurve1;
 	
 	return *this;

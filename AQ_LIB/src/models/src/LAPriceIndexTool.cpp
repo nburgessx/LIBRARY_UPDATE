@@ -88,7 +88,7 @@ LAPriceIndexToolBase::setUp(const LADate& basedate,
 							const LAObject& indexinfo,
 							const LAPricePayOff& payoff)
 {
-	(void)payoff; (void)trade; (void)basedate; (void)paydate; //20070411--Nagase--Œxíœ‚ğgcc‚É‚à‘Î‰
+	(void)payoff; (void)trade; (void)basedate; (void)paydate; //20070411--Nagase--gcc
 	const LADataHolder* dh;
 	//round function
 	dh = &(indexinfo.getData(PRICING_DATA_ROUNDFUNCTION, NOCHECK));
@@ -1759,7 +1759,7 @@ LAPriceIndexToolCpn::setUpCapandFloor(const LAObject& trade,
 				 const LADate& fixingdate,
 				 const LAPricePayOff& payoff)
 {
-	(void)payoff; //20070411--Nagase--Œxíœ‚ğgcc‚É‚à‘Î‰
+	(void)payoff; //20070411--Nagase--gcc
 	mLatestPos = -1;
 	for (unsigned int i = 0; i < mPayOff->getPayOff()[mLegNo].size(); i++)
 	{
@@ -2027,7 +2027,7 @@ LAPriceIndexToolCpnCF::setUpCapandFloor(const LAObject& trade,
 				 const LADate& fixingdate,
 				 const LAPricePayOff& payoff)
 {
-	(void)payoff; //20070411--Nagase--Œxíœ‚ğgcc‚É‚à‘Î‰
+	(void)payoff; //20070411--Nagase--gcc
 	mLatestPos = -1;
 	for (unsigned int i = 0; i < mPayOff->getPayOff()[mLegNo].size(); i++)
 	{

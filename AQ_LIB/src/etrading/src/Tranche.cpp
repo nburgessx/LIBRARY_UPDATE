@@ -1,18 +1,3 @@
-/*
- * @brief			Structured Credit Tranche specification. Used in the Capital Structure calculations
- *					The capital structure consists of one or more tranches of increasing seniority;
- *					Losses are applied to the least senior tranche first, once that tranche capacity
- *					has been exhausted the losses are applied to the next most senior tranche.
- *
- *					This code was ported from MGEN AlgoQuantHub R analytics library
- *					Author Andrew Friend
- *
- * @Created:		11th Dec 2019
- * @Author:			Ian Castleton
- * @Department:	    Quant Research & Analytics
- *
- */
-
 #include "Tranche.h"
 #include "Solvers.h"
 #include "CommonConstants.h"

@@ -59,7 +59,7 @@ LAPriceArbFreeGenerator::~LAPriceArbFreeGenerator()
 /*!
     @brief  Check function for this class ID
 
-    @param[in] id type of class（function_t）
+    @param[in] id type of class(function_t)
     @return true or false
 */
 bool
@@ -112,7 +112,7 @@ LAPriceArbFreeGenerator::registerData(LAPriceDataManager& dm) const
 
 /*!
     @brief  Return this class type
-    @return Function Type（FN_IRYIELDGENERATOR）
+    @return Function Type(FN_IRYIELDGENERATOR)
 */
 function_t          
 LAPriceArbFreeGenerator::getType() const

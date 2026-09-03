@@ -1,12 +1,3 @@
-/*
- * @brief			Validation Interface for Convexity Adjustment Class
- * @Created:		12th January
- * @Author:			Nicholas Burgess
- * @Department:		AlgoQuantHub Quant Research and Analytics
- *
- * The copyright to the computer program(s) herein is the property of AlgoQuantHub.
- */
-
 #include "tryMeMathConvexity.h"
 #include "ConvexityModel.h"
 
