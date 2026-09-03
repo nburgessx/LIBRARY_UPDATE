@@ -181,9 +181,9 @@ each numbered item.
   "Deletion" = **do not port them** in Phase 4. Nothing to remove now. Any
   `msc*` GoogleTest / resource references are handled in Phase 6.0 with the
   credit untangle.
-- ☐ **1.6 Namespaces** `validation_api → validation`. Single mechanical rename;
-  update the friend/using declarations and the bindings + XLL call sites (the
-  POC `AQ_XLL\src\math.cpp` already calls `validation_api::tryMe…`).
+- ☑ **1.6 Namespaces** `validation_api → validation` — commit `cdceb61`. 524
+  files, 2067 refs, word-boundary; no collision; wrap/.i files unaffected.
+  Awaiting Nicholas's build + GoogleTest diff.
 - ◐ **1.7 Config path resolution.** Client absolute paths in
   `LACurveProperties.cpp` / `FolderConfig.cpp` already neutralised → `.\config\…`
   (commit `767aa4e`). **Still to do, needs a build:** the `MLIBQ` env-var name
