@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirGetPCAResults.h"
 #include "AQLString.h"
 #include "tryMirGetPCAResults.h"
@@ -17,7 +17,7 @@ SWIG_STRINGMATRIX mirGetPCAResults(const std::string& ID, int update)
 		// Input marshalling
 		AQLString id(ID.c_str());
 
-		AQLStringMatrix temp = validation::tryMirGetPCAResults(etrading::InitializeAQETrading::instance().dataInstance(), id, update);
+		AQLStringMatrix temp = validation::tryMirGetPCAResults(etrading::InitializeETrading::instance().dataInstance(), id, update);
 
 		ret = swig::fromStringMatrixToMatrixOfString(temp);
 

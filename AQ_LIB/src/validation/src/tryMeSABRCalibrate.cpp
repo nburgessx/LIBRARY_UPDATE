@@ -4,7 +4,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "AQLMathSwaptionVolUtility.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "AQLCoreUtility.h"
 #include "ScheduleValidation.h"
 #include "ParameterValidation.h"
@@ -74,7 +74,7 @@ namespace validation
 			AQ_THROW("Do not input ForwardID and Convention ID at the same time")
 		}
 
-		AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+		AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
 
 		AQLString curveID("");
 		if (forwardID == AQLString(""))

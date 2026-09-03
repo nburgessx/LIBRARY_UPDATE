@@ -1,7 +1,7 @@
 // QuickTest.h
 
 // AlgoQuantLib test base class
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 
 // Google Test Library
 #include <gTest/gTest.h>
@@ -12,7 +12,7 @@ namespace google_test
 
     // Timeout Fixture Class
     class QuickTest
-        : public virtual google_test::InitializeAQGoogleTest
+        : public virtual google_test::InitializeGoogleTest
         , public virtual testing::Test
     {
     protected:

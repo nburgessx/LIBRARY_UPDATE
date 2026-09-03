@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirCompound.h"
 #include "TypeUtilities.h"
 #include "AQLString.h"
@@ -61,7 +61,7 @@ std::vector<double> mirCompound3(const std::vector<std::string>& startDates,
 		AQLString firstOddDt(firstOddDate.c_str());
 		AQLString lastOddDt(lastOddDate.c_str());
 
-		ret = validation::tryMirCompound3(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirCompound3(etrading::InitializeETrading::instance().dataInstance(),
 								startDateVec,
 								endDateVec,
 								cId,
@@ -143,7 +143,7 @@ double mirCompound3(const std::string& startDate,
 		AQLString firstOddDt(firstOddDate.c_str());
 		AQLString lastOddDt(lastOddDate.c_str());
 
-		ret = validation::tryMirCompound3(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirCompound3(etrading::InitializeETrading::instance().dataInstance(),
 								startDt,
 								endDt,
 								cId,

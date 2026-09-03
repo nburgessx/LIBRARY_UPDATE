@@ -2,7 +2,7 @@
 
 #include "tryMirSetUpOISCurve.h"
 #include "YieldCurveUtil.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 
 namespace google_test
 {
@@ -52,7 +52,7 @@ namespace google_test
 
 			try
             {
-                validation::tryMirSetUpOISCurve( etrading::InitializeAQETrading::instance().dataInstance(),
+                validation::tryMirSetUpOISCurve( etrading::InitializeETrading::instance().dataInstance(),
                                                      curveID,
                                                      marketName,
                                                      inputFileObj["generalProps"],

@@ -3,7 +3,7 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "TestHelperUtilities.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "tryMeUtilitySetup.h"
 #include "ContainerUtilities.h"
 #include "CoreEnumerations.h"

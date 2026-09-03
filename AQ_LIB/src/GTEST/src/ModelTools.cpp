@@ -9,7 +9,7 @@
 #include "AQLMathSwaptionVolUtility.h"
 #include "AQLMathParameterUtility.h"
 
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "Dependency.h"
 #include "CurveOis.h"
 #include "CurveStd.h"
@@ -59,7 +59,7 @@ void ModelUtility::SetCurves(const AQLString& directory, const AQLString& fileNa
 void ModelUtility::SetParameters(const AQLString& directory, const AQLString& paramFileName, const AQLString& currency,
                                  const AQLStringVector& paramNames, AQLStringVector& paramIDs, AQLDate& asOfDate)
 {
-    AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+    AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
 
     // Set file object
     AQLString inputFile = directory + paramFileName + AQLString(".csv");
@@ -92,7 +92,7 @@ void ModelUtility::SetParameters(const AQLString& directory, const AQLString& pa
 void ModelUtility::SetNonInterpolatedParameters(const AQLString& directory, const AQLString& paramFileName, const AQLString& currency,
                                                 const AQLStringVector& paramNames, AQLStringVector& paramIDs, AQLDate& asOfDate)
 {
-    AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+    AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
 
     // Set file object
     AQLString inputFile = directory + paramFileName + AQLString(".csv");

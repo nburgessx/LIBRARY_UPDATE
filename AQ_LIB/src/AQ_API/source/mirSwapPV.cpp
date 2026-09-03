@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirSwapPV.h"
 #include "AQLDate.h"
 #include "AQLString.h"
@@ -108,7 +108,7 @@ double mirSwapPV(double notional,
 		AQLString tRollDay		(TRollDay.c_str());
 		AQLString xRollDay		(XRollDay.c_str());
 
-		ret = validation::tryMirSwapPV(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirSwapPV(etrading::InitializeETrading::instance().dataInstance(),
 												notional,
 												payRec,
 												effectiveDate, 

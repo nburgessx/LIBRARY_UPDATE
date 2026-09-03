@@ -109,8 +109,8 @@ namespace google_test
     {
         void testGraphAtCompileTime()
         {
-            // make sure that conversion to InitializeAQGoogleTest base class is unambiguous
-            auto& g0 = static_cast<google_test::InitializeAQGoogleTest&>( *this );
+            // make sure that conversion to InitializeGoogleTest base class is unambiguous
+            auto& g0 = static_cast<google_test::InitializeGoogleTest&>( *this );
 
             // make sure that conversion to source nodes is unambiguous
             auto& s0 = static_cast<SourceUSDYC_OIS&>( *this );

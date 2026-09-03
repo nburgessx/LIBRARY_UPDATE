@@ -8,7 +8,7 @@
 #include "tryMirGetParRate.h"
 #include "YieldCurveUtil.h"
 #include "LADateScheduleHelpers.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "tryMeUtilitySetup.h"
 #include <sstream>
 
@@ -149,7 +149,7 @@ namespace google_test
 				AQLDate maturity = etrading::LADateScheduleHelpers::getDate(effectiveDate, maturityTenor, "", "");	// Maturity date must not be adjusted first
 
 				// Case 1: IsFwdInter = FALSE, UseFwdData = FALSE
-				double parRate = validation::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
+				double parRate = validation::tryMirGetParRate4(etrading::InitializeETrading::instance().dataInstance(),
 																   effectiveDate.stringWithFormat( "YYYYMMDD" ),
 																   maturity.stringWithFormat("YYYYMMDD"),
 																   curveCollection,
@@ -189,7 +189,7 @@ namespace google_test
 
 				// Case 2: IsFwdInter = TRUE, UseFwdData = FALSE
 				parRate = validation::tryMirGetParRate4(
-																   etrading::InitializeAQETrading::instance().dataInstance(),
+																   etrading::InitializeETrading::instance().dataInstance(),
 																   effectiveDate.stringWithFormat( "YYYYMMDD" ),
 																   maturity.stringWithFormat("YYYYMMDD"),
 																   curveCollection,
@@ -231,7 +231,7 @@ namespace google_test
 
 				const bool IS_FWD_INTER = true;
 				parRate = validation::tryMirGetParRate4(
-																   etrading::InitializeAQETrading::instance().dataInstance(),
+																   etrading::InitializeETrading::instance().dataInstance(),
 																   effectiveDate.stringWithFormat( "YYYYMMDD" ),
 																   maturity.stringWithFormat("YYYYMMDD"),
 																   curveCollection,

@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirGetAnnuity.h"
 #include "TypeUtilities.h"
 #include "tryMirGetAnnuity.h"
@@ -49,7 +49,7 @@ double mirGetAnnuity1(const std::string& fromDate,
 		AQLString interp			(interpolation.c_str());
 		AQLString curName		(curveName.c_str());
 		
-		ret = validation::tryMirGetAnnuity1(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirGetAnnuity1(etrading::InitializeETrading::instance().dataInstance(),
 												fromDt, 
 												toDt, 
 												curId, 
@@ -98,7 +98,7 @@ double mirGetAnnuity2(const std::string& curveId,
 		AQLString interp(interpolation.c_str());
 		AQLString curName(curveName.c_str());
 
-		ret = validation::tryMirGetAnnuity2(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirGetAnnuity2(etrading::InitializeETrading::instance().dataInstance(),
 								curId,
 								dateVec,
 								dayC,

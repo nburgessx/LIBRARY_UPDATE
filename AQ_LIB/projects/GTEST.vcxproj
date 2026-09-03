@@ -141,7 +141,7 @@
     <ClCompile Include="..\src\GTEST\src\CurveXccyBasis.cpp" />
     <ClCompile Include="..\src\GTEST\src\Examples.cpp" />
     <ClCompile Include="..\src\GTEST\src\Fixtures.cpp" />
-    <ClCompile Include="..\src\GTEST\src\InitializeAQGoogleTest.cpp" />
+    <ClCompile Include="..\src\GTEST\src\InitializeGoogleTest.cpp" />
     <ClCompile Include="..\src\GTEST\src\InterestRateSwap.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestCurveStdUSD_NonOverridingFwds.cpp" />
     <ClCompile Include="..\src\GTEST\src\TestCurveTenorBasisUSD_FRA.cpp" />
@@ -290,7 +290,7 @@
     <ClInclude Include="..\src\GTEST\include\CurveXccyBasis.h" />
     <ClInclude Include="..\src\GTEST\include\Dependency.h" />
     <ClInclude Include="..\src\GTEST\include\ExtractCurveCalibrationData.h" />
-    <ClInclude Include="..\src\GTEST\include\InitializeAQGoogleTest.h" />
+    <ClInclude Include="..\src\GTEST\include\InitializeGoogleTest.h" />
     <ClInclude Include="..\src\GTEST\include\InterestRateSwap.h" />
     <ClInclude Include="..\src\GTEST\include\QuickTest.h" />
     <ClInclude Include="..\src\GTEST\include\EnvironmentAttacker.h" />

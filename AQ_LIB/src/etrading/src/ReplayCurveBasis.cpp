@@ -3,11 +3,11 @@
 #include "ReplayCurveBasis.h"
 #include "ReadDataFile.h"
 #include "LAUpdateStaticDataManager.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 
 namespace etrading
 {
-    using etrading::InitializeAQETrading;
+    using etrading::InitializeETrading;
 
     const AQLString replayCurveBasis( const ReadDataFile::Load& inputFile )
     {
@@ -57,7 +57,7 @@ namespace etrading
         // 3. Build the Basis Curve
         // ----------------------
         const bool checkStaticDataLoaded = true;
-        LAUpdateStaticDataManager::setUpBasisCurve( InitializeAQETrading::instance( checkStaticDataLoaded ).dataInstance(),
+        LAUpdateStaticDataManager::setUpBasisCurve( InitializeETrading::instance( checkStaticDataLoaded ).dataInstance(),
                                            curveID,
                                            marketName,
                                            basisRates,

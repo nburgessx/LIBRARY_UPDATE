@@ -2,7 +2,7 @@
 #include <gTest/gTest.h>
 
 // Test Includes
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 #include "CurveResultsContainer.h"
 #include "tryMeCurveResults.h"
 #include "CurveUtilities.h"						// Contains Legcacy Curve Discount Factor and Forward Rate Methods
@@ -39,7 +39,7 @@ namespace google_test
 
     // TEST FIXTURE CONSTRUCTOR
     // ------------------------------------------------------------------------------------------------------------------
-    class TestCurveResults : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
+    class TestCurveResults : public virtual testing::Test, public virtual google_test::InitializeGoogleTest
     {
         public:
 
@@ -397,7 +397,7 @@ namespace google_test
     // ------------------------------------------------------------------------------------------------------------------
 
     // Declare Test Fixture Class
-    class TestCurveResultsVsObjectPool : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
+    class TestCurveResultsVsObjectPool : public virtual testing::Test, public virtual google_test::InitializeGoogleTest
     {
     public:
 
@@ -1641,7 +1641,7 @@ namespace google_test
     // ------------------------------------------------------------------------------------------------------------------
 
     // Declare Test Fixture Class
-    class TestCurveResultsDaycount : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
+    class TestCurveResultsDaycount : public virtual testing::Test, public virtual google_test::InitializeGoogleTest
     {
     public:
 
@@ -1942,7 +1942,7 @@ namespace google_test
     // ------------------------------------------------------------------------------------------------------------------
 
     // Declare Test Fixture Class
-    class TestCurveResultsCurveTenor : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
+    class TestCurveResultsCurveTenor : public virtual testing::Test, public virtual google_test::InitializeGoogleTest
     {
     public:
 

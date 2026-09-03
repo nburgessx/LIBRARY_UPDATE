@@ -1,6 +1,6 @@
 #pragma once
 
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 #include "TryMeCurveAccessors.h"
 
 namespace google_test

@@ -10,16 +10,16 @@ namespace google_test
 
 // MACRO To Initialize a Test Non-Fixture and Clean-Up Aftwerwards Using the Initialize Class Destructor
 #define INITIALIZE_TEST \
-	InitializeAQGoogleTest c;
+	InitializeGoogleTest c;
 
 // MACRO To Initialize a Test Fixture and Clean-Up Aftwerwards Using the Initialize Class Destructor
 #define DECLARE_TEST_FIXTURE(test_name) \
-	class test_name : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest {};
+	class test_name : public virtual testing::Test, public virtual google_test::InitializeGoogleTest {};
 
 
     //
     // CLASS
-    //    google_test::InitializeAQGoogleTest
+    //    google_test::InitializeGoogleTest
     //
     // PURPOSE
     //    Base class for test fixtures: initialise / uninitialise AlgoQuantLib
@@ -27,16 +27,16 @@ namespace google_test
     // SYNPOSIS
     //    #include "mTest.h"
     //
-    //    class OISCurveEUR : public virtual google_test::InitializeAQGoogleTest { /* ... */ };
+    //    class OISCurveEUR : public virtual google_test::InitializeGoogleTest { /* ... */ };
     //
-    class InitializeAQGoogleTest
+    class InitializeGoogleTest
     {
     public:
         // initialise AlgoQuantLib
-        InitializeAQGoogleTest();
+        InitializeGoogleTest();
 
         // uninitialise AlgoQuantLib (unless disabled)
-        virtual ~InitializeAQGoogleTest();
+        virtual ~InitializeGoogleTest();
 
         // enable / disable re-initialisation of AlgoQuantLib in between tests;
         // default is on;
@@ -61,8 +61,8 @@ namespace google_test
 
     private:
         // disable copying
-        InitializeAQGoogleTest( const InitializeAQGoogleTest& );
-        InitializeAQGoogleTest& operator=( const InitializeAQGoogleTest& );
+        InitializeGoogleTest( const InitializeGoogleTest& );
+        InitializeGoogleTest& operator=( const InitializeGoogleTest& );
 
         static bool doReinit_;			// force AlgoQuantLib re-initialisation after end of test?
         AQLDataInstance* dataInstance_;

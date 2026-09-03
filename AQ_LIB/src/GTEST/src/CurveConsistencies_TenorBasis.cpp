@@ -9,7 +9,7 @@
 #include "tryMirGetParRate.h"
 #include "YieldCurveUtil.h"
 #include "LADateScheduleHelpers.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "tryMeUtilitySetup.h"
 #include "ExceptionMacros.h"
 #include <sstream>
@@ -389,7 +389,7 @@ namespace google_test
 
 				// Calculate 'against leg' par rate
 				const double a_ParRate = validation::tryMirGetParRate4(
-																   etrading::InitializeAQETrading::instance().dataInstance(),
+																   etrading::InitializeETrading::instance().dataInstance(),
 																   a_effectiveStart.stringWithFormat( "YYYYMMDD" ),
 																   maturity.stringWithFormat("YYYYMMDD"),
 																   curveCollection,
@@ -426,7 +426,7 @@ namespace google_test
 
 				// Calculate 'target leg' par rate
 				const double t_ParRate = validation::tryMirGetParRate4(
-																   etrading::InitializeAQETrading::instance().dataInstance(),
+																   etrading::InitializeETrading::instance().dataInstance(),
 																   t_effectiveStart.stringWithFormat( "YYYYMMDD" ),
 																   maturity.stringWithFormat("YYYYMMDD"),
 																   curveCollection,

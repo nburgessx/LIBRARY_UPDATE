@@ -1,5 +1,5 @@
 #include "AQLDataInstance.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "LibSetUpETrading.h"
 #include "LAUpdateStaticDataManager.h"
 #include "tryMeUtilitySetup.h"
@@ -90,13 +90,13 @@ namespace validation
 
         // Load IR Properties - filepaths are set to AQLString* of type NULL if not found
         // ---------------------------------------------------------------------------------------------------------------
-        // Note: The InitializeAQETrading::instance() method below calls the InitializeAQETrading constructor,
+        // Note: The InitializeETrading::instance() method below calls the InitializeETrading constructor,
         // which checks if calendar files have been loaded
         // ---------------------------------------------------------------------------------------------------------------
         const bool checkIfStaticDataLoaded = true;
         const bool checkIfCalendarFileLoaded = true;
         etrading::LAUpdateStaticDataManager::setUpForIRServer(); // TODO: Stop making this lower layer refer to an interface (like Excel)
-        etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *(etrading::InitializeAQETrading::instance( checkIfStaticDataLoaded, checkIfCalendarFileLoaded ).dataInstance()) );
+        etrading::LAUpdateStaticDataManager::setUpDefaultIRStaticData( *(etrading::InitializeETrading::instance( checkIfStaticDataLoaded, checkIfCalendarFileLoaded ).dataInstance()) );
         // ---------------------------------------------------------------------------------------------------------------
 			
         // Disable Thread Locking - since we have a local thread guard
@@ -128,7 +128,7 @@ namespace validation
 
 		// Clean-Up Object Pool
 		AQLCoreDataService::finalize();
-		etrading::InitializeAQETrading::destroyInstance();
+		etrading::InitializeETrading::destroyInstance();
 
         // Clean-Up the Volatility Manager - Is this needed?
         //AQLLinearRatesVolatilityManager::finalize();

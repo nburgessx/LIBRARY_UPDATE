@@ -9,7 +9,7 @@
 #include <boost/program_options.hpp>
 
 #include "ResultsProcessor.h"
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 
 
 // Control parameter to enable / disable the console pause command
@@ -49,7 +49,7 @@ void parse_command_line( int argc, char* argv[] )
 
     if ( vm.count( "reinit" ) )
     {
-        google_test::InitializeAQGoogleTest::setMLibReinit( true );
+        google_test::InitializeGoogleTest::setMLibReinit( true );
     }
 
     if ( vm.count( "rebase" ) )
@@ -66,12 +66,12 @@ void parse_command_line( int argc, char* argv[] )
 	if (vm.count("leakcheck"))
 	{
 		// Enable leak checking
-		google_test::InitializeAQGoogleTest::enableLeakCheck( true );
+		google_test::InitializeGoogleTest::enableLeakCheck( true );
 	}
 
 	if (vm.count("leakfilename"))
 	{
-		google_test::InitializeAQGoogleTest::setLeakReportFilename(vm["leakfilename"].as<std::string>());
+		google_test::InitializeGoogleTest::setLeakReportFilename(vm["leakfilename"].as<std::string>());
 	}
 
     if ( vm.count( "pause" ) )
@@ -151,7 +151,7 @@ int main( int argc, char* argv[] )
         testing::InitGoogleTest( &argc, argv );
 
 		// Disable memory leak checking, by default
-		google_test::InitializeAQGoogleTest::enableLeakCheck( false );
+		google_test::InitializeGoogleTest::enableLeakCheck( false );
 
         // Our own command line arguments
         parse_command_line( argc, argv );

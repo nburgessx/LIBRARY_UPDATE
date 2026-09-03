@@ -38,7 +38,7 @@ const std::string fileNameNZD3ML = TEST_FOLDER + "NZD_SWAP_3M_CURVE.JSON";
 namespace google_test
 {
     // Declare Test Fixture Class
-    class NZD_OisCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
+    class NZD_OisCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeGoogleTest
     {
     public:
 

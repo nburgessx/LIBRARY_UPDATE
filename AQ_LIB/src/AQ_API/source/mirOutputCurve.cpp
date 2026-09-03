@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirOutputCurve.h"
 #include "AQLString.h"
 #include "tryMirOutputCurve.h"
@@ -19,11 +19,11 @@ std::vector<std::vector<double> > mirOutputCurve(const std::string& curveId,
 		AQLString curId			(curveId.c_str());
 		AQLString curName		(curveName.c_str());
 		
-		DoubleArray ans = validation::tryMirOutputCurve(etrading::InitializeAQETrading::instance().dataInstance(),
+		DoubleArray ans = validation::tryMirOutputCurve(etrading::InitializeETrading::instance().dataInstance(),
 												            curId,
 												            curName);
 
-		AQLDataHolder* dh = &(etrading::InitializeAQETrading::instance().dataInstance()->getObjectPool().getObject(curId,ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_DFS2));
+		AQLDataHolder* dh = &(etrading::InitializeETrading::instance().dataInstance()->getObjectPool().getObject(curId,ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_DFS2));
 		if(dh->isDefined() && !dh->isNull() && curveName == STD)
 		{
 			DoubleVector terms;

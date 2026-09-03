@@ -4,7 +4,7 @@
 #include "CreateDataFile.h"
 #include "ResultsProcessor.h"
 #include "TestHelperUtilities.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "tryMeBondCurves.h"
 #include "tryMeLWOBond.h"
 

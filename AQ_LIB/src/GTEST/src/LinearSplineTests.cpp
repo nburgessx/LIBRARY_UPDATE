@@ -7,7 +7,7 @@
 #include "tryMirGetParRate.h"
 #include "YieldCurveUtil.h"
 #include "LADateScheduleHelpers.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "tryMeUtilitySetup.h"
 #include "tryMirGetForwardRate.h"
 #include "ResultsProcessor.h"

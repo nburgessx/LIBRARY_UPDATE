@@ -20,8 +20,8 @@
 #include <gTest/gTest.h>
 
 #include "TestHelperUtilities.h"
-#include "InitializeAQETrading.h"
-#include "InitializeAQGoogleTest.h"
+#include "InitializeETrading.h"
+#include "InitializeGoogleTest.h"
 #include "tryMeUtilitySetup.h"
 #include "BuildMarketDataObjectFromFile.h"
 

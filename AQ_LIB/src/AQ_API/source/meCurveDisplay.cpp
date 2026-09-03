@@ -1,6 +1,6 @@
 #include "AQLString.h"
 #include "LACurvePricingObject.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "meCurveDisplay.h"
 #include "tryMeCurveDisplay.h"
 #include "APISetUp.h"               // AQ_API_START and AQ_API_END Macros
@@ -22,7 +22,7 @@ std::vector<std::vector<double> > meCurveDisplay(const std::string& curveCollect
 		
 	DoubleArray ans = validation::tryMeCurveDisplay(tmp_curveCollection, tmp_curveIndex);
 
-    AQLDataHolder* dh = &(etrading::InitializeAQETrading::instance().dataInstance()->getObjectPool().getObject(tmp_curveCollection,ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_DFS2));
+    AQLDataHolder* dh = &(etrading::InitializeETrading::instance().dataInstance()->getObjectPool().getObject(tmp_curveCollection,ENCHKTYPE_ISDEFINED).getData(IR_CALIBRATION_DATA_DFS2));
 	if(dh->isDefined() && !dh->isNull() && tmp_curveIndex == STD)
 	{
 		DoubleVector terms;

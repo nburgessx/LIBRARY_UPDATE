@@ -41,7 +41,7 @@ const std::string fileNameEUR12ML	= TEST_FOLDER + "EUR_SWAP_12M_CURVE.JSON";
 namespace google_test
 {
     // Declare Test Fixture Class
-    class BuildAllEURCurvesAsSTDSwap : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
+    class BuildAllEURCurvesAsSTDSwap : public virtual testing::Test, public virtual google_test::InitializeGoogleTest
     {
     public:
 

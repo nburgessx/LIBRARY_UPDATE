@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "TypeUtilities.h"
 #include "mirSetUpOISCurve.h"
 #include "AQLDate.h"
@@ -64,7 +64,7 @@ const std::string mirSetUpOISCurve(const std::string& CurveID,
 		AQLStringMatrix loBasisConv;
 		swig::buildStringMatrix(loBasisConv, LOBasisConv);
 
-		ret = validation::tryMirSetUpOISCurve(etrading::InitializeAQETrading::instance().dataInstance(), 
+		ret = validation::tryMirSetUpOISCurve(etrading::InitializeETrading::instance().dataInstance(), 
 												  curveID, 
 												  marketName, 
 												  generalProps, 

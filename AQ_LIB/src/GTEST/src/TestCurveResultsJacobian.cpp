@@ -2,7 +2,7 @@
 #include <gTest/gTest.h>
 
 // Test Includes
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 #include "GetGoogleTestFolder.h"
 #include "RecordMacros.h"						// Logfile Macros
 #include "ResultsProcessor.h"					// Test Rebase Methods

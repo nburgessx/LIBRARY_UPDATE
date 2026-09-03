@@ -136,7 +136,7 @@
     <ClCompile Include="..\src\GTEST\src\TestDataFilesRead.cpp">
       <Filter>src\etrading\DataFilesAndTypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GTEST\src\InitializeAQGoogleTest.cpp">
+    <ClCompile Include="..\src\GTEST\src\InitializeGoogleTest.cpp">
       <Filter>src\SETUP</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GTEST\src\TestCurveReplay.cpp">
@@ -744,7 +744,7 @@
     <ClInclude Include="..\src\GTEST\include\InterestRateSwap.h">
       <Filter>include\etrading\Legacy\Trade</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GTEST\include\InitializeAQGoogleTest.h">
+    <ClInclude Include="..\src\GTEST\include\InitializeGoogleTest.h">
       <Filter>include\SETUP</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GTEST\include\EnvironmentAttacker.h">

@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirGetTerm.h"
 #include "tryMirGetTerm.h"
 

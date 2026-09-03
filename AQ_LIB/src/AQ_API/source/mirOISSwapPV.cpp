@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirOISSwapPV.h"
 #include "AQLDate.h"
 #include "AQLString.h"
@@ -109,7 +109,7 @@ double mirOISSwapPV(double notional,
 		AQLString tRollDay		(TRollDay.c_str());
 		AQLString xRollDay		(XRollDay.c_str());
 
-		ret = validation::tryMirOISSwapPV(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirOISSwapPV(etrading::InitializeETrading::instance().dataInstance(),
 												notional,
 												payRec,
 												effectiveDate, 

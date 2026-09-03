@@ -11,7 +11,7 @@
 #include "SwapValidation.h"
 #include "SwapUtilities.h"
 #include "ParameterValidation.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "CurveCalibrationData.h"
 #include "SettingsValidation.h"
 #include "DataUtilities.h"      // for AQ_TO_STRING macros

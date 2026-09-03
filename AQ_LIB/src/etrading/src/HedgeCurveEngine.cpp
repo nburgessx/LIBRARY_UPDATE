@@ -5,7 +5,7 @@
 #include "ObjectUtilities.h"
 #include "LWOUtilities.h"
 #include "CommonConstants.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"

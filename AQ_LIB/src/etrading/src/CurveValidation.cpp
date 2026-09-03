@@ -1,7 +1,7 @@
 #include "CurveValidation.h"
 #include "CurveBuildDefaults.h"
 #include "CurveResultsContainer.h"      // Accessors to Curve Results, Description and Discount Factors
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "ParameterValidation.h"
 #include "AQLDefinitions.h"
 #include "LADateScheduleHelpers.h"
@@ -469,7 +469,7 @@ namespace etrading
                 // ---------------------------------
 
                 // Get the CurveCalibrationData object object
-                CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject( curveCollection );
+                CurveCalibrationData* curveCalibrationData = etrading::InitializeETrading::instance().ycStaticDataObject( curveCollection );
             
                 // Get the CurveFrequencyTenor: This function populates curveFrequencyTenor given the curveIndex
                 curveCalibrationData->getBasisCurveFrequency( curveIndex, curveFrequencyTenor );
@@ -509,7 +509,7 @@ namespace etrading
         }
         
         // Get the CurveCalibrationData object object
-        CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject( curveCollection );
+        CurveCalibrationData* curveCalibrationData = etrading::InitializeETrading::instance().ycStaticDataObject( curveCollection );
         
         // ------------------------------------------------------------------------------------------------
 
@@ -593,7 +593,7 @@ namespace etrading
 		// and fetch the CurveCalibrationData from the EntityPool
 
         // Get the CurveCalibrationData object object
-        CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject( curveCollection );
+        CurveCalibrationData* curveCalibrationData = etrading::InitializeETrading::instance().ycStaticDataObject( curveCollection );
 
 		// Get the assignedCurveMktMap from the CurveCalibrationData
 		// This is a map from curveIndex to staticDataTable
@@ -661,7 +661,7 @@ namespace etrading
         }
         
         // Get Yield Curve Pro Object Object
-        CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject( curveCollection );
+        CurveCalibrationData* curveCalibrationData = etrading::InitializeETrading::instance().ycStaticDataObject( curveCollection );
         
         AQLString singleIndex = curveIndex;
         if ( curveIndex.findString( MULTI_STATIC_DATA_DELIMITER ) != -1 )
@@ -730,7 +730,7 @@ namespace etrading
         }
         
         // Initialize Yield Curve Pro
-        CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject( curveCollection );
+        CurveCalibrationData* curveCalibrationData = etrading::InitializeETrading::instance().ycStaticDataObject( curveCollection );
         
         dh = &curveCalibrationData->getData( curveTypeAttributeName );
         if ( dh->isDefined() && !dh->isNull() )
@@ -752,7 +752,7 @@ namespace etrading
     AQLString getCurveType( const AQLString& curveCollection, const AQLString& staticDataTable )
     {
         // get yield curve set
-        AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+        AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
         AQLObjectPool& objPool = dataInstance->getObjectPool();
 
         if ( !objPool.getObject( curveCollection ).isDefined() )

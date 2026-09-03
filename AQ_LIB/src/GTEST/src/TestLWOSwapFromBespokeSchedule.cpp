@@ -1,5 +1,5 @@
 #include <gTest/gTest.h>
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 
 #include "Dependency.h"
 #include "ReadDataFile.h"

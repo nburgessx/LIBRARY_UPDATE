@@ -1,7 +1,7 @@
 #include "CurveStd.h"
 #include "tryMirSetUpSwapCurve.h"
 #include "YieldCurveUtil.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 
 namespace google_test
 {
@@ -59,7 +59,7 @@ namespace google_test
 			try
             {
                 validation::tryMirSetUpSwapCurve(
-                    etrading::InitializeAQETrading::instance().dataInstance(),
+                    etrading::InitializeETrading::instance().dataInstance(),
                     curveID,
                     marketName,
                     inputFileObj.getOptional( "generateProp", inputFileObj.getOptional( "generalProps", AQLStringMatrix() ) ), // Some files have generateProp and others generalProps

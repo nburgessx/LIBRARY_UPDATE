@@ -8,7 +8,7 @@
 #include "ScheduleValidation.h"
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "ConstantDeclarations.h"
 #include "LACurvePricingObject.h"
 #include "AQLPriceDataSlidingRule.h"
@@ -29,7 +29,7 @@ namespace etrading
     */
     double OISSwap::pv()
     {
-        LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( etrading::InitializeAQETrading::instance().dataInstance(), curveSet_ );
+        LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( etrading::InitializeETrading::instance().dataInstance(), curveSet_ );
 
         AQLString fixeddc = AQLCoreComponentManager::getDayCount( fixedDayCount_ );
         AQLString floatdc = AQLCoreComponentManager::getDayCount( floatDayCount_ );

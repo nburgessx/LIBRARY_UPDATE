@@ -3,7 +3,7 @@
 
 // Include: Google Test Library
 //#include <gTest/gTest.h>
-#include "InitializeAQGoogleTest.h"	
+#include "InitializeGoogleTest.h"	
 #include "Dependency.h"
 
 

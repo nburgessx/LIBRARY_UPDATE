@@ -51,7 +51,7 @@
 #include "CurveBuildProperties.h"
 #include "EnvironmentUtilities.h"
 #include "ObjectUtilities.h"
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 #include "ExampleObjects.h"
 
 

@@ -10,7 +10,7 @@
 #include "CommonConstants.h"
 #include "ContainerUtilities.h"
 #include "CurveValidation.h"        // getCurveAsOfDate
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "LWOUtilities.h"
 
 #include <cctype>
@@ -266,7 +266,7 @@ namespace etrading
     */
     AQLDataInstance* getDataInstance()
     {
-        return etrading::InitializeAQETrading::instance( false ).dataInstance();
+        return etrading::InitializeETrading::instance( false ).dataInstance();
 
     }
 

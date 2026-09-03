@@ -1,6 +1,6 @@
 // Include: Google Test Library
 #include <gTest/gTest.h>
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 
 #include "BondYields.h"
 #include "BondFactory.h"
@@ -44,7 +44,7 @@ namespace
 
 namespace google_test
 {
-    class TestBondPricesAustraliaType23Govt : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest //: public TestBondFactory 
+    class TestBondPricesAustraliaType23Govt : public virtual testing::Test, public virtual google_test::InitializeGoogleTest //: public TestBondFactory 
 	{
 	public:
 		etrading::BondPtr createBondFromSingleLVB(const std::string& inputFile)

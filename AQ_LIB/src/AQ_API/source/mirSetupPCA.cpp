@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirSetupPCA.h"
 #include "AQLString.h"
 #include "tryMirSetupPCA.h"
@@ -22,7 +22,7 @@ std::string mirSetupPCA(const std::string& ID,
 		// Input marshalling
 		AQLString id(ID.c_str());
 
-		ret = validation::tryMirSetupPCA(etrading::InitializeAQETrading::instance().dataInstance(), id, data, IsScale, FactorNum).getCString();
+		ret = validation::tryMirSetupPCA(etrading::InitializeETrading::instance().dataInstance(), id, data, IsScale, FactorNum).getCString();
 	} 
 	catch (AQLCoreError& mesx) 
 	{

@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirOISParRate.h"
 #include "AQLDate.h"
 #include "AQLString.h"
@@ -102,7 +102,7 @@ double mirOISParRate(const std::string& EffDt,
 		AQLString tRollDay		(TRollDay.c_str());
 		AQLString xRollDay		(XRollDay.c_str());
 	
-		ret = validation::tryMirOISParRate(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirOISParRate(etrading::InitializeETrading::instance().dataInstance(),
 												effectiveDate, 
 												maturity, 
 												curveID, 

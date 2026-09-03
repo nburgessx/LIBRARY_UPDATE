@@ -1,5 +1,5 @@
 #include "Dependency.h"
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 #include "ParameterValidation.h"
 #include "tryMeUtilitySetup.h"
 #include "ReadDataFile.h"

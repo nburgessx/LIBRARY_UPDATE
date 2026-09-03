@@ -11,7 +11,7 @@
 
 // Include: Google Test Library
 #include <gTest/gTest.h>
-#include "InitializeAQGoogleTest.h"	// DECLARE_TEST_FIXTURE
+#include "InitializeGoogleTest.h"	// DECLARE_TEST_FIXTURE
 
 // Infrastructure
 #include "Dependency.h"

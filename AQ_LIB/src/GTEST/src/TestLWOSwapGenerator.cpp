@@ -3,7 +3,7 @@
 #include "Dependency.h"
 #include "ReadDataFile.h"
 #include "AQLCoreError.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "tryMeLWOSwapCreation.h"
 
 #include <gTest/gTest.h>

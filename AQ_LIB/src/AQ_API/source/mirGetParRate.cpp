@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirGetParRate.h"
 #include "AQLDate.h"
 #include "AQLString.h"
@@ -103,7 +103,7 @@ double mirGetParRate4(const std::string& EffDt,
 		AQLString tRollDay		(TRollDay.c_str());
 		AQLString xRollDay		(XRollDay.c_str());
 		
-		ret = validation::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirGetParRate4(etrading::InitializeETrading::instance().dataInstance(),
 												effectiveDate, 
 												maturity, 
 												curveID, 
@@ -244,7 +244,7 @@ double mirGetParRate5(const std::string& EffDt,
 		AQLString xRollDay		(XRollDay.c_str());
 		AQLString tFixCalc		(TFixCalc.c_str());
 		
-		ret = validation::tryMirGetParRate4(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirGetParRate4(etrading::InitializeETrading::instance().dataInstance(),
 												effectiveDate, 
 												maturity, 
 												curveID, 
@@ -342,7 +342,7 @@ double mirGetParRate3(const std::string& fromDate,
 		AQLString foreCurName	(foreCurveName.c_str());
 		AQLString dfCurName		(dfCurveName.c_str());
 		
-		ret = validation::tryMirGetParRate3(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirGetParRate3(etrading::InitializeETrading::instance().dataInstance(),
 												fromDt, 
 												toDt, 
 												curId, 

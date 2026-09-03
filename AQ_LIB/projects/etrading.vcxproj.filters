@@ -558,7 +558,7 @@
     <ClInclude Include="..\src\etrading\include\LibSetUpETrading.h">
       <Filter>include\Initialization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\etrading\include\InitializeAQETrading.h">
+    <ClInclude Include="..\src\etrading\include\InitializeETrading.h">
       <Filter>include\Initialization</Filter>
     </ClInclude>
     <ClInclude Include="..\src\etrading\include\CurveMarketData.h">
@@ -1337,7 +1337,7 @@
     <ClCompile Include="..\src\etrading\src\LibSetUpETrading.cpp">
       <Filter>src\Initialization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\etrading\src\InitializeAQETrading.cpp">
+    <ClCompile Include="..\src\etrading\src\InitializeETrading.cpp">
       <Filter>src\Initialization</Filter>
     </ClCompile>
     <ClCompile Include="..\src\etrading\src\CurveMarketData.cpp">

@@ -31,7 +31,7 @@
 #include "AQLMatrix.h"
 #include "AQLMathFXEntity.h"
 
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "LADateHelpers.h"
 #include "LADateScheduleHelpers.h"
 #include "LACurveForwardRateHelpers.h"
@@ -7592,7 +7592,7 @@ BasisCurveCalibration* BasisCurveCalibration::getYieldCurvePro( AQLObjectPool& o
 												const AQLString& curveCollectionID,
 												const AQLString& errMsg)
 {
-    AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+    AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
     AQLString yieldName( curveCollectionID );
 
     // get yield data pro

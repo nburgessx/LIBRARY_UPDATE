@@ -8,7 +8,7 @@
 #include "ScheduleValidation.h"
 #include "SwapValidation.h"
 #include "ParameterValidation.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "ConstantDeclarations.h"
 #include "LACurvePricingObject.h"
 #include "CurveInstrumentPricing.h"
@@ -30,7 +30,7 @@ namespace etrading
 		if ( !isYieldCurveReady_ )
 		{
 			// Is forward interpolation possible?
-			LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( etrading::InitializeAQETrading::instance().dataInstance(), curveSet_ );
+			LACurvePricingObject& yc = etrading::LACurveForwardRateHelpers::getYieldCurveForCurveID( etrading::InitializeETrading::instance().dataInstance(), curveSet_ );
 
 			AQLString curveType = getCurveType( curveSet_, forecastCurve_ );
 			if (etrading::LACurveForwardRateHelpers::setUpForwardDayCount( etrading::getDataInstance(), curveSet_, forecastCurve_, yc )

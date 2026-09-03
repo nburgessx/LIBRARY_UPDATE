@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirGetForwardRate.h"
 #include "TypeUtilities.h"
 #include "AQLString.h"
@@ -48,7 +48,7 @@ std::vector<double> mirGetForwardRate2( const std::vector<std::string>& fromDate
 		AQLString interp(interpolation.c_str());
 		AQLString cName(curveName.c_str());
 
-		results = validation::tryMirGetForwardRate2(etrading::InitializeAQETrading::instance().dataInstance(), fromDateVec, toDateVec, cId, freq, dayC, sRule, cal, interp, cName, isFwdInterp, useFwdData);
+		results = validation::tryMirGetForwardRate2(etrading::InitializeETrading::instance().dataInstance(), fromDateVec, toDateVec, cId, freq, dayC, sRule, cal, interp, cName, isFwdInterp, useFwdData);
 
 	} 
 	catch (AQLCoreError& mesx) 

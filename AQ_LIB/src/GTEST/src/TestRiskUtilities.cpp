@@ -5,7 +5,7 @@
 
 #include "RiskUtilities.h"
 #include "Dependency.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "GetGoogleTestFolder.h"
 #include "tryMeLWO.h"
 

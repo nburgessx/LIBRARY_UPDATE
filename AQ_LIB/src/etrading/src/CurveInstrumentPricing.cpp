@@ -5,7 +5,7 @@
 #include "CurveInstrumentPricing.h"
 
 // Needed to initialise the AlgoQuantLib dataInstance variable
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 
 // External Includes
 #include <cmath>
@@ -1505,7 +1505,7 @@ StubRateAndFixingDate CurveInstrumentPricing::getStubRate( const DateVector& fix
     // ------------------------------------------------------------------------
 
     // DataInstance access required for this function
-    AQLDataInstance*	dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+    AQLDataInstance*	dataInstance = etrading::InitializeETrading::instance().dataInstance();
 
     AQLString INTERPOLATION( interpolation );
 	upper( INTERPOLATION );
@@ -1721,7 +1721,7 @@ double CurveInstrumentPricing::getStubRateFromFixingStartEnd( const AQLDate& fix
 	const AQLString stubToleranceTenor = (toleranceTenor.size() == 0) ? "0D" : toleranceTenor;
 
 	// Retrieve yield curve through curveid
-	AQLDataInstance*	dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+	AQLDataInstance*	dataInstance = etrading::InitializeETrading::instance().dataInstance();
 	LACurvePricingObject& yc = LACurveForwardRateHelpers::getYieldCurveForCurveID(dataInstance, curveid);
 	const AQLObject& YieldData = yc.getYieldData().get().get();
 

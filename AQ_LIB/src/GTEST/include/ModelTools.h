@@ -3,7 +3,7 @@
 #include "AQLDate.h"
 #include "AQLCoreTemplateType.h"
 #include <gTest/gTest.h>
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 
 #define AQ_CURVE_DIR           "Vanilla/Models/"
 #define AQ_SABR_DIR            "Vanilla/Models/SABR/"
@@ -12,7 +12,7 @@
 
 namespace google_test
 {
-    class ModelsBasics : public testing::Test, public virtual google_test::InitializeAQGoogleTest {};
+    class ModelsBasics : public testing::Test, public virtual google_test::InitializeGoogleTest {};
 
     class ModelUtility
     {

@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "FolderConfig.h"
 #include "LibSetUpETrading.h"
 #include "LAUpdateStaticDataManager.h"
@@ -12,14 +12,14 @@
 
 namespace etrading
 {
-    InitializeAQETrading* InitializeAQETrading::instance_ = nullptr;
+    InitializeETrading* InitializeETrading::instance_ = nullptr;
 
     namespace 
     {
 	    boost::mutex instanceProtector;
     }
 
-    InitializeAQETrading::InitializeAQETrading(const bool checkStaticDataLoaded, const bool checkIfCalendarLoaded) : dataInstance_(new AQLDataInstance())
+    InitializeETrading::InitializeETrading(const bool checkStaticDataLoaded, const bool checkIfCalendarLoaded) : dataInstance_(new AQLDataInstance())
     {
 	    // moved from LibSetUp/initialize;
 	    libSetUpETrading(dataInstance_.get(), checkIfCalendarLoaded);
@@ -30,20 +30,20 @@ namespace etrading
 		FolderConfig::setupOptionalStartupConfig();
     }
 
-    InitializeAQETrading::~InitializeAQETrading()
+    InitializeETrading::~InitializeETrading()
     {
 	    // from mirClearEntityPoolAndReadProperty
 	    dataInstance_->getObjectPool().clear();
 	    AQLCoreDataService::finalize();
     }
 
-    InitializeAQETrading& InitializeAQETrading::instance(const bool checkStaticDataLoaded, const bool checkIfCalendarLoaded)
+    InitializeETrading& InitializeETrading::instance(const bool checkStaticDataLoaded, const bool checkIfCalendarLoaded)
     {
         boost::mutex::scoped_lock guard(instanceProtector);
 	    if (instance_ == nullptr)
         {
             // checkIfStaticDataLoaded is an inline function MAStaticDataLoaded.h
-		    instance_ = new InitializeAQETrading(checkStaticDataLoaded, checkIfCalendarLoaded);
+		    instance_ = new InitializeETrading(checkStaticDataLoaded, checkIfCalendarLoaded);
 	    }
         else if(checkStaticDataLoaded)
         {
@@ -52,7 +52,7 @@ namespace etrading
 	    return *instance_;
     }
 
-    void InitializeAQETrading::destroyInstance()
+    void InitializeETrading::destroyInstance()
     {
 	    boost::mutex::scoped_lock guard(instanceProtector);
         delete instance_;
@@ -66,7 +66,7 @@ namespace etrading
     // curveCollection:             CurveID, e.g. USDYC
     // throwIfCurveDoesNotExist:    Disallows the creation of a new ycProperties object when true. Defaults to true, which is the typical user-case
     //
-    CurveCalibrationData* InitializeAQETrading::ycStaticDataObject( const AQLString& curveCollection, const bool throwIfCurveDoesNotExist )
+    CurveCalibrationData* InitializeETrading::ycStaticDataObject( const AQLString& curveCollection, const bool throwIfCurveDoesNotExist )
     {
         // Result Place Holder
         CurveCalibrationData* ycProperties = nullptr;

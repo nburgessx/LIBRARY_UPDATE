@@ -3,7 +3,7 @@
 #include "CreateDataFile.h"
 #include "StructuredExceptionHandler.h"
 #include "AQLMathSwaptionVolUtility.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include <algorithm>
 #include "RecordMacros.h"
 
@@ -52,7 +52,7 @@ namespace validation
 
 		bool isLognormal = (etrading::toVolatilityTypeEnum(volType) != etrading::NORMAL_VOLATILITY);
 
-		double ret = AQLMathSwaptionVolUtility::getSABRPrem(etrading::InitializeAQETrading::instance().dataInstance(),
+		double ret = AQLMathSwaptionVolUtility::getSABRPrem(etrading::InitializeETrading::instance().dataInstance(),
 														expiryPoint,
 														tenorPoint,
 														strike,

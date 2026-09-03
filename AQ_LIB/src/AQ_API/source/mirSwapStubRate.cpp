@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "mirSwapStubRate.h"
 #include "AQLDate.h"
 #include "AQLString.h"
@@ -80,7 +80,7 @@ double mirSwapStubRate(const std::string& EffDt,
 		AQLStringVector curveTenors;
 		swig::buildStringVector(curveTenors, CurveTenors);
 
-		ret = validation::tryMirSwapStubRate(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirSwapStubRate(etrading::InitializeETrading::instance().dataInstance(),
 												effDt, 
 												mat, 
 												freq, 

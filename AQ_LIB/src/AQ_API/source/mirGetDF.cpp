@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "TypeUtilities.h"
 #include "mirGetDF.h"
 #include "AQLDate.h"
@@ -35,7 +35,7 @@ double mirGetDF1(double Term,
 		AQLString interpolation(Interpolation.c_str());
 		AQLString curveName(CurveName.c_str());
 
-		std::vector<double> DFs = validation::tryMirGetDF1(etrading::InitializeAQETrading::instance().dataInstance(), terms, curveID, dayCount, interpolation, IsBasisFlag, curveName);
+		std::vector<double> DFs = validation::tryMirGetDF1(etrading::InitializeETrading::instance().dataInstance(), terms, curveID, dayCount, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
 	catch (AQLCoreError& mesx) 
@@ -71,7 +71,7 @@ std::vector<double> mirGetDF1(const std::vector<double>& Terms,
 		AQLString interpolation(Interpolation.c_str());
 		AQLString curveName(CurveName.c_str());
 
-		ret = validation::tryMirGetDF1(etrading::InitializeAQETrading::instance().dataInstance(), Terms, curveID, dayCount, interpolation, IsBasisFlag, curveName);
+		ret = validation::tryMirGetDF1(etrading::InitializeETrading::instance().dataInstance(), Terms, curveID, dayCount, interpolation, IsBasisFlag, curveName);
 	} 
 	catch (AQLCoreError& mesx) 
 	{
@@ -115,7 +115,7 @@ double mirGetDF2(const std::string& Term,
 		AQLString interpolation(Interpolation.c_str());
 		AQLString curveName(CurveName.c_str());
 
-		std::vector<double> DFs = validation::tryMirGetDF2(etrading::InitializeAQETrading::instance().dataInstance(), terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		std::vector<double> DFs = validation::tryMirGetDF2(etrading::InitializeETrading::instance().dataInstance(), terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
 	catch (AQLCoreError& mesx) 
@@ -160,7 +160,7 @@ std::vector<double> mirGetDF2(const std::vector<std::string>& Terms,
 		AQLString interpolation(Interpolation.c_str());
 		AQLString curveName(CurveName.c_str());
 
-		ret = validation::tryMirGetDF2(etrading::InitializeAQETrading::instance().dataInstance(), terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		ret = validation::tryMirGetDF2(etrading::InitializeETrading::instance().dataInstance(), terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
 	catch (AQLCoreError& mesx) 
 	{
@@ -209,7 +209,7 @@ double mirGetDF3(const std::string& FromDate,
 		AQLString interpolation(Interpolation.c_str());
 		AQLString curveName(CurveName.c_str());
 
-		std::vector<double> DFs = validation::tryMirGetDF3(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, toDates, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		std::vector<double> DFs = validation::tryMirGetDF3(etrading::InitializeETrading::instance().dataInstance(), fromDates, toDates, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
 	catch (AQLCoreError& mesx) 
@@ -260,7 +260,7 @@ std::vector<double> mirGetDF3(const std::string& FromDate,
 		AQLString interpolation(Interpolation.c_str());
 		AQLString curveName(CurveName.c_str());
 
-		ret = validation::tryMirGetDF3(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, toDates, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		ret = validation::tryMirGetDF3(etrading::InitializeETrading::instance().dataInstance(), fromDates, toDates, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
 	catch (AQLCoreError& mesx) 
 	{
@@ -310,7 +310,7 @@ double mirGetDF4(const std::string& FromDate,
 		AQLString interpolation(Interpolation.c_str());
 		AQLString curveName(CurveName.c_str());
 
-		std::vector<double> DFs = validation::tryMirGetDF4(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		std::vector<double> DFs = validation::tryMirGetDF4(etrading::InitializeETrading::instance().dataInstance(), fromDates, terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
 	catch (AQLCoreError& mesx) 
@@ -358,7 +358,7 @@ std::vector<double> mirGetDF4(const std::vector<std::string>& FromDates,
 		AQLString interpolation(Interpolation.c_str());
 		AQLString curveName(CurveName.c_str());
 
-		ret = validation::tryMirGetDF4(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, Terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		ret = validation::tryMirGetDF4(etrading::InitializeETrading::instance().dataInstance(), fromDates, Terms, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
 	catch (AQLCoreError& mesx) 
 	{
@@ -406,7 +406,7 @@ double mirGetDF5(const std::string& FromDate,
 		AQLString interpolation(Interpolation.c_str());
 		AQLString curveName(CurveName.c_str());
 
-		std::vector<double> DFs = validation::tryMirGetDF5(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, term, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		std::vector<double> DFs = validation::tryMirGetDF5(etrading::InitializeETrading::instance().dataInstance(), fromDates, term, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 		ret = DFs[0];
 	} 
 	catch (AQLCoreError& mesx) 
@@ -455,7 +455,7 @@ std::vector<double> mirGetDF5(const std::vector<std::string>& FromDates,
 		AQLString interpolation(Interpolation.c_str());
 		AQLString curveName(CurveName.c_str());
 
-		ret = validation::tryMirGetDF5(etrading::InitializeAQETrading::instance().dataInstance(), fromDates, term, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
+		ret = validation::tryMirGetDF5(etrading::InitializeETrading::instance().dataInstance(), fromDates, term, curveID, dayCount, slidingRule, calendar, interpolation, IsBasisFlag, curveName);
 	} 
 	catch (AQLCoreError& mesx) 
 	{

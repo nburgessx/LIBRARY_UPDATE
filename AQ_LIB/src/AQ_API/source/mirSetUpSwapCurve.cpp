@@ -1,4 +1,4 @@
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "TypeUtilities.h"
 #include "mirSetUpSwapCurve.h"
 #include "AQLDate.h"
@@ -93,7 +93,7 @@ const std::string mirSetUpSwapCurve(const std::string& CurveID,
 		AQLStringMatrix adjustSwapRates;
 		swig::buildStringMatrix(adjustSwapRates, AdjGrid);
 
-		ret = validation::tryMirSetUpSwapCurve(etrading::InitializeAQETrading::instance().dataInstance(),
+		ret = validation::tryMirSetUpSwapCurve(etrading::InitializeETrading::instance().dataInstance(),
 																curveID,
 																marketName,
 																yldData, 

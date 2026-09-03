@@ -8,7 +8,7 @@
 #include "tryMirOISSwapPV.h"
 #include "YieldCurveUtil.h"
 #include "LADateScheduleHelpers.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "tryMeUtilitySetup.h"
 #include <sstream>
 
@@ -287,7 +287,7 @@ namespace google_test
 						}
 					}
 								
-					const double calcParRate = validation::tryMirOISParRate( etrading::InitializeAQETrading::instance().dataInstance(),
+					const double calcParRate = validation::tryMirOISParRate( etrading::InitializeETrading::instance().dataInstance(),
 								                                                 effectiveDate.stringWithFormat( "YYYYMMDD" ),
 								                                                 maturityTenor,
 								                                                 curveCollection,
@@ -368,7 +368,7 @@ namespace google_test
 
 							// Compute Libor-OIS basis swap PV
 							const double PV = validation::tryMirOISSwapPV( 
-								etrading::InitializeAQETrading::instance().dataInstance(),
+								etrading::InitializeETrading::instance().dataInstance(),
 								1.0,	// notional
 								"PAY",	// payRec
 								effectiveDate.stringWithFormat( "YYYYMMDD" ),

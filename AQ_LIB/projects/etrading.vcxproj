@@ -196,7 +196,7 @@
     <ClInclude Include="..\src\etrading\include\HasCurveData.h" />
     <ClInclude Include="..\src\etrading\include\HasVariantMatrixAccess.h" />
     <ClInclude Include="..\src\etrading\include\HasDataSchemaGenerator.h" />
-    <ClInclude Include="..\src\etrading\include\InitializeAQETrading.h" />
+    <ClInclude Include="..\src\etrading\include\InitializeETrading.h" />
     <ClInclude Include="..\src\etrading\include\Interpolation2DUtilities.h" />
     <ClInclude Include="..\src\etrading\include\InterpolationFactory.h" />
     <ClInclude Include="..\src\etrading\include\IsLWOObject.h" />
@@ -466,7 +466,7 @@
     <ClCompile Include="..\src\etrading\src\FloatStaticData.cpp" />
     <ClCompile Include="..\src\etrading\src\FuturesDates.cpp" />
     <ClCompile Include="..\src\etrading\src\HasCurveData.cpp" />
-    <ClCompile Include="..\src\etrading\src\InitializeAQETrading.cpp" />
+    <ClCompile Include="..\src\etrading\src\InitializeETrading.cpp" />
     <ClCompile Include="..\src\etrading\src\Interpolation2DUtilities.cpp" />
     <ClCompile Include="..\src\etrading\src\InterpolationFactory.cpp" />
     <ClCompile Include="..\src\etrading\src\IsLWOObject.cpp" />

@@ -6,7 +6,7 @@
 #include "LACurveForwardRateHelpers.h"
 #include "CurveCalibrationData.h"
 #include "AQLDataMultiReference.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "AQLObject.h"
 #include "AQLMathDefine.h"
 #include "AQLPriceDataCalendar.h"
@@ -23,7 +23,7 @@ namespace
 	CurveCalibrationData* getYieldCurvePro(const AQLString& curveCollectionID)
 	{
 		// get yield curve set
-		AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+		AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
 		AQLObjectPool& objPool = dataInstance->getObjectPool();
 		AQLString yieldName(curveCollectionID);
 
@@ -668,7 +668,7 @@ namespace etrading
     */
     void DeltaGenerator::flatShiftYieldCurve( const AQLString& direction, double bumpSize )
     {
-        AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+        AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
 
 		double directionFactor = 1.0;
         if ( direction == "UP" )
@@ -855,7 +855,7 @@ namespace etrading
 					continue;
 				}
 
-                AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+                AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
                 const AQLDataDate& atr = dynamic_cast<const AQLDataDate& >( dataInstance->getObjectPool().getObject( curveCollectionID, ENCHKTYPE_ISDEFINED ).get().getData( CALIBRATION_DATA_ASOFDATE, ISNOTNULL ).get() );
                 const AQLDate asofdate = atr.get();
 
@@ -1148,7 +1148,7 @@ namespace etrading
     */
     void DeltaGenerator::recalibrateSingleCurve( CurveCalibrationData* curveCalibrationData, const AQLString& curveName, const AQLString& curveCollectionID, bool isBasisCurve )
 	{
-		AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+		AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
 
 		if ( isBasisCurve )
         {
@@ -1746,7 +1746,7 @@ namespace etrading
     */
     void DeltaGenerator::restoreCurveMarketDataAndRecalibrate()
     {
-        AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+        AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
 
         // 1. Restore all Market Data
         for ( auto iter = bumpCurvesCollection_.allCurvesInEachCollection_.begin(); iter != bumpCurvesCollection_.allCurvesInEachCollection_.end(); ++iter )
@@ -1773,7 +1773,7 @@ namespace etrading
 	{
 		if (isUsingGlobalCurveEngine_)
 		{
-			AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+			AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
 
 			for (auto iter = bumpCurvesCollection_.allCurvesInEachCollection_.begin(); iter != bumpCurvesCollection_.allCurvesInEachCollection_.end(); ++iter)
 			{
@@ -1902,7 +1902,7 @@ namespace etrading
         }
         else
         {
-            AQLDataInstance* dataInstance = etrading::InitializeAQETrading::instance().dataInstance();
+            AQLDataInstance* dataInstance = etrading::InitializeETrading::instance().dataInstance();
             AQLDataHolder* dh = &curveCalibrationData->getData( IR_CALIBRATION_DATA_MARKETTYPE + attrSuffix );
             if ( dh->isDefined() && !dh->isNull() )
             {

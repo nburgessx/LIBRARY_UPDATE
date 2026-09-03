@@ -9,7 +9,7 @@
 #include "CurveBuildDefaults.h"
 #include "CurveResultsContainer.h"  // Curve Results and Discount Factor Methods
 #include "CurveValidation.h"
-#include "InitializeAQETrading.h"
+#include "InitializeETrading.h"
 #include "LACurveForwardRateHelpers.h"
 #include "LACurvePricingObject.h"
 #include "LADateHelpers.h"
@@ -1174,7 +1174,7 @@ namespace etrading
         curves.reserve(allCurves.size());
 
         // Initialize Yield Curve Pro
-        CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject( curveCollection, true ); // true = throw if curve does not exist
+        CurveCalibrationData* curveCalibrationData = etrading::InitializeETrading::instance().ycStaticDataObject( curveCollection, true ); // true = throw if curve does not exist
 
 		const AQLObject& yieldData = curveCalibrationData->getYieldData().get().get();
 
@@ -2561,7 +2561,7 @@ namespace etrading
 	bool isCurveBuiltFromCurveEngine(const AQLString& curveCollection, const AQLString& curveName)
 	{
 		bool isFromCurveEngine = false;
-		CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject(curveCollection);
+		CurveCalibrationData* curveCalibrationData = etrading::InitializeETrading::instance().ycStaticDataObject(curveCollection);
 		AQLString suffix = curveName == "STD" ? "" : "_" + AQLString(curveName).toUpper();
 		AQLDataHolder* dh = &(curveCalibrationData->getYieldData().get().getData(IR_CALIBRATION_DATA_BUILTBYCURVEENGINE + suffix, NOCHECK) );
 		if (dh->isDefined() && !dh->isNull())
@@ -2587,7 +2587,7 @@ namespace etrading
 									bool displayLabels,
 									bool displayInverseMatrix)
 	{
-		CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject(curveCollection);
+		CurveCalibrationData* curveCalibrationData = etrading::InitializeETrading::instance().ycStaticDataObject(curveCollection);
 		AQLString suffix = curveEngineObject == "STD" ? "" : "_" + AQLString(curveEngineObject).toUpper();
 
 		if (displayInverseMatrix)
@@ -2635,7 +2635,7 @@ namespace etrading
 			throw AQLCoreInvalidData(error.getCString(), __FILE__, __LINE__);
 		}
 
-		CurveCalibrationData* curveCalibrationData = etrading::InitializeAQETrading::instance().ycStaticDataObject(curveCollection);
+		CurveCalibrationData* curveCalibrationData = etrading::InitializeETrading::instance().ycStaticDataObject(curveCollection);
 		AQLString suffix = curveName == "STD" ? "" : "_" + AQLString(curveName).toUpper();
 
 		if (displayInverseMatrix)

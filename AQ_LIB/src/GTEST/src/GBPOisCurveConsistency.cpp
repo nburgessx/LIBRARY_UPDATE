@@ -38,7 +38,7 @@ const std::string fileNameGBP6ML = TEST_FOLDER + "GBP_BASIS_6M_CURVE.JSON";
 namespace google_test
 {
     // Declare Test Fixture Class
-    class GBP_OisCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
+    class GBP_OisCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeGoogleTest
     {
     public:
 

@@ -12,44 +12,44 @@ namespace etrading
 
 	//
 	// CLASS
-	//    InitializeAQETrading
+	//    InitializeETrading
 	//
 	// PURPOSE
 	//    To ensure initialisation of AlgoQuantLib DataInstance, Object Pool and Yield Curve Properties
 	// 
 	// SYNOPSIS
-	//    #include "InitializeAQETrading.h"
+	//    #include "InitializeETrading.h"
 	// 
-	//    InitializeAQETrading& instance_ = instance();
+	//    InitializeETrading& instance_ = instance();
 	//    const DoubleArray res = etrading::LACurveCalibrationHelpers::outPutCurveFromYieldData( instance_.getDataInstance(), curveId, marketName );
 	// 
-	class InitializeAQETrading
+	class InitializeETrading
 	{
 	public:
 		
         // Singleton: Library Set-Up and Tear-down Methods
-        static InitializeAQETrading& instance(const bool checkStaticDataLoaded = false, const bool checkIfCalendarLoaded = false); // Set-Up
+        static InitializeETrading& instance(const bool checkStaticDataLoaded = false, const bool checkIfCalendarLoaded = false); // Set-Up
         static void destroyInstance(); // Tear-Down
 
         // Re-initialisation (used by google tests)
-		~InitializeAQETrading();
+		~InitializeETrading();
 
 		// Accessors
 		AQLDataInstance* dataInstance()  { return dataInstance_.get(); }
         CurveCalibrationData* ycStaticDataObject( const AQLString& curveCollection, const bool throwIfCurveDoesNotExist = true );
 
 	protected:
-		InitializeAQETrading(const bool checkStaticDataLoaded = false, const bool checkIfCalendarLoaded = false);  
+		InitializeETrading(const bool checkStaticDataLoaded = false, const bool checkIfCalendarLoaded = false);  
 
 	private:
 		
         // Disable Copying & Assignment
-        InitializeAQETrading(const InitializeAQETrading& rhs) = delete;
-        InitializeAQETrading& operator=(const InitializeAQETrading& rhs) = delete;
+        InitializeETrading(const InitializeETrading& rhs) = delete;
+        InitializeETrading& operator=(const InitializeETrading& rhs) = delete;
 
         // Private Member Variables
 		std::unique_ptr<AQLDataInstance> dataInstance_;
-        static InitializeAQETrading* instance_;
+        static InitializeETrading* instance_;
 	};
 }
 

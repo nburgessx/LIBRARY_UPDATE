@@ -10,7 +10,7 @@
  */
 
 // Include: Google Test Library
-#include "InitializeAQGoogleTest.h"
+#include "InitializeGoogleTest.h"
 
 #include "Dependency.h"
 #include "ReadDataFile.h"
@@ -41,7 +41,7 @@ const std::string fileNameCZK12M = TEST_FOLDER + "CZK_BASIS_12M_CURVE.JSON";
 namespace google_test
 {
     // Declare Test Fixture Class
-    class CZK_Curve_Consistency : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
+    class CZK_Curve_Consistency : public virtual testing::Test, public virtual google_test::InitializeGoogleTest
     {
     public:
 

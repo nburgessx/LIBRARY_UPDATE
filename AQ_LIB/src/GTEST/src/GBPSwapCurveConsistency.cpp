@@ -37,7 +37,7 @@ const std::string fileNameGBP3ML = TEST_FOLDER + "GBP_SWAP_3M_CURVE.JSON";
 namespace google_test
 {
     // Declare Test Fixture Class
-    class GBP_SwapCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeAQGoogleTest
+    class GBP_SwapCurve_Consistency : public virtual testing::Test, public virtual google_test::InitializeGoogleTest
     {
     public:
 
