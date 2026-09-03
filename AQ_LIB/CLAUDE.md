@@ -50,7 +50,7 @@ Design principles the code is held to:
 
 ```
 AQ_LIB\
-├── AQ_2022.sln                    the solution
+├── AlgoQuantLib_2022.sln                    the solution
 ├── SetEnvironmentVariables.bat    one-time env-var setup (see §3.1)
 ├── Visualizer.natvis             debug visualisers for Julian-day dates (keep current)
 ├── readme.md                     library readme

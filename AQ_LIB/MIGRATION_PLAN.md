@@ -143,7 +143,7 @@ each numbered item.
   + generate/deploy. Original detail:
   - `projects\AQ_BINDINGS.vcxproj` (+ `.filters`, `.user`) → rename file,
     `<ProjectName>`, `<RootNamespace>`.
-  - `AQ_2022.sln` — project name and path (GUID unchanged).
+  - `AlgoQuantLib_2022.sln` — project name and path (GUID unchanged).
   - `src\AQ_BINDINGS\` → `src\AQ_API\`.
   - `src\AQ_API\source\{generate,deploy}{Python,CSharp,Java,R}_2022.bat` — the
     hard-coded `...\targets\%1\%2\AQ_BINDINGS` path segment, the

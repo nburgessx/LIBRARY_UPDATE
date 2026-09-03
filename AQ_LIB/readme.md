@@ -31,7 +31,7 @@ bindings for Python, C#, Java and R, and an Excel add-in.
 
 ```
 AQ_LIB\
-├── AQ_2022.sln                  Visual Studio 2022 solution
+├── AlgoQuantLib_2022.sln                  Visual Studio 2022 solution
 ├── SetEnvironmentVariables.bat  one-time environment setup
 ├── Visualizer.natvis            debugger visualisers for date types
 ├── CLAUDE.md                    working guidance
@@ -109,7 +109,7 @@ Accept the suggested paths or type your own; the script validates them. Then
 
 ### Compile
 
-Open `AQ_2022.sln` and build. All projects are x64. Configurations:
+Open `AlgoQuantLib_2022.sln` and build. All projects are x64. Configurations:
 
 | Configuration | Purpose |
 |---|---|
